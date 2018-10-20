@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8548&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:21:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Command not finishing what I want it to do.</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Command not finishing what I want it to do.</h2>
+		<p><a href="viewtopic93d5.html?f=3&amp;t=8548">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8548</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Command not finishing what I want it to do.</h3>
+				<div class="date">Posted: <strong>07 May 2018 04:52</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">I have the following bat file command that comes up correctly asking me for the password and what i want to name folder of which I input then nothing else happens and it should 7zip it. <br>
+<br>
+Any Ideas. <br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>]@echo off
+cls
+SETLOCAL EnableDelayedExpansion 
+
+set DL=C:\Users\g\Downloads\test
+set /p PW=”Please type password:”
+set /p FL=”Please type folder name:”
+
+for /f "tokens=1,2 delims=." %%a in ('dir /b /a-d "!DL!"') do (
+                set fn=%%a
+                set fe=%%b
+                cd !dl!
+"C:\Program Files\7-Zip\7z.exe" a -tzip "!fn!.7z" -p!PW! "!fn!.!fe!" '-x!*.7z' -sdel
+(
+move *.7z !FL!</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Command not finishing what I want it to do.</h3>
+				<div class="date">Posted: <strong>07 May 2018 05:20</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">Your second to last line is a ( when it should be a )<br>
+<br>
+Honestly, I'm kind of surprised that it doesn't throw an error.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Command not finishing what I want it to do.</h3>
+				<div class="date">Posted: <strong>07 May 2018 08:59</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content">You could try it like this:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off
+Set "ZE=%ProgramFiles%\7-Zip\7z.exe"
+Set "DL=C:\Users\g\Downloads\test"
+
+If Not Exist "%ZE%" Exit /B
+CD /D "%DL%" 2&gt;Nul || Exit /B
+
+:GetPW
+Set "PW="
+Set /P "PW=Please provide an archive password:"
+If Not Defined PW GoTo GetPW
+
+:GetFL
+Set "FL="
+Set /P "FL=Please supply the destination for the archive:"
+If Not Defined FL GoTo GetFL
+If Not Exist "%FL%\" GoTo GetFL
+
+For %%A In (*) Do "%ZE%" a -tzip "%%~nA.7z" -p%PW% "%%A" -x!*.7z -o"%FL%" -sdel</code></pre></div>You should note that although there are some checks built into this, there are none checking for characters in the password which could cause issues when run from cmd.exe in a batch file; <em class="text-italics">for those those you'll have to find a suitable workaround yourself!</em></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Command not finishing what I want it to do.</h3>
+				<div class="date">Posted: <strong>09 May 2018 11:20</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Thanks</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8548&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:21:45 GMT -->
+</html>

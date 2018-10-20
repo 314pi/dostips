@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8805&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:22:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Refreshing desktop and running script on the background</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Refreshing desktop and running script on the background</h2>
+		<p><a href="viewtopic21cb.html?f=3&amp;t=8805">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8805</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Refreshing desktop and running script on the background</h3>
+				<div class="date">Posted: <strong>30 Aug 2018 09:33</strong></div>
+				<div class="author">by <strong>Gaverek</strong></div>
+				<div class="content">Hello, I'm actually working on a script that moves every single icon from the desktop to another location, which has already been accomplished, here is the code I'm using:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>robocopy %USERPROFILE%\Desktop\ C:\SWAT /MOVE /S /E
+md %USERPROFILE%\Desktop</code></pre></div>
+
+The thing is, I'm running this script every 5 minutes on every user computer by setting it as a scheduled task on a GPO, so, seeing the command window every 5 minutes on the screen can be annoying, also, folder's doesn't dissapear at all if desktop is not being refreshed.<br>
+<br>
+Is there a simple way to refresh the desktop after executing the code above and also running the script in the background?<br>
+<br>
+Thanks in advance</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Refreshing desktop and running script on the background</h3>
+				<div class="date">Posted: <strong>30 Aug 2018 14:57</strong></div>
+				<div class="author">by <strong>Gaverek</strong></div>
+				<div class="content">Solved it calling the .bat script in a .vbs with this code<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Set oShell = CreateObject ("Wscript.Shell")
+Dim strArgs
+strArgs = "cmd /c MoveItemsFromDesktop.bat"
+oShell.Run strArgs, 0, false</code></pre></div>
+
+Hope it helps someone else. <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Refreshing desktop and running script on the background</h3>
+				<div class="date">Posted: <strong>30 Aug 2018 16:47</strong></div>
+				<div class="author">by <strong>Gaverek</strong></div>
+				<div class="content">Now I'm having another problem with this, the thing is that I'm having to run 2 times the vbs script to execute all the commands on the .bat file, does anyone knows why and how to solve it?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Refreshing desktop and running script on the background</h3>
+				<div class="date">Posted: <strong>30 Aug 2018 17:09</strong></div>
+				<div class="author">by <strong>Gaverek</strong></div>
+				<div class="content">I think that calling 2 .bat files from the .vbs script may work but I'm not an expert in .vbs scripting so I don't know how to implement it. Hope someone that knows how to do it reads this.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Refreshing desktop and running script on the background</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 09:35</strong></div>
+				<div class="author">by <strong>Gaverek</strong></div>
+				<div class="content">Solved it converting my bat file with this online batch to .exe converter <a href="http://www.f2ko.de/en/ob2e.php" class="postlink">http://www.f2ko.de/en/ob2e.php</a> just remember to mark the invisible radio button</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Refreshing desktop and running script on the background</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 10:49</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I don't see any good possibility to refresh the desktop using batch. But what I'm really wondering is ...<br>
+1) Why do you need to permanently move the desktop folder and recreate it?<br>
+2) Why are you doing it using Batch if you don't like the console window?<br>
+3) Why do you use one of these terrible bat2exe thingies with all of their side effects instead of using a compilable language from the beginning if you believe a script isn't good enough?<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Refreshing desktop and running script on the background</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 11:35</strong></div>
+				<div class="author">by <strong>Gaverek</strong></div>
+				<div class="content">Hi aGerman, thanks for replying, I'm doing this because my boss wanted it, he just doesn't like seeing things on peoples desktop, his issues not mines, I'm just here doing what I'm being asked and payed for. I'm using batch because it was the only way I thought of doing it and used the bat2exe because it was the simpliest way to do what I wanted at the moment which was make the batch script run in the background</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Refreshing desktop and running script on the background</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 16:21</strong></div>
+				<div class="author">by <strong>Gaverek</strong></div>
+				<div class="content">You were right after all aGerman, using the converter is not a good idea, in stead I did a do until loop on my vbscript so that it executed the batch file 2 times and that solved my problem</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Refreshing desktop and running script on the background</h3>
+				<div class="date">Posted: <strong>01 Sep 2018 10:05</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic0871.html?p=57887#p57887" data-post-id="57887" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Aug 2018 10:49</div></cite>
+I don't see any good possibility to refresh the desktop using batch.
+</div></blockquote>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo. &amp;&lt;nul set /p "=  :/ Restart 'explorer.EXE'
+:: (
+	&gt;nul taskkill /im explorer.EXE /f &amp;&amp;start explorer.EXE
+	&lt;nul set /p "=  :/ Restart 'explorer.EXE'"
+:: )
+&lt;nul set /p "= [OK]" &amp;echo. 
+</code></pre></div>
+This will work but you will loose all active explorer windows and any moved icons will be restored to their location they had at logon. I mean visual location as stored in the registry not physical location obviously. This part of code is extracted from a batch that configures the desktop. Removing/moving icons etcetera... Actually this part of code runs at the end after i edited the registry so my icons are placed on screen location exactly where i want them.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Refreshing desktop and running script on the background</h3>
+				<div class="date">Posted: <strong>01 Sep 2018 17:15</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453">Ed Dyreen</a> wrote: <a href="viewtopice865.html?p=57900#p57900" data-post-id="57900" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">01 Sep 2018 10:05</div></cite>
+This will work but you will loose all active explorer windows
+</div></blockquote>
+Some other possibilities that may work under certain circumstances:<br>
+XP<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>rundll32.exe user32.dll,UpdatePerUserSystemParameters</code></pre></div>
+
+before Win10<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ie4uinit.exe -ClearIconCache</code></pre></div>
+
+Win10<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ie4uinit.exe -show</code></pre></div>
+
+Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8805&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:22:40 GMT -->
+</html>

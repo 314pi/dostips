@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8806&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:19:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; find string in logs directory, send email</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>find string in logs directory, send email</h2>
+		<p><a href="viewtopic718e.html?f=3&amp;t=8806">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8806</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>find string in logs directory, send email</h3>
+				<div class="date">Posted: <strong>30 Aug 2018 16:35</strong></div>
+				<div class="author">by <strong>netwerkassist</strong></div>
+				<div class="content">I would like to monitor a directory of logs for specific occurrences of memory issues.    Manually I run findstr -s *Heap.memory" from the command prompt.  I'm looking for some help/expertise to have a batch file I could run as a windows scheduled task daily, initiate a search of the logs and if a string is found to be able to notify.<br>
+<br>
+Appreciate replies.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: find string in logs directory, send email</h3>
+				<div class="date">Posted: <strong>01 Sep 2018 09:31</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7db1.html?mode=viewprofile&amp;u=1398">netwerkassist</a> wrote: <a href="viewtopic36d7.html?p=57867#p57867" data-post-id="57867" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Aug 2018 16:35</div></cite>
+I would like to monitor a directory of logs for specific occurrences of memory issues.    Manually I run findstr -s *Heap.memory" from the command prompt.  I'm looking for some help/expertise to have a batch file I could run as a windows scheduled task daily, initiate a search of the logs and if a string is found to be able to notify.<br>
+<br>
+Appreciate replies.
+</div></blockquote>
+
+Just add that command to a batch file. You want to be informed when the string is found so you can use the onSucces command which is just a double &amp; symbol. onSucces you will want to be informed so you may want a messageBox to popup informing you about that.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+findstr.EXE /S /I /R "*heap.memory" &amp;&amp;(
+
+	net.EXE START messenger
+	net.EXE SEND "%COMPUTERNAME%" "heap.memory found"
+	pause
+ )
+ 
+ exit 0
+</code></pre></div>
+Now the shedule, you may want the batch to be interactive so you can scroll and get more detailed info.<br>
+Because this information is missing i will assume you will only want to be informed when you are logged in as Administrator.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>schtasks.EXE /CREATE /U Administrator /P myPassword /SC DAILY /TN heapMemory /TR "%~f0" /ST 00:00:00
+</code></pre></div>
+But you can also add the job using the GUI named Planned Tasks.<br>
+<br>
+You may want the batch to produce a logfile of it's own and then open it instead of simple informing a match was found. I will leave that up to you.. Oh i forgot the email part, I will help you with that later if i get a response from you.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: find string in logs directory, send email</h3>
+				<div class="date">Posted: <strong>02 Sep 2018 10:21</strong></div>
+				<div class="author">by <strong>netwerkassist</strong></div>
+				<div class="content">Thanks for posting the reply!  This looks like I could work with this well.  I should be able to create a log output file.  I could use some help with the email function though and attach the created log in something like c:\temp\memory_log.txt .</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: find string in logs directory, send email</h3>
+				<div class="date">Posted: <strong>02 Sep 2018 17:35</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7db1.html?mode=viewprofile&amp;u=1398">netwerkassist</a> wrote: <a href="viewtopic1076.html?p=57908#p57908" data-post-id="57908" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">02 Sep 2018 10:21</div></cite>
+Thanks for posting the reply!  This looks like I could work with this well.  I should be able to create a log output file.  I could use some help with the email function though and attach the created log in something like c:\temp\memory_log.txt .
+</div></blockquote>
+I added some comments and included an exemplary mail.<br>
+<br>
+before using this script make a telnet connection with your mail server to figure out what it uses for default encoding.<br>
+Most mail servers use base64 for login, you can figure that out by looking at the server's response.<br>
+<br>
+if you address the server with HELO it should default to plain text or base64. and reply with Hello<br>
+if you greet it with EHLO, it should enable an encrypted connection.<br>
+you can just say helo and then later enable encoding also but is server specific.<br>
+<br>
+i ask you to google for ICMP yourself and first learn to talk with the server using telnet.<br>
+once you figure out how to send mails manually, this batch can be a nice template to script future messages.<br>
+<br>
+sendMail.CMD
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal enableDelayedExpansion &amp;set $lf=^
+
+
+::
+set  ^"$c1=%%~#^&lt;nul ^^"
+set ^"$n1c=^^^%$lf%%$lf%^%$lf%%$lf%^&lt;nul ^^"
+
+:: ip changed ?
+:: ipconfig /flushdns &amp;cls
+
+call :getDate "()"
+
+:: CUSTOMIZABLE SECTION
+:: (
+	set    ^"$server=[server] [portNumber]"			%= port number usually is 25, example: www.gmx.com 25 =%
+
+	set       "$user="					%= your login name,	server may expect base64 encoded !	=%
+	set       "$pass="					%= your login password 	server may expect base64 encoded !	=%
+
+	set       "$from="					%= your mail address, 			example: me@gmx.COM	=%
+	set         "$to="					%= correspondent's mail address, 	example: he@gmx.COM	=%
+	set "$returnPath="					%= your mail address, 			may be left empty	=%
+
+	set  "$fromAlias="					%= your alias, 				can be left empty	=%
+	set    "$toAlias="					%= correspondent's alias, 		can be left empty	=%
+	set    "$replyTo="					%= correspondent's replyto address, 	can be left empty	=%
+
+	set   ^"$subject="					%= 					can be left empty	=%
+	set      ^"$date=!$dayName!, !$day! !$monthName! !$year! 00:00:00 +0000"
+
+%==%for %%# in ("") do set ^"$data=%$c1%
+%=	=%%$c1%
+%=	=%Connection from 208.79.240.2, Sun Nov 12 13:25:05 2017%$n1c%
+%=	=%EHLO mail.rollernet.us%$n1c%
+%=	=%STARTTLS%$n1c%
+%=	=%EHLO mail.rollernet.us%$n1c%
+%=	=%MAIL FROM:^&lt;admin@gmx.COM^&gt; SIZE=6511%$n1c%
+%=	=%RCPT TO:^&lt;he@gmx.COM^&gt;%$n1c%
+%=	=%RCPT from 208.79.240.2 - user ^&lt;me@gmx.COM^&gt; not known.%$n1c%
+%=	=%RSET%$n1c%
+%=	=%QUIT%$n1c%
+%=	=%3 sec. elapsed, connection closed Sun Nov 12 13:25:08 2017%$n1c%
+%=	=%%$n1c%
+%=	=%namasté,%$n1c%
+%=	=%%$n1c%
+%=	=%.«¤{O}¤».•me•.«¤{O}¤».%$n1c%
+"
+:: )
+
+:: Surround with doublequotes if defined
+for %%? in ( $fromAlias, $toAlias ) do if defined %%~? set %%~?="!%%~?!" &amp;set %%~?=!%%~?:""="!
+
+for %%# in ("") do set ^"$data=%$c1%
+%$c1%
+%=	=%FROM: !$fromAlias! ^&lt;!$from!^&gt;%$n1c%
+%=	=%TO: !$toAlias! ^&lt;!$to!^&gt;%$n1c%
+%=	=%REPLY-TO: ^&lt;!$replyTo!^&gt;%$n1c%
+%$c1%
+%=	=%SUBJECT: !$subject!%$n1c%
+%=	=%DATE: !$date!%$n1c%
+%=	=%%$n1c%
+%=	=%!$data!%$n1c%
+%=	=%%$n1c%
+%=	=%.%$n1c%
+%=	=%%$n1c%
+"
+for %%? in ( "!$lf!" ) do set "$data=!$data:%%~?=\m!"
+
+&gt; "script.txt" (
+
+	echo.!$server!
+	echo.WAIT "server ready."
+
+	echo.SEND "helo\m"
+	echo.WAIT "Hello, ."
+
+	echo.SEND "auth login\m"
+	echo.WAIT "334 VXNlcm5hbWU6"%=				do not change, base64 for server response: [Username:]=%
+	echo.SEND "!$user!\m"
+	echo.WAIT "334 UGFzc3dvcmQ6"%=				do not change, base64 for server response: [Password:]=%
+	echo.SEND "!$pass!\m"
+	echo.WAIT "235 Authentication successful."
+
+	echo.SEND "MAIL FROM: &lt;!$returnPath!&gt;\m"
+	echo.WAIT "250 Sender OK - send RCPTs."
+
+	echo.SEND "RCPT TO: &lt;!$to!&gt;\m"
+	echo.WAIT "250 Recipient OK - send RCPT or DATA."
+
+	echo.SEND "DATA\m"
+	echo.WAIT "354 OK, send data, end with CRLF.CRLF"
+
+	echo.SEND "!$data!"
+	echo.WAIT "250 Data received OK."
+
+	echo.SEND "QUIT"
+	%=										=%
+	%=	must end with no or double empty line otherwise				=%
+	%=	Telnet Scripting Tool v1.0 will show help instead of running the script	=%
+	echo.
+)
+
+type "script.txt"
+pause
+start /LOW "Telnet Scripting Tool v1.0" "tst10.exe" /r:script.txt &amp;exit 0
+
+:getDate "()"
+::
+setlocal
+:: (
+	set "$date=!DATE!"
+
+	:: get $dayName
+	:: (
+		set "ma=Mon" &amp;set "di=Tue" &amp;set "wo=Wed" &amp;set "do=Thu" &amp;set "vr=Fri" &amp;set "za=Sat" &amp;set "zo=Sun"
+		for %%? in ( "!$date:~0,2!" ) do set "$dayName=!%%~?!"
+	:: )
+
+	:: get $day
+	:: (
+		for /F "tokens=1 delims=/" %%? in ( "!$date:~3!" ) do set "$=%%~?"
+		if %$:~0,1% NEQ 0 ( set "$=!$:~0,2!" ) else set "$=!$:~1,1!"
+
+		set "$day=!$!"
+	:: )
+
+	:: get $monthName
+	:: (
+		for /F "tokens=2 delims=/" %%? in ( "!$date:~3!" ) do set "$=%%~?"
+		if %$:~0,1% NEQ 0 ( set "$=!$:~0,2!" ) else set "$=!$:~1,1!"
+
+		set "1=jan" &amp;set "2=feb" &amp;set "3=mar" &amp;set "4=apr" &amp;set "5=may" &amp;set "6=jun"
+		set "7=jul" &amp;set "8=aug" &amp;set "9=sep" &amp;set "10=okt" &amp;set "11=nov" &amp;set "12=dec"
+		for %%? in ( "!$!" ) do set "$monthName=!%%~?!"
+	:: )
+
+	:: get $year
+	:: (
+		for /F "tokens=3 delims=/" %%? in ( "!$date:~3!" ) do set "$=%%~?"
+
+		set "$year=!$!"
+	:: )
+:: )
+endlocal &amp;set "$dayName=%$dayName%" &amp;set "$day=%$day%" &amp;set "$monthName=%$monthName%" &amp;set "$year=%$year%" &amp;exit /B 0
+</code></pre></div>
+I've attached a zip file containing a base64 enc-/decoder and the telnet scripting tool required for automating telnet.<br>
+<a href="https://anonfile.com/h8EbNcg6bd/sendMail_7z" class="postlink">https://anonfile.com/h8EbNcg6bd/sendMail_7z</a><br>
+<br>
+Oh last thing but important if you intend to use my template, you need to change the date function because i coded it for dutch machine. Normally I include macro's that retrieve this info from registry but I seemed not have done that here, it would also complicate things for you if the function would malfunction so i just leave it like this.<br>
+<br>
+You may not understand every command of this script so I explain the most important things briefly, most people on this forum also know. $LF is a linefeed, ( do not remove the empty line it is intentionally ), $c1 is a line continuation that is only for visual convenience it will not be inside any macro. $n1c is a linefeed and a continuation identical to \n that you may have seen other people use, but i use my own definitions because i use various types of those depending on nesting and expansion states. $ is not necessary but it is my variable identifier required by doskit ( my function library ).</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: find string in logs directory, send email</h3>
+				<div class="date">Posted: <strong>03 Sep 2018 14:53</strong></div>
+				<div class="author">by <strong>netwerkassist</strong></div>
+				<div class="content">Thanks again for putting your time into this post.  This is quite helpful.  Once I'm back in the office this week I'll play around with this to see if I can get this going.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8806&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:19:27 GMT -->
+</html>

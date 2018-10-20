@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8656&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:51:26 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; JREPL - search based on position?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>JREPL - search based on position?</h2>
+		<p><a href="viewtopic40c0.html?f=3&amp;t=8656">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8656</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>JREPL - search based on position?</h3>
+				<div class="date">Posted: <strong>02 Jul 2018 16:33</strong></div>
+				<div class="author">by <strong>SIMMS7400</strong></div>
+				<div class="content">Hi There -<br>
+<br>
+I use JREPL to perform various find &amp; replaces.  However, I only need it to perform the find &amp; replace on the 3rd column. My delimiter is comma. <br>
+<br>
+Thank you!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL - search based on position?</h3>
+				<div class="date">Posted: <strong>03 Jul 2018 06:36</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">If javascript regular expressions supported look behind assertions then it would be easy. But alas, no.<br>
+<br>
+That is one of the main reasons I added the /PREPL option in <a href="viewtopic69b5.html?f=3&amp;t=6044&amp;p=54742#p54742" class="postlink">version 7.9</a>, that augments the /P and /PFLAG options introduced in <a href="viewtopic1ba3.html?f=3&amp;t=6044&amp;p=49151#p49546" class="postlink">version 6.2</a>.<br>
+<br>
+The /P option uses a regex to identify which portion of a line will participate in the find/replace.<br>
+The /PFLAG options specifies what flags to use for the /P search - Defaults to global case sensitive search.<br>
+The /PREPL option identifies which captured groups within /P are left alone, and which are actually replaced.<br>
+<br>
+Use JREPL /?/P etc. to get detailed help about each of the options.<br>
+<br>
+So lets say you have the following one line text file:<br>
+<br>
+<strong class="text-strong">test.txt</strong>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>bawl,bag,black flag,lag,tag,sack,stack,mare,stare
+</code></pre></div>
+
+And you want to substitute "o" for every "a" within the 3rd column only.<br>
+<br>
+This first solution uses the "^" anchor to make sure /P only searches through the 3rd column:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl a o /p "^((?:[^,]*,){2})([^,]*)" /prepl "$1+{$2}" /f test.txt
+</code></pre></div>
+--OUTPUT--
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>bawl,bag,block flog,lag,tag,sack,stack,mare,stare
+</code></pre></div>
+
+Alternatively you can drop the "^" and use the /PFLAG option to remove the default g flag so that only the first matching /P is used:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl a o /p "((?:[^,]*,){2})([^,]*)" /pflag "" /prepl "$1+{$2}" /f test.txt
+</code></pre></div>
+Output is the same as before.<br>
+<br>
+<br>
+Now suppose you want to substitute "o" for "a" in <em class="text-italics">every</em> third column (columns 3,6,9...).<br>
+<br>
+The /P option has to be modified because each 3rd column might end with comma or end-of-line:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl a o /p "((?:[^,]*,){2})([^,]*)(,|$)" /prepl "$1+{$2}+$3" /f test.txt
+</code></pre></div>
+--OUTPUT--
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>bawl,bag,block flog,lag,tag,sock,stack,mare,store
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL - search based on position?</h3>
+				<div class="date">Posted: <strong>04 Jul 2018 02:30</strong></div>
+				<div class="author">by <strong>SIMMS7400</strong></div>
+				<div class="content">HI Dave -<br>
+<br>
+Thank you so much!  Works like an absolute charm!!!<br>
+<br>
+Also, how come JREPL won't work if you use a variable for the file name?  For instance, this doesn't work:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>PUSHD "%HC_EXCEL_SUBPATH%%HC_ACT_SUBF%%YYYY_MMDD%"
+	FOR %%A IN ("*.csv") DO (
+		SET "NAME=%%A"
+		FOR %%a IN ( %LIST% ) DO (
+			SET "SKIP="
+			ECHO %%A | FINDSTR /C:"_%%~a_" &gt;nul 2&gt;&amp;1 &amp;&amp; SET "SKIP=T"
+			IF DEFINED SKIP (
+				CALL "%UTILPATH%JREPL\JREPL.bat" 3 1 /p "^((?:[^,]*,){2})([^,]*)" /prepl "$1+{$2}" /f "!NAME!" /o - 
+			)
+		)
+	)
+	
+</code></pre></div>
+
+Since my file names have the date, I want to keep this dynamic - anyway around this? Thanks again!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL - search based on position?</h3>
+				<div class="date">Posted: <strong>04 Jul 2018 06:22</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">There is nothing special about JREPL about using a variable in a file name. If you have a problem there, then the problem is in your logic, totally separate from JREPL.<br>
+<br>
+Do you have delayed expansion enabled? - SETLOCAL ENABLEDELAYEDEXPANSION<br>
+<br>
+But I see no reason to define the variable NAME, you can use %%A directly. Then you don't have to worry about delayed expansion.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL - search based on position?</h3>
+				<div class="date">Posted: <strong>04 Jul 2018 10:19</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistba0d.html?mode=viewprofile&amp;u=8052">SIMMS7400</a> wrote: <a href="viewtopic5b45.html?p=57336#p57336" data-post-id="57336" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Jul 2018 02:30</div></cite>
+HI Dave -<br>
+<br>
+Thank you so much!  Works like an absolute charm!!!<br>
+<br>
+Also, how come JREPL won't work if you use a variable for the file name?  For instance, this doesn't work:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>PUSHD "%HC_EXCEL_SUBPATH%%HC_ACT_SUBF%%YYYY_MMDD%"
+	FOR %%A IN ("*.csv") DO (
+		SET "NAME=%%A"
+		FOR %%a IN ( %LIST% ) DO (
+			SET "SKIP="
+			ECHO %%A | FINDSTR /C:"_%%~a_" &gt;nul 2&gt;&amp;1 &amp;&amp; SET "SKIP=T"
+			IF DEFINED SKIP (
+				CALL "%UTILPATH%JREPL\JREPL.bat" 3 1 /p "^((?:[^,]*,){2})([^,]*)" /prepl "$1+{$2}" /f "!NAME!" /o - 
+			)
+		)
+	)
+	
+</code></pre></div>
+
+Since my file names have the date, I want to keep this dynamic - anyway around this? Thanks again!
+</div></blockquote>
+Your logic seems backwards to me.  If the variable skip is defined or true, that makes me think you would want to skip processing that file.  You are defining the variable skip and then if it is defined then running JREPL.  Why wouldn't you just CALL JREPL with the conditional execution instead defining the variable?<br>
+<br>
+Also, it seems like this code could be shortened even further if you flipped the order of the FOR commands or used the list as a way to make a whole variable with a wildcard string to use with the initial FOR command to get all the csv files.<br>
+<br>
+It seems like an extreme inefficiency to check the file name for every possible outcome within your list variable.  You could even take your list and make it into a file that FINDSTR could use for the search arguments.  I know I have shown you that in the past.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL - search based on position?</h3>
+				<div class="date">Posted: <strong>07 Jul 2018 19:17</strong></div>
+				<div class="author">by <strong>SIMMS7400</strong></div>
+				<div class="content">Dave -<br>
+<br>
+Thank you so much! Yes, it seemed to be an issue with my syntax. I'm using %%A with success!<br>
+<br>
+Squash -<br>
+<br>
+Thank you for the suggestions. I too agree it's a bit backwards. I'm amidst making changes to the process and this is just a interim version. I will be cleaning it up as you suggested.  As far as the FINDSTR command, the strings it's search its just (3) and they are actually parts of file names that I use in other parts of this process as well. While a file could work, I just wanted one point of maintenance so I included them in a variable. <br>
+<br>
+Thanks again gents!</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8656&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:51:26 GMT -->
+</html>

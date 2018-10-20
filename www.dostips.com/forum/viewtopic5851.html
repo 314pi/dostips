@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7857&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:28:10 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Misol and Cari had a lovechild! - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Misol and Cari had a lovechild!</h2>
+		<p><a href="viewtopicef36.html?f=3&amp;t=7857">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7857</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>3</strong></div>
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>03 May 2017 14:37</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite>misol101 wrote:</cite>Do you have any antivirus software running?</div></blockquote><br />Yes. Although switching off Avira didn't make any difference.<br /><br /><blockquote><div><cite>misol101 wrote:</cite>Could you try one more thing?</div></blockquote><br />I did. Only without <em class="text-italics">cmdgfx &quot;&quot; knW9</em> it runs smoothly.<br /><br />Don't worry. I'm virtually certain my slow &quot;couch toy&quot; netbook is the culprit. It's good enough for doing some home office, a little programming, internet surfing, ... But it's definitely not a gaming computer (what I'm not even intersted in <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> ). It's most likely a bad device for running such programs.<br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>03 May 2017 16:00</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">I don't think that's it; my i5-6600K and NVIDIA GTX 980 should have no problem rendering the images.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>04 May 2017 04:59</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content"><blockquote><div><cite>ShadowThief wrote:</cite>I don't think that's it; my i5-6600K and NVIDIA GTX 980 should have no problem rendering the images.</div></blockquote><br /><br />Agreed. Actually, what these tests show is that the major culprit here is the startup time of the executable file. It's not the timing calculations or the rendering that's the problem but the startup time overhead of running the executable at all. It seems that after Win 7, this startup cost is much higher.<br /><br />The only thing this line (<em class="text-italics">cmdgfx &quot;&quot; knW9</em>) actually does is 1) Check for key presses  2) Make sure that the maximum screen refresh rate is 1000/9=111 FPS. The rendering is all done elsewhere. But what happens is that just starting the exe takes much more than 9 ms to begin with.<br /><br />So atleast it has been shown that removing this line, you can get a smooth result also on Win10, when running with the server. The problem is I can no longer check for key presses and there is no control over the refresh rate (so on fast machines it might run too fast)<br /><br />Possible solutions:<br />1. Find a way to decrease the startup cost of the executable. Not sure how, different compiler perhaps...? Or write a separate exe that does only the two things needed (would probably still be faster if written in assembler, see (2) )<br />2. Use Aacinis GetKey program to get the key presses. This has considerably lower startup cost than my exe, due to no linked libraries and less overhead because it's written in assembler. It's still not as fast as running without that line, but it is an improvement at least. Problem is though, that then I still cannot control the refresh rate accurately. (Aacini, can you please write a program which does both?  <img class="smilies" src="images/smilies/icon_mrgreen.gif" alt=":mrgreen:" title="Mr. Green" /> ). I *might* be able to wing it myself, but it's been many years since I touched assembler.<br />3. Remove the line, and let the server do both the key reading and the time synch. This has various problems: the server needs to communicate the key read back to the script. Currently it can be done by writing to a file, but in the worst case key presses may be lost. Also, I found that with a SSD drive, writing a file every frame is pretty slow itself. But anyway, perhaps with enough tinkering, this will be the best solution, especially in this kind of program where reading keys is not important or vital<br /><br />I'll get started on an entirely server-based version of this demo... this will probably add further problems, but let's see <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>05 May 2017 17:54</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Hi, I need your help with some testing again  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br /><br />After some tests I could conclude that GetKey was actually only marginally faster than cmdgfx for startup cost (but cmdgfx_gdi was slower, due to linking with the GDI library). So basically my approach 1 and 2 were out the window.<br /><br />I haven't touched the demo yet, but I made a new server.bat and modified cmdgfx_gdi.exe. The server is now supposed to do both key reading and timing. <strong class="text-strong">See attached file!</strong><br /><br />I'd be happy if you could put these two files in the same folder as before and run server.bat, again for approximately 10 seconds, then note the number in the bottom. (and of course, note if it seems to run smoothly). You could also try decreasing the W value on line 5 to e.g. 0 and see what value you get for 10 seconds.<br /><br />Keys are ENTER, Space, p, f, m, Escape.<br /><br />Thanks a lot!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>05 May 2017 18:03</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><blockquote><div><cite>misol101 wrote:</cite><br />. . .<br /><br />Possible solutions:<br />1. Find a way to decrease the startup cost of the executable. Not sure how, different compiler perhaps...? Or write a separate exe that does only the two things needed (would probably still be faster if written in assembler, see (2) )<br />2. Use Aacinis GetKey program to get the key presses. This has considerably lower startup cost than my exe, due to no linked libraries and less overhead because it's written in assembler. It's still not as fast as running without that line, but it is an improvement at least. Problem is though, that then I still cannot control the refresh rate accurately. (Aacini, can you please write a program which does both?  <img class="smilies" src="images/smilies/icon_mrgreen.gif" alt=":mrgreen:" title="Mr. Green" /> ). I *might* be able to wing it myself, but it's been many years since I touched assembler.<br /><br />. . .<br /><br /></div></blockquote><br />I willingly could do that. <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" />  However, if you want a faster response from me, you should post the C++ code you want I translate into assembler. I am currently very busy, so I can't do any research, but a direct C to assembler translation is something much simpler...<br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>05 May 2017 18:16</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content"><blockquote><div><cite>Aacini wrote:</cite>I willingly could do that. <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" />  However, if you want a faster response from me, you should post the C++ code you want I translate into assembler. I am currently very busy, so I can't do any research, but a direct C to assembler translation is something much simpler...<br /></div></blockquote><br />Ok, cool! I just posted an update a few minutes before you (strange that we posted almost simultaneously), which basically says that I chose my option 3 for now, so there is less of a need for this utility than I previously thought. Still it would be nice to have, so if you have the time, here's the C code for that tool (GetTickCount does not give the needed precision for timing at the ms level, that's why QueryPerformanceCounter is used if available):<br /><br />EDIT: I think the program could be sped up if there was no writing to file, but I do need to save <em class="text-italics">milliseconds_now</em> between runs. The registry perhaps is faster? Or is there another way?<br /><br />EDIT2: Would it be possible to make the executable a COM rather than an EXE? From what I remember COM files have less startup cost than EXE's, and startup cost is the main problem here it seems.<br /><br />EDIT2.2 It seems it's not possible to make 32 bit COM files. My hopes were up because windows\System32 actually contains a few com files (e.g. mode.com), but apparently they are just renamed exe files called .com for legacy reasons<br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>#include &lt;stdio.h&gt;<br />#include &lt;conio.h&gt;<br />#include &lt;windows.h&gt;<br /><br />long long milliseconds_now(void) {<br />&nbsp; &nbsp;static LARGE_INTEGER s_frequency;<br />&nbsp; &nbsp;static BOOL s_use_qpc;<br /><br />&nbsp; &nbsp;s_use_qpc = QueryPerformanceFrequency(&amp;s_frequency);<br />&nbsp; &nbsp;if (s_use_qpc) {<br />&nbsp; &nbsp;&nbsp; &nbsp;LARGE_INTEGER now;<br />&nbsp; &nbsp;&nbsp; &nbsp;QueryPerformanceCounter(&amp;now);<br />&nbsp; &nbsp;&nbsp; &nbsp;return (1000LL * now.QuadPart) / s_frequency.QuadPart;<br />&nbsp; &nbsp;} else {<br />&nbsp; &nbsp;&nbsp; &nbsp;return GetTickCount();<br />&nbsp; &nbsp;}<br />}<br /><br />void process_waiting(int waitTime) { <br /><br />&nbsp; &nbsp;if (waitTime &gt; 0) {<br />&nbsp; &nbsp;&nbsp; &nbsp;long long sT;<br />&nbsp; &nbsp;&nbsp; &nbsp;<br />&nbsp; &nbsp;&nbsp; &nbsp;FILE *fp = fopen(&quot;CGXMS.dat&quot;, &quot;r&quot;);<br /><br />&nbsp; &nbsp;&nbsp; &nbsp;if (fp != NULL) {<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;fscanf(fp, &quot;%lld&quot;, &amp;sT);<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;fclose(fp);<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;if (milliseconds_now() &gt;= sT)<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;while (milliseconds_now() &lt; sT + waitTime) ;<br />&nbsp; &nbsp;&nbsp; &nbsp;}<br />&nbsp; &nbsp;&nbsp; &nbsp;<br />&nbsp; &nbsp;&nbsp; &nbsp;fp = fopen(&quot;CGXMS.dat&quot;, &quot;w&quot;);<br />&nbsp; &nbsp;&nbsp; &nbsp;if (fp != NULL) {<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;fprintf(fp, &quot;%lld&quot;, milliseconds_now());<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;fclose(fp);<br />&nbsp; &nbsp;&nbsp; &nbsp;}<br />&nbsp; &nbsp;}<br />}<br /><br />int main(int argc, char *argv&#91;&#93;) {<br />&nbsp; &nbsp;int waitTime = 0, retVal = 0;<br />&nbsp; &nbsp;&nbsp; &nbsp;<br />&nbsp; &nbsp;if (argc &gt; 1) {<br />&nbsp; &nbsp;&nbsp; &nbsp;waitTime = atoi(argv&#91;1&#93;);<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;<br />&nbsp; &nbsp;if (kbhit()) {<br />&nbsp; &nbsp;&nbsp; &nbsp;int k = getch();<br />&nbsp; &nbsp;&nbsp; &nbsp;if (k == 224 || k == 0) k = 256 + getch();<br />&nbsp; &nbsp;&nbsp; &nbsp;retVal = k;<br />&nbsp; &nbsp;}<br /><br />&nbsp; &nbsp;process_waiting(waitTime);<br />&nbsp; &nbsp;<br />&nbsp; &nbsp;return retVal;<br />}<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>05 May 2017 18:18</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Just a little note to (primarily) ShadowThief and aGerman: don't miss my new post 3 posts above this one about new tests for Win10 (if you have the time to help out)  <img class="smilies" src="images/smilies/icon_mrgreen.gif" alt=":mrgreen:" title="Mr. Green" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>06 May 2017 06:11</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite>misol101 wrote:</cite>I'd be happy if you could put these two files in the same folder as before and run server.bat, again for approximately 10 seconds, then note the number in the bottom. (and of course, note if it seems to run smoothly). You could also try decreasing the W value on line 5 to e.g. 0 and see what value you get for 10 seconds.<br /></div></blockquote><br />It's ~500 (looks smooth as expected). Changing to W0 doesn't make any difference though.<br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>06 May 2017 08:26</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content"><blockquote><div><cite>aGerman wrote:</cite>It's ~500 (looks smooth as expected). Changing to W0 doesn't make any difference though.<br /></div></blockquote><br /><br />Ok, thanks! Not quite as much of a change as I would have hoped, but still a clear improvement.<br /><br />I'm expecting (hoping) that ShadowThief with his faster computer will get at least 800 or more.<br /><br />(I get around 800 with W13 and around 2000 with W0)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>06 May 2017 08:59</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">I'm seeing just shy of 800 with W13 and just over 2700 with W0<br /><br />But yeah, everything looks awesome</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>06 May 2017 10:44</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Excellent!<br /><br />So the kaleidoscope effect is sorted then.<br /><br />For some of the other effects (the ones using the cmdgfx &quot;block&quot; operation with math expressions), I get significantly lower FPS when running with a server. It's confusing.<br /><br />I'm putting my hope in Aacini to sort that out with a quick little executable <img class="smilies" src="images/smilies/icon_wink.gif" alt=";)" title="Wink" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>08 May 2017 08:43</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">hi misol101,<br /><br />the server version its very good. On my old celeron i get 50 FPS (the demo version get 15 FPS). Awesome work!<br /><br /><br />Einstein1969</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>08 May 2017 09:45</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Hi einstein1969,<br />thanks! Which Windows version are you running?<br /><br />It's a good thing I found out about this Windows10 debacle when releasing this. On my Win7 machine all my cmdgfx graphic scripts run at 70+ FPS. Little did I know that most people running those scripts (I guess most ppl nowadays run Win8 or Win10) were getting horrible frame rates <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" />  The server solution takes care of some of those issues at least</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>08 May 2017 11:03</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">I'm running Windows 7 32bit on 2Ghz Celeron</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Misol and Cari had a lovechild!</h3>
+				<div class="date">Posted: <strong>08 May 2017 11:10</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Really... haha. Hmmm...  Well, there goes my Win7 theory. My machine must be some kind of fluke.<br /><br />Well, server it is, then <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>3</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7857&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:28:10 GMT -->
+</html>

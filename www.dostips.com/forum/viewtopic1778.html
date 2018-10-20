@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5543&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:22:44 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; js/vbs/html/hta and more hybrids and chimeras in cmd/bat</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>js/vbs/html/hta and more hybrids and chimeras in cmd/bat</h2>
+		<p><a href="viewtopic9fb1.html?f=3&amp;t=5543">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5543</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>4</strong></div>
+					<div class="post">
+				<h3>js/vbs/html/hta and more hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>21 Apr 2014 03:43</strong></div>
+				<div class="author">by <strong>siberia-man</strong></div>
+				<div class="content"><strong class="text-strong">* * * * * *<br />Everything said here is correct. However during discussions some parts of this message became obsolete. <br />The resulting message accumulating all good points of this thread is located by the following link: <br /><a href="viewtopic48fd.html?p=37780#p37780" class="postlink">http://www.dostips.com/forum/viewtopic.php?p=37780#p37780</a><br />* * * * * *</strong><br /><br /><strong class="text-strong">js in cmd/bat</strong><br />these solutions are world-wide and well-known. <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@set @x=0 /*<br />@echo off<br />cscript /nologo /e:javascript %0<br />goto:EOF */<br /><br />WScript.Echo('Hello from JScript');<br /></code></pre></div><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (true == false) @end /*<br />@echo off<br />cscript //nologo //e:javascript &quot;%~dpnx0&quot; %*<br />goto :EOF */<br /><br />WScript.Echo('Hello from JScript');<br /></code></pre></div><br /><br /><strong class="text-strong">html in cmd/bat</strong><br />this is the first version. It uses the trick to clean the resulting page on from the wrong markups. <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:&lt;nul&gt;nul<br /><br />@echo off<br />start mshta &quot;%~f0&quot;<br />goto :EOF<br /><br />&lt;script type=&quot;text/javascript&quot;&gt;<br />document.body.innerHTML = '';<br />&lt;/script&gt;<br /><br />&lt;html&gt;<br />&lt;head&gt;<br />&lt;title&gt;HTML-in-BATCH&lt;/title&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br />&lt;h1&gt;Hello, world!&lt;/h1&gt;<br />&lt;/body&gt;<br />&lt;/html&gt;<br /></code></pre></div><br /><br />the second version found by the programmer from Russia is the best. <span style="text-decoration: underline">http://forum.script-coding.com/viewtopic.php?pid=79317#p79317</span><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;!-- :<br />@echo off<br />start &quot;&quot; mshta.exe &quot;%~f0&quot;<br />exit /b<br />--&gt;<br /><br />&lt;html&gt;<br />&lt;head&gt;&lt;title&gt;HTA window&lt;/title&gt;&lt;/head&gt;<br />&lt;body&gt;&lt;h1&gt;Hello, world!&lt;/h1&gt;&lt;/body&gt;<br />&lt;/html&gt;<br /></code></pre></div><br /><br />The better way to use mshta instead of cscript. The better is in the terms of friendliness, development and support (compare with ugly <strong class="text-strong">mshta &quot;javascript&#058;...&quot;</strong>). This can be used for both js-in-cmd or html-in-cmd. (found by npocmaka_ in <span style="text-decoration: underline">http://www.dostips.com/forum/viewtopic.php?p=33783#p33783</span>). <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (true == false) @end /*!<br />@echo off<br />mshta &quot;about&#058;&lt;script src='file://%~f0'&gt;&lt;/script&gt;&lt;script&gt;close()&lt;/script&gt;&quot; %*<br />goto :EOF */<br /><br />alert(&quot;Hello, world!&quot;);<br /></code></pre></div><br /><br /><strong class="text-strong">vbs in cmd/bat</strong><br />This is not true hybrid because it uses a js-layer between cmd and vbs. In fact this is js-in-cmd solution running vbs within js. Take a look: two ways similar each other (taken from <span style="text-decoration: underline">http://forum.script-coding.com/viewtopic.php?pid=79691#p79691</span>)<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (true == false) @end /*<br />@echo off<br />set &quot;SYSDIR=SysWOW64&quot;<br />if &quot;%PROCESSOR_ARCHITECTURE%&quot; == &quot;x86&quot; if not defined PROCESSOR_ARCHITEW6432 set &quot;SYSDIR=System32&quot;<br />&quot;%WINDIR%\%SYSDIR%\cscript.exe&quot; //nologo //e:javascript &quot;%~f0&quot; %*<br />goto :EOF */<br /><br />(function(readFile, code)<br />{<br />&nbsp; &nbsp; var e;<br />&nbsp; &nbsp; try {<br />&nbsp; &nbsp; &nbsp; &nbsp; var vb = new ActiveXObject('MSScriptControl.ScriptControl');<br />&nbsp; &nbsp; &nbsp; &nbsp; vb.Language = 'VBScript';<br />&nbsp; &nbsp; &nbsp; &nbsp; vb.AddObject('WScript', WScript, true);<br />&nbsp; &nbsp; &nbsp; &nbsp; vb.AddCode(code);<br />&nbsp; &nbsp; } catch(e) {<br />&nbsp; &nbsp; &nbsp; &nbsp; var file = readFile();<br />&nbsp; &nbsp; &nbsp; &nbsp; var prologLen = file.slice(0, file.indexOf(code)).split('\n').length;<br />&nbsp; &nbsp; &nbsp; &nbsp; var vbe = vb.Error;<br />&nbsp; &nbsp; &nbsp; &nbsp; WScript.Echo(<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; WScript.ScriptFullName + <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; '(' + ( prologLen + vbe.Line - 1 ) + ', ' + vbe.Column + ') ' + <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; vbe.Source + ': ' + vbe.Description);<br />&nbsp; &nbsp; }<br />})(<br />function()<br />{<br />&nbsp; &nbsp; var fso = new ActiveXObject('Scripting.FileSystemObject');<br />&nbsp; &nbsp; var f = fso.OpenTextFile(WScript.ScriptFullName, 1, true);<br />&nbsp; &nbsp; var file = f.ReadAll();<br />&nbsp; &nbsp; f.Close();<br />&nbsp; &nbsp; return file;<br />}, <br />(function()<br />{<br />&nbsp; &nbsp; return arguments.callee.toString().replace(/^&#91;\s\S&#93;+\/\*|\*\/&#91;\s\S&#93;+$/g, '');<br />/* ' VBScript<br /><br />WScript.Echo &quot;Hello, world!&quot;<br /><br />*/<br />})());<br /></code></pre></div><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (true == false) @end /*<br />@echo off<br />set &quot;SYSDIR=SysWOW64&quot;<br />if &quot;%PROCESSOR_ARCHITECTURE%&quot; == &quot;x86&quot; if not defined PROCESSOR_ARCHITEW6432 set &quot;SYSDIR=System32&quot;<br />&quot;%WINDIR%\%SYSDIR%\cscript.exe&quot; //nologo //e:javascript &quot;%~f0&quot; %*<br />goto :EOF */<br /><br />var prologLen = 0;<br />var vb = new ActiveXObject('MSScriptControl.ScriptControl');<br />vb.Language = 'VBScript';<br />vb.AddObject('WScript', WScript, true);<br />try {<br />&nbsp; &nbsp; vb.AddCode((function () {<br />&nbsp; &nbsp; &nbsp; &nbsp; var fso = new ActiveXObject(&quot;Scripting.FileSystemObject&quot;);<br />&nbsp; &nbsp; &nbsp; &nbsp; var f = fso.OpenTextFile(WScript.ScriptFullName, 1, false);<br />&nbsp; &nbsp; &nbsp; &nbsp; do prologLen++; while (f.ReadLine() != &quot;/* ' VBScript&quot;);<br />&nbsp; &nbsp; &nbsp; &nbsp; var code = f.ReadAll();<br />&nbsp; &nbsp; &nbsp; &nbsp; f.Close();<br />&nbsp; &nbsp; &nbsp; &nbsp; return code;<br />&nbsp; &nbsp; })());<br />} catch (e) {<br />&nbsp; &nbsp; var vbe = vb.Error;<br />&nbsp; &nbsp; WScript.StdErr.WriteLine(<br />&nbsp; &nbsp; &nbsp; &nbsp; WScript.ScriptFullName + <br />&nbsp; &nbsp; &nbsp; &nbsp; '(' + ( prologLen + vbe.Line ) + ', ' + vbe.Column + ') ' + <br />&nbsp; &nbsp; &nbsp; &nbsp; vbe.Source + ': ' + vbe.Description);<br />}<br />/* ' VBScript<br /><br />WScript.Echo &quot;Hello, world!&quot;<br /><br />'*/<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>21 Apr 2014 03:55</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Another VBScript example<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::'@echo off &amp;cscript //nologo //e:vbscript &quot;%~f0&quot;<br />::'&gt;nul pause<br />::'exit /b<br />WScript.Echo &quot;test&quot;<br /></code></pre></div><br /><br />There is a SUB character (0x1a) next to each apostrophe. Just in case it doesn't appear if you copy the code.<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>21 Apr 2014 04:00</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><blockquote><div><cite>aGerman wrote:</cite>Another VBScript example<br />There is a SUB character (0x1a) next to each apostrophe. Just in case it doesn't appear if you copy the code.<br /></div></blockquote><br /><br />I can't see how that will execute the batch code.  Is the SUB character before the apostrophe?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>21 Apr 2014 04:19</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">No it isn't.<br /><br />For Batch interpretation:<br />:: initiates a Batch comment. The SUB is interpreted as line break in this case. That means the expression next to the SUB will be executed.<br /><br />For VBScript interpretation:<br />Colons are interpreted as separators. (E.g. <em class="text-italics">Dim var : Set var = New RegExp</em>). They don't have any effect if they are written at the beginning of a line. The apostroph initiates a comment though. The following SUB doesn't influence it.<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>21 Apr 2014 04:21</strong></div>
+				<div class="author">by <strong>siberia-man</strong></div>
+				<div class="content">I copied and pasted the code from the post by aGerman. I can see those ascii26 AFTER each apostrophs.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>21 Apr 2014 04:24</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote class="uncited"><div>I can see those ascii26 AFTER each apostrophs.</div></blockquote><br />Yes, that's the SUB character. It should work then.<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>21 Apr 2014 04:33</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Thanks to you both.  I can see the SUB characters too in a copy and paste.<br /><br />I'm amazed at the ingenuity of people to figure out such workarounds.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>21 Apr 2014 04:38</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote class="uncited"><div>I'm amazed at the ingenuity of people to figure out such workarounds.</div></blockquote><br />I should have mentioned that it was dbenham for my example. I can't find the thread where he originally posted it. But I remember it was here at DosTips ...<br /><br />Regards<br />aGerman<br /><br />EDIT Found it.<br /><a href="viewtopic55a2.html?f=3&amp;t=2863&amp;p=13170#p13170" class="postlink">http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=2863&amp;p=13170#p13170</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>21 Apr 2014 13:30</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content"><blockquote><div><cite>siberia-man wrote:</cite><br />the second version found by the programmer from Russia is the best. <span style="text-decoration: underline">http://forum.script-coding.com/viewtopic.php?pid=79317#p79317</span><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;!-- :<br />@echo off<br />start &quot;&quot; mshta.exe &quot;%~f0&quot;<br />exit /b<br />--&gt;<br /><br />&lt;html&gt;<br />&lt;head&gt;&lt;title&gt;HTA window&lt;/title&gt;&lt;/head&gt;<br />&lt;body&gt;&lt;h1&gt;Hello, world!&lt;/h1&gt;&lt;/body&gt;<br />&lt;/html&gt;<br /></code></pre></div><br /><br /></div></blockquote><br /><br />This is amazing  . In this way you can have both (browser versions ) of javascript and vbscript in one file and have no poisonous echo :<br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;!-- :<br />@echo off<br />&nbsp;mshta.exe &quot;%~f0&quot; %*<br />exit /b<br />&nbsp;rem <br />--&gt; <br />&lt;html&gt;<br />&lt;head&gt;<br />&lt;title&gt;Command Line Agruments&lt;/title&gt;<br /><br />&lt;HTA:APPLICATION <br />&nbsp; &nbsp; &nbsp;ID=&quot;objTestHTA&quot;<br />&nbsp; &nbsp; &nbsp;APPLICATIONNAME=&quot;Command Line Agruments&quot;<br />&nbsp; &nbsp; &nbsp;SINGLEINSTANCE=&quot;yes&quot;<br />&gt;<br />&lt;/head&gt;<br /><br />&lt;SCRIPT Language=&quot;VBScript&quot;&gt;<br /><br />alert(objTestHTA.commandLine)<br />Sub Window_onLoad<br />&nbsp; &nbsp; arrCommands = Split(objTestHTA.commandLine, chr(34))<br />&nbsp; &nbsp; For i = 3 to (Ubound(arrCommands) - 1) Step 2<br />&nbsp; &nbsp; &nbsp; &nbsp; Msgbox arrCommands(i)<br />&nbsp; &nbsp; Next<br />End Sub<br /><br />&lt;/SCRIPT&gt;<br /><br />&lt;body&gt;<br />&lt;/body&gt;<br />&lt;/html&gt;</code></pre></div><br /><br /><br />(thought for something similar with frames)  . But will this work on fat32 ? Is this redirecting to / from ADS ?<br /><br /><span style="color: #800000">EDIT -its the same as &quot;:&lt;!-- &quot;  no ADS</span></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>21 Apr 2014 13:35</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">and this..<br /><!-- m --><a class="postlink" href="http://stackoverflow.com/questions/9074476/is-it-possible-to-embed-and-execute-vbscript-within-a-batch-file-without-using-a">http://stackoverflow.com/questions/9074 ... ut-using-a</a><!-- m --><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:sub echo(str) :end sub<br />echo off<br />'&gt;nul 2&gt;&amp;1|| copy /Y %windir%\System32\doskey.exe %windir%\System32\'.exe &gt;nul<br /><br />'&amp; echo/ <br />'&amp; cscript /nologo /E:vbscript %~f0<br />'&amp; echo/<br />'&amp; echo BATCH: Translation is at best an ECHO.<br />'&amp; echo/<br />'&amp; pause<br />'&amp; rem del /q &quot;%windir%\System32\'.exe&quot;<br />'&amp; exit /b<br /><br />WScript.Echo &quot;VBScript&#058; Remorse is the ECHO of a lost virtue.&quot;<br />WScript.Quit</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>21 Apr 2014 19:34</strong></div>
+				<div class="author">by <strong>Liviu</strong></div>
+				<div class="content"><blockquote><div><cite>siberia-man wrote:</cite><strong class="text-strong">js in cmd/bat</strong><br />these solutions are world-wide and well-known. <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (true == false) @end /*<br />@echo off<br />cscript //nologo //e:javascript &quot;%~dpnx0&quot; %*<br />goto :EOF */<br /><br />WScript.Echo('Hello from JScript');</code></pre></div></div></blockquote><br />Just as a side note, but since this example in particular attempts to pass the '%*' command line to JScript, it may be worth mentioning that cmd and WSH (the Windows Script Host) parse arguments differently - which matters in some cases where quotes or special characters are involved.<br /><br />For example, the test run of the following hybrid cmd/js sees 3 arguments in batch code, but only 1 in JScript.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (true == false) @end /* ----------------------------------------- .cmd ----<br />@echo off<br />echo(<br />echo cmd.args = &#91;%*&#93;<br />echo(<br />if not '%1'=='' echo cmd.arg1 = &#91;%1&#93;<br />if not '%2'=='' echo cmd.arg2 = &#91;%2&#93;<br />if not '%3'=='' echo cmd.arg3 = &#91;%3&#93;<br />echo(<br />cscript //nologo //e:javascript &quot;%~f0&quot; %*<br />goto :eof */<br /><br />var wshShell = WScript.CreateObject(&quot;WScript.Shell&quot;); //-------------- .js ----<br /><br />for(var n = 1; n &lt;= WScript.Arguments.length; n++)<br />&nbsp; WScript.Echo(&quot;js.arg&quot; + n + &quot;&nbsp; = &#91;&quot; + WScript.Arguments(n - 1) + &quot;&#93;&quot;);<br /></code></pre></div><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;cmd-js 1=&quot;2&quot;,3<br /><br />cmd.args = &#91;1=&quot;2&quot;,3&#93;<br /><br />cmd.arg1 = &#91;1&#93;<br />cmd.arg2 = &#91;&quot;2&quot;&#93;<br />cmd.arg3 = &#91;3&#93;<br /><br />js.arg1&nbsp; = &#91;1=2,3&#93;</code></pre></div><br /><br />Liviu</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>22 Apr 2014 10:10</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">Hmm <img class="smilies" src="images/smilies/icon_sad.gif" alt=":(" title="Sad" /> , the best hybrid js/vbs/batch script i am able to create is this:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Rem = ''; /*<br />::'' Batch part<br />Rem^ &amp; @echo off<br />Rem^ &amp;echo Hello bat world!<br />Rem^ &amp;cscript //NoLogo //E:JScript test.bat<br />Rem^ &amp;cscript //NoLogo //E:VBScript test.bat<br />Rem^ &amp;goto :eof<br /><br />' VBScript part<br />WScript.Echo &quot;Hello vbs world!&quot;<br /><br />' */ '\<br />'; /* JSript part */ '\<br />'; WScript.Echo (&quot;Hello js&nbsp; world!&quot;); '\<br />';<br /></code></pre></div>The batch part echoes nearly the complete first two (batch code) lines ... .<br /><br />penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>22 Apr 2014 23:04</strong></div>
+				<div class="author">by <strong>Liviu</strong></div>
+				<div class="content"><blockquote><div><cite>siberia-man wrote:</cite><strong class="text-strong">html in cmd/bat</strong><br />the second version found by the programmer from Russia is the best. <span style="text-decoration: underline">http://forum.script-coding.com/viewtopic.php?pid=79317#p79317</span><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;!-- :<br />@echo off<br />start &quot;&quot; mshta.exe &quot;%~f0&quot;<br />exit /b<br />--&gt;<br />&#91;... html code here ...&#93;</code></pre></div></div></blockquote><br />Cool trick, that XML '&lt;!-- --&gt;' comment crossed with a CMD '&lt;etc :' redirected label.<br /><br />A variation on the same idea seems to work for the cmd/wsf hybrid below - CMD can call embedded JS and VBS, and those two can call each other within a given &lt;job&gt;. Checked ok under xp.sp3 and win7x64.sp1.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;?xml : version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt; ^&lt;!------------------------- cmd ----<br />@echo off<br />echo cmd<br />cscript //nologo &quot;%~f0?.wsf&quot; //job:JS //job:VBS<br />exit /b<br />---------------------------------------------------------------------- wsf ---&gt;<br />&lt;package&gt;<br />&nbsp; &lt;job id=&quot;JS&quot;&gt; &lt;!----------------------------------------------------- js ---&gt;<br />&nbsp; &nbsp; &lt;script language=&quot;VBScript&quot;&gt;&lt;!&#91;CDATA&#91;<br />&nbsp; &nbsp; &nbsp; sub vbsEcho() : WScript.Echo &quot;cmd.js.vbs&quot; : end sub<br />&nbsp; &nbsp; &#93;&#93;&gt;&lt;/script&gt;<br />&nbsp; &nbsp; &lt;script language=&quot;JScript&quot;&gt;&lt;!&#91;CDATA&#91;<br />&nbsp; &nbsp; &nbsp; WScript.Echo(&quot;cmd.js&quot;);<br />&nbsp; &nbsp; &nbsp; vbsEcho();<br />&nbsp; &nbsp; &#93;&#93;&gt;&lt;/script&gt;<br />&nbsp; &lt;/job&gt;<br />&nbsp; &lt;job id=&quot;VBS&quot;&gt; &lt;!--------------------------------------------------- vbs ---&gt;<br />&nbsp; &nbsp; &lt;script language=&quot;JScript&quot;&gt;&lt;!&#91;CDATA&#91;<br />&nbsp; &nbsp; &nbsp; function jsEcho() { WScript.Echo(&quot;cmd.vbs.js&quot;); }<br />&nbsp; &nbsp; &#93;&#93;&gt;&lt;/script&gt;<br />&nbsp; &nbsp; &lt;script language=&quot;VBScript&quot;&gt;&lt;!&#91;CDATA&#91;<br />&nbsp; &nbsp; &nbsp; WScript.Echo &quot;cmd.vbs&quot;<br />&nbsp; &nbsp; &nbsp; call jsEcho<br />&nbsp; &nbsp; &#93;&#93;&gt;&lt;/script&gt;<br />&nbsp; &lt;/job&gt;<br />&lt;/package&gt;<br /></code></pre></div><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;cmd-wsf.cmd<br />cmd<br />cmd.js<br />cmd.js.vbs<br />cmd.vbs<br />cmd.vbs.js</code></pre></div><br />Leaving aside the multi-language and CDATA complications, this also works to embed straight VBScript code into a batch file.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;!-- : --------------------------------------------------------------- cmd ----<br />@cscript //nologo &quot;%~f0?.wsf&quot; &amp; exit /b &amp; rem ------------------------ vbs ---&gt;<br />&lt;job&gt;&lt;script language=&quot;VBScript&quot;&gt;<br />WScript.Echo &quot;cmd.vbs - no CDATA so &lt;&quot; &amp; &quot;/script&gt; would cause XML error here&quot;<br />&lt;/script&gt;&lt;/job&gt;</code></pre></div><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;cmd-vbs.cmd<br />cmd.vbs - no CDATA so &lt;/script&gt; would cause XML error here</code></pre></div><br />FWIW the oddities that make the above work are:<br />- cscript identifies &quot;.wsf&quot; files by extension alone, it has no documented switch or override like it has for individual //E scripting engines - however, appending &quot;?.wsf&quot; to the full filename appears to work i.e. the filename before &quot;?&quot; is loaded but still treated as an &quot;.wsf&quot; type (and even more odd '?' works but '*:\;etc' don't);<br />- .wsf appears to require an explicit &lt;?xml version=&quot;1.0&quot; ?&gt; in order to recognize &lt;![CDATA[ ]]&gt; syntax, and per XML standards that has to be the first line of the file - however, the MS parser allows an &quot;:&quot; to be inserted in &lt;?xml : version=&quot;1.0&quot; ?&gt; without complaining, and the batch interpreter doesn't complain either about an '?' in the presumed &quot;&lt;&quot; filename.<br /><br />Liviu</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>23 Apr 2014 00:47</strong></div>
+				<div class="author">by <strong>siberia-man</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&quot;%~f0?.wsf&quot;</code></pre></div><br />Very interesting trick allowing to run a batch file as wsf scenario. I tried to embed wsf into bat/cmd but all my attempts bumped to impossibility to run bat file as wsf (as it is possible for vbs or js scenarios). Is there source where I could learn more about it? Seems it uses some bug in cmd.exe (or wsh, or hidden feature of one of them).</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>23 Apr 2014 02:02</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">Here's my attempt to combine batch with wsf:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />goto :skip_xml_comment<br />&lt;!--<br />:skip_xml_comment<br /><br />echo(<br />echo Echo from the batch<br />echo(<br /><br />( ren %0 %0.wsf <br />&nbsp;cscript %0.wsf <br />&nbsp;ren %0.wsf %0 )<br /><br /><br />exit /b 0<br />--&gt;<br /><br />&lt;package&gt;<br />&nbsp; &nbsp;&lt;job id=&quot;vbs&quot;&gt;<br />&nbsp; &nbsp; &nbsp; &lt;script language=&quot;VBScript&quot;&gt;<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;WScript.Echo &quot;Echo from the VBS&quot;<br /><br />&nbsp; &nbsp; &nbsp; &lt;/script&gt;<br />&nbsp; &nbsp;&lt;/job&gt;<br />&lt;/package&gt;</code></pre></div><br /><br />But is risky as it includes self renaming.<br /><br />Cool trick with the &quot;%~f0?.wsf&quot; . Shall be tested with powershell <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":-D" title="Very Happy" /><br /><br />I was wondered if it's possible to register the &quot;.bat&quot; extension to WSH as a dummy extension language and how eventually that could be used but didn't reach so far yet (it's still in my list with crazy ideas).</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>4</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5543&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:22:44 GMT -->
+</html>

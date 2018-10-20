@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8575&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:32 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; start .exe from 08:00 to 18:00 at every workday - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>start .exe from 08:00 to 18:00 at every workday</h2>
+		<p><a href="viewtopic7a38.html?f=3&amp;t=8575">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8575</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Re: start .exe from 08:00 to 18:00 at every workday</h3>
+				<div class="date">Posted: <strong>28 May 2018 14:56</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">Hi,<br>
+Since nobody offered a solution so far ... I created the script to wait.<br>
+It uses robocopy as mentioned in the other post.<br>
+The start time to wait must be set before the first execution time.<br>
+But it should at least be smaller or equal.<br>
+The break time and the last possible execution time must also be stated.<br>
+<br>
+If a waiting time is to be used over midnight, the head must be rewritten.<br>
+unfortunately I have not inserted yet - sorry ...<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+@set prompt=$g$s
+setlocal
+echo Start this batch at %time%
+
+set run= ping localhost -n 25 ^&amp; echo(
+
+ rem "Time=HHmm"   : [0700]
+ rem before this time Batch NOT process NOR Pause
+set "startTimerBatch=0700"
+
+ rem minimum Time to Batch process
+set "startProgramBatch=0800"
+
+ rem next startTime in Minutes
+set /a pauseMin     =60
+
+ rem "Time=HHmm"   : [1156]
+ rem maximum Time to Batch process
+set  "stopTimerBatch=1800"
+
+:Timestamp
+for /f "eol=D tokens=1-6 delims=/: " %%T in (
+ 'robocopy /L  /njh "\|" .^|find "123" '
+ ) do set "nowTime=%%W%%X"
+
+:: ---------------------------------------------------
+if 1%startTimerBatch% gtr 1%nowTime% (
+  echo time is NOT arrived ...
+  pause
+  exit /b 2
+)
+set "nextTime=%nowTime%"
+set "startProgram=%startProgramBatch%"
+set   "startPause=%stopTimerBatch%"
+set         "param3=run"
+goto :checkStopTime
+
+:nextPause
+call :TimedPause %startProgram% %startPause% %param3%
+if errorlevel 1 (
+  echo Program exit.
+  pause
+  exit /b 0
+)
+
+for /f "eol=D tokens=1-6 delims=/: " %%T in (
+ 'robocopy /L  /njh "\|" .^|find "123" '
+) do set /a "nowNext= 60 *1%%W + 40%%X -10000 +pauseMin, nextTime= (nowNext /60 %%24 +100) *100 +nowNext %%60"
+
+ rem call/execute program X
+%run%
+
+set "nextTime=%nextTime:~1%"
+set "startProgram=%nextTime%" 
+:: set "startPause=%startTimerBatch%"
+set "startPause="
+set "param3="
+
+:checkStopTime
+if 1%stopTimerBatch% lss 1%nextTime% (
+  echo Time is over ...
+  pause
+  exit /b 0
+)
+echo continue ...
+goto :nextPause
+
+:: -------------------------------------------------------
+:TimedPause ExecutionStartTime [ExecutionEndTime] [run]
+::
+setlocal
+set "exitcode=1"
+set  "endTime="
+for %%i in (%~2 %~3) do if /i %%i == run (set "exitcode=0") else set "endTime=%%i"
+if NOT defined endTime ( 
+  for /f "eol=D tokens=1-6 delims=/: " %%T in (
+   'robocopy /L  /njh "\|" .^|find "123" '
+  ) do set /a "nowBefore= 60 *1%%W +40%%X -10001, endTime=(nowBefore /60 %%24 +100) *100 +nowBefore %%60"
+)
+set "RC=%temp%\RC_%time::=%_tmp.log"
+type nul &gt;"%RC%"
+
+robocopy . . " Zeitfenster ."  /RH:%~1-%endTime:~-4%  /L /W:1 /R:1 /nFL /nDL /njH /njS /tee /Log:"%RC%" | (
+  for /f "tokens=1*" %%a in ('find "..." ^^^&lt;"%RC%"') do @(
+    echo Zeit fuer eine Pause %time%
+    &gt;&amp;3 echo start Pause %time%
+    echo Program - %%b
+    &gt;&amp;3 echo Program - %%b
+  ) &gt;&gt; D:\Log.txt
+) &amp;&amp; (
+ echo pause ends
+  rem start programm
+ del "%RC%"
+ exit /b 0
+ ) || (
+ echo No Pause
+ del "%RC%"
+ exit /b %exitcode%
+)</code></pre></div>
+
+Phil</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8575&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:32 GMT -->
+</html>

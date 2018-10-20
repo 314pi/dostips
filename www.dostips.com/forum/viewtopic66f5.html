@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8846&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:11:04 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Reading Passwords Into a .cmd script</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Reading Passwords Into a .cmd script</h2>
+		<p><a href="viewtopic39d7.html?f=3&amp;t=8846">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8846</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Reading Passwords Into a .cmd script</h3>
+				<div class="date">Posted: <strong>02 Oct 2018 03:40</strong></div>
+				<div class="author">by <strong>Dosage</strong></div>
+				<div class="content">Hi,<br>
+<br>
+I have a drive-mapping script, mapping.cmd, that uses different accounts to map different drives.<br>
+Some of the account passwords have special characters in them like % which would be parsed incorrectly if entered straight into the mapping.cmd file.<br>
+So I've put the password containing the % character into a separate file, pwd.txt, and this imports in fine when called like this:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>net use p: \\[some path] /user:[some domain]\[some ID] &lt; pwd.txt</code></pre></div>
+
+So far so good.  This works and maps the drive using the password with the % in it, from pwd.txt<br>
+<br>
+Just wondering, if I wanted to map <strong class="text-strong">another </strong>drive in mapping.cmd, which again uses a special character, if I can in some way list multiple passwords in the same pwd.txt file, rather than the clunkier method of using yet another file, say pwd2.txt, just to hold this other password e.g.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>net use p: \\[some path] /user:[some domain]\[some ID] &lt; pwd.txt
+net use q: \\[some path] /user:[some domain]\[some ID] &lt; pwd2.txt</code></pre></div>
+
+If this is possible - How would I infer the delimit between different passwords in the pwd.txt file and/or refer to them separately in the &lt; pwd.txt part?<br>
+<br>
+Or should I just use the clunky method?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading Passwords Into a .cmd script</h3>
+				<div class="date">Posted: <strong>04 Oct 2018 19:58</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">Can you try this, is only a idea that myabe can work:<br>
+<br>
+Put on a single file the password in order of mapping:<br>
+<br>
+pass.txt
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>abcd
+efgh
+</code></pre></div>
+
+and process.cmd
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(
+net use p: \\[some path] /user:[some domain]\[some ID]
+net use q: \\[some path] /user:[some domain]\[some ID]
+) &lt; pass.txt
+</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8846&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:11:04 GMT -->
+</html>

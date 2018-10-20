@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7570&start=45&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:20:44 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; CONVERTCP.exe - Convert text from one code page to another - Page 4</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>CONVERTCP.exe - Convert text from one code page to another</h2>
+		<p><a href="viewtopic75ba.html?f=3&amp;t=7570">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7570</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>4</strong> of <strong>5</strong></div>
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>14 Apr 2018 08:19</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic6cb3.html?p=56341#p56341" data-post-id="56341" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">14 Apr 2018 07:07</div></cite>
+Right now I discovered that the output of CONVERTCP and JREPL (as well as using various text editors) are still different when I converted Lubomir's file.<br>
+CONVERTCP does <strong class="text-strong">not</strong> change line endings automatically. E.g. things like double line feeds (LF LF) can be found in Lubomir's file. CONVERTCP leaves it as LF LF while other software may automatically convert it to CR LF CR LF.
+</div></blockquote>
+
+Regarding JREPL - It depends on the options used.<br>
+<br>
+By default, all End-Of-Lines (EOLs) will be written as CR LF<br>
+<br>
+With the /U option, all EOLs will be written as LF<br>
+<br>
+Both of the above are processed one line at a time, so JREPL can process arbitrarily large files.<br>
+<br>
+With the /M option, all original EOLs will be preserved (unless explicitly modified by the find/replace of course)<br>
+<br>
+The /M option loads the entire file into memory, so it is limited to what can fit. I believe the practical limit is somewhere around 1 GB.<br>
+<br>
+<br>
+The performance of compiled CONVERTCP will always blow the pants off the interpreted JREPL <img class="smilies" src="images/smilies/icon_twisted.gif" width="15" height="15" alt=":twisted:" title="Twisted Evil">  But JREPL can be extremely useful if you want to change content at the same time as changing the encoding, or if you want to take control of inexact translations when the destination encoding is missing a source character.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>14 Apr 2018 08:28</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Thanks Dave! I hoped you wanted to clarify how to avoid that effect using JREPL <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> (I would have pointed you via PM otherwise.)<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>15 Apr 2018 05:49</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I added a "Known issues" paragraph to my initial post.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>18 Apr 2018 15:54</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">After a long run of converting files in a loop and comparisions using FC /B I still got corrupted files every now and then. Days of unsuccessful investigations, dozens of internet articles, every possible settings, changing the chunks to the size of a drive sector ... nothing helped. It really drove me crazy  <img class="smilies" src="images/smilies/icon_evil.gif" width="15" height="15" alt=":evil:" title="Evil or Very Mad"> Eventually I passed on to random trial and error tests. Moving the character conversion from the thread function to the reading loop in the main routine solved the issue even if it is still not logical to me. What I found during my research was that flushing the buffer is needless as long as no concurrent writing or reading actions are in place. So forget about my former explanatios about the technical reason of the bug  <img class="smilies" src="images/smilies/icon_redface.gif" width="15" height="15" alt=":oops:" title="Embarassed"> <br>
+<br>
+Steffen<br>
+<br>
+Virustotal scans of version 2.2:<br>
+x86: <a href="https://www.virustotal.com/en/file/84a4d80ee7bffafac4de4301efd403ca2218032cef4a0f7f2601b29587113991/analysis/" class="postlink">https://www.virustotal.com/en/file/84a4 ... /analysis/</a><br>
+x64: <a href="https://www.virustotal.com/en/file/726bffd600300138375a7853639b484cfdebcf998067c3da9930d78de2c97ea6/analysis/" class="postlink">https://www.virustotal.com/en/file/726b ... /analysis/</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>20 Apr 2018 10:24</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I added option /f to version 3.0. This leads to flushing of the output file buffer before the file will be closed.<br>
+<br>
+<br>
+Some explanations about the reason for the new option:<br>
+<br>
+As written above flushing is basically not needed. Written data will be buffered by the file system because the physical writing to the drive is slow. That way the performance can be improved enormously. There is no drawback as long as the file is not accessed concurrently. Appending new data to the buffer by another write operation will not corrupt the data in the buffer. That's the reason why the default behavior of CONVERTCP is that the buffer will not be flushed automatically, also not before the file was closed. Converting multiple files in a loop keeps being very fast in that case.<br>
+<br>
+This having said, there is still a risk just in case you immediately access the new file while there might be yet unwritten data in the buffer. E.g. if you convert a file using CONVERTCP in a script and you want to process the new file in the very next line of the script then you might get trouble because physical writing of the data to the drive may still take a few hundreds of milliseconds (even if the file was already closed). Option /f forces the buffer flushing before CONVERTCP terminates which should protect you from unwritten data. Even though this doesn't necessarily mean that the data was already written to the physical drive memory. Drives may have an additional buffer and it depends on the driver settings whether or not the request of Windows to flush that additional buffer will be ignored. The latter is nothing that I'm even able to influence and this possible behavior of a drive would also cause issues for other programs that write data to the drive.<br>
+<br>
+<br>
+Steffen<br>
+<br>
+<br>
+Virustotal scans of version 3.0:<br>
+x86: <a href="https://www.virustotal.com/en/file/11b5da94f03d6373f358cf01a6f05f6e1c1423de5481fbe8c6a6b5c4144b1c22/analysis/" class="postlink">https://www.virustotal.com/en/file/11b5 ... /analysis/</a><br>
+x64: <a href="https://www.virustotal.com/en/file/5dfde448b5ca00ffaecdd9e285e7ec2fea14f3b8a4bc768f5b08a47cad5d5458/analysis/" class="postlink">https://www.virustotal.com/en/file/5dfd ... /analysis/</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>20 Apr 2018 13:16</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Carlos wrote me a PM because he had some questions about the source code. I reread the code which made me recognize that I should have moved the thread-waiting to another position.<br>
+<br>
+Thanks for pointing, Carlos!<br>
+<br>
+Steffen<br>
+<br>
+Virustotal scans of version 3.1:<br>
+x86: <a href="https://www.virustotal.com/en/file/364b3c1b3ff36a226526b5e14ebbd9c56e56bf684bb61f07ffc0002e260fc605/analysis/" class="postlink">https://www.virustotal.com/en/file/364b ... /analysis/</a><br>
+x64: <a href="https://www.virustotal.com/en/file/a8717cf701939d97a4a1a3560d01c81509dbcb9e6e78858c3de8b0246556af63/analysis/" class="postlink">https://www.virustotal.com/en/file/a871 ... /analysis/</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>22 Apr 2018 10:26</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I moved the project along with the download to SourceForge <a href="https://sourceforge.net/projects/convertcp/" class="postlink">https://sourceforge.net/projects/convertcp/</a>.<br>
+Of course I'll keep you updated in this thread.<br>
+<br>
+I just hope to get a little more feedback about the source code since I think there are more members over there that are experienced in C.<br>
+Also people don't have to worry about whether or not questions about the code would be rather off-topic.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>23 Apr 2018 02:57</strong></div>
+				<div class="author">by <strong>miskox</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic6a8f.html?p=56470#p56470" data-post-id="56470" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Apr 2018 10:24</div></cite>
+This having said, there is still a risk just in case you immediately access the new file while there might be yet unwritten data in the buffer. E.g. if you convert a file using CONVERTCP in a script and you want to process the new file in the very next line of the script then you might get trouble because physical writing of the data to the drive may still take a few hundreds of milliseconds (even if the file was already closed). Option /f forces the buffer flushing before CONVERTCP terminates which should protect you from unwritten data. Even though this doesn't necessarily mean that the data was already written to the physical drive memory. Drives may have an additional buffer and it depends on the driver settings whether or not the request of Windows to flush that additional buffer will be ignored. The latter is nothing that I'm even able to influence and this possible behavior of a drive would also cause issues for other programs that write data to the drive.
+</div></blockquote>
+
+Steffen! Thanks for all the updates and the information!<br>
+<br>
+My understanding (how I see things) is that even if a file is not written physicaly to the disk and I access it with another program/process the system would make sure data is consistent: system knows that there is some data still to be written to the disk so it would provide the correct data to the process requesting it (either from the disk or from the memory/cache).<br>
+<br>
+Can anyone more knowledgeable about this give more info on this matter?<br>
+<br>
+Thanks.<br>
+Saso</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>23 Apr 2018 04:08</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">This is all quite confusing Saso. It's not only the operating system but also the file system a drive was formatted, and of course the design of the drive itself.<br>
+According to the MSDN a mechanism like you stated may exist on NTFS formatted drives. See<br>
+<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd979523(v=vs.85).aspx" class="postlink">https://msdn.microsoft.com/en-us/librar ... s.85).aspx</a><br>
+I can't say anything about how other file systems behave.<br>
+<br>
+However, as stated in the second half of my answer that you quoted, the drive itself may behave unexpected.<br>
+<a href="https://blogs.msdn.microsoft.com/oldnewthing/20170510-00/?p=95505" class="postlink">https://blogs.msdn.microsoft.com/oldnew ... 0/?p=95505</a><br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>26 Apr 2018 09:31</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Hi Steffen,<br>
+<br>
+Is your program similar the GNU utility ICONV?<br>
+<br>
+As you may remember I work on a mainframe and the EBCIDIC character set is all single byte.  So when we start working with clients we tell them that they have to send us files in a single byte character set.  Our sales people sold a job and neglected to tell the client about this requirement.  Now we are stuck trying to figure out the best way to convert the UTF-8 file they sent us.<br>
+<br>
+When we upload a file to the mainframe the conversion from ascii to ebcidic automatically happens on the fly.  It also strips off the CR\LF.  If we know there are extended ascii characters in the file we then send a quote command to the mainframe to tell it the file is ISO8859-1 and convert it to IBM-1047.  We have never had any luck trying to do the conversion with ftp when the file is a multi-byte character set. <br>
+<br>
+So I am wondering if it is better to convert the file from UTF-8 to EBCIDIC and then do a binary upload of the file to the mainframe or convert the file from UTF-8 to  ISO8859-1 and then upload the file to the mainframe.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>26 Apr 2018 10:58</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">So I ended up using your program to convert the file.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>CONVERTCP 65001 28591 /i "APPEAL.txt" /o "APPEAL_converted.txt"</code></pre></div>
+The converted file was only 3 bytes smaller.  So all it did was remove the BOM.  This tells me there were not any variable byte characters in the files.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>26 Apr 2018 12:15</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I never used ICONV but since the purpose seems to be the same I assume the behavior is at least similar. I don't know how the character conversion of ICONV was implemented. In CONVERTCP I use the MultiByteToWideChar and WideCharToMultiByte API functions that internally access the code page files installed on your computer.<br>
+<br>
+As to your example, do you think the result was right? Sure the BOM was removed as it has to be for ISO 8859-1. If there were no other characters than the 7 bit ASCII then you can't tell them apart.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>26 Apr 2018 12:26</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Added option /n in version 4.0.<br>
+<br>
+Virustotal scans of version 4.0:<br>
+x86: <a href="https://www.virustotal.com/en/file/f1aacea5130336e2aee8c800026fe5ffbfd98797b31b334267f0f1ba6525b25a/analysis/" class="postlink">https://www.virustotal.com/en/file/f1aa ... /analysis/</a><br>
+x64: <a href="https://www.virustotal.com/en/file/f7105f373868db8f6ce07ad2ad69e594a0290f592f71ff443fb5ffc74a730918/analysis/" class="postlink">https://www.virustotal.com/en/file/f710 ... /analysis/</a><br>
+<br>
+The /n is for "no threading". But what does it mean?<br>
+For a better understanding let's step back to the defaults. As already written CONVERTCP reads the incoming stream chunk-wise. The advantage is that an already converted chunk can be written using an asynchronuous thread at the same time as the next chunk of text is read and converted. That leads to a good performance. Furthermore the memory usage is limited to the buffer size the chunks need. This size doesn't increase even not if very large files are converted. Sounds like a good concept, doesn't it? That's the reason why threading is used by default.<br>
+Things are getting complicated if the end of the read chunk is somewhere inside of a sequence of multiple bytes that represents a single character. There are charsets that have rules to recognize where the a character ends. I already use these rules for the processing of UTF-8 and UTF-16 streams in order to adjust the chunk boundaries accordingly. But there exist charsets without those rules. Such streams could get corrupted if their size exceed 1 MB (which is the default chunk size). If you list the code pages using option /l you'll find in the second column whether or not you can convert incoming streams greater than 1 MB without the risk of damaging their content. So the conclusion is that threading is not always as good as it seems to be.<br>
+That's the point where option /n comes in. This option leads to reading the whole file into the buffer. Due to internal limits of the used API functions the size of the incoming stream is still restricted. But now it's 511 MB rather than only 1 MB. The needed buffer size might increase tremendously. If you have only little RAM space the tool may crash (even if that should be quite unlikely on modern computers).<br>
+<br>
+tl;dr<br>
+Option /n might be of interest especially for large text encoded in UTF-7 or for people living in the eastern hemisphere (Chinese, Japanese, Korean people for example). If you are unsure if you need to pass option /n then first run CONVERTCP with option /l. If you find a "No" in the second column of the code page of your incoming stream AND the stream size (file size) is greater than 1 MB then use option /n for the conversion. If you need to convert a stream greater than 511 MB from such a code page then don't use CONVERTCP at all.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>26 Apr 2018 16:42</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">I think the user should not care about things like the internal way of do the work.<br>
+I think is better that the program internally take the best decision for get the accurate work.<br>
+If the conditions are accomplish, it should use thread, otherwise it should not use thread. But this decision should be taken by the program, not by the user.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>26 Apr 2018 17:00</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I forgot to update the number of allowed options  <img class="smilies" src="images/smilies/icon_redface.gif" width="15" height="15" alt=":oops:" title="Embarassed"> <br>
+<br>
+Virustotal scans of version 4.1:<br>
+x86: <a href="https://www.virustotal.com/en/file/a6419bb99081eddaa71c678e445ec2ffef34e6e7c9510c5412a5b5028f3f1dc2/analysis/" class="postlink">https://www.virustotal.com/en/file/a641 ... /analysis/</a><br>
+x64: <a href="https://www.virustotal.com/en/file/1c0f6ad91cc262bc6f49af58441e50ff37df9d3bb5bddc787566f8e61d8ba5ff/analysis/" class="postlink">https://www.virustotal.com/en/file/1c0f ... /analysis/</a><br>
+<br>
+<br>
+@Carlos<br>
+Thanks for your feedback!<br>
+I already thought about that. The reason why I refrained from adding that feature in the first place was that I thought I had to enumerate all code pages in a callback every time the tool is called (similar to option /l). Meanwhile I think it can be done easier. In the VerifyCp function I already call the GetCPInfo function without using the filled CPINFO structure. I think I can fork the program flow if I evaluate the MaxCharSize member ... Certainly done in the next update  <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=":wink:" title="Wink"> <br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>4</strong> of <strong>5</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7570&start=45&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:20:44 GMT -->
+</html>

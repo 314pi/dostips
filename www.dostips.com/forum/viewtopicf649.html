@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=105&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:02:37 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support - Page 8</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</h2>
+		<p><a href="viewtopicb16d.html?f=3&amp;t=6044">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6044</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>8</strong> of <strong>27</strong></div>
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>10 Sep 2015 22:51</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Conceptually it is quite simple if you only do one form of manipulation at a time. Your replacement script can be a JScript expression, so all that is needed are some functions to reverse and/or scramble a string.<br /><br />There are built in functions that make reversing a string simple enough that you can embed the functions directly within the replace string.<br /><br /><strong class="text-strong">mirror.bat</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@call jrepl &quot;.+&quot; &quot;$0.split('').reverse().join('')&quot; /j /f input.txt /o mirror.txt<br /></code></pre></div><br /><strong class="text-strong">reverse.bat</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@call jrepl &quot;\w\w+&quot; &quot;$0.split('').reverse().join('')&quot; /j /f input.txt /o reverse.txt<br /></code></pre></div><br /><br />Randomly scrambling a string is more complex. In this case it makes sense to define a scramble function and then use it within the replace string. One option for defining a custom function is to use /JBEG.<br /><br /><strong class="text-strong">jumble.bat</strong> via /JBEG<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@call jrepl &quot;(\w\w+)(\w)&quot; &quot;scramble($1)+$2&quot; /j /f input.txt /o jumble.txt ^<br />&nbsp; &nbsp; &nbsp; /jbeg &quot;function scramble(s){s=s.split('');for(var i = s.length,j,k;i;j=parseInt(Math.random()*i),k=s&#91;--i&#93;,s&#91;i&#93;=s&#91;j&#93;,s&#91;j&#93;=k); return s.join('');}&quot;<br /></code></pre></div><br />That looks pretty ugly. There are ways to clean it up, but there is an easier way that is also reusable. You can create a file containing one or more functions and include the definition using /JLIB.<br /><br /><strong class="text-strong">scramble.jlib</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>function scramble(s) {<br />&nbsp; s=s.split('');<br />&nbsp; for(<br />&nbsp; &nbsp; var i=s.length, j, temp;<br />&nbsp; &nbsp; i;<br />&nbsp; &nbsp; j=parseInt(Math.random()*i), temp=s&#91;--i&#93;, s&#91;i&#93;=s&#91;j&#93;, s&#91;j&#93;=temp<br />&nbsp; );<br />&nbsp; return s.join('');<br />}<br /></code></pre></div><br /><strong class="text-strong">jumble.bat</strong> via /JLIB<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@call jrepl &quot;(\w\w+)(\w)&quot; &quot;scramble($1)+$2&quot; /j /jlib scramble.jlib /f input.txt /o jumble.txt<br /></code></pre></div><br /><br />Now for the tricky part - producing all 4 results in one pass as you have shown in your sample output. I got creative on this <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br />Have fun figuring out how it works  <img class="smilies" src="images/smilies/icon_twisted.gif" alt=":twisted:" title="Twisted Evil" /> <br /><br /><strong class="text-strong">combined.bat</strong> (reusing scramble.jlib)<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal<br />set &quot;rev=split('').reverse().join('')&quot;<br />&gt;combined.txt (<br />&nbsp; echo normal,jumble,mirror,reverse<br />&nbsp; echo(<br />&nbsp; call jrepl &quot;(\w*)(\w)|\W+&quot;^<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;rev+=$0.%rev%;scramble($2)+$3|rev+=$0,$0&quot;^<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;/jbegln &quot;norm=$txt; rev=''&quot;^<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;/jendln &quot;$txt=norm+','+$txt+','+norm.%rev%+','+rev&quot;^<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;/jlib scramble.jlib /j /t &quot;|&quot; /f input.txt <br />)<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>11 Sep 2015 02:08</strong></div>
+				<div class="author">by <strong>brinda</strong></div>
+				<div class="content">dave,<br /><br />thank you <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><br />your mirror.bat and reverse.bat gives some overview how the character are being manipulated/ I usually save the whole thread and foxidrive's previous question/result topic helps a little more on this.<br /><br />Anything after that gives me more <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" />  and <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" />  and probably going to melt the brain <img class="smilies" src="images/smilies/icon_rolleyes.gif" alt=":roll:" title="Rolling Eyes" /> <br /><br />thanks for helping on this</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>29 Oct 2015 17:49</strong></div>
+				<div class="author">by <strong>staghavi</strong></div>
+				<div class="content">Thank u for this great script,<br />But there is a problem: unfortunately I couldn't use some characters like <strong class="text-strong">,</strong> or <strong class="text-strong">;</strong> as <strong class="text-strong">DelimiterChar</strong>.<br /><br />my command was:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>JREPL &quot;autoreport: true;autolaunch: true;proxyall: false&quot; &quot;autoreport: false;autolaunch: false;proxyall: true&quot; /f &quot;lantern-2.0.10 - Copy.yaml&quot; /o - /l /m /t ;</code></pre></div><br /><br />Can you fix it? (or at least mention it in the help)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>30 Oct 2015 15:06</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">The solution is already mentioned in the second paragraph of the help <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; Each parameter may be optionally enclosed by double quotes. The double<br />&nbsp; quotes are not considered part of the argument. The quotes are required<br />&nbsp; if the parameter contains a batch token delimiter like space, tab, comma,<br />&nbsp; semicolon. The quotes should also be used if the argument contains a<br />&nbsp; batch special character like &amp;, |, etc. so that the special character<br />&nbsp; does not need to be escaped with ^.<br /></code></pre></div><br /><br />So all you need to do is quote the semicolon delimiter:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>JREPL &quot;autoreport: true;autolaunch: true;proxyall: false&quot; &quot;autoreport: false;autolaunch: false;proxyall: true&quot; /f &quot;lantern-2.0.10 - Copy.yaml&quot; /o - /l /m /t &quot;;&quot;<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>11 Jan 2016 03:40</strong></div>
+				<div class="author">by <strong>Nuvolarix</strong></div>
+				<div class="content">Hi Dave, this batch looks so cool, I'm trying to use it but I'm in trouble with multi-line and/or newline functions... I cannot figure out how to properly use /M /X and I guess mainly... \n   <img class="smilies" src="images/smilies/icon_rolleyes.gif" alt=":roll:" title="Rolling Eyes" /> <img class="smilies" src="images/smilies/icon_cry.gif" alt=":cry:" title="Crying or Very sad" /> <br /><br />This the exact string (multi-line) I should search for (included spaces and newlines):<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; &nbsp; &lt;file name=&quot;App On&quot;&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;icon&gt;icon.ico&lt;/icon&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;path&gt;App.exe&lt;/path&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Autorun&gt;2&lt;/Autorun&gt;</code></pre></div><br />and this is exactly how it should be replaced:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; &nbsp; &lt;file name=&quot;App Off&quot;&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;icon&gt;icon.ico&lt;/icon&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;path&gt;App.exe&lt;/path&gt;</code></pre></div><br />Any help would be greatly appreciated!  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br /><br />Thanks in advance.<br /><br />Best Regards<br />Nuv</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>11 Jan 2016 09:30</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">You have to remember that \r may be present as well.<br /><br />I'm assuming your search does not care about exact spacing, but that you want to remove the one line and preserve all other spacing.<br /><br />I would use the following:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;(^\s*&lt;file name=\qApp On\q&gt;\s*&lt;icon&gt;icon.ico&lt;/icon&gt;\s*&lt;path&gt;App.exe&lt;/path&gt;&#91; \t&#93;*\r?\n)&#91;&#91; \t&#93;*&lt;Autorun&gt;2&lt;/Autorun&gt;&#91; \t&#93;*\r?\n&quot; $1 /m /x /f test.txt /o -<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>12 Jan 2016 02:08</strong></div>
+				<div class="author">by <strong>Nuvolarix</strong></div>
+				<div class="content">You are right and to be precise I would like to remove that line in <em class="text-italics">batch-1</em> and vice versa add it back in a <em class="text-italics">batch-2</em> (which I was assuming to easily get by inverting the 'search' and 'replace' fields of <em class="text-italics">batch-1</em> but now I guess it needs something different as well).<br /><br />Reading your code I must admit \r wasn't my only trouble, unfortunately I'm still not able to achieve the goal, I'm not sure if I'm doing something wrong just testing your code:<br /><br />1) I've created a test.txt file:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; &nbsp; &lt;file name=&quot;App On&quot;&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;icon&gt;icon.ico&lt;/icon&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;path&gt;App.exe&lt;/path&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Autorun&gt;2&lt;/Autorun&gt;</code></pre></div><br />2) I run your code in a batch (this batch, jrepl.bat and test.txt in the same directory)<br /><br />The file is actually edited but it shows no differences, &quot;Autorun&quot; line is still there... <img class="smilies" src="images/smilies/icon_rolleyes.gif" alt=":roll:" title="Rolling Eyes" /><br /><br />Many thanks for your help <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>12 Jan 2016 12:11</strong></div>
+				<div class="author">by <strong>thefeduke</strong></div>
+				<div class="content"><blockquote><div><cite>Nuvolarix wrote:</cite>2) I run your code in a batch (this batch, jrepl.bat and test.txt in the same directory)<br />The file is actually edited but it shows no differences, &quot;Autorun&quot; line is still there...</div></blockquote>I set up your test like this <span style="color: #4000FF">(Revised: input data and solution)</span>:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off &amp;SetLOCAL &amp;Rem.and keep environment uncluttered.<br />Rem.DOS Testing Environment '0' easy to find temporary folder<br />&nbsp; &nbsp; Set &quot;tmpd=%TEMP%\'0'&quot;<br />&nbsp; &nbsp; If Not Exist &quot;%tmpd%&quot; MkDir &quot;%tmpd%&quot;<br />::<br />&nbsp; &nbsp; (<br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; ^&lt;file name=&quot;App X&quot;^&gt;&nbsp; &nbsp;<br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ^&lt;icon^&gt;iconX.ico^&lt;/icon^&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ^&lt;path^&gt;AppX.exe^&lt;/path^&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ^&lt;Autorun^&gt;2^&lt;/Autorun^&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; ^&lt;file name=&quot;App Off&quot;^&gt;&nbsp; &nbsp; &nbsp; <br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ^&lt;icon^&gt;icon.ico^&lt;/icon^&gt;&nbsp; &nbsp;<br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ^&lt;path^&gt;App.exe^&lt;/path^&gt;&nbsp; &nbsp; <br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ^&lt;Autorun^&gt;2^&lt;/Autorun^&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; ^&lt;file name=&quot;App Y&quot;^&gt;&nbsp; &nbsp;<br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ^&lt;icon^&gt;iconY.ico^&lt;/icon^&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ^&lt;path^&gt;AppY.exe^&lt;/path^&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; ^&lt;file name=&quot;App Z&quot;^&gt;&nbsp; &nbsp;<br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ^&lt;icon^&gt;iconZ.ico^&lt;/icon^&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ^&lt;path^&gt;AppZ.exe^&lt;/path^&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ^&lt;Autorun^&gt;3^&lt;/Autorun^&gt;<br />&nbsp; &nbsp; )&gt;&quot;%tmpd%\%~n0_ToRemove.txt&quot; <br />&nbsp; &nbsp; Echo.<br />&nbsp; &nbsp; Echo.Input:<br />&nbsp; &nbsp; Type &quot;%tmpd%\%~n0_ToRemove.txt&quot; <br />&nbsp; &nbsp; Call jrepl &quot;(^\s*&lt;file name=\qApp Off\q&gt;\s*&lt;icon&gt;icon.ico&lt;/icon&gt;\s*&lt;path&gt;App.exe&lt;/path&gt;&#91; \t&#93;*\r?\n)&#91;&#91; \t&#93;*&lt;Autorun&gt;2&lt;/Autorun&gt;&#91; \t&#93;*\r?\n?&quot; $1 /m /x /f &quot;%tmpd%\%~n0_ToRemove.txt&quot; /o -<br />&nbsp; &nbsp; Echo.<br />&nbsp; &nbsp; Echo.Modified:<br />&nbsp; &nbsp; Call jrepl &quot;App Off&quot; &quot;App On&quot; /m /x /f &quot;%tmpd%\%~n0_ToRemove.txt&quot; <br />::&nbsp; Do it again to store the output&nbsp; <br />&nbsp; &nbsp; Call jrepl &quot;App Off&quot; &quot;App On&quot; /m /x /f &quot;%tmpd%\%~n0_ToRemove.txt&quot; /o &quot;%tmpd%\%~n0_ToInsert.txt&quot; <br />&nbsp; &nbsp; Echo.<br />&nbsp; &nbsp; Echo.Replenished:<br />&nbsp; &nbsp; Call jrepl &quot;(^\s*&lt;file name=\qApp On\q&gt;\s*&lt;icon&gt;icon.ico&lt;/icon&gt;\s*&lt;path&gt;App.exe&lt;/path&gt;&#91; \t&#93;*\r?\n)&#91;&#91; \t&#93;*\r?\n?&quot; &quot;$1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Autorun&gt;2&lt;/Autorun&gt;\r\n&nbsp; &nbsp; &nbsp; &nbsp; &quot; /m /x /f &quot;%tmpd%\%~n0_ToInsert.txt&quot; /o - <br />&nbsp; &nbsp; Call jrepl &quot;App On&quot; &quot;App Off&quot; /m /x /f &quot;%tmpd%\%~n0_ToInsert.txt&quot; <br />::&nbsp; Do it again to store the output&nbsp; <br />&nbsp; &nbsp; Call jrepl &quot;App On&quot; &quot;App Off&quot; /m /x /f &quot;%tmpd%\%~n0_ToInsert.txt&quot; /o - <br />GoTo :EOF</code></pre></div>The autorun is restored at the end and you can tweak the input and JRepl in the above self-contained script.<br /><span style="color: #0040FF">Edit: Output example from previous attempt deleted from post.</span> <br />Dave, I admire your work very much and thank you for this example as a learning model.  It does exactly what you said it would.  To change the string &quot;App On&quot; to &quot;App Off&quot; in addition as Nuv suggested, would you just use a second pass of JRepl?<br />John A.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>12 Jan 2016 13:46</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">@Nuvolarix - I did test, and everything worked for me.<br /><br />My best guess is your test file ends with the &lt;Autorun&gt; line, and the last line is not terminated with \n.<br /><br />My posted code assumes the &lt;Autorun&gt; line ends with \n, so it would not match if it doesn't.<br /><br />The problem is easily fixed by making the \n optional with the ? quantifier:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;(^\s*&lt;file name=\qApp On\q&gt;\s*&lt;icon&gt;icon.ico&lt;/icon&gt;\s*&lt;path&gt;App.exe&lt;/path&gt;&#91; \t&#93;*\r?\n)&#91;&#91; \t&#93;*&lt;Autorun&gt;2&lt;/Autorun&gt;&#91; \t&#93;*\r?\n?&quot; $1 /m /x /f test.txt /o -<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>13 Jan 2016 03:26</strong></div>
+				<div class="author">by <strong>Nuvolarix</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>My best guess is your test file ends with the &lt;Autorun&gt; line, and the last line is not terminated with \n.<br />Dave Benham</div></blockquote><br />It was exactly like that, I'm sorry I didn't understand by myself  <img class="smilies" src="images/smilies/icon_redface.gif" alt=":oops:" title="Embarassed" /> and thank you for the fix!<br />You also were assuming right, the &lt;Autorun&gt; line ends with \n, except in my stupid test file.<br /><br />Now I just miss the code to replenish it, or in other words, add the &lt;Autorun&gt; line where is not present. Unfortunately I cannot use the code suggested by <em class="text-italics">thefeduke</em> (btw, thank you too!) <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; ( <br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ^&lt;Autorun^&gt;2^&lt;/Autorun^&gt;<br />&nbsp; &nbsp; )&gt;&gt;%tmpd%\test.txt </code></pre></div> because my entire file looks like this:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; &nbsp; &lt;file name=&quot;App X&quot;&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;icon&gt;iconX.ico&lt;/icon&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;path&gt;AppX.exe&lt;/path&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Autorun&gt;2&lt;/Autorun&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ...<br />-&gt;&nbsp; &nbsp; &nbsp; &lt;file name=&quot;App On&quot;&gt;&nbsp; &nbsp;&nbsp; &nbsp;&lt;-<br />-&gt;&nbsp; &nbsp; &nbsp; &nbsp; &lt;icon&gt;icon.ico&lt;/icon&gt;&nbsp; &nbsp;&lt;-<br />-&gt;&nbsp; &nbsp; &nbsp; &nbsp; &lt;path&gt;App.exe&lt;/path&gt;&nbsp; &nbsp; &lt;-<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ...<br />&nbsp; &nbsp; &nbsp; &nbsp; &lt;file name=&quot;App Y&quot;&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;icon&gt;iconY.ico&lt;/icon&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;path&gt;AppY.exe&lt;/path&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &lt;file name=&quot;App Z&quot;&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;icon&gt;iconZ.ico&lt;/icon&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;path&gt;AppZ.exe&lt;/path&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Autorun&gt;3&lt;/Autorun&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ...<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; etc.</code></pre></div><br />I was hoping to have learnt something but it looks once again I'm not able to do it by myself, at the moment it looks bigger than me  <img class="smilies" src="images/smilies/icon_cry.gif" alt=":cry:" title="Crying or Very sad" /><br /><br />Could you help me for this final step too?<br />Once again your help would be very much appreciated.<br /><br />Best Regards<br />Nuv</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>14 Jan 2016 05:00</strong></div>
+				<div class="author">by <strong>Nuvolarix</strong></div>
+				<div class="content">ok, not sure it's the best way to achieve the goal, but here a code which looks working:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;(^\s*&lt;file name=\qApp On\q&gt;\s*&lt;icon&gt;icon.ico&lt;/icon&gt;\s*&lt;path&gt;App.exe&lt;/path&gt;&#91; \t&#93;*\r?\n)&quot; &quot;\r\n&nbsp; &nbsp; &nbsp; &nbsp; &lt;file name=\qApp On\q&gt;\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;icon&gt;icon.ico&lt;/icon&gt;\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;path&gt;App.exe&lt;/path&gt;\r\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Autorun&gt;2&lt;/Autorun&gt;\r\n&quot; /m /x /f test.txt /o -</code></pre></div>Thank you Dave for the help and the patience and obviously for your awesome batch  <img class="smilies" src="images/smilies/icon_cool.gif" alt="8)" title="Cool" /><br /><br />P.S.: one thing I'm not able to get rid of... what about if I have to replace a &quot;[&quot;? <br />I get &quot;<em class="text-italics">JScript runtime error in Search regular expression: Expected ']' (...)</em>&quot; and a new empty file test.txt.new is created.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>14 Jan 2016 07:18</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite>Nuvolarix wrote:</cite>P.S.: one thing I'm not able to get rid of... what about if I have to replace a &quot;[&quot;? <br />I get &quot;<em class="text-italics">JScript runtime error in Search regular expression: Expected ']' (...)</em>&quot; and a new empty file test.txt.new is created.</div></blockquote><br />Use the hex code.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>14 Jan 2016 09:25</strong></div>
+				<div class="author">by <strong>Nuvolarix</strong></div>
+				<div class="content">Thank you for reply @Squashman.<br /><br />Got it!<br /><br />The problem was the use of option /x  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;\x5b&quot; ok /x /f test.txt /o -</code></pre></div><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;\u005b&quot; ok /x /f test.txt /o -</code></pre></div>They both give &quot;<em class="text-italics">JScript runtime error in Search regular expression: Expected ']'</em> (...)&quot;<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;\x5b&quot; ok /f test.txt /o -</code></pre></div><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;\u005b&quot; ok /f test.txt /o -</code></pre></div>They both give &quot;ok&quot;  <img class="smilies" src="images/smilies/icon_cool.gif" alt="8)" title="Cool" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>14 Jan 2016 11:19</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Ooh, that is an interesting an unplanned difference between /X vs. no /X. I'll have to do some more research and decide if that is a bug, and if it is, see if I can fix it.<br /><br />But the simplest way to search for [ when using a regular expression is to escape it. The escape works both with and without \X.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>D:\test&gt;ECHO &#91;1&#93;|jrepl &quot;\&#91;&quot; &quot;&quot; /x<br />1&#93;<br /><br />D:\test&gt;ECHO &#91;1&#93;|jrepl &quot;\&#91;&quot; &quot;&quot;<br />1&#93;<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>14 Jan 2016 22:33</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">That was definitely a bug - thanks for finding and reporting that problem Nuvolarix.<br /><br />I had a bug where a regex search could fail if it contained \xnn or \unnnn that evaluated to a meta-character, and the /X option was used.<br />The fix was quite simple, and it actually simplified the code <img class="smilies" src="images/smilies/icon_smile.gif" alt=":-)" title="Smile" /><br /><br />Besides the bug fix, I also reworked the error processing a bit in a transparent way.<br /><br />So here is JREPL.BAT version 3.7<br /><div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file6e03.php?id=13">JREPL3.7.zip</a></dt>
+						<dd>(8.85 KiB) Downloaded 79 times</dd>
+		</dl>
+		
+		
+			</div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>8</strong> of <strong>27</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=105&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:02:37 GMT -->
+</html>

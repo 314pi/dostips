@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=270&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:59:47 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support - Page 19</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</h2>
+		<p><a href="viewtopicb16d.html?f=3&amp;t=6044">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6044</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>19</strong> of <strong>27</strong></div>
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>01 Mar 2017 13:20</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite>catalinnc wrote:</cite>@dbenham<br /><br />i have this text file:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>somerandomblablablaSTARTmorerandomblablablaENDlastrandomblablabla</code></pre></div><br /><br />can i use this tool (in a .bat) to insert a new line (hex sequence 0x0d0a) before START and after END in one ore more steps?<br />_</div></blockquote><br />So you want the output to look like this?<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>somerandomblablabla<br />STARTmorerandomblablablaEND<br />lastrandomblablabla</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>01 Mar 2017 13:26</strong></div>
+				<div class="author">by <strong>catalinnc</strong></div>
+				<div class="content">indeed...<br />_</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>01 Mar 2017 13:40</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;START.*END&quot; &quot;\r\n$&amp;\r\n&quot; /X /f file.txt /O -</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>01 Mar 2017 14:06</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@set @a=0 /* &amp; echo off<br /><br />echo somerandomblablablaSTARTmorerandomblablablaENDlastrandomblablabla &gt; file.txt<br />cscript //nologo //E:JScript &quot;%~F0&quot; &lt; file.txt &gt; file.tmp<br />move /Y file.tmp file.txt &gt; NUL<br /><br />goto :EOF */<br /><br /><br />WScript.Stdout.Write(WScript.Stdin.ReadAll().replace(/START.*END/g,&quot;\r\n$&amp;\r\n&quot;));<br /></code></pre></div><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>02 Mar 2017 13:04</strong></div>
+				<div class="author">by <strong>catalinnc</strong></div>
+				<div class="content">@Squashman and @Aacini<br /><br />thanks a lot for your help...<br />_</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>09 Mar 2017 11:22</strong></div>
+				<div class="author">by <strong>Dylan666</strong></div>
+				<div class="content">Hi, please help me to solve this problem  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br />I have this text file caller MyLog.txt :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Line one bla bla bla<br />Line two OK bla bla bla<br /><br />Line one bla bla bla<br />Line two ERROR bla bla bla<br />Line three bla bla bla <br /><br />Line one bla bla bla<br />Line two OK bla bla bla<br /><br />Line one bla bla bla<br />Line two OK bla bla bla<br /><br />Line one bla bla bla<br />Line two ERROR bla bla bla<br />Line three bla bla bla <br /><br />Line one bla bla bla<br />Line two OK bla bla bla</code></pre></div><br /><br />I need to keep all the groups of 3 lines with &quot;error&quot; and delete the groups of two lines containing &quot;ok&quot;<br />Maybe I need to split the text in paragraph using the blank lines as separator.<br /><br />Any suggestion?<br /><br />Thanks in advance</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>09 Mar 2017 12:40</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite>Dylan666 wrote:</cite>I need to keep all the groups of 3 lines with &quot;error&quot; and delete the groups of two lines containing &quot;ok&quot;<br />Maybe I need to split the text in paragraph using the blank lines as separator.<br /><br />Any suggestion?<br /><br />Thanks in advance</div></blockquote><br />I am not understanding your requirements.  Can you please show us what your expected output should be.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>09 Mar 2017 13:50</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">Like this one, perhaps?<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />set &quot;i=0&quot;<br />set &quot;error=&quot;<br />for /F &quot;tokens=1* delims=:&quot; %%a in ('findstr /N &quot;^&quot; MyLog.txt') do (<br />&nbsp; &nbsp;if &quot;%%b&quot; equ &quot;&quot; (<br />&nbsp; &nbsp; &nbsp; if defined error (for /L %%i in (1,1,!i!) do echo !line&#91;%%i&#93;!) &amp; echo/<br />&nbsp; &nbsp; &nbsp; set &quot;i=0&quot;<br />&nbsp; &nbsp; &nbsp; set &quot;error=&quot;<br />&nbsp; &nbsp;) else (<br />&nbsp; &nbsp; &nbsp; set /A i+=1<br />&nbsp; &nbsp; &nbsp; for /F %%i in (&quot;!i!&quot;) do (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;line&#91;%%i&#93;=%%b&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if !i! equ 2 if &quot;!line&#91;%%i&#93;:ERROR=!&quot; neq &quot;%%b&quot; set &quot;error=1&quot;<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />)<br />if defined error for /L %%i in (1,1,!i!) do echo !line&#91;%%i&#93;!<br /></code></pre></div><br />Output:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Line one bla bla bla<br />Line two ERROR bla bla bla<br />Line three bla bla bla<br /><br />Line one bla bla bla<br />Line two ERROR bla bla bla<br />Line three bla bla bla<br /></code></pre></div><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>09 Mar 2017 14:52</strong></div>
+				<div class="author">by <strong>Mike D</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;ERROR&quot; &quot;&quot; /K 1:2 /F MyLog.txt</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>09 Mar 2017 16:26</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite>Mike D wrote:</cite><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;ERROR&quot; &quot;&quot; /K 1:2 /F MyLog.txt</code></pre></div></div></blockquote><br />That's nice.  Didn't know you could do that with JREPL.<br /><br />You are officially Foxidrive's replacement.  Err....well we really can't replace his charm......but another Aussie will do.<br /> <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>09 Apr 2017 08:38</strong></div>
+				<div class="author">by <strong>zimxavier</strong></div>
+				<div class="content">Hi!  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br />I use JREPL 6.6<br /><br />1.<br />I need to extract all lines from the first to the 1500th. I use <strong class="text-strong">\inc</strong> option but it doesn't work. (ERROR: invalid option)<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call JREPL &quot;.*&quot; &quot;$0&quot; /jmatch /INC: &quot;1:1500&quot; /f file.txt /o -</code></pre></div><br />I tested for replacing and same result:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call JREPL &quot;.*&quot; &quot;&quot; /i /INC: &quot;1:1500&quot; /x /f file.txt /o -</code></pre></div><br />2.<br />I use this code for updating some lines:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />for /f &quot;delims=&quot; %%a in ('dir /b /a-d &quot;DATA\*.txt&quot; ') do (<br />call JREPL &quot;VARIABLE_ALL_CULTURES: .*$&quot; &quot;stdin.AtEndOfStream?$0:stdin.ReadLine()&quot; /j /f &quot;DATA\%%~a&quot; &lt;&quot;TEMP\all_cultures.txt&quot; /o -<br />)</code></pre></div><br />I would like to test the new version with <strong class="text-strong">jq</strong>. What should be the new code ?<br /><br />Thanks for any help</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>09 Apr 2017 10:29</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite>zimxavier wrote:</cite>I need to extract all lines from the first to the 1500th. I use <strong class="text-strong">\inc</strong> option but it doesn't work. (ERROR: invalid option)<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call JREPL &quot;.*&quot; &quot;$0&quot; /jmatch /INC: &quot;1:1500&quot; /f file.txt /o -</code></pre></div></div></blockquote>Oops <img class="smilies" src="images/smilies/icon_redface.gif" alt=":oops:" title="Embarassed" /> - There is a documentation error in the examples. The /INC and /EXC options should not have a trailing colon. I will release v6.7 to fix the docs.<br /><br />Your regex is wrong because it will match and preserve the entire line, and then .* will also match the end of line, resulting in a blank line after every matched line. That can be fixed by using &quot;^.*&quot; to match only from the beginning of the line.<br />Also, the /JMATCHQ option is faster than /JMATCH<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call JREPL &quot;^.*&quot; &quot;$txt=$0&quot; /jmatchq /inc &quot;1:1500&quot; /f file.txt /o -<br /></code></pre></div><br />There is a simpler solution using the /K option to keep lines that have at least one regex match. The 0 after /K means do not include any additional lines before or after a match.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call JREPL &quot;^&quot; &quot;&quot; /k 0 /inc &quot;1:1500&quot; /f file.txt /o -<br /></code></pre></div><br /><br /><blockquote><div><cite>zimxavier wrote:</cite>I use this code for updating some lines:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />for /f &quot;delims=&quot; %%a in ('dir /b /a-d &quot;DATA\*.txt&quot; ') do (<br />call JREPL &quot;VARIABLE_ALL_CULTURES: .*$&quot; &quot;stdin.AtEndOfStream?$0:stdin.ReadLine()&quot; /j /f &quot;DATA\%%~a&quot; &lt;&quot;TEMP\all_cultures.txt&quot; /o -<br />)</code></pre></div><br />I would like to test the new version with <strong class="text-strong">jq</strong>. What should be the new code ?</div></blockquote>Couldn't be much simpler <img class="smilies" src="images/smilies/icon_wink.gif" alt=";-)" title="Wink" /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call JREPL &quot;VARIABLE_ALL_CULTURES: .*$&quot; &quot;$txt=stdin.AtEndOfStream?$0:stdin.ReadLine()&quot; /jq /f &quot;DATA\%%~a&quot; &lt;&quot;TEMP\all_cultures.txt&quot; /o -<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>09 Apr 2017 10:53</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Here is version 6.7<br /><div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/filee3cf.php?id=171">JREPL6.7.zip</a></dt>
+			<dd><em>1340 downloads from the main release page when v6.7 was the current release (4+ months)</em></dd>			<dd>(19.01 KiB) Downloaded 136 times</dd>
+		</dl>
+		
+		
+			</div><br />The only changes are fixes to documentation:<br /> - Corrected /OFF documentation to include /JMATCHQ and /MATCH<br /> - Fixed /INC and /EXC examples - eliminated unwanted colon after option<br /> - Corrected various spelling errors pointed out to me by brinda in a private message<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>10 Apr 2017 06:04</strong></div>
+				<div class="author">by <strong>zimxavier</strong></div>
+				<div class="content">It works great, as usual. Thank you <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>12 Apr 2017 07:45</strong></div>
+				<div class="author">by <strong>takedown</strong></div>
+				<div class="content">Hi there,<br />I'm first time using &quot;REPL.BAT&quot; tool and still can't quite figure it out how to work with the syntax.<br />The issue is that i have a text file with a long string in one line :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;pre&gt; 3/16/2017 11:20 AM&nbsp; &nbsp; &nbsp; &nbsp; &amp;lt;dir&amp;gt; &lt;A HREF=&quot;/App_Data/&quot;&gt;App_Data&lt;/A&gt;&lt;br&gt; 3/20/2017&nbsp; 8:00 AM&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 256 &lt;A HREF=&quot;/Avg-2013.zip.sig&quot;&gt;Avg-2013.zip.sig&lt;/A&gt;&lt;br&gt; 3/12/2017&nbsp; 8:01 AM&nbsp; &nbsp; 124068275 &lt;A HREF=&quot;/Avg-2014.zip&quot;&gt;Avg-2014.zip&lt;/A&gt;&lt;br&gt;</code></pre></div><br />How can i syntax &quot;REPL.BAT&quot; to make a new line (split) after each time the word <strong class="text-strong">&lt;br&gt;</strong> is shown<br /><br />e.g.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>3/16/2017 11:20 AM&nbsp; &nbsp; &nbsp; &nbsp; &amp;lt;dir&amp;gt; &lt;A HREF=&quot;/App_Data/&quot;&gt;App_Data&lt;/A&gt;&lt;br&gt; <br />3/20/2017&nbsp; 8:00 AM&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 256 &lt;A HREF=&quot;/Avg-2013.zip.sig&quot;&gt;Avg-2013.zip.sig&lt;/A&gt;&lt;br&gt;<br />3/12/2017&nbsp; 8:01 AM&nbsp; &nbsp; 124068275 &lt;A HREF=&quot;/Avg-2014.zip&quot;&gt;Avg-2014.zip&lt;/A&gt;&lt;br&gt;<br /></code></pre></div><br />Thanks in advanced for the help</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>19</strong> of <strong>27</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=270&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:59:47 GMT -->
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2371&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:14:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; How to detect if input comes from pipe or redirected file</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>How to detect if input comes from pipe or redirected file</h2>
+		<p><a href="viewtopic6fd6.html?f=3&amp;t=2371">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=2371</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>How to detect if input comes from pipe or redirected file</h3>
+				<div class="date">Posted: <strong>25 Oct 2011 07:40</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Hi,<br /><br />this is an interessting code, as it fits to some other problems (like set /p, and FOR/F file reading)<br /><br />You can detect how your batch is called<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type file.txt | myBatch.bat</code></pre></div><br />or<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; file.txt myBatch.bat</code></pre></div><br />or<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>myBatch.bat</code></pre></div><br /><br />From Frank P. Westlake <a href="https://groups.google.com/group/alt.msdos.batch.nt/browse_thread/thread/b5d5f5e3e17f024b#" class="postlink">alt.msdos.batch.nt</a><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:: inputDemo2.cmd<br />:: From the desk of Frank P. Westlake, 2011-09-21<br />::<br />:: Determines if there is redirected or piped input waiting and identifies<br />:: which it is. This test conforms to the precedence of REDIRECTION over PIPE.<br />::<br />:: This test is not reliable because if file handle 3 is mishandled by any<br />:: process in this console group then the handle can become lost or confused.<br />::<br />:: This test is not reliable because there are other command line<br />:: configurations which will pass the test as a PIPE but which have no pipe.<br />::<br />:: Unfortunately this test prints a blank line in the console window<br />:: if input is not REDIRECTION.<br />@Echo OFF<br />SetLocal EnableExtensions<br /><br />:: This file catches the error report if input is REDIRECTION. It will be deleted.<br />Set &quot;TempFile=%TEMP%\inputTest&quot;<br /><br />:: INPUT either remains undefined or it is defined with either &quot;REDIRECTION&quot; or &quot;PIPE&quot;.<br />Set &quot;INPUT=&quot;<br /><br />:: BEGIN TEST.<br />:: Print something redirected to the console window. This redirection fails if the<br />:: input stream has been redirected from a file; an error report is sent to &quot;%TempFile%&quot;.<br />:: ERRORLEVEL does not receive the value of this error so the report is necessary.<br />:: This redirection does not fail if it is done in FOR's execution chamber so it must be<br />:: done here.<br />Echo(&gt;&amp;3 2&gt;&quot;%TempFile%&quot;<br /><br />For %%f in (&quot;%TempFile%&quot;) Do (<br />&nbsp; ERASE &quot;%TempFile%&quot;<br />&nbsp; REM If file size is not 0 there was a redirection error so the input type is REDIRECTION.<br />&nbsp; If &quot;%%~zf&quot; NEQ &quot;0&quot; (<br />&nbsp; &nbsp; Set &quot;INPUT=REDIRECTION&quot;<br />&nbsp; ) Else (<br />&nbsp; &nbsp; REM &quot;I'm_HERE&quot;'s pipe test. Determine if a PIPE is indicated.<br />&nbsp; &nbsp; Echo %CMDCMDLINE%|FINDSTR &quot;\&quot;/c\&quot; %0&quot;&gt;NUL: &amp;&amp; Set &quot;INPUT=PIPE&quot;<br />&nbsp; )<br />)<br />:: Finished. Show the result.<br />If DEFINED INPUT (<br />&nbsp; Echo Input type is %INPUT%<br />&nbsp; REM Show the input.<br />&nbsp; MORE<br />) Else (<br />&nbsp; Echo No PIPE and no REDIRECTION.<br />)<br /></code></pre></div><br /><br />jeb</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to detect if input comes from pipe or redirected fil</h3>
+				<div class="date">Posted: <strong>13 May 2013 10:00</strong></div>
+				<div class="author">by <strong>Sponge Belly</strong></div>
+				<div class="content">Hello Jeb!<br /><br />Only found this earlier topic today. <img class="smilies" src="images/smilies/icon_redface.gif" alt=":oops:" title="Embarassed" /><br /><br />But my question still stands: I’m looking for a robust method to check for redirected input (ie, prog.cmd &lt; file.txt).<br /><br />The program in the OP correctly identifies redirected input from a file. But like FPW says in the comments, it’s fragile, requires a temporary file, and outputs a blank line to the console. Is there a more robust solution? Can the above code be improved upon?<br /><br />And I’m aware of Aacini’s <a href="viewtopic577f.html?f=3&amp;t=2800" class="postlink">typeofhandle program</a>, but it’s a .com file and they won’t work on 64-bit Windows. Anyways, my point is I’m looking for something as portable as possible. Any helpful suggestions gratefully appreciated. <img class="smilies" src="images/smilies/icon_smile.gif" alt=":-)" title="Smile" /><br /><br /><em class="text-italics">- SB</em></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to detect if input comes from pipe or redirected file</h3>
+				<div class="date">Posted: <strong>17 Sep 2018 09:08</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">The technique in the original post is very fragile, to the point I would never rely on it. The redirected input test only works if there has not been any other redirection prior to redirecting the input.<br>
+<br>
+For example, the following falsely claims there is no redirected input or pipe:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;nul &lt;file.txt MyBatch.bat
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to detect if input comes from pipe or redirected file</h3>
+				<div class="date">Posted: <strong>17 Sep 2018 09:35</strong></div>
+				<div class="author">by <strong>siberia-man</strong></div>
+				<div class="content">To detect quickly if STDIN  of a batch script is bound (piped or redirected, it doesn't matter) I use the command similar the following one:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>timeout /t 0 2&gt;nul
+if errorlevel 1 rem do something when STDIN bound
+</code></pre></div>
+
+Unfortunately it works for STDIN only.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to detect if input comes from pipe or redirected file</h3>
+				<div class="date">Posted: <strong>17 Sep 2018 12:05</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Great idea <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation">  <img class="smilies" src="images/smilies/icon_idea.gif" width="15" height="15" alt=":idea:" title="Idea">  <img class="smilies" src="images/smilies/icon_cool.gif" width="15" height="15" alt="8)" title="Cool"> <br>
+<br>
+I forgot about that TIMEOUT feature. I was always irritated by that design, but I never thought to apply the feature in this case. Very useful.<br>
+<br>
+TIMEOUT is not available to XP, but hopefully that should not be much of an issue. At long last I think that Win version is finally a dying breed in the wild.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to detect if input comes from pipe or redirected file</h3>
+				<div class="date">Posted: <strong>17 Sep 2018 23:27</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">@siberia-man<br>
+It's cool and simple  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+<br>
+Yesterday, I build a new solution to detect STDOUT redirection.<br>
+Currently, the detection for STDERR redirection is not working correct.<br>
+[strike]It produces a wrong result when the STDOUT redirection is active.[/strike]<br>
+Edit: I found a simple way for STDERR, 1&gt;&amp;2 needs to be present in the findstr statement.<br>
+<br>
+The complete concepts is build on the tabulator/backspace technic of @Aacini <a href="viewtopic5b4f.html?t=7898" class="postlink">Move cursor to *any position* using just ECHO command</a>.<br>
+The trick is, that trying to move the cursor before the home position results into an error message, but there is no such message when the STDOUT/ERR is redirected<br>
+<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+call :createTAB_BS
+call :isSTDOUTRedirected stdoutRedir
+call :isSTDERRRedirected stderrRedir
+(
+echo(
+echo %1 %2
+echo STDOUT = %stdoutRedir%
+echo STDERR = %stderrRedir%
+) &gt; CON
+pause &gt; nul
+exit /b
+
+:isSTDOUTRedirected
+cls
+call :__detectRedirection %1
+exit /b
+
+
+:isSTDERRRedirected
+cls 1&gt;&amp;2
+call :__detectRedirection %1 "1&gt;&amp;2"
+exit /b
+
+:__detectRedirection
+setlocal DisableDelayedExpansion
+( ^(echo %%TAB%%%%BS%%%%BS%%^) ) | ( findstr "^"  %~2 2&gt; nul)
+set /a __tmp=!%errorlevel%
+(
+endlocal
+set "%1=%__tmp%"
+)
+exit /b
+
+:createTAB_BS
+for /f "tokens=1,2 delims=," %%A in ('forfiles /p "%~dp0." /m "%~nx0" /c "cmd /c echo(0x09,0x08"') do (
+    set "TAB=%%A"
+    set "BS=%%B"
+)
+exit /b
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to detect if input comes from pipe or redirected file</h3>
+				<div class="date">Posted: <strong>18 Sep 2018 02:08</strong></div>
+				<div class="author">by <strong>siberia-man</strong></div>
+				<div class="content">@jeb<br>
+<br>
+I am not sure that I totally understand what the last script does:<br>
+<br>
+<strong class="text-strong">z ZERO NIL</strong>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ZERO NIL
+STDOUT = 1
+STDERR = 1
+</code></pre></div>
+
+<strong class="text-strong">z ONE UNO | z TWO DUO &gt; nul</strong>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>TWO DUO
+STDOUT = 1
+STDERR = 1
+
+
+ONE UNO
+STDOUT = 1
+STDERR = 1
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to detect if input comes from pipe or redirected file</h3>
+				<div class="date">Posted: <strong>18 Sep 2018 02:52</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">I used an extra test script, my main script has the name <strong class="text-strong">detectRedirect.bat</strong><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+call detectRedirect.bat #1 stdout_default
+
+call detectRedirect.bat #2 stdout2Nul &gt; nul
+
+call detectRedirect.bat #3 stderr2Nul 2&gt; nul
+
+call detectRedirect.bat #4 both2Nul 1&gt; nul 2&gt; nul
+</code></pre></div>
+
+<blockquote><div><cite>Output wrote:</cite>
+#1 stdout_default<br>
+STDOUT = 0<br>
+STDERR = 0<br>
+<br>
+#2 stdout2Nul<br>
+STDOUT = 1<br>
+STDERR = 0<br>
+<br>
+#3 stderr2Nul<br>
+STDOUT = 0<br>
+STDERR = 1<br>
+<br>
+#4 both2Nul<br>
+STDOUT = 1<br>
+STDERR = 1
+</div></blockquote>
+
+<blockquote><div><cite>siberia-man wrote:</cite>
+z ZERO NIL<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ZERO NIL
+STDOUT = 1
+STDERR = 1
+</code></pre></div>
+</div></blockquote>
+
+@siberia-man <br>
+That is unexpected, I got for the same test with<br>
+detectRedirect.bat ZERO NIL
+<blockquote><div><cite>Output Win7x64 wrote:</cite>ZERO NIL<br>
+STDOUT = 0<br>
+STDERR = 0</div></blockquote></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to detect if input comes from pipe or redirected file</h3>
+				<div class="date">Posted: <strong>18 Sep 2018 08:50</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">First off, I don't like any method that reads from stdin or writes to stdout or stderr because I view that as destructive - the result of a script can change from what it was without any detection.<br>
+<br>
+But ignoring that concern...<br>
+<br>
+"#1 No redirection", "#3 stderr redirected", and "#4 both redirected" all work for me.<br>
+<br>
+But "#2 stdout redirected" does not work. The control codes, including the CLS formfeed, are all non-functional, causing a little box to be printed to the console for each control character. And the script lists both stdout and stderr as redirected. I've used * to represent each little box on my output screen
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>*******#2 stdout2Nul**STDOUT = 1**STDERR = 1**
+</code></pre></div>
+I'm testing on Win 10. (both legacy console, as well as new console)<br>
+<br>
+I've added a couple more tests:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call detectRedirect.bat #5 stdout2stderr 1&gt;&amp;2
+
+call detectRedirect.bat #6 stderr2stdout 2&gt;&amp;1
+</code></pre></div>--OUTPUT--<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>#5 stdout2stderr
+STDOUT = 0
+STDERR = 0
+
+#6 stderr2stdout
+STDOUT = 0
+STDERR = 0
+</code></pre></div>
+I suppose those are the expected results, but I don't think that is what we want.<br>
+<br>
+Lastly I did a couple crazy tests redirecting to stdin <img class="smilies" src="images/smilies/icon_twisted.gif" width="15" height="15" alt=":twisted:" title="Twisted Evil"> 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call detectRedirect.bat #7 stdout2stderr 1&gt;&amp;0
+</code></pre></div>--OUTPUT--<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>The system cannot write to the specified device.
+
+#7 stdout2stdin
+STDOUT = 0
+STDERR = 1
+</code></pre></div>
+That certainly is wrong.<br>
+<br>
+But the real kicker is when I redirect stderr to stdin:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call detectRedirect.bat #8 stderr2stdin 2&gt;&amp;0
+</code></pre></div>
+This crashes and kills the console <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to detect if input comes from pipe or redirected file</h3>
+				<div class="date">Posted: <strong>18 Sep 2018 20:28</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic726b.html?p=58005#p58005" data-post-id="58005" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">18 Sep 2018 08:50</div></cite>
+But the real kicker is when I redirect stderr to stdin:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call detectRedirect.bat #8 stderr2stdin 2&gt;&amp;0
+</code></pre></div>
+This crashes and kills the console <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> 
+</div></blockquote>
+cmd will not be crashed by this, rather it will terminate itself in a controlled manner.<br>
+<br>
+At first I thought stack overflow might be the cause of the termination, as it may repeatedly try to write to stderr but that will generate another error and this continues until the stack is full. Then I checked the behavior in debugger, and it turned out that cmd explicitly checks if it can write to stderr, and if it can not, it terminates itself immediately by calling CRT exit function.<br>
+<br>
+From the batch programming perspective it doesn't make much difference how cmd is terminated, but it guarantees that the behavior is by design.<br>
+<br>
+This can be used for example to detect if the right side of the pipe is terminated. As I used the technique in this <a href="https://stackoverflow.com/a/51609670/4561332" class="postlink">SO Answer</a>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(
+    for /L %%# in (0,0,1) do @(
+        echo doIt
+        timeout /t 1 /nobreak &gt;nul
+        %= This guarantees we will not loop infinitely when the right side of pipe is closed =%
+        echo PingPipe 2&gt;&amp;1
+    )
+) | MyCustomStreamConsumerApp
+</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2371&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:14:49 GMT -->
+</html>

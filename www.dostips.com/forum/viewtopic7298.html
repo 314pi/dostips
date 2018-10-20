@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8492&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:07 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Can I add an autorun command</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Can I add an autorun command</h2>
+		<p><a href="viewtopic3777.html?f=3&amp;t=8492">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8492</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Can I add an autorun command</h3>
+				<div class="date">Posted: <strong>12 Apr 2018 08:44</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Hi <br>
+<br>
+A big big thanks everyone but I have a different question on autorun commands <br>
+<br>
+What im trying to do is use the script below to create folder and move files into new folder  but then what im trying to do is add a command that when you open the file after merging it auto opens the associated program thats associated to it. <br>
+<br>
+Sometimes it will need to open Player_Eng.exe   OR  Nucleus.exe  but wont know what one until it tries opening the file as there will be different video types in there.  It will not requre both programs to open at once it will always be one or the other. <br>
+<br>
+I used to have an autorun for 1 program when I copied and pasted the files into a folder manually each time by just by copy and paste auto run into folder before burning to disk but now I automated this I donno if there is any way I can automate that too. <br>
+<br>
+ Any Ideas or suggestions?<br>
+<br>
+Thanks<br>
+<br>
+<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Option Explicit
+
+Const strDLFolder = "C:\Downloads"
+Dim objFSO, objWShell, objDLFolder, strNewFolder, objFile
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objWShell = CreateObject("WScript.Shell")
+
+
+If Not objFSO.FolderExists(strDLFolder) Then objFSO.CreateFolder(strDLFolder)
+objWShell.CurrentDirectory = strDLFolder
+Set objDLFolder = objFSO.GetFolder(strDLFolder)
+If objDLFolder.Files.Count = 0 Then WScript.Quit
+
+Do
+  Err.Clear
+  strNewFolder = InputBox("Folder Name", vbLf &amp; "Enter the name of the folder to be created:")
+  If strNewFolder = False Then WScript.Quit
+  On Error Resume Next
+  objFSO.CreateFolder strNewFolder
+Loop While Err.Number &lt;&gt; 0 Or Not objFSO.FolderExists(strNewFolder)
+
+On Error Goto 0
+For Each objFile In objDLFolder.Files
+  objFSO.MoveFile objFile.Name, strNewFolder &amp; "\"
+Next
+
+objWShell.Popup "All files moved.", 0, "Done", vbInformation Or vbSystemModal Or &amp;h00040000&amp;
+
+objWShell.Run "explorer.exe /select,""" &amp; objFSO.BuildPath(strDLFolder, strNewFolder) &amp; """"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I add an autorun command</h3>
+				<div class="date">Posted: <strong>12 Apr 2018 10:08</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Sorry but I still don't understand what you're trying to do. The script moves all the files into one folder. But I think that you certainly don't want to open the folder in a certain programm. So I assume it's a file in the folder that you need to pass to those .exe files. It's not clear to me what file it could be.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I add an autorun command</h3>
+				<div class="date">Posted: <strong>12 Apr 2018 12:05</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Sorry Steffen <br>
+<br>
+Yes you were right in what you said as in moving all the scripts into 1 folder and I do not want to open the folfer in a certain program.<br>
+<br>
+What I was trying to do is click on the folder once all the files are merged , so it opens it up and then looks for either  Player_Eng.exe OR Nucleus.exe of which are programs and which ever one it is in there it will launch it.<br>
+<br>
+<br>
+Does that help?<br>
+Glenn</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I add an autorun command</h3>
+				<div class="date">Posted: <strong>12 Apr 2018 12:19</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I assume these are the additional lines you're looking for
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>If objFSO.FileExists(objFSO.BuildPath(strNewFolder, "Player_Eng.exe")) Then
+  objWShell.Run """" &amp; objFSO.BuildPath(strNewFolder, "Player_Eng.exe") &amp; """"
+ElseIf objFSO.FileExists(objFSO.BuildPath(strNewFolder, "Nucleus.exe")) Then
+  objWShell.Run """" &amp; objFSO.BuildPath(strNewFolder, "Nucleus.exe") &amp; """"
+End If
+</code></pre></div>Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I add an autorun command</h3>
+				<div class="date">Posted: <strong>13 Apr 2018 08:38</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Its 90% what I require maybe I was not very clear in explaining.<br>
+<br>
+<br>
+The code is correct but what im trying to do is to copy the text below into the folder that was created earlier by previous command and then run it automatically  when clicking on the folder to open it.  <br>
+<br>
+If objFSO.FileExists(objFSO.BuildPath(strNewFolder, "Player_Eng.exe")) Then<br>
+  objWShell.Run """" &amp; objFSO.BuildPath(strNewFolder, "Player_Eng.exe") &amp; """"<br>
+ElseIf objFSO.FileExists(objFSO.BuildPath(strNewFolder, "Nucleus.exe")) Then<br>
+  objWShell.Run """" &amp; objFSO.BuildPath(strNewFolder, "Nucleus.exe") &amp; """"<br>
+End If<br>
+<br>
+Can I do that?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I add an autorun command</h3>
+				<div class="date">Posted: <strong>13 Apr 2018 09:12</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8291.html?mode=viewprofile&amp;u=9155">tweacle</a> wrote: <a href="viewtopic0413.html?p=56315#p56315" data-post-id="56315" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">13 Apr 2018 08:38</div></cite>... run it automatically  when clicking on the folder to open it ...<br>
+Can I do that?</div></blockquote>
+Nope. Clicking on a folder can't be linked to a script and things like "autorun.inf" don't work here (only in the root folder of a CD drive).</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I add an autorun command</h3>
+				<div class="date">Posted: <strong>13 Apr 2018 09:32</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Ok Many Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I add an autorun command **AMENDMENT**</h3>
+				<div class="date">Posted: <strong>02 Jun 2018 06:03</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Ladies and Gents<br>
+<br>
+This autorun script runs good but I have a slight problem where as its merging everything in C:\Downloads. Is there anyway that I can set it up to do this command so it merges everything but not <br>
+ 7Z application file types but I do need Player_Eng.exe of which is a application type included into the folder. <br>
+<br>
+Any Ideas.<br>
+<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Option Explicit
+
+Const strDLFolder = "C:\Downloads"
+Dim objFSO, objWShell, objDLFolder, strNewFolder, objFile
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objWShell = CreateObject("WScript.Shell")
+
+
+If Not objFSO.FolderExists(strDLFolder) Then objFSO.CreateFolder(strDLFolder)
+objWShell.CurrentDirectory = strDLFolder
+Set objDLFolder = objFSO.GetFolder(strDLFolder)
+If objDLFolder.Files.Count = 0 Then WScript.Quit
+
+Do
+  Err.Clear
+  strNewFolder = InputBox("Folder Name", vbLf &amp; "Enter the name of the folder to be created:")
+  If strNewFolder = False Then WScript.Quit
+  On Error Resume Next
+  objFSO.CreateFolder strNewFolder
+Loop While Err.Number &lt;&gt; 0 Or Not objFSO.FolderExists(strNewFolder)
+
+On Error Goto 0
+For Each objFile In objDLFolder.Files
+  objFSO.MoveFile objFile.Name, strNewFolder &amp; "\"
+Next
+
+objWShell.Popup "All files moved.", 0, "Done", vbInformation Or vbSystemModal Or &amp;h00040000&amp;
+
+objWShell.Run "explorer.exe /select,""" &amp; objFSO.BuildPath(strDLFolder, strNewFolder) &amp; """"</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8492&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:07 GMT -->
+</html>

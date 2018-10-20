@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8807&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:23:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Help with a Batch Macro</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Help with a Batch Macro</h2>
+		<p><a href="viewtopic3d56-2.html?f=3&amp;t=8807">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8807</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Help with a Batch Macro</h3>
+				<div class="date">Posted: <strong>30 Aug 2018 16:46</strong></div>
+				<div class="author">by <strong>Grapefruits</strong></div>
+				<div class="content">Hey everyone. So right now, I have a Batch macro "with arguments", of which I took the form from <a href="viewtopic1ca9.html?f=3&amp;t=2518" class="postlink">viewtopic.php?f=3&amp;t=2518</a>. The macro is this:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set ac=^&lt;^&gt;
+set MUSIC=for /L %%n in (1 1 2) do if %%n==2 (%\n%
+      for /F "tokens=1 delims=, " %%1 in ("!argv!") do (%\n%
+         set "argument1=%%1"%\n%
+         set prevmusic=!argument1!%\n%
+         ( echo Set Sound = CreateObject("WMPlayer.OCX.7"^^)%\n%
+           echo Sound.URL = "!argument1!.mp3"%\n%
+           echo Sound.settings.volume = 100%\n%
+           echo Sound.settings.setMode "loop", True%\n%
+           echo Sound.Controls.play%\n%
+           echo While Sound.playState !ac! 1%\n%
+           echo WScript.Sleep 100%\n%
+           echo Wend%\n%
+           ^) ^&gt;Music.vbs%\n%
+         start /min Music.vbs%\n%
+      ) %\n%
+) ELSE setlocal enableDelayedExpansion ^&amp; set argv=,</code></pre></div>
+
+It creates a .vbs file that plays music on loop, and works fine when I do %MUSIC% JazzBeat2. However, I have a txt file with many commands in it such as:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>%MUSIC% JazzBeat3
+%MUSIC% JazzBeat2</code></pre></div>
+
+I have another script which reads the aforementioned txt line by line, and it's supposed to execute each line (%MUSIC% JazzBeat3, ect) by means of :<br>
+<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>!Line1!</code></pre></div>
+
+<br>
+So if Line1 is equal to "%MUSIC% JazzBeat3" on the txt file, it should play Jazzbeat3. However, it says that "%MUSIC% is not recognized". How can I solve this?<br>
+<br>
+<br>
+Thank, Grapefruits,</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Help with a Batch Macro</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 03:43</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">Post the complete code also batch2, I don't like guessing what you are doing.<br>
+<br>
+batch1 seems to accept only a single parameter %%1 and %MUSIC% seems to handle also only a single parameter.<br>
+then batch1.CMD "mySongPath/mySong.MP3" should simply work.<br>
+<br>
+You can execute %MUSIC% JazzBeat3 from batch2 in two ways:<br>
+<br>
+-either %MUSIC% expands to batch1.CMD in which case you want to prepend CALL to %MUSIC% so control is returned to batch2 after execution of batch1.<br>
+<br>
+-or it is the macro defined in batch1.<br>
+<br>
+Post the complete code also batch2, I don't like guessing what you are doing.<br>
+<br>
+Why are you using two different scripts instead of just one ?</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8807&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:23:17 GMT -->
+</html>

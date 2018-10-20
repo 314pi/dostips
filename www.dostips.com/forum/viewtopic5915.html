@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8617&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Dateien verbinden und / Fehler bei Inhalte suchen</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Dateien verbinden und / Fehler bei Inhalte suchen</h2>
+		<p><a href="viewtopicfa14.html?f=3&amp;t=8617">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8617</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Dateien verbinden und / Fehler bei Inhalte suchen</h3>
+				<div class="date">Posted: <strong>12 Jun 2018 03:20</strong></div>
+				<div class="author">by <strong>FireBuff</strong></div>
+				<div class="content">Hallo User,<br>
+<br>
+ich habe ein Problem und kommen nicht weiter ...<br>
+<br>
+Ich habe sehr viele Textdateien und möchte diese verbinden, leere Zeilen löschen und Inhalte suchen.<br>
+<br>
+Ich habe 2 cmd Dateien erstellt aber die Daten ( der Inhaltssuche ) werden jeweils doppelt ausgewertet.<br>
+<br>
+Datei 1:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+echo.  &gt;  KS-Inhalt.txt
+For %%i in (KH-*.txt) do call Dat-verbinden %%i</code></pre></div>
+
+Datei 2:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+   set Datei=%1
+   cls
+   echo.
+   echo    Datei %Datei% wird verarbeitet
+   echo.
+   echo =======================            &gt;&gt;  KS-Inhalt.txt
+   echo === %Datei% ===                            &gt;&gt;  KS-Inhalt.txt
+   echo =======================            &gt;&gt;  KS-Inhalt.txt
+
+::  der folgende Befehl wird 2x ausgeführt .  Wieso ?
+ :?: 
+   findstr "VV011"           %Datei%               &gt;&gt;  KS-Inhalt.txt</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dateien verbinden und / Fehler bei Inhalte suchen</h3>
+				<div class="date">Posted: <strong>12 Jun 2018 14:13</strong></div>
+				<div class="author">by <strong>Newbee</strong></div>
+				<div class="content">Es funktioniert gut auf meiner Maschine.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dateien verbinden und / Fehler bei Inhalte suchen</h3>
+				<div class="date">Posted: <strong>13 Jun 2018 00:43</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Hi FireBuff,<br>
+<br>
+the language for this forum is english, it would be polite to translate your question.<br>
+<br>
+Like Newbee wrote, I suppose the problem is not in your code.  <br>
+Instead it's probably that findstr simply finds two lines with "VV011".<br>
+<br>
+You could test this, add /N to findstr ("findstr /N ...") this will output also the line numbers of the hits.<br>
+<br>
+Btw. You could simplify your code a bit to:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+set "Datei=%~1"
+cls
+echo(
+echo    Datei %Datei% wird verarbeitet
+echo(
+(
+   echo =======================
+   echo === %Datei% ===
+   echo =======================
+
+   findstr /N "VV011" "%Datei%"
+) &gt;&gt;  KS-Inhalt.txt</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8617&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:18 GMT -->
+</html>

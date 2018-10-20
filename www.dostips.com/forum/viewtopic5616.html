@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8657&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:52:20 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Help with set /a</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Help with set /a</h2>
+		<p><a href="viewtopic959e.html?f=3&amp;t=8657">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8657</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Help with set /a</h3>
+				<div class="date">Posted: <strong>03 Jul 2018 21:57</strong></div>
+				<div class="author">by <strong>J'aitreschaud</strong></div>
+				<div class="content">I have another question. Hopefully this gets answered...<br>
+I have this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /L %%G IN (1,1,6) DO (
+    SET /A rand%%G=%RANDOM% * (5 - 1 + 1) / 32768 + 1
+)</code></pre></div>
+
+But for the life of me, I can't figure out why it doesn't work. It displays the error message :"/ was unexpected at the time". I really see no error however. Any help would be lovely  <img class="smilies" src="images/smilies/icon_twisted.gif" width="15" height="15" alt=":twisted:" title="Twisted Evil"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Help with set /a</h3>
+				<div class="date">Posted: <strong>03 Jul 2018 22:22</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">If you happened to read the help file for the SET command you may have noticed this comment.
+<blockquote class="uncited"><div>If you use any of the logical or modulus operators, you will need to enclose the expression string in quotes.</div></blockquote>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>setlocal enabledelayedexpansion
+FOR /L %%G IN (1,1,6) DO (
+    SET /A "rand%%G=!RANDOM! * (5 - 1 + 1) / 32768 + 1"
+)</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Help with set /a</h3>
+				<div class="date">Posted: <strong>04 Jul 2018 08:03</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Of course the help is incomplete, misleading, and in some ways simply wrong. The OP did not use modulus or logical operators, so it wouldn't be obvious that quotes are needed. Beyond that, quotes wouldn't help with modulus, which must be escaped in a batch file as %%, with or without quotes.<br>
+<br>
+And negation must be escaped as ^! if the expression is quoted and delayed expansion is enabled. Without the quotes it would be escaped as ^^!.<br>
+<br>
+And quotes are never actually needed - an alternative for most problem characters is to escape the character with a preceding caret (^).<br>
+<br>
+The OPs issue is the ) which prematurely closes the FOR loop unless it is quoted or escaped.<br>
+<br>
+Here is a complete list of SET /A operators that require special handling:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Operator  Name          Required Special Handling
+--------  ------------  --------------------------------------------------
+%         modulus       Must be escaped as %% within a batch file
+!         not           Only if delayed expansion is enabled, then must be
+                        escaped as ^^! without quotes, or ^! within quotes
+&amp;         and           Must be quoted or escaped as ^&amp;
+|         or            Must be quoted or escaped as ^|
+^         exclusive or  Must be quoted or escaped as ^^
+&lt;&lt;        left shift    Must be quoted or escaped as ^&lt;^&lt;
+&gt;&gt;        right shift   Must be quoted or escaped as ^&gt;^&gt;
+)         close group   Only if appears within a parenthesized block of
+                        code, as often occurs with FOR loops and IF
+                        statements, then must be quoted or escaped as ^)
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Help with set /a</h3>
+				<div class="date">Posted: <strong>04 Jul 2018 09:14</strong></div>
+				<div class="author">by <strong>J'aitreschaud</strong></div>
+				<div class="content">Thanks for the reply dbenham!  However, it still auto-closes with the same message:"/ was unexpected at the time"<br>
+I've tried putting a caret before the ), but it doesn't work.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /L %%G IN (1,1,6) DO (
+    SET /A rand%%G=%RANDOM% * (5 - 1 + 1^) / 32768 + 1
+^)</code></pre></div>
+
+Neither does this<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /L %%G IN (1,1,6) DO (
+    SET /A rand%%G=%RANDOM% * (5 - 1 + 1) / 32768 + 1
+^)</code></pre></div>
+
+Any thoughts?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Help with set /a</h3>
+				<div class="date">Posted: <strong>04 Jul 2018 09:56</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">The code I gave you worked just fine when I tested it. I also fixed the problem with your results not actually being random! Not sure why you haven't tried to use it.<br>
+<br>
+Regardless of that you literally took Dave's advice and attempted to do it both ways you could possibly do it wrong.  You need to escape the parentheses that is <strong class="text-strong"><span style="color: red">CAUSING</span></strong> the FOR command to be closed. <br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /L %%G IN (1,1,6) DO (
+    SET /A rand%%G=%RANDOM% * (5 - 1 + 1^) / 32768 + 1
+)</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Help with set /a</h3>
+				<div class="date">Posted: <strong>04 Jul 2018 13:11</strong></div>
+				<div class="author">by <strong>J'aitreschaud</strong></div>
+				<div class="content">@Squashman Sorry for ignoring your answer, its just that the time I saw your answer was on mobile; while when I saw Dave's answer I was on my PC, so I looked at his advice. Thank you a lot for posting a reply, it works!  <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8657&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:52:20 GMT -->
+</html>

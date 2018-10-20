@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:01:47 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</h2>
+		<p><a href="viewtopicb16d.html?f=3&amp;t=6044">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6044</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>27</strong></div>
+					<div class="post">
+				<h3>JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>14 Nov 2014 14:52</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Here is the current version of JREPL.BAT as of 2018-10-15. Read the subsequent posts for examples of usage and to follow the development history.
+<div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file6a70.php?id=387">JREPL7.14.zip</a></dt>
+						<dd>(27.24 KiB) Downloaded 57 times</dd>
+		</dl>
+		
+		
+			</div>
+
+<br>
+Full documentation is available from the command line via JREPL /?, or JREPL /?? for paged help.<br>
+The entire documentation is also listed at the top of the code, after the history.<br>
+<br>
+Unfortunately the code has gotten too big to post on this site as view-able text. More than half the code is documentation <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <br>
+<br>
+<strong class="text-strong">Index of releases</strong><br>
+<a href="viewtopic2135.html?f=3&amp;t=6044&amp;p=58143#p58143" class="postlink"><strong class="text-strong">v7.14</strong></a> 2018-10-15: Bug fix to allow user defined variables str and/or obj, and to hide xbytes from user code.<br>
+<a href="viewtopic6da9.html?f=3&amp;t=6044&amp;start=360#p57477" class="postlink"><strong class="text-strong">v7.13</strong></a> 2018-07-18: Added ability to create XBYTES.DAT via ADO in case CERTUTIL is missing, Fixed minor bug related to XBYTES.DAT that was sometimes leaving behind one or more copies of XBYTES.HEX, and Fixed major bug with /INC and /EXC regular expression blocks.<br>
+<a href="viewtopicbde8.html?f=3&amp;t=6044&amp;p=56103#p56103" class="postlink"><strong class="text-strong">v7.11</strong></a> 2018-03-26: Added functionality to overwrite input file as ADO UTF without BOM (added support for <strong class="text-strong">/O "-|UTF-?|NB"</strong>).<br>
+<a href="viewtopic93de.html?f=3&amp;t=6044&amp;p=55970#p55970" class="postlink"><strong class="text-strong">v7.10</strong></a> 2018-03-14: Now can block BOM in ADO output files by appending |NB to |CharSet in the /O option and OpenOutput() function.<br>
+<a href="viewtopic69b5.html?f=3&amp;t=6044&amp;p=54742#p54742" class="postlink"><strong class="text-strong">v7.9</strong></a> 2017-11-23: Allow escape sequences with /T "", New /PREPL option to improve /P functionality, plus two minor bug fixes<br>
+<a href="viewtopic2b38.html?f=3&amp;t=6044&amp;p=54672#p54672" class="postlink"><strong class="text-strong">v7.8</strong></a> 2017-11-13:  Emulate FINDSTR /G; Split /X into /XSEQ and /XFILE; New \x{nn-mm} escape sequence<br>
+<a href="viewtopic5eca.html?f=3&amp;t=6044&amp;p=54491#p54491" class="postlink"><strong class="text-strong">v7.7</strong></a> 2017-10-24: Fixed broken MicroSoft links; Allow /O "-|CharSet"; fix decode() bug - make CharSet arg optional<br>
+<a href="viewtopic70c8.html?f=3&amp;t=6044&amp;p=54307#p54307" class="postlink"><strong class="text-strong">v7.6</strong></a> 2017-10-08: New /?CHARSET/[Query] list character sets help option, New /?CHARSET and /?XREGEXP web page help options, and minor bug fix to output.WriteLine()<br>
+<a href="viewtopicd036.html?f=3&amp;t=6044&amp;start=330#p54150" class="postlink"><strong class="text-strong">v7.4</strong></a> 2017-09-25: Modified /X \xnn extended ASCII escape sequence to support any single byte character set, not just Windows-1252<br>
+<a href="viewtopic4f57.html?f=3&amp;p=53520#p53886" class="postlink"><strong class="text-strong">v7.3</strong></a> 2017-09-23: Added ability to select character set for input and output, including Unicode. Also added support for XRegExp enhanced regular expressions<br>
+<a href="viewtopicc61b.html?f=3&amp;t=6044&amp;start=315#p53520" class="postlink"><strong class="text-strong">v6.8</strong></a> 2017-08-25:  Added \c escape sequence for /X, added /APP option, and added openOutput() function.<br>
+<a href="viewtopic9e57.html?f=3&amp;t=6044&amp;p=51846#p51846" class="postlink"><strong class="text-strong">v6.7</strong></a> 2017-04-09: Corrected /OFF, /EXC, and /INC documentation, plus spelling fixes.<br>
+<a href="viewtopice773.html?f=3&amp;t=6044&amp;p=50127#p50127" class="postlink"><strong class="text-strong">v6.6</strong></a> 2016-12-23: New /RTN option to store result in a variable. Improved support for extended ASCII. Fixed documentation error introduced by version 6.0<br>
+<a href="viewtopica8aa.html?f=3&amp;t=6044&amp;start=240#p49641" class="postlink"><strong class="text-strong">v6.4</strong></a> 2016-11-01: Improved peformance by dynamically building optimized main loop based on chosen options<br>
+<a href="viewtopic1ba3.html?f=3&amp;t=6044&amp;p=49151#p49546" class="postlink"><strong class="text-strong">v6.2</strong></a> 2016-10-13: Added /K /R /MATCH /P /PFLAG /JQ /JMATCHQ. Improved /INC /EXC. Improved Performance.<br>
+<a href="viewtopic1ba3.html?f=3&amp;t=6044&amp;p=49151#p49151" class="postlink"><strong class="text-strong">v5.2</strong></a> 2016-09-27: Added /T FILE option<br>
+<a href="viewtopic131d.html?f=3&amp;t=6044&amp;p=49112#p49112" class="postlink"><strong class="text-strong">v5.0</strong></a> 2016-09-18: Added /U option<br>
+<a href="viewtopic2ebc.html?f=3&amp;t=6044&amp;p=48271#p48271" class="postlink"><strong class="text-strong">v4.5</strong></a> 2016-08-03: Added /D option<br>
+<a href="viewtopic5fae.html?f=3&amp;t=6044&amp;p=48255#p48255" class="postlink"><strong class="text-strong">v4.4</strong></a> 2016-08-02: Bug fix for /C when last line missing \n<br>
+<a href="viewtopic5fae.html?f=3&amp;t=6044&amp;p=48255#p48205" class="postlink"><strong class="text-strong">v4.3</strong></a> 2016-07-30: Added rpad() and improved lpad()<br>
+<a href="viewtopic80f2.html?f=3&amp;t=6044&amp;p=47283#p47283" class="postlink"><strong class="text-strong">v4.2</strong></a> 2016-06-24: Improved /?Options help<br>
+<a href="viewtopic4f06.html?f=3&amp;t=6044&amp;p=47247#p47247" class="postlink"><strong class="text-strong">v4.1</strong></a> 2016-06-23: Added help for single option/topic as well as /T examples<br>
+<a href="viewtopic7b5e.html?f=3&amp;t=6044&amp;p=47121#p47121" class="postlink"><strong class="text-strong">v4.0</strong></a> 2016-06-19: Added /INC and /EXC<br>
+<a href="viewtopice95c.html?f=3&amp;t=6044&amp;p=45938#p45938" class="postlink"><strong class="text-strong">v3.8</strong></a> 2016-03-27: Bug fix - hide some additional internal variables<br>
+<a href="viewtopic57d4-2.html?f=3&amp;t=6044&amp;p=44816#p44816" class="postlink"><strong class="text-strong">v3.7</strong></a> 2016-01-14: Bug fix for \xnn and \unnnn in regex with /X<br>
+<a href="viewtopic0e8b.html?f=3&amp;t=6044&amp;p=42089#p42089" class="postlink"><strong class="text-strong">v3.6</strong></a> 2015-07-15: Added /?? paged help option<br>
+<a href="viewtopicfa57.html?f=3&amp;t=6044&amp;p=41616#p41616" class="postlink"><strong class="text-strong">v3.5</strong></a> 2015-06-12: /T bug fix for $n and $nn when not /J or /JMATCH<br>
+<a href="viewtopic84d7.html?f=3&amp;t=6044&amp;p=39381#p39381" class="postlink"><strong class="text-strong">v3.4</strong></a> 2015-01-22: "Hide" internal /TEST variable (instead of TEST)<br>
+<a href="viewtopicec8a.html?f=3&amp;t=6044&amp;p=38247#p38247" class="postlink"><strong class="text-strong">v3.3</strong></a> 2014-12-24: Added /JLIB plus some bug fixes<br>
+<a href="viewtopic4b65.html?f=3&amp;t=6044&amp;p=38213#p38213" class="postlink"><strong class="text-strong">v3.0</strong></a> 2014-11-23: Added /JBEGLN and /JENDLN<br>
+<a href="viewtopic7caf.html?f=3&amp;t=6044&amp;p=38103#p38103" class="postlink"><strong class="text-strong">v2.2</strong></a> 2014-11-21: Added /T option<br>
+<a href="viewtopic7c25.html?f=3&amp;t=6044&amp;p=37969#p37969" class="postlink"><strong class="text-strong">v1.0</strong></a> 2014-11-14: Initial release<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>14 Nov 2014 15:26</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">JREPL.BAT is a powerful, general purpose, command line, regular expression text processor for ASCII data. It is a hybrid JScript/batch script that should run on any Windows machine from XP onward.<br /><br />Here is a trivial example that will substitute &quot;blue&quot; for every occurrence of the word &quot;red&quot; within a file. Changes are made directly to the file:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;\bred\b&quot; &quot;blue&quot; /f test.txt /o -<br /></code></pre></div><br />If the command is used in a batch script, then CALL must be used so that the calling script can continue after JREPL finishes.<br /><br />Full documentation can be accessed by using the following:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl /?<br /></code></pre></div><br />JREPL.BAT is a direct <a href="viewtopicebb5.html?f=3&amp;t=3855" class="postlink">descendent from REPL.BAT</a>. A new name was needed because the calling syntax is not backward compatible.<br /><br />JREPL.BAT uses the same options as REPL.BAT, except instead of concatenating all the options into one string, each option must be listed separately with a slash prefix.<br /><br />Besides having different calling syntax, JREPL version 1.0 offers the following enhancements over REPL.BAT version 6:<br /><ul><li> The input file may be specified using /F &quot;file&quot;. No need to pipe or redirect the input file.<br /></li><li> The output may be sent to a file using /O &quot;file&quot;. No need to redirect the output.<br /></li><li> /O &quot;-&quot; will replace the original file with the result. The output is first written to a temporary file, and then it is MOVEd to replace the original.<br /></li><li> /JMATCH discards all non-matching text, and each match's replacement value is written on a new line. The replacement value is expressed as JScript code.<br /></li><li> /JBEG &quot;code&quot; and /JEND &quot;code&quot; run initialization and termination JSCRIPT code supplied by the user. User defined global variables can be declared and initialized within the /JBEG code. Then the /J or /JMATCH Replacement code can update the variables upon each match. Finally, the /JEND code can write summarized information upon completion.<br /></li><li> /N &quot;width&quot; prefixes each line of output with the corresponding line number from the input. The line numbers may be zero padded to a minimum width.<br /></li><li> /OFF &quot;width&quot; prefixes each line of /JMATCH output with the offset within the source line where the match occurred. The offsets may be zero padded to a minimum width.<br /></li><li> Expanded the number of predefined global variables/methods/objects that may be used by user supplied JScript code.<br /></li><li> All global variables/methods/objects used by the JREPL script itself are hidden behind a single opaque global object named &quot;_g&quot;. User supplied code can create identifiers without fear of corrupting the JREPL script as long as the _g object is avoided.</li></ul><br />Please let me know if you find any bugs - I've done rudimentary testing, but I do not yet have a regression test plan, and the code has grown substantially since the original version of REPL.BAT. I may have unknowingly broken code that worked previously.<br /><br /><div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file3a9f.php?id=6">JREPL1.0.zip</a></dt>
+						<dd>(5.79 KiB) Downloaded 478 times</dd>
+		</dl>
+		
+		
+			</div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>14 Nov 2014 17:02</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Me find redundant terms: <span style="color: blue">run user supplied initialization and termination JSCRIPT code supplied by the user.</span><br /><br />I like the concept of Jrepl but I'm unclear on this point - does it do everything that repl.bat did, except with extra features?<br /><br /><br /><br />Forgive me to asking but I've had gastric problems for over 2 months and had less than 4 hours sleep for many of those nights - so my concentration to study complex stuff is sorely lacking.  I'm also not very clued up with Jscript.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>14 Nov 2014 17:15</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Yes, it does everything that REPL.BAT did, plus more.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>14 Nov 2014 18:41</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">I assume then that the repl syntax will all work the same way, in Jrepl ?<br /><br />There is a thread over at computerhope <!-- m --><a class="postlink" href="http://www.computerhope.com/forum/index.php/topic,147278.msg919079.html#msg919079">http://www.computerhope.com/forum/index ... #msg919079</a><!-- m --><br />where I have attempted to solve the problem using repl, and I think it might be a good question for Jrepl to solve, if you can take the terms from my answer and wrap it in a Jrepl line.<br /><br />It could be a good example for those of us that need functional examples to learn to use these new tools.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>14 Nov 2014 19:30</strong></div>
+				<div class="author">by <strong>bars143</strong></div>
+				<div class="content">HI,<br /><br />can you give me script that can extract text between html tags specially &lt;title&gt; tag?<br />findstr cant do when a &lt;title&gt; tag is found in a single line together with a long line of css scripts up to 41KB , the findstr error is &quot;...line 2 is too long string...&quot;<br /><br />here is example of html page (only two-lines):<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<br />&lt;!DOCTYPE html PUBLIC &quot;-//WAPFORUM//DTD XHTML Mobile 1.0//EN&quot; &quot;http://www.wapforum.org/DTD/xhtml-mobile10.dtd&quot;&gt;&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;&lt;head&gt;&lt;title&gt;Comments2&lt;/title&gt;&lt;meta name=&quot;referrer&quot; content=&quot;default&quot; id=&quot;meta_referrer&quot; /&gt;&lt;noscript&gt;&lt;meta http-equiv=&quot;X-Frame-Options&quot; content=&quot;DENY&quot; /&gt;&lt;/noscript&gt;&lt;style type=&quot;text/css&quot;&gt;/*&lt;!&#91;CDATA&#91;*/.f{background:#dcdee3;}.b .m{background:#f6f7f8;border:0;font-size:small;margin:0;}.m .bh{font-size:x-small;}.m .bf{font-size:x-small;}.bm .dh{font-size:13px;}.bm .dd .dk a,.bm .dd .dk abbr{white-space:nowrap;}.n{margin:0 6px 6px;padding:6px;}.b .n .n{border-color:#e9eaed;margin:6px 0 0;}.bj{display:inline-block;}.bg{margin-top:5px;}.r,.s{margin:5px 0;}.n a,.n a:visited{color:#2b55ad;}.n a:hover,.n a:focus{background:#2b55ad;color:#fff;}.m .n{font-size:small;padding:4px;}.m .bg{margin-top:6px;}.m .r,.m .s{margin:6px 0;}.b .o{background:white;margin:0;}.x{border:1px solid #ccc;margin:5px 0;word-wrap:break-word;}.t{display:block;}.b .t,.b .t:visited{color:#3e4350;}.b .t:focus,.b .t:hover,.b .t:focus .x,.b .t:hover .x{background:#3b5998;color:#fff;}.b a,.b a:visited{color:#3b5998;text-decoration:none;}.b .bk,.b .bk:visited{color:#6d84b4;}.b a:focus,.b a:hover,.b .bk:focus,.b .bk:hover{background-color:#3b5998;color:#fff;}.v{background:#f6f7f8;}.cl{background:#fff;}.b .cz{padding:0;}.b .cp{padding:2px;}.b .w{padding:4px;}.b .y{border:0;border-collapse:collapse;margin:0;padding:0;width:100%;}.b .y tbody,.b .z&gt;tr&gt;td,.b .z&gt;tbody&gt;tr&gt;td,.b .y td.z{vertical-align:top;}.b .bs&gt;tr&gt;td,.b .bs&gt;tbody&gt;tr&gt;td,.b .y td.bs{vertical-align:middle;}.b .y td{padding:0;}.b .y td.cp{padding:2px;}.b .y td.w{padding:4px;}.b .bb{width:100%;}.k{border:0;display:inline-block;vertical-align:top;}i.k <br /></code></pre></div><br /><br />but i cut a last line cause its too big to paste here but its total kilobytes is 41.<br /><br />did you see &quot;&lt;title&gt;Comments2&lt;/title&gt;&quot; in secondline(also lastline) ? then after &lt;title&gt; tags -- there is  &quot;/*&lt;![CDATA[*&quot; , which i can use &quot;[&quot; as delimiter then copy it output to a file then do findstr again to extract &quot;Comments2&quot; -- thats the way i can solve but its more work and more time as i had thousands webpages that are not named according to its webpage title. but not all html has longline. some &lt;title&gt;<br />tags are separated from a longline of css script like this:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;!DOCTYPE html&gt;<br /><br />&lt;html dir=&quot;ltr&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;en&quot;&gt;<br />&nbsp; &nbsp; &lt;head&gt;&lt;link rel=&quot;canonical&quot; href=&quot;http://msdn.microsoft.com/en-us/library/aa664628(v=vs.71).aspx&quot; /&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &lt;title&gt;1.1 Getting started (C#)&lt;/title&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; <br />&nbsp; &nbsp; &nbsp; &nbsp; <br />&lt;meta name=&quot;DCS.dcsuri&quot; content=&quot;/en-us/library/aa664628(d=default,l=en-us,v=vs.71).aspx&quot; /&gt;<br /><br />&lt;meta name=&quot;NormalizedUrl&quot; content=&quot;http://msdn.microsoft.com/en-us/library/aa664628(d=default,l=en-us,v=vs.71).aspx&quot; /&gt;<br /></code></pre></div><br />above &lt;title&gt; tags are easy to extract<br /><br />and some .mht webpage has two-lines of webpage title which is separated by equal symbol &quot;=&quot; like this:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>From: &lt;Saved by Mozilla 5.0 (Windows)&gt;<br />Subject: DosTips.com - View topic - Another way to create a line feed<br />&nbsp;variable<br />Date: Thu, 13 Nov 2014 17:24:51 +0800<br />MIME-Version: 1.0<br />Content-Type: multipart/related;<br />&nbsp; &nbsp;type=&quot;text/html&quot;;<br />&nbsp; &nbsp;boundary=&quot;----=_NextPart_000_0000_EA983E61.0B94984F&quot;<br />X-MAF-Information: Produced By MAF V3.0.3<br /><br />This is a multi-part message in MIME format.<br /><br />------=_NextPart_000_0000_EA983E61.0B94984F<br />Content-Type: text/html;<br />&nbsp; &nbsp;charset=&quot;UTF-8&quot;<br />Content-Transfer-Encoding: quoted-printable<br />Content-Location: http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4439<br /><br />&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.=<br />w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;&lt;html xmlns=3D&quot;http://www.w3.=<br />org/1999/xhtml&quot; dir=3D&quot;ltr&quot; xml:lang=3D&quot;en-gb&quot; lang=3D&quot;en-gb&quot;&gt;&lt;head&gt;<br />&lt;meta http-equiv=3D&quot;content-type&quot; content=3D&quot;text/html; charset=3DUTF-8&quot;&gt;<br /><br />&lt;meta http-equiv=3D&quot;content-type&quot; content=3D&quot;text/html; charset=3DUTF-8&quot;&gt;<br />&lt;meta http-equiv=3D&quot;content-language&quot; content=3D&quot;en-gb&quot;&gt;<br />&lt;meta http-equiv=3D&quot;content-style-type&quot; content=3D&quot;text/css&quot;&gt;<br />&lt;meta http-equiv=3D&quot;imagetoolbar&quot; content=3D&quot;no&quot;&gt;<br />&lt;meta name=3D&quot;resource-type&quot; content=3D&quot;document&quot;&gt;<br />&lt;meta name=3D&quot;distribution&quot; content=3D&quot;global&quot;&gt;<br />&lt;meta name=3D&quot;copyright&quot; content=3D&quot;2000, 2002, 2005, 2007 phpBB Group&quot;&gt;<br />&lt;meta name=3D&quot;keywords&quot; content=3D&quot;&quot;&gt;<br />&lt;meta name=3D&quot;description&quot; content=3D&quot;&quot;&gt;<br /><br />&lt;title&gt;DosTips.com - View topic - Another way to create a line feed variabl=<br />e&lt;/title&gt;<br /><br />&lt;link rel=3D&quot;stylesheet&quot; href=3D&quot;urn:snapshot-9C7CAE89:http://www.dostips.c=<br />om/forum/styles/avalon/theme/stylesheet.css&quot; type=3D&quot;text/css&quot;&gt;<br />&lt;!--&#91;if IE&#93;&gt;<br />&lt;link rel=3D&quot;stylesheet&quot; type=3D&quot;text/css&quot; href=3D&quot;./styles/avalon/theme/ie=<br />7.css&quot; /&gt;<br />&lt;!&#91;endif&#93;--&gt;<br /></code></pre></div><br />as shown above the &lt;title&gt; tags has two-lines:<br /><br />&lt;title&gt;DosTips.com - View topic - Another way to create a line feed variabl=<br />e&lt;/title&gt;<br /><br /><br />other .mht has different string in second line like this for examples:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;title&gt;DosTips.com - View topic - Another way to create a line feed var=<br />iable&lt;/title&gt;<br /></code></pre></div><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;title&gt;DosTips.com - View topic - Another way to create a line feed variable&lt;/tit=<br />le&gt;<br /></code></pre></div><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;title&gt;DosTips.com - View topic - Another way to create a line feed variable&lt;/=<br />title&gt;<br /></code></pre></div><br /><br /><br />i tried this code but no luck in a single long stringline:<br /><br /> type infile.htm |repl &quot;.*&lt;title&gt;(.*)&lt;/title&gt;.*&quot; &quot;$1&quot; &gt;outfile.txt<br /><br /><br />can this repl.bat or jrepl.bat solves problems below:<br /><br />1) extracting between html tags in a oneline in a long strings?<br />2) extracting between html tags (of some .mht webpages) which has two-lines long webpage title separated by equal(=) symbol ?<br /><br />i needs above answers and im still on studying the so-called &quot;regex code&quot;<br /><br />anyway thanks<br /><br />Bars<br /><br />windows xp sp3 32bit user</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>14 Nov 2014 23:50</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">@foxidrive - I posted solutions at ComputerHope. I also edited the top post on this thread to briefly describe the difference in syntax between JREPL and REPL. It shouldn't take long to get used to the new syntax.<br /><br />@bars143 - This is really easy (and fast) with JREPL.BAT <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" />  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type test.txt | jrepl &quot;=?\r?\n&quot; &quot;&quot; /m | jrepl &quot;&lt;title&gt;(.*?)&lt;/title&gt;&quot; &quot;$1&quot; /jmatch /m<br /></code></pre></div><br />First I strip out all carriage returns and linefeeds. I also strip out = if it precedes the end of a line. Then I simply search for the title tag, capturing the contents. The /JMATCH option preserves only matched text.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>15 Nov 2014 01:55</strong></div>
+				<div class="author">by <strong>bars143</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>@foxidrive - I posted solutions at ComputerHope. I also edited the top post on this thread to briefly describe the difference in syntax between JREPL and REPL. It shouldn't take long to get used to the new syntax.<br /><br />@bars143 - This is really easy (and fast) with JREPL.BAT <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" />  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type test.txt | jrepl &quot;=?\r?\n&quot; &quot;&quot; /m | jrepl &quot;&lt;title&gt;(.*?)&lt;/title&gt;&quot; &quot;$1&quot; /jmatch /m<br /></code></pre></div><br />First I strip out all carriage returns and linefeeds. I also strip out = if it precedes the end of a line. Then I simply search for the title tag, capturing the contents. The /JMATCH option preserves only matched text.<br /><br /><br />Dave Benham</div></blockquote><br /><br /><br />thanks very much!! <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" />  Dave,<br /><br /> it works perfectly on .mht file and .htm file(for a long oneline strings)<br /><br />but i already had working combo of find.exe and REPL.exe to work on testing some 15 webpage in one go.<br />yet needed &quot;[&quot; as delimeter on longline stringd. findstr does not work as its keep saying error message :<br />&quot;...line 2 is too long strings...&quot; and it does not work on .mht file with an equal sign &quot;=&quot; .<br /><br />here is what i made:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />setlocal enabledelayedexpansion<br /><br />rem &quot;xxxx4&quot; is a folder that contents webpages files to be extracted<br /><br />set &quot;PD=%~dp0xxxx4\&quot;<br />dir &quot;%PD%&quot; /b &gt;webpagelist.txt<br />set &quot;WB=webpagelist.txt&quot;<br />set count=0<br />echo %WB%<br /><br />for /f &quot;delims=&quot; %%a in (' type &quot;!WB!&quot; ') do (<br />&nbsp; &nbsp;set &quot;FILE=%%a&quot;<br />&nbsp; &nbsp;set &quot;PFILE=!PD!!FILE!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; set /a count+=1&nbsp; &nbsp;<br />&nbsp; &nbsp;<br />&nbsp; &nbsp;&nbsp; &nbsp;echo this line will cut longline string by delimiting up to &quot;&#91;&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;echo FINDSTR will not work here. i use FIND.<br />&nbsp; &nbsp;&nbsp; &nbsp;for /f &quot;delims=&#91;&quot; %%b in (' type &quot;!PFILE!&quot; ^|find &quot;&lt;title&gt;&quot; ^|repl &quot;.*&lt;title&gt;(.*)&lt;/title&gt;.*&quot; &quot;$1&quot; ') do (<br />&nbsp; &nbsp;&nbsp; &nbsp;set &quot;c=%%b&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;ren &quot;!PD!!FILE!&quot; &quot;!c!.htm&quot;&nbsp; &nbsp;<br />&nbsp; &nbsp;&nbsp; &nbsp;<br />&nbsp; &nbsp;&nbsp; &nbsp;)<br />&nbsp;&nbsp; &nbsp;echo this line will rename some duplicate webpage title<br />&nbsp; &nbsp;if exist &quot;!PD!!FILE!&quot; ren &quot;!PD!!FILE!&quot; &quot;!c!_!count!.htm&quot;<br />)<br />echo above code does not work on .mht files with an equal sign &quot;=&quot; &lt;--it is as a separator of two-lines webpage title.<br />pause<br /><br /></code></pre></div><br /><br />i will try your script soon on some remaining webpages files.<br /><br />Bars</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>15 Nov 2014 06:21</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Bars<br /><br />Use regular expressions on markup languages (like HTML, XML, and the like) very carefully. They may fail! Enjoy reading that legendary post at SO:<br /><a href="http://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454" class="postlink">The &lt;center&gt; cannot hold it is too late.</a><br />Better take the data object model (DOM). JScript is suitable for that task as well. Maybe if I find the time I'll write a command line tool to work around XML issues.<br /><br /><br />Dave<br /><br />Great work! I already used repl.bat very successfully...<br /><br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>15 Nov 2014 11:47</strong></div>
+				<div class="author">by <strong>bars143</strong></div>
+				<div class="content">aGerman, thanks for the link. Regards back to you.<br /><br /><br />Dave , i have a problem that some webpages title has one ore more of these characters:  &quot;|&quot; &quot;?&quot; &quot;:&quot; &quot;\&quot; &quot;/&quot; &quot;=&quot; &quot;&lt;&quot; &quot;&gt;&quot;<br /><br />i can delete these chars  &quot;\&quot; &quot;|&quot; &quot;:&quot; &quot;?&quot; &quot;=&quot; by leading with &quot;\&quot; for ex. &quot;\?&quot; &quot;\:&quot;etc<br /><br />but these cant , and dont know how to delete the ff :  &quot;/&quot;  &quot;&lt;&quot; &quot;&gt;&quot; <br /><br /><br />here is my code: <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type test.txt | jrepl &quot;&#91;\|\?\:\=\\&#93;&quot; &quot;&quot; /m | jrepl &quot;&lt;title&gt;(.*?)&lt;/title&gt;&quot; &quot;$1&quot; /jmatch /m &gt;output.txt<br /></code></pre></div> <br /><br />could you give me script that can remove  &quot;/&quot;  &quot;&lt;&quot; &quot;&gt;&quot;  maybe you can add more char i dont know.<br />if you can , then i can rename &quot;/&quot; as [slash] ,  &quot;&lt;&quot; as [lessthan] , &quot;&gt;&quot; as [greaterthan] to be used as part of filename.<br />i always use webpage title as basis for my search query.<br /><br /><br />thanks,<br /><br />Bars</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>15 Nov 2014 13:10</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite>bars143 wrote:</cite>Dave , i have a problem that some webpages title has one ore more of these characters:  &quot;|&quot; &quot;?&quot; &quot;:&quot; &quot;\&quot; &quot;/&quot; &quot;=&quot; &quot;&lt;&quot; &quot;&gt;&quot;<br /><br />i can delete these chars  &quot;\&quot; &quot;|&quot; &quot;:&quot; &quot;?&quot; &quot;=&quot; by leading with &quot;\&quot; for ex. &quot;\?&quot; &quot;\:&quot;etc<br /><br />but these cant , and dont know how to delete the ff :  &quot;/&quot;  &quot;&lt;&quot; &quot;&gt;&quot; <br /></div></blockquote><br />Those chars are needed to identify the &lt;title&gt; &lt;/title&gt; tags, so they must be deleted after you extract the title, not before.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type test.txt | jrepl &quot;=?\r?\n&quot; &quot;&quot; /m | jrepl &quot;&lt;title&gt;(.*?)&lt;/title&gt;&quot; &quot;$1&quot; /jmatch /m | jrepl &quot;&#91;|?:/\\=&lt;&gt;&#93;&quot; &quot;&quot;<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>15 Nov 2014 22:09</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Dave, I was wondering if you would consider a transliteration switch like GnuSed has in the Y switch.<br /><br /><span style="color: #0040FF">y/abc/xyz</span> replaces - a with x - and b with y - and c with z.  <br /><br />Do you think that is a worthwhile function to include?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>15 Nov 2014 22:30</strong></div>
+				<div class="author">by <strong>bars143</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite><blockquote><div><cite>bars143 wrote:</cite>Dave , i have a problem that some webpages title has one ore more of these characters:  &quot;|&quot; &quot;?&quot; &quot;:&quot; &quot;\&quot; &quot;/&quot; &quot;=&quot; &quot;&lt;&quot; &quot;&gt;&quot;<br /><br />i can delete these chars  &quot;\&quot; &quot;|&quot; &quot;:&quot; &quot;?&quot; &quot;=&quot; by leading with &quot;\&quot; for ex. &quot;\?&quot; &quot;\:&quot;etc<br /><br />but these cant , and dont know how to delete the ff :  &quot;/&quot;  &quot;&lt;&quot; &quot;&gt;&quot; <br /></div></blockquote><br />Those chars are needed to identify the &lt;title&gt; &lt;/title&gt; tags, so they must be deleted after you extract the title, not before.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type test.txt | jrepl &quot;=?\r?\n&quot; &quot;&quot; /m | jrepl &quot;&lt;title&gt;(.*?)&lt;/title&gt;&quot; &quot;$1&quot; /jmatch /m | jrepl &quot;&#91;|?:/\\=&lt;&gt;&#93;&quot; &quot;&quot;<br /></code></pre></div><br /><br />Dave Benham</div></blockquote><br /><br />oh, thats a simple tweak... , i never though of that , --those chars should be deleted last.  <br />And only backlash needed another backlash inside square parenthesis [|?:/\\=&lt;&gt;*] , &lt;--- i added asterisk since its not allowed as part of filename. but a doublequote symbol  ,i dont know how?<br /><br />edited at nov 16 2014 :<br /><br />now i found it: it is   \q   &lt;---a doublequote regex <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br /><br />anyway thanks Dave for quick reply.<br /><br />Bars</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>17 Nov 2014 20:56</strong></div>
+				<div class="author">by <strong>brinda</strong></div>
+				<div class="content">dave,<br /><br />thank you for Jrepl.<br /><br />Would it be possible to use Jrepl to remove duplicate lines (case sensitive) and  leaving the lines in original order stripping blank lines as well.<br /><br />from your link<a href="http://stackoverflow.com/questions/11689689/batch-to-remove-duplicate-rows-from-text-file" class="postlink">http://stackoverflow.com/questions/11689689/batch-to-remove-duplicate-rows-from-text-file</a><br /><br />example below<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal disableDelayedExpansion<br />set &quot;file=%~1&quot;<br />set &quot;line=%file%.line&quot;<br />set &quot;deduped=%file%.deduped&quot;<br />::Define a variable containing a linefeed character<br />set LF=^<br /><br /><br />::The 2 blank lines above are critical, do not remove<br />&gt;&quot;%deduped%&quot; (<br />&nbsp; for /f usebackq^ eol^=^%LF%%LF%^ delims^= %%A in (&quot;%file%&quot;) do (<br />&nbsp; &nbsp; set &quot;ln=%%A&quot;<br />&nbsp; &nbsp; setlocal enableDelayedExpansion<br />&nbsp; &nbsp; &gt;&quot;%line%&quot; (echo !ln:\=\\!)<br />&nbsp; &nbsp; &gt;nul findstr /xlg:&quot;%line%&quot; &quot;%deduped%&quot; || (echo !ln!)<br />&nbsp; &nbsp; endlocal<br />&nbsp; )<br />)<br />&gt;nul move /y &quot;%deduped%&quot; &quot;%file%&quot;<br />2&gt;nul del &quot;%line%&quot;</code></pre></div><br /><br />If yes, could you please provide how to do? thanks.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>17 Nov 2014 21:22</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">@brinda - I don't see how JREPL can help with that, especially if the lines are not sorted.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>27</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:01:47 GMT -->
+</html>

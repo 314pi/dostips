@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=3803&p=55933 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:13:26 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Rules for label names vs GOTO and CALL - Page 4 - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopice8c4.html?t=3803&amp;start=45">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic5232.html?f=3&amp;t=3803&amp;start=45">Rules for label names vs GOTO and CALL</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting685a.html?mode=reply&amp;f=3&amp;t=3803" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic001e.html?f=3&amp;t=3803&amp;start=45&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="3803" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			54 posts
+							<ul>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic6cfc.html?f=3&amp;t=3803&amp;start=30" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopic494f.html?f=3&amp;t=3803" role="button">1</a></li>
+				<li><a class="button" href="viewtopic54db.html?f=3&amp;t=3803&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopic6cfc.html?f=3&amp;t=3803&amp;start=30" role="button">3</a></li>
+			<li class="active"><span>4</span></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p55405" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55405">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55405">
+
+						<h3 class="first"><a href="#p55405">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingabf0.html?mode=quote&amp;f=3&amp;p=55405" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicc059.html?p=55405#p55405" onclick="prompt('Message #46',this.href); return false;">#46</a></span> 
+									<a class="unread" href="viewtopicc059.html?p=55405#p55405" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>21 Jan 2018 20:50
+			</p>
+			
+			
+			
+			<div class="content">So I've been thinking about my recent experiments, and I realize that there must be two different phases where a label can be recognized so that it is not executed.<br>
+<br>
+I had already <a href="https://stackoverflow.com/a/4095133/1012053" class="postlink">updated jeb's cmd parsing rules on StackOverflow</a> to show that a command token that begins with : is detected as a label in phase 2, and the command is aborted - the later phases are not executed.<br>
+<br>
+But my recent experiments show that some labels with preceding redirection actually execute the redirection in phase 5.5, yet the label still is not executed (no error message). This implies that command execution in phase 7 must  be able to recognize that commands that begin with : are labels, and should not be executed.<br>
+<br>
+I did a bunch of additional tests, and came up with the following rules:<br>
+<br>
+There are two major types of labels:
+<ul>
+  <li> <strong class="text-strong">Unexecuted Label</strong> - A label that is fully detected in phase 2
+      <ul>
+        <li> The command is aborted, the remainder of the line is not parsed, and the subsequent phases do not take place for the label. <span style="color: #BF0000"><strong class="text-strong"><em class="text-italics">Edit - Except ^ line continuation still occurs</em></strong></span></li>
+        <li> Generally, if a command token discovered in phase 2 begins with a colon, then it is an Unexecuted Label.<br>
+            But there are exceptions listed under the Executed Label section</li>
+        <li> An Unexecuted Label within a parenthesized block will result in a fatal syntax error in phase 2 unless it is immediately followed by a command or executed label on the very next line</li>
+      </ul></li>
+  <li> <strong class="text-strong">Executed Label</strong> - A label that is not fully detected until phase 7<br>
+      All prior phases are applied to the label, but then during execution, the label is ignored (not really executed), or else results in an error, or in rare cases, changes the current volume.<br>
+      There are two basic classes of executed labels
+      <ul>
+        <li> <strong class="text-strong">Delayed label</strong> - The command token did not begin with a colon in phase 2. The leading colon only appears after FOR expansion in phase 4 or delayed expansion in phase 5 <br>
+        <span style="color: #FFFFFF">.</span></li>
+        <li> <strong class="text-strong">Phase 2 Executed Label exceptions</strong> - A command token that begins with : in phase 2 will be executed under any of the following circumstances:
+            <ul>
+            <li> The command token begins with : and there is redirection that precedes the command token, and there is &amp;, &amp;&amp;, or || command concatenation <span style="color: #BF0000"><strong class="text-strong"><em class="text-italics">or a | pipe</em></strong></span> on the line</li> 
+            <li> The command token begins with : and there is redirection that precedes the command token, and the command is within a parenthesized block</li>
+            <li> The command token begins with : and it is the very first command on a line within a parenthesized block, and the line immediately above ended with an unexecuted label</li>
+          </ul>
+          The following occurs when an executed label is discovered in phase 2
+          <ul>
+            <li> The label, its arguments, and its redirection are all excluded from any echo output in phase 3</li>
+            <li> Any subsequent concatenated commands on the line are fully parsed and executed</li>
+          </ul></li>
+      </ul></li>
+</ul>
+
+In order to fully describe the behavior of an Executed Label, phase 7 must be expanded as follows.<br>
+Steps that are important to labels are in <strong class="text-strong"><em class="text-italics">bold italics</em></strong>.<br>
+Note that there are slight differences between batch mode and command line mode that are important for executed labels.<br>
+<br>
+<strong class="text-strong">Phase 7) Execute the command</strong>
+<ul>
+  <li> <strong class="text-strong">7.1 - Execute internal command</strong> - If the command token is not quoted and it is an internal command, then execute the internal command<br>
+  <span style="color: #FFFFFF">.</span></li>
+  <li> <strong class="text-strong">7.2 - Execute volume change</strong> - Else if the command token does not begin with a quote, is exactly two characters long, and the 2nd character is a colon, then change the volume
+      <ul>
+        <li> All argument tokens are ignored</li>
+        <li> If the volume specified by the first character cannot be found, then abort with an error.</li>
+        <li> <strong class="text-strong"><em class="text-italics">A command token of :: will always result in an error unless SUBST is used to define a volume for ::<br>
+            If SUBST is used to define a volume for :: then the volume will be changed, it will not be treated as a label</em></strong></li>
+      </ul></li>
+  <li> <strong class="text-strong">7.3 - Execute external command</strong> - Else try to treat the command as an external command
+      <ul>
+        <li> If the 2nd character is a colon, then verify the volume specified by the 1st character can be found.<br>
+             If the volume cannot be found, then abort with an error</li>
+        <li> <strong class="text-strong"><em class="text-italics">If in batch mode and the command token is a label that begins with : then goto 7.4<br>
+             Note that if the label begins with :: then this will not be reached because the preceding step will have issued an error unless SUBST is used to define a volume for ::</em></strong></li>
+        <li> Identify the external command to execute<br>
+            This is a complex process that can involve the current volume, current directory,  PATH variable, PATHEXT variable, and file associations<br>
+            If a valid external command cannot be identified, then abort with an error</li>
+        <li> <strong class="text-strong"><em class="text-italics">If in command line mode and the command token is a label that begins with : then goto 7.4<br>
+             Note that this is rarely reached because the preceding step will have identified the label as an error unless the command token begins with :: and SUBST is used to define a volume for :: and the entire command token is a valid path to an external command</em></strong></li>
+        <li> Execute the external command</li>
+      </ul></li>
+  <li> <strong class="text-strong">7.4 - Ignore a label <em class="text-italics">- Ignore the command and all its arguments if the command token begins with :<br>
+      Rules in 7.2 and 7.3 may prevent a label from reaching this point</em></strong></li>
+</ul>
+
+I've updated <a href="https://stackoverflow.com/a/4095133/1012053" class="postlink">jeb's parsing rules</a> to reflect the rules above.<br>
+<br>
+The remainder of this post is evidence for and/or examples of the rules I outlined above for the batch context only.<br>
+In the future I may do a similar set of tests for command line mode.<br>
+<br>
+I have two methods to probe whether a label is parsed beyond phase 2 (unexecuted label), or continues on to phase 7 (executed label)
+<ul>
+  <li> <strong class="text-strong">Test whether delayed expansion phase 5 is performed</strong><br>
+      At first I didn't think I could probe this because delayed expansion never results in a fatal syntax error, and labels never have any output.<br>
+      But then I remembered that find/replace and substring operations on the pseudo CMDCMDLINE variable actually modifies the underlying value.<br>
+      So I simply add an argument after the label that uses delayed expansion to modify CMDCMDLINE.<br>
+      If the value changes, then phase 5 must have been performed. If not, then phase 5 must not have been performed.</li>
+  <li> <strong class="text-strong">Test whether redirection phase 5.5 is performed</strong><br>
+      I create a text file with length greater than 0 prior to executing the label command.<br>
+      Then for the label "command" I redirect stdout to the file.<br>
+      A label "command" never has any output, so if the file size goes to 0, then redirection must have occurred. If not, then redirection did not occur.</li>
+</ul>
+If neither phase 5 nor 5.5 is executed, then the presumption is that the label stopped at phase 2.<br>
+If both phase 5 and 5.5 are executed, then the presumption is that the label is processed all the way through phase 7.<br>
+<br>
+I don't want to permanently mess with the CMDCMDLINE value for my current cmd session, so I execute each test in a new cmd.exe process.<br>
+<br>
+I built a test harness that allows me to perform multiple tests within a single script, each test within its own cmd process.<br>
+<br>
+If there is a fatal syntax error, then I cannot probe the delayed expansion because the test cmd.exe process will terminate and I will lose my CMDCMDLINE value.<br>
+But the file still exists after a fatal syntax error, so I check the file size after the test cmd.exe process closes.<br>
+<br>
+If no arguments are given, then all 26 tests are run.<br>
+If a single START integer argument is given, then the test starts with the START test, and continues to the end.<br>
+If both START and STOP are given, then the test starts with the START test, and continues through the STOP test.<br>
+<br>
+Here is my set of batch mode tests:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+set "beg=%~1"
+set "end=%~2"
+if not defined beg set "beg=1"
+if not defined end set "end=26"
+
+for /l %%N in (%beg% 1 %end%) do if %0=="%~dp0Test%%N\..\%~nx0" (
+  echo(
+  set "print="
+  for /f "usebackq delims=" %%A in ("%~f0") do (
+    for /f %%B in ("%%A") do if "%%B"=="@exit" (set print=) else if "%%B"==":test%%N" set print=1
+    if defined print for /f "eol=@ delims=" %%B in ("%%A") do echo(%%B
+  )
+  &lt;nul set /p "=------------------------------------------"
+  echo content &gt;test1.txt
+  echo content &gt;test2.txt
+  setlocal enableDelayedExpansion
+  break "!cmdcmdline:*.bat""= 1 2!"
+  echo on
+  call :test%%N
+  @echo off
+  echo cmdCmdLine=!cmdcmdline!
+  exit /b
+)
+
+cls
+prompt echo$g 
+for /l %%N in (%beg% 1 %end%) do (
+  cmd /c ^""%~dp0Test%%N\..\%~nx0""
+  for %%F in (test1.txt test2.txt) do &lt;nul set /p "=%%F size=%%~zF  "
+  echo(
+)
+prompt
+exit /b
+
+
+:test1 - A normal label is not executed
+@echo(
+:label !cmdcmdline:1=Mod1! &gt;test1.txt &amp; echo ignored
+@exit /b
+
+:test2 - A normal label is still not executed if concatenated to a command
+echo exec &amp; :label !cmdcmdline:1=Mod1! &gt;test1.txt &amp; echo ignored
+@exit /b
+
+:test3 - This delayed label is executed because it doesn't exist until phase 4
+for %%A in (:label) do %%A !cmdcmdline:1=Mod1! &gt;test1.txt &amp; echo executed
+@exit /b
+
+:test4 - This delayed label is executed because it doesn't exist until phase 5
+set "var=:label" &amp; !var! !cmdcmdline:1=Mod1! &gt;test1.txt &amp; echo executed
+@exit /b
+
+:test5 - A label with preceding redirection is not executed if no command concatenation
+@echo(
+&gt;test1.txt :label !cmdcmdline:1=Mod1!
+@exit /b
+
+:test6 - A label with preceding redirection is executed if it is concatenated to a command
+echo executed &amp; &gt;test1.txt :label !cmdcmdline:1=Mod1!
+@exit /b
+
+:test7 - A label with preceding redirection is also executed if a concatenated command follows
+&gt;test1.txt :label !cmdcmdline:1=Mod1! &amp; echo exec
+@exit /b
+
+:test8 - A label with preceding redirection is executed even if the concatenated command is an unexecuted label
+&gt;test1.txt :label !cmdcmdline:1=Mod1! &amp; :label !cmdcmdline:2=Mod2! &gt;test2.txt
+@exit /b
+
+:test9 - Of course the label with preceding redirection is executed if sandwiched between executing commands
+echo executed &amp; &gt;test1.txt :label !cmdcmdline:1=Mod1! &amp; echo executed
+@exit /b
+
+:test10 - Both concatenated labels with preceding redirection are executed
+&gt;test1.txt :label !cmdcmdline:1=Mod1! &amp; &gt;test2.txt :label !cmdcmdline:2=Mod2!
+@exit /b
+
+:test11 - Executed label beginning with :: normally gives an error
+&gt;test1.txt ::label !cmdcmdline:1=Mod1! &amp; echo executed
+@exit /b
+
+:test12 - Executed label beginning with :: is OK if volume :: is defined via SUBST
+subst :: . &amp; &gt;test1.txt ::label !cmdcmdline:1=Mod1! &amp; subst :: /d
+@exit /b
+
+:test13 - Executed :: "label" with volume :: defined is actually an executed change volume command
+subst :: . &amp; &gt;test1.txt :: !cmdcmdline:1=Mod1!
+cd &amp; subst :: /d
+@exit /b
+
+:test14 - label with preceding redirection and conditional &amp;&amp; concatenation also forces label execution
+&gt;test1.txt :label !cmdcmdline:1=Mod1! &amp;&amp; echo executed label SUCCESS
+@exit /b
+
+:test15 - label with preceding redirection and conditional || concatenation also forces label execution
+&gt;test1.txt ::label !cmdcmdline:1=Mod1! || echo executed label beginning with :: FAILED
+@exit /b
+
+:test16 - Within parens: unexecuted label without immediately following command gives fatal syntax error
+@echo(
+(
+  :label !cmdcmdline:1=Mod1! &gt;test1.txt  Syntax Error
+)
+@exit /b
+
+:test17 - Within parens: unexecuted label without immediately following command gives fatal syntax error
+@echo(
+(
+  :label !cmdcmdline:1=Mod1! &gt;test1.txt
+  
+  echo Syntax Error
+)
+@exit /b
+
+:test18 - Within parens: uexecuted label immediately followed by command is valid syntax
+(
+  :validLabel !cmdcmdline:1=Mod1! &gt;test1.txt
+  echo exec
+)
+@exit /b
+
+:test19 - Within parens: 1st label not executed, 2nd label is executed, yielding valid syntax
+(
+  :label 1 !cmdcmdline:1=Mod1! &gt;test1.txt
+  :label 2 !cmdcmdline:2=Mod2! &gt;test2.txt
+)
+@exit /b
+
+:test20 - As expected, ::label2 is executed, but normally gives an error
+(
+  ::label1 !cmdcmdline:1=Mod1! &gt;test1.txt
+  ::label2 !cmdcmdline:2=Mod2! &gt;test2.txt
+)
+@exit /b
+
+:test21 - As expected, defining volume :: allows ::label2 to execute without error
+(
+  subst :: .
+  ::label1 !cmdcmdline:1=Mod1! &gt;test1.txt
+  ::label2 !cmdcmdline:2=Mod2! &gt;test2.txt
+  subst :: /d
+)
+@exit /b
+
+:test22 - Within parens: delayed label is executed, so it is valid syntax even though no following command
+(
+  set "var=:label"
+  !var! !cmdcmdline:1=Mod1! &gt;test1.txt
+)
+@exit /b
+
+:test23 - Within parens: lone label with preceding redirection is executed without fatal syntax error, even without concatenated command
+(
+  &gt;test1.txt :label !cmdcmdline:1=Mod1!
+)
+@exit /b
+
+:test24 - Within parens: lone label without preceding redirection is not executed, no following command gives fatal syntax error
+@echo(
+(
+  :label !cmdcmdline:1=Mod1! &gt;test1.txt 
+)
+@exit /b
+
+:test25 - Within parens: unexecuted label2 is not followed by executed command, so fatal syntax error
+@echo(
+(
+  &gt;test1.txt :label1 !cmdcmdline:1=Mod1! &amp; :label2 !cmdcmdline:2=Mod2! &gt;test2.txt
+)
+@exit /b
+
+:test26 - Within parens: unexecuted label2 is followed by a command, so valid syntax
+(
+  &gt;test1.txt :label1 !cmdcmdline:1=Mod1! &amp; :label2 !cmdcmdline:2=Mod2! &gt;test2.txt
+  echo executed
+)
+@exit /b
+</code></pre></div>
+
+Below is the output of each test. I put each test result in its own command block so that you don't have to scroll any test.<br>
+I run each test with ECHO ON so you can see how labels affect phase 3 output.<br>
+<br>
+Each test output contains the following components:
+<ul>
+  <li> The test number and lesson learned</li>
+  <li> The actual test code</li>
+  <li> A ------------------------- separator</li>
+  <li> The test results
+      <ul>
+        <li> Phase 3 output (ECHO ON output) follows the <strong class="text-strong">echo&gt;</strong> prompt<br>
+        <span style="color: #FFFFFF">.</span></li>
+        <li> The CMDCMDLINE probe can have four results. Only the first two are valid if there is only one label:
+             <ul>
+               <li> <strong class="text-strong">cmdCmdLine= 1 2</strong> - no label was executed</li>
+               <li> <strong class="text-strong">cmdCmdLine= Mod1 2</strong> - label 1 was executed</li>
+               <li> <strong class="text-strong">cmdCmdLine= 1 Mod2</strong> - label 2 was executed</li>
+               <li> <strong class="text-strong">cmdCmdLine= Mod1 Mod2</strong> - both label 1 and label 2 were executed</li>
+            </ul>
+            If the CMDCMDLINE value is missing, then there was a fatal syntax error.<br>
+        <span style="color: #FFFFFF">.</span></li>
+        <li> The redirection probe can have four results. Only the first two are valid if there is only one label:
+            <ul>
+              <li> <strong class="text-strong">test1.txt size=10    test2.txt size=10</strong> - no label was executed</li>
+              <li> <strong class="text-strong">test1.txt size=0    test2.txt size=10</strong> - label 1 was executed</li>
+              <li> <strong class="text-strong">test1.txt size=10    test2.txt size=0</strong> - label 2 was executed</li>
+              <li> <strong class="text-strong">test1.txt size=0    test2.txt size=0</strong> - both label 1 and label 2 were executed</li>
+            </ul></li>         
+      </ul></li>
+</ul>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test1 - A normal label is not executed
+:label !cmdcmdline:1=Mod1! &gt;test1.txt &amp; echo ignored
+------------------------------------------
+cmdCmdLine= 1 2
+test1.txt size=10  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test2 - A normal label is still not executed if concatenated to a command
+echo exec &amp; :label !cmdcmdline:1=Mod1! &gt;test1.txt &amp; echo ignored
+------------------------------------------
+echo&gt; echo exec
+exec
+cmdCmdLine= 1 2
+test1.txt size=10  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test3 - This delayed label is executed because it doesn't exist until phase 4
+for %%A in (:label) do %%A !cmdcmdline:1=Mod1! &gt;test1.txt &amp; echo executed
+------------------------------------------
+echo&gt; for %A in (:label) do %A !cmdcmdline:1=Mod1!   1&gt;test1.txt  &amp; echo executed
+
+echo&gt;  &amp; echo executed
+executed
+cmdCmdLine= Mod1 2
+test1.txt size=0  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test4 - This delayed label is executed because it doesn't exist until phase 5
+set "var=:label" &amp; !var! !cmdcmdline:1=Mod1! &gt;test1.txt &amp; echo executed
+------------------------------------------
+echo&gt; set "var=:label"   &amp; !var! !cmdcmdline:1=Mod1!   1&gt;test1.txt  &amp; echo executed
+executed
+cmdCmdLine= Mod1 2
+test1.txt size=0  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test5 - A label with preceding redirection is not executed if no command concatenation
+&gt;test1.txt :label !cmdcmdline:1=Mod1!
+------------------------------------------
+cmdCmdLine= 1 2
+test1.txt size=10  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test6 - A label with preceding redirection is executed if it is concatenated to a command
+echo executed &amp; &gt;test1.txt :label !cmdcmdline:1=Mod1!
+------------------------------------------
+echo&gt; echo executed   &amp;
+executed
+cmdCmdLine= Mod1 2
+test1.txt size=0  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test7 - A label with preceding redirection is also executed if a concatenated command follows
+&gt;test1.txt :label !cmdcmdline:1=Mod1! &amp; echo exec
+------------------------------------------
+echo&gt;  &amp; echo exec
+exec
+cmdCmdLine= Mod1 2
+test1.txt size=0  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test8 - A label with preceding redirection is executed even if the concatenated command is an unexecuted label
+&gt;test1.txt :label !cmdcmdline:1=Mod1! &amp; :label !cmdcmdline:2=Mod2! &gt;test2.txt
+------------------------------------------
+echo&gt;
+cmdCmdLine= Mod1 2
+test1.txt size=0  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test9 - Of course the label with preceding redirection is executed if sandwiched between executing commands
+echo executed &amp; &gt;test1.txt :label !cmdcmdline:1=Mod1! &amp; echo executed
+------------------------------------------
+echo&gt; echo executed   &amp;  &amp; echo executed
+executed
+executed
+cmdCmdLine= Mod1 2
+test1.txt size=0  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test10 - Both concatenated labels with preceding redirection are executed
+&gt;test1.txt :label !cmdcmdline:1=Mod1! &amp; &gt;test2.txt :label !cmdcmdline:2=Mod2!
+------------------------------------------
+echo&gt;  &amp;
+cmdCmdLine= Mod1 Mod2
+test1.txt size=0  test2.txt size=0
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test11 - Executed label beginning with :: normally gives an error
+&gt;test1.txt ::label !cmdcmdline:1=Mod1! &amp; echo executed
+------------------------------------------
+echo&gt;  &amp; echo executed
+The system cannot find the drive specified.
+executed
+cmdCmdLine= Mod1 2
+test1.txt size=0  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test12 - Executed label beginning with :: is OK if volume :: is defined via SUBST
+subst :: . &amp; &gt;test1.txt ::label !cmdcmdline:1=Mod1! &amp; subst :: /d
+------------------------------------------
+echo&gt; subst :: .   &amp;  &amp; subst :: /d
+cmdCmdLine= Mod1 2
+test1.txt size=0  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test13 - Executed :: "label" with volume :: defined is actually an executed change volume command
+subst :: . &amp; &gt;test1.txt :: !cmdcmdline:1=Mod1!
+cd &amp; subst :: /d
+------------------------------------------
+echo&gt; subst :: .   &amp;
+
+echo&gt; cd   &amp; subst :: /d
+::\
+cmdCmdLine= Mod1 2
+test1.txt size=0  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test14 - label with preceding redirection and conditional &amp;&amp; concatenation also forces label execution
+&gt;test1.txt :label !cmdcmdline:1=Mod1! &amp;&amp; echo executed label SUCCESS
+------------------------------------------
+echo&gt;  &amp;&amp; echo executed label SUCCESS
+executed label SUCCESS
+cmdCmdLine= Mod1 2
+test1.txt size=0  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test15 - label with preceding redirection and conditional || concatenation also forces label execution
+&gt;test1.txt ::label !cmdcmdline:1=Mod1! || echo executed label beginning with :: FAILED
+------------------------------------------
+echo&gt;  || echo executed label beginning with :: FAILED
+The system cannot find the drive specified.
+executed label beginning with :: FAILED
+cmdCmdLine= Mod1 2
+test1.txt size=0  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test16 - Within parens: unexecuted label without immediately following command gives fatal syntax error
+(
+  :label !cmdcmdline:1=Mod1! &gt;test1.txt  Syntax Error
+)
+------------------------------------------
+) was unexpected at this time.
+
+echo&gt; )
+test1.txt size=10  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test17 - Within parens: unexecuted label without immediately following command gives fatal syntax error
+(
+  :label !cmdcmdline:1=Mod1! &gt;test1.txt
+
+  echo Syntax Error
+)
+------------------------------------------
+The syntax of the command is incorrect.
+
+echo&gt;
+test1.txt size=10  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test18 - Within parens: uexecuted label immediately followed by command is valid syntax
+(
+  :validLabel !cmdcmdline:1=Mod1! &gt;test1.txt
+  echo exec
+)
+------------------------------------------
+echo&gt; (echo exec )
+exec
+cmdCmdLine= 1 2
+test1.txt size=10  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test19 - Within parens: 1st label not executed, 2nd label is executed, yielding valid syntax
+(
+  :label 1 !cmdcmdline:1=Mod1! &gt;test1.txt
+  :label 2 !cmdcmdline:2=Mod2! &gt;test2.txt
+)
+------------------------------------------
+echo&gt; ()
+cmdCmdLine= 1 Mod2
+test1.txt size=10  test2.txt size=0
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test20 - As expected, ::label2 is executed, but normally gives an error
+(
+  ::label1 !cmdcmdline:1=Mod1! &gt;test1.txt
+  ::label2 !cmdcmdline:2=Mod2! &gt;test2.txt
+)
+------------------------------------------
+echo&gt; ()
+The system cannot find the drive specified.
+cmdCmdLine= 1 Mod2
+test1.txt size=10  test2.txt size=0
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test21 - As expected, defining volume :: allows ::label2 to execute without error
+(
+  subst :: .
+  ::label1 !cmdcmdline:1=Mod1! &gt;test1.txt
+  ::label2 !cmdcmdline:2=Mod2! &gt;test2.txt
+  subst :: /d
+)
+------------------------------------------
+echo&gt; (
+subst :: .
+
+ subst :: /d
+)
+cmdCmdLine= 1 Mod2
+test1.txt size=10  test2.txt size=0
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test22 - Within parens: delayed label is executed, so it is valid syntax even though no following command
+(
+  set "var=:label"
+  !var! !cmdcmdline:1=Mod1! &gt;test1.txt
+)
+------------------------------------------
+echo&gt; (
+set "var=:label"
+ !var! !cmdcmdline:1=Mod1!  1&gt;test1.txt
+)
+cmdCmdLine= Mod1 2
+test1.txt size=0  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test23 - Within parens: lone label with preceding redirection is executed without fatal syntax error, even without concatenated command
+(
+  &gt;test1.txt :label !cmdcmdline:1=Mod1!
+)
+------------------------------------------
+echo&gt; ()
+cmdCmdLine= Mod1 2
+test1.txt size=0  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test24 - Within parens: lone label without preceding redirection is not executed, no following command gives fatal syntax error
+(
+  :label !cmdcmdline:1=Mod1! &gt;test1.txt
+)
+------------------------------------------
+) was unexpected at this time.
+
+echo&gt; )
+test1.txt size=10  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test25 - Within parens: unexecuted label2 is not followed by executed command, so fatal syntax error
+(
+  &gt;test1.txt :label1 !cmdcmdline:1=Mod1! &amp; :label2 !cmdcmdline:2=Mod2! &gt;test2.txt
+)
+------------------------------------------
+) was unexpected at this time.
+
+echo&gt; )
+test1.txt size=10  test2.txt size=10
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:test26 - Within parens: unexecuted label2 is followed by a command, so valid syntax
+(
+  &gt;test1.txt :label1 !cmdcmdline:1=Mod1! &amp; :label2 !cmdcmdline:2=Mod2! &gt;test2.txt
+  echo executed
+)
+------------------------------------------
+echo&gt; ( &amp; echo executed )
+executed
+cmdCmdLine= Mod1 2
+test1.txt size=0  test2.txt size=10
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p55471" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55471">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search73f1.html?author_id=417&amp;sr=posts">880</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 30 Aug 2007 08:05</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany, Bochum</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55471">
+
+						<h3 ><a href="#p55471">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingdc8c.html?mode=quote&amp;f=3&amp;p=55471" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicf4d5.html?p=55471#p55471" onclick="prompt('Message #47',this.href); return false;">#47</a></span> 
+									<a class="unread" href="viewtopicf4d5.html?p=55471#p55471" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a></strong> &raquo; </span>25 Jan 2018 05:56
+			</p>
+			
+			
+			
+			<div class="content">Hi Dave,<br>
+<br>
+great work  <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <br>
+<br>
+But some annotations.
+<blockquote><div><cite>dbenham wrote:</cite>
+When scanning the file for the label name, I see that there are 5 (maybe 6) stop characters for the label name instead of two: &lt;+&gt;, &lt;:&gt;, &lt;space&gt;, &lt;tab&gt;, &lt;LF&gt;, and possibly &lt;CR&gt;. The other token delimiters are not stop characters</div></blockquote>
+I retested and I came to the same conclusion, CR is a hard stop character, too.<br>
+<br>
+When scanning, the caret seems to work as an escape character, it can append even stop characters to the label, but then these labels can't be called anymore, as the CALL or GOTO itself can't escape the stop characters.<br>
+
+<blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopicc059.html?p=55405#p55405" data-post-id="55405" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">21 Jan 2018 20:50</div></cite>
+The command is aborted, the remainder of the line is not parsed, and the subsequent phases do not take place for the label.
+</div></blockquote>
+Not quite correct, at least multiline carets still work, despite of REM where even carets are not parsed (when they aren't in the first argument token).
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:label This caret still works ^
+echo this line is part of the label</code></pre></div>
+
+<blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopicc059.html?p=55405#p55405" data-post-id="55405" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">21 Jan 2018 20:50</div></cite>
+Phase 2 Executed Label exceptions - A command token that begins with : in phase 2 will be executed under any of the following circumstances:<br>
+<br>
+    The command token begins with : and there is redirection that precedes the command token, and there is &amp;, &amp;&amp;, or || command concatenation on the line
+</div></blockquote>
+
+It's also "executed" for pipe "|", but then typically an error occours, unless you construct your label into something like this (label.bat must exist and subst has to be executed for ::)
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;nul ::\label.bat | more</code></pre></div>
+
+My test suite
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo Off
+SETLOCAL EnableDelayedExpansion
+
+call :prepare
+
+call :noLabelEvaluation
+call :LabelEvaluation
+
+call :noRedirectEvaluation
+call :redirectEvaluation
+
+call :clearEnviroment
+exit /b
+
+
+:noLabelEvaluation
+call :resetCmdline
+&lt;nul :label !cmdcmdline:*#=1#!
+call :checkCmdline - "Label will not be evaluated without any operator &amp;, &amp;&amp;, ||, |"
+exit /b
+
+:LabelEvaluation
+for /F "tokens=1,2" %%C in ("label &amp;!\n!label &amp;&amp;!\n!label ||!\n!:\dummy.bat |") DO (
+    call :resetCmdline
+    set "labelName=%%~C"
+    set "testExpr=%%~D"
+    call :test_LabelEvaluation 2&gt;nul
+    call :checkCmdline 1 "label ':!labelName!' is evaluated with appended '!testExpr!'"
+)    
+exit /b
+:test_LabelEvaluation
+&lt;nul :%labelName% !cmdcmdline:*#=1#! %testExpr% set do=nothing
+exit /b
+
+
+:redirectEvaluation
+for /F "tokens=1,2" %%C in ("label &amp;!\n!label &amp;&amp;!\n!label ||!\n!:\dummy.bat |") DO (
+    call :resetCmdline
+    set "labelName=%%~C"
+    set "testExpr=%%~D"
+    call :test_redirectEvaluation 2&gt;nul
+    call :checkCmdline 1 "Redirection with label ':!labelName!' is evaluated with appended !testExpr!"
+)    
+exit /b
+:test_redirectEvaluation
+&lt;"!cmdcmdline:*#=1#!" :%labelName% %testExpr% set do=nothing
+exit /b
+
+:noRedirectEvaluation
+call :resetCmdline
+&lt;"!cmdcmdline:*#=1#!" :label
+call :checkCmdline - "Redirection with only label is not evaluated"
+exit /b
+
+
+@echo off
+echo cmdcmdline !cmdcmdline!
+echo END
+exit /b
+
+:resetCmdline
+rem. change cmdcmdline !cmdcmdline:"C=-#!
+rem. change cmdcmdline !cmdcmdline:*#=-#!
+rem. change cmdcmdline !cmdcmdline:~0,2!
+exit /b
+
+:checkCmdline &lt;expected value&gt; &lt;text&gt;
+set "cmdl=!cmdcmdline!"
+set "result=FAIL"
+if "!cmdl:~0,1!" == "%~1" set "result=Okay"
+set "msg=%~2"
+echo !result!: !msg!
+exit /b
+
+:prepare
+(set \n=^
+%=EMPTY LINE=%
+)
+
+subst /d :: 2&gt;nul 1&gt;nul
+
+subst :: C:\temp
+(
+    echo @echo off
+    echo This is %%~f0
+) &gt; ::\Dummy.bat
+exit /b
+
+:clearEnviroment
+del ::\Dummy.bat
+subst /d ::
+exit /b
+</code></pre></div>
+
+<blockquote><div><cite>Output wrote:</cite>Okay: Label will not be evaluated without any operator &amp;, &amp;&amp;, ||, |<br>
+Okay: label ':label' is evaluated with appended '&amp;'<br>
+Okay: label ':label' is evaluated with appended '&amp;&amp;'<br>
+Okay: label ':label' is evaluated with appended '||'<br>
+Okay: label '::\dummy.bat' is evaluated with appended '|'<br>
+Okay: Redirection with only label is not evaluated<br>
+Okay: Redirection with label ':label' is evaluated with appended &amp;<br>
+Okay: Redirection with label ':label' is evaluated with appended &amp;&amp;<br>
+Okay: Redirection with label ':label' is evaluated with appended ||<br>
+Okay: Redirection with label '::\dummy.bat' is evaluated with appended |</div></blockquote></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p55482" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55482">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55482">
+
+						<h3 ><a href="#p55482">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2324-2.html?mode=quote&amp;f=3&amp;p=55482" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicedd6.html?p=55482#p55482" onclick="prompt('Message #48',this.href); return false;">#48</a></span> 
+									<a class="unread" href="viewtopicedd6.html?p=55482#p55482" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>25 Jan 2018 14:49
+			</p>
+			
+			
+			
+			<div class="content">Thanks for the corrections jeb.<br>
+<br>
+I've updated the SO post to reflect the corrected label rules. <br>
+<br>
+I also cleaned up some issues that I had created when I initially tried to refine phase 4. My fix also expands phases 2 and 7. I think it is good now.<br>
+<br>
+But I have some additional concerns unrelated to labels. So I am starting a new generalized central thread for parsing rules discussions: <a href="viewtopicdf43.html?f=3&amp;t=8355" class="postlink">viewtopic.php?f=3&amp;t=8355</a><br>
+<br>
+<br>
+Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p55901" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55901">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55901">
+
+						<h3 ><a href="#p55901">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting6437.html?mode=quote&amp;f=3&amp;p=55901" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic17da.html?p=55901#p55901" onclick="prompt('Message #49',this.href); return false;">#49</a></span> 
+									<a class="unread" href="viewtopic17da.html?p=55901#p55901" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>06 Mar 2018 16:22
+			</p>
+			
+			
+			
+			<div class="content">Just for yucks, I decided to create a :label that calls itself. I've come up with two different strategies.<br>
+All conceivable cases rely on jeb's discovery that any character can appear in the first position of a label line, and the label can still be valid.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+call :test1 normal
+call :test2 normal
+exit /b
+
+:test1
+echo(
+&lt;nul set /p"=1) Redirect self call - "
+findstr "self1" "%~f0"|findstr /v "findstr"
+&lt;:self1 &lt;nul call :self1 self_call
+echo %%0 = %0    %%* = %*
+exit /b
+
+:test2
+echo(
+&lt;nul set /p"=2) Variable self call - "
+findstr "self2" "%~f0"|findstr /v "findstr"
+set ":=call :%%%%"
+%:%self2 self_call
+echo %%0 = %0    %%* = %*
+exit /b
+</code></pre></div>
+--OUTPUT--
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>1) Redirect self call - &lt;:self1 &lt;nul call :self1 self_call
+%0 = :self1    %* = self_call
+%0 = :test1    %* = normal
+
+2) Variable self call - %:%self2 self_call
+%0 = :%self2    %* = self_call
+%0 = :test2    %* = normal
+</code></pre></div>
+By far my "favorite" strategy is the definition of the colon variable, as the label name only appears once on the line.<br>
+<br>
+All well and good. But then I tested on a Windows 10 machine and both self calls fail  <img class="smilies" src="images/smilies/icon_eek.gif" width="15" height="15" alt=":shock:" title="Shocked">  <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"> <br>
+<br>
+I did limited testing, and it appears that on Windows 10, a label with an odd character in position 1 on the line is only recognized as a label if the CALL (or GOTO) is on the physical line directly above the label line. The exact same CALL or GOTO placed anywhere else in the file fails to find the label.<br>
+<br>
+So now we have different parsing rules for windows versions  <img class="smilies" src="images/smilies/icon_cry.gif" width="15" height="15" alt=":cry:" title="Crying or Very sad"> <br>
+<br>
+<br>
+<span style="font-size: 150%; line-height: normal">Edit</span> - Actually, there is a self call option that doesn't rely on an odd character in position 1 - but I consider it cheating because it uses line continuation to split the call across two physical lines
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+call :test0 normal
+exit /b
+
+:test0
+call ^
+:self0 self_call
+echo %%0 = %0    %%* = %*
+exit /b
+</code></pre></div>
+--OUTPUT--
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>%0 = :self0    %* = self_call
+%0 = :test0    %* = normal
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p55913" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55913">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search73f1.html?author_id=417&amp;sr=posts">880</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 30 Aug 2007 08:05</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany, Bochum</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55913">
+
+						<h3 ><a href="#p55913">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting00f7.html?mode=quote&amp;f=3&amp;p=55913" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicf5ad.html?p=55913#p55913" onclick="prompt('Message #50',this.href); return false;">#50</a></span> 
+									<a class="unread" href="viewtopicf5ad.html?p=55913#p55913" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a></strong> &raquo; </span>07 Mar 2018 16:28
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic17da.html?p=55901#p55901" data-post-id="55901" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">06 Mar 2018 16:22</div></cite>
+By far my "favorite" strategy is the definition of the colon variable, as the label name only appears once on the line.<br>
+<br>
+All well and good. But then I tested on a Windows 10 machine and both self calls fail     <br>
+<br>
+I did limited testing, and it appears that on Windows 10, a label with an odd character in position 1 on the line is only recognized as a label if the CALL (or GOTO) is on the physical line directly above the label line. The exact same CALL or GOTO placed anywhere else in the file fails to find the label.
+</div></blockquote>
+Your colon variable definition  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> is really nice  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+<br>
+I tested today with Windows 7 and Windows 10 and I got the same results for both.<br>
+I can't find any differences in the behaviour.<br>
+Enabling or disabling DelayedExpansion doesn't change anything. <br>
+Disabling the extensions simply fails, as expected.<br>
+Perhaps you have some strange test environment on your win10<br>
+<br>
+Btw. Your findstr construct can be simplyfied to
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr "self[1]" "%~f0"</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p55915" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55915">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55915">
+
+						<h3 ><a href="#p55915">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7375.html?mode=quote&amp;f=3&amp;p=55915" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic770f.html?p=55915#p55915" onclick="prompt('Message #51',this.href); return false;">#51</a></span> 
+									<a class="unread" href="viewtopic770f.html?p=55915#p55915" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>07 Mar 2018 22:32
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopicf5ad.html?p=55913#p55913" data-post-id="55913" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">07 Mar 2018 16:28</div></cite>
+Btw. Your findstr construct can be simplyfied to
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr "self[1]" "%~f0"</code></pre></div>
+</div></blockquote>
+I like it <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"> <br>
+<br>
+
+<blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopicf5ad.html?p=55913#p55913" data-post-id="55913" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">07 Mar 2018 16:28</div></cite>
+I tested today with Windows 7 and Windows 10 and I got the same results for both.<br>
+I can't find any differences in the behaviour.<br>
+Enabling or disabling DelayedExpansion doesn't change anything. <br>
+Disabling the extensions simply fails, as expected.<br>
+Perhaps you have some strange test environment on your win10
+</div></blockquote>
+I may have fooled myself into thinking there is a Win10 difference. But I have discovered the trigger that causes the label with an odd character in position 1 to fail. If the batch script uses \n line terminators instead of \r\n, then I get the weird behavior on Win10. I haven't had a chance to do the same test on Win7 yet. Hopefully it fails there as well.<br>
+<br>
+If the batch script terminates lines with \r\n, then Win10 exhibits the expected behavior - allowing the odd character in position 1.<br>
+<br>
+The whole business of allowing the odd character in position 1 has always mystified me - it makes no sense to allow that. I'm thinking the difference between \r\n vs. \n might be a clue as to the derivation of the behavior, but I'm drawing blanks. <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"> <br>
+<br>
+<br>
+Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p55918" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55918">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search73f1.html?author_id=417&amp;sr=posts">880</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 30 Aug 2007 08:05</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany, Bochum</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55918">
+
+						<h3 ><a href="#p55918">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting4740.html?mode=quote&amp;f=3&amp;p=55918" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb21f-2.html?p=55918#p55918" onclick="prompt('Message #52',this.href); return false;">#52</a></span> 
+									<a class="unread" href="viewtopicb21f-2.html?p=55918#p55918" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a></strong> &raquo; </span>08 Mar 2018 01:55
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic770f.html?p=55915#p55915" data-post-id="55915" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">07 Mar 2018 22:32</div></cite>
+I may have fooled myself into thinking there is a Win10 difference. But I have discovered the trigger that causes the label with an odd character in position 1 to fail. If the batch script uses \n line terminators instead of \r\n, then I get the weird behavior on Win10. I haven't had a chance to do the same test on Win7 yet. Hopefully it fails there as well.
+</div></blockquote>
+On windows 7 it's the same behaviour. Good to know that the world is still a reliable place. <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+<br>
+I've build some tests to discover the CR line ending rules
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+for /f %%a in ('copy /Z "%~dpf0" nul') do set "\r=%%a"
+(set \n=^
+%=empty=%
+)
+
+
+call :buildTest ":test1" ":test1"
+
+call :buildTest ":test10" "^!\r^!:test10"
+call :buildTest ":test11" "#^!\r^!:test11"
+call :buildTest ":test12" "##^!\r^!:test12"
+call :buildTest ":test13" "^!\r^!#:test13"
+call :buildTest ":test14" "^!\r^!^!\n^!#:test14"
+
+call :buildTest ":test20" "^!\n^!:test20"
+call :buildTest ":test21" "#^!\n^!:test21"
+call :buildTest ":test22" "##^!\n^!:test22"
+call :buildTest ":test23" "^!\n^!#:test23"
+call :buildTest ":test24" "^!\n^!#^!\r^!:test24"
+
+
+exit /b
+
+:buildTest
+setlocal disabledelayedExpansion 
+echo calling "%~2"
+setlocal EnableDelayedExpansion
+set "labelname=%~1"
+set "fullLabel=%~2"
+(
+  echo @echo off
+  echo call !labelname!
+  echo exit /b
+  echo REM !\r!!\n!!fullLabel!
+  echo echo Function "%%0" called
+  echo exit /b
+) &gt; testGenerated.bat
+call testGenerated.bat
+echo(
+exit /b
+</code></pre></div>
+<blockquote><div><cite>Output wrote:</cite>calling ":test1"<br>
+Function ":test1" called<br>
+<br>
+calling "!\r!:test10"<br>
+Function ":test10" called<br>
+<br>
+calling "#!\r!:test11"<br>
+Function ":test11" called<br>
+<br>
+calling "##!\r!:test12"<br>
+Das Sprungziel - test12 wurde nicht gefunden.<br>
+<br>
+calling "!\r!#:test13"<br>
+Das Sprungziel - test13 wurde nicht gefunden.<br>
+<br>
+calling "!\r!!\n!#:test14"<br>
+Function ":test14" called<br>
+<br>
+calling "!\n!:test20"<br>
+Function ":test20" called<br>
+<br>
+calling "#!\n!:test21"<br>
+Function ":test21" called<br>
+<br>
+calling "##!\n!:test22"<br>
+Function ":test22" called<br>
+<br>
+calling "!\n!#:test23"<br>
+Das Sprungziel - test23 wurde nicht gefunden.<br>
+<br>
+calling "!\n!#!\r!:test24"<br>
+Das Sprungziel - test24 wurde nicht gefunden.
+</div></blockquote>
+It's strange, in the CR only tests (test10-test14), the "extra" character is no longer allowed in front of the colon, but instead it's allowed to put one "extra" character in front of the CR, but not two.<br>
+<br>
+But with the newline tests (test20-test24), I can't get it working with "extra" characters at all.<br>
+Test21 and test22 only demonstrates that the newline splits the lines, but the CR character doesn't work the same, as test12 fails.<br>
+<br>
+jeb</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p55924" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55924">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55924">
+
+						<h3 ><a href="#p55924">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf005.html?mode=quote&amp;f=3&amp;p=55924" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice317.html?p=55924#p55924" onclick="prompt('Message #53',this.href); return false;">#53</a></span> 
+									<a class="unread" href="viewtopice317.html?p=55924#p55924" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>08 Mar 2018 14:19
+			</p>
+			
+			
+			
+			<div class="content">Your test plan gave me some ideas on how to structure some additional tests.<br>
+And now I believe I have it figured out  <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"><br>
+<br>
+\r functions as a token delimiter - any number of \r can appear before the :label, just like spaces, commas, etc.<br>
+<br>
+The first character of a :label line may be any character (other than colon or newline) if and only if:<br>
+<br>
+A) The :label is at or below the current file position and all lines from the current file position until the :label line are all terminated by \r\n. It is okay if the :label line itself is not terminated by \r\n.<br>
+<br>
+OR<br>
+<br>
+B) The :label is above the current file position and all lines from the file beginning until the :label line are all terminated by \r\n. It is okay if the :label line itself is not terminated by \r\n. It is also okay if lines from the current file position to the end of file are not terminated by \r\n.<br>
+<br>
+This is another case where I can't believe this behavior was intentional, yet I can't imagine any sane design that would inadvertently result in this behavior <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"> <br>
+<br>
+I ran a series of tests to determine exactly when the "any character" is allowed. I chose @ as my "any character" because @:label is never executed.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+cls
+setlocal DisableDelayedExpansion
+for %%n in (^"^
+%=empty=%
+^") do for /f %%r in ('copy /Z "%~dpf0" nul') do (
+  set "\r=%%r"
+  set "\n=%%~n"
+  set "\r\n=%%r%%~n"
+)
+set "col=:"
+
+for %%A in (
+
+  @:below0_0
+
+  !\r\n!@:below1_0
+  !\n!@:below1_1
+
+  !\r\n!!\r\n!@:below2_0
+  !\n!!\r\n!@:below2_1
+  !\r\n!!\n!@:below2_2
+
+  !\r\n!!\r\n!!\r\n!@:below3_0
+  !\n!!\r\n!!\r\n!@:below3_1
+  !\r\n!!\n!!\r\n!@:below3_2
+  !\r\n!!\r\n!!\n!@:below3_3
+
+) do call :belowTest %%A
+
+for %%A in (
+
+  :above0_0
+
+  !\r\n!@:above1_0
+  !\n!@:above1_1
+
+  !\r\n!!\r\n!@:above2_0
+  !\n!!\r\n!@:above2_1
+  !\r\n!!\n!@:above2_2
+
+  !\r\n!!\r\n!!\r\n!@:above3_0
+  !\n!!\r\n!!\r\n!@:above3_1
+  !\r\n!!\n!!\r\n!@:above3_2
+  !\r\n!!\r\n!!\n!@:above3_3
+
+) do call :aboveTest %%A
+
+exit /b
+
+:belowTest
+echo calling "%~1"
+for /f "tokens=2 delims=:" %%A in (".%~1") do (
+  setlocal EnableDelayedExpansion
+  set "labelName=:%%A"
+)
+set "fullLabel=%~1"
+(
+  echo @echo off
+  &lt;nul set /p "=call !labelName!&amp;exit /b!\n!"
+	echo !fullLabel!!\n!
+  echo echo Function "%%0" called
+  echo exit /b
+) &gt; testGenerated.bat
+call testGenerated.bat
+echo(
+exit /b
+
+:aboveTest
+echo calling "%~1"
+for /f "tokens=2 delims=:" %%A in (".%~1") do (
+  setlocal EnableDelayedExpansion
+  set "labelName=:%%A"
+)
+set "fullLabel=%~1"
+(
+  echo !fullLabel!!\n!
+  echo @if defined begun echo Function "%%0" called^&amp;exit /b
+  echo @echo off
+  echo set "begun=1"
+  echo call !labelName!!\n!!\n!
+  &lt;nul set /p "=exit /b"
+) &gt; testGenerated.bat
+call testGenerated.bat
+echo(
+exit /b
+</code></pre></div>
+<blockquote><div><cite>Output wrote:</cite>
+calling "@:below0_0"<br>
+Function ":below0_0" called<br>
+<br>
+calling "!\r\n!@:below1_0"<br>
+Function ":below1_0" called<br>
+<br>
+calling "!\n!@:below1_1"<br>
+The system cannot find the batch label specified - below1_1<br>
+<br>
+calling "!\r\n!!\r\n!@:below2_0"<br>
+Function ":below2_0" called<br>
+<br>
+calling "!\n!!\r\n!@:below2_1"<br>
+The system cannot find the batch label specified - below2_1<br>
+<br>
+calling "!\r\n!!\n!@:below2_2"<br>
+The system cannot find the batch label specified - below2_2<br>
+<br>
+calling "!\r\n!!\r\n!!\r\n!@:below3_0"<br>
+Function ":below3_0" called<br>
+<br>
+calling "!\n!!\r\n!!\r\n!@:below3_1"<br>
+The system cannot find the batch label specified - below3_1<br>
+<br>
+calling "!\r\n!!\n!!\r\n!@:below3_2"<br>
+The system cannot find the batch label specified - below3_2<br>
+<br>
+calling "!\r\n!!\r\n!!\n!@:below3_3"<br>
+The system cannot find the batch label specified - below3_3<br>
+<br>
+calling ":above0_0"<br>
+Function ":above0_0" called<br>
+<br>
+calling "!\r\n!@:above1_0"<br>
+Function ":above1_0" called<br>
+<br>
+calling "!\n!@:above1_1"<br>
+The system cannot find the batch label specified - above1_1<br>
+<br>
+calling "!\r\n!!\r\n!@:above2_0"<br>
+Function ":above2_0" called<br>
+<br>
+calling "!\n!!\r\n!@:above2_1"<br>
+The system cannot find the batch label specified - above2_1<br>
+<br>
+calling "!\r\n!!\n!@:above2_2"<br>
+The system cannot find the batch label specified - above2_2<br>
+<br>
+calling "!\r\n!!\r\n!!\r\n!@:above3_0"<br>
+Function ":above3_0" called<br>
+<br>
+calling "!\n!!\r\n!!\r\n!@:above3_1"<br>
+The system cannot find the batch label specified - above3_1<br>
+<br>
+calling "!\r\n!!\n!!\r\n!@:above3_2"<br>
+The system cannot find the batch label specified - above3_2<br>
+<br>
+calling "!\r\n!!\r\n!!\n!@:above3_3"<br>
+The system cannot find the batch label specified - above3_3
+</div></blockquote>
+
+<br>
+Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p55933" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55933">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5152.html?mode=viewprofile&amp;u=5284" class="username">siberia-man</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7f01.html?author_id=5284&amp;sr=posts">108</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 26 Dec 2013 09:28</dd>		
+		
+											
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact siberia-man">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact siberia-man</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://with-love-from-siberia.blogspot.com/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55933">
+
+						<h3 ><a href="#p55933">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingca06.html?mode=quote&amp;f=3&amp;p=55933" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic3362.html?p=55933#p55933" onclick="prompt('Message #54',this.href); return false;">#54</a></span> 
+									<a class="unread" href="viewtopic3362.html?p=55933#p55933" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5152.html?mode=viewprofile&amp;u=5284" class="username">siberia-man</a></strong> &raquo; </span>10 Mar 2018 02:19
+			</p>
+			
+			
+			
+			<div class="content">Waw! Interesting thread. 4 years ago I have performed some investigations in this direction. I did it in the frame of the correct colorizing of labels in FAR3-embedded editor, soI don't pretend that my little work is 100% complete but it has some fruitful conclusions. <br>
+<br>
+The following link shows these findings - <a href="http://forum.script-coding.com/viewtopic.php?pid=80366#p80366" class="postlink">http://forum.script-coding.com/viewtopi ... 366#p80366</a>. That text is written in Russian, so I am really sorry if you feel some troubles with this but Google Translate can help you. Here I just share the translated conclusions:<br>
+<br>
+There is set of 100% allowable characters. The allowable characters are assumed if<br>
+-- the character could be placed anywhere in the label name (in the beginning, in the midst, in the end)<br>
+-- the label is correct independently of the <strong class="text-strong">setlocal</strong> mode<br>
+-- the label is accessible by any method (directly via <strong class="text-strong">goto/call :LABEL</strong> or indirectly via <strong class="text-strong">goto/call :%1</strong>)<br>
+<br>
+The label name could consist of:<br>
+-- Latin letters<br>
+-- digits<br>
+-- underscore character<br>
+-- punctuation characters: "." (dot), "-" (dash), "[" and "]" (square brackets), "{" and "}" (curly brackets), "/" slash and "\" backslash<br>
+-- "'" (apostrophe) and "`" (backtrick), "~" (tilde), "@" (at), "#" (diez), "$" (dollar)<br>
+<br>
+Other characters can not be considered as 100% valid label characters because they could lead to error or require additional escaping.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting685a.html?mode=reply&amp;f=3&amp;t=3803" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic001e.html?f=3&amp;t=3803&amp;start=45&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=3803&amp;start=45">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			54 posts
+							<ul>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic6cfc.html?f=3&amp;t=3803&amp;start=30" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopic494f.html?f=3&amp;t=3803" role="button">1</a></li>
+				<li><a class="button" href="viewtopic54db.html?f=3&amp;t=3803&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopic6cfc.html?f=3&amp;t=3803&amp;start=30" role="button">3</a></li>
+			<li class="active"><span>4</span></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron68e3.gif?cron_type=cron.task.text_reparser.pm_text" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=3803&p=55933 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:13:38 GMT -->
+</html>

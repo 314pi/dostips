@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8771&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:29:04 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; copy files from uncertain subfolders into another location</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>copy files from uncertain subfolders into another location</h2>
+		<p><a href="viewtopic889e.html?f=3&amp;t=8771">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8771</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>copy files from uncertain subfolders into another location</h3>
+				<div class="date">Posted: <strong>07 Aug 2018 08:19</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">Hi,<br>
+<br>
+I need to copy all files which sit from one subfolder to another location. The issue is that I do not know how many subfolder levels under one known folder (efg) downtwards to this final subfolder, which shall have files with extension .S3S, this final subfolder name can vary depend on different naming convertion...<br>
+<br>
+For examples, I have some files sit in C:\abc\efg\...\1.S3S<br>
+                                                        C:\abc\efg\...\2.S3S<br>
+                                                        C:\abc\efg\...\3.S3S<br>
+                                                        C:\abc\efg\...\4.S3S<br>
+                                                        C:\abc\efg\...\5.S3S<br>
+I need to copy to C:\target folder\<br>
+<br>
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: copy files from uncertain subfolders into another location</h3>
+				<div class="date">Posted: <strong>07 Aug 2018 09:34</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Use DIR with options /B /S in a FOR /F loop or directly a FOR /R loop to iterate recursively across the folder structure.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: copy files from uncertain subfolders into another location</h3>
+				<div class="date">Posted: <strong>07 Aug 2018 10:12</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">And you were shown how to do both of these concepts in two of your previous threads.<br>
+<br>
+<a href="viewtopic5c66.html?f=3&amp;t=8100&amp;p=53824#p53829" class="postlink">viewtopic.php?f=3&amp;t=8100&amp;p=53824#p53829</a><br>
+<a href="viewtopicec81-2.html?f=3&amp;t=8715&amp;p=57432#p57433" class="postlink">viewtopic.php?f=3&amp;t=8715&amp;p=57432#p57433</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: copy files from uncertain subfolders into another location</h3>
+				<div class="date">Posted: <strong>08 Aug 2018 06:13</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">Thank you both!!!<br>
+I tried this as below and works<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call C:\auto_pkg_build\Scripts\single_comp\srcfg.cmd
+cd "C:\auto_pkg_build\Sources\Source_schemes\Tetra_Schemes\%VARSRC5%-*\%VARSRC5%"
+FOR /F "delims=" %%G IN ('dir /b /s *.S3S') DO (
+	copy %%G C:\auto_pkg_build\Sources\Source_schemes\Single_Replace\%VARSRC1%\
+	)
+</code></pre></div>
+But I was not able to do the same as below:<br>
+ 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call C:\auto_pkg_build\Scripts\single_comp\srcfg.cmd
+cd "C:\auto_pkg_build\Sources\Source_schemes\Tetra_Schemes\%VARSRC5%-*\%VARSRC5%"
+FOR /R %%G IN (*.S3S) DO IF EXIST "%%~dpnG" copy "%%~dpnG" C:\auto_pkg_build\Sources\Source_schemes\Single_Replace\%VARSRC1%\
+</code></pre></div>
+
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: copy files from uncertain subfolders into another location</h3>
+				<div class="date">Posted: <strong>08 Aug 2018 09:26</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">What do you think are the modifiers ~dpn for?<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: copy files from uncertain subfolders into another location</h3>
+				<div class="date">Posted: <strong>08 Aug 2018 13:21</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic8aad.html?p=57705#p57705" data-post-id="57705" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">08 Aug 2018 09:26</div></cite>
+What do you think are the modifiers ~dpn for?<br>
+<br>
+Steffen
+</div></blockquote>
+
+expands %G to a drive letter and path only<br>
+tried using %~nxG  expands %G to a file name and extension only not working <img class="smilies" src="images/smilies/icon_mad.gif" width="15" height="15" alt=":x" title="Mad"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: copy files from uncertain subfolders into another location</h3>
+				<div class="date">Posted: <strong>08 Aug 2018 13:52</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">~<span style="color: #0000BF">d</span><span style="color: #FF00BF">p</span><span style="color: #008040">n</span> expands<br>
+<span style="color: #0000BF">C:</span><span style="color: #FF00BF">\bla\</span><span style="color: #008040">blub</span><span style="color: #FF0000">.txt</span><br>
+to<br>
+<span style="color: #0000BF">C:</span><span style="color: #FF00BF">\bla\</span><span style="color: #008040">blub</span><br>
+<br>
+A few more questions to you:<br>
+1) Will the file be found if the file extension was stripped from the file name?<br>
+2) What is the difference between the content of %%G in the FOR /F loop and the content of %%G in the FOR /R loop?<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: copy files from uncertain subfolders into another location</h3>
+				<div class="date">Posted: <strong>09 Aug 2018 06:51</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic22e7.html?p=57708#p57708" data-post-id="57708" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">08 Aug 2018 13:52</div></cite>
+~<span style="color: #0000BF">d</span><span style="color: #FF00BF">p</span><span style="color: #008040">n</span> expands<br>
+<span style="color: #0000BF">C:</span><span style="color: #FF00BF">\bla\</span><span style="color: #008040">blub</span><span style="color: #FF0000">.txt</span><br>
+to<br>
+<span style="color: #0000BF">C:</span><span style="color: #FF00BF">\bla\</span><span style="color: #008040">blub</span><br>
+<br>
+A few more questions to you:<br>
+1) Will the file be found if the file extension was stripped from the file name?<br>
+2) What is the difference between the content of %%G in the FOR /F loop and the content of %%G in the FOR /R loop?<br>
+<br>
+Steffen
+</div></blockquote>
+
+FOR /F - Loop through items in a text file<br>
+FOR /R - Loop through files (recurse subfolders)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: copy files from uncertain subfolders into another location</h3>
+				<div class="date">Posted: <strong>09 Aug 2018 07:39</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopica42a.html?p=57719#p57719" data-post-id="57719" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">09 Aug 2018 06:51</div></cite>
+FOR /F - Loop through items in a text file
+</div></blockquote>Not in your case. And you didn't answer my question of what you'll find in %%G. (hint: ECHO %%G helps to figure it out)<br>
+<br>
+FWIW FOR /F processes streams. That <em class="text-italics">can</em> be file streams besides of the standard output stream or string streams. In your example the standard output stream of the DIR command will be processed. No text file is involved.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: copy files from uncertain subfolders into another location</h3>
+				<div class="date">Posted: <strong>22 Aug 2018 09:02</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopice61a.html?p=57721#p57721" data-post-id="57721" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">09 Aug 2018 07:39</div></cite>
+<blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopica42a.html?p=57719#p57719" data-post-id="57719" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">09 Aug 2018 06:51</div></cite>
+FOR /F - Loop through items in a text file
+</div></blockquote>Not in your case. And you didn't answer my question of what you'll find in %%G. (hint: ECHO %%G helps to figure it out)<br>
+<br>
+FWIW FOR /F processes streams. That <em class="text-italics">can</em> be file streams besides of the standard output stream or string streams. In your example the standard output stream of the DIR command will be processed. No text file is involved.<br>
+<br>
+Steffen
+</div></blockquote>
+
+You are right, there is another one for <br>
+FOR /F - Loop through the output of a command<br>
+Thanks a lot!</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8771&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:29:04 GMT -->
+</html>

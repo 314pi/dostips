@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8624&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:14 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Deleting folders</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Deleting folders</h2>
+		<p><a href="viewtopiccefe.html?f=3&amp;t=8624">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8624</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Deleting folders</h3>
+				<div class="date">Posted: <strong>13 Jun 2018 04:26</strong></div>
+				<div class="author">by <strong>jamesgross</strong></div>
+				<div class="content">Hi gang,<br>
+<br>
+I am trying to delete folders with wildcards within the "wstemp" directory the folders are all named "anonymous" with different end dates like "anonymous20180613" I want them all deleted when this script is run for the past 180 days / 6 months, I have attached what I have, I have tried numerous things but I keep missing something.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+ECHO Backing up wstemp
+xcopy /i wstemp wstemp.backup /e
+ECHO Deleting anonymous files in wstemp...
+ECHO OFF
+timeout 3
+RMDIR E:\Dmgr01\wstemp\anonymous*     (THIS IS THE LINE THAT ISN'T WORKING PROPERLY)
+ECHO Deleting backup...
+ECHO OFF
+timeout 3
+rmdir /s /q wstemp.backup
+@ECHO OFF</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Deleting folders</h3>
+				<div class="date">Posted: <strong>13 Jun 2018 12:26</strong></div>
+				<div class="author">by <strong>Meerkat</strong></div>
+				<div class="content">Apparently, <strong class="text-strong"><span style="color: #0000FF">rd/rmdir</span></strong> doesn't support wildcards. Change the problematic line with this instead:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /d %%x in ("E:\Dmgr01\wstemp\anonymous*") do rmdir "%%x"</code></pre></div>
+
+Wherein <strong class="text-strong"><span style="color: #0000FF">for /d</span></strong> allows you to loop through directories. Here's a link for more information: <a href="https://ss64.com/nt/for_d.html" class="postlink">https://ss64.com/nt/for_d.html</a><br>
+<br>
+Meerkat</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8624&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:14 GMT -->
+</html>

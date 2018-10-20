@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=90&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:03:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support - Page 7</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</h2>
+		<p><a href="viewtopicb16d.html?f=3&amp;t=6044">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6044</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>7</strong> of <strong>27</strong></div>
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>18 Jun 2015 07:09</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I may have the column positions off a bit, but here is a looooong one liner that very efficiently creates your final CSV using only a single FOR loop executing wget piped to JREPL twice <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />TITLE Get WORS Results<br /><br />SET /P &quot;RACENUM=What race number do you want to retrieve? : &quot;<br />set &quot;url=http://www.wors.org/results/2015&quot;<br /><br />(for %%G in (junior) do wget -O - -q %url%/%RACENUM%/overall/%%G.htm |^<br />jrepl &quot;^((?:(&nbsp; DNF|&nbsp; &nbsp;NR)|.{5}).{80})(.*Broken Spoke.*)&quot; ^<br />&nbsp; &nbsp; &nbsp; &quot;$1+($2?'&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;':'')+$3+'\x22%RACENUM%\x22,\x22%%G\x22'&quot; ^<br />&nbsp; &nbsp; &nbsp; /j /a |^<br />jrepl &quot;(.{5})(.{9})(..)(.{6})(.{7})(.{26})(.{26})(...)(.{12})(.{12})(.{32})(.*)&quot; ^<br />&nbsp; &nbsp; &nbsp; &quot;f($1)+f($2)+f($3)+f($4)+f($5)+f($6)+f($7)+f($8)+f($9)+f($10)+f($11)+$12&quot; ^<br />&nbsp; &nbsp; &nbsp; /j /jbeg &quot;function f(str){return str.replace(/^\s*(\S(.*\S)*)*/,'\x22$1\x22,')}&quot;<br />)&gt;&gt;ALL_Race_Results.csv<br /></code></pre></div><br /><span style="color: #0000FF"><strong class="text-strong">EDIT - Simplified the regex in the f(str) function</strong></span><br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>18 Jun 2015 10:33</strong></div>
+				<div class="author">by <strong>pyr0ball</strong></div>
+				<div class="content">Hey guys, I'm having a very strange issue with JREPL not catching a seemingly simple string. I'm unsure if I'm using improper syntax, or if JREPL has some other issues when editing *.reg files.<br /><br />I'm starting from a pre-made registry file where I've replaced a portion of a registry key with the string CURRENT_DIRECTORY, and I'm trying to have JREPL replace that with a variable for the current working directory. I've used this technique successfully for other parts of my script where it's replacing text in *.ini and *.txt files, but it cant seem to detect it in this case. Here's the full line and the command I'm calling:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&quot;SFXModule&quot;=&quot;CURRENT_DIRECTORY\\WinRAR-Portable\\*.sfx&quot;</code></pre></div><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Test&gt; jrepl.bat &quot;CURRENT_DIRECTORY&quot; &quot;TESTOUT&quot; /m /f Default_SplitSFXProfile.reg /o SplitSFXProfile.reg</code></pre></div><br /><br />After running, the output file looks exactly the same:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&quot;SFXModule&quot;=&quot;CURRENT_DIRECTORY\\WinRAR-Portable\\*.sfx&quot;</code></pre></div><br /><br />Any ideas what I may be doing wrong?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>18 Jun 2015 14:21</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite>pyr0ball wrote:</cite>After running, the output file looks exactly the same:<br />...<br />Any ideas what I may be doing wrong?</div></blockquote><br />Are you sure your input file is ASCII (ANSI) and not unicode?<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>18 Jun 2015 14:41</strong></div>
+				<div class="author">by <strong>pyr0ball</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>Are you sure your input file is ASCII (ANSI) and not unicode?<br /><br /><br />Dave Benham</div></blockquote><br /><br />Notepad++ reports the input file as UCS-2 Little Endian, and the same for the output</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>18 Jun 2015 14:45</strong></div>
+				<div class="author">by <strong>pyr0ball</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite><blockquote><div><cite>pyr0ball wrote:</cite>After running, the output file looks exactly the same:<br />...<br />Any ideas what I may be doing wrong?</div></blockquote><br />Are you sure your input file is ASCII (ANSI) and not unicode?<br /><br /><br />Dave Benham</div></blockquote><br /><br />Well, I guess that was my issue. Converted to ANSI first and was able to get a proper output file! Now I just have to see if regedit will take an ANSI .reg instead of unicode</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>15 Jul 2015 16:14</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Here is a version 3.6 - a very minor release that simply adds the /?? option for paged help via MORE<br /><br /><strong class="text-strong">JREPL.BAT Version 3.6</strong><br /><div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file4ef9.php?id=12">JREPL3.6.zip</a></dt>
+						<dd>(8.78 KiB) Downloaded 71 times</dd>
+		</dl>
+		
+		
+			</div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>15 Aug 2015 07:14</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Dave, <br /><br />We discussed <span style="color: blue">.</span> not matching <span style="color: blue">\n</span> I've misunderstood something here and I am unsure where I've gone wrong.<br /><br /><br />I thought this term would match the end of a line, any string of numerals, and then the end of that line.<br /><br /><span style="color: blue">&quot;\r\n([0-9]*)\r\n&quot;</span><br /><br />My aim is to have all the numbers that are on lines by themselves, to be on one line - and this code does that, but it has other effects of removing more line endings.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />(<br />echo(Thanks for playing, here are the details of your purchase.<br />echo(<br />echo(Game: $600 Million Jackpot<br />echo(Draw(s^): 11562<br />echo(Purchased: 5 Aug, 2015<br />echo(Ticket No: 0 055 43<br />echo(Entry Details: 1 game<br />echo(Price: $1.20 (includes $0.10 commission^)<br />echo(<br />echo(Your Numbers<br />echo(Game 1<br />echo(3<br />echo(15<br />echo(29<br />echo(31<br />echo(32<br />echo(39<br />echo(45<br />)&gt;file1.txt<br /><br /><br />call jrepl &quot;\r\n(&#91;0-9&#93;*)\r\n&quot; &quot; $1 &quot; /m /x /f file1.txt<br />pause<br /></code></pre></div><br /><br /><br />This is the output and the numerals are on one line as I wish, but below that is the input text where you can see more changes have taken place.<br />How does the regular expression do this?  I'm stumped.<br /><br /><br /><span style="color: green">Thanks for playing, here are the details of your purchase.  Game: $600 Million Jackpot<br />Draw(s): 11562<br />Purchased: 5 Aug, 2015<br />Ticket No: 0 055 43<br />Entry Details: 1 game<br />Price: $1.20 (includes $0.10 commission)  Your Numbers<br />Game 1 3 15 29 31 32 39 45 </span><br /><br /><br /><br /><span style="color: blue">Thanks for playing, here are the details of your purchase.<br /><br />Game: $600 Million Jackpot<br />Draw(s): 11562<br />Purchased: 5 Aug, 2015<br />Ticket No: 0 055 43<br />Entry Details: 1 game<br />Price: $1.20 (includes $0.10 commission)<br /><br />Your Numbers<br />Game 1<br />3<br />15<br />29<br />31<br />32<br />39<br />45<br /></span></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>15 Aug 2015 07:59</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><span style="color: #0000FF"><strong class="text-strong">*</strong></span> matches 0 or more times, so  <strong class="text-strong"><span style="color: #0000FF">\r\n([0-9]*)\r\n</span></strong> empty lines as well as lines containing only digits.<br /><br />The solution is to use <strong class="text-strong"><span style="color: #0000FF">+</span></strong> (match 1 or more times) instead of <strong class="text-strong"><span style="color: #0000FF">*</span></strong><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl &quot;\r\n(&#91;0-9&#93;+)\r\n&quot; &quot; $1 &quot; /m /x /f file1.txt<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>15 Aug 2015 08:13</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>The solution is to use <strong class="text-strong"><span style="color: #0000FF">+</span></strong> (match 1 or more times) instead of <strong class="text-strong"><span style="color: #0000FF">*</span></strong><br /><br />Dave Benham</div></blockquote><br /><br />Thank you for enlightening me Dave. <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>19 Aug 2015 00:27</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Dave, this isn't really a bug but it's something that may benefit from a rethink wrt <span style="color: blue">/x</span> switches<br /><br />What happens is when a .csv file is passed to jrepl - and assume double quotes are required -<br />then a letter in the path is changed to a formfeed in <span style="color: blue">C:\files\apple carrot\pie</span><br /><br />It will affect paths like d:\twitter and f:\backup too with tab and backspace, if I got it right.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />SET &quot;encrypted=C:\files\apple carrot\pie&quot;<br /><br />echo receipt_20150814.csv|jrepl &quot;.*(........)....&quot; &quot;echo \q%encrypted%\$1\q&quot;&nbsp; /x &gt;&quot;temp.txt&quot;<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>19 Aug 2015 06:14</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">That behavior is to be expected, and is necessary. Your string includes \f, which is interpreted by the /X option as a form-feed character.<br /><br />When using the /X option, all \ literals should be escaped as \\. Technically you need only escape any \ literal that precedes a character that would be recognized as an escape sequence. But it is a good idea to simply escape all the \ literals.<br /><br />Note how in addition to escaping the variable value, I also escape the one \ in the replacement string.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal<br />set &quot;encrypted=C:\\files\\apple carrot\\pie&quot;<br /><br />echo receipt_20150814.csv|jrepl &quot;.*(........)....&quot; &quot;echo \q%encrypted%\\$1\q&quot;&nbsp; /x &gt;&quot;temp.txt&quot;<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>19 Aug 2015 07:24</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><strong class="text-strong">EDITED:</strong><br /><br />I've modified my reply as I realise now that it's not as widespread as I had assumed, Dave.<br /><br />it doesn't affect the contents of $&amp; such as below, which I had assumed would suffer too.<br /><br /><span style="color: #4000FF">I just noticed - the formfeed is at the start and the end of each line.</span><br /><br /><span style="color: blue"><br />d:\files&gt;dir cap* /b /s /a-d |jrepl &quot;.*&quot; &quot;\f$&amp;&quot; /x<br />♀d:\files\capture - 2015-08-16_161106.jpg♀<br />♀d:\files\capture - 2015-08-18_190558.jpg♀<br />♀d:\files\capture - 2015-08-18_190558.png♀<br /></span><br /><br /><blockquote><div><cite>dbenham wrote:</cite>Note how in addition to escaping the variable value, I also escape the one \ in the replacement string.<br /></div></blockquote><br /><br />That escape doesn't affect the sample code I posted right, but would if there was the affected text characters after the backslash.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>19 Aug 2015 10:27</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">You fell into the trap of .* matching an empty string (again  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> ) <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br /><br />.* first matches the entire line, then it matches the empty string before the line end. The solution is to add the ^ anchor.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>dir cap* /b /s /a-d |jrepl &quot;^.*&quot; &quot;\f$&amp;&quot; /x<br /></code></pre></div><br />Or you could simplify to:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>dir cap* /b /s /a-d |jrepl &quot;^&quot; &quot;\f&quot; /x<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>19 Aug 2015 19:41</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>You fell into the trap of .* matching an empty string (again  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> ) <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br /></div></blockquote><br /><br />hehe  Wasn't it with /m that we discussed it not matching a \n ?<br /><br /><blockquote class="uncited"><div>.* first matches the entire line, then it matches the empty string before the line end. The solution is to add the ^ anchor.<br /></div></blockquote><br /><br />I'm aware of anchoring to the line start and end but I'm really surprised because GnuSED doesn't act this way - see here for sed output:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>d:\files&gt;dir cap* /b|jrepl &quot;.*&quot; &quot;a&quot;<br />aa<br />aa<br />aa<br /><br />d:\files&gt;dir cap* /b|sed s/.*/a/g<br />a<br />a<br />a</code></pre></div><br /><br />Thanks for your explanation once more Dave - it's most useful.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>10 Sep 2015 18:30</strong></div>
+				<div class="author">by <strong>brinda</strong></div>
+				<div class="content">dave,<br /><br />a request for word jumble mix for jrepl.<br /><br />currently using excel code here for jumble and modifying them the suit the needs<br /><a href="http://www.mrexcel.com/forum/excel-questions/37340-word-scramble.html" class="postlink">http://www.mrexcel.com/forum/excel-questions/37340-word-scramble.html</a><br /><br /><br />Normal word list input on text file looks below<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Sri Advaita<br />Bhagavad Gita<br />Saptaham<br />Maha Bali Puram</code></pre></div><br /><br />Processed list text file (Normal, jumble,mirror,reverse)<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Normal,jumble,mirror,reverse<br /><br />Sri Advaita,rSi vAdiata,atiavdA irS,irS atiavdA <br />Bhagavad Gita,avBgahd tiGa,atiG davagahB,davagahB atiG <br />Saptaham,tpahaaSm,mahatpaS,mahatpaS<br />Maha Bali Puram,ahMa lBai arPum,maruP ilaB ahaM,ahaM ilaB maruP&nbsp; <br /></code></pre></div><br /><br />Jumble1 mix criteria,<br />a)Only the last letter in a word should remain in its original position.<br />b)Maintain Letter Capitalization<br />c)Original position of space should remain<br /><br />Jumble2 Mirror criteria<br />a)Reversal of letters position and the word position from left to right. E.g &quot;Sri Advaita&quot; becomes &quot;atiavdA irS&quot;<br />b)Maintain Letter Capitalization<br />c)Original position of space should remain<br /><br />Jumble3 Reverse criteria<br />a)Reversal of letters position from left to right. Word position remains.  E.g &quot;Sri Advaita&quot; becomes &quot;irS atiavdA&quot;<br />b)Maintain Letter Capitalization<br />c)Original position of space should remain<br /><br />thanks,<br />brinda</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>7</strong> of <strong>27</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=90&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:03:03 GMT -->
+</html>

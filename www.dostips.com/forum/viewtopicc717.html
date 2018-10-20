@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5751 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:32:09 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>BrainF*** Interpreter in Batch - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopicb8e8-2.html?t=5751">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopicc717.html?f=3&amp;t=5751">BrainF*** Interpreter in Batch</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting96e6.html?mode=reply&amp;f=3&amp;t=5751" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic59d2.html?f=3&amp;t=5751&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="5751" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			62 posts
+							<ul>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopic3b52.html?f=3&amp;t=5751&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopicfbe6.html?f=3&amp;t=5751&amp;start=30" role="button">3</a></li>
+				<li><a class="button" href="viewtopic29f4-2.html?f=3&amp;t=5751&amp;start=45" role="button">4</a></li>
+				<li><a class="button" href="viewtopicd39e.html?f=3&amp;t=5751&amp;start=60" role="button">5</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic3b52.html?f=3&amp;t=5751&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p35676" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35676">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd149.html?mode=viewprofile&amp;u=5607" class="username">JWinslow23</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search28c9.html?author_id=5607&amp;sr=posts">58</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 17 Jun 2014 10:38</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35676">
+
+						<h3 class="first"><a href="#p35676">BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8e76.html?mode=quote&amp;f=3&amp;p=35676" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5f01.html?p=35676#p35676" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopic5f01.html?p=35676#p35676" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd149.html?mode=viewprofile&amp;u=5607" class="username">JWinslow23</a></strong> &raquo; </span>08 Jul 2014 14:22
+			</p>
+			
+			
+			
+			<div class="content">As probably many have done before, I have proven Batch's Turing-completeness by making a BrainF*** interpreter in Batch.<br />I need to work a lot more on this, definitely. Rewrite the input system, for example. And make it faster. But it is fully functional!<br /><br />BrainF*** (for posterity, I have censored the name) is an esoteric programming language that is one of the smallest possible Turing-complete languages ever. See <a href="http://esolangs.org/wiki/BF" class="postlink">http://esolangs.org/wiki/BF</a> for more information. It consists of only eight instructions, each one character:<br /><br />+ : Increment the current memory value.<br />- : Decrement the current memory value.<br />&gt; : Move the memory pointer forwards.<br />&lt; : Move the memory pointer backwards.<br />[ : If current cell is 0, skip to the matching ].<br />] : If current cell is nonzero, go back to the matching [.<br />. : Output the ASCII value of the current memory value.<br />, : Input a value to the current memory value.<br /><br />Execute a BF file by either loading it as an argument, dragging and dropping it on the interpreter file, or specifying it when loading without an argument.<br />According to the original specs, there is an infinite amount of memory to work with. However, seeing as though none of us have that kind of space, I have an array of 4096 values as the memory tape.<br />Any memory cell can only have values from 0 to 255. I do support wraparounds.<br />In this interpretation, you can only input numbers, not text. I should get to fixing that soon.<br />Once it's done, it displays &quot;Press any key to continue...&quot;, and the interpreter closes when a key is pressed.<br /><br />Here is an example program (it should print &quot;Hello, World!&quot;):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>++++++++++&#91;&gt;+++++++&gt;++++++++++&gt;+++++++++&gt;++++&gt;+++&gt;+&lt;&lt;&lt;&lt;&lt;&lt;-&#93;&gt;++.&gt;+.+++++++..+++.&gt;&gt;++++.&gt;++.&lt;&lt;---.&lt;.+++.------.--------.&gt;&gt;&gt;+.&gt;.</code></pre></div><br /><br />And here is the source code to the interpreter (credit to...Jeb, was it? for the :echoWithoutLinefeed routine, and Aacini for the character-extraction code):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enabledelayedexpansion<br /><br />if &quot;%~1&quot;==&quot;&quot; (set /p sourcefile=File? ) else set sourcefile=%~1<br /><br />set &quot;allowedChars=+-&lt;&gt;.,&#91;&#93;&quot;<br /><br />set i=-1<br />&lt;nul set /p=Processing file commands.<br />for /f &quot;usebackq delims=&quot; %%g in (&quot;%sourcefile%&quot;) do (<br />&nbsp; for /f &quot;delims=&quot; %%h in ('cmd /u /c echo &quot;%%g&quot;^| find /v &quot;&quot;') do (<br />&nbsp; &nbsp; if &quot;!allowedChars:%%h=!&quot; neq &quot;%allowedChars%&quot; (<br />&nbsp; &nbsp; &nbsp; set /a i+=1<br />&nbsp; &nbsp; &nbsp; set code&#91;!i!&#93;=&quot;%%h&quot;<br />&nbsp; &nbsp; )<br />&nbsp; )<br />&nbsp; &lt;nul set /p=.<br />)<br /><br />set /a length=%i%+1<br />set codepointer=0<br />set mempointer=0<br /><br />echo(<br />&lt;nul set /p=Preparing memory array.<br />for /l %%g in (0,1,4095) do set mem&#91;%%g&#93;=0&amp;set /a h=%%g%%400&amp;if !h!==0 &lt;nul set /p=.<br /><br />echo(<br />echo Done.<br />echo Press any key to start interpretation...<br />pause &gt;nul<br />cls<br /><br />:startLoop<br />if !code&#91;%codepointer%&#93;!==&quot;+&quot; set /a mem&#91;%mempointer%&#93;=!mem&#91;%mempointer%&#93;!+1%%256<br />if !code&#91;%codepointer%&#93;!==&quot;-&quot; set /a mem&#91;%mempointer%&#93;-=1&amp;if !mem&#91;%mempointer%&#93;!==-1 set mem&#91;%mempointer%&#93;=255<br />if !code&#91;%codepointer%&#93;!==&quot;&gt;&quot; set /a mempointer=%mempointer%+1%%4096<br />if !code&#91;%codepointer%&#93;!==&quot;&lt;&quot; set /a mempointer-=1&amp;if !mempointer!==-1 set mempointer=4095<br />if !code&#91;%codepointer%&#93;!==&quot;.&quot; (<br />&nbsp; cmd /c exit /b !mem&#91;%mempointer%&#93;!<br />&nbsp; if !mem&#91;%mempointer%&#93;!==10 echo(<br />&nbsp; if !mem&#91;%mempointer%&#93;!==32 call :echoWithoutLinefeed &quot; &quot;<br />&nbsp; if !mem&#91;%mempointer%&#93;! gtr 32 call :echoWithoutLinefeed &quot;!=ExitCodeAscii!&quot;<br />)<br />if !code&#91;%codepointer%&#93;!==&quot;,&quot; (<br />&nbsp; set attempted=0<br />:enterNumber<br />&nbsp; if !attempted!==1 (echo Try again...number invalid.) else echo(<br />&nbsp; set /p &quot;mem&#91;%mempointer%&#93;=Input number: &quot;<br />&nbsp; call :isNumber !mem&#91;%mempointer%&#93;!<br />&nbsp; if !?!==0 set attempted=1&amp;goto enterNumber<br />&nbsp; set /a mem&#91;%mempointer%&#93;=!mem&#91;%mempointer%&#93;!%%256<br />)<br />if !code&#91;%codepointer%&#93;!==&quot;&#91;&quot; (<br />&nbsp; if !mem&#91;%mempointer%&#93;!==0 (<br />&nbsp; &nbsp; set brackets=1<br />:findEndBracket<br />&nbsp; &nbsp; set /a codepointer+=1<br />&nbsp; &nbsp; for %%g in (!codepointer!) do if !code&#91;%%g&#93;!==&quot;&#91;&quot; set /a brackets+=1<br />&nbsp; &nbsp; for %%g in (!codepointer!) do if !code&#91;%%g&#93;!==&quot;&#93;&quot; set /a brackets-=1<br />&nbsp; &nbsp; if !brackets! neq 0 goto findEndBracket<br />&nbsp; )<br />)<br />if !code&#91;%codepointer%&#93;!==&quot;&#93;&quot; (<br />&nbsp; if !mem&#91;%mempointer%&#93;! neq 0 (<br />&nbsp; &nbsp; set brackets=1<br />:findStartBracket<br />&nbsp; &nbsp; set /a codepointer-=1<br />&nbsp; &nbsp; for %%g in (!codepointer!) do if !code&#91;%%g&#93;!==&quot;&#93;&quot; set /a brackets+=1<br />&nbsp; &nbsp; for %%g in (!codepointer!) do if !code&#91;%%g&#93;!==&quot;&#91;&quot; set /a brackets-=1<br />&nbsp; &nbsp; if !brackets! neq 0 goto findStartBracket<br />&nbsp; )<br />)<br />set /a codepointer+=1<br />if %codepointer% lss %length% goto startLoop<br />pause<br />exit /b<br /><br />:echoWithoutLinefeed<br />setlocal disabledelayedexpansion<br />set &quot;ln=%~1&quot;<br />for /f %%A in ('copy /z &quot;%~dpf0&quot; nul') do set EOL=%%A^<br /><br /><br />setlocal enabledelayedexpansion<br />&lt;nul set /p &quot;=x!EOL!!ln!&quot; &gt;ln.tmp<br />findstr /v $ ln.tmp<br />del ln.tmp<br />exit /b<br /><br />:isNumber<br />for /f &quot;tokens=*&quot; %%g in (&quot;%~1&quot;)do set #=%%~g<br />for /f &quot;tokens=* delims=0&quot; %%g in (&quot;%#%&quot;)do set #=%%g<br />if not defined # set #=0<br />set ?=1&amp;for /f &quot;tokens=1 delims=0123456789&quot; %%g in (&quot;%#%&quot;) do set ?=0<br />exit /b</code></pre></div></div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlistd149.html?mode=viewprofile&amp;u=5607" class="username">JWinslow23</a> on 08 Jul 2014 15:51, edited 1 time in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35677" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35677">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35677">
+
+						<h3 ><a href="#p35677">Re: BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting1000.html?mode=quote&amp;f=3&amp;p=35677" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic3521.html?p=35677#p35677" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopic3521.html?p=35677#p35677" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>08 Jul 2014 14:35
+			</p>
+			
+			
+			
+			<div class="content">And maybe give credit to Antonio for his code contribution.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35680" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35680">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd149.html?mode=viewprofile&amp;u=5607" class="username">JWinslow23</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search28c9.html?author_id=5607&amp;sr=posts">58</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 17 Jun 2014 10:38</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35680">
+
+						<h3 ><a href="#p35680">Re: BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting88c8.html?mode=quote&amp;f=3&amp;p=35680" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb20f.html?p=35680#p35680" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopicb20f.html?p=35680#p35680" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd149.html?mode=viewprofile&amp;u=5607" class="username">JWinslow23</a></strong> &raquo; </span>08 Jul 2014 15:50
+			</p>
+			
+			
+			
+			<div class="content">I almost forgot, sorry about that. Post edited.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35683" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35683">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35683">
+
+						<h3 ><a href="#p35683">Re: BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5287.html?mode=quote&amp;f=3&amp;p=35683" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5274.html?p=35683#p35683" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopic5274.html?p=35683#p35683" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>08 Jul 2014 22:35
+			</p>
+			
+			
+			
+			<div class="content">Interesting application for Batch! This is my version:<br /><br /><strong class="text-strong">EDIT 2014-07-09</strong>: I fixed a couple small bugs in the overflow of arithmetic operations. I also added support for the 256 Ascii characters in &quot;.&quot; (output) command. This is achieved creating 164 one-character text files, so I suggest to do so in a new empty folder.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />rem bf.bat: Brainf*ck interpreter in Batch<br />rem Antonio Perez Ayala<br />rem Version 1.1: - Bug fixed in arithmetic overflow<br />rem&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Full support of 256 Ascii characters in &quot;.&quot; (output) command<br /><br />if &quot;%~1&quot; equ &quot;&quot; echo Usage: %~N0 filename.ext &amp; goto :EOF<br />if not exist &quot;%~1&quot; echo File not found: %1 &amp; goto :EOF<br /><br />set &quot;operators=+-&lt;&gt;.,&#91;&#93;&quot;<br />set /A ip=0, sp=0<br />set /P &quot;=Loading file.&quot; &lt; NUL<br />for /F &quot;usebackq delims=&quot; %%a in (&quot;%~1&quot;) do (<br />&nbsp; &nbsp;for /F &quot;delims=&quot; %%b in ('cmd /U /C echo &quot;%%a&quot;^| find /V &quot;&quot;') do (<br />&nbsp; &nbsp; &nbsp; if &quot;!operators:%%b=!&quot; neq &quot;%operators%&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A ip+=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;code&#91;!ip!&#93;=%%b&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if &quot;%%b&quot; equ &quot;,&quot; set &quot;code&#91;!ip!&#93;=comma&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if &quot;%%b&quot; equ &quot;&#91;&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /A sp+=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set stack&#91;!sp!&#93;=!ip!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;) else if &quot;%%b&quot; equ &quot;&#93;&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for %%s in (!sp!) do set /A jump&#91;!ip!&#93;=stack&#91;%%s&#93;-1, jump&#91;!stack&#91;%%s&#93;!&#93;=ip, sp-=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;set /P &quot;=.&quot; &lt; NUL<br />)<br />echo/<br />if %sp% neq 0 echo ERROR: Unbalanced brackets &amp; goto :EOF<br />set /A ip+=1<br />set &quot;code&#91;%ip%&#93;=EOF&quot;<br /><br />set /P &quot;=Creating Ascii tables.&quot; &lt; NUL<br />type nul &gt; t.tmp<br />set &quot;options=/d compress=off /d reserveperdatablocksize=26&quot;<br />for /L %%i in (0,1,34) do if not exist %%i.chr call :genchr %%i<br />set /P &quot;=.&quot; &lt; NUL<br />for /L %%i in (127,1,255) do if not exist %%i.chr call :genchr %%i<br />set &quot;options=&quot;<br />del t.tmp temp.tmp<br />set /P &quot;=.&quot; &lt; NUL<br />set &quot;Ascii=01234567890123456789012345678901&quot;<br />for /L %%i in (32,1,126) do (<br />&nbsp; &nbsp;cmd /C exit /B %%i<br />&nbsp; &nbsp;set &quot;Ascii=!Ascii!!=ExitCodeAscii!&quot;<br />)<br />for /L %%i in (126,-1,32) do (<br />&nbsp; &nbsp;cmd /C exit /B %%i<br />&nbsp; &nbsp;set &quot;Char&#91;!=ExitCodeAscii!&#93;=%%i&quot;<br />)<br />set &quot;upCase=ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;<br />echo/<br /><br />set /P &quot;=Initializing memory.&quot; &lt; NUL<br />for /L %%i in (0,1,4095) do (<br />&nbsp; &nbsp;set m&#91;%%i&#93;=0<br />&nbsp; &nbsp;set /A mod=%%i %% 400<br />&nbsp; &nbsp;if !mod! equ 0 set /P &quot;=.&quot; &lt; NUL<br />)<br />echo/<br /><br />echo Running.<br /><br />set /A ip=0, mp=0<br />:nextOpCode<br />set /A ip+=1<br />goto OpCode&quot;!code&#91;%ip%&#93;!&quot;<br /><br />:OpCode&quot;+&quot;<br />set /A &quot;m&#91;%mp%&#93;=(m&#91;%mp%&#93;+1) &amp; 255&quot;<br />goto nextOpCode<br /><br />:OpCode&quot;-&quot;<br />set /A &quot;m&#91;%mp%&#93;=(m&#91;%mp%&#93;-1) &amp; 255&quot;<br />goto nextOpCode<br /><br />:OpCode&quot;^&gt;&quot;<br />set /A &quot;mp=(mp+1) &amp; 4095&quot;<br />goto nextOpCode<br /><br />:OpCode&quot;^&lt;&quot;<br />set /A &quot;mp=(mp-1) &amp; 4095&quot;<br />goto nextOpCode<br /><br />:OpCode&quot;.&quot;<br />set char=!m&#91;%mp%&#93;!<br />if %char% equ 10 (<br />&nbsp; &nbsp; echo/<br />) else if %char% leq 34 (<br />&nbsp; &nbsp;type %char%.chr<br />) else if %char% leq 126 (<br />&nbsp; &nbsp; set /P &quot;=!Ascii:~%char%,1!&quot; &lt; NUL<br />) else (<br />&nbsp; &nbsp;type %char%.chr<br />)<br />goto nextOpCode<br /><br />:OpCode&quot;comma&quot;<br />set &quot;key=&quot;<br />setlocal DisableDelayedExpansion<br />for /F &quot;delims=&quot; %%k in ('xcopy /L /W &quot;%~F0&quot; &quot;%~F0&quot; 2^&gt;NUL') do (<br />&nbsp; &nbsp;if not defined key set &quot;key=%%k&quot;<br />)<br />endlocal &amp; set &quot;key=%key:~-1%&quot;<br />set &quot;m&#91;%mp%&#93;=!Char&#91;%key%&#93;!&quot;<br />if &quot;!upCase:%key%=%key%!&quot; neq &quot;%upCase%&quot; set /A m&#91;%mp%&#93;+=32<br />goto nextOpCode<br /><br />:OpCode&quot;&#91;&quot;<br />if !m&#91;%mp%&#93;! equ 0 set ip=!jump&#91;%ip%&#93;!<br />goto nextOpCode<br /><br />:OpCode&quot;&#93;&quot;<br />set ip=!jump&#91;%ip%&#93;!<br />goto nextOpCode<br /><br />:OpCode&quot;EOF&quot;<br />goto :EOF<br /><br />:genchr<br />REM This code creates one single byte. Parameter: int<br />REM Teamwork of carlos, penpen, aGerman, dbenham<br />REM Tested under Win2000, XP, Win7, Win8<br />if %~1 neq 26 (<br />&nbsp; &nbsp;makecab %options% /d reserveperfoldersize=%~1 t.tmp %~1.chr &gt; nul<br />&nbsp; &nbsp;type %~1.chr | ( (for /l %%N in (1,1,38) do pause)&gt;nul &amp; findstr &quot;^&quot; &gt; temp.tmp )<br />&nbsp; &nbsp;&gt;nul copy /y temp.tmp /a %~1.chr /b<br />) else (<br />&nbsp; &nbsp;copy /y nul + nul /a 26.chr /a &gt;nul<br />)<br />exit /B<br /></code></pre></div><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35694" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35694">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35694">
+
+						<h3 ><a href="#p35694">Re: BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting43f3.html?mode=quote&amp;f=3&amp;p=35694" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic8f36-2.html?p=35694#p35694" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopic8f36-2.html?p=35694#p35694" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>09 Jul 2014 07:11
+			</p>
+			
+			
+			
+			<div class="content">I modified my BF interpreter in order to show the 256 Ascii characters in &quot;.&quot; (output) command; the new code is in the same place than the original, as usual.<br /><br />Below there is a BF program that show some example output using the characters of the extended set in code page 850:<br /><br /><strong class="text-strong">EDIT</strong>: I modified the &quot;4x10 Frame&quot; to use multiple &quot;.&quot; (output) commands instead of just one command in a loop, so it run faster in my new optimized BF version.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Characters in Spanish: ¿La mamá del niño &quot;el güero&quot; Pérez?<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />&gt;++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&#91; &gt;++++++++&nbsp; &nbsp; &nbsp; &nbsp;&#91;&gt; + &lt;-&#93; &lt;-&#93;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;space in m(3)<br />&nbsp;++++++++++++ &#91; &gt;++++++++++++++ &#91;&gt;&gt;+&lt;&lt;-&#93; &lt;-&#93; &gt;&gt;&gt;.&lt;&lt;&lt;&nbsp; &nbsp; &nbsp;¿ in m(4)<br />&nbsp;+++++++++&nbsp; &nbsp; &#91; &gt;++++++++&nbsp; &nbsp; &nbsp; &nbsp;&#91;&lt;&lt;+&gt;&gt;-&#93; &lt;-&#93; &lt;++++ .&nbsp; &nbsp; &nbsp;L<br />+++++++++++++++++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; &nbsp; &nbsp;a<br />&gt;&gt;&gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .<br />&lt;&lt;&lt; ++++++++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&nbsp; &nbsp; &nbsp;m<br />------------&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&nbsp; &nbsp; &nbsp;a<br />++++++++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&nbsp; &nbsp; &nbsp;m<br />&gt;&gt;&gt;&gt;--------&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&lt;.&nbsp; &nbsp;á&nbsp; space<br />&lt;&lt;&lt;---------&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&nbsp; &nbsp; &nbsp;d<br />+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; &nbsp; &nbsp;e<br />+++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&gt;&gt;&gt;. l&nbsp; space<br />&lt;&lt;&lt;++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; &nbsp; &nbsp;n<br />-----&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; &nbsp; &nbsp;i<br />&gt;&gt;&gt;&gt;++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&nbsp; &nbsp; &nbsp;ñ<br />&lt;&lt;&lt;&lt;++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&gt;&gt;&gt;. o&nbsp; space<br />++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.--&nbsp; &nbsp;quote<br />&lt;&lt;&lt;----------&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; &nbsp; &nbsp;e<br />+++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&gt;&gt;&gt;. l&nbsp; space<br />&lt;&lt;&lt;-----&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&nbsp; &nbsp; &nbsp;g<br />&gt;&gt;&gt;&gt;-----------------------------------&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; &nbsp; &nbsp;ü<br />&lt;&lt;&lt;&lt;--&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&nbsp; &nbsp; &nbsp;e<br />+++++++++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; &nbsp; &nbsp;r<br />---&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; &nbsp; &nbsp;o<br />&gt;&gt;&gt;++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .--.&nbsp; quote&nbsp; space<br />&lt;&lt;&lt;-------------------------------&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&nbsp; &nbsp; &nbsp;P<br />&gt;&gt;&gt;&gt;+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; &nbsp; &nbsp;é<br />&lt;&lt;&lt;&lt;++++++++++++++++++++++++++++++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&nbsp; &nbsp; &nbsp;r<br />-------------&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; &nbsp; &nbsp;e<br />+++++++++++++++++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; &nbsp; &nbsp;z<br />&gt;&gt;&gt;+++++++++++++++++++++++++++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&nbsp; &nbsp; &nbsp;?<br />&lt;&lt;++++++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;..&nbsp; &nbsp; NL NL<br /><br />A 4x10 frame:<br /><br />&gt;&gt;&gt;&gt;&gt; ++++ &#91; &gt;++++++++++++++++ &#91;&gt;-&gt;-&lt;&lt;-&#93; &lt;-&#93;&nbsp; &nbsp; &nbsp; 192 in two cells<br />&gt;&gt;&gt;++++++++++++++++++++++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; 218&nbsp; top left<br />&lt;++++ ..........&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 196&nbsp; top 10 times<br />-----&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; 191&nbsp; top right<br />&lt;&lt;++++++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&nbsp; NL<br />&gt;&gt;------------&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 179&nbsp; left<br />&lt;++++++++++++++++++++++++++++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;a space<br />&lt;&lt;++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 4 times<br />&#91; &gt;&gt;&gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; &nbsp; &nbsp;show left<br />&nbsp; &nbsp;&lt; ..........&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; show 10 spaces<br />&nbsp; &nbsp;&gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&nbsp; &nbsp; &nbsp;show&nbsp; right<br />&nbsp; &nbsp;&lt;&lt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; &nbsp; &nbsp;NL<br />&lt;-&#93;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;end 4 times<br />&gt;&gt;&gt; +++++++++++++&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; 192&nbsp; bottom left<br />++++ ..........&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;196&nbsp; bottom 10 times<br />&gt;-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.&nbsp; 217&nbsp; bottom right<br />&lt;&lt;&lt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .&nbsp; NL<br /></code></pre></div><br />Output:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Loading file......................................................<br />Creating Ascii tables...<br />Initializing memory..<br />Running.<br />¿La mamá del niño &quot;el güero&quot; Pérez?<br /><br />┌──────────┐<br />│&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │<br />│&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │<br />│&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │<br />│&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; │<br />└──────────┘<br /></code></pre></div><br />Antonio<br /><br />PS - The &quot;,&quot; (input) command is limited by the &quot;xcopy /L /W&quot; trick used to get one keystroke. Anybody knows if there is a way to accurately read <em class="text-italics">all</em> keyboard characters using this method? The BF interpreter currently fails when an exclamation mark, a quote or an equal-sign is read.</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a> on 10 Jul 2014 13:31, edited 1 time in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35695" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35695">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35695">
+
+						<h3 ><a href="#p35695">Re: BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingdc4b.html?mode=quote&amp;f=3&amp;p=35695" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9e06.html?p=35695#p35695" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopic9e06.html?p=35695#p35695" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>09 Jul 2014 10:34
+			</p>
+			
+			
+			
+			<div class="content">It should be possible to pre-process the code into memory, stripping out comments (non command characters), and establishing loop pointers. Then a single infinite loop should be able to interpret the code extremely fast, without resorting to any CALL or GOTO statements.<br /><br />The XCOPY method of reading a keypress has only 2 restrictons:<br /><br />1) It cannot read 0x00 (pretty much true of any batch command, with a few exceptions)<br /><br />2) It cannot distinguish between &lt;Ctrl-C&gt; and &lt;LF&gt;<br /><br />Below is an infinite loop that prints out each keypress until &lt;CR&gt; is entered via &lt;Enter&gt;, &lt;Ctrl-M&gt;, or &lt;Alt&gt;13<br /><br />My code interprets both &lt;Ctrl-C&gt; and &lt;LF&gt; (entered as &lt;Alt&gt;10) as &lt;LF&gt;<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />if &quot;%~1&quot; equ &quot;&quot; (<br />&nbsp; cmd /c &quot;%~f0&quot; x<br />&nbsp; exit /b<br />)<br />setlocal enableDelayedExpansion<br />for /f %%a in ('copy /Z &quot;%~dpf0&quot; nul') do set &quot;CR=%%a&quot;<br />set ^&quot;LF=^<br /><br />^&quot;<br />for /l %%. in () do (<br />&nbsp; set &quot;key=&quot;<br />&nbsp; for /f &quot;delims=&quot; %%A in ('xcopy /w &quot;%~f0&quot; &quot;%~f0&quot; 2^&gt;nul') do (<br />&nbsp; &nbsp; if not defined key (<br />&nbsp; &nbsp; &nbsp; setlocal disableDelayedExpansion<br />&nbsp; &nbsp; &nbsp; set &quot;key=%%A&quot;<br />&nbsp; &nbsp; )<br />&nbsp; )<br />&nbsp; setlocal enableDelayedExpansion<br />&nbsp; if &quot;!key:~-2,1!&quot; neq &quot;)&quot; (<br />&nbsp; &nbsp; endlocal&amp;endlocal<br />&nbsp; &nbsp; set &quot;key=!LF!&quot;<br />&nbsp; ) else if &quot;!key:~-1!&quot; equ &quot;^!&quot; (<br />&nbsp; &nbsp; endlocal&amp;endlocal<br />&nbsp; &nbsp; set &quot;key=^!&quot;<br />&nbsp; ) else if &quot;!key:~-1!&quot; equ &quot;^^&quot; (<br />&nbsp; &nbsp; endlocal&amp;endlocal<br />&nbsp; &nbsp; set &quot;key=^&quot;<br />&nbsp; ) else if &quot;!key:~-1!&quot; equ &quot;!CR!&quot; (<br />&nbsp; &nbsp; endlocal&amp;endlocal<br />&nbsp; &nbsp; set &quot;key=!CR!&quot;<br />&nbsp; ) else (<br />&nbsp; &nbsp; for /f delims^=^ eol^= %%A in (&quot;!key:~-1!&quot;) do (<br />&nbsp; &nbsp; &nbsp; endlocal&amp;endlocal<br />&nbsp; &nbsp; &nbsp; set &quot;key=%%A&quot;<br />&nbsp; &nbsp; )<br />&nbsp; )<br />&nbsp; if &quot;!key!&quot; equ &quot;!CR!&quot; exit<br />&nbsp; echo &#91;!key!&#93;<br />)<br /></code></pre></div><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35696" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35696">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist77fa.html?mode=viewprofile&amp;u=1506" class="username">miskox</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search184b.html?author_id=1506&amp;sr=posts">323</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 28 Jun 2010 03:46</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35696">
+
+						<h3 ><a href="#p35696">Re: BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinge086.html?mode=quote&amp;f=3&amp;p=35696" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic90d2.html?p=35696#p35696" onclick="prompt('Message #7',this.href); return false;">#7</a></span> 
+									<a class="unread" href="viewtopic90d2.html?p=35696#p35696" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist77fa.html?mode=viewprofile&amp;u=1506" class="username">miskox</a></strong> &raquo; </span>09 Jul 2014 10:40
+			</p>
+			
+			
+			
+			<div class="content">Dumping the source file first would make it possible to process all values (0-255) (agerman's excelent file dump: <!-- l --><a class="postlink-local" href="viewtopicec7b.html?p=14361#p14361">viewtopic.php?p=14361#p14361</a><!-- l -->).<br /><br />Saso</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35707" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35707">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35707">
+
+						<h3 ><a href="#p35707">Re: BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5688.html?mode=quote&amp;f=3&amp;p=35707" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic154b.html?p=35707#p35707" onclick="prompt('Message #8',this.href); return false;">#8</a></span> 
+									<a class="unread" href="viewtopic154b.html?p=35707#p35707" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>09 Jul 2014 23:59
+			</p>
+			
+			
+			
+			<div class="content">Here is my optimized version.<br /><br />Upon reading Aacini's code more carefully, I realized he already strips out the comments and establishes loop pointers. So I used a derivative of his code parser, but completely redesigned the actual interpreter. It uses an infinite loop without any CALL or GOTO.<br /><br />Instead of initializing the memory array elements to 0, I undefined all elements of the array, and allow unbounded extension to the left and right. The interpreter treats undefined values the same as 0.<br /><br />I also used a highly optimized version of the ASCII generator<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:: BF.BAT - BrainF*** interpreter in Batch<br />::<br />:: The memory array consists of unsigned bytes<br />:: The array is unbounded both to the left and right<br />::<br />:: BF.BAT can only read input from the keyboard. Input will fail<br />:: if data is piped into BF.BAT or if stdin is redirected to a file.<br />::<br />:: The &lt;Enter&gt; key is read as &lt;CR&gt;<br />:: &lt;Ctrl-C&gt; is read as &lt;LF&gt;<br />:: All other inputs are normal.<br />::<br />:: Any byte value (except 0x00) may be entered by holding down the &lt;Alt&gt; key<br />:: and entering a decimal code on the numeric keypad.<br />::<br />:: BF.BAT was written by Dave Benham, with help from others as commented below<br />::<br /><br /><br />@echo off<br />setlocal EnableDelayedExpansion<br />if &quot;%~2&quot; equ &quot;run&quot; goto :run<br /><br />::-------------------------------------------------------------------------------------<br />:: Validate parameters and parse bf code<br />:: This section of code is derived from code by Antonio Parez Ayala,<br />:: known as Aacini on DosTips<br />::<br />if &quot;%~1&quot; equ &quot;&quot; &gt;&amp;2 echo Usage: %~N0 filename.ext&amp;exit /b 1<br />if not exist &quot;%~1&quot; &gt;&amp;2 echo File not found: %1&amp;exit /b 1<br /><br />set &quot;operators=+-&lt;&gt;.,&#91;&#93;&quot;<br />set /a ip=0, sp=0<br />for /f %%b in ('cmd /U /C type %1^|find /V &quot;&quot;') do (<br />&nbsp; if &quot;!operators:%%b=!&quot; neq &quot;%operators%&quot; (<br />&nbsp; &nbsp; set /a ip+=1<br />&nbsp; &nbsp; set &quot;code&#91;!ip!&#93;=%%b&quot;<br />&nbsp; &nbsp; if &quot;%%b&quot; equ &quot;&#91;&quot; (<br />&nbsp; &nbsp; &nbsp; set /a sp+=1<br />&nbsp; &nbsp; &nbsp; set stack&#91;!sp!&#93;=!ip!<br />&nbsp; &nbsp; ) else if &quot;%%b&quot; equ &quot;&#93;&quot; (<br />&nbsp; &nbsp; &nbsp; for %%s in (!sp!) do set /a jump&#91;!ip!&#93;=stack&#91;%%s&#93;+1, jump&#91;!stack&#91;%%s&#93;!&#93;=ip+1, sp-=1<br />&nbsp; &nbsp; )<br />&nbsp; )<br />)<br />if %sp% neq 0 &gt;&amp;2 echo ERROR: Unbalanced brackets&amp;exit /b 1<br />::<br />:: End of Aacini derived code<br />::---------------------------------------------------------------------------------------<br /><br /><br />:: Create character files if they don't already exist<br />set &quot;needChars=&quot;<br />for /l %%N in (0 1 255) do for %%F in (%%N.bf.chr) do if &quot;%%~zF&quot; neq &quot;1&quot; set &quot;needChars=1&quot;<br />if defined needChars call :genAllChr<br /><br />:: Initialize memory to undefined (equivalent to 0)<br />for /f &quot;delims==&quot; %%A in ('set m&#91; 2^&gt;nul') do set &quot;%%A=&quot;<br /><br />:: Define CR to hold &lt;CarriageReturn&gt; for use in input routine<br />for /f %%A in ('copy /Z &quot;%~dpf0&quot; nul') do set &quot;CR=%%A&quot;<br /><br />:: Define SUB to hold &lt;0x1A&gt;<br />for /f &quot;delims=&quot; %%A in (26.bf.chr) do set &quot;SUB=%%A&quot;<br /><br />:: Launch the interpreter<br />cmd /c &quot;%~f0&quot; x run&amp;&amp;exit /b 0||exit /b 1<br /><br /><br />:run&nbsp; - This is the main interpreter loop<br />set /a &quot;ip=mp=1&quot;<br />for /l %%. in () do for /f &quot;tokens=1,2&quot; %%A in (&quot;!ip! !mp!&quot;) do (<br />&nbsp; if&nbsp; &nbsp; &nbsp; &nbsp; &quot;!code&#91;%%A&#93;!&quot; equ &quot;+&quot; (<br />&nbsp; &nbsp; set /a &quot;m&#91;%%B&#93;=(m&#91;%%B&#93;+1)&amp;255, ip+=1&quot;<br />&nbsp; ) else if &quot;!code&#91;%%A&#93;!&quot; equ &quot;-&quot; (<br />&nbsp; &nbsp; set /a &quot;m&#91;%%B&#93;=(m&#91;%%B&#93;-1)&amp;255, ip+=1&quot;<br />&nbsp; ) else if &quot;!code&#91;%%A&#93;!&quot; equ &quot;&gt;&quot; (<br />&nbsp; &nbsp; set /a &quot;mp+=1, ip+=1&quot;<br />&nbsp; ) else if &quot;!code&#91;%%A&#93;!&quot; equ &quot;&lt;&quot; (<br />&nbsp; &nbsp; set /a &quot;mp-=1, ip+=1&quot;<br />&nbsp; ) else if &quot;!code&#91;%%A&#93;!&quot; equ &quot;&#91;&quot; (<br />&nbsp; &nbsp; set /a ip+=1<br />&nbsp; &nbsp; if not defined m&#91;%%B&#93; set &quot;ip=!jump&#91;%%A&#93;!&quot;<br />&nbsp; &nbsp; if &quot;!m&#91;%%B&#93;!&quot; equ &quot;0&quot; set &quot;ip=!jump&#91;%%A&#93;!&quot;<br />&nbsp; ) else if &quot;!code&#91;%%A&#93;!&quot; equ &quot;&#93;&quot; (<br />&nbsp; &nbsp; set /a ip+=1<br />&nbsp; &nbsp; if defined m&#91;%%B&#93; if &quot;!m&#91;%%B&#93;!&quot; neq &quot;0&quot; set &quot;ip=!jump&#91;%%A&#93;!&quot;<br />&nbsp; ) else if &quot;!code&#91;%%A&#93;!&quot; equ &quot;.&quot; (<br />&nbsp; &nbsp; if &quot;!m&#91;%%B&#93;!&quot; equ &quot;26&quot; (&lt;nul set/p&quot;=!SUB!&quot;) else type !m&#91;%%B&#93;!.bf.chr<br />&nbsp; &nbsp; set /a ip+=1<br />&nbsp; ) else if &quot;!code&#91;%%A&#93;!&quot; equ &quot;,&quot; (<br />&nbsp; &nbsp; set &quot;key=&quot;<br />&nbsp; &nbsp; for /f &quot;delims=&quot; %%K in (<br />&nbsp; &nbsp; &nbsp; 'xcopy /w &quot;%~f0&quot; &quot;%~f0&quot; 2^&gt;nul'<br />&nbsp; &nbsp; ) do if not defined key (<br />&nbsp; &nbsp; &nbsp; setlocal disableDelayedExpansion<br />&nbsp; &nbsp; &nbsp; set &quot;key=%%K&quot;<br />&nbsp; &nbsp; )<br />&nbsp; &nbsp; setlocal enableDelayedExpansion<br />&nbsp; &nbsp; if &quot;!key:~-2,1!&quot; neq &quot;)&quot; (<br />&nbsp; &nbsp; &nbsp; endlocal&amp;endlocal<br />&nbsp; &nbsp; &nbsp; set &quot;m&#91;%%B&#93;=10&quot;<br />&nbsp; &nbsp; ) else if &quot;!key:~-1!&quot; equ &quot;!CR!&quot; (<br />&nbsp; &nbsp; &nbsp; endlocal&amp;endlocal<br />&nbsp; &nbsp; &nbsp; set &quot;m&#91;%%B&#93;=13&quot;<br />&nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; &gt;key.txt.tmp echo(!key:~-1!<br />&nbsp; &nbsp; &nbsp; endlocal&amp;endlocal<br />&nbsp; &nbsp; &nbsp; for /f &quot;delims=.&quot; %%K in ('findstr /lg:key.txt.tmp *.bf.chr') do set &quot;m&#91;%%B&#93;=%%K&quot;<br />&nbsp; &nbsp; )<br />&nbsp; &nbsp; set /a ip+=1<br />&nbsp; ) else exit<br />)<br /><br /><br />:genAllChr<br />::This code creates 256 1 byte files, one for each possible byte value.<br />::This is encoded in a macro way to be called asynchronously with start cmd /c<br />::Teamwork of carlos, penpen, aGerman, dbenham, einstein1969<br />::Tested under Win7 and XP<br />setlocal disableDelayedExpansion<br />set ^&quot;genchr=(^<br />for /l %%N in (%%A !cnt! 255) do (^<br />&nbsp; if %%N equ 26 (^<br />&nbsp; &nbsp; copy /y nul + nul /a 26.bf.chr /a ^&gt;nul^<br />&nbsp; ) else (if %%N geq 35 if %%N leq 126 if %%N neq 61 (^<br />&nbsp; &nbsp; ^&lt;nul set /p &quot;=!ascii:~%%N,1!&quot; ^&gt;%%N.bf.chr^<br />&nbsp; ))^&amp;^<br />&nbsp; if not exist %%N.bf.chr (^<br />&nbsp; &nbsp; makecab /d compress=off /d reserveperdatablocksize=26 /d reserveperfoldersize=%%N %%A.tmp %%N.bf.chr ^&gt;nul^&amp;^<br />&nbsp; &nbsp; type %%N.bf.chr ^| ((for /l %%n in (1 1 38) do pause)^&gt;nul^&amp;findstr &quot;^^&quot; ^&gt;%%N.temp)^&amp;^<br />&nbsp; &nbsp; ^&gt;nul copy /y %%N.temp /a %%N.bf.chr /b^&amp;^<br />&nbsp; &nbsp; del %%N.temp^<br />&nbsp; )^<br />))^&amp;^<br />del %%A.tmp^&quot;<br />del /f /q /a *bf.chr &gt;nul 2&gt;&amp;1<br />set &quot;ascii=&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;#$%%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ&#91;\&#93;^_`abcdefghijklmnopqrstuvwxyz{|}~&quot;<br />set /a cnt=number_of_processors<br />if %cnt% lss 1 set cnt=1<br />if %cnt% gtr 256 set cnt=256<br />set /a &quot;end=cnt-1&quot;<br />for /l %%A in (0 1 %end%) do (<br />&nbsp; type nul &gt;%%A.tmp<br />&nbsp; if %%A equ %end% (<br />&nbsp; &nbsp; cmd /q /v:on /c &quot;%genchr%&quot;<br />&nbsp; ) else (<br />&nbsp; &nbsp; start &quot;&quot; /b cmd /q /v:on /c &quot;%genchr%&quot;<br />&nbsp; )<br />)<br />:genAllChr.check<br />for /l %%N in (0 1 %end%) do if exist %%N.tmp goto :genAllChr.check<br />exit /b<br /></code></pre></div><br /><br />Here is a small bf program that reads input in a loop, displaying each entered value. The program terminates when &lt;Enter&gt; or &lt;Ctrl-M&gt; is pressed. &lt;Ctrl-C&gt; is interpreted as &lt;LF&gt;. Any value except &lt;0x00&gt; may be entered by holding &lt;Alt&gt;while entering a decimal code on the numeric keypad.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>++++++++++++++++++++++++++++++++&gt;<br />++++++++++++++++++++++++++++++++++++++++&gt;&gt;<br />+++++++++++++++++++++++++++++++++++++++++&gt;<br />++++++++++&lt;&lt;<br />+<br />&#91;,&lt;&lt;.&gt;.&gt;.&gt;.&gt;.&lt;&lt;-------------&#93;<br /></code></pre></div><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35724" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35724">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35724">
+
+						<h3 ><a href="#p35724">Re: BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinga058.html?mode=quote&amp;f=3&amp;p=35724" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4e7f.html?p=35724#p35724" onclick="prompt('Message #9',this.href); return false;">#9</a></span> 
+									<a class="unread" href="viewtopic4e7f.html?p=35724#p35724" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>10 Jul 2014 13:00
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>dbenham wrote:</cite>It should be possible to pre-process the code into memory, stripping out comments (non command characters), and establishing loop pointers. Then a single infinite loop should be able to interpret the code extremely fast, without resorting to any CALL or GOTO statements.<br /><br />Dave Benham</div></blockquote><br /><br />Oops! Last night, after read your suggestion on using a <a href="viewtopicac79.html?f=3&amp;t=3487" class="postlink">&quot;while loop&quot;</a> instead goto's, I planned 3 modifications: the &quot;while&quot; loop, don't define the memory array, and combine groups of same operators in a single command. Today morning I realized that you have already implemented the first two points!  <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" /> (It seems that you sleep less than I <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> ). Anyway, I borrowed your code for the &quot;,&quot; (input) operator, but the way to detect the Enter key is language dependant! The last character in XCOPY /W message in Spanish is an &quot;s&quot; instead of &quot;)&quot;.<br /><br />The optimizing modification of group in a single command several repeated BF operators allows the program to run <em class="text-italics">much</em> faster! Here it is:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br />if &quot;%~1&quot; equ &quot;:nextOpCode&quot; goto %1<br /><br />rem bf.bat: Brainf*ck interpreter in Batch<br />rem Antonio Perez Ayala<br /><br />rem Version 1.1: - Bug fixed in arithmetic overflow<br />rem&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Full support of 256 Ascii characters in &quot;.&quot; (output) command<br /><br />rem Version 2:&nbsp; &nbsp;- Change &quot;goto&quot; main loop by a &quot;while&quot; one<br />rem&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - No define memory tape array.<br />rem&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Optimize groups of the same + - &gt; &lt; . commands in a single one<br />rem&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Use Dave Benham's code for &quot;,&quot; (input) command<br /><br />if &quot;%~1&quot; equ &quot;&quot; echo Usage: %~N0 filename.ext &amp; goto :EOF<br />if not exist &quot;%~1&quot; echo File not found: %1 &amp; goto :EOF<br /><br />set &quot;operators=+-&lt;&gt;.,&#91;&#93;&quot;<br />set &quot;lastOp=&quot;<br />set /A ip=0, sp=0, count=0<br />set /P &quot;=Loading file.&quot; &lt; NUL<br />for /F &quot;usebackq delims=&quot; %%a in (&quot;%~1&quot;) do (<br />&nbsp; &nbsp;for /F &quot;delims=&quot; %%b in ('cmd /U /C echo &quot;%%a&quot;^| find /V &quot;&quot;') do (<br />&nbsp; &nbsp; &nbsp; if &quot;!operators:%%b=!&quot; neq &quot;%operators%&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if &quot;!lastOp!&quot; equ &quot;%%b&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /A count+=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if defined lastOp (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A ip+=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;code&#91;!ip!&#93;=!lastOp! !count!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;lastOp=&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set count=0<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if &quot;%%b&quot; equ &quot;&#91;&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A ip+=1, sp+=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set stack&#91;!sp!&#93;=!ip!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ) else if &quot;%%b&quot; equ &quot;&#93;&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A ip+=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for %%s in (!sp!) do (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set &quot;code&#91;!ip!&#93;=&#93; !stack&#91;%%s&#93;!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set &quot;code&#91;!stack&#91;%%s&#93;!&#93;=&#91; !ip!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A sp-=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;lastOp=%%b&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set count=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;set /P &quot;=.&quot; &lt; NUL<br />)<br />if %count% gtr 0 (<br />&nbsp; &nbsp;set /A ip+=1<br />&nbsp; &nbsp;set &quot;code&#91;!ip!&#93;=%lastOp% %count%&quot;<br />)<br />echo/<br />if %sp% neq 0 echo ERROR: Unbalanced brackets &amp; goto :EOF<br /><br />set /P &quot;=Creating Ascii tables.&quot; &lt; NUL<br />type nul &gt; t.tmp<br />set &quot;options=/d compress=off /d reserveperdatablocksize=26&quot;<br />for /L %%i in (0,1,255) do (<br />&nbsp; &nbsp;if not exist %%i.chr call :genchr %%i<br />&nbsp; &nbsp;set /A mod=%%i %% 16<br />&nbsp; &nbsp;if !mod! equ 0 set /P &quot;=.&quot; &lt; NUL<br />)<br />for /F %%a in ('copy /Z &quot;%~F0&quot; NUL') do set &quot;CR=%%a&quot;<br />for /F &quot;delims=&quot; %%a in (26.chr) do set &quot;SUB=%%a&quot;<br />set &quot;options=&quot;<br />del t.tmp temp.tmp<br />echo/<br /><br />echo Running.<br />set /A ip=0, mp=0<br />cmd /Q /C &quot;%~F0&quot; :nextOpCode<br />exit /B %errorlevel%<br /><br />:nextOpCode<br />for /L %%? in () do (<br />&nbsp; &nbsp;set /A ip+=1<br />&nbsp; &nbsp;for %%i in (!ip!) do for /F &quot;tokens=1-3&quot; %%a in (&quot;!mp! !code&#91;%%i&#93;!&quot;) do (<br />&nbsp; &nbsp;if&nbsp; &nbsp; &nbsp; &nbsp; &quot;%%b&quot; equ &quot;+&quot; (<br />&nbsp; &nbsp; &nbsp; set /A &quot;m&#91;%%a&#93;=(m&#91;%%a&#93;+%%c) &amp; 255&quot;<br />&nbsp; &nbsp;) else if &quot;%%b&quot; equ &quot;-&quot; (<br />&nbsp; &nbsp; &nbsp; set /A &quot;m&#91;%%a&#93;=(m&#91;%%a&#93;-%%c) &amp; 255&quot;<br />&nbsp; &nbsp;) else if &quot;%%b&quot; equ &quot;&gt;&quot; (<br />&nbsp; &nbsp; &nbsp; set /A &quot;mp=(mp+%%c) &amp; 4095&quot;<br />&nbsp; &nbsp;) else if &quot;%%b&quot; equ &quot;&lt;&quot; (<br />&nbsp; &nbsp; &nbsp; set /A &quot;mp=(mp-%%c) &amp; 4095&quot;<br />&nbsp; &nbsp;) else if &quot;%%b&quot; equ &quot;&#91;&quot; (<br />&nbsp; &nbsp; &nbsp; if not defined m&#91;%%a&#93; ( set ip=%%c<br />&nbsp; &nbsp; &nbsp; ) else if &quot;!m&#91;%%a&#93;!&quot; equ &quot;0&quot; set ip=%%c<br />&nbsp; &nbsp;) else if &quot;%%b&quot; equ &quot;&#93;&quot; (<br />&nbsp; &nbsp; &nbsp; if defined m&#91;%%a&#93; if &quot;!m&#91;%%a&#93;!&quot; neq &quot;0&quot; set ip=%%c<br />&nbsp; &nbsp;) else if &quot;%%b&quot; equ &quot;.&quot; (<br /><br />&nbsp; &nbsp; &nbsp; for /L %%i in (1,1,%%c) do (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if defined m&#91;%%a&#93; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if&nbsp; &nbsp; &nbsp; &nbsp; &quot;!m&#91;%%a&#93;!&quot; equ &quot;10&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; echo/<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ) else if &quot;!m&#91;%%a&#93;!&quot; equ &quot;26&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /P &quot;=!SUB!&quot; &lt; NUL<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;type !m&#91;%%a&#93;!.chr<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; type 0.chr<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; )<br /><br />&nbsp; &nbsp;) else if &quot;%%b&quot; equ &quot;,&quot; (<br /><br />&nbsp; &nbsp; &nbsp; setlocal DisableDelayedExpansion<br />&nbsp; &nbsp; &nbsp; set &quot;key=&quot;<br />&nbsp; &nbsp; &nbsp; for /F &quot;delims=&quot; %%K in ('xcopy /W &quot;%~F0&quot; &quot;%~F0&quot; 2^&gt;NUL') do (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if not defined key set &quot;key=%%K&quot;<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; setlocal EnableDelayedExpansion<br />&nbsp; &nbsp; &nbsp; if &quot;!key:~-2,1!&quot; neq &quot;)&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;endlocal &amp; endlocal<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;m&#91;%%a&#93;=10&quot;<br />&nbsp; &nbsp; &nbsp; ) else if &quot;!key:~-1!&quot; equ &quot;!CR!&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;endlocal &amp; endlocal<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;m&#91;%%a&#93;=13&quot;<br />&nbsp; &nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt; key.txt.tmp echo(!key:~-1!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;endlocal &amp; endlocal<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for /F &quot;delims=.&quot; %%K in ('findstr /LG:key.txt.tmp *.chr') do set &quot;m&#91;%%a&#93;=%%K&quot;<br />&nbsp; &nbsp; &nbsp; )<br /><br />&nbsp; &nbsp;) else exit !m&#91;%%a&#93;!<br />&nbsp; &nbsp;)<br />)<br /><br /><br />:genchr<br />REM This code creates one single byte. Parameter: int<br />REM Teamwork of carlos, penpen, aGerman, dbenham<br />REM Tested under Win2000, XP, Win7, Win8<br />if %~1 neq 26 (<br />&nbsp; &nbsp;makecab %options% /d reserveperfoldersize=%~1 t.tmp %~1.chr &gt; nul<br />&nbsp; &nbsp;type %~1.chr | ( (for /l %%N in (1,1,38) do pause)&gt;nul &amp; findstr &quot;^&quot; &gt; temp.tmp )<br />&nbsp; &nbsp;&gt;nul copy /y temp.tmp /a %~1.chr /b<br />) else (<br />&nbsp; &nbsp;copy /y nul + nul /a 26.chr /a &gt;nul<br />)<br />exit /B<br /></code></pre></div><br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35728" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35728">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35728">
+
+						<h3 ><a href="#p35728">Re: BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf495.html?mode=quote&amp;f=3&amp;p=35728" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic8332.html?p=35728#p35728" onclick="prompt('Message #10',this.href); return false;">#10</a></span> 
+									<a class="unread" href="viewtopic8332.html?p=35728#p35728" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>10 Jul 2014 17:59
+			</p>
+			
+			
+			
+			<div class="content">Hi,<br /><br />i have tried <a href="http://pastebin.com/PWQQUesT" class="postlink">this</a> but seem don't work...<br /><br />EDIT:<br />ref: <a href="http://www.clifford.at/bfcpu/" class="postlink">towers of hanoi</a><br /><br />einstein1969</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35729" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35729">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35729">
+
+						<h3 ><a href="#p35729">Re: BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting18d6.html?mode=quote&amp;f=3&amp;p=35729" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic05c6.html?p=35729#p35729" onclick="prompt('Message #11',this.href); return false;">#11</a></span> 
+									<a class="unread" href="viewtopic05c6.html?p=35729#p35729" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>10 Jul 2014 18:29
+			</p>
+			
+			
+			
+			<div class="content">Perhaps this is the reason: &quot;The terminal must be able to understand vt100 escape codes...&quot;<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35730" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35730">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35730">
+
+						<h3 ><a href="#p35730">Re: BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting51ff-2.html?mode=quote&amp;f=3&amp;p=35730" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic232a.html?p=35730#p35730" onclick="prompt('Message #12',this.href); return false;">#12</a></span> 
+									<a class="unread" href="viewtopic232a.html?p=35730#p35730" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>10 Jul 2014 19:42
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite>Perhaps this is the reason: &quot;The terminal must be able to understand vt100 escape codes...&quot;<br /><br />Antonio</div></blockquote><br /><br />I do not think ... maybe it's too slow?<br /><br />There are 2 type of escape sequence: ← is ESC<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>←&#91;H←&#91;2J<br /></code></pre></div><br />which equals CLS<br /><br />And <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>←&#91;x;yH<br /></code></pre></div><br />which is goto x,y<br /><br />The output is blocked at <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>←&#91;H←&#91;2J←&#91;2;27HTowers of Hanoi in Brainf*ck←&#91;3;15HWritten by Clifford Wolf &lt;http://www.clifford.at/bfcpu/&gt;←&#91;14;43H<br /></code></pre></div><br /><br /><br />einstein1969</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35731" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35731">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35731">
+
+						<h3 ><a href="#p35731">Re: BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting1883.html?mode=quote&amp;f=3&amp;p=35731" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicc001.html?p=35731#p35731" onclick="prompt('Message #13',this.href); return false;">#13</a></span> 
+									<a class="unread" href="viewtopicc001.html?p=35731#p35731" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>10 Jul 2014 20:18
+			</p>
+			
+			
+			
+			<div class="content">It is not blocked, it is Running!<br /><br />You must realize that by its very nature, the executable code generated by Brainf*uck <em class="text-italics">compilers</em> is very inefficient. If the BF support is an <em class="text-italics">interpreter</em>, the code is even more inefficient -&gt; slow execution.<br /><br />In this case we have a BF interpreter <strong class="text-strong">running in a Batch file</strong>, perhaps the worst possible combination, so any BF program moderately complex will take <em class="text-italics">a lot of time</em> to complete!<br /><br />You may test the BF program in any Brainf*ck optimizing compiler and run it to have an idea of the &quot;shortest&quot; possible execution time we may expect from a given program. Then, multiply that time for a several thousand times (a suitable factor, perhaps?) to have an idea of the time required by the Batch file interpreter.<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35732" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35732">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35732">
+
+						<h3 ><a href="#p35732">Re: BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7b08.html?mode=quote&amp;f=3&amp;p=35732" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice185.html?p=35732#p35732" onclick="prompt('Message #14',this.href); return false;">#14</a></span> 
+									<a class="unread" href="viewtopice185.html?p=35732#p35732" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>10 Jul 2014 20:35
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite>It is not blocked, it is Running!<br /><br />You must realize that by its very nature, the executable code generated by Brainf*uck <em class="text-italics">compilers</em> is very inefficient. If the BF support is an <em class="text-italics">interpreter</em>, the code is even more inefficient -&gt; slow execution.<br /><br />In this case we have a BF interpreter <strong class="text-strong">running in a Batch file</strong>, perhaps the worst possible combination, so any BF program moderately complex will take <em class="text-italics">a lot of time</em> to complete!<br /><br />You may test the BF program in any Brainf*ck optimizing compiler and run it to have an idea of the &quot;shortest&quot; possible execution time we may expect from a given program. Then, multiply that time for a several thousand times (a suitable factor, perhaps?) to have an idea of the time required by the Batch file interpreter.<br /><br />Antonio</div></blockquote><br /><br />Do you know an &quot;Brainf*ck optimizing compiler&quot;? what it this?<br /><br />einstein1969</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35733" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35733">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35733">
+
+						<h3 ><a href="#p35733">Re: BrainF*** Interpreter in Batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting1b87.html?mode=quote&amp;f=3&amp;p=35733" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic362b.html?p=35733#p35733" onclick="prompt('Message #15',this.href); return false;">#15</a></span> 
+									<a class="unread" href="viewtopic362b.html?p=35733#p35733" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>10 Jul 2014 21:00
+			</p>
+			
+			
+			
+			<div class="content">I have misured the &quot;performance&quot; of BF interpreter with the previous program:<br /><br />dbenham BF about 15 cycles/s<br />aacini     BF about 45 cycles/s<br /><br />einstein1969</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting96e6.html?mode=reply&amp;f=3&amp;t=5751" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic59d2.html?f=3&amp;t=5751&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5751">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			62 posts
+							<ul>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopic3b52.html?f=3&amp;t=5751&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopicfbe6.html?f=3&amp;t=5751&amp;start=30" role="button">3</a></li>
+				<li><a class="button" href="viewtopic29f4-2.html?f=3&amp;t=5751&amp;start=45" role="button">4</a></li>
+				<li><a class="button" href="viewtopicd39e.html?f=3&amp;t=5751&amp;start=60" role="button">5</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic3b52.html?f=3&amp;t=5751&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5897.gif?cron_type=cron.task.text_reparser.poll_option" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5751 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:32:33 GMT -->
+</html>

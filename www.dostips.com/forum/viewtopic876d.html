@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4774&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:56:08 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; business day date math ideas</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>business day date math ideas</h2>
+		<p><a href="viewtopice4bd.html?f=3&amp;t=4774">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4774</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>business day date math ideas</h3>
+				<div class="date">Posted: <strong>23 Jul 2013 19:47</strong></div>
+				<div class="author">by <strong>avery_larry</strong></div>
+				<div class="content">I'm just looking for ideas on date math but skipping weekends (and holidays maybe).<br /><br />I've got a scanning (paper to pdf) process that's partly done by people, and partly done by computers.  I'm going to track the progress of individual batches via a simple log file concept.<br /><br />Well anyway -- I have a monitoring script that I just want to use simply to alert people if a batch sits too long at any given stage.  For instance, it shouldn't take more than 2 days to get around to checking that a batch finished processing properly.  The trick is that the people portions need to check for 2 business days.<br /><br />Anyone got any better ideas than the simple (but annoying) 5 separate cases based on day of week?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: business day date math ideas</h3>
+				<div class="date">Posted: <strong>23 Jul 2013 21:52</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">Although I don't completely understand your concern, I think the Batch file below may help you. This Batch file get the Day of the Week of current date as an integer value from 0 (Sunday) to 6 (Saturday). This value may help you to know if a date (or a past/future date) falls on weekends or on business days.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal<br />call :DateToJDN &quot;%date%&quot; jdn=<br />set /A dow=(jdn+1)%%7<br />echo Today's Day of Week is: %dow%<br />goto :EOF<br /><br /><br />:DateToJDN locale_date jdn=<br />setlocal EnableDelayedExpansion<br />set &quot;date=%~1&quot;<br />set dateFormat&#91;0&#93;=mm=10%%a%%100, dd=10%%b%%100, yyyy=100%%c%%10000<br />set dateFormat&#91;1&#93;=dd=10%%a%%100, mm=10%%b%%100, yyyy=100%%c%%10000<br />set dateFormat&#91;2&#93;=yyyy=100%%a%%10000, mm=10%%b%%100, dd=10%%c%%100<br />for /F &quot;tokens=1,2*&quot; %%a in ('reg query &quot;HKCU\Control Panel\International&quot; ^| findstr /I &quot;\&lt;&#91;is&#93;Date\&gt;&quot;') do set &quot;%%a=%%c&quot;<br />set dateValues=!dateFormat&#91;%iDate%&#93;!<br />for /F &quot;tokens=1-3 delims=%sDate%&quot; %%a in (&quot;%date:* =%&quot;) do set /A %dateValues%<br />if %yyyy% lss 100 (<br />&nbsp; &nbsp;if %yyyy% lss 70 (set /A yyyy+=2000) else (set /A yyyy+=1900)<br />)<br />set /A a=(mm-14)/12, jdn=(1461*(yyyy+4800+a))/4+(367*(mm-2-12*a))/12-(3*((yyyy+4900+a)/100))/4+dd-32075<br />endlocal &amp; set %2=%jdn%<br />exit /B<br /></code></pre></div><br />If you have further questions about how to modify this method, don't hesitate to post new questions.<br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: business day date math ideas</h3>
+				<div class="date">Posted: <strong>24 Jul 2013 06:27</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite>avery_larry wrote:</cite>Anyone got any better ideas than the simple (but annoying) 5 separate cases based on day of week?<br /></div></blockquote><br />You may map the dates (of DateSpace) to their index of business day in the current year (of BusinessDateSpace); non busisess dates are mapped to the last business day just prior to them.<br />Then add 2 and map the result back to DateSpace.<br /><br />penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: business day date math ideas</h3>
+				<div class="date">Posted: <strong>29 Jul 2013 12:06</strong></div>
+				<div class="author">by <strong>avery_larry</strong></div>
+				<div class="content">Well, it was worth a shot.  I'll just code it the long way basically using what Aacini posted.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4774&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:56:08 GMT -->
+</html>

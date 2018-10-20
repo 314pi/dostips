@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8569&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:54 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; How to debug BATCH files</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>How to debug BATCH files</h2>
+		<p><a href="viewtopic23ae.html?f=3&amp;t=8569">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8569</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>How to debug BATCH files</h3>
+				<div class="date">Posted: <strong>20 May 2018 21:34</strong></div>
+				<div class="author">by <strong>JimmyTheDos</strong></div>
+				<div class="content">Hi guys,<br>
+<br>
+I have experience with VBA and excel, looking to expand my knowledge with BATCH.<br>
+
+<ul><li>Is there a way to "step into" (go line by line) of the code, (I can use "Pause" but this seems like not the best method.)<br>
+Is there a way to run code without the repercussions (a way to prevent accidentally deleting all your files or something) or a way that is reversible.<br>
+Is there a way to stop at a particular point and see the enviromental variables throughout the script (I guess this is the same as the "watches" window in excel, or "Set" in cmd?)<br>
+Any other good advice?</li></ul>
+
+Sorry if I am breaking any forum rules by a generic question!<br>
+<br>
+Jimmy  <img class="smilies" src="images/smilies/icon_cool.gif" width="15" height="15" alt="8)" title="Cool"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to debug BATCH files</h3>
+				<div class="date">Posted: <strong>21 May 2018 12:24</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist9d46.html?mode=viewprofile&amp;u=9222">JimmyTheDos</a> wrote: <a href="viewtopiccdf7.html?p=56832#p56832" data-post-id="56832" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 May 2018 21:34</div></cite>
+Is there a way to "step into" (go line by line) of the code, (I can use "Pause" but this seems like not the best method.)
+</div></blockquote>Often you want to debug only a particular function and often only if it is being called from a particular point, for that I programmed various debug functions. Functions could implement debug_ as follows
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:: --------------------------------------------------------------------------------------------------------------------------
+:§myFunction_ ( null )
+:: --------------------------------------------------------------------------------------------------------------------------
+Rem ( %debugOn_% "!$trace!" )
+::
+( %debug_% "", "inside !$trace!(!%$trace%.p!)", /EQU )
+::
+( %forP_% '$rs,$r', '$rAs,"",""' )
+::
+:: (
+	( %debug_% "valid()", /EQU )
+	:: (
+
+	:: )
+	( %deq_% %necho$_% $debug.sub )
+
+	( %debug_% "perform()", /EQU )
+	:: (
+
+	:: )
+	( %deq_% %necho$_% $debug.sub )
+:: )
+( %debug_% "outside !$trace!()", /EQU, /PAUSE ) &amp;exit /B !£e!
+:: --------------------------------------------------------------------------------------------------------------------------
+</code></pre></div>debugOn_ enables debugMode for the function specified as argument. debugOn_ can be used anywhere.<br>
+When debug is enabled for a function, all other debug commands become active<br>
+( %debug_% message, /PAUSE, /EQU ), ( %deq_% job ), ...
+<blockquote><div><cite><a href="memberlist9d46.html?mode=viewprofile&amp;u=9222">JimmyTheDos</a> wrote: <a href="viewtopiccdf7.html?p=56832#p56832" data-post-id="56832" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 May 2018 21:34</div></cite>
+Is there a way to run code without the repercussions (a way to prevent accidentally deleting all your files or something) or a way that is reversible.
+</div></blockquote>This happens to many at some point in time, a good way to protect your OS would be to do all the programming and testing from inside a virtual machine. VirtualPC is free but I prefer VMWare.
+<blockquote><div><cite><a href="memberlist9d46.html?mode=viewprofile&amp;u=9222">JimmyTheDos</a> wrote: <a href="viewtopiccdf7.html?p=56832#p56832" data-post-id="56832" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 May 2018 21:34</div></cite>
+Is there a way to stop at a particular point and see the enviromental variables throughout the script (I guess this is the same as the "watches" window in excel, or "Set" in cmd?)
+</div></blockquote>It's always nice to see exactly what arguments were passed to a function. My parser will print them on the console if debug is enabled for the function from where it is called. ( %forP_% 'name,value,default', 'and so on', .... ).
+<blockquote><div><cite><a href="memberlist9d46.html?mode=viewprofile&amp;u=9222">JimmyTheDos</a> wrote: <a href="viewtopiccdf7.html?p=56832#p56832" data-post-id="56832" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 May 2018 21:34</div></cite>
+Any other good advice?
+</div></blockquote>I cannot give you the code, I am too lazy, eh.. I mean it's too complex and depends on way too many factors to simply isolate this one functionality and hand it over to you. You could download and try out my library when my server is back online in a couple of weeks.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to debug BATCH files</h3>
+				<div class="date">Posted: <strong>21 May 2018 12:45</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist9d46.html?mode=viewprofile&amp;u=9222">JimmyTheDos</a> wrote: <a href="viewtopiccdf7.html?p=56832#p56832" data-post-id="56832" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 May 2018 21:34</div></cite>
+Is there a way to "step into" (go line by line) of the code
+</div></blockquote>
+I'm not an expert batch coder, and therefore can give you only very basic advice. But may be this is exactly what you need. Once you figured out the entire batch skeleton, try using a combination of 2 methods to debug its sections:<br>
+<br>
+- check and choose each command syntax at <a href="https://ss64.com/nt/" class="postlink">SS64 Commandline Reference</a> (other sites like <em class="text-italics">DOSTips</em> and <em class="text-italics">Stackoverflow</em> add plenty of use case examples)<br>
+- once the syntax is more or less cleaned up, replace parts of syntax that manipulate your variables X and Y with this basic debug code:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>rem Goto :Next
+echo !X! !Y!
+rem (some code here)
+: Next
+rem (more code)
+exit /b</code></pre></div>
+This allows you to print resulting variable values to currently open Cmd Prompt window without running the rest of the code to avoid unintended damage to your system, and edit the snippet accordingly. Once you see vars X and Y work perfect, delete the above construct to enable your original code snippet, or simply bypass that section with <em class="text-italics">Goto :Next</em> function if the next one can be tested independently, and move on to the next snippet of your code to print and debug vars U and V ...<br>
+<br>
+Its quite simple, and works amazingly well. However, when designing a relatively complex algorithm you need to see and plan a bigger code picture, and that's were the experts advice comes handy, since they have a large bag of tricks in their sleeves for almost every turn of your imagination, so long pages of your original code can be replaced by 2-3 expert lines, of which you might not understand a thing without verbiage.  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to debug BATCH files</h3>
+				<div class="date">Posted: <strong>21 May 2018 14:20</strong></div>
+				<div class="author">by <strong>jfl</strong></div>
+				<div class="content">I've posted a powerful batch debugging library there:<br>
+<a href="https://github.com/JFLarvoire/SysToolsLib/blob/master/Batch/Library.bat" class="postlink">https://github.com/JFLarvoire/SysToolsL ... ibrary.bat</a><br>
+<br>
+You can find some high level documentation in the html file there:<br>
+<a href="https://github.com/JFLarvoire/SysToolsLib/blob/master/Docs/System Script Libraries Description.htm" class="postlink">https://github.com/JFLarvoire/SysToolsL ... iption.htm</a><br>
+<br>
+There's also a very detailed low level documentation in the headers of Library.bat.<br>
+<br>
+Example of use. This fact.bat script is instrumented using macros from Library.bat: (Which must be present in the path)<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableExtensions EnableDelayedExpansion
+set "SCRIPT=%~nx0"				&amp;:# Script name
+set ^"ARG0=%0^"					&amp;:# Script invokation name
+set ^"ARGS=%*^"					&amp;:# Argument line
+
+call library.bat source &amp;:# Load the debug library
+goto :Main
+
+:#----------------------------------------------------------------------------#
+:# Factorial routine
+
+:Fact %1=argument %2=output variable (Optional, default=RESULT)
+%FUNCTION% EnableExtensions EnableDelayedExpansion
+set RETVAR=%2
+if not defined RETVAR set RETVAR=RESULT
+%UPVAR% %RETVAR%
+set N=%1
+if .%1.==.. set N=0
+if .%N%.==.0. (
+  set %RETVAR%=1
+) else (
+  set /A M=N-1
+  call :Fact !M!
+  set /A %RETVAR%=N*%RETVAR%
+)
+%RETURN%
+
+:#----------------------------------------------------------------------------#
+:# Help routine
+
+:Help
+echo.Usage: %SCRIPT% [OPTIONS] N
+echo.
+echo.Options:
+echo.  -?	This help
+echo.  -d	Enable debug mode
+exit /b
+
+:#----------------------------------------------------------------------------#
+:# Main routine
+
+:Main
+set PARAM=
+:next_arg
+if not defined ARGS set "ARG=" &amp; set ""ARG"=" &amp; goto :Start
+%POPARG%
+if "!ARG!"=="-?" goto :Help
+if "!ARG!"=="-d" %LCALL% :Debug.On &amp; goto next_arg
+set PARAM=!ARG!
+goto :next_arg
+
+:Start
+call :Fact !PARAM!
+echo !RESULT!
+exit /b 0
+</code></pre></div>
+If you run fact.bat "normally", it'll compute the factorial of a number. Ex:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\JFL\Temp&gt;fact 5
+120
+
+C:\JFL\Temp&gt;</code></pre></div>
+And if you invoke it in debug mode, it'll trace all instrumented functions:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\JFL\Temp&gt;fact 5 -d
+call :Fact 5
+  call :Fact 4
+    call :Fact 3
+      call :Fact 2
+        call :Fact 1
+          call :Fact 0
+            return 0 &amp; set "RESULT=1"
+          return 0 &amp; set "RESULT=1"
+        return 0 &amp; set "RESULT=2"
+      return 0 &amp; set "RESULT=6"
+    return 0 &amp; set "RESULT=24"
+  return 0 &amp; set "RESULT=120"
+120
+
+C:\JFL\Temp&gt;</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to debug BATCH files</h3>
+				<div class="date">Posted: <strong>21 May 2018 15:00</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">@jfl,<br>
+<br>
+I had a quick look at your batch library and read this line:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:# FOREACHLINE macro. (Changes the delimiter to none to catch the whole lines.)
+set FOREACHLINE=for /f "delims="
+</code></pre></div>
+I tested it with:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>%FOREACHLINE% %%? in ( ";please preserve this line" ) do echo.?=%%?_
+</code></pre></div>
+But it fails to produce any output because this line starts with an ; char, the default EndOfLine char. I change it to:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set  ^"FOREACHLINE=for /F delims^^=^^ eol^^= %%r in"
+</code></pre></div>
+And tested it with:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>%FOREACHLINE% ( ";please preserve this line" ) do echo.r=%%r_
+</code></pre></div>
+And it works.<br>
+<br>
+I am unsure whether you see this as a flaw or whether the behavior is intended, yet because the variable name FOREACHLINE suggests it should process each line I thought, nah-aah it doesn't.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to debug BATCH files</h3>
+				<div class="date">Posted: <strong>22 May 2018 03:52</strong></div>
+				<div class="author">by <strong>jfl</strong></div>
+				<div class="content">You're right, this is a bug.<br>
+I'll fix that eventually as you suggest.<br>
+(Or better still, you can submit a pull request <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":-)" title="Smile"></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8569&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:54 GMT -->
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8801&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:23:16 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Print Result in Variable Obtained by for</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Print Result in Variable Obtained by for</h2>
+		<p><a href="viewtopic1341.html?f=3&amp;t=8801">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8801</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Print Result in Variable Obtained by for</h3>
+				<div class="date">Posted: <strong>28 Aug 2018 14:32</strong></div>
+				<div class="author">by <strong>deniscalanca</strong></div>
+				<div class="content">how do I manage to demand the result obtained in the for?<br>
+<br>
+@echo off<br>
+<br>
+setlocal<br>
+setlocal EnableExtensions<br>
+setlocal EnableDelayedExpansion<br>
+<br>
+set "usr1_name=user1"<br>
+<br>
+for /F "skip=1 delims= " %%a in ('wmic useraccount where name^="%usr1_name%" get passwordexpires') do (<br>
+	set usr1_passwdexpiretmp=%%a<br>
+)<br>
+<br>
+for /F "skip=1 delims= " %%b in ('wmic useraccount where name^="%usr1_name%" get passwordchangeable') do (<br>
+	set usr1_passwordchangeabletmp=%%b<br>
+)<br>
+<br>
+echo %usr1_passwdexpiretmp%<br>
+echo %usr1_passwordchangeabletmp%<br>
+<br>
+pause<br>
+<br>
+Result:<br>
+<br>
+ECHO It's deactivated<br>
+ECHO It's deactivated</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Print Result in Variable Obtained by for</h3>
+				<div class="date">Posted: <strong>28 Aug 2018 14:54</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">You've enabled delayed expansion, but you aren't using it. Change the echo statements to
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo !usr1_passwdexpiretmp!
+echo !usr1_passwordchangeabletmp!
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Print Result in Variable Obtained by for</h3>
+				<div class="date">Posted: <strong>28 Aug 2018 17:00</strong></div>
+				<div class="author">by <strong>deniscalanca</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8beb.html?mode=viewprofile&amp;u=5056">ShadowThief</a> wrote: <a href="viewtopic5adb.html?p=57844#p57844" data-post-id="57844" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Aug 2018 14:54</div></cite>
+You've enabled delayed expansion, but you aren't using it. Change the echo statements to
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo !usr1_passwdexpiretmp!
+echo !usr1_passwordchangeabletmp!
+</code></pre></div>
+</div></blockquote>
+
+I made the exchange and yet the return is:<br>
+<br>
+ECHO It's deactivated<br>
+ECHO It's deactivated<br>
+<br>
+I disable delayed expansion and still the return is:<br>
+<br>
+ECHO It's deactivated<br>
+ECHO It's deactivated</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Print Result in Variable Obtained by for</h3>
+				<div class="date">Posted: <strong>29 Aug 2018 06:47</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">The ECHO statements are not within the FOR loop, so delayed expansion is not required.<br>
+<br>
+Assuming your code really matches your post, the most likely explanation is that user "user1" does not exist, so there are no iterations and the variables are never set.<br>
+<br>
+It is easy to check - simply add <strong class="text-strong">echo %%a</strong> within the first FOR loop. If you don't see a value printed when you run the script, then you know the user does not exist.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Print Result in Variable Obtained by for</h3>
+				<div class="date">Posted: <strong>29 Aug 2018 13:35</strong></div>
+				<div class="author">by <strong>deniscalanca</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic1eee.html?p=57848#p57848" data-post-id="57848" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">29 Aug 2018 06:47</div></cite>
+The ECHO statements are not within the FOR loop, so delayed expansion is not required.<br>
+<br>
+Assuming your code really matches your post, the most likely explanation is that user "user1" does not exist, so there are no iterations and the variables are never set.<br>
+<br>
+It is easy to check - simply add <strong class="text-strong">echo %%a</strong> within the first FOR loop. If you don't see a value printed when you run the script, then you know the user does not exist.<br>
+<br>
+<br>
+Dave Benham
+</div></blockquote>
+
+I'm considering that the user exists, and I test the script on a Windows with that created user, follows the piece of script that I want to make work, when trying to execute it the return is:<br>
+<br>
+ECHO It's deactivated<br>
+ECHO It's deactivated<br>
+<br>
+if I run "echo %%a" and "echo %%B" I get the result I want, but I need to save the result in a variable that will be used later<br>
+<br>
+@echo off<br>
+<br>
+set "usr1_name=user1"<br>
+set "usr1_status=yes"<br>
+set "net=%windir%\System32\net.exe"<br>
+<br>
+:start<br>
+if /i "%usr1_status%" == "yes" (<br>
+		%net% user "%usr1_name%" 1&gt;nul 2&gt;nul<br>
+		if not errorlevel 1 (<br>
+			for /f "skip=1 delims= " %%b in ('wmic useraccount where name^="%usr1_name%" get passwordchangeable') do (<br>
+				if /i "%%b" == "true" (<br>
+					set "usr1_passwordchangeabletmp=yes"<br>
+				)	else if /i "%%b" == "false" (<br>
+							set "usr1_passwordchangeabletmp=no"<br>
+						)<br>
+			)<br>
+			for /f "skip=1 delims= " %%a in ('wmic useraccount where name^="%usr1_name%" get passwordexpires') do (<br>
+				if /i "%%a" == "true" (<br>
+					set "usr1_passwdexpiretmp=yes"<br>
+				)	else	if /i "%%a" == "false" (<br>
+								set "usr1_passwdexpiretmp=no"<br>
+							)<br>
+			)<br>
+		echo %usr1_passwordchangeabletmp%<br>
+		echo %usr1_passwdexpiretmp%<br>
+		goto exit<br>
+		)	else	(<br>
+						goto exit<br>
+					)<br>
+)	else	if /i "%usr1_status%" == "no" (<br>
+				goto exit<br>
+			)<br>
+	<br>
+:exit<br>
+	pause</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Print Result in Variable Obtained by for</h3>
+				<div class="date">Posted: <strong>29 Aug 2018 14:14</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">That's because WMIC outputs in Unicode, FOR /F converts it to ANSI encoding but before that, it will strip the LineFeeds and splits the output to individual lines then converts the text, the result is that you end up with orphaned carriage return characters.<br>
+<br>
+So the last line that FOR /F passes to the body is a single carriage return character which will be stripped again by batch parser when using normal expansion, so essentially <strong class="text-strong">echo %usr1_passwdexpiretmp%</strong> will become just <strong class="text-strong">echo</strong> with no parameters and you will get <strong class="text-strong">ECHO in on/off</strong> message, and even if you use delayed expansion, echo prints the CR character which will just moves cursor to the start of the line.<br>
+<br>
+There are multiple ways to overcome this, some are slightly simpler than the others, but will just work if certain conditions are met and output is in some particular format, but i'll prefer more general approach which should not depend on the format and value of the properties you query.<br>
+<br>
+A Simple method which will only work if the value you query does not contain any of these characters: <strong class="text-strong">&lt;SPACE&gt;;,</strong> which will work for your particular query anyway
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f "skip=1 delims=" %%A in ('wmic useraccount where name^="%usr1_name%" get passwordexpires') do for %%B in (%%A) do set "usr1_passwdexpiretmp=%%B"
+</code></pre></div>
+
+And a more general approach which will work for most cases
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableExtensions
+
+set "usr1_name=user1"
+
+for /f "tokens=1* delims==" %%A in ('wmic useraccount where name^="%usr1_name%" get passwordexpires /value') do (
+    if "%%B" NEQ "" set "usr1_passwdexpiretmp=%%B"
+)
+:: usr1_passwdexpiretmp still contains carriage return, strip it by reassigning with normal expansion
+set "usr1_passwdexpiretmp=%usr1_passwdexpiretmp%"
+
+echo %usr1_passwdexpiretmp%
+</code></pre></div>
+
+It still is not bullet proof and will fail if the value you query contains double quotes and any batch poison character exist inside the double quotes like <strong class="text-strong">"this &amp; that"</strong>  then when using the last set to strip the CR character this fails: <strong class="text-strong">set "value="this &amp; that""</strong><br>
+<br>
+This can happen for example when querying Processes CommandLine values.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Print Result in Variable Obtained by for</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 07:12</strong></div>
+				<div class="author">by <strong>deniscalanca</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopicd234.html?p=57855#p57855" data-post-id="57855" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">29 Aug 2018 14:14</div></cite>
+That's because WMIC outputs in Unicode, FOR /F converts it to ANSI encoding but before that, it will strip the LineFeeds and splits the output to individual lines then converts the text, the result is that you end up with orphaned carriage return characters.<br>
+<br>
+So the last line that FOR /F passes to the body is a single carriage return character which will be stripped again by batch parser when using normal expansion, so essentially <strong class="text-strong">echo %usr1_passwdexpiretmp%</strong> will become just <strong class="text-strong">echo</strong> with no parameters and you will get <strong class="text-strong">ECHO in on/off</strong> message, and even if you use delayed expansion, echo prints the CR character which will just moves cursor to the start of the line.<br>
+<br>
+There are multiple ways to overcome this, some are slightly simpler than the others, but will just work if certain conditions are met and output is in some particular format, but i'll prefer more general approach which should not depend on the format and value of the properties you query.<br>
+<br>
+A Simple method which will only work if the value you query does not contain any of these characters: <strong class="text-strong">&lt;SPACE&gt;;,</strong> which will work for your particular query anyway
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f "skip=1 delims=" %%A in ('wmic useraccount where name^="%usr1_name%" get passwordexpires') do for %%B in (%%A) do set "usr1_passwdexpiretmp=%%B"
+</code></pre></div>
+
+And a more general approach which will work for most cases
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableExtensions
+
+set "usr1_name=user1"
+
+for /f "tokens=1* delims==" %%A in ('wmic useraccount where name^="%usr1_name%" get passwordexpires /value') do (
+    if "%%B" NEQ "" set "usr1_passwdexpiretmp=%%B"
+)
+:: usr1_passwdexpiretmp still contains carriage return, strip it by reassigning with normal expansion
+set "usr1_passwdexpiretmp=%usr1_passwdexpiretmp%"
+
+echo %usr1_passwdexpiretmp%
+</code></pre></div>
+
+It still is not bullet proof and will fail if the value you query contains double quotes and any batch poison character exist inside the double quotes like <strong class="text-strong">"this &amp; that"</strong>  then when using the last set to strip the CR character this fails: <strong class="text-strong">set "value="this &amp; that""</strong><br>
+<br>
+This can happen for example when querying Processes CommandLine values.
+</div></blockquote>
+
+Funny that testing only the code I get the result, but when inserting a for inside the if I get echo off</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8801&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:23:16 GMT -->
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="en-US">
+
+<!-- Mirrored from www.dostips.com/?t=Interfacing.Sql2 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 03:48:32 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<META http-equiv=content-type content="text/html; charset=iso-8859-1">
+<META content=TRUE name=MSSmartTagsPreventParsing>
+<META http-equiv=expires content=-1>
+<META http-equiv=pragma content=no-cache>
+<META content=all name=robots>
+<META name=keywords content='dos,functions,vista,xp,command line,batch,examples,substring,variables,copies,date'>
+<link rel=Stylesheet type="text/css" media=all href="_style0b84.css?v=0001">
+<link rel="shortcut icon" href="favicon.ico" >
+<link rel="icon" href="animated_favicon1.gif" type="image/gif" >
+<title>OSQL.EXE - Run SQL script from DOS Batch, passing parameters</title>
+<!--index.php-->
+</head>
+<body>
+
+<div class="nav">
+        <br>
+    <div class="navi">
+        <a href='index.html'><img src='TitleDostips.jpg' height='80' alt='DosTips.com'></a>
+        <br><span style="font-size: 9px; font-weight: bold;">for Windows10,Windows8,Windows7,VISTA,</span>
+        <br><span style="font-size: 9px; font-weight: bold;">XP,NT,Server 2000,Server 2003,Server 2008</span>
+        <br>
+        <br>
+            <!-- SiteSearch Google -->
+<div class="search">
+<script>
+  (function() {
+    var cx = 'partner-pub-4331089886589220:2001057635';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = '../cse.google.com/cse07b6.html?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:searchbox-only></gcse:searchbox-only>
+</div>
+<!-- SiteSearch Google -->
+        <br>
+            <ul>
+        <li class='nsel'><a href='index.html'>Home</a>&nbsp;
+            <ul>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a>Source Script</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='DtCodeBatchFiles.html'>Batch Files</a>&nbsp;</li>
+                <li class='nsel'><a href='DtCodeFunctions.html'>Functions</a>&nbsp;</li>
+                <li class='nsel'><a href='DtCodeCmdLib.html'>Function Library</a>&nbsp;</li>
+                <li class='nsel'><a href='DtCodeSnippets.html'>Script Snippets</a>&nbsp;</li>
+                <li class='nsel'><a href='DtCodeInterfacing.html'>Interfacing</a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a>Tips and Tricks</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='DtTipsXCopy.html'>Copy Tips</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsMenu.html'>Menu in Batch</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsStringManipulation.html'>String Manipulation</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsStringOperations.html'>String Operations</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsDateTime.html'>Date and Time</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsArithmetic.html'>Arithmetic</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsFtpBatchScript.html'>FTP Batch Script</a>&nbsp;</li>
+                <li class='nsel'><a href='DosCommandIndex.html'>Command Index</a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a>Tutorials</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='DtTutoFirstBatch.html'>My First Batch</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTutoFramework.html'>Solid Framework</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTutoFunctions.html'>Functions</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTutoPersistency.html'>Persistency</a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a href='forum/viewforum4d6b.html?f=3'>Forum</a>&nbsp;
+            <ul>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a href='DtGeneGeneral.html'>General</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='DtGeneTermsOfUse.html'>Terms of Use</a>&nbsp;</li>
+                <li class='nsel'><a href='DtGeneEnabler.html'>Enablers</a>&nbsp;</li>
+                <li class='nsel'><a href='DtGeneAboutUs.html'>About Us</a>&nbsp;</li>
+                <li class='nsel'><a href='forum/memberlist8733.html?mode=contactadmin'>Contact Us</a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a>Others</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=9018663'><marquee width="120" scrollamount="2">Want donate a cup of Cafe? . click . </marquee></a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+    </ul>
+    </div>
+</div>
+<H1>OSQL.EXE - Run SQL script from DOS Batch, passing parameters</H1>
+<span class='shortText'>Run SQL scripts with parameters passed in from the batch script.</span><br><br>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'><p>Now we can embed SQL queries into a batch file.  But how can we pass arguments from the batch script into SQL?
+This can be done using a temporary table.  Temporary tables live as long as the connection to the SQL Server.
+But how can we fill a temporary table with runtime data and execute the embedded SQL script without creating two separate SQL Server connections by calling OSQL.EXE twice?
+The trick is that OSQL allows to use the -i and -q option at the same time whereas:
+<ul>
+    <li>-q specifies a query string to be executed</li>
+    <li>-i specifies a filename with SQL syntax to be executed</li>
+</ul>
+Both the query string and the SQL file will be executed using the same Server connection.  Some testing shows that the query string -q will always be executed before the -I SQL file, which allows us to use a query string to set up a temporary table.
+</p></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'><span style='float:right;'>Download: <a href='Batch4SQL2.bat'>Batch4SQL2.bat</a>&nbsp;&nbsp;</span>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br><a name='14'>14.</a><br><a name='15'>15.</a><br><a name='16'>16.</a><br><a name='17'>17.</a><br><a name='18'>18.</a><br><a name='19'>19.</a><br><a name='20'>20.</a><br><a name='21'>21.</a><br><a name='22'>22.</a><br><a name='23'>23.</a><br><a name='24'>24.</a><br><a name='25'>25.</a><br><a name='26'>26.</a><br><a name='27'>27.</a><br><a name='28'>28.</a><br><a name='29'>29.</a><br><a name='30'>30.</a><br><a name='31'>31.</a><br><a name='32'>32.</a><br><a name='33'>33.</a><br><a name='34'>34.</a><br><a name='35'>35.</a><br><a name='36'>36.</a><br><a name='37'>37.</a><br><a name='38'>38.</a><br><a name='39'>39.</a><br><a name='40'>40.</a><br><a name='41'>41.</a><br><a name='42'>42.</a><br><a name='43'>43.</a><br><a name='44'>44.</a><br><a name='45'>45.</a><br><a name='46'>46.</a><br><a name='47'>47.</a><br><a name='48'>48.</a><br><a name='49'>49.</a><br><a name='50'>50.</a><br><a name='51'>51.</a><br><a name='52'>52.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'>GOTO&nbsp;START</span><br>
+<span style='color=#000000'>--&nbsp;DOS&nbsp;jumps&nbsp;to&nbsp;the&nbsp;':START'&nbsp;label</span><br>
+<span style='color=#000000'>--&nbsp;SQL&nbsp;jumps&nbsp;to&nbsp;the&nbsp;'START:'&nbsp;label</span><br>
+<span style='color=#000000'>--&nbsp;Source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>/*&nbsp;Begin&nbsp;of&nbsp;SQL&nbsp;comment,&nbsp;this&nbsp;makes&nbsp;the&nbsp;BATCH&nbsp;script&nbsp;invisible&nbsp;for&nbsp;SQL</span><br>
+<span style='color=#000000'><span class=c_cmmt>::&nbsp;BATCH&nbsp;starts&nbsp;below&nbsp;here</span></span><br>
+<span style='color=#000000'><span class=c_labl><a name='START'>:START</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>@echo&nbsp;off</span><br>
+<span style='color=#000000'>CLS</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>set&nbsp;/p&nbsp;AuthorName=Author&nbsp;Name:</span><br>
+<span style='color=#000000'>set&nbsp;/p&nbsp;AuthorCity=Author&nbsp;City:</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'><span class=c_cmmt>rem.-------------------------------------------------------------------------</span></span><br>
+<span style='color=#000000'><span class=c_cmmt>rem.Execute&nbsp;THIS&nbsp;file&nbsp;in&nbsp;SQL&nbsp;context&nbsp;transmitting&nbsp;arguments&nbsp;per&nbsp;temp&nbsp;table</span></span><br>
+<span style='color=#000000'>set&nbsp;Args=</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'><span class=c_cmmt>rem.--BEGIN&nbsp;ARGS&nbsp;SECTION&nbsp;------------------</span></span><br>
+<span style='color=#000000'>set&nbsp;Args=%Args%&nbsp;INSERT&nbsp;#ArgsTable&nbsp;VALUES&nbsp;('AuthorName','%AuthorName%')</span><br>
+<span style='color=#000000'>set&nbsp;Args=%Args%&nbsp;INSERT&nbsp;#ArgsTable&nbsp;VALUES&nbsp;('AuthorCity','%AuthorCity%')</span><br>
+<span style='color=#000000'><span class=c_cmmt>rem.--END&nbsp;&nbsp;&nbsp;ARGS&nbsp;SECTION&nbsp;------------------</span></span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>set&nbsp;Args=&nbsp;-q&nbsp;&quot;SET&nbsp;NOCOUNT&nbsp;ON&nbsp;CREATE&nbsp;TABLE&nbsp;#ArgsTable(Arg&nbsp;char(16)&nbsp;PRIMARY&nbsp;KEY,&nbsp;Val&nbsp;char(32))&nbsp;%Args%&quot;</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>OSQL.EXE&nbsp;-n&nbsp;-E&nbsp;-w&nbsp;65536&nbsp;-d&nbsp;NORTHWIND&nbsp;%Args%&nbsp;-i&nbsp;&quot;<span class=c_pvar>%~f0</span>&quot;</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>PAUSE&amp;GOTO:EOF</span><br>
+<span style='color=#000000'>*/</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>--&nbsp;SQL&nbsp;starts&nbsp;below&nbsp;here</span><br>
+<span style='color=#000000'>START:</span><br>
+<span style='color=#000000'>GO</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>DECLARE&nbsp;@AuthorName&nbsp;varchar(128)</span><br>
+<span style='color=#000000'>DECLARE&nbsp;@AuthorCity&nbsp;varchar(128)</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>--Set&nbsp;defaults&nbsp;for&nbsp;values&nbsp;as&nbsp;needed</span><br>
+<span style='color=#000000'>SET&nbsp;@AuthorName&nbsp;=&nbsp;''</span><br>
+<span style='color=#000000'>SET&nbsp;@AuthorCity&nbsp;=&nbsp;''</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>--Copy&nbsp;data&nbsp;from&nbsp;temporary&nbsp;table&nbsp;into&nbsp;variables</span><br>
+<span style='color=#000000'>IF&nbsp;EXISTS&nbsp;(SELECT&nbsp;name,&nbsp;type&nbsp;FROM&nbsp;tempdb..sysobjects&nbsp;WHERE&nbsp;name&nbsp;like&nbsp;'#ArgsTable_%'&nbsp;AND&nbsp;type&nbsp;=&nbsp;'U')</span><br>
+<span style='color=#000000'>BEGIN</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;@AuthorName=Val&nbsp;FROM&nbsp;#ArgsTable&nbsp;&nbsp;WHERE&nbsp;Arg='AuthorName'</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;@AuthorCity=Val&nbsp;FROM&nbsp;#ArgsTable&nbsp;&nbsp;WHERE&nbsp;Arg='AuthorCity'</span><br>
+<span style='color=#000000'>END</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>print&nbsp;@AuthorName</span><br>
+<span style='color=#000000'>print&nbsp;@AuthorCity</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>GO</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+  </table>
+<br><div class='bot'>
+<script type="text/javascript">
+    /***********************************************
+    * IFrame SSI script II- Copyright Dynamic Drive DHTML code library (http://www.dynamicdrive.com)
+    * Visit DynamicDrive.com for hundreds of original DHTML scripts
+    * This notice must stay intact for legal use
+    ***********************************************/
+    
+    //Input the IDs of the IFRAMES you wish to dynamically resize to match its content height:
+    //Separate each ID with a comma. Examples: ["myframe1", "myframe2"] or ["myframe"] or [] for none:
+    var iframeids=["myframe"]
+    
+    //Should script hide iframe from browsers that don't support this script (non IE5+/NS6+ browsers. Recommended):
+    var iframehide="yes"
+    
+    var getFFVersion=navigator.userAgent.substring(navigator.userAgent.indexOf("Firefox")).split("index.html")[1]
+    var FFextraHeight=parseFloat(getFFVersion)>=0.1? 16 : 0 //extra height in px to add to iframe in FireFox 1.0+ browsers
+    
+    function resizeCaller() {
+        var dyniframe=new Array()
+        for (i=0; i<iframeids.length; i++){
+            if (document.getElementById)
+                resizeIframe(iframeids[i])
+            //reveal iframe for lower end browsers? (see var above):
+            if ((document.all || document.getElementById) && iframehide=="no"){
+                var tempobj=document.all? document.all[iframeids[i]] : document.getElementById(iframeids[i])
+                tempobj.style.display="block"
+            }
+        }
+    }
+    
+    function resizeIframe(frameid){
+        var currentfr=document.getElementById(frameid)
+        if (currentfr && !window.opera){
+            currentfr.style.display="block"
+            if (currentfr.contentDocument && currentfr.contentDocument.body.offsetHeight) //ns6 syntax
+                currentfr.height = currentfr.contentDocument.body.offsetHeight+FFextraHeight; 
+            else if (currentfr.Document && currentfr.Document.body.scrollHeight) //ie5+ syntax
+                currentfr.height = currentfr.Document.body.scrollHeight;
+            if (currentfr.addEventListener)
+                currentfr.addEventListener("load", readjustIframe, false)
+            else if (currentfr.attachEvent){
+                currentfr.detachEvent("onload", readjustIframe) // Bug fix line
+                currentfr.attachEvent("onload", readjustIframe)
+            }
+        }
+    }
+    
+    function readjustIframe(loadevt) {
+        var crossevt=(window.event)? event : loadevt
+        var iframeroot=(crossevt.currentTarget)? crossevt.currentTarget : crossevt.srcElement
+        if (iframeroot)
+            resizeIframe(iframeroot.id);
+    }
+    
+    function loadintoIframe(iframeid, url){
+        if (document.getElementById)
+        document.getElementById(iframeid).src=url
+    }
+    
+    if (window.addEventListener)
+        window.addEventListener("load", resizeCaller, false)
+    else if (window.attachEvent)
+        window.attachEvent("onload", resizeCaller)
+    else
+        window.onload=resizeCaller
+</script>
+<iframe id="myframe" src="forum/viewforum4d6b.html?f=3"                  marginwidth="0" marginheight="0" frameborder="0" style="overflow:visible; " height=15000 width="100%" scrolling="no" ALLOWTRANSPARENCY="true"></iframe></div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/?t=Interfacing.Sql2 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 03:48:32 GMT -->
+</html>

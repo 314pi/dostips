@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5260&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:46:50 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; self-compiled .net hybrids - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>self-compiled .net hybrids</h2>
+		<p><a href="viewtopicdcbd.html?f=3&amp;t=5260">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5260</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Re: self-compiled .net hybrids</h3>
+				<div class="date">Posted: <strong>24 Jun 2015 08:03</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content"><a href="http://stackoverflow.com/questions/30948239/get-the-console-buffer-without-the-last-line-with-c" class="postlink">Without redundant output</a>:<br /><br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>// 2&gt;nul||@goto :batch<br />/*<br />:batch<br />@echo off<br /><br />setlocal<br />:: find csc.exe<br />set &quot;frm=%SystemRoot%\Microsoft.NET\Framework\&quot;<br />for /f &quot;tokens=* delims=&quot; %%v in ('dir /b /a:d&nbsp; /o:-n &quot;%SystemRoot%\Microsoft.NET\Framework\v*.*&quot;') do (<br />&nbsp; &nbsp;set netver=%%v<br />&nbsp; &nbsp;goto :break_loop<br />)<br />:break_loop<br />set csc=%frm%%netver%\csc.exe<br />:: csc.exe found<br />if not exist %~n0.exe (<br />&nbsp; &nbsp;%csc% /nologo /out:&quot;%~n0.exe&quot; &quot;%~dpsfnx0&quot; &gt;nul<br />)<br />%~n0.exe<br />echo -- redundant output has been cleared --<br /><br />endlocal<br />exit /b 0<br />*/<br />public class Hello<br />{<br />&nbsp; &nbsp;public static void Main() {<br />&nbsp; &nbsp; &nbsp; ClearC();<br />&nbsp; &nbsp; &nbsp; System.Console.WriteLine(&quot;Hello, C# World!&quot;);<br />&nbsp; &nbsp;}<br /><br />&nbsp; &nbsp;public static void ClearC() {<br />&nbsp; &nbsp;&nbsp; &nbsp;try {<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;System.Console.CursorTop = System.Console.CursorTop - 1;<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;System.Console.Write(new string(' ', System.Console.BufferWidth));<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;System.Console.CursorTop = System.Console.CursorTop - 1;<br />&nbsp; &nbsp;&nbsp; &nbsp;} catch (System.IO.IOException e) {<br />&nbsp; &nbsp;&nbsp; &nbsp;}<br />&nbsp; &nbsp;}<br />}</code></pre></div><br /><br />though if there are `echo`-es before the c# part you'll need to change the cursor position.And wont work if the file is redirected to a file.Also I'm not sure if <span style="color: #000040">Console.CursorTop</span> is available in .net 2 and 3</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: self-compiled .net hybrids</h3>
+				<div class="date">Posted: <strong>24 Jun 2015 14:37</strong></div>
+				<div class="author">by <strong>Ben Mar</strong></div>
+				<div class="content"><blockquote><div><cite>npocmaka_ wrote:</cite><a href="http://stackoverflow.com/questions/30948239/get-the-console-buffer-without-the-last-line-with-c" class="postlink">Without redundant output</a>:</div></blockquote><br />You can do that trick with &quot;cls&quot; too <img class="smilies" src="images/smilies/icon_smile.gif" alt=":-)" title="Smile" /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>//&gt;nul 2&gt;nul||@goto :batch<br />/*<br />:batch<br />@echo off<br />setlocal<br />cls<br />:: find csc.exe<br />set &quot;frm=%SystemRoot%\Microsoft.NET\Framework\&quot;<br />for /f &quot;tokens=* delims=&quot; %%v in ('dir /b /a:d&nbsp; /o:-n &quot;%SystemRoot%\Microsoft.NET\Framework\v*&quot;') do (<br />&nbsp; &nbsp;set netver=%%v<br />&nbsp; &nbsp;goto :break_loop<br />)<br />:break_loop<br />set csc=%frm%%netver%\csc.exe<br />:: csc.exe found<br /><br />call %csc% /nologo /out:&quot;%~n0.exe&quot; &quot;%~dpsfnx0&quot;<br />%~n0.exe<br />endlocal<br />exit /b 0<br />*/<br />public class Hello<br />{<br />&nbsp; &nbsp;public static void Main()<br />&nbsp; &nbsp;{<br />&nbsp; &nbsp; &nbsp; System.Console.WriteLine(&quot;Hello, C# World!&quot;);<br />&nbsp; &nbsp;}<br />}</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: self-compiled .net hybrids</h3>
+				<div class="date">Posted: <strong>21 Mar 2016 10:56</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">I've just found this:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>https://gist.github.com/subTee/28b7439d3dfa07053b61</code></pre></div><br /><br />Looks like something that will allow platform invoke from JScript.net.<br />Not tested yet.<br />It will be good it works because in some cases will be a good replacement of C# and its redundant output.<br />Though it will be not so powerful as jscript does not allow passing by reference.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: self-compiled .net hybrids</h3>
+				<div class="date">Posted: <strong>07 Oct 2016 06:15</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">using msbuild (without redundant output and without temp files ! ) :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;!-- :<br />&nbsp; &nbsp; @echo off<br /><br /><br />&nbsp; &nbsp; &nbsp; &nbsp; echo -^- FROM BATCH<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; set &quot;CMD_ARGS=%*&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; ::::::&nbsp; Starting C# code :::::::<br />&nbsp; &nbsp; &nbsp; &nbsp; :: searching for msbuild location<br />&nbsp; &nbsp; &nbsp; &nbsp; for /r &quot;%SystemRoot%\Microsoft.NET\Framework\&quot; %%# in (&quot;*msbuild.exe&quot;) do&nbsp; set &quot;msb=%%#&quot;<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; if not defined&nbsp; msb (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo no .net framework installed<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;exit /b 10<br />&nbsp; &nbsp; &nbsp; &nbsp; )<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; rem ::::::::::&nbsp; calling msbuid :::::::::<br />&nbsp; &nbsp; &nbsp; &nbsp; call %msb% /nologo&nbsp; /noconsolelogger &quot;%~dpsfnx0&quot;&nbsp; /property:&quot;H=From C#&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; rem ::::::::::::::::::::::::::::::::::::<br />&nbsp; &nbsp; &nbsp; &nbsp; exit /b %errorlevel%<br />--&gt; <br /><br /><br />&lt;Project ToolsVersion=&quot;$(MSBuildToolsVersion)&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;<br />&nbsp; &lt;Target Name=&quot;_&quot;&gt;<br />&nbsp; &nbsp; &lt;_/&gt;<br />&nbsp; &lt;/Target&gt;<br />&nbsp; &lt;UsingTask<br />&nbsp; &nbsp; TaskName=&quot;_&quot;<br />&nbsp; &nbsp; TaskFactory=&quot;CodeTaskFactory&quot;<br />&nbsp; &nbsp; AssemblyFile=&quot;$(MSBuildToolsPath)\Microsoft.Build.Tasks.v$(MSBuildToolsVersion).dll&quot; &gt; <br /><br />&nbsp; &nbsp; &lt;ParameterGroup&nbsp; &gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;Z ParameterType=&quot;System.String&quot;&gt;$(H)&lt;/Z&gt;<br />&nbsp; &nbsp; &lt;/ParameterGroup&gt;<br /><br />&nbsp; &nbsp; &lt;Task&gt;<br />&nbsp; &nbsp; &nbsp; &lt;Using Namespace=&quot;System&quot; /&gt;<br />&nbsp; &nbsp; &nbsp; &lt;Code Type=&quot;Fragment&quot; Language=&quot;cs&quot;&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &lt;!&#91;CDATA&#91;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; String CMD_ARGS=Environment.GetEnvironmentVariable(&quot;CMD_ARGS&quot;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.Console.WriteLine(&quot;-- &quot;+&quot;$(H)&quot;);&nbsp; <br />&nbsp; &nbsp; &nbsp; &nbsp; &#93;&#93;&gt;<br />&nbsp; &nbsp; &nbsp; &lt;/Code&gt;<br />&nbsp; &nbsp; &lt;/Task&gt;<br />&nbsp; &lt;/UsingTask&gt;<br />&lt;/Project&gt;<br /></code></pre></div><br /><br /><br />Will have to experiment more with this to see how P/Invoke can be used (something I can't do neat with jscript.net)<br /><br /><!-- m --><a class="postlink" href="https://msdn.microsoft.com/en-us/library/dd722601.aspx">https://msdn.microsoft.com/en-us/library/dd722601.aspx</a><!-- m --></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: self-compiled .net hybrids</h3>
+				<div class="date">Posted: <strong>06 Jan 2017 16:02</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">More notes on the msbuild technique.<br />If you need a reference to a dll you'll need to include it in the task node in the xml (alike the simple /r:some.dll in csc compiler)<br /><br />you cant use the &quot;--&quot; directly in batch part because it will broke the xml parsing (I'll have to think how the batch part can be put in CDATA section...  may be will be not possible)<br /><br />The type can be fragment (as in the previous example) or class or method <br /><br />Using a class needs more effort than a fragment - you need to implement ITask interface . Though it will be easier to inherit Task class which has some pipe work done. These are in Microsoft.Build.Framework and Microsoft.Build.Utilities namespaces. Doing so you'll have to override Execute method.<br /><br />The class must be public (though you can have more non public classes) and it should have the same name as the task you want to execute.<br /><br />Here's an example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;!-- :<br />&nbsp; &nbsp; @echo off<br /><br /><br />&nbsp; &nbsp; &nbsp; &nbsp; echo -^- FROM BATCH<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; set &quot;CMD_ARGS=%*&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; ::::::&nbsp; Starting C# code :::::::<br />&nbsp; &nbsp; &nbsp; &nbsp; :: searching for msbuild location<br />&nbsp; &nbsp; &nbsp; &nbsp; for /r &quot;%SystemRoot%\Microsoft.NET\Framework\&quot; %%# in (&quot;*msbuild.exe&quot;) do&nbsp; set &quot;msb=%%#&quot;<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; if not defined&nbsp; msb (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo no .net framework installed<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;exit /b 10<br />&nbsp; &nbsp; &nbsp; &nbsp; )<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; rem ::::::::::&nbsp; calling msbuid :::::::::<br />&nbsp; &nbsp; &nbsp; &nbsp; call %msb% /nologo&nbsp; /noconsolelogger &quot;%~dpsfnx0&quot;&nbsp; /property:&quot;H=From C#&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; rem ::::::::::::::::::::::::::::::::::::<br />&nbsp; &nbsp; &nbsp; &nbsp; exit /b %errorlevel%<br />&nbsp; &nbsp;&nbsp; &nbsp;<br />--&gt; <br /><br /><br />&lt;Project ToolsVersion=&quot;$(MSBuildToolsVersion)&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;<br />&nbsp; &lt;Target Name=&quot;Program&quot;&gt;<br />&nbsp; &nbsp; &lt;Program/&gt;<br />&nbsp; &lt;/Target&gt;<br />&nbsp; &lt;UsingTask<br />&nbsp; &nbsp; TaskName=&quot;Program&quot;<br />&nbsp; &nbsp; TaskFactory=&quot;CodeTaskFactory&quot;<br />&nbsp; &nbsp; AssemblyFile=&quot;$(MSBuildToolsPath)\Microsoft.Build.Tasks.v$(MSBuildToolsVersion).dll&quot; &gt; <br /><br />&nbsp; &nbsp; &lt;ParameterGroup&nbsp; &gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;Z ParameterType=&quot;System.String&quot;&gt;$(H)&lt;/Z&gt;<br />&nbsp; &nbsp; &lt;/ParameterGroup&gt;<br /><br />&nbsp; &nbsp; &lt;Task&gt;<br />&nbsp; &nbsp;&nbsp; &lt;Reference Include=&quot;$(MSBuildToolsPath)\System.Windows.Forms.dll&quot;/&gt;<br />&nbsp; &nbsp; &nbsp; &lt;Using Namespace=&quot;System&quot; /&gt;<br />&nbsp;<br />&nbsp; &nbsp; &nbsp; &lt;Code Type=&quot;Class&quot; Language=&quot;cs&quot;&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &lt;!&#91;CDATA&#91;<br />&nbsp; &nbsp;using Microsoft.Build.Framework;<br />&nbsp; &nbsp;using Microsoft.Build.Utilities;<br />&nbsp; &nbsp;using System;<br />&nbsp; &nbsp;<br />&nbsp; &nbsp;public class Program:Task, ITask<br />&nbsp; &nbsp; {<br />&nbsp; &nbsp;&nbsp; &nbsp;public override bool Execute(){<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;Console.WriteLine(&quot;Whoa&quot;);<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;String CMD_ARGS=Environment.GetEnvironmentVariable(&quot;CMD_ARGS&quot;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.Console.WriteLine(&quot;-- &quot;+&quot;$(MSBuildToolsVersion)&quot;); <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;return true;<br />&nbsp; &nbsp;&nbsp; &nbsp;}<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &#93;&#93;&gt;<br />&nbsp; &nbsp; &nbsp; &lt;/Code&gt;<br />&nbsp; &nbsp; &lt;/Task&gt;<br />&nbsp; &lt;/UsingTask&gt;<br />&lt;/Project&gt;<br /></code></pre></div><br /><br />Also the MSBuildToolsVersion and MSBuildToolsPath are no more hard coded in the xml.<br /><br />As a reference I've used this - <!-- m --><a class="postlink" href="https://gist.github.com/subTee/6fa2b0cc82559ee6ea54070e6d93f31a">https://gist.github.com/subTee/6fa2b0cc ... 0e6d93f31a</a><!-- m -->   (in the subtee's gists there are pretty interesting things)<br /><br />Still not tried to implement a method The <a href="https://msdn.microsoft.com/en-us/library/dd722601.aspx?f=255&amp;MSPPError=-2147217396" class="postlink">msdn</a> does not tell much - <br /><strong class="text-strong">If the value of Type is Method, then the code defines an override of the Execute method of the ITask interface.</strong><br /><br /><br />I feel a little lonely in my excitement about this - but for sure will try and share the method type task too.<br /><br /><br /><strong class="text-strong">EDIT</strong>. Example with method (the msdn explanation  was more than enough):<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;!-- :<br />&nbsp; &nbsp; @echo off<br /><br /><br />&nbsp; &nbsp; &nbsp; &nbsp; echo -^- FROM BATCH<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; set &quot;CMD_ARGS=%*&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; ::::::&nbsp; Starting C# code :::::::<br />&nbsp; &nbsp; &nbsp; &nbsp; :: searching for msbuild location<br />&nbsp; &nbsp; &nbsp; &nbsp; for /r &quot;%SystemRoot%\Microsoft.NET\Framework\&quot; %%# in (&quot;*msbuild.exe&quot;) do&nbsp; set &quot;msb=%%#&quot;<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; if not defined&nbsp; msb (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo no .net framework installed<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;exit /b 10<br />&nbsp; &nbsp; &nbsp; &nbsp; )<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; rem ::::::::::&nbsp; calling msbuid :::::::::<br />&nbsp; &nbsp; &nbsp; &nbsp; call %msb% /nologo&nbsp; /noconsolelogger &quot;%~dpsfnx0&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; rem ::::::::::::::::::::::::::::::::::::<br />&nbsp; &nbsp; &nbsp; &nbsp; exit /b %errorlevel%<br />&nbsp; &nbsp;&nbsp; &nbsp;<br />--&gt; <br /><br /><br />&lt;Project ToolsVersion=&quot;$(MSBuildToolsVersion)&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;<br />&nbsp; &lt;Target Name=&quot;_&quot;&gt;<br />&nbsp; &nbsp; &lt;_/&gt;<br />&nbsp; &lt;/Target&gt;<br />&nbsp; &lt;UsingTask<br />&nbsp; &nbsp; TaskName=&quot;_&quot;<br />&nbsp; &nbsp; TaskFactory=&quot;CodeTaskFactory&quot;<br />&nbsp; &nbsp; AssemblyFile=&quot;$(MSBuildToolsPath)\Microsoft.Build.Tasks.v$(MSBuildToolsVersion).dll&quot; &gt; <br /><br />&nbsp; &nbsp; &lt;Task&gt;<br />&nbsp; &nbsp;&nbsp; &lt;Reference Include=&quot;$(MSBuildToolsPath)\System.Windows.Forms.dll&quot;/&gt;<br />&nbsp; &nbsp; &nbsp; &lt;Using Namespace=&quot;System&quot; /&gt;<br />&nbsp;<br />&nbsp; &nbsp; &nbsp; &lt;Code Type=&quot;Method&quot; Language=&quot;cs&quot;&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &lt;!&#91;CDATA&#91;<br /><br />&nbsp; &nbsp;&nbsp; &nbsp;public override bool Execute(){<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;MyMethod();<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;return true;<br />&nbsp; &nbsp;&nbsp; &nbsp;}<br />&nbsp; &nbsp;&nbsp; &nbsp;<br />&nbsp; &nbsp;&nbsp; &nbsp;void MyMethod(){<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;Console.WriteLine(&quot;Whoa&quot;);<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;String CMD_ARGS=Environment.GetEnvironmentVariable(&quot;CMD_ARGS&quot;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.Console.WriteLine(&quot;-- &quot;+&quot;$(MSBuildToolsVersion)&quot;); <br />&nbsp; &nbsp;&nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &#93;&#93;&gt;<br />&nbsp; &nbsp; &nbsp; &lt;/Code&gt;<br />&nbsp; &nbsp; &lt;/Task&gt;<br />&nbsp; &lt;/UsingTask&gt;<br />&lt;/Project&gt;</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: self-compiled .net hybrids</h3>
+				<div class="date">Posted: <strong>07 Jan 2017 08:58</strong></div>
+				<div class="author">by <strong>LotPings</strong></div>
+				<div class="content">Nice one npocmaka,<br /><br />two questions<br />1. why do you call msbuild.exe?<br />2. are there remnant files from the build, if yes where are they located?<br /><br />Wish you a happy new year.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: self-compiled .net hybrids</h3>
+				<div class="date">Posted: <strong>07 Jan 2017 09:13</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content"><blockquote><div><cite>LotPings wrote:</cite>Nice one npocmaka,<br /><br />two questions<br />1. why do you call msbuild.exe?<br />2. are there remnant files from the build, if yes where are they located?<br /><br />Wish you a happy new year.</div></blockquote><br /><br />1.MSBuild works with xml files which can be used in batch files for comment lines without redundant output. the &quot;&lt;!-- :&quot; will be executed as &quot;:&lt;!--&quot; i.e. label and there will be nothing displayed in the console.<br /><br />2.This is even more beautiful - there are no build files , no temp files - everything is loaded in the memory (may be this mean that it will be faster but I'n not sure). Except there's a compilation error - there will be some source files in the %temp% where you can see in more details what msbuild is doing.<br /><br /><br /><strong class="text-strong"><span style="color: #FF0000">WRONG</span></strong>:<span style="color: #FFFF00">The only impediment is that you can't exit with custom error codes if the build is successful it returns 0  otherwise 1 , depending on what is returned from Execute() method.</span></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: self-compiled .net hybrids</h3>
+				<div class="date">Posted: <strong>01 Aug 2018 05:39</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">Probably the inline tasks for msbuild will remain the best method for .net hybridization. But this will require .net framework 4.6 (can it be installed on something different than windows 10?) so it is not so portable.<br>
+<br>
+Using c# without msbuild will produce redundant output because of the '// 2&gt;nul||@goto :batch'  line (vb.net also will produce something similar). JScript.net does not support syntax sugaring for platform invokes but it is still possible  (<a href="http://cx20.main.jp/blog/hello/2013/03/07/hello-win32-api-jscript-net-world/" class="postlink">http://cx20.main.jp/blog/hello/2013/03/ ... net-world/</a>):<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (@X)==(@Y) @end /* JScript comment
+@echo off
+setlocal
+
+set "jsc="
+for /r "%SystemRoot%\Microsoft.NET\Framework\" %%# in ("*jsc.exe") do  set "jsc=%%#"
+
+if not exist "%jsc%" (
+   echo no .net framework installed
+   exit /b 10
+)
+
+
+::if not exist "%~n0.exe" (
+	call "%jsc%"  /r:"System.Windows.Forms.dll" /nologo /out:"%~n0.exe" "%~dpsfnx0"||(
+		exit /b %errorlevel%
+	)
+::)
+
+"%~n0.exe"
+
+endlocal &amp; exit /b %errorlevel%
+
+*/
+
+import System;
+import System.Reflection;
+import System.Reflection.Emit;
+import System.Runtime;
+import System.Text;
+ 
+// Invoke a Win32 P/Invoke call.
+// http://www.leeholmes.com/blog/2006/07/21/get-the-owner-of-a-process-in-powershell-%e2%80%93-pinvoke-and-refout-parameters
+function InvokeWin32(dllName:String, returnType:Type,
+  methodName:String, parameterTypes:Type[], parameters:Object[])
+{
+  // Begin to build the dynamic assembly
+  var domain = AppDomain.CurrentDomain;
+  var name = new System.Reflection.AssemblyName('PInvokeAssembly');
+  var assembly = domain.DefineDynamicAssembly(name, AssemblyBuilderAccess.Run);
+  var module = assembly.DefineDynamicModule('PInvokeModule');
+  var type = module.DefineType('PInvokeType',TypeAttributes.Public + TypeAttributes.BeforeFieldInit);
+ 
+  // Define the actual P/Invoke method
+  var method = type.DefineMethod(methodName, MethodAttributes.Public + MethodAttributes.HideBySig + MethodAttributes.Static + MethodAttributes.PinvokeImpl, returnType, parameterTypes);
+ 
+  // Apply the P/Invoke constructor
+  var ctor = System.Runtime.InteropServices.DllImportAttribute.GetConstructor([Type.GetType("System.String")]);
+  var attr = new System.Reflection.Emit.CustomAttributeBuilder(ctor, [dllName]);
+  method.SetCustomAttribute(attr);
+ 
+  // Create the temporary type, and invoke the method.
+  var realType = type.CreateType();
+  return realType.InvokeMember(methodName, BindingFlags.Public + BindingFlags.Static + BindingFlags.InvokeMethod, null, null, parameters);
+}
+ 
+function MessageBox(hWnd:Int32, lpText:String, lpCaption:String, uType:Int32) 
+{ 
+   var parameterTypes:Type[] = [Type.GetType("System.Int32"),Type.GetType("System.String"),Type.GetType("System.String"),Type.GetType("System.Int32")];
+   var parameters:Object[] = [hWnd, lpText, lpCaption, uType];
+ 
+   return InvokeWin32("user32.dll", Type.GetType("System.Int32"), "MessageBoxA", parameterTypes,  parameters );
+} 
+ 
+MessageBox( 0, "Hello, Win32 API World!", "Hello, World!", 0 );</code></pre></div>
+
+the interesting part is in the InvokeWin32 function (nothing so complicated and can't be used directly without knowing too much about reflection ).<br>
+<br>
+Despite it is no more supported by MS jscript.net is the most backward compatible .net tool installed by default on Windows machines (it is not installed on win XP by default though it is highly probable ,but it is time to let XP die anyway).<br>
+<br>
+With pure batch scripts and with WSH/jscript/vbscript there are limits that can't be overcome without accessing windows system libraries - so jscript.net is a worthy thing to dig in.<br>
+<br>
+ Probably I'll try to 'translate' the tools I've wrote with C# to jscript.net and if possible to update the examples in <a href="http://pinvoke.net/" class="postlink">http://pinvoke.net/</a></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5260&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:46:50 GMT -->
+</html>

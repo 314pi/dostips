@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5987&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:13:56 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Extract only the last word from a string</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Extract only the last word from a string</h2>
+		<p><a href="viewtopic8d5e.html?f=3&amp;t=5987">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5987</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Extract only the last word from a string</h3>
+				<div class="date">Posted: <strong>17 Oct 2014 15:48</strong></div>
+				<div class="author">by <strong>lyp</strong></div>
+				<div class="content">Hi all!<br /><br />I can't find answer to the following question: How can I extract only the last word from a string?<br /><br />Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Extract only the last word from a string</h3>
+				<div class="date">Posted: <strong>17 Oct 2014 17:49</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Here is one way:<br /><br />If you want to do something else then give us full details of the task.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />set &quot;string=A cat and dog had a quarrel&quot;<br />echo &quot;%string%&quot;|repl &quot;.* (.*).&quot; &quot;$1&quot;<br />pause</code></pre></div><br /><br /><br />This uses a helper batch file called `repl.bat` (by dbenham) - download from:  <!-- m --><a class="postlink" href="https://www.dropbox.com/s/qidqwztmetbvklt/repl.bat">https://www.dropbox.com/s/qidqwztmetbvklt/repl.bat</a><!-- m --><br /><br />Place `repl.bat` in the same folder as the batch file or in a folder that is on the path.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Extract only the last word from a string</h3>
+				<div class="date">Posted: <strong>17 Oct 2014 19:22</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />set string=Give me the last word in this sentence<br />FOR %%A IN (%string%) DO SET last=%%A<br />echo %last%<br />pause</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Extract only the last word from a string</h3>
+				<div class="date">Posted: <strong>17 Oct 2014 19:52</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Put an ampersand in there and BANG! <img class="smilies" src="images/smilies/icon_wink.gif" alt=";)" title="Wink" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Extract only the last word from a string</h3>
+				<div class="date">Posted: <strong>18 Oct 2014 04:00</strong></div>
+				<div class="author">by <strong>Yury</strong></div>
+				<div class="content"><blockquote><div><cite>foxidrive wrote:</cite>Put an ampersand in there and BANG! <img class="smilies" src="images/smilies/icon_wink.gif" alt=";)" title="Wink" /></div></blockquote><br /><br /><br /><br />Without the Bing Bang:<br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enabledelayedexpansion<br /><br />set &quot;string=|| &lt;&gt; :&amp;&quot;<br /><br />for /f &quot;delims=&quot; %%i in ('cmd /u /c set /p&quot;=%string%&quot;^&lt;nul^| more^| findstr /n &quot;^&quot;') do (<br />&nbsp;set symbol=%%i<br />&nbsp;if not &quot;!symbol:*:=!&quot;==&quot; &quot; (set last=!last!!symbol:*:=!) else (set last=)<br />&nbsp;)<br />for /f &quot;eol=&quot; %%i in (&quot;%last%&quot;) do echo %%i<br /><br />endlocal<br />pause&gt;nul<br />exit /b</code></pre></div><br /><br /><br />.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Extract only the last word from a string</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 21:52</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content">vbscript, using arrays<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>myString = &quot;one two three four five&quot;<br />myArray = Split(myString)<br />WScript.Echo myArray( UBound(myArray) )<br /></code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5987&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:13:56 GMT -->
+</html>

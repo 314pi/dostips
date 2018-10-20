@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8793&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:29:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; What does &amp; mean?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>What does &amp; mean?</h2>
+		<p><a href="viewtopic8a1f.html?f=3&amp;t=8793">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8793</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>What does &amp; mean?</h3>
+				<div class="date">Posted: <strong>21 Aug 2018 07:43</strong></div>
+				<div class="author">by <strong>ahzong</strong></div>
+				<div class="content">As simple as the subject says, what does an ampersand (&amp;) mean in batch programming?<br>
+All I know is it is located between two lines or commands, but I still don't get what it does exactly, and how it is used practically in code.<br>
+Thanks for answering!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: What does &amp; mean?</h3>
+				<div class="date">Posted: <strong>21 Aug 2018 07:52</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Allows you to stack multiple commands on one line.<br>
+<br>
+For example
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo Batch files are cool. &amp; echo Batch files are fun.</code></pre></div>
+
+versus<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo Batch files are cool.
+echo Batch files are fun.</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: What does &amp; mean?</h3>
+				<div class="date">Posted: <strong>21 Aug 2018 09:04</strong></div>
+				<div class="author">by <strong>ahzong</strong></div>
+				<div class="content">Thank you very much! <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: What does &amp; mean?</h3>
+				<div class="date">Posted: <strong>21 Aug 2018 09:09</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">There is one other use of &amp; that is totally unrelated to command concatenation.<br>
+<br>
+&amp; is used during redirection to specify an existing file handle.<br>
+<br>
+For example, it is often desired to capture both stdout (file handle 1) and stderr (file handle 2) to a single logfile. This is easily done by redirecting stderr to the existing definition of stdout. But the reference to 1 (stdout) must be prefixed with &amp; so that it is interpreted as a file handle instead of a file name.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>someCommand 2&gt;&amp;1
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: What does &amp; mean?</h3>
+				<div class="date">Posted: <strong>21 Aug 2018 17:41</strong></div>
+				<div class="author">by <strong>CirothUngol</strong></div>
+				<div class="content">Wait, isn't there also...<br>
+&amp;&amp; = execute following command only if previous command's errorlevel==0<br>
+|| = execute following command only if previous command' errorlevel&lt;&gt;0<br>
+<br>
+So...<br>
+someCommand  &amp;&amp; doIfErrLev==0 || doIfErrLev&lt;&gt;0<br>
+<br>
+...is analogous to:<br>
+someCommand<br>
+if errorlevel 1 (doIfErrLev&lt;&gt;0) ELSE (doIfErrLev==0)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: What does &amp; mean?</h3>
+				<div class="date">Posted: <strong>22 Aug 2018 06:20</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3eee.html?mode=viewprofile&amp;u=8894">CirothUngol</a> wrote: <a href="viewtopic634e.html?p=57803#p57803" data-post-id="57803" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">21 Aug 2018 17:41</div></cite>
+Wait, isn't there also...<br>
+&amp;&amp; = execute following command only if previous command's errorlevel==0<br>
+|| = execute following command only if previous command' errorlevel&lt;&gt;0<br>
+<br>
+So...<br>
+someCommand  &amp;&amp; doIfErrLev==0 || doIfErrLev&lt;&gt;0<br>
+<br>
+...is analogous to:<br>
+someCommand<br>
+if errorlevel 1 (doIfErrLev&lt;&gt;0) ELSE (doIfErrLev==0)
+</div></blockquote>
+Of course, how could I forget. But your definition is wrong - the &amp;&amp; and || do not respond to ERRORLEVEL, but rather to the return code of the most recently executed command or operation - The return code and ERRORLEVEL are not quite the same thing <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <br>
+<br>
+Not all internal commands clear the ERRORLEVEL upon success. So it is actually a good thing that &amp;&amp; and || do not respond to ERRORLEVEL.<br>
+<br>
+In the example code below, (CALL ) with a space sets ERRORLEVEL to 0, and (CALL) without a space sets ERRORLEVEL to 1.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+(call)
+echo ERRORLEVEL is %errorlevel%&amp;&amp;The ECHO was successful||The ECHO failed
+echo ERRORLEVEL is still %errolevel%
+</code></pre></div>-- OUTPUT --<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ERRORLEVEL is 1
+The previous ECHO was successful
+ERRORLEVEL is still 1
+</code></pre></div>
+If &amp;&amp; and || responded to ERRORLEVEL then the middle line should read "The previous ECHO failed"<br>
+<br>
+Not only that, but || can actually detect an error and set the ERRORLEVEL in situations that would not set ERRORLEVEL without it.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+(call )
+echo ERRORLEVEL = %ERRORLEVEL%
+for /f %%A in ("") do echo No iterations
+echo After empty FOR /F without ^|^|: ERRORLEVEL = %ERRORLEVEL%
+(for /f %%A in ("") do echo No iterations) &amp;&amp; echo There were iterations || echo There were no iterations
+echo After empty FOR /F with ^|^|: ERRORLEVEL = %ERRORLEVEL%
+
+echo(
+
+(call )
+echo ERRORLEVEL = %ERRORLEVEL%
+&lt;NotExists (
+ rem
+)
+echo After failed redirection without ^|^|: ERRORLEVEL = %ERRORLEVEL%
+&lt;NotExists (
+ rem
+) &amp;&amp; echo Redirection succeeded || echo Redirection failed
+echo After failed redirection with ^|^|: ERRORLEVEL = %ERRORLEVEL%
+</code></pre></div>--OUTPUT--<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ERRORLEVEL = 0
+After empty FOR /F without ||: ERRORLEVEL = 0
+There were no iterations
+After empty FOR /F with ||: ERRORLEVEL = 1
+
+ERRORLEVEL = 0
+The system cannot find the file specified.
+After failed redirection without ||: ERRORLEVEL = 0
+The system cannot find the file specified.
+Redirection failed
+After failed redirection with ||: ERRORLEVEL = 1
+</code></pre></div>
+In the last example, || is responding to the failed redirection, which is not really a command. That is why I say that &amp;&amp; and || respond to the most recently executed command <strong class="text-strong"><em class="text-italics">or operation</em></strong>.<br>
+<br>
+=======================================<br>
+<br>
+Lastly, since we are trying to be complete, &amp; is also the bitwise AND operator when used in the SET /A command
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+set /a "result=13 &amp; 7"
+echo 13 ^&amp; 7 = %result%
+echo(
+echo in Binary:
+echo 13 = 00000000000000000000000000001101
+echo  7 = 00000000000000000000000000000111
+echo  5 = 00000000000000000000000000000101
+</code></pre></div>--OUTPUT--<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>13 &amp; 7 = 5
+
+in Binary:
+13 = 00000000000000000000000000001101
+ 7 = 00000000000000000000000000000111
+ 5 = 00000000000000000000000000000101
+ </code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: What does &amp; mean?</h3>
+				<div class="date">Posted: <strong>22 Aug 2018 07:14</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopicb0f9.html?p=57805#p57805" data-post-id="57805" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 Aug 2018 06:20</div></cite>
+<blockquote><div><cite><a href="memberlist3eee.html?mode=viewprofile&amp;u=8894">CirothUngol</a> wrote: <a href="viewtopic634e.html?p=57803#p57803" data-post-id="57803" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">21 Aug 2018 17:41</div></cite>
+Wait, isn't there also...<br>
+&amp;&amp; = execute following command only if previous command's errorlevel==0<br>
+|| = execute following command only if previous command' errorlevel&lt;&gt;0<br>
+<br>
+So...<br>
+someCommand  &amp;&amp; doIfErrLev==0 || doIfErrLev&lt;&gt;0<br>
+<br>
+...is analogous to:<br>
+someCommand<br>
+if errorlevel 1 (doIfErrLev&lt;&gt;0) ELSE (doIfErrLev==0)
+</div></blockquote>
+Of course, how could I forget. But your definition is wrong - the &amp;&amp; and || do not respond to ERRORLEVEL, but rather to the return code of the most recently executed command or operation - The return code and ERRORLEVEL are not quite the same thing <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <br>
+<br>
+Not all internal commands clear the ERRORLEVEL upon success. So it is actually a good thing that &amp;&amp; and || do not respond to ERRORLEVEL.<br>
+<br>
+In the example code below, (CALL ) with a space sets ERRORLEVEL to 0, and (CALL) without a space sets ERRORLEVEL to 1.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+(call)
+echo ERRORLEVEL is %errorlevel%&amp;&amp;The ECHO was successful||The ECHO failed
+echo ERRORLEVEL is still %errolevel%
+</code></pre></div>-- OUTPUT --<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ERRORLEVEL is 1
+The previous ECHO was successful
+ERRORLEVEL is still 1
+</code></pre></div>
+If &amp;&amp; and || responded to ERRORLEVEL then the middle line should read "The previous ECHO failed"<br>
+<br>
+Not only that, but || can actually detect an error and set the ERRORLEVEL in situations that would not set ERRORLEVEL without it.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+(call )
+echo ERRORLEVEL = %ERRORLEVEL%
+for /f %%A in ("") do echo No iterations
+echo After empty FOR /F without ^|^|: ERRORLEVEL = %ERRORLEVEL%
+(for /f %%A in ("") do echo No iterations) &amp;&amp; echo There were iterations || echo There were no iterations
+echo After empty FOR /F with ^|^|: ERRORLEVEL = %ERRORLEVEL%
+
+echo(
+
+(call )
+echo ERRORLEVEL = %ERRORLEVEL%
+&lt;NotExists (
+ rem
+)
+echo After failed redirection without ^|^|: ERRORLEVEL = %ERRORLEVEL%
+&lt;NotExists (
+ rem
+) &amp;&amp; echo Redirection succeeded || echo Redirection failed
+echo After failed redirection with ^|^|: ERRORLEVEL = %ERRORLEVEL%
+</code></pre></div>--OUTPUT--<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ERRORLEVEL = 0
+After empty FOR /F without ||: ERRORLEVEL = 0
+There were no iterations
+After empty FOR /F with ||: ERRORLEVEL = 1
+
+ERRORLEVEL = 0
+The system cannot find the file specified.
+After failed redirection without ||: ERRORLEVEL = 0
+The system cannot find the file specified.
+Redirection failed
+After failed redirection with ||: ERRORLEVEL = 1
+</code></pre></div>
+In the last example, || is responding to the failed redirection, which is not really a command. That is why I say that &amp;&amp; and || respond to the most recently executed command <strong class="text-strong"><em class="text-italics">or operation</em></strong>.<br>
+<br>
+<br>
+Dave Benham
+</div></blockquote>
+
+<br>
+<br>
+Just to complete this information, there are cases when a command ends with an ERRORLEVEL greater than 1 that does <em class="text-italics">not</em> means that the command failed because an error, but is just an indication of some condition.<br>
+<br>
+Also, although || detect a "return code" caused by an error, it does <em class="text-italics">not</em> "set the ERRORLEVEL" by itself; this behavior depends on the type of command executed after the ||.<br>
+<br>
+The ERRORLEVEL values returned by all internal cmd.exe commands are described at <a href="https://stackoverflow.com/questions/34987885/what-are-the-errorlevel-values-set-by-internal-cmd-exe-commands" class="postlink">this SO question</a>. Such a description is divided in tables accordingly to the different ways that the commands can change the ERRORLEVEL, including the commands and operations that cause a "return code" different than zero, and the commands that set the ERRORLEVEL in this case when they are placed after ||.<br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: What does &amp; mean?</h3>
+				<div class="date">Posted: <strong>22 Aug 2018 08:26</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopicc2ac.html?p=57806#p57806" data-post-id="57806" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 Aug 2018 07:14</div></cite>
+Just to complete this information, there are cases when a command ends with an ERRORLEVEL greater than 1 that does not means that the command failed because an error, but is just an indication of some condition.
+</div></blockquote>
+Fair point. A good example is the ERRORLEVEL returned by HELP.<br>
+<br>
+Requesting HELP for an invalid command gives an error message, but returns ERRORLEVEL 0.<br>
+Requesting HELP for a valid command gives the requested help, but returns ERRORLEVEL 1.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+help bogusCommand
+echo ERRORLEVEL = %errorlevel%
+help rem
+echo ERRORLEVEL = %errorlevel%
+</code></pre></div>--OUTPUT--<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>This command is not supported by the help utility.  Try "bogusCommand /?".
+ERRORLEVEL = 0
+Records comments (remarks) in a batch file or CONFIG.SYS.
+
+REM [comment]
+ERRORLEVEL = 1
+</code></pre></div>
+
+<br>
+
+<blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopicc2ac.html?p=57806#p57806" data-post-id="57806" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 Aug 2018 07:14</div></cite>
+Also, although || detect a "return code" caused by an error, it does <em class="text-italics">not</em> "set the ERRORLEVEL" by itself; this behavior depends on the type of command executed after the ||.
+</div></blockquote>
+That can't be right. Surely ECHO is not setting the ERRORLEVEL in my examples. The subsequent command does not matter, as long as it does not itself set ERRORLEVEL. However, I do agree that a command executed by || can <em class="text-italics">mask</em> the returned value of the previous command if the command after || itself sets ERRORLEVEL. I believe that is because || first sets the ERRORLEVEL based on the previous command's return code, and then the command after || may overwrite the ERRORLEVEL with its own value.<br>
+<br>
+The value may not always be 0. For example:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+(call )
+REM
+echo After REM: ERRORLEVEL = %ERRORLEVEL%
+rd NotExists
+echo After failed RD without ^|^|: ERRORLEVEL = %ERRORLEVEL%
+rd NotExists || REM
+echo After failed RD with ^|^|: ERRORLEVEL = %ERRORLEVEL%
+</code></pre></div>--OUTPUT--<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>After REM: ERRORLEVEL = 0
+The system cannot find the file specified.
+After failed RD without ||: ERRORLEVEL = 0
+The system cannot find the file specified.
+After failed RD with ||: ERRORLEVEL = 2
+</code></pre></div>
+
+I claim that || always sets the ERRORLEVEL because of what happens when an invalid command is issued. This normally sets ERRORLEVEL to 9009, but if || is used, then the ERRORLEVEL becomes 1. I believe that the invalid command sets ERRORLEVEL to 9009, but has a return code of 1. The || then overwrites the 9009 ERRORLEVEL with the 1 return code. Note the use of CMD /C below, <a href="https://stackoverflow.com/questions/34936240/batch-goto-loses-errorlevel/34937706#comment57708412_34937706" class="postlink">based on an idea by jeb</a>. CMD /C returns an error code, not ERRORLEVEL. This gives additional evidence that the return code of an invalid command is 1, even though the ERRORLEVEL is 9009.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+(call )
+bogusCommand
+echo After invalid command without ^|^|: ERRORLEVEL = %ERRORLEVEL%
+(call )
+bogusCommand || REM
+echo After invalid command with ^|^|: ERRORLEVEL = %ERRORLEVEL%
+(call )
+cmd /c "bogusCommand"
+echo After bogusCommand executed by CMD /C: ERRORLEVEL = %ERRORLEVEL%
+(call )
+cmd /c "exit /b 9009"
+echo Prove that CMD /C can return 9009: ERRORLEVEL = %ERRORLEVEL%
+</code></pre></div>--OUTPUT--<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>'bogusCommand' is not recognized as an internal or external command,
+operable program or batch file.
+After invalid command without ||: ERRORLEVEL = 9009
+'bogusCommand' is not recognized as an internal or external command,
+operable program or batch file.
+After invalid command with ||: ERRORLEVEL = 1
+'bogusCommand' is not recognized as an internal or external command,
+operable program or batch file.
+After bogusCommand executed by CMD /C: ERRORLEVEL = 1
+Prove that CMD /C can return 9009: ERRORLEVEL = 9009
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8793&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:29:15 GMT -->
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8622&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:14 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Copy csv with new column that adds 2 existing columns</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Copy csv with new column that adds 2 existing columns</h2>
+		<p><a href="viewtopic9168.html?f=3&amp;t=8622">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8622</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Copy csv with new column that adds 2 existing columns</h3>
+				<div class="date">Posted: <strong>12 Jun 2018 09:21</strong></div>
+				<div class="author">by <strong>catalyph</strong></div>
+				<div class="content">I have a .csv file<br>
+<br>
+Prod,Name,Datetime,Type,MemFree,MemAvailable,MemTotal<br>
+PRDAAA,HJGYASW,6/11/2018 23:06,WIN,4319264768,4875202560,8006983680<br>
+PRDBBB,UYBCLAS,6/11/2018 23:11,WIN,4313509888,4870922240,8006983680<br>
+<br>
+<br>
+I need to move this csv to a new location and add 2 new columns with new headers of "MemUsedA" and "MemUsedF" that are the subtractions of other columns (MemTotal - MemAvailable) and (MemTotal - MemFree)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Copt csv with new column that adds 2 existing columns</h3>
+				<div class="date">Posted: <strong>12 Jun 2018 09:27</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Your totals are larger than a 32 bit Integer which is a limitation of the SET /A command which does expression evaluation.  Regardless of that, your task can still be accomplished, just in a different way.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Copt csv with new column that adds 2 existing columns</h3>
+				<div class="date">Posted: <strong>12 Jun 2018 10:13</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+set "header="
+(for /F "tokens=1-7 delims=," %%a in (input.csv) do (
+   if not defined header (
+      set "header=1"
+      echo %%a,%%b,%%c,%%d,%%e,%%f,%%g,MemUsedA,MemUsedF
+   ) else (
+      set "MemFree=0000%%e"  &amp;  set "MemAvailable=0000%%f"  &amp;  set "MemTotal=0000%%g"
+      set /A "MemUsedAHigh=1!MemTotal:~-10,5!-1!MemAvailable:~-10,5!, MemUsedALow=2!MemTotal:~-5!-1!MemAvailable:~-5!"
+      set /A "MemUsedFHigh=1!MemTotal:~-10,5!-1!MemFree:~-10,5!, MemUsedFLow=2!MemTotal:~-5!-1!MemFree:~-5!"
+      echo %%a,%%b,%%c,%%d,%%e,%%f,%%g,!MemUsedAHigh!!MemUsedALow:~-5!,!MemUsedFHigh!!MemUsedFLow:~-5!
+   )
+)) &gt; output.csv
+</code></pre></div>
+
+This method fail if any number have less than 6 digits (and, of course, if there are more memory free or available than the total!  <img class="smilies" src="images/smilies/icon_eek.gif" width="15" height="15" alt=":shock:" title="Shocked"> ).<br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Copt csv with new column that adds 2 existing columns</h3>
+				<div class="date">Posted: <strong>12 Jun 2018 12:01</strong></div>
+				<div class="author">by <strong>catalyph</strong></div>
+				<div class="content">OK this worked by itself but not when I place it in my current bat.<br>
+I have a portion that sets the newest file in the directory to the variable %NewestFile%<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+FOR /F "delims=" %%I IN ('DIR "ProData\*.csv" /B /O:D') DO SET NewestFile=%%I
+
+set "header="
+(for /F "tokens=1-7 delims=," %%a in ( DIR "ProData\%NewestFile%") do ( if not defined header ( set "header=1"
+      echo %%a,%%b,%%c,%%d,%%e,%%f,%%g,MemUsedA,MemUsedF
+   ) else (
+      set "MemFree=0000%%e"  &amp;  set "MemAvailable=0000%%f"  &amp;  set "MemTotal=0000%%g"
+      set /A "MemUsedAHigh=1!MemTotal:~-10,5!-1!MemAvailable:~-10,5!, MemUsedALow=2!MemTotal:~-5!-1!MemAvailable:~-5!"
+      set /A "MemUsedFHigh=1!MemTotal:~-10,5!-1!MemFree:~-10,5!, MemUsedFLow=2!MemTotal:~-5!-1!MemFree:~-5!"
+      echo %%a,%%b,%%c,%%d,%%e,%%f,%%g,!MemUsedAHigh!!MemUsedALow:~-5!,!MemUsedFHigh!!MemUsedFLow:~-5!
+   )
+)) &gt; ProData\output.csv
+
+
+COPY "ProData\output.csv" "%ProHome%\user_cfg\inputdata\output.csv"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Copt csv with new column that adds 2 existing columns</h3>
+				<div class="date">Posted: <strong>12 Jun 2018 12:30</strong></div>
+				<div class="author">by <strong>catalyph</strong></div>
+				<div class="content">Im having trouble implementing this into my batch file.<br>
+<br>
+I have a line that sets the latest csv file to the var NewestFile, when I use Newest file as the file it des not work
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+FOR /F "delims=" %%I IN ('DIR "ProData\*.csv" /B /O:D') DO SET NewestFile=%%I
+
+set "header="
+(for /F "tokens=1-7 delims=," %%a in ( DIR "ProData\%NewestFile%") do ( if not defined header ( set "header=1"
+      echo %%a,%%b,%%c,%%d,%%e,%%f,%%g,MemUsedA,MemUsedF
+   ) else (
+      set "MemFree=0000%%e"  &amp;  set "MemAvailable=0000%%f"  &amp;  set "MemTotal=0000%%g"
+      set /A "MemUsedAHigh=1!MemTotal:~-10,5!-1!MemAvailable:~-10,5!, MemUsedALow=2!MemTotal:~-5!-1!MemAvailable:~-5!"
+      set /A "MemUsedFHigh=1!MemTotal:~-10,5!-1!MemFree:~-10,5!, MemUsedFLow=2!MemTotal:~-5!-1!MemFree:~-5!"
+      echo %%a,%%b,%%c,%%d,%%e,%%f,%%g,!MemUsedAHigh!!MemUsedALow:~-5!,!MemUsedFHigh!!MemUsedFLow:~-5!
+   )
+)) &gt; ProData\output.csv
+COPY "ProData\output.csv" "%PRO_HOME%\inputdata\output.csv"</code></pre></div>
+
+<blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopicc44e.html?p=57144#p57144" data-post-id="57144" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">12 Jun 2018 10:13</div></cite>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+set "header="
+(for /F "tokens=1-7 delims=," %%a in (input.csv) do (
+   if not defined header (
+      set "header=1"
+      echo %%a,%%b,%%c,%%d,%%e,%%f,%%g,MemUsedA,MemUsedF
+   ) else (
+      set "MemFree=0000%%e"  &amp;  set "MemAvailable=0000%%f"  &amp;  set "MemTotal=0000%%g"
+      set /A "MemUsedAHigh=1!MemTotal:~-10,5!-1!MemAvailable:~-10,5!, MemUsedALow=2!MemTotal:~-5!-1!MemAvailable:~-5!"
+      set /A "MemUsedFHigh=1!MemTotal:~-10,5!-1!MemFree:~-10,5!, MemUsedFLow=2!MemTotal:~-5!-1!MemFree:~-5!"
+      echo %%a,%%b,%%c,%%d,%%e,%%f,%%g,!MemUsedAHigh!!MemUsedALow:~-5!,!MemUsedFHigh!!MemUsedFLow:~-5!
+   )
+)) &gt; output.csv
+</code></pre></div>
+
+This method fail if any number have less than 6 digits (and, of course, if there are more memory free or available than the total!  <img class="smilies" src="images/smilies/icon_eek.gif" width="15" height="15" alt=":shock:" title="Shocked"> ).<br>
+<br>
+Antonio
+</div></blockquote></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Copt csv with new column that adds 2 existing columns</h3>
+				<div class="date">Posted: <strong>12 Jun 2018 13:25</strong></div>
+				<div class="author">by <strong>catalyph</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopic39c5.html?p=57143#p57143" data-post-id="57143" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">12 Jun 2018 09:27</div></cite>
+Your totals are larger than a 32 bit Integer which is a limitation of the SET /A command which does expression evaluation.  Regardless of that, your task can still be accomplished, just in a different way.
+</div></blockquote>
+
+<br>
+How so ? Still using bat?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Copy csv with new column that adds 2 existing columns</h3>
+				<div class="date">Posted: <strong>12 Jun 2018 14:08</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">@catalyph, I have a question for you.<br>
+<br>
+In the new line that you added:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F "delims=" %%I IN ('DIR "ProData\*.csv" /B /O:D') DO SET NewestFile=%%I
+                         ^                           ^
+</code></pre></div>
+
+... you inserted apostrophes (marked above with carets) to enclose the whole DIR command. Why?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Copy csv with new column that adds 2 existing columns</h3>
+				<div class="date">Posted: <strong>13 Jun 2018 07:57</strong></div>
+				<div class="author">by <strong>catalyph</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopic7112.html?p=57149#p57149" data-post-id="57149" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">12 Jun 2018 14:08</div></cite>
+@catalyph, I have a question for you.<br>
+<br>
+In the new line that you added:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F "delims=" %%I IN ('DIR "ProData\*.csv" /B /O:D') DO SET NewestFile=%%I
+                         ^                           ^
+</code></pre></div>
+
+... you inserted apostrophes (marked above with carets) to enclose the whole DIR command. Why?
+</div></blockquote>
+
+<br>
+I'm not the creator of the command, I have little knowledge beyond basic of bat scripting. <br>
+This was how the .bat was provided to me.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F "delims=" %%I IN ('DIR "ProData\*.csv" /B /O:D') DO SET NewestFile=%%I
+COPY "ProData\%NewestFile%" "%PRO_HOME%\inputdata\output.csv"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Copy csv with new column that adds 2 existing columns</h3>
+				<div class="date">Posted: <strong>13 Jun 2018 09:57</strong></div>
+				<div class="author">by <strong>catalyph</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopic7112.html?p=57149#p57149" data-post-id="57149" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">12 Jun 2018 14:08</div></cite>
+@catalyph, I have a question for you.<br>
+<br>
+In the new line that you added:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F "delims=" %%I IN ('DIR "ProData\*.csv" /B /O:D') DO SET NewestFile=%%I
+                         ^                           ^
+</code></pre></div>
+
+... you inserted apostrophes (marked above with carets) to enclose the whole DIR command. Why?
+</div></blockquote>
+
+Without those, the .bat does not work it seems.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8622&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:14 GMT -->
+</html>

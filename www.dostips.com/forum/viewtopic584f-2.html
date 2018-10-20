@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=12825 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:31:30 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Detect redirection and EOF in Standard Handles - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic162b.html?t=2800">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic577f.html?f=3&amp;t=2800">Detect redirection and EOF in Standard Handles</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting190e.html?mode=reply&amp;f=3&amp;t=2800" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicd56f.html?f=3&amp;t=2800&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="2800" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			4 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p12825" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile12825">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content12825">
+
+						<h3 class="first"><a href="#p12825">Detect redirection and EOF in Standard Handles</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9b65.html?mode=quote&amp;f=3&amp;p=12825" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic584f-2.html?p=12825#p12825" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopic584f-2.html?p=12825#p12825" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>15 Jan 2012 23:02
+			</p>
+			
+			
+			
+			<div class="content">At <a href="viewtopica6ef.php?f=3&amp;t=2128&amp;p=9720#p9720" class="postlink">this post</a> I saw this strange example posted by jeb:<br /><br /><blockquote><div><cite>jeb wrote:</cite><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br />&lt; testfile.txt&nbsp; (<br />&nbsp; &nbsp;set /p line=<br />&nbsp; &nbsp;echo set/p-read: !line!<br /><br />&nbsp; &nbsp;echo --- FINDSTR ---<br />&nbsp; &nbsp;findstr /n ^^<br /><br />&nbsp; &nbsp;echo --- MORE ---<br />&nbsp; &nbsp;more<br /><br />&nbsp; &nbsp;echo --- FIND ---<br />&nbsp; &nbsp;find /n /v &quot;&quot;<br />)<br /></code></pre></div>...<br />None of the commands close the input stream, even if they are at the end the stream is still open.<br /><br />FIND and MORE first resets the file position variable and then read the complete file to the EOF, so both can be used to reread the same file multiple times.<br />jeb</div></blockquote><br />Previous code open my eyes to a so obvious concept I didn't realized before: in any Batch program, subroutine or parentheses-enclosed code block, the DOS standard file handles remains open until the program/subroutine/block ends. Remember that every DOS-Windows running program have 5 <em class="text-italics">Standard Handles</em> identified by an integer number this way: 0=STDIN (keyboard CON, redirected by &lt;), 1=STDOUT (screen CON, redirected by &gt;), 2=STDERR (screen CON, redirected by 2&gt;), 3=STDAUX (serial port AUX) and 4=STDPRN (printer PRN).<br /><br /><strong class="text-strong">EDIT:</strong> Windows documentation indicate that handles 3-9 are undefined (available), although it seems that CMD.EXE connect handle 3 to CON: device (keyboard for input, screen for output).<br /><br />I made a small test to confirm that the standard handles behaves as expected:<blockquote><div><cite>thefile.txt wrote:</cite>Line one<br />Line two<br />Line three<br />Line four<br />Line five<br /></div></blockquote>The program:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br />findstr /N ^^ thefile.txt | find /C &quot;:&quot; &gt; lines.tmp<br />set /P lines=&lt; lines.tmp<br />rem Copy twice the number of input lines:<br />set /A lines*=2<br />&lt; thefile.txt (<br />&nbsp; &nbsp;for /L %%i in (1,1,%lines%) do (<br />&nbsp; &nbsp; &nbsp; set /P line=<br />&nbsp; &nbsp; &nbsp; echo Copy of line %%i: !line!<br />&nbsp; &nbsp;)<br />) &gt;&gt; thefile.txt<br /></code></pre></div>And the result:<blockquote><div><cite>Result wrote:</cite>Line one<br />Line two<br />Line three<br />Line four<br />Line five<br />Copy of line 1: Line one<br />Copy of line 2: Line two<br />Copy of line 3: Line three<br />Copy of line 4: Line four<br />Copy of line 5: Line five<br />Copy of line 6: Copy of line 1: Line one<br />Copy of line 7: Copy of line 2: Line two<br />Copy of line 8: Copy of line 3: Line three<br />Copy of line 9: Copy of line 4: Line four<br />Copy of line 10: Copy of line 5: Line five<br /></div></blockquote>The new data appended to the end of the file via STDOUT handle is ready to be read when STDIN's File Pointer reaches it, although both handles refer to the same physical file.<br /><br />With this idea as base, I wrote a very small and simple .COM program that allows to detect if a standard handle has been redirected to a disk file.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>TYPEOFHANDLE handle</code></pre></div><br />Return the type of given handle via ERRORLEVEL this way:<br /><br />IF %ERRORLEVEL% LSS 128 (<br />   Handle connected to character device: 3=CON (4=NUL in original DOS)<br />) ELSE (<br />   Handle connected to disk file: +128=disk file, +64=EOF (low part=drive in original DOS)<br />)<br /><br /><strong class="text-strong">EDIT</strong>: If %errorlevel% is zero, the handle is not connected to any file (undefined handle, like handles 3-9 in Windows CMD.EXE).<br /><br />For example:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>TypeOfHandle 0<br />if %errorlevel% geq 128 (<br />&nbsp; &nbsp; rem STDIN redirected to disk file<br />&nbsp; &nbsp; echo This program must be executed in interactive (not predefined-input) way^!<br />&nbsp; &nbsp; goto :EOF<br />)<br />set /P input=Enter input please: <br />etc...</code></pre></div>Another one:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>TypeOfHandle 1<br />if %errorlevel% == 3 (<br />&nbsp; &nbsp; echo Summary of results to be displayed in the screen...<br />) else (<br />&nbsp; &nbsp; echo The complete results<br />&nbsp; &nbsp; echo that will be stored<br />&nbsp; &nbsp; echo in the redirected disk file...<br />)</code></pre></div>This program also provide (at least!) a method to detect EOF in redirected input file:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:nextLine<br />&nbsp; &nbsp;set line=<br />&nbsp; &nbsp;set /P line=<br />&nbsp; &nbsp;echo(%line%<br />&nbsp; &nbsp;TypeOfHandle 0<br />&nbsp; &nbsp;set /A eof=%errorlevel% ^&amp; 64<br />if %eof% == 0 goto nextLine</code></pre></div>To get TYPEOFHANDLE.COM program, insert this line at beginning of the Batch file:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if not exist TypeOfHandle.com call :CreateTypeOfHandle</code></pre></div>... and this subroutine at end:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:CreateTypeOfHandle<br />setlocal DisableDelayedExpansion<br />set TypeOfHandle=ëWëOë82Ò2ÿ³‹û2íŠMÿã^&gt;° üó®t7Š&#93;ÿ€û0r/€û9w*€ë02À´DÍ!rÎöÂ€tË€âëÄ€Ê€€â¿°',!´DÍ!&quot;Àu²€Ê@ŠÂ´LÍ!ë«<br />setlocal EnableDelayedExpansion<br />echo !TypeOfHandle!&gt; TypeOfHandle.com<br />exit /B<br /></code></pre></div><br /><br />P.S. - When both STDIN and STDOUT handles are redirected to disk files, this command: <strong class="text-strong">SET /P VAR=%VAR%</strong> do a simultaneous output-input operation: the previous value of VAR is sent to STDOUT (with no CR+LF) and a new value of VAR is read from STDIN.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p37865" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile37865">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5152.html?mode=viewprofile&amp;u=5284" class="username">siberia-man</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7f01.html?author_id=5284&amp;sr=posts">108</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 26 Dec 2013 09:28</dd>		
+		
+											
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact siberia-man">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact siberia-man</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://with-love-from-siberia.blogspot.com/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content37865">
+
+						<h3 ><a href="#p37865">Re: Detect redirection and EOF in Standard Handles</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting77ca.html?mode=quote&amp;f=3&amp;p=37865" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicd80d.html?p=37865#p37865" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopicd80d.html?p=37865#p37865" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5152.html?mode=viewprofile&amp;u=5284" class="username">siberia-man</a></strong> &raquo; </span>08 Nov 2014 10:40
+			</p>
+			
+			
+			
+			<div class="content">Seems there is no internal way to detect if a handler is redirected to a file or another pipe. <br /><br /><blockquote class="uncited"><div>With this idea as base, I wrote a very small and simple .COM program that allows to detect if a standard handle has been redirected to a disk file</div></blockquote><br /><br /><strong class="text-strong">Aacini</strong>, what if you share the original assembler code of the program? Trivial copy-and-paste method doesn't allow to believe that the stored file if the same one as you have.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p37868" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile37868">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content37868">
+
+						<h3 ><a href="#p37868">Re: Detect redirection and EOF in Standard Handles</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8a68.html?mode=quote&amp;f=3&amp;p=37868" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicf461.html?p=37868#p37868" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopicf461.html?p=37868#p37868" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>08 Nov 2014 15:43
+			</p>
+			
+			
+			
+			<div class="content">I think Aacini already knows this, but the following information is still not correct.<br /><blockquote><div><cite>Aacini wrote:</cite>Remember that every DOS-Windows running program have 5 <em class="text-italics">Standard Handles</em> identified by an integer number this way: 0=STDIN (keyboard CON, redirected by &lt;), 1=STDOUT (screen CON, redirected by &gt;), 2=STDERR (screen CON, redirected by 2&gt;), 3=STDAUX (serial port AUX) and 4=STDPRN (printer PRN).<br /><br /><strong class="text-strong">EDIT:</strong> Windows documentation indicate that handles 3-9 are undefined (available), although it seems that CMD.EXE connect handle 3 to CON: device (keyboard for input, screen for output).<br /></div></blockquote><br />The above edited statement was largely due to the following behavior:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;echo Hello 1&gt;&amp;3<br />Hello<br /></code></pre></div> The output is written to the console<br /><br />But there is newer information available at <!-- m --><a class="postlink" href="http://stackoverflow.com/q/9878007/1012053">http://stackoverflow.com/q/9878007/1012053</a><!-- m -->, and <!-- l --><a class="postlink-local" href="viewtopic0809-2.html?p=14612#p14612">viewtopic.php?p=14612#p14612</a><!-- l --><br /><br />The MicroSoft docs are correct. Only handles 0, 1 and 2 are predefined. Handles 3 and above are undefined.<br /><br />It is easy to show that 4 is undefined<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;echo Hello 1&gt;&amp;4<br />The handle could not be duplicated<br />during redirection of handle 1.<br /></code></pre></div><br />Handle 3 seems to point to the console, but it only seems so because the redirection temporarily stores the original definition of 1 in the first available undefined handle, which normally is 3. So it is effectively redirecting 1 to itself!<br /><br />This behavior is further demonstrated below:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;echo Hello 3&gt;nul 1&gt;&amp;4<br />Hello<br /></code></pre></div>Earlier we saw that 4 was undefined, but now it is pointing to the console <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> This is because 3 is already taken, so the first available undefined handle is 4, so that is where the original definition of 1 is temporarily stored. When the redirection of 1 is finished, it has effectively redirected to itself.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p37884" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile37884">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content37884">
+
+						<h3 ><a href="#p37884">Re: Detect redirection and EOF in Standard Handles</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting63ef.html?mode=quote&amp;f=3&amp;p=37884" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic970a.html?p=37884#p37884" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopic970a.html?p=37884#p37884" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>09 Nov 2014 15:56
+			</p>
+			
+			
+			
+			<div class="content">Ok. Finally I updated this program to WIN-32 API, so it is now an .exe file that run in all Windows versions. I spent several hours looking for the corresponding documentation because it is bad named/located as a <em class="text-italics">File</em> Windows function, although it is really a <em class="text-italics">Handle</em> one! <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" />  After <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa364960(v=vs.85).aspx" class="postlink">the documentation</a> was found, it took me less than 10 minutes to write the new program. <img class="smilies" src="images/smilies/icon_evil.gif" alt=":evil:" title="Evil or Very Mad" /> <br /><br />The Batch file below create the new GetFileType.exe auxiliary program and describe how to use it.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />rem GetFileTypeDoc.bat: Create GetFileType.exe auxiliary program and describe it<br />rem Antonio Perez Ayala<br /><br />if not exist GetFileType.exe (<br />&nbsp; &nbsp;echo Extracting GetFileType.exe<br />&nbsp; &nbsp;call :ExtractBinaryFile GetFileType.exe<br />&nbsp; &nbsp;echo GetFileType.exe file created<br />&nbsp; &nbsp;echo/<br />)<br /><br />echo Get the file type of the given handle<br />echo/<br />echo&nbsp; &nbsp; GetFileType.exe handle<br />echo/<br />echo The result is reported via ERRORLEVEL this way:<br />echo/<br />echo -2&nbsp; &nbsp; &nbsp; No handle given or bad handle number.<br />echo -1&nbsp; &nbsp; &nbsp; The handle number is not connected to any file.<br />echo&nbsp; 0&nbsp; &nbsp; &nbsp; The type of the specified file is unknown.<br />echo&nbsp; 1&nbsp; &nbsp; &nbsp; The specified file is a disk file.<br />echo&nbsp; 2&nbsp; &nbsp; &nbsp; The specified file is a character file, typically a device or console.<br />echo&nbsp; 3&nbsp; &nbsp; &nbsp; The specified file is a socket, a named pipe, or an anonymous pipe.<br />echo/<br />echo/<br />echo Some examples:<br />echo/<br />echo C:\^&gt; GetFileType.exe 0<br />echo C:\^&gt; echo %%errorlevel%%<br />echo 2<br />echo/<br />echo C:\^&gt; GetFileType.exe 0 ^&lt; file.txt<br />echo C:\^&gt; echo %%errorlevel%%<br />echo 1<br />echo/<br />echo C:\^&gt; type file.txt ^| GetFileType.exe 0<br />echo C:\^&gt; echo %%errorlevel%%<br />echo 3<br />echo/<br />echo C:\^&gt; GetFileType.exe 3<br />echo C:\^&gt; echo %%errorlevel%%<br />echo -1<br />echo/<br />goto :EOF<br /><br /><br />rem Extract Binary File from hexadecimal digits placed in a &quot;resource&quot; in this .bat file<br /><br />:ExtractBinaryFile filename.ext&#91;.cab&#93;<br />setlocal EnableDelayedExpansion<br />set &quot;start=&quot;<br />set &quot;end=&quot;<br />for /F &quot;tokens=1,3 delims=:=&gt;&quot; %%a in ('findstr /N /B &quot;&lt;/*resource&quot; &quot;%~F0&quot;') do (<br />&nbsp; &nbsp;if not defined start (<br />&nbsp; &nbsp; &nbsp; if &quot;%%~b&quot; equ &quot;%~1&quot; set start=%%a<br />&nbsp; &nbsp;) else if not defined end set end=%%a<br />)<br />(for /F &quot;skip=%start% tokens=1* delims=:&quot; %%a in ('findstr /N &quot;^&quot; &quot;%~F0&quot;') do (<br />&nbsp; &nbsp;if &quot;%%a&quot; == &quot;%end%&quot; goto decodeHexFile<br />&nbsp; &nbsp;echo %%b<br />)) &gt; &quot;%~1.hex&quot;<br />:decodeHexFile<br /><br />rem Modified code based on :genchr subroutine<br />type nul &gt; t.tmp<br />(for /F &quot;usebackq&quot; %%a in (&quot;%~1.hex&quot;) do (<br />&nbsp; &nbsp;set input=%%a<br />&nbsp; &nbsp;set i=0<br />&nbsp; &nbsp;for /L %%I in (0,2,120) do for %%i in (!i!) do if &quot;!input:~%%i,1!&quot; neq &quot;&quot; (<br />&nbsp; &nbsp; &nbsp; set hex=!input:~%%i,2!<br />&nbsp; &nbsp; &nbsp; set /A i+=2<br />&nbsp; &nbsp; &nbsp; if &quot;!hex:~0,1!&quot; neq &quot;&#91;&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A chr=0x!hex!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if not exist !chr!.chr call :genchr !chr!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;type !chr!.chr<br />&nbsp; &nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for /L %%J in (1,1,5) do for %%i in (!i!) do if &quot;!input:~%%i,1!&quot; neq &quot;&#93;&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set &quot;hex=!hex!!input:~%%i,1!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /A i+=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if not exist 0.chr call :genchr 0<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for /L %%J in (1,1,!hex:~1!) do type 0.chr<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A i+=1<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />)) &gt; &quot;%~1&quot;<br />del *.chr<br />del t.tmp temp.tmp<br />del &quot;%~1.hex&quot;<br /><br />rem Expand created file if extension is .cab<br />set &quot;filename=%~1&quot;<br />if /I &quot;%filename:~-4%&quot; equ &quot;.cab&quot; (<br />&nbsp; &nbsp;expand &quot;%filename%&quot; &quot;%filename:~0,-4%&quot; &gt; NUL<br />&nbsp; &nbsp;del &quot;%filename%&quot;<br />)<br /><br />exit /B<br /><br /><br />:genchr<br />REM This code creates one single byte. Parameter: int<br />REM Teamwork of carlos, penpen, aGerman, dbenham<br />REM Tested under Win2000, XP, Win7, Win8<br />set &quot;options=/d compress=off /d reserveperdatablocksize=26&quot;<br />if %~1 neq 26 (<br />&nbsp; &nbsp;makecab %options% /d reserveperfoldersize=%~1 t.tmp %~1.chr &gt; nul<br />&nbsp; &nbsp;type %~1.chr | ( (for /l %%N in (1,1,38) do pause)&gt;nul &amp; findstr &quot;^&quot; &gt; temp.tmp )<br />&nbsp; &nbsp;&gt;nul copy /y temp.tmp /a %~1.chr /b<br />) else (<br />&nbsp; &nbsp;copy /y nul + nul /a 26.chr /a &gt;nul<br />)<br />exit /B<br /><br /><br />&lt;resource id=&quot;GetFileType.exe&quot;&gt;<br />4d5a900003&#91;3&#93;04&#91;3&#93;ffff&#91;2&#93;b8&#91;7&#93;40&#91;35&#93;b0&#91;3&#93;0e1fba0e00b409cd21b8014ccd21546869732070726f6772616d2063616e6e6f74206265207275<br />6e20696e20444f53206d6f64652e0d0d0a24&#91;7&#93;551e49c1117f2792117f2792117f27929f603492167f2792ed5f3592137f279252696368117f2792<br />&#91;8&#93;5045&#91;2&#93;4c01020066de5f54&#91;8&#93;e0000f010b01050c0002&#91;3&#93;02&#91;7&#93;10&#91;3&#93;10&#91;3&#93;20&#91;4&#93;40&#91;2&#93;10&#91;3&#93;02&#91;2&#93;04&#91;7&#93;04&#91;8&#93;30&#91;3&#93;02&#91;6&#93;03&#91;5&#93;10&#91;2&#93;10<br />&#91;4&#93;10&#91;2&#93;10&#91;6&#93;10&#91;11&#93;1420&#91;2&#93;28&#91;84&#93;20&#91;2&#93;14&#91;27&#93;2e74657874&#91;3&#93;86&#91;4&#93;10&#91;3&#93;02&#91;3&#93;02&#91;14&#93;20&#91;2&#93;602e7264617461&#91;2&#93;9c&#91;4&#93;20&#91;3&#93;02&#91;3&#93;04&#91;14&#93;<br />40&#91;2&#93;40&#91;8&#93;e83b&#91;3&#93;e85a&#91;3&#93;33c048488a1e80fb30721f80fb39771a80e30fb8f6ffffff2ac350e850&#91;3&#93;0bc07c0650e840&#91;3&#93;50e834&#91;3&#93;cccccccccccc<br />e83b&#91;3&#93;8bf08a06463c2275098a06463c2275f9eb0c8a06463c20740484c075f54ec38a06463c2074f94ec3ccff250c204000ff2500204000ff250420<br />4000ff25082040&#91;379&#93;5e20&#91;2&#93;6c20&#91;2&#93;7c20&#91;2&#93;5020&#91;6&#93;3c20&#91;10&#93;8e20&#91;3&#93;20&#91;22&#93;5e20&#91;2&#93;6c20&#91;2&#93;7c20&#91;2&#93;5020&#91;6&#93;9b004578697450726f63657373<br />001f0147657446696c6554797065006a0147657453746448616e646c65&#91;2&#93;e600476574436f6d6d616e644c696e6541006b65726e656c33322e646c6c<br />&#91;358&#93;<br />&lt;/resource&gt;<br /></code></pre></div><br />Please, report any problem you may have with this program...<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting190e.html?mode=reply&amp;f=3&amp;t=2800" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicd56f.html?f=3&amp;t=2800&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=2800">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			4 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5495.gif?cron_type=cron.task.text_reparser.poll_title" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=12825 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:31:30 GMT -->
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1637&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:56:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; renaming fails</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>renaming fails</h2>
+		<p><a href="viewtopic9401.html?f=3&amp;t=1637">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1637</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>renaming fails</h3>
+				<div class="date">Posted: <strong>09 Feb 2011 09:56</strong></div>
+				<div class="author">by <strong>maclovin</strong></div>
+				<div class="content">Hi there!<br /><br />I need to move my randomized files to another directory. Can anyone help me with the right amount of code to accomplish this?<br />What I have is this:<br /><br />REM MOVE TO THE RIGHT DIRECTORY<br />pushd %tmpDir%<br /><br />setlocal EnableDelayedExpansion<br /><br />for /f %%T in ('dir/s/b/a-d *.*') do (<br />ren &quot;%%T&quot; &quot;!random!%%~nT.kvi&quot; )<br />move %tmpDir%\*kvi &quot;T:\Program\renamedFiles&quot;<br /><br />But I can't seem to get this to work, and I am fresh out of ideas <img class="smilies" src="images/smilies/icon_smile.gif" alt=":-)" title="Smile" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: renaming fails</h3>
+				<div class="date">Posted: <strong>09 Feb 2011 11:06</strong></div>
+				<div class="author">by <strong>avery_larry</strong></div>
+				<div class="content">t:\program\renamedfiles  must exist.<br />probably want to use *.kvi since it's an extension<br />path probably should be in quotes:<br /><br />move &quot;%tmpdir%\*.kvi&quot; &quot;t:\program\renamedfiles&quot;</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: renaming fails</h3>
+				<div class="date">Posted: <strong>10 Feb 2011 01:18</strong></div>
+				<div class="author">by <strong>maclovin</strong></div>
+				<div class="content">It is not allowed to use quotes around destination.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: renaming fails</h3>
+				<div class="date">Posted: <strong>10 Feb 2011 12:07</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite>maclovin wrote:</cite>It is not allowed to use quotes around destination.</div></blockquote><br />Why not?<br /><br />What error message did your batch file display?<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: renaming fails</h3>
+				<div class="date">Posted: <strong>11 Feb 2011 06:32</strong></div>
+				<div class="author">by <strong>maclovin</strong></div>
+				<div class="content">Thanks for the reply! and the kind help so far.<br /><br />When I run this ( i have 2 files which I want to rename) :<br />REM %tmpDir% is defined in end of script<br /><br />pushd %tmpDir%<br />setlocal EnableDelayedExpansion<br />For /F &quot;Tokens=* Delims=&quot; %%T in ('dir/s/b/a-d *.*') do (<br />ren &quot;%%T&quot; &quot;!random!%%~nT.kvi&quot; )<br />pause<br />move &quot;%tmpDir%\*kvi&quot; &quot;C:\renamedFiles&quot;<br />pause<br /><br />I get this:<br /><br />C:\&gt;pushd  &quot;C:\temp&quot;<br /><br />C:\temp&gt;setlocal EnableDelayedExpansion<br /><br />C:\temp&gt;For /F &quot;Tokens=* Delims=&quot; %T in ('dir/s/b/a-d *.*') do (ren &quot;%T&quot; &quot;!random!%~nT.kvi&quot;  )<br /><br />C:\temp&gt;(ren &quot;C:\temp\22022testret2.kvi&quot; &quot;!random!22022testret2.kvi&quot;  )<br /><br />C:\temp&gt;(ren &quot;C:\temp\testret&quot; &quot;!random!testret.kvi&quot;  )<br /><br />C:\temp&gt;pause<br />Trykk en tast for å fortsette...<br /><br />C:\temp&gt;move &quot; &quot;C:\temp&quot;\*kvi&quot; &quot;C:\renamedFiles&quot;<br />Filename, foldername or volumname syntax is wrong<br /><br />C:\temp&gt;pause<br />press to continue</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: renaming fails</h3>
+				<div class="date">Posted: <strong>11 Feb 2011 06:55</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Ok, a really hard problem  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\temp&gt;move &quot; &quot;C:\temp&quot;\*kvi&quot; &quot;C:\renamedFiles&quot;<br />Filename, foldername or volumname syntax is wrong</code></pre></div><br /><br />But wait ... I count 6 quotes, I expected only 4.<br /><br />jeb</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: renaming fails</h3>
+				<div class="date">Posted: <strong>11 Feb 2011 08:05</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Yes, jeb is absolutely right.<br /><br />Probably you have a line like this:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set tmpDir = &quot;C:\temp&quot;</code></pre></div><br />but you should try<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;tmpDir=C:\temp&quot;</code></pre></div><br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: renaming fails</h3>
+				<div class="date">Posted: <strong>11 Feb 2011 12:03</strong></div>
+				<div class="author">by <strong>maclovin</strong></div>
+				<div class="content">Thanks alot man! Looks like I might set this in production after all <img class="smilies" src="images/smilies/icon_smile.gif" alt=":-)" title="Smile" /><br /><br />Have a nice weekend everyone!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: renaming fails</h3>
+				<div class="date">Posted: <strong>14 Feb 2011 01:42</strong></div>
+				<div class="author">by <strong>maclovin</strong></div>
+				<div class="content">What I ended up using is this:<br /><br />pushd %tmpDir%<br />setlocal EnableDelayedExpansion<br />For /F &quot;Tokens=* Delims=&quot; %%T in ('dir/s/b/a-d *.*') do (<br />ren &quot;%%T&quot; &quot;!random!%%~nT.kvi&quot; )<br />pause<br />move %tmpDir%\*kvi &quot;C:\renamedFiles\&quot;<br />pause<br /><br />The only difference between the working code on friday is C:\renamedFiles vs &quot;C:\renamedFiles\&quot;<br />And oh, of course, my declaration is not set tmp = &quot;\\server\ohshitspaces&quot; but set tmp=&quot;\\server\looknospaces&quot;<br /><br />Looks like it might be working. In production tomorrow <img class="smilies" src="images/smilies/icon_smile.gif" alt=":-)" title="Smile" /></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1637&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:56:40 GMT -->
+</html>

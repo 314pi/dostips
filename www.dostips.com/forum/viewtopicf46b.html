@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8759&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:47:00 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Strange behavior in Batch script</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Strange behavior in Batch script</h2>
+		<p><a href="viewtopic58f3.html?f=3&amp;t=8759">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8759</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Strange behavior in Batch script</h3>
+				<div class="date">Posted: <strong>31 Jul 2018 15:09</strong></div>
+				<div class="author">by <strong>Grapefruits</strong></div>
+				<div class="content">So I have this script. It's supposed to check if the input (%skiller%) is in the variable %tree%. So if I input Sword, it'll look for the string "Sword" in the variable %tree%. The tree value is "Sword Shield". Afterward, it checks the variable %skillsunlocked% to see if it has the input. If it has the input, it'll say "You already unlocked it!". Strange thing is, when I input "Sword" it always says "You already unlocked Sword", even though %skillsunlocked% has no value. If I input "Mace", which isn't in the %tree% variable, it goes back to :FUNC, which is the intended behaviour. But when I input "Sword", it always says I unlocked Sword, even though %skillunlocked% does not contain Sword.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:FUNC
+set skillsunlocked="
+set "tree=Sword Shield"
+set /p skiller="Enter skill..."
+echo.%tree% | findstr /C:"%skiller%" 1&gt;nul
+if "%errorlevel%" == "0" (
+      echo.%skillsunlocked% | findstr /C:"%skiller%" 1&gt;nul
+      if "%errorlevel%" == "0" (
+            echo You already unlocked %skiller%^^!
+            pause
+            GOTO :FUNC
+      )
+) else (
+     GOTO :FUNC
+)</code></pre></div>
+
+I thought maybe a blank variable was throwing it off, so I tried adding skillsunlocked=None, but it still behaved the same. The first findstr works, while the second one doesn't. Any hints or thoughts?  <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Strange behavior in Batch script</h3>
+				<div class="date">Posted: <strong>31 Jul 2018 15:16</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Delayed Expansion!<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:FUNC
+set skillsunlocked="
+set "tree=Sword Shield"
+set /p skiller="Enter skill..."
+echo.%tree% | findstr /C:"%skiller%" 1&gt;nul
+if "%errorlevel%" == "0" (
+      echo.%skillsunlocked% | findstr /C:"%skiller%" 1&gt;nul
+     setlocal enabledelayedexpansion
+      if "!errorlevel!" == "0" (
+            echo You already unlocked %skiller%^^!
+            pause
+            GOTO :FUNC
+      )
+     endlocal
+) else (
+     GOTO :FUNC
+)</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Strange behavior in Batch script</h3>
+				<div class="date">Posted: <strong>31 Jul 2018 15:22</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">You try to access the %errorlevel% variable in a parenthesized block of command lines. You can't get its changed value without delayed expansion and !! instead of %%. Another problem is the space between the variable and the | operator. The space belongs to the ECHOed string and may falsify your result.<br>
+But I wouldn't even use the external FINDSTR tool. What about string replacement? If "!tree:%skiller%=!" is still the same as "!tree!" then tree doesn't contain skiller.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8759&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:47:00 GMT -->
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8526&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:24:46 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; get only last file of same type</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>get only last file of same type</h2>
+		<p><a href="viewtopic9f30.html?f=3&amp;t=8526">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8526</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>get only last file of same type</h3>
+				<div class="date">Posted: <strong>27 Apr 2018 04:08</strong></div>
+				<div class="author">by <strong>darioit</strong></div>
+				<div class="content">Hello everybody,<br>
+a new problem at least difficult for me<br>
+<br>
+In a directory I have different file, I must add each one for same name at 3th position in a new file one and delete it after copy.<br>
+This is a script and it works fine<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F %%a in ('dir %folder%\*.DDDDDDDD.* /b/a-d/od') do type "%folder%\%%a" &gt;&gt; %OUTPUT%\DDDDDDDD &amp;&amp; del /Q %folder%\%%a </code></pre></div>
+
+The problem is when I have more file with same name at 1th position, in this case I want copy <strong class="text-strong">only last</strong> file arrived and <strong class="text-strong">delete others same with 1st name</strong><br>
+<br>
+Example list file:<br>
+AAAAAAAA.BBBBBBBB.CCCCCCCC.03024<br>
+EEEEEEEE.BBBBBBBB.CCCCCCCC.02052<br>
+FFFFFFFF.BBBBBBBB.DDDDDDDD.00155 <br>
+EEEEEEEE.BBBBBBBB.DDDDDDDD.13099<br>
+EEEEEEEE.BBBBBBBB.DDDDDDDD.13100<br>
+EEEEEEEE.BBBBBBBB.DDDDDDDD.13101<br>
+EEEEEEEE.BBBBBBBB.DDDDDDDD.13102<br>
+<br>
+Example output file in %OUTPUT% folder, must contain only this FFFFFFFF.BBBBBBBB.DDDDDDDD.00155 and this file EEEEEEEE.BBBBBBBB.DDDDDDDD.13102 put in this file DDDDDDDD with type command <br>
+<br>
+If I add <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>t:c</code></pre></div> to dir command I can select last file but of all file, not only same 1st type of file<br>
+<br>
+Suggestion?<br>
+Thank you in advance</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: get only last file of same type</h3>
+				<div class="date">Posted: <strong>30 Apr 2018 08:41</strong></div>
+				<div class="author">by <strong>darioit</strong></div>
+				<div class="content">I wrote this code, but works only if a file are ordered before first dot.<br>
+How can I order first qualifier name before dot (EEEEEEEE)?<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnabledelayedExpansion
+
+set file1=""
+set file2=""
+
+for /f "tokens=1,2,3,4 delims=." %%a in ('dir *.DDDDDDDD.* /b/a-d/o-d') do (
+		set file1=%%a.%%b.%%c
+		if !file1! equ !file2! del /q !file2!.%%d 
+		set file2=!file1!
+	)
+
+goto:eof</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: get only last file of same type</h3>
+				<div class="date">Posted: <strong>30 Apr 2018 10:30</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Has the fourth token always the highest number for the most recent file?<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: get only last file of same type</h3>
+				<div class="date">Posted: <strong>30 Apr 2018 12:14</strong></div>
+				<div class="author">by <strong>darioit</strong></div>
+				<div class="content">Yes at 99,99% the last 5 digit are sequential and higher is last file received, maybe is easier find the last file using this value</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: get only last file of same type</h3>
+				<div class="date">Posted: <strong>30 Apr 2018 13:48</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Give that a go
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal EnableDelayedExpansion
+set "string=DDDDDDDD"
+
+for /f "delims==" %%i in ('2^&gt;nul set max_') do set "%%i="
+for /f "delims=" %%i in ('dir /a-d /o-d /b ^| findstr /rbc:"[^\.][^\.]*\.[^\.][^\.]*\.%string%\.[0-9][0-9][0-9][0-9][0-9]"') do (
+  for /f "tokens=1-4 delims=." %%j in ("%%i") do (
+    if "%%m" gtr "!max_%%j_%%k!" set "max_%%j_%%k=%%m"
+  )
+)
+
+for /f "tokens=2-4 delims=_=" %%i in ('2^&gt;nul set max_') do (
+  for /f "delims=" %%l in (
+    'dir /a-d /o-d /b ^| findstr /rbc:"%%i\.%%j\.%string%\.[0-9][0-9][0-9][0-9][0-9]" ^| findstr /vbc:"%%i.%%j.%string%.%%k"'
+  ) do ECHO del "%%l"
+  ECHO type "%%i.%%j.%string%.%%k" ^&gt;^&gt;"%string%"
+)
+PAUSE
+</code></pre></div>
+Whether or not the code works does highly depend on your real file names. If this code displays the right commands then remove the ECHOs and PAUSE and change ^&gt;^&gt; to &gt;&gt;.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: get only last file of same type</h3>
+				<div class="date">Posted: <strong>01 May 2018 23:38</strong></div>
+				<div class="author">by <strong>darioit</strong></div>
+				<div class="content">this is exactly what I had in mind, put each data in a array to get last file and, after read the array and delete or keep data,many thanks it works very very well !!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: get only last file of same type</h3>
+				<div class="date">Posted: <strong>02 May 2018 05:46</strong></div>
+				<div class="author">by <strong>darioit</strong></div>
+				<div class="content">Just a quick question, what's is this <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>^&gt;^&gt;"%string%" </code></pre></div> <br>
+<br>
+it type file content on screen not in a file destination</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: get only last file of same type</h3>
+				<div class="date">Posted: <strong>02 May 2018 09:44</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Reading is fun <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=":wink:" title="Wink"> <blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic8989.html?p=56620#p56620" data-post-id="56620" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Apr 2018 13:48</div></cite>... and change ^&gt;^&gt; to &gt;&gt;.</div></blockquote>
+
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: get only last file of same type</h3>
+				<div class="date">Posted: <strong>03 May 2018 02:23</strong></div>
+				<div class="author">by <strong>darioit</strong></div>
+				<div class="content">you're right, I miss it !!<br>
+Thank you</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8526&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:24:46 GMT -->
+</html>

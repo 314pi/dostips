@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8857&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:09:33 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Deactivate admin privileges</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Deactivate admin privileges</h2>
+		<p><a href="viewtopic8e5e.html?f=3&amp;t=8857">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8857</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Deactivate admin privileges</h3>
+				<div class="date">Posted: <strong>14 Oct 2018 16:05</strong></div>
+				<div class="author">by <strong>Potatismoose</strong></div>
+				<div class="content">I'm having some problems with a script i'm making. Here is a short background. At my work (a computer store) we do alot of installations for the customers. Until now we have done most of the installations manually wich have been a pain in the ass. So I started to write a script. The script contains alot of tools for our daily work and it has a total of 20 something batch files for different purposes. So the main bat file is called start and I run that with admin privileges (thru a shortcut). The admin rights is nessecery for the whole script to work properly. What I´ve noticed is that the admin rights seem to be inherited to other bat files that you use the call or start command on. Here comes the problem. One of the bat files downloads the spotify installer, starts the installer and should install the program. BUT... spotify installer does not allow you to run it with admin rights. It just pops up a messagebox that says something like "Run this program as a standard user, not as an administrator". <br>
+<br>
+I find this very strange. Is there a work around for this? I have not found anything when I googled if there is a command for temporarily removing the inherited admin rights for a bat file. <br>
+<br>
+If I run the spotify bat file directly without starting the elevated start.bat file first, it works perfectly. But f I run it thru the main file (start.bat) it won´t work.<br>
+<br>
+Anyone who sits on a solution for this?<br>
+<br>
+The, not so good, solution I´ve managed to create so far is this:<br>
+Starting start.bat<br>
+Automatically copying spotify.bat to autostart<br>
+Automatically restarting computer with shutdown.exe -r -t 0<br>
+spotify.bat runs thru autostart, downloads spotify and installs the program. It then deletes the downloaded installation file and the .bat in autostart and restarts the start.bat again so the user can continue the installation.<br>
+<br>
+Is there another, more convinient way so you dont need to restart the computer?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Deactivate admin privileges</h3>
+				<div class="date">Posted: <strong>15 Oct 2018 14:03</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">a.bat<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal
+:: If you run a batch script via "Run as administrator" then the working directory gets automatically changed to %SystemRoot%.
+cd /d "%~dp0"
+
+:: Test
+echo %~nx0
+&gt;nul 2&gt;&amp;1 net session &amp;&amp;(echo Elevated.)||(echo Not elevated.)
+
+:: Once the explorer already runs without elevation, another thread can't be run elevated.
+:: Thus, passing the other batch script to explorer.exe will lead in a cmd.exe process without elevation.
+start "" "explorer.exe" "b.bat"
+
+pause
+</code></pre></div>
+
+<br>
+b.bat<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal
+
+:: Test
+echo %~nx0
+&gt;nul 2&gt;&amp;1 net session &amp;&amp;(echo Elevated.)||(echo Not elevated.)
+
+pause
+</code></pre></div>
+
+Put both scripts in the same folder and run a.bat as admin via right click.<br>
+<br>
+However, I don't know if that will work for you. If you're logged on with an admin account then explorer.exe might be elevevated already. Also keep in mind that the account will not change that way. If you need the program to be installed under the user account then your current workarount might not be too bad.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Deactivate admin privileges</h3>
+				<div class="date">Posted: <strong>16 Oct 2018 04:55</strong></div>
+				<div class="author">by <strong>miskox</strong></div>
+				<div class="content">Is scheduled task a solution?<br>
+<br>
+Maybe you can create a scheduled task, run it and then delete it when it is done?<br>
+<br>
+Saso</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8857&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:09:33 GMT -->
+</html>

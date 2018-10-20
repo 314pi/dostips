@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8826&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:15:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; how to programmatically escape percent signs %</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>how to programmatically escape percent signs %</h2>
+		<p><a href="viewtopic8b24.html?f=3&amp;t=8826">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8826</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>how to programmatically escape percent signs %</h3>
+				<div class="date">Posted: <strong>11 Sep 2018 04:09</strong></div>
+				<div class="author">by <strong>sage12</strong></div>
+				<div class="content">I have a .bat file that passes in connection strings and password arguements to a java program. Any of these fields could have embedded percent signs. The values are entered by the client. I would like to programmatically search these fields and replace all % with %%. Below is an exmple where two arguments (uid and pwd) have embedded %. When the java program receives the arguments they are not as written in the dos batch file. <br>
+<br>
+set uid="--uid=theb%renda"<br>
+set pwd="--pwd=pass%word1%234"<br>
+<br>
+"%JAVA_HOME%" -classpath %CLASSPATH% javaprogram %uid% %pwd% <br>
+<br>
+want to turn uid and pwd to this<br>
+<br>
+set uid="--uid=theb%%renda"<br>
+set pwd="--pwd=pass%%word1%%234"<br>
+<br>
+"%JAVA_HOME%" -classpath %CLASSPATH% javaprogram %uid% %pwd%</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: how to programmatically escape percent signs %</h3>
+				<div class="date">Posted: <strong>11 Sep 2018 05:42</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Hi sage12,<br>
+<br>
+you should use delayed expansion, too avoid any problems with special charaters.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>setlocal EnableDelayedExpansion
+"%JAVA_HOME%" -classpath %CLASSPATH% javaprogram !uid! !pwd!
+</code></pre></div>
+
+But your main problem is a bit difficult.<br>
+I don't understand, who builds the lines
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set uid="--uid=theb%renda"
+set pwd="--pwd=pass%word1%234"</code></pre></div>
+Are they build by another program and prepended to your batch file?<br>
+Or are they part of another batch file?<br>
+<br>
+This way the set command will drop the percent signs.<br>
+But when the it's part of a config/user file, you could read that file via FOR/F without losing the percents.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8826&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:15:53 GMT -->
+</html>

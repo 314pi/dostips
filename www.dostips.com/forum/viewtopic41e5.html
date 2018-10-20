@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4697&start=90&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:58 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; FindRepl.bat:New regex utility to search and replace strings - Page 7</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>FindRepl.bat:New regex utility to search and replace strings</h2>
+		<p><a href="viewtopica720.html?f=3&amp;t=4697">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4697</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>7</strong> of <strong>9</strong></div>
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace str</h3>
+				<div class="date">Posted: <strong>27 Aug 2015 05:06</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Hi Antonio,<br /><br />When I tried to change three letters in the block using the /e: switch in findrepl V2.2 it replaced/removed the primary rSearch term instead.<br /><br /><br />V 2.2 returns this:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code><br />555<br />bbb<br /></code></pre></div><br /><br />V1.x returns this:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>aaa<br /><br />bbb<br /></code></pre></div><br /><br />Sample code<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />(<br />echo(aaa<br />echo(555<br />echo(bbb<br />)&gt;filein.txt<br /><br />type filein.txt|findrepl &quot;aaa&quot; /e:&quot;bbb&quot; /b:&quot;555&quot; &quot;&quot;<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>16 Dec 2015 00:41</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Hi Aacini!<br /><br />Here's some sample code to make an issue clearer that is in the current findrepl.bat<br /><br /><br /><span style="color: blue">findrepl July 7 2013</span>  This is the correct output<br /><blockquote class="uncited"><div><br />AAA bbb<br />ccc ddd<br /></div></blockquote><br /><br /><span style="color: blue">findrepl 2.2</span>  This is not right.<br /><blockquote class="uncited"><div>\r\nAAA bbb<br />ccc ddd<br /></div></blockquote><br /><br /><span style="color: green"><br />Sample code</span><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />(<br />echo(<br />echo(aaa bbb<br />echo(ccc ddd<br />echo(<br />)&gt;file.txt<br /><br />type file.txt|findrepl&nbsp; &quot;\r\naaa&quot; &quot;\r\nAAA&quot;<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>08 Mar 2016 20:29</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Antonio, should findrepl be able to be chained on the command line?<br />I see this here:<br /><br /><span style="color: #8040FF">c:\Files\Misc\+bat\findrepl.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br />c:\Files\Misc\+bat\findrepl.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br />c:\Files\Misc\+bat\findrepl.bat(784, 4) Microsoft JScript runtime error: Input past end of file<br /></span><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />(<br />echo line 1<br />echo line 2<br />echo line 3<br />echo line 4<br />echo line 5<br />echo line 6<br />echo line 7<br />echo line 8<br />echo line 9<br />echo line 10 first string here...<br />echo line 11<br />echo line 12<br />echo line 13 second string here...<br />echo line 14<br />)&gt;&quot;file.txt&quot;<br /><br />:go<br /><br />@echo off<br />set &quot;file=file.txt&quot;<br />call findrepl /o:10:10 &lt; &quot;%file%&quot;|findrepl &quot;^(.*)$&quot; &quot;Heading&nbsp; $1&quot; /R<br />call findrepl /o:13:13 &lt; &quot;%file%&quot;|findrepl &quot;^(.*)$&quot; &quot;Heading&nbsp; $1&quot; /R<br />pause<br />goto :go<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>05 Apr 2016 13:30</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">I thought I had this straight when I checked the built-in help, it will print only the changed lines.<br />Did I get it wrong again?<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>c:\Files&gt;type file.txt|findrepl &quot;.*NCName.*&quot; &quot;abc&quot; /i /r<br />aaa<br />abc<br />zzz<br /><br />c:\Files&gt;type file.txt<br />aaa<br />111 uNcName 222<br />zzz<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>07 May 2016 12:23</strong></div>
+				<div class="author">by <strong>catalinnc</strong></div>
+				<div class="content">@Aacini<br /><br />1st thanks a lot for this very useful script...<br /><br />i need a little help...<br /><br />please, be kind and provide a line that will replace this characters with a space...<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>=<br />%<br />&quot;<br />^<br />!<br />&lt;<br />&gt;<br />&amp;<br />|</code></pre></div><br /><br />if this is posible all in one line it will be perfect...<br /><br />input file is &quot;input.txt&quot; and output file is &quot;output.txt&quot;...<br /><br /><br />thanks a lot...<br />_</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>07 May 2016 18:39</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">@catalinnc, this works at the command-line prompt:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;&#91;=%@^!&lt;&gt;&amp;|&#93;&quot; &quot;' '&quot; /Q:@ /J &lt; input.txt &gt; output.txt<br /></code></pre></div><br /><strong class="text-strong">HOWEVER...</strong><br /><br />FindRepl.bat is an almost-1000-lines complex Batch file capable of perform very advanced replacement tasks, but your replacement request is a very simple one. Perhaps you would consider to use a much simpler 4-lines Batch-JScript hybrid script that perform the same task instead...<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@set @a=0&nbsp; /*<br />@cscript //nologo //E:JScript &quot;%~F0&quot; &lt; input.txt &gt; output.txt<br />@goto :EOF */<br /><br />WScript.Stdout.WriteLine(WScript.Stdin.ReadAll().replace(/&#91;=%&quot;\^!&lt;&gt;&amp;\|&#93;/g,' '));<br /></code></pre></div><br />Save this file with .bat extension.<br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>08 May 2016 12:14</strong></div>
+				<div class="author">by <strong>catalinnc</strong></div>
+				<div class="content">@Aacini thanks a lot for your support...much respect...<br />_<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;&#91;=%@^!&lt;&gt;&amp;|&#93;&quot; &quot;' '&quot; /Q:@ /J &lt; input.txt &gt; output.txt</code></pre></div><br /><br />works perfect from command-line prompt...<br /><br />please, can you mod it so it will work from a .bat file?<br />_<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@set @a=0&nbsp; /*<br />@cscript //nologo //E:JScript &quot;%~F0&quot; &lt; input.txt &gt; output.txt<br />@goto :EOF */<br /><br />WScript.Stdout.WriteLine(WScript.Stdin.ReadAll().replace(/&#91;=%&quot;\^!&lt;&gt;&amp;\|&#93;/g,' '));</code></pre></div><br /><br />works perfect from a .bat file!<br />_</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>11 May 2016 23:56</strong></div>
+				<div class="author">by <strong>thefeduke</strong></div>
+				<div class="content">catalinnc,  Here is a one-liner that works with Prompt or .bat .<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call poison input.txt &gt;output.txt</code></pre></div>Although it functions within the limited scope that you described, it does break down if the character '!' is imbedded one or more times within a larger string.  This is a middle approach that has no advantage other than to see if it could be done without going outside of plain batch script.<br /><br />The above requires this file that I named Poison.bat : <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp;@Echo Off<br />&nbsp; &nbsp; SETLOCAL enabledelayedexpansion<br />&nbsp; &nbsp; set &quot;DelChars== %% ^&quot; ^^^^ ^^! ^&lt; ^&gt; ^&amp; ^| &quot;<br />&nbsp; &nbsp; set &quot;DelChars=!DelChars: =!&quot;<br />&nbsp; &nbsp; For /F &quot;usebackq tokens=* delims=&quot; %%I in (&quot;%~1&quot;) DO (<br />&nbsp; &nbsp; &nbsp; &nbsp; set &quot;str=A%%I&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; set &quot;len=0&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; For /L %%A in (15,-1,0) do (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;len|=1&lt;&lt;%%A&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for %%B in (!len!) do if &quot;!str:~%%B,1!&quot;==&quot;&quot; set /a &quot;len&amp;=~1&lt;&lt;%%A&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; &nbsp; Set /A &quot;pos=!len!-1&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; Set &quot;PoisonString=%%I&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; IF &quot;!PoisonString!&quot; EQU &quot;&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Set PoisonString=^^!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set &quot;pos=0&quot; <br />&nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; &nbsp; For /L %%C in (0,1,8) do (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Set &quot;Base=!DelChars:~%%C,1!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; For /L %%P in (!pos!,-1,0) do (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Set &quot;Test=!PoisonString:~%%P,1!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; If /I &quot;!Test!&quot; EQU &quot;!Base!&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Set &quot;Sterile= !Sterile!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ) Else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Set &quot;Sterile=!PoisonString:~%%P,1!!Sterile!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Set &quot;PoisonString=!Sterile!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Set &quot;Sterile=&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; &nbsp; If /I &quot;%%I&quot; EQU &quot;&quot; (<br />Rem.&nbsp; &nbsp; &nbsp; &nbsp; Echo.Panic^^!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Set &quot;PoisonString= &quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; &nbsp; Echo.!PoisonString!<br />&nbsp; &nbsp; )<br />Exit /B<br /></code></pre></div>John A.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>25 May 2016 14:34</strong></div>
+				<div class="author">by <strong>thefeduke</strong></div>
+				<div class="content"><blockquote><div><cite>thefeduke wrote:</cite>catalinnc,  ... Although it functions within the limited scope that you described, it does break down if the character '!' is imbedded one or more times within a larger string.  This is a middle approach that has no advantage other than to see if it could be done without going outside of plain batch script.</div></blockquote>I tried to build a preprocessor to handle the &quot;!&quot; and found that I could incorporate it right into the above.  The solution is posted within Topic: &quot;Replace specific line in a .txt with text&quot; at <a href="viewtopic6b7c.html?f=3&amp;t=7167&amp;p=46734#p46734" class="postlink">http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7167&amp;p=46734#p46734</a> and it can handle the above as well as turning : <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>The=teacher%angry:&quot;Shut up!^Be&lt;quiet&gt;and&amp;listen|to me!<br /></code></pre></div>into<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>The teacher angry: Shut up. Be quiet and listen to me.</code></pre></div><br />John A.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>25 Jul 2016 20:26</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Hi guys, I'm after some feedback to ascertain if this problem is on my machine.<br /><br />If you open a cmd prompt and run each of these scripts multiple times in a row - do you get an error message at all?<br /><br />Both scripts should just show <span style="color: green">ccc</span> on the console.<br />I find that I get an error message randomly.  Sometimes it prints <span style="color: green">ccc</span> just fine.<br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />echo aaa|findrepl &quot;aaa&quot; &quot;bbb&quot;|more|findrepl &quot;bbb&quot; &quot;ccc&quot;<br /></code></pre></div><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />echo aaa|findrepl &quot;aaa&quot; &quot;bbb&quot;|findrepl &quot;bbb&quot; &quot;ccc&quot;<br /></code></pre></div><br /><br />The second script doesn't work at all here - and I get different error messages.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>26 Jul 2016 06:00</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I can't reproduce your problem - Both work just fine for me after repeated runs ('though I ran the command from the command line, not a script)<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>26 Jul 2016 16:07</strong></div>
+				<div class="author">by <strong>thefeduke</strong></div>
+				<div class="content">This is Win7 Home Premium SP1 64-bit with findrepl at the front of my path not in CD.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\Zani\Scripts&gt;foxibug2<br />ccc<br /><br />C:\Users\Zani\Scripts&gt;foxibug1<br />ccc<br /><br /><br />C:\Users\Zani\Scripts&gt;foxibug2<br />ccc<br /><br />C:\Users\Zani\Scripts&gt;foxibug1<br />ccc<br /><br /><br />C:\Users\Zani\Scripts&gt;foxibug2<br />ccc<br /><br />C:\Users\Zani\Scripts&gt;foxibug1<br />C:\Users\Zani\Programs\Functions\FindREPL.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br /><br />C:\Users\Zani\Scripts&gt;foxibug1<br />ccc<br /><br /><br />C:\Users\Zani\Scripts&gt;foxibug1<br />ccc<br /><br /><br />C:\Users\Zani\Scripts&gt;foxibug1<br />ccc<br /><br /><br />C:\Users\Zani\Scripts&gt;</code></pre></div><br /><blockquote><div><cite>foxibug1.bat wrote:</cite>@echo off<br />:: <!-- l --><a class="postlink-local" href="viewtopic84b2.html?p=48056#p48056">viewtopic.php?p=48056#p48056</a><!-- l --><br />:: Post subject: Re: FindRepl.bat:New regex utility to search and replace strings<br />::Posted: Mon Jul 25, 2016 10:26 pm by foxidrive   <br />echo aaa|findrepl &quot;aaa&quot; &quot;bbb&quot;|more|findrepl &quot;bbb&quot; &quot;ccc&quot;<br /></div></blockquote><br />I also have Win10 handy: one Win7 32-bit based and one Win8.1 based. Let me know, but I guess he above is something.<br />John A.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>26 Jul 2016 21:36</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Thank you John and thanks Dave.<br /><br />The error you saw here John is the same error I see.<br /><br /><blockquote><div><cite>thefeduke wrote:</cite>This is Win7 Home Premium SP1 64-bit with findrepl at the front of my path not in CD.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\Zani\Scripts&gt;foxibug2<br />ccc<br /><br />C:\Users\Zani\Scripts&gt;foxibug1<br />C:\Users\Zani\Programs\Functions\FindREPL.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /></code></pre></div><br /></div></blockquote><br />Thanks for your tests, John.  <br /><br />Mine is Windows 8.1 32 bit  and findrepl is on the path here.  Running this from a cmd prompt.<br />My tests are below<br /><br />z-more.bat<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />echo aaa|findrepl &quot;aaa&quot; &quot;bbb&quot;|more|findrepl &quot;bbb&quot; &quot;ccc&quot;<br /></code></pre></div><br /><br />z.bat<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />echo aaa|findrepl &quot;aaa&quot; &quot;bbb&quot;|findrepl &quot;bbb&quot; &quot;ccc&quot;<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>26 Jul 2016 21:47</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Whatever issue causes this was introduced in Findrepl 2.1<br />as Findrepl 2.0 works flawlessly in both batch files here.<br /><br />rem   - Nov/20/2014: Version 2 - New switches: /J, /L, /G, /ARG#, and || separate regexp's in /Alternations.<br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>d:\test&gt;for /L %a in (1,1,10) do @call z-more<br />ccc<br /><br />ccc<br /><br />ccc<br /><br />ccc<br /><br />ccc<br /><br />ccc<br /><br />ccc<br /><br />ccc<br /><br />ccc<br /><br />ccc<br /></code></pre></div><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>d:\test&gt;for /L %a in (1,1,10) do @call z<br />ccc<br />ccc<br />ccc<br />ccc<br />ccc<br />ccc<br />ccc<br />ccc<br />ccc<br />ccc</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>26 Jul 2016 21:50</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">rem   - Dic/15/2014: Version 2.2 - New &quot;data generating &quot; predefined functions for /S switch combined with /J<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>d:\test&gt;for /L %a in (1,1,10) do @call z<br />d:\test\findrepl.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(784, 4) Microsoft JScript runtime error: Input past end of file<br /><br />d:\test\findrepl.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(784, 4) Microsoft JScript runtime error: Input past end of file<br /><br />d:\test\findrepl.bat(322, 1) Microsoft JScript runtime error: Input past end of file<br /><br />d:\test\findrepl.bat(784, 4) Microsoft JScript runtime error: Input past end of file<br /><br />d:\test\findrepl.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(784, 4) Microsoft JScript runtime error: Input past end of file<br /><br />d:\test\findrepl.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(784, 4) Microsoft JScript runtime error: Input past end of file<br /><br />d:\test\findrepl.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /></code></pre></div><br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>d:\test&gt;for /L %a in (1,1,10) do @call z-more<br />d:\test\findrepl.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br /><br />ccc<br /><br />d:\test\findrepl.bat(325, 1) Microsoft JScript runtime error: Permission denied<br /><br /><br />d:\test\findrepl.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(325, 1) Microsoft JScript runtime error: Permission denied<br /><br /><br />ccc<br /><br />ccc<br /><br />d:\test\findrepl.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br />ccc<br /><br />ccc<br /></code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>7</strong> of <strong>9</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4697&start=90&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:58 GMT -->
+</html>

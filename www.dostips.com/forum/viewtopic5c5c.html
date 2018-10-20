@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8841&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:11:36 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; For loop doesn't work</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>For loop doesn't work</h2>
+		<p><a href="viewtopic532b.html?f=3&amp;t=8841">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8841</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>For loop doesn't work</h3>
+				<div class="date">Posted: <strong>26 Sep 2018 20:22</strong></div>
+				<div class="author">by <strong>Docfxit</strong></div>
+				<div class="content">The for loop in my bat file doesn't work.<br>
+The bat file should delete all files named desktop.ini in all folders on the partition.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo on
+
+Set Drive=E:
+%Drive%
+attrib -r -s -h -a "desktop.ini" /s
+@for /f "usebackq delims=|" %%i in (`dir /s /b /x /A:H ^| find "desktop.ini"`) do (
+	del /A:H "%%i"
+	Echo "%%i"
+	)
+cd\
+
+pause</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code> INFO.BAT version 1.5
+--------------------------------------------------------------------------------
+Windows version        :  Microsoft Windows [Version 6.1.7601]
+Product name           :  Windows 7 Ultimate, 32 bit
+Performance indicators :  Processor Cores: 4      Visible RAM: 2604844 kilobytes
+
+Date/Time format       :  (mm/dd/yy)  Wed 09/26/2018  19:14:26.59
+__APPDIR__             :  C:\Windows\system32\
+ComSpec                :  C:\Windows\system32\cmd.exe
+PathExt                :  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+Extensions             :  system: Enabled   user: Disabled
+Delayed expansion      :  system: Disabled  user: Disabled
+Locale name            :  en-US       Code Pages: OEM  437    ANSI 1252
+DIR  format            :  03/18/2018  11:49 AM         3,959,016 ntoskrnl.exe
+Permissions            :  Elevated Admin=Yes, Admin group=Yes
+
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: For loop doesn't work</h3>
+				<div class="date">Posted: <strong>26 Sep 2018 21:24</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">You recursively unset the hidden attribute on all desktop.ini files on line 5, but then you explicitly specify to only delete hidden files on line 7. Get rid of the /A:H from your del statement and it should work.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: For loop doesn't work</h3>
+				<div class="date">Posted: <strong>26 Sep 2018 23:25</strong></div>
+				<div class="author">by <strong>Docfxit</strong></div>
+				<div class="content">That worked excellent.  Thank you.<br>
+<br>
+I have another For loop that isn't working:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cd\
+attrib -r -s -h -a "$Recycle.BIN" 
+@for /f "usebackq delims=|" %%i in (`dir /s /b /x  ^| find "$Recycle.BIN"`) do (
+	del "%%i"
+	Echo "%%i"
+	)
+</code></pre></div>
+
+Docfxit</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: For loop doesn't work</h3>
+				<div class="date">Posted: <strong>27 Sep 2018 17:48</strong></div>
+				<div class="author">by <strong>CirothUngol</strong></div>
+				<div class="content">$Recycle.Bin is a folder and cannot be removed using the DEL command. Besides, it's also a <em class="text-italics">system</em> folder that you probably don't want to remove.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: For loop doesn't work</h3>
+				<div class="date">Posted: <strong>27 Sep 2018 21:33</strong></div>
+				<div class="author">by <strong>Docfxit</strong></div>
+				<div class="content">I have tried to replace del with rd.  It still doesn't work.<br>
+The Attrib removes the system attribute.<br>
+The reason I would like to remove it is because there are times when there is more than one file within the folder $Recycle.BIN.<br>
+When the folder $Recycle.BIN is removed Win7 recreates it automatically.<br>
+<br>
+I have changed it to this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cd\
+attrib -r -s -h -a "$Recycle.BIN" 
+rd /s /q %Drive%\$Recycle.bin
+</code></pre></div>
+
+It's working now.<br>
+<br>
+Thank you,<br>
+Docfxit</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8841&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:11:36 GMT -->
+</html>

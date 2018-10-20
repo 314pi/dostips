@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8577&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:16 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; How do i move files from series of folders</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>How do i move files from series of folders</h2>
+		<p><a href="viewtopicc1e0.html?f=3&amp;t=8577">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8577</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>How do i move files from series of folders</h3>
+				<div class="date">Posted: <strong>24 May 2018 04:03</strong></div>
+				<div class="author">by <strong>haggy</strong></div>
+				<div class="content">Hi All,<br>
+I've got series of folders in a folder(Root) and in these folders exist one file each. I'm trying to move each file from thier corresponding folders to the main root folder(Root). I have tried this but not yeilding.<br>
+<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+rem For each folder in your folders
+for /R %%~dp0 %%i in (.) do (
+cd "%%~dp/%%i"
+if "%%~xa" NEQ ""  if "%%~dpxi" NEQ "%~dpx0" (
+rem Move the file to directory
+move /y "%%i/*" ../
+))</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i move files from series of folders</h3>
+				<div class="date">Posted: <strong>25 May 2018 04:11</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">You mean so?
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>PushD D:\rootfolder
+For /r %%i in (*) do if "%%~fi" neq "%~f0" if NOT exist %%~nxi move "%%i"
+Popd</code></pre></div>
+
+Phil</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i move files from series of folders</h3>
+				<div class="date">Posted: <strong>25 May 2018 04:36</strong></div>
+				<div class="author">by <strong>haggy</strong></div>
+				<div class="content">Thank you phil for this though it doesn't work for me. it throws error "%%i was unexpected at this time." and secondly i want a scenario where i don't have an fore knowledge what the root-folder is. can i do?<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>PushD ..
+For /r %%i in (*) do if "%%~fi" neq "%~f0" if NOT exist %%~nxi move "%%i"
+Popd</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i move files from series of folders</h3>
+				<div class="date">Posted: <strong>25 May 2018 06:06</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8399.html?mode=viewprofile&amp;u=9227">haggy</a> wrote: <a href="viewtopice5a9.html?p=56940#p56940" data-post-id="56940" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">25 May 2018 04:36</div></cite>
+Thank you phil for this though it doesn't work for me. it throws error "%%i was unexpected at this time."
+</div></blockquote>
+You ran it from the command line or a batch file?<br>
+
+<blockquote><div><cite><a href="memberlist8399.html?mode=viewprofile&amp;u=9227">haggy</a> wrote: <a href="viewtopice5a9.html?p=56940#p56940" data-post-id="56940" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">25 May 2018 04:36</div></cite>
+ and secondly i want a scenario where i don't have an fore knowledge what the root-folder is. 
+</div></blockquote>
+So give us some type of technical information on how we can determine what your root folder is?  Are you running the batch file from the root folder?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i move files from series of folders</h3>
+				<div class="date">Posted: <strong>25 May 2018 14:44</strong></div>
+				<div class="author">by <strong>haggy</strong></div>
+				<div class="content">Yes . i ran it from command line.<br>
+I actually intend it to be a generic script regardless of wherever  i'm running it from. it should be able to access each folder and move out the file to the upper folder.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i move files from series of folders</h3>
+				<div class="date">Posted: <strong>25 May 2018 14:58</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Read the first 8 lines of the help file for the FOR command.<br>
+<br>
+You failed to answer my question on how to determine what the root folder is.  Please describe your requirements for that.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i move files from series of folders</h3>
+				<div class="date">Posted: <strong>25 May 2018 15:24</strong></div>
+				<div class="author">by <strong>haggy</strong></div>
+				<div class="content">By root folder i mean the upper folder. Take this scenario:<br>
+<br>
+mkdir a<br>
+cd a<br>
+mkdir b<br>
+cd b<br>
+move txtfile    ../<br>
+<br>
+"Dir a is the upper folder"  I need the to enter a folder and move the file to the upper folder. Thanks.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i move files from series of folders</h3>
+				<div class="date">Posted: <strong>25 May 2018 16:15</strong></div>
+				<div class="author">by <strong>haggy</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8399.html?mode=viewprofile&amp;u=9227">haggy</a> wrote: <a href="viewtopic1ded.html?p=56947#p56947" data-post-id="56947" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">25 May 2018 15:24</div></cite>
+By root folder i mean the upper folder. Take this scenario:<br>
+<br>
+mkdir a<br>
+cd a<br>
+mkdir b<br>
+cd b<br>
+move txtfile    ../<br>
+<br>
+"Dir a is the upper folder"  I need the to enter a folder and move the file to the upper folder. Thanks.
+</div></blockquote>
+
+Directory "A" is the upper. All i want to achieve is enter the folders and move out the file to upper folder</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8577&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:16 GMT -->
+</html>

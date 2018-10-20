@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8533&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:23:32 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; [Info] Saving current codepage</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>[Info] Saving current codepage</h2>
+		<p><a href="viewtopic18d8.html?f=3&amp;t=8533">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8533</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>[Info] Saving current codepage</h3>
+				<div class="date">Posted: <strong>01 May 2018 14:56</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">I'm doing some test on windows in different languages, for save the current codepage, for restore later with chcp command.<br>
+<br>
+I see almost two codes for save the current codepages, but that fails on some languages.<br>
+<br>
+Chcp outputs:<br>
+<br>
+German: ( it have a dot at the end )
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Aktive Codepage: 850.</code></pre></div>
+
+Chinese Traditional: ( If you look closely it uses other colon symbol ：instead of : )
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>使用中字碼頁： 950</code></pre></div>
+
+Chinese Simplified:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>活动的代码页: 936</code></pre></div>
+
+Japanase:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>現在のコード ページ: 932</code></pre></div>
+
+Korean:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>활성 코드 페이지: 949</code></pre></div>
+
+Spanish:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Página de códigos activa: 850</code></pre></div>
+
+Russian
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Текущая кодовая страница: 866</code></pre></div>
+
+Because that the next code snippet:<br>
+<br>
+Not works for chinese traditional because it uses a different colon character
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f "tokens=2 delims=:." %%g in ('chcp') do set "_codepage=%%g"</code></pre></div>
+
+Not works for german because it not remove the dot at the end
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f "tokens=*" %%a in ('chcp') do for %%b in (%%a) do set "_codepage=%%b"</code></pre></div>
+
+<strong class="text-strong">This next works (tested) on environments: german, chinese traditional, chinese simplified, japanase, korean, spanish, russian</strong><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f "tokens=*" %%a in ('chcp') do for %%b in (%%a) do set "_codepage=%%~nb"</code></pre></div>
+
+(old code for reference, also tested) :
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f "tokens=*" %%a in ('chcp'
+) do for %%b in (%%a) do for /f "delims=." %%c in ("%%b"
+) do set "_codepage=%%c"
+</code></pre></div>
+
+Eventually I will add more supported languages.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [Info] Saving current codepage</h3>
+				<div class="date">Posted: <strong>02 May 2018 01:38</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">what about mode command?<br>
+Itс results are aligned In columns and eventually you'll be able to get the code page using a substring and numbers.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [Info] Saving current codepage</h3>
+				<div class="date">Posted: <strong>02 May 2018 07:19</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">Mmm, i don't know the availability of the mode command on different versions of windows. Also, I have tested the routine using chcp for getting the current chcp. If it works, I not see a reason for change it.<br>
+<br>
+The only advantage that I now see of use mode instead chcp is for change the codepage on windows 2000 and xp where the chcp command clear the screen when you change the codepage from a mbcp to dbcp codepage and viceversa, for example if you have the codepage 950 and use chcp 437 it clear the screen. Using mode con cp select=437 will not clear the screen, but will left some character of the screen with ? characters in replace of some asian characters.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [Info] Saving current codepage</h3>
+				<div class="date">Posted: <strong>02 May 2018 08:24</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content">There's still no need for three 'For' loops carlos, you could use either:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>For /F "Tokens=*" %%A In ('ChCp') Do For %%B In (%%A) Do Set /A "_codepage=%%B" 2&gt;Nul</code></pre></div>or even:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>For /F "Tokens=*" %%A In ('ChCp') Do For %%B In (%%A) Do Set "_codepage=%%~nB"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [Info] Saving current codepage</h3>
+				<div class="date">Posted: <strong>02 May 2018 09:52</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Interesting! Seems I have to update <a href="viewtopica98d.html?f=3&amp;t=6108&amp;p=49091#p49091" class="postlink">info.bat</a>.<br>
+<br>
+FWIW I already tried to get informations about the behavior of commands from my Chinese and Japanese colleagues. Unfortunately all the company's computers have a US American configuration  <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"> <br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [Info] Saving current codepage</h3>
+				<div class="date">Posted: <strong>02 May 2018 11:48</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">Thanks @Compo. I prefer the second version that you provide. I think is a bad idea silent a message error. I tested the second version and also works ok. I put that on the first message, because is more clean code. Remove the end dot using the name expansion is a elegant technique.<br>
+Eventually if in some windows appears at the end of the number codepage other character than dot, i think my version with 3 for should be used instead adding the character to remove as delimiter.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [Info] Saving current codepage</h3>
+				<div class="date">Posted: <strong>02 May 2018 13:12</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Carlos<br>
+<br>
+May I ask you how you did the tests? Did you find the messages in the internet, or did you change the localization on your computer, or did you read the strings out of the MUI files?<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [Info] Saving current codepage</h3>
+				<div class="date">Posted: <strong>02 May 2018 13:55</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic23ee.html?p=56655#p56655" data-post-id="56655" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">02 May 2018 13:12</div></cite>
+Carlos<br>
+<br>
+May I ask you how you did the tests? Did you find the messages in the internet, or did you change the localization on your computer, or did you read the strings out of the MUI files?<br>
+<br>
+Steffen
+</div></blockquote>
+
+@aGerman: I install a real windows 2000 of each specified language on a virtualbox machine, then I save the output of the chcp command on a text file, and also I run testcp.cmd command for check if it capture it correctly. I choose win2000 because the installation is very short and also for the maximum compatibility.<br>
+<br>
+Screenshot :<br>
+<img src="../../image.ibb.co/hdRvUS/Virtual_Box_win2000_chinese_traditional.png" class="postimage" alt="Image"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [Info] Saving current codepage</h3>
+				<div class="date">Posted: <strong>02 May 2018 14:10</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I see. Not an option for me, unfortunately. Thanks anyway.<br>
+<br>
+During the development of info.bat I also got informations from siberia-man about the output in a Russian environment. I remember there was a non-breaking space used as thousands separator. I wonder if the space next to the colon is still a space in the Russian output.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [Info] Saving current codepage</h3>
+				<div class="date">Posted: <strong>02 May 2018 15:59</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">@aGerman I tested on russian, and is ok. I write the output to the first post. I look with a hexadecimal editor and the space next to the colon is a space. Maybe that you mentions applies to other version of windows on russian, like xp.<br>
+<br>
+Screenshot:<br>
+<img src="../../image.ibb.co/g8vp67/Virtual_Box_win2000_russian.png" class="postimage" alt="Image"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [Info] Saving current codepage</h3>
+				<div class="date">Posted: <strong>02 May 2018 16:33</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">That's great, Carlos. Seems like this method is quite reliable <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"> <br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [Info] Saving current codepage</h3>
+				<div class="date">Posted: <strong>03 May 2018 14:32</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">The last proposed solution which uses ~n to eliminate the trailing dot is a neat and clean one.<br>
+<br>
+However if one have concerns about probable immediate trailing characters other than dot, maybe something like this can be helpful.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f "tokens=*" %%a in ('chcp') do for %%b in (%%a) do set "_codepage=%%b"
+for /f "delims=0123456789" %%a in ("%_codepage%") do call set "_codepage=%%_codepage:%%a=%%"
+</code></pre></div>
+It can reduce the chance of failure but does not work with "*?^" which are improbable I think.<br>
+Also works if nothing comes after number.<br>
+<br>
+for example
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f "tokens=*" %%a in ("A hypothetical chcp output: Active code page:  123450+-/.&amp;$#%%@!~\|:[]{}`'_abcd,;") do for %%b in (%%a) do set "_codepage=%%b"
+for /f "delims=0123456789" %%a in ("%_codepage%") do call set "_codepage=%%_codepage:%%a=%%"
+set _codepage
+</code></pre></div>
+<blockquote class="uncited"><div>
+_codepage=123450
+</div></blockquote>
+
+Just a thought</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [Info] Saving current codepage</h3>
+				<div class="date">Posted: <strong>04 May 2018 05:09</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content">sst, I provided two examples as alternatives, in my initial post, the first method ignored most trailing characters, the second, <em class="text-italics">which is the one carlos preferred</em>, ignored only the trailing dot<br>
+<br>
+I accept that the first method is unlikely to work with a ? too, but it is illogical that a question mark would trail a result, <em class="text-italics">after all it's an answer not a question</em>.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [Info] Saving current codepage</h3>
+				<div class="date">Posted: <strong>04 May 2018 09:30</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">@Compo,<br>
+Oh, I didn't notice SET /A in your first proposed method, However I doubt that SET /A can be considered a filtering tool.<br>
+<br>
+That being said, it is very improbable in any language or locale one can see any of these characters to be appended at the end of numbers. so something like 12345{ is very unlikely or even exotic, although usage of native characters can not be rules out which will fall in to the range of extended characters. I used that example just for demonstration of the result and it definitely was not a proposed replacement for existing method.<br>
+"*?" will not work for obvious reasons so I'll take your statement about question mark as your sense of humor.<br>
+<br>
+All in all, I myself prefer your accepted proposed method over mine.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8533&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:23:32 GMT -->
+</html>

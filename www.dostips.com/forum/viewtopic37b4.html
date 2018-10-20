@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8635&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; which wildcard can be used in this case??</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>which wildcard can be used in this case??</h2>
+		<p><a href="viewtopicb3cf.html?f=3&amp;t=8635">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8635</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>which wildcard can be used in this case??</h3>
+				<div class="date">Posted: <strong>20 Jun 2018 06:17</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">Hi all,<br>
+<br>
+I have a if statement as below:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if exist "C:\auto_pkg_build\Sources\Source_pkg\%opkg%\%optn%\Factory Download\TETRA\TELIUM3\%VAR14%\Schemes to Sign_for_%VAR001%.doc" (
+.......
+)
+</code></pre></div>
+Now the problem is that sometimes the format of this "Schemes to Sign_for_%VAR001%.doc" vary depend upon the developer and could be<br>
+Schemes_to_Sign_for_%VAR001%.doc<br>
+Schemes to_Sign_for_%VAR001%.doc<br>
+Which wildcard I can use in this case to accommodate all these possible variation of the file name??<br>
+<br>
+Thanks<br>
+<br>
+goodywp</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: which wildcard can be used in this case??</h3>
+				<div class="date">Posted: <strong>20 Jun 2018 07:08</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">A question mark for a single character.<br>
+Here is a good read for you.<br>
+<a href="viewtopic31e1.html?t=6207" class="postlink">viewtopic.php?t=6207</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: which wildcard can be used in this case??</h3>
+				<div class="date">Posted: <strong>20 Jun 2018 08:15</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">If you don't need to access the matched file or know the exact file name, then using wildcard in combination with `IF` statement would suffice, but if there is a need to access the file afterwards (read contents of, know the exact file name, pass the file name to another program,...) then `FOR` statement can do the job of `IF EXIST` and at the same time gives access to the exact match.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%f in ("PathToFile\a?b?c.ext") do (
+    REM being here means that there is at least one existing match and %%f refers to the exact match
+)
+</code></pre></div>
+But you should then watch for multiple matches as the loop will be executed for every one of them</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: which wildcard can be used in this case??</h3>
+				<div class="date">Posted: <strong>20 Jun 2018 08:40</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopica0c2.html?p=57206#p57206" data-post-id="57206" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jun 2018 07:08</div></cite>
+A question mark for a single character.<br>
+Here is a good read for you.<br>
+<a href="viewtopic31e1.html?t=6207" class="postlink">viewtopic.php?t=6207</a>
+</div></blockquote>
+
+I tried it and not working. probably as sst said that I need to access the file...<br>
+<br>
+Thanks anyway..</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: which wildcard can be used in this case??</h3>
+				<div class="date">Posted: <strong>20 Jun 2018 08:44</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopice548.html?p=57207#p57207" data-post-id="57207" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jun 2018 08:15</div></cite>
+If you don't need to access the matched file or know the exact file name, then using wildcard in combination with `IF` statement would suffice, but if there is a need to access the file afterwards (read contents of, know the exact file name, pass the file name to another program,...) then `FOR` statement can do the job of `IF EXIST` and at the same time gives access to the exact match.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%f in ("PathToFile\a?b?c.ext") do (
+    REM being here means that there is at least one existing match and %%f refers to the exact match
+)
+</code></pre></div>
+But you should then watch for multiple matches as the loop will be executed for every one of them
+</div></blockquote>
+
+Thanks a lot sst!<br>
+<br>
+I tried it and not working due to I need to access the file afterwards. I shall try the FOR command as you suggested.<br>
+However, I also need to use this file in a tiny utility (convert word to txt ) therefore give me the limitation to use this...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: which wildcard can be used in this case??</h3>
+				<div class="date">Posted: <strong>20 Jun 2018 08:54</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopic0701.html?p=57208#p57208" data-post-id="57208" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jun 2018 08:40</div></cite>
+<blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopica0c2.html?p=57206#p57206" data-post-id="57206" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jun 2018 07:08</div></cite>
+A question mark for a single character.<br>
+Here is a good read for you.<br>
+<a href="viewtopic31e1.html?t=6207" class="postlink">viewtopic.php?t=6207</a>
+</div></blockquote>
+
+I tried it and not working. probably as sst said that I need to access the file...<br>
+<br>
+Thanks anyway..
+</div></blockquote>
+Really hard to help you when you don't show us the exact code you attempted to use.  Unfortunately none of us are omniscient.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: which wildcard can be used in this case??</h3>
+				<div class="date">Posted: <strong>20 Jun 2018 09:33</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopice548.html?p=57207#p57207" data-post-id="57207" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jun 2018 08:15</div></cite>
+If you don't need to access the matched file or know the exact file name, then using wildcard in combination with `IF` statement would suffice, but if there is a need to access the file afterwards (read contents of, know the exact file name, pass the file name to another program,...) then `FOR` statement can do the job of `IF EXIST` and at the same time gives access to the exact match.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%f in ("PathToFile\a?b?c.ext") do (
+    REM being here means that there is at least one existing match and %%f refers to the exact match
+)
+</code></pre></div>
+But you should then watch for multiple matches as the loop will be executed for every one of them
+</div></blockquote>
+I tried to rename it (without access the file) before it can be used for the afterwards code as below code not go through ??
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%f in ("C:\auto_pkg_build\Sources\Source_pkg\%opkg%\%optn%\Factory Download\TETRA\TELIUM3\%VAR14%\Schemes?to?Sign_for_%VAR001%.doc") do (
+rename %%f Schemes_to_Sign_for_%VAR001%.doc
+</code></pre></div>
+
+Does this above command valid?<br>
+rename %%f Schemes_to_Sign_for_%VAR001%.doc</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: which wildcard can be used in this case??</h3>
+				<div class="date">Posted: <strong>20 Jun 2018 11:23</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopic3d12.html?p=57212#p57212" data-post-id="57212" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jun 2018 09:33</div></cite>
+Does this above command valid?<br>
+rename %%f Schemes_to_Sign_for_%VAR001%.doc
+</div></blockquote>
+Well I will give you a hint.  What do you need to do with your commands when your file paths or file names contain spaces?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: which wildcard can be used in this case??</h3>
+				<div class="date">Posted: <strong>20 Jun 2018 12:50</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">OK, I think I had several try and get what I need for. Here is the one:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cd "C:\auto_pkg_build\Sources\Source_pkg\%opkg%\%optn%\Factory Download\TETRA\TELIUM3\%VAR14%\"
+if exist *.doc (
+rename *.doc Schemes_to_Sign_for_%VAR001%.doc
+</code></pre></div>
+So in this way, I can make sure the file format is always has underscore between words, like Schemes_to_Sign_for_%VAR001%.doc<br>
+No matter what the format of the source file as these as mightbe<br>
+Schemes to_Sign_for_%VAR001%.doc<br>
+Schemes to Sign_for_%VAR001%.doc<br>
+Schemes_to_Sign_for_%VAR001%.doc<br>
+I always can handle the file to be Schemes_to_Sign_for_%VAR001%.doc as the input to the next code....<br>
+Thanks anyway...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: which wildcard can be used in this case??</h3>
+				<div class="date">Posted: <strong>20 Jun 2018 13:56</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">You can use this to rename:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Setlocal enable delayedexpansion
+For %%i in (*.doc)  do ( set "filename=%%~nxi"
+  Set "filename=!filename: =_!"
+  Ren "%%i" "!filename!"
+   rem do something
+)
+</code></pre></div>
+I can't see what content your variable is.<br>
+Phil</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: which wildcard can be used in this case??</h3>
+				<div class="date">Posted: <strong>20 Jun 2018 16:05</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopic3d12.html?p=57212#p57212" data-post-id="57212" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jun 2018 09:33</div></cite>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%f in ("C:\auto_pkg_build\Sources\Source_pkg\%opkg%\%optn%\Factory Download\TETRA\TELIUM3\%VAR14%\Schemes?to?Sign_for_%VAR001%.doc") do (
+rename %%f Schemes_to_Sign_for_%VAR001%.doc
+</code></pre></div>
+
+Does this above command valid?<br>
+rename %%f Schemes_to_Sign_for_%VAR001%.doc
+</div></blockquote>
+As I alluded to in my previous comment, you seem to know that you need to use quotes to protect spaces with your full file path within the FOR command so why wouldn't you use quotes with the rename command. Using quotes is a best practice regardless of needing them or not.  Pretty sure we have mentioned this to you a couple of times in your previous questions.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%f in ("C:\auto_pkg_build\Sources\Source_pkg\%opkg%\%optn%\Factory Download\TETRA\TELIUM3\%VAR14%\Schemes?to?Sign_for_%VAR001%.doc") do (
+     rename "%%f" "Schemes_to_Sign_for_%VAR001%.doc" 2&gt;nul
+ )
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: which wildcard can be used in this case??</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 07:39</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopice9ca.html?p=57217#p57217" data-post-id="57217" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jun 2018 16:05</div></cite>
+<blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopic3d12.html?p=57212#p57212" data-post-id="57212" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jun 2018 09:33</div></cite>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%f in ("C:\auto_pkg_build\Sources\Source_pkg\%opkg%\%optn%\Factory Download\TETRA\TELIUM3\%VAR14%\Schemes?to?Sign_for_%VAR001%.doc") do (
+rename %%f Schemes_to_Sign_for_%VAR001%.doc
+</code></pre></div>
+
+Does this above command valid?<br>
+rename %%f Schemes_to_Sign_for_%VAR001%.doc
+</div></blockquote>
+As I alluded to in my previous comment, you seem to know that you need to use quotes to protect spaces with your full file path within the FOR command so why wouldn't you use quotes with the rename command. Using quotes is a best practice regardless of needing them or not.  Pretty sure we have mentioned this to you a couple of times in your previous questions.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%f in ("C:\auto_pkg_build\Sources\Source_pkg\%opkg%\%optn%\Factory Download\TETRA\TELIUM3\%VAR14%\Schemes?to?Sign_for_%VAR001%.doc") do (
+     rename "%%f" "Schemes_to_Sign_for_%VAR001%.doc" 2&gt;nul
+ )
+</code></pre></div>
+</div></blockquote>
+
+Thanks Squashman for your comment and make this works by using "%%f"  <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: which wildcard can be used in this case??</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 07:43</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistc1e4.html?mode=viewprofile&amp;u=5414">pieh-ejdsch</a> wrote: <a href="viewtopic8613.html?p=57215#p57215" data-post-id="57215" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jun 2018 13:56</div></cite>
+You can use this to rename:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Setlocal enable delayedexpansion
+For %%i in (*.doc)  do ( set "filename=%%~nxi"
+  Set "filename=!filename: =_!"
+  Ren "%%i" "!filename!"
+   rem do something
+)
+</code></pre></div>
+I can't see what content your variable is.<br>
+Phil
+</div></blockquote>
+
+Thanks Phil! for making less hard coding. However we still need define the filename as well as the doc extension
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>....
+ Ren "%%i" "!filename!.doc"
+....
+</code></pre></div>
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: which wildcard can be used in this case??</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 09:00</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">You do not have to add the file extension additionally. This is done in the variable with the for extension "%%~nxi".</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8635&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:27 GMT -->
+</html>

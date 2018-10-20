@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8766&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:44:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; can I have a script in same folder as where merging from</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>can I have a script in same folder as where merging from</h2>
+		<p><a href="viewtopic9655.html?f=3&amp;t=8766">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8766</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>can I have a script in same folder as where merging from</h3>
+				<div class="date">Posted: <strong>03 Aug 2018 13:39</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">I have this script of which is saved with the name merge.bat and it is also in X:\DOWNLOADS of which is where data im getting is also located.  When im merging up files its also merging the .bat script.<br>
+ <br>
+1) Can I have a bat script in same folder as where getting data from?<br>
+<br>
+2) If so is there anyway the script can be amended to merge as stated below but ignore the .bat file so I can click on it next time for when I want to merge again . <br>
+<br>
+Thanks<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+rem Define folder paths
+set BaseDir=X:\DOWNLOADS
+
+rem Quit if no files in download area to process
+set Empty=Y
+for %%A in ("%BaseDir%\*.*") do set Empty=N
+if "%Empty%" EQU "Y" (
+    echo No new files to process, quitting.
+    exit /b
+)
+
+rem Ask if BTP download to determine 
+set Download=
+choice /C YN /M "Is this a BTP download (Y/N)?"
+if !ERRORLEVEL! EQU 1 (
+  set Download=BTP
+) else (
+  choice /C YN /M "IS THIS A CHILTERN DOWNLOAD(Y/N)?"
+  if !ERRORLEVEL! EQU 1 (
+    set Download=CHILTERN
+  )
+)
+
+rem Prompt for reference number
+set RefNum=
+set /P "RefNum=Enter reference number (blank to exit):"
+
+rem If none entered, exit script
+if "%RefNum%" EQU "" exit /b
+
+rem Make a subfolder for the reference number
+md "%BaseDir%\%Download%%RefNum%"
+
+rem Move all files to new subfolder
+move "%BaseDir%\*.*" "%BaseDir%\%Download%%RefNum%"
+
+Select all
+ 
+Open in new window</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: can I have a script in same folder as where merging from</h3>
+				<div class="date">Posted: <strong>03 Aug 2018 13:47</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Instead of using the MOVE command, use ROBOCOPY and use the exclude file and move options that ROBOCOPY has.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: can I have a script in same folder as where merging from</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 10:13</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Please correct me if im wrong I know that robocopy copies and you can do various things but I am creating a new subfolder with a particular reference number and 3 letters depending on how I answer.<br>
+<br>
+Robocopy would not work when moving files would it as ive created a sub folder and named it?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: can I have a script in same folder as where merging from</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 11:10</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8291.html?mode=viewprofile&amp;u=9155">tweacle</a> wrote: <a href="viewtopice467.html?p=57673#p57673" data-post-id="57673" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Aug 2018 10:13</div></cite>
+Please correct me if im wrong I know that robocopy copies and you can do various things but I am creating a new subfolder with a particular reference number and 3 letters depending on how I answer.<br>
+<br>
+Robocopy would not work when moving files would it as ive created a sub folder and named it?
+</div></blockquote>
+I don't see how you think that is valid logic.  You are first using the MD command to make your target directory and then using that target directory in your move command.  It would be no different then using the target directory with literally ANY command that you can define the target directory.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: can I have a script in same folder as where merging from</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 11:55</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Please accept my apologies but im confused.<br>
+<br>
+Im totally new to robocopy and only know how to do it by using an app  online called robocopy and that is so simple as in copying from one drive to another with all commands. <br>
+<br>
+When it comes to other things its all above my head.  I really wanna learn but aint got a clue.  I i know im asking a lot but is there any chance anyone could amend the script I supplied and explain how you come to the new end.<br>
+<br>
+Big thanks in advance</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: can I have a script in same folder as where merging from</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 12:31</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8291.html?mode=viewprofile&amp;u=9155">tweacle</a> wrote: <a href="viewtopicaedc.html?p=57677#p57677" data-post-id="57677" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Aug 2018 11:55</div></cite>
+Please accept my apologies but im confused.<br>
+<br>
+Im totally new to robocopy and only know how to do it by using an app  online called robocopy and that is so simple as in copying from one drive to another with all commands. </div></blockquote>
+Not True.  You were given ROBOCOPY code in this <a href="viewtopic449a.html?t=8496" class="postlink">question</a><br>
+
+<blockquote><div><cite><a href="memberlist8291.html?mode=viewprofile&amp;u=9155">tweacle</a> wrote: <a href="viewtopicaedc.html?p=57677#p57677" data-post-id="57677" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Aug 2018 11:55</div></cite>When it comes to other things its all above my head.  I really wanna learn but aint got a clue.  I i know im asking a lot but is there any chance anyone could amend the script I supplied and explain how you come to the new end.
+</div></blockquote>
+But that seems to be the same things you say to me in a lot of your threads.  I would really expect you to at least make an attempt first.  The syntax is not that hard to understand
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ROBOCOPY source destination [files to copy] [options you want to use]</code></pre></div>
+So plug in those four options into that template.<br>
+1. Source - The folder with your files<br>
+2. Destination - The folder where you want the files to go.<br>
+3. Files to Copy - The files you want to copy.  Wildcards can be used<br>
+4. Options - The options you would like to use to assist with the functionality you want.  In this case you want to move the files and exclude the batch file so you will be listing two options.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: can I have a script in same folder as where merging from</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 13:50</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Please correct me if im wrong but this is the way I understand ROBOCOPY  as was posted it would be no good to me as <br>
+<br>
+1) im trying create a subfolder with a question asking if it a BTP or CHILTERN download
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>rem Ask if BTP download to determine 
+set Download=
+choice /C YN /M "Is this a BTP download (Y/N)?"
+if !ERRORLEVEL! EQU 1 (
+  set Download=BTP
+) else (
+  choice /C YN /M "IS THIS A CHILTERN DOWNLOAD(Y/N)?"
+  if !ERRORLEVEL! EQU 1 (
+    set Download=CHILTERN
+  )</code></pre></div>
+
+2) Then asks me for a specific number <br>
+ 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>rem Prompt for reference number
+set RefNum=
+set /P "RefNum=Enter reference number (blank to exit):"
+
+rem If none entered, exit script
+if "%RefNum%" EQU "" exit /b
+</code></pre></div>
+
+Once ive input the number it makes a sub folder<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>rem Make a subfolder for the reference number
+md "%BaseDir%\%Download%%RefNum%"</code></pre></div>
+
+Thats when the problem occours as it merges the .BAT script too.<br>
+<br>
+Therefore the robocopy would be  copying from X:/downloads to X:/downloads  creating a subfolder and ignoring inserting the .bat file but it <strong class="text-strong"><em class="text-italics">DOES NOT </em></strong>ask me to input a reference number and ask me if it a chiltern or BTP download of which is extremely important or do I just use the script as far as insert reference number and create a subfolder using robocopy? but will it take the data from the rest of the script?<br>
+<br>
+Reason for this is that overnight this script runs and moves everything<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+set Source=X:\DOWNLOADS
+set Target=X:\DOWNLOADS1
+for /F %%a in ('dir  /od /b "%Source%\btp*.*"') do set Folder=%%a
+xcopy /y "%SourcE%\%Folder%"  "%Target%"
+set Source=X:\DOWNLOADS
+set Target=X:\DOWNLOADS2
+for /F %%a in ('dir  /od /b "%Source%\chiltern*.*"') do set Folder=%%a
+xcopy /y "%SourcE%\%Folder%"  "%Target%"
+del /q "X:\DOWNLOADS\*"
+FOR /D %%p IN ("X:\DOWNLOADS\*.*") DO rmdir "%%p" /s /q
+xcopy X:\DOWNLOADS2 X:\DOWNLOADS3 /E </code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: can I have a script in same folder as where merging from</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 14:27</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Reread my original statement.<br>
+
+<blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopic52b4.html?p=57656#p57656" data-post-id="57656" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">03 Aug 2018 13:47</div></cite>
+Instead of using the MOVE command, use ROBOCOPY and use the exclude file and move options that ROBOCOPY has.
+</div></blockquote>
+
+What does this mean to you?  Did I say you had to change anything else in your script besides the MOVE command?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: can I have a script in same folder as where merging from</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 15:11</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">No but its sorted now anyway so thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: can I have a script in same folder as where merging from</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 18:04</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8291.html?mode=viewprofile&amp;u=9155">tweacle</a> wrote: <a href="viewtopice67e.html?p=57683#p57683" data-post-id="57683" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Aug 2018 15:11</div></cite>
+No but its sorted now anyway so thanks
+</div></blockquote>
+Yes. I see you have been posting the same sob story on multiple forums(SS64, Computer Hope, VBForums, etc...)  across the Internet for several months now using one of your aliases (Tweacle, Daffied, Shreked, glennm).  If you would have spent this much effort actually learning to program batch files and vbscript instead of making multiple account across multiple forums you would be pretty fluent in one of these scripting languages by now.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8766&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:44:53 GMT -->
+</html>

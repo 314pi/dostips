@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=165&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:02:12 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support - Page 12</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</h2>
+		<p><a href="viewtopicb16d.html?f=3&amp;t=6044">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6044</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>12</strong> of <strong>27</strong></div>
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>08 Mar 2016 21:13</strong></div>
+				<div class="author">by <strong>mirrormirror</strong></div>
+				<div class="content">Thank you - it mostly works after testing on one file but one line fails:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call findrepl /o:13:13 &lt; &quot;%file%&quot;|jrepl &quot;.*&quot; &quot;SET \qmyVar2=$1\q&quot; /x /i</code></pre></div><br />produces:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>SET &quot;myVar2=$1&quot;SET &quot;myVar2=$1&quot;</code></pre></div><br />Line 13 is:<br />&quot;second.string here!&quot;<br />- no &quot;SET&quot; or anything, just a string enclosed in quotes. The output needs to strip the quotes, then output this format<br />[SET &quot;][myVAR2=][unquoted string][EndQuote]<br />like this:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>SET &quot;myVAR2=second.string here!&quot;</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>08 Mar 2016 21:33</strong></div>
+				<div class="author">by <strong>mirrormirror</strong></div>
+				<div class="content">Actually, I may have resolved it - it's been a while since I've used regex but I remembered a few things. - I changed the line from this:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call findrepl /o:13:13 &lt; &quot;%file%&quot;|jrepl &quot;.*&quot; &quot;SET \qmyVar2=$1\q&quot; /x /i</code></pre></div><br />to:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call findrepl /o:13:13 &lt;&quot;%file%&quot; |jrepl &quot;\q(.*)\q&quot; &quot;SET \qmyVar2=$1\q&quot; /x /i</code></pre></div><br />and I seem to be getting the correct output - at least from the command-line. I am going to test the whole thing on a few more files...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>08 Mar 2016 21:36</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">I edited my code on the last post too mirrormirror.  <br /><br />It's a little different and just removes the first and last character without checking for a quote.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>13 Mar 2016 11:07</strong></div>
+				<div class="author">by <strong>zimxavier</strong></div>
+				<div class="content">Hi !<br /><br />I have an issue with some lines with space(s) in excess:<br /><br />call jrepl &quot;(^\t)([a-zA-Z0-9_]*)&quot; $2 /jmatch /f input.txt /o output.txt<br /><br /><span style="text-decoration: underline"><strong class="text-strong">input.txt</strong></span><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp;events = { 910 911 }<br />&nbsp; &nbsp; action_clan_sentiment = {<br />&nbsp; &nbsp;potential = {</code></pre></div><br /><span style="text-decoration: underline"><strong class="text-strong">output.txt</strong></span><br /><blockquote class="uncited"><div>events <br />potential</div></blockquote><br /><br />I wish it extract &quot;action_clan_sentiment&quot; too, but there is <span style="color: #FF0000">a space</span> before it (and after a tab). How can I write a code which catch all three like that :<br /><br /><blockquote class="uncited"><div>events<br />action_clan_sentiment<br />potential</div></blockquote><br /><br />i.e. no take account of one or two space(s) in excess and take account of each tab.<br /><br />PS: jrepl is very powerful, thank you <img class="smilies" src="images/smilies/icon_smile.gif" alt=":-)" title="Smile" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>13 Mar 2016 11:47</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">You are asking about basic regex functionality.<br /><br />You can use the shorthand \w to represent a &quot;word&quot; character, equivalent to [a-zA-Z0-9_]<br /><br />And you can use \s to represent whitespace, including space and tab.<br /><br />I believe you should be looking for this pattern (in English):<br /><ul><li>Beginning of line</li><li>followed by 0 or more whitespace characters</li><li>followed by 1 or more &quot;word&quot; characters</li><li>followed by 0 or more whitespace characters</li><li>followed by =</li></ul><br />And you want to capture the &quot;word&quot; characters, so you only need one set of parentheses:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl &quot;^\s*(\w+)\s*=&quot; $1 /jmatch /f input.txt /o output.txt<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>13 Mar 2016 17:32</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">I am sorry, but I can't resist the temptation of post this reply...  <img class="smilies" src="images/smilies/icon_rolleyes.gif" alt=":roll:" title="Rolling Eyes" /> <br /><br />Both dbenham's JREPL.BAT and my own <a href="viewtopica720.html?f=3&amp;t=4697" class="postlink">FindRepl.bat</a> programs are extensive and complex applications designed to perform advanced and very sophisticated text replacement operations. However, I never have seen that anyone of these programs be used at least at a small fraction of their capabilities! These programs are mainly sub-used, and the resources invested in they are wasted...<br /><br />For example, although FindRepl.bat is very capable of extract the line # 13 of a file, IMHO it is just absurd to use a 950 lines program to achieve a result that can be obtained in a simpler way; like this one:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F &quot;usebackq skip=12 delims=&quot; %%a in (&quot;%file%&quot;) do set &quot;line13=%%a&quot; &amp; goto break<br />:break<br /></code></pre></div><br />... or this one, that don't use a GOTO:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;line13=&quot;<br />for /F &quot;usebackq skip=12 delims=&quot; %%a in (&quot;%file%&quot;) do if not defined line13 set &quot;line13=%%a&quot;<br /></code></pre></div><br /><br />In a similar way, the replace operation shown in previous reply is finally executed in a very simple function in just one line of JScript code, so certainly you don't need a 850 lines program (like JREPL.BAT) in order to write and execute the same line in a small Batch-JScript hybrid file; for example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@set @a=0 //&nbsp; &amp;&nbsp; cscript //nologo //E:JScript &quot;%~F0&quot;&nbsp; &amp;&nbsp; goto :EOF<br /><br />WScript.Stdout.Write(WScript.Stdin.ReadAll().replace(/^\s*(\w+).+/gm,&quot;$1\r\n&quot;));<br /></code></pre></div><br />Output example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt; type input.txt<br />&nbsp; &nbsp;events = { 910 911 }<br />&nbsp; &nbsp; action_clan_sentiment = {<br />&nbsp; &nbsp;potential = {<br /><br />C:\&gt; test.bat &lt; input.txt<br />events<br />action_clan_sentiment<br />potential<br /></code></pre></div><br /><br />You may review other examples of not-so-simple replacements that can be achieved in a few JSCript lines <a href="http://stackoverflow.com/questions/17368982/how-to-change-specific-string-in-a-project-with-batch/17431173#17431173" class="postlink">here</a> or <a href="http://stackoverflow.com/questions/35637893/replace-multiple-lines-in-powershell/35728994#35728994" class="postlink">here</a>...<br /><br /><br /><img class="smilies" src="images/smilies/icon_arrow.gif" alt=":arrow:" title="Arrow" />  <span style="font-size: 110%; line-height: normal">Nor JREPL.BAT neither FindRepl.bat can avoid that the user needs to learn regular expressions in order to successfully use these programs</span> <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br /><br />Antonio<br /><br /><br />PS - You may use the &quot;Search an extra string in a block of lines (/B switch)&quot; FindRepl's feature to perform a replacement in line 13 of the file:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call findrepl &quot;&quot; /O:13:13 /Q:' /B:&quot;'(.*)'&quot; &quot;SET 'myVar2=$1'&quot; &lt; &quot;%file%&quot;<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>14 Mar 2016 06:23</strong></div>
+				<div class="author">by <strong>zimxavier</strong></div>
+				<div class="content">Thanks to both of you  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /><br />I have now a list of regex : <!-- m --><a class="postlink" href="https://msdn.microsoft.com/en-us/library/ae5bf541(v=vs.80).aspx">https://msdn.microsoft.com/en-us/librar ... 80%29.aspx</a><!-- m --><br />It will take time to assimilate all of these regex, but it's very useful for my work already. <br /><br />I have a new question. From input.txt :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp;option = {<br /><br />&nbsp; &nbsp;&nbsp; &nbsp;prestige = -20<br />&nbsp; &nbsp;&nbsp; &nbsp;custom_tooltip = { text = no_own_ball_tooltip }<br />&nbsp; &nbsp;&nbsp; &nbsp;name = EVTOPTB_REP_104<br />&nbsp; &nbsp;&nbsp; &nbsp;wealth = -100<br />&nbsp; &nbsp;&nbsp; &nbsp;narrative_event = { id = REP.105 days = 14 tooltip = EVTTOOLTIP_REP_105 } </code></pre></div><br /><br />I wish to extract all characters between &quot;option =&quot; and the end of the first following line containing &quot;name =&quot;<br /><br />ouput.txt:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp;option = {<br /><br />&nbsp; &nbsp;&nbsp; &nbsp;prestige = -20<br />&nbsp; &nbsp;&nbsp; &nbsp;custom_tooltip = { text = no_own_ball_tooltip }<br />&nbsp; &nbsp;&nbsp; &nbsp;name = EVTOPTB_REP_104</code></pre></div><br /><br />I tried several codes but it doesn't work.<br />This one seems work only if &quot;name&quot; is in the line just after.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl &quot;option.*(\r\n)(.*name.*)&quot; &quot;$0&quot; /jmatch /m /f input.txt /o output.txt</code></pre></div><br /><br />---------<br />@Aacini I found several posts about <em class="text-italics">extract </em>, <em class="text-italics">remove </em>or <em class="text-italics">replace </em>line #n but i would need to <em class="text-italics">add</em> a line. For example, a first line and/or a last line in a file.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>14 Mar 2016 06:47</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><blockquote><div><cite>zimxavier wrote:</cite>I have a new question. Extract from input.txt :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp;option = {<br /><br />&nbsp; &nbsp;&nbsp; &nbsp;prestige = -20<br />&nbsp; &nbsp;&nbsp; &nbsp;custom_tooltip = { text = no_own_ball_tooltip }<br />&nbsp; &nbsp;&nbsp; &nbsp;name = EVTOPTB_REP_104<br />&nbsp; &nbsp;&nbsp; &nbsp;wealth = -100<br />&nbsp; &nbsp;&nbsp; &nbsp;narrative_event = { id = REP.105 days = 14 tooltip = EVTTOOLTIP_REP_105 } </code></pre></div><br /><br />I wish to extract all characters between &quot;option =&quot; and the end of the first following line containing &quot;name =&quot;<br /></div></blockquote><br /><br />With Aacini's findrepl.bat<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call findrepl &quot;option =&quot; /e:&quot;name.*&quot; &lt;&quot;input.txt&quot;</code></pre></div><br /><br /><br /><br /><br />This uses a native Windows batch script called Findrepl.bat written by Aacini, which uses jscript to make it robust and swift.<br /><!-- l --><a class="postlink-local" href="viewtopica720.html?f=3&amp;t=4697">viewtopic.php?f=3&amp;t=4697</a><!-- l --><br /><br />Place Findrepl.bat in the same folder as the batch file, or in a folder that is on the system path.<br /><br />There is also copy on Dropbox (unblock it after downloading):<br /><!-- m --><a class="postlink" href="https://www.dropbox.com/s/rfdldmcb6vwi9xc/findrepl.bat">https://www.dropbox.com/s/rfdldmcb6vwi9xc/findrepl.bat</a><!-- m --></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>14 Mar 2016 07:02</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite>zimxavier wrote:</cite>I wish to extract all characters between &quot;option =&quot; and the end of the first following line containing &quot;name =&quot;<br /></div></blockquote><br />You need to bone up on your regular expression knowledge.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl &quot;^&#91; \t&#93;*option =&#91;\s\S&#93;*?^\s*name =.*$&quot; $0 /m /jmatch /f input.txt /o output.txt<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>27 Mar 2016 20:01</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Here is version 3.8 with the following bug fixes.<br /><br />1) Given certain options, I had some unintended global variables that could interfere with user defined JScript variables: i, libs, lib, and rtn. I moved them behind the _g opaque object.<br /><br />2) Work around the %~f0 bug that crops up when a command is quoted<br /><br />3) Substitute variable /OPTIONS for OPTIONS in the option parser so that it is unlikely to interfere with /V option variables.<br /><br /><div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file87f1.php?id=14">JREPL3.8.zip</a></dt>
+						<dd>(9.01 KiB) Downloaded 80 times</dd>
+		</dl>
+		
+		
+			</div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>28 Mar 2016 04:26</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Nice one.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>05 Apr 2016 05:41</strong></div>
+				<div class="author">by <strong>vincs2</strong></div>
+				<div class="content">Hello thank you for this amazing work, I have the following question :<br />In a text file I have lines like that :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C\MyFolder\Folder\File 31549115<br />C\MyFolder\Folder\File2 31544445<br />C\MyFolder\Folder\File3 31545555<br /></code></pre></div><br /><br />and would like to look through the file and erase all the &quot;C\MyFolder\&quot; part to obtain something like that :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Folder\File 31549115<br />Folder\File3 1549115<br />Folder\File2 31544445<br /></code></pre></div><br /><br />Is that possible with your script? <br />Thanks !</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>05 Apr 2016 07:00</strong></div>
+				<div class="author">by <strong>vincs2</strong></div>
+				<div class="content">Hello thank you for this amazing work, I have a question : <br /><br />I have a txt file with paths of files and their size at every lines similar to this :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>\MyFolder\Folder\File01 31549115 <br />\MyFolder\Folder\File02 22512271&nbsp; <br />\MyFolder\Folder\File03 19837047<br />&nbsp;</code></pre></div><br /><br />I want to delete the \MyFolder\ part that it look like the following :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Folder\File01 31549115 <br />Folder\File02 22512271 <br />Folder\File03 19837047<br /></code></pre></div><br /><br />Is it possible with your script ? <br /><br />Thank you</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>05 Apr 2016 07:40</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">This works with your sample text, and is very literal with what you've shown.  It can be made more general, but it would be useful to give a sample of actual text format, if it is different.<br /><br />The - means to overwrite the original file, so use a sample file to test it with.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl &quot;^..*?\\&quot; &quot;&quot; /f &quot;textfile.txt&quot; /o -</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>07 May 2016 12:20</strong></div>
+				<div class="author">by <strong>catalinnc</strong></div>
+				<div class="content">@dbenham<br /><br />1st thanks a lot for this very useful script...<br /><br />i need a little help...<br /><br />please, be kind and provide a line that will replace this characters with a space...<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>=<br />%<br />&quot;<br />^<br />!<br />&lt;<br />&gt;<br />&amp;<br />|</code></pre></div><br /><br />if this is posible all in one line it will be perfect...<br /><br />input file is &quot;input.txt&quot; and output file is &quot;output.txt&quot;...<br /><br />thanks a lot...<br />_</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>12</strong> of <strong>27</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=165&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:02:12 GMT -->
+</html>

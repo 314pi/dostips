@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8355&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:17:32 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Discussion about jeb's batch parsing rules on StackOverflow - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Discussion about jeb's batch parsing rules on StackOverflow</h2>
+		<p><a href="viewtopicdf43.html?f=3&amp;t=8355">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8355</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>3</strong></div>
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>30 Jan 2018 18:22</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopice858.html?p=55551#p55551" data-post-id="55551" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Jan 2018 07:51</div></cite>Else break the command token before the first occurrence of + / [ ] or standard token delimiter</div></blockquote>I'm unsure if this is right.<br>
+Under Windows 10 enable debugging like npocmaka_ described (<a href="viewtopicdbd9.html?t=6438&amp;p=54459#p54448" class="postlink">viewtopic.php?t=6438&amp;p=54459#p54448</a>; i've built it into "enableDebug.bat" in the following post).<br>
+<br>
+Create "test.bat":
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+if a==a echo[ test.bat
+echo[ test.bat
+goto :eof</code></pre></div>
+Create "echo[.bat":
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo( echo[.bat</code></pre></div>
+Then this is the result (at least under my win 10, home, x64):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Z:\&gt;enableDebug.bat
+Z:\&gt;test.bat
+Cmd: test.bat  Type: 0
+@
+  Cmd: echo  Type: 0 Args: ` off'
+if
+  Cmd: a  Type: 39 Args: `a'
+  Cmd: echo[  Type: 0 Args: ` test.bat'
+ test.bat
+Cmd: echo[  Type: 0 Args: ` test.bat'
+@
+  Cmd: echo  Type: 0 Args: `(echo[.bat'
+echo[.bat
+
+Z:\&gt;</code></pre></div>There you can seee, that theparsing splits the command after the '[' char (but before the '(' char).<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>30 Jan 2018 23:23</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Your code gives the exact output I expect based on my proposed rules.<br>
+
+<blockquote><div><cite><a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915">penpen</a> wrote: <a href="viewtopicf4a1.html?p=55573#p55573" data-post-id="55573" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Jan 2018 18:22</div></cite>
+There you can seee, that theparsing splits the command after the '[' char (but before the '(' char).
+</div></blockquote>You lost me. I don't see a single line in any of your code where you have a line with '[' before a '('.<br>
+<br>
+The only line that has both characters is the line within ECHO[.BAT, and that has '(' before '['. And phase 2 breaks the command token before '(', as expected. So the command token is 'ECHO' when it reaches phase 7, which is simply executed as an internal command.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>31 Jan 2018 06:59</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">I meant under my Windows 10 it seems the following happens:<br>
+The command "echo[ test.bat" is split not before but after the '[' character into "echo[" and " test.bat".<br>
+But i wanted to confirm that the command "echo(test.bat" is split before the '(' character into "echo" and "(test.bat".<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>31 Jan 2018 08:42</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Yes.<br>
+<br>
+<strong class="text-strong">ECHO(TEST.BAT</strong><br>
+<br>
+In phase 2, <strong class="text-strong">(</strong> is a token delimiter, so <strong class="text-strong">ECHO(TEST.BAT</strong> is split into a command token of <strong class="text-strong">ECHO</strong>, and arguments token of <strong class="text-strong">(TEST.BAT</strong>.<br>
+<br>
+Phase 7 simply gets the command token of <strong class="text-strong">ECHO</strong>, and immediately recognizes it as an internal command.<br>
+<br>
+<strong class="text-strong">ECHO[ TEST.BAT</strong><br>
+<br>
+In phase 2, <strong class="text-strong">[</strong> is not a token delimiter, but <strong class="text-strong">&lt;space&gt;</strong> is.  The command is split into a command token of <strong class="text-strong">ECHO[</strong> and arguments token of <strong class="text-strong">&lt;space&gt;TEST.BAT</strong>.<br>
+<br>
+Phase 7 does not recognize the <strong class="text-strong">ECHO[</strong> command token as an internal command. So it moves on to the next test.<br>
+The command token is split before <strong class="text-strong">[</strong>, and it recognizes <strong class="text-strong">ECHO</strong> as a potential internal command. How it is handled depends on whether <strong class="text-strong">ECHO[.BAT</strong> exists:<br>
+  - If the batch script exists, then it is executed<br>
+  - If not, then the internal command is executed, with <strong class="text-strong">[&lt;space&gt;TEST.BAT</strong> as the arguments.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>31 Jan 2018 10:45</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Thanks penpen for the idea to test with the debug mode.<br>
+<br>
+I tested it with
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo ###1
+echo(###2
+echo (###3
+echo[###4
+echo=###5
+</code></pre></div>
+I only show the relevant parts
+<blockquote><div><cite>output wrote:</cite>
+Cmd: echo  Type: 0 Args: ` ###1'<br>
+Cmd: echo  Type: 0 Args: `(###2'<br>
+Cmd: echo  Type: 0 Args: ` (###3'<br>
+Cmd: echo[###4  Type: 0<br>
+Cmd: echo  Type: 0 Args: `=###5'</div></blockquote>
+
+My conclusion is:<br>
+(like Dave) In phase2 the ( is a token delimiter lie ;,= and it's part of the argument.<br>
+<br>
+But as even the plain echo ###1 the first character of the argument is a space, I suppose that the first character will be removed, always.<br>
+<br>
+The only question left, is why echo(/? works but echo=/? fails, even the arguments looks quite the same. <span style="color: #00BF00">The explanation is in PPS</span><br>
+<br>
+jeb<br>
+PS: It seems that the most other command, can't work properly with any other delimiter than a space<br>
+IF works with the standard delimiter ;,= and space, but not with (<br>
+SET only removes trailing space, but SET,a=b sets the variable ",a" to "b"<br>
+<br>
+PPS:<br>
+I suppose it's the ECHO parsing for /? that uses a quite different way than other commands.<br>
+It tests if the first "token" starts with "/?", then it shows the help.<br>
+But it strips all (standard) delimiters while it searches.<br>
+These varaiants all show the help
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo /?
+echo=/?
+echo=/?
+echo   =;, /=,; ?
+echo ;,/;=?TEXT</code></pre></div>
+But it only strips the standard delimiters (,;= and space) therefore the "echo(" works so nicely <img class="smilies" src="images/smilies/icon_cool.gif" width="15" height="15" alt="8)" title="Cool"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>31 Jan 2018 12:12</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Now when it's clear, I found also some examples to demonstrate the token splitting even without debug mode.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+set var=#####
+echo]!var! ^^^^  #1
+echo(!var! ^^^^  #2</code></pre></div>
+
+<blockquote><div><cite>output wrote:</cite>##### ^^  #1<br>
+##### ^  #2</div></blockquote>
+In the first example the carets are only reduced by phase 2, but not by phase 5, as the exclamation marks are part of the command token <br>
+cmdToken="echo]!var"<br>
+args = "^^ #1"<br>
+<br>
+But the second sample shows that the "(" is a cmdToken delimiter and therefore the args activate phase5 and reduce the carets a second time<br>
+cmdToken="echo"<br>
+args = "(!var! ^^ #2"<br>
+<br>
+The concusion is that there exists different sets of delimiters for the different phases.<br>
+Phase2 ,;= space and (<br>
+Phase 7   :][/\;,=+ space ,but not (<br>
+And the individual commands can have another, different set</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>31 Jan 2018 12:49</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopicee07.html?p=55588#p55588" data-post-id="55588" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Jan 2018 10:45</div></cite>
+I suppose it's the ECHO parsing for /? that uses a quite different way than other commands.<br>
+It tests if the first "token" starts with "/?", then it shows the help.<br>
+But it strips all (standard) delimiters while it searches.<br>
+These varaiants all show the help
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo /?
+echo=/?
+echo=/?
+echo   =;, /=,; ?
+echo ;,/;=?TEXT</code></pre></div>
+But it only strips the standard delimiters (,;= and space) therefore the "echo(" works so nicely <img class="smilies" src="images/smilies/icon_cool.gif" width="15" height="15" alt="8)" title="Cool">
+</div></blockquote>
+
+I pretty much concluded the same thing at <a href="viewtopice902.html?f=3&amp;t=774&amp;start=30#p55557" class="postlink">Re: ECHO. FAILS to give text or blank line - Instead use ECHO/</a>
+<blockquote><div><cite>dbenham wrote:</cite>
+When ECHO sees ;/? or ,/? or =/? it sees a token delimiter and then a string beginning with help option. So it prints help.<br>
+<br>
+But (/? does not start with a token delimiter, so the /? is masked. Then the leading character is stripped and the remainder is printed.
+</div></blockquote>
+
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>31 Jan 2018 12:55</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopic5260.html?p=55590#p55590" data-post-id="55590" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Jan 2018 12:12</div></cite>
+The concusion is that there exists different sets of delimiters for the different phases.<br>
+Phase2 ,;= space and (<br>
+Phase 7   :][/\;,=+ space ,but not (<br>
+And the individual commands can have another, different set
+</div></blockquote>
+Phase 2 - you forgot &lt;tab&gt; and &lt;0xFF&gt;<br>
+<br>
+Phase 7 - Not all those delimiters are treated equally, as outlined by my 7.1 rules.<br>
+Also, I'm pretty sure the exact same rules are used to determine what internal command to execute, regardless of the command.<br>
+Things don't vary by command until the individual command parses the command arguments.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>31 Jan 2018 13:12</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Good point <blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic8996.html?p=55591#p55591" data-post-id="55591" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Jan 2018 12:49</div></cite>
+I pretty much concluded the same thing at Re: ECHO. FAILS to give text or blank line - Instead use ECHO/<br>
+dbenham wrote:<br>
+When ECHO sees ;/? or ,/? or =/? it sees a token delimiter and then a string beginning with help option. So it prints help.<br>
+<br>
+But (/? does not start with a token delimiter, so the /? is masked. Then the leading character is stripped and the remainder is printed.
+</div></blockquote>
+But when I read it, I didn't understand why echo should see the "(" at all and why it is removed later.<br>
+
+<blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic1acd.html?p=55592#p55592" data-post-id="55592" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Jan 2018 12:55</div></cite>
+Phase 2 - you forgot &lt;tab&gt; and &lt;0xFF&gt;</div></blockquote>
+You are right, I was sure that I forgot something  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+
+<blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic1acd.html?p=55592#p55592" data-post-id="55592" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Jan 2018 12:55</div></cite>Phase 7 - Not all those delimiters are treated equally, as outlined by my 7.1 rules.<br>
+Also, I'm pretty sure the exact same rules are used to determine what internal command to execute, regardless of the command.<br>
+Things don't vary by command until the individual command parses the command arguments.
+</div></blockquote>
+I think the same, my text was a bit misleading. <br>
+In Phase 7 also the TAB is a delimiter. But 0xFF is special here
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+for /f "delims=" %%A in (
+    'forfiles /p "%~dp0." /m "%~nx0" /c "cmd /c echo(0xFF"'
+) do set "FF=%%~A"
+
+set "var=!FF!#####"
+
+echo!var! ^^^^  #1
+echo%var% ^^^^  #2
+</code></pre></div>
+
+<blockquote><div><cite>Output wrote:</cite> ##### ^^ #1<br>
+##### ^^  #2</div></blockquote>
+As you can see in sample #1, that it works as a delimiter in phase7, but it's also shown by the echo</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>31 Jan 2018 14:01</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">I still don't understand why there are different results (see my above example) between:<br>
+- "if a==a echo[ test.bat" which executes the internal command "echo", and<br>
+- "echo[ test.bat" which executes the batch file "echo[.bat".<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>31 Jan 2018 15:15</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopicfac0.html?p=55594#p55594" data-post-id="55594" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Jan 2018 13:12</div></cite>
+In Phase 7 also the TAB is a delimiter. But 0xFF is special here
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+for /f "delims=" %%A in (
+    'forfiles /p "%~dp0." /m "%~nx0" /c "cmd /c echo(0xFF"'
+) do set "FF=%%~A"
+
+set "var=!FF!#####"
+
+echo!var! ^^^^  #1
+echo%var% ^^^^  #2
+</code></pre></div>
+
+<blockquote><div><cite>Output wrote:</cite> ##### ^^ #1<br>
+##### ^^  #2</div></blockquote>
+As you can see in sample #1, that it works as a delimiter in phase7, but it's also shown by the echo
+</div></blockquote>
+The #1 behavior kind of makes sense if 0xFF is considered to be a non-breaking space.<br>
+But the difference between #1 and #2 is odd. That means the ECHO command must be able to tell which characters are left over from the command token, and which are from the original arguments token.<br>
+That means my following rule doesn't quite tell the whole story:
+<blockquote><div><cite>dbenham wrote:</cite>
+If an internal command is parsed from a larger command token, then the unused portion of the command token is included in the argument list
+</div></blockquote>
+I had assumed that the left over text is simply prepended to the arguments token before the internal command parses the arguments.<br>
+But instead, the internal command must parse the left over text as a separate token before it parses the original arguments token.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>31 Jan 2018 15:27</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915">penpen</a> wrote: <a href="viewtopicab6b.html?p=55595#p55595" data-post-id="55595" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Jan 2018 14:01</div></cite>
+I still don't understand why there are different results (see my above example) between:<br>
+- "if a==a echo[ test.bat" which executes the internal command "echo", and<br>
+- "echo[ test.bat" which executes the batch file "echo[.bat".
+</div></blockquote>
+
+I don't understand why MS wrote cmd.exe that way.<br>
+But my rules do predict the behavior.
+<blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopice858.html?p=55551#p55551" data-post-id="55551" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Jan 2018 07:51</div></cite>
+<ul>
+   <li><span style="color: #008040"> Else break the command token before the first occurrence of + / [ ] or standard token delimiter<br>
+        If the preceding text is an internal command, then remember that command<br>
+</span>        <ul>
+          <li> If in command line mode, or <span style="color: #0000FF">if the command is from a</span> parenthesized block, <span style="color: #0000FF">IF command block</span>, FOR command block, or involved with command concatenation, <span style="color: #0000FF">then execute the internal command</span><br>
+          <span style="color: #FFFFFF">.</span></li>
+          <li><span style="color: #800000"> Else (must be a stand-alone command in batch mode) scan the current folder and the PATH for a .COM, .EXE, .BAT, or .CMD file whose base name matches the original command token</span>
+          <ul>
+            <li> <span style="color: #800000">If the first matching file is a .BAT or .CMD, then goto 7.3.exec and execute that script</span></li>
+            <li> Else (match not found or first match is .EXE or .COM) execute the remembered internal command</li>
+          </ul></li>
+        </ul></li>
+</ul>
+</div></blockquote>
+Both commands match the <span style="color: #008040">green</span> rule.<br>
+The first command matches the <span style="color: #0000FF">blue</span> rule.<br>
+The second command matches the <span style="color: #800000">brown</span> rules.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>31 Jan 2018 16:19</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic9b95.html?p=55598#p55598" data-post-id="55598" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Jan 2018 15:27</div></cite>
+I don't understand why MS wrote cmd.exe that way.<br>
+But my rules do predict the behavior.
+</div></blockquote>
+Yes, the rules seem to be accurate to explain how it works.<br>
+But I can't believe that a sane human would code it that way.<br>
+I suppose, that the behaviour is only a side effect of some parts we currently don't know or don't understand quite right.<br>
+<br>
+But now back to delimiters ...  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+I forgot to test line feed and carriage return.<br>
+<br>
+Both characters seem to work as delimiters only in phase7.<br>
+Carriage return can't be tested with phase 2, as I'm known no way to inject a carriage return which survives up to phase2<br>
+<br>
+But for the ECHO command they are not part of the delimiters, therefore they both work for /?
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+for /f "delims=" %%A in (
+    'forfiles /p "%~dp0." /m "%~nx0" /c "cmd /c echo(0xFF"'
+) do set "FF=%%~A"
+for /F %%# in ('copy /Z "%~dpf0" NUL') do set "CR=%%#"                         &amp; rem capture carriage return char
+(set LF=^
+%=empty line=%
+)
+set "var=#########"
+
+REM *** References
+echo !var:~,7! ^^^^ #1
+echo(!var:~,7! ^^^^ #2
+echo(/?        #3 ( echo delimiter test
+
+echo^%LF%%LF%!var:~,7! ^^^^ #4  LF Phase2 test- Fail, it is handled in phase7
+echo!LF!!var:~,7! ^^^^ #5	LF Phase7 test
+echo!CR!!var:~,7! ^^^^ #6	CR Phase7 test
+
+echo!LF!/?        #7   LF   echo!LF!delimiter!CR!test
+echo!CR!/?        #8 CR echo delimiter!CR!test
+
+</code></pre></div> <br>
+<br>
+Regarding the output of test #7 and #8 <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question">  <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> 
+<blockquote><div><cite>Output wrote:</cite>####### ^ #1<br>
+####### ^ #2<br>
+/?        #3 ( echo delimiter test<br>
+var:~,7 ^ #4 LF Phase2 test - Fail, it is handled in phase7<br>
+var:~,7 ^ #5 LF Phase7 test<br>
+var:~,7 ^ #6 CR Phase7 test<br>
+/? #7 LF echo delimiter test<br>
+/? #8 CR echo delimiter test</div></blockquote>
+In #7 and #8 all characters of the form &lt;space&gt;&lt;tab&gt;&lt;CR&gt;&lt;LF&gt; are replaced by spaces and reduced to only one space consecutive <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <br>
+I've never saw this behaviour in batch before  <img class="smilies" src="images/smilies/icon_eek.gif" width="15" height="15" alt=":shock:" title="Shocked"> <br>
+<br>
+jeb</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>01 Feb 2018 07:28</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Freaky <img class="smilies" src="images/smilies/icon_eek.gif" width="15" height="15" alt=":shock:" title="Shocked"> <br>
+<br>
+Your !var:~,7! expansion is broken because you forgot to escape the comma, so the expression is split between the command token and the arguments token in phase 2.<br>
+
+<blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopicefa9.html?p=55599#p55599" data-post-id="55599" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Jan 2018 16:19</div></cite>
+In #7 and #8 all characters of the form &lt;space&gt;&lt;tab&gt;&lt;CR&gt;&lt;LF&gt; are replaced by spaces and reduced to only one space consecutive <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <br>
+I've never saw this behaviour in batch before  <img class="smilies" src="images/smilies/icon_eek.gif" width="15" height="15" alt=":shock:" title="Shocked"> 
+</div></blockquote>
+Your description isn't quite correct. It is true for those characters within the command token. But in the arguments token the behavior changes a bit. The &lt;space&gt; and &lt;tab&gt; within the arguments token are still collapsed into one space if &lt;LF&gt; or &lt;CR&gt; appears in command token, but &lt;CR&gt; and &lt;LF&gt; are printed normally in the arguments token.<br>
+<br>
+And we have seen very similar behavior before, but we never realized it.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+(set LF=^
+%=empty line=%
+)
+prompt prompt$g
+echo on
+
+for %%A in (1   ====,,,,,;;;;; 2
+
+
+3) do @echo %%A
+
+(echo 1
+echo 2)
+</code></pre></div>
+--OUTPUT--
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt;for %A in (1 2 3) do @echo %A
+1
+2
+3
+
+prompt&gt;(
+echo 1
+ echo 2
+)
+1
+2</code></pre></div>
+But in this case all token delimiters are collapsed into a single space, not just white space characters.<br>
+And within a parenthesized block of commands, the consecutive &lt;LF&gt; is collapsed into &lt;LF&gt;&lt;space&gt;.<br>
+<br>
+This led me to discover a totally brand new effect <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+(set LF=^
+%= Empty line results in &lt;LF&gt; =%
+)
+prompt prompt$g
+echo on
+for %%A in (1 =,;%LF%%LF%;,= 2) do @echo %%A
+for %%A in ("1 =,;%LF%%LF;,= %2^") do @echo %%A
+(echo 1 =,;%LF%%LF%;,= echo 2)
+(echo "1 =,;%LF%%LF%;,= echo 2^")
+</code></pre></div>
+--OUTPUT-- (broken up into multiple code blocks to prevent scrolling)
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt;for %A in (1 2) do @echo %A
+1
+2
+
+prompt&gt;for %A in ("1 =,; 2") do @echo %A
+"1 =,; 2"
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt;(
+echo 1 =,;
+ echo 2
+)
+1 =,;
+2
+
+prompt&gt;(
+echo "1 =,;
+ echo 2"
+)
+"1 =,;
+2"
+</code></pre></div>
+%LF% is fully functional within phase 2 as long as it is within a parenthesized block. It does not instantly terminate the line  <img class="smilies" src="images/smilies/icon_eek.gif" width="15" height="15" alt=":shock:" title="Shocked"> <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"><br>
+<br>
+So the rules for &lt;LF&gt; in phase 2 need serious updating:<br>
+<br>
+The behavior of &lt;LF&gt; varies depending on context. But quotes never alter the behavior.<br>
+<br>
+<strong class="text-strong">Escaped &lt;LF&gt;</strong>
+<ul>
+ <li> &lt;LF&gt; is stripped</li>
+ <li> Next character is escaped, even if it is &lt;LF&gt;</li>
+</ul>
+<strong class="text-strong">Unescaped &lt;LF&gt; not within parentheses</strong>
+<ul>
+ <li> &lt;LF&gt; is stripped</li>
+ <li> Remainder of line is not parsed (totally ignored)</li>
+</ul>
+<strong class="text-strong">Unescaped &lt;LF&gt; within FOR IN parenthesized block</strong>
+<ul>
+ <li> &lt;LF&gt; turns off the quote flag</li>
+ <li> &lt;LF&gt; functions as any other token delimiter</li>
+ <li> Consecutive token delimiters are collapsed into a single space</li>
+</ul>
+<strong class="text-strong">Unescaped &lt;LF&gt; within parenthesized command block</strong>
+<ul>
+ <li> &lt;LF&gt; turns off the quote flag</li>
+ <li> &lt;LF&gt; converted into &lt;LF&gt;&lt;space&gt;</li>
+ <li> Any immediately trailing string of token delimiters and &lt;LF&gt; is stripped</li>
+</ul>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>02 Feb 2018 01:55</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic766f.html?p=55601#p55601" data-post-id="55601" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">01 Feb 2018 07:28</div></cite>
+Your !var:~,7! expansion is broken because you forgot to escape the comma, so the expression is split between the command token and the arguments token in phase 2.
+</div></blockquote> Exactly that was my intention, to simply detect, if the character between ECHO and !var is a phase 2 delimiter.<br>
+<br>
+<br>
+
+<blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic766f.html?p=55601#p55601" data-post-id="55601" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">01 Feb 2018 07:28</div></cite>
+This led me to discover a totally brand new effect<br>
+...<br>
+%LF% is fully functional within phase 2 as long as it is within a parenthesized block. It does not instantly terminate the line  <img class="smilies" src="images/smilies/icon_eek.gif" width="15" height="15" alt=":shock:" title="Shocked"> <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"><br>
+<br>
+So the rules for &lt;LF&gt; in phase 2 need serious updating:
+</div></blockquote>
+ <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> I suppose we are too old to remember all the things we already know.<br>
+Do you can remember the batch macros? They are using exactly this effect, when the macro is defined, the LF is injected in an escaped form, but when executing a macro  it uses an unescaped LF.<br>
+<br>
+
+<blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic766f.html?p=55601#p55601" data-post-id="55601" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">01 Feb 2018 07:28</div></cite>So the rules for &lt;LF&gt; in phase 2 need serious updating:<br>
+The behavior of &lt;LF&gt; varies depending on context. But quotes never alter the behavior.
+</div></blockquote>
+You are right, I never thought of add this to the rules, as I'm discovered the LF parenthesis trick much later.<br>
+<br>
+jeb</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>3</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8355&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:17:32 GMT -->
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8848&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:11:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; need help in creating a batch script to run a procedure</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>need help in creating a batch script to run a procedure</h2>
+		<p><a href="viewtopica6fd.html?f=3&amp;t=8848">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8848</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>need help in creating a batch script to run a procedure</h3>
+				<div class="date">Posted: <strong>02 Oct 2018 09:48</strong></div>
+				<div class="author">by <strong>lalat06bag</strong></div>
+				<div class="content">I want to create a batch script to run a database procedure and  give me the results in a flat file. <br>
+I am using exadata. I want to run the batch from a remote windows server. <br>
+1. Below is the procedure<br>
+sp_analyze_wt.sql<br>
+<br>
+CREATE OR REPLACE PROCEDURE x.sp_analyze_x<br>
+AUTHID DEFINER<br>
+AS<br>
+BEGIN<br>
+  dbms_stats.gather_schema_stats(ownname=&gt;'x', estimate_percent=&gt;100, degree=&gt;4, cascade=&gt;TRUE, options=&gt;'GATHER');<br>
+END;<br>
+/<br>
+<br>
+CREATE OR REPLACE PUBLIC SYNONYM SP_ANALYZE_x FOR x.SP_ANALYZE_x;<br>
+<br>
+AUDIT GRANT ON x.SP_ANALYZE_x BY ACCESS WHENEVER SUCCESSFUL;<br>
+AUDIT GRANT ON x.SP_ANALYZE_x BY ACCESS WHENEVER NOT SUCCESSFUL;<br>
+<br>
+GRANT EXECUTE ON x.SP_ANALYZE_x TO xUSR;<br>
+GRANT EXECUTE ON x.SP_ANALYZE_x TO x;<br>
+/*<br>
+<br>
+GRANT EXECUTE ON x.SP_ANALYZE_x TO x_BATCH;<br>
+GRANT EXECUTE ON x.SP_ANALYZE_x TO x_EXECUTE;<br>
+*/<br>
+<br>
+2. to run the above procedure, exec sp_analyze_x<br>
+<br>
+3 . result is below<br>
+<br>
+select owner, table_name, to_char(last_analyzed,'yyyy-mm-dd hh:mm:ss') from all_tables <br>
+where<br>
+last_analyzed is not null<br>
+and<br>
+owner = 'x'<br>
+order by table_name<br>
+<br>
+I need to create a batch script which would run the above procedure and give me the result in a flat file.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: need help in creating a batch script to run a procedure</h3>
+				<div class="date">Posted: <strong>02 Oct 2018 12:04</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">This should help you.<br>
+<a href="https://docs.microsoft.com/en-us/sql/relational-databases/scripting/sqlcmd-use-the-utility?view=sql-server-2017" class="postlink">https://docs.microsoft.com/en-us/sql/re ... erver-2017</a></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8848&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:11:05 GMT -->
+</html>

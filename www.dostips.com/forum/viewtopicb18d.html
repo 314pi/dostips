@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8582&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:15:12 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Going back to one of my old batch files... wanting to add to it</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Going back to one of my old batch files... wanting to add to it</h2>
+		<p><a href="viewtopic082e.html?f=3&amp;t=8582">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8582</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>27 May 2018 22:01</strong></div>
+				<div class="author">by <strong>1033Forest</strong></div>
+				<div class="content">This one only works on 32-bit Windows versions.<br>
+<br>
+So, someone made this batch file for me, and I added to it more or less characters.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+Setlocal EnableDelayedExpansion
+:: Limit window size
+mode con lines=25
+:: Determine available characters and available colors
+set Characters=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890
+set Colors=123456789abcdef
+:: Calculate amount of characters and colors
+FOR /F "delims=:" %%A IN ('"(echo %Characters%&amp;echo.)|findstr /O $"') DO set /a TotalCharAmount=%%A - 3
+FOR /F "delims=:" %%A IN ('"(echo %Colors%&amp;echo.)|findstr /O $"') DO set /a TotalColorAmount=%%A - 3
+:Loop_Random
+:: Calculate next character, its color and its next place. Temporary variables, which are overwritten afterwards, are named the same as their end products (e.g. NextChar is first a number and then the actual character)
+set /a NextChar=%random% %% %TotalCharAmount%
+set NextChar=!Characters:~%NextChar%,1!
+set /a NextColor=%random% %% %TotalColorAmount%
+set NextColor=!Colors:~%NextColor%,1!
+set /a NextPlace=((%random% %% 50) * 80 + (%random% %% 80)) * 2
+cmd /c exit /b %NextPlace%
+set NextPlace=%=ExitCode:~4%
+:: Display
+(
+echo EB800:%NextPlace% "%NextChar%"%NextColor%
+echo Q
+) | debug &gt;nul
+:: Add a PING-command here to make a delay in order to limit CPU usage
+REM ping localhost -n 2 &gt;nul
+goto :Loop_Random</code></pre></div>
+
+What I'd like to add to my program is the ability to give each character a random background color as well as a random text color, and also the ability to represent certain characters in a different manner, like in hex or decimal, for example the single music note (13) and right arrow (26) are the hardest characters to implement into my program, and I would like to have my program use all 253 possible glyphs without the 3 space characters (0, 32, and 255). The control characters do not appear in the program when I run it, even if they're in the set Characters=. Only the alphabet and numbers are listed there because non printable characters might break a forum. Also if possible maybe a way to adjust the speed of the program in the batch file.<br>
+<br>
+The program I'm working on is a "just for fun" program, similar to this: <a href="http://ludumdare.com/compo/2010/07/16/retro-awesomeness/" class="postlink">http://ludumdare.com/compo/2010/07/16/r ... esomeness/</a> . This above is the first version of the program, which I would consider 1.0.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>28 May 2018 12:36</strong></div>
+				<div class="author">by <strong>1033Forest</strong></div>
+				<div class="content">Some of my past experiences with this program:<br>
+- By changing the available colors I can change the color scheme of this program<br>
+- Characters 7, 8, 9, 10, and 13 still appear when listed, but only in light gray (color 7), even if 7 is not listed as one of the available colors. 26 (and maybe 27) does not appear at all<br>
+- Running it by itself does not display the control characters, values 0-31 and 127. In order for them to appear it would have to be run under cmd.exe or another batch file that works like a command prompt<br>
+- After a while of running it a "16-bit MS-DOS subsystem" error appears and the simulation pauses. If the ignore button is clicked the simulation continues as if nothing happened.<br>
+<br>
+The set Colors= parameter is used to set the available colors of the text to randomly select from. What I want to add is a parameter for background colors.<br>
+set Characters= is used to select what characters to be used in the simulation. In the code above, it's all the uppercase and lowercase letters of the alphabet, and the digits 0-9. I only listed those in the code above because listing the non printable characters and some escape characters might break this forum post. I'm looking for a way to be able to display all 253 glyphs that aren't space characters, while still being able to modify the character range when I feel like something a bit different.<br>
+<br>
+I honestly have no idea what to call this program. It's a "just for fun" program which is just something that is fun to stare at for like a few minutes as you watch the characters try to fill up the screen. This current version above, I would consider it 1.0. It's like a slower simulation of the CRASH DOS virus. In Windows Vista and up, the program can't be run in fullscreen unless run in safe mode.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>28 May 2018 13:19</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">debug.exe does not work on 64bit operating systems.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>28 May 2018 14:31</strong></div>
+				<div class="author">by <strong>1033Forest</strong></div>
+				<div class="content">I know, that's why I clearly stated in my post, that it only works on 32-bit Windows systems.<br>
+<br>
+This program was tested on Windows XP Professional SP3, and Windows 7 Ultimate 32-bit, and both worked well on these OSes. On a 64 bit OS it'll just say that debug is not a found command and then immediately close the window.<br>
+Since this program only works on 32-bit OSes, I can assume that it will work on 32-bit Windows 10.<br>
+<br>
+This brings me to another problem: a way to do this simulation without debug, so the program works on both 32 and 64-bit Windows. If there's no way to do this without debug, I'm OK with it being only for 32-bit Windows.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>30 May 2018 11:10</strong></div>
+				<div class="author">by <strong>1033Forest</strong></div>
+				<div class="content">Glyphs that don't work (or do work but are only produced in gray): 7, 8, 9, 10, 13, 26, 27 (•, ◘, ○, ◙, ♪, →, ←)<br>
+Glyphs that need to be escaped with a ^ character to make them work: 38, 60, 62, 94, 124 (&amp;, &lt;, &gt;, ^, |)<br>
+<br>
+If I wanted to put all the characters at once to appear randomly, I would have to put a space between each one to make it work correctly.<br>
+The character range that I want to use is (0,32)U(32,254] meaning all characters from 1-31 and 33-254, not including space characters.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>30 May 2018 16:17</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">You probably could simulate the behaviour using ANSI escape sequences (which works at least under windows 10, 64 bit - can't test older windows x64 editions).<br>
+<br>
+But there s a problem:<br>
+We don't see the glyphs displayed within your command shell.<br>
+It would help if you would copy and paste (all of) them, or give the codepage you are using (note if you are using raster font, the codepage is ignored when selecting the glyphs that shall be displayed, so in that case we need the characters).<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>30 May 2018 17:57</strong></div>
+				<div class="author">by <strong>1033Forest</strong></div>
+				<div class="content">Codepage: 437. I am using the raster font<br>
+<br>
+Characters (CP1252 but they appear just like they're supposed to in the CP437 raster font, in their CP437 equivalents): <br>
+Control characters 0-31 and 127 not listed, but I use them<br>
+!"#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>31 May 2018 03:35</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">I hope this "Retro awesomness.bat" is what you are looking for:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableExtensions disableDelayedExpansion
+:: set active, utf-7 and utf8 codepages
+set /A "utf7Cp=65000, utf8Cp=65001"
+set "cp="
+for /f "delims=." %%a in ('2^&gt;nul chcp') do for %%b in (%%a) do set "cp=%%b"
+if not defined cp for /f "tokens=2" %%a in ('2^&gt;nul chcp') do set "cp=%%~a"
+&gt;nul chcp %utf8Cp%
+
+:: define filenames
+set "utf7DataFile=data.utf-7.txt"
+set "dataFile=data.dat"
+
+:: create chinese chcp seperator char
+set "data="
+
+setlocal enableDelayedExpansion
+
+:: create glyph data using only characters in { '+', '-', '/', '0'-'9', 'A'-'Z', 'a'-'z' }
+&gt;nul chcp %utf8Cp%
+rem &gt;"%dataFile%" cmd /a /c^&lt;nul set /p "=+/v8-"
+rem &gt;nul chcp %utf7Cp%
+set "data="
+rem &lt;"%dataFile%" set /p "data="
+rem &gt;nul chcp %utf8Cp%
+set "data=!data!+AF8mOiY7JmUmZiZjJmAgIiXYJcsl2SZCJkAmaiZrJjwluiXEIZUgPAC2AKclrCGoIZEhkyGSIZAiHyGUJbIlvA- +ACEAIgAjAC"
+set "data=!data!QAJQAm-'()+ACo-+-,-./0123456789:+ADsAPAA9AD4-?+AEA-ABCDEFGHIJKLMNOPQRSTUVWXYZ+AFsAXABdAF4AXwBg-abcde"
+set "data=!data!fghijklmnopqrstuvwxyz+AHsAfAB9AH4jAgDHAPwA6QDiAOQA4ADlAOcA6gDrAOgA7wDuAOwAxADFAMkA5gDGAPQA9gDyAPsA+Q"
+set "data=!data!D/ANYA3ACiAKMApSCnAZI-+AOEA7QDzAPoA8QDRAKoAugC/IxAArAC9ALwAoQCrALslkSWSJZMlAiUkJWElYiVWJVUlYyVRJVclX"
+set "data=!data!SVcJVslECUUJTQlLCUcJQAlPCVeJV8lWiVUJWklZiVgJVAlbCVnJWglZCVlJVklWCVSJVMlayVqJRglDCWIJYQljCWQJYADsQDfA"
+set "data=!data!5MDwAOjA8MAtQPEA6YDmAOpA7QiHgPGA7UiKQ-+ImEAsSJlImQjICMhAPciSACwIhkAtyIaIH8AsiWg-+AKA-"
+::  index       0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+::              0         1         2         3         4         5         6         7         8         9         
+cmd /d /a /e:on /v:on /c"&gt;"^!dataFile^!" echo(^!data^!"
+set "data="
+
+:: read data from file
+&gt;nul chcp %utf7Cp%
+set "data="
+&lt;"%dataFile%" set /p "data="
+&gt;nul chcp %utf8Cp%
+
+::initialize
+:: set "Characters=!data:~1,31!!data:~33,222!"
+:: removed NUL, BEL, TAB, SUB, ESC, breaking whitespace, non breaking whitespace
+set "Characters=!data:~1,6!!data:~8,1!!data:~10,16!!data:~28,4!!data:~33,222!"
+set "Colors=123456789abcdef"
+call :strlen "Characters"  "TotalCharAmount"
+call :strlen     "Colors" "TotalColorAmount"
+for /F %%a in ('echo prompt $E^| cmd') do set "ESC=%%a"
+mode con cols=80 lines=25
+title Retro awesomness.
+
+:loop
+set /a "c=!random! %% !TotalCharAmount!, i=!random! %% %TotalColorAmount%, j=!random! %% %TotalColorAmount%, x=(!random! %% 80) + 1, y=(!random! %% 25) + 1"
+set /a "color=0x!Colors:~%i%,1!, bgcolor=0x!Colors:~%j%,1!"
+&lt;nul set /p "=%ESC%[%y%;%x%f%ESC%[38;5;%color%;48;5;%bgcolor%m!Characters:~%c%,1!%ESC%[0m"
+goto :loop
+goto :eof
+
+
+:strlen
+:: %~1	environment variable that holds the string to test
+:: %~2	environment variable to store the string length to
+	setlocal enableExtensions enableDelayedExpansion
+	if not defined %~1 (
+		set "%~2=-1"
+	) else (
+		set "len=0"
+		for /l %%a in (12,-1,0) do (
+			set /a "len|=(1&lt;&lt;%%~a)"
+			for %%b in (!len!) do if "!%~1:~%%~b,1!" == "" set /a "len^=(1&lt;&lt;%%~a)"
+		)
+	)
+	endlocal &amp; set /a "%~2=%len%+1"
+	goto :eof
+</code></pre></div>
+
+Sidenotes:<br>
+You need to disable "Legacy console mode" else the vt100 ANSI escape sequences won't work.<br>
+<br>
+When you are using raster fonts then the glyphs used should be system dependent.<br>
+So giving CP1252 characters and saying "their CP437 equivalents" is of not much use,<br>
+because CP437 isn't used if you are using raster fonts (so i hope the glyphs i used are ok).<br>
+<br>
+I used these characters (as these are the defaults used by my system for raster fonts):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>_☺☻♥♦♣♠•◘○◙♂♀♪♫☼
+►◄↕‼¶§▬↨↑↓→←∟↔▲▼
+ !"#$%&amp;'()*+,-./
+0123456789:;&lt;=&gt;?
+@ABCDEFGHIJKLMNO
+PQRSTUVWXYZ[\]^_
+`abcdefghijklmno
+pqrstuvwxyz{|}~⌂
+ÇüéâäàåçêëèïîìÄÅ
+ÉæÆôöòûùÿÖÜ¢£¥₧ƒ
+áíóúñÑªº¿⌐¬½¼¡«»
+░▒▓│┤╡╢╖╕╣║╗╝╜╛┐
+└┴┬├─┼╞╟╚╔╩╦╠═╬╧
+╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀
+αßΓπΣσµτΦΘΩδ∞φε∩
+≡±≥≤⌠⌡÷≈°∙·√ⁿ²■ </code></pre></div>
+Just for comparison - the following ones are used by CP 437 if  not using raster fonts:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code> ☺☻♥♦♣♠•◘○◙♂♀♪♫☼
+►◄↕‼¶§▬↨↑↓→←∟↔▲▼
+ !"#$%&amp;'()*+,-./
+0123456789:;&lt;=&gt;?
+@ABCDEFGHIJKLMNO
+PQRSTUVWXYZ[\]^_
+`abcdefghijklmno
+pqrstuvwxyz{|}~⌂
+ÇüéâäàåçêëèïîìÄÅ
+ÉæÆôöòûùÿÖÜø£Ø×ƒ
+áíóúñÑªº¿®¬½¼¡«»
+░▒▓│┤ÁÂÀ©╣║╗╝¢¥┐
+└┴┬├─┼ãÃ╚╔╩╦╠═╬¤
+ðÐÊËÈıÍÎÏ┘┌█▄¦Ì▀
+ÓßÔÒõÕµþÞÚÛÙýÝ¯´
+­±‗¾¶§÷¸°¨·¹³²■ </code></pre></div>
+
+Edited:<br>
+Corrected "!Characters:~%i%,1!" to "!Characters:~%c%,1!" so the actual character index c is used to select the next character, instead of the foreground color index i.<br>
+Removed NUL, BEL, TAB, SUB, ESC, breaking whitespace, non breaking whitespace from the environment variable Characters to avoid bad sideeffects; see <a href="viewtopicfeb7.html?f=3&amp;t=8582&amp;p=57984#p57984" class="postlink">viewtopic.php?f=3&amp;t=8582&amp;p=57984#p57984</a>.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>31 May 2018 05:53</strong></div>
+				<div class="author">by <strong>1033Forest</strong></div>
+				<div class="content">Does not work on Windows 7 Ultimate x32, which is the one I'm currently using. I'll try it on a Windows 10 VM<br>
+So it uses CP850 as the default for CP437 if raster fonts not enabled?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>31 May 2018 07:24</strong></div>
+				<div class="author">by <strong>1033Forest</strong></div>
+				<div class="content">Installing the Windows 10 VM didn't work out for me and I don't have any Windows 10 machines to test this out on. Is it possible to make something similar that'll work for 7 too?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>31 May 2018 10:49</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">You could use an vt100 interpreter, such as this by Aacini (which hopefuly works under win7):<br>
+<a href="viewtopicf5a8.html?f=3&amp;t=5772&amp;p=35898#p35898" class="postlink">viewtopic.php?f=3&amp;t=5772&amp;p=35898#p35898</a>.<br>
+The batch script within the second code block whould create the file "AnsiSys.exe".<br>
+<br>
+Sadly this vt100 doesn't interpret the above color codes, so i rewrote them to use older ones (from historical viewpoint).<br>
+In addition i removed some additional characters, causing unexpected errors with "AnsiSys.exe".<br>
+I also didn't fill all lines to avoid scrolling (if writing  character to cursor position (80,25).<br>
+(Alternatively you could just avoid that screen position.)<br>
+<br>
+You call the below "Retro awesomeness AnsiSys.bat" with (after copying the above created AnsiSys.exe into the same folder as the batch):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;cls&amp;("Retro awesomeness AnsiSys.bat" | AnsiSys.exe)
+</code></pre></div>
+
+"Retro awesomeness AnsiSys.bat":
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableExtensions disableDelayedExpansion
+:: set active, utf-7 and utf8 codepages
+set /A "utf7Cp=65000, utf8Cp=65001"
+set "cp="
+for /f "delims=." %%a in ('2^&gt;nul chcp') do for %%b in (%%a) do set "cp=%%b"
+if not defined cp for /f "tokens=2" %%a in ('2^&gt;nul chcp') do set "cp=%%~a"
+&gt;nul chcp %utf8Cp%
+
+:: define filenames
+set "utf7DataFile=data.utf-7.txt"
+set "dataFile=data.dat"
+
+:: create chinese chcp seperator char
+set "data="
+
+setlocal enableDelayedExpansion
+
+:: create glyph data using only characters in { '+', '-', '/', '0'-'9', 'A'-'Z', 'a'-'z' }
+&gt;nul chcp %utf8Cp%
+rem &gt;"%dataFile%" cmd /a /c^&lt;nul set /p "=+/v8-"
+rem &gt;nul chcp %utf7Cp%
+set "data="
+rem &lt;"%dataFile%" set /p "data="
+rem &gt;nul chcp %utf8Cp%
+set "data=!data!+AF8mOiY7JmUmZiZjJmAgIiXYJcsl2SZCJkAmaiZrJjwluiXEIZUgPAC2AKclrCGoIZEhkyGSIZAiHyGUJbIlvA- +ACEAIgAjAC"
+set "data=!data!QAJQAm-'()+ACo-+-,-./0123456789:+ADsAPAA9AD4-?+AEA-ABCDEFGHIJKLMNOPQRSTUVWXYZ+AFsAXABdAF4AXwBg-abcde"
+set "data=!data!fghijklmnopqrstuvwxyz+AHsAfAB9AH4jAgDHAPwA6QDiAOQA4ADlAOcA6gDrAOgA7wDuAOwAxADFAMkA5gDGAPQA9gDyAPsA+Q"
+set "data=!data!D/ANYA3ACiAKMApSCnAZI-+AOEA7QDzAPoA8QDRAKoAugC/IxAArAC9ALwAoQCrALslkSWSJZMlAiUkJWElYiVWJVUlYyVRJVclX"
+set "data=!data!SVcJVslECUUJTQlLCUcJQAlPCVeJV8lWiVUJWklZiVgJVAlbCVnJWglZCVlJVklWCVSJVMlayVqJRglDCWIJYQljCWQJYADsQDfA"
+set "data=!data!5MDwAOjA8MAtQPEA6YDmAOpA7QiHgPGA7UiKQ-+ImEAsSJlImQjICMhAPciSACwIhkAtyIaIH8AsiWg-+AKA-"
+::  index       0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+::              0         1         2         3         4         5         6         7         8         9         
+cmd /d /a /e:on /v:on /c"&gt;"^!dataFile^!" echo(^!data^!"
+set "data="
+
+:: read data from file
+&gt;nul chcp %utf7Cp%
+set "data="
+&lt;"%dataFile%" set /p "data="
+&gt;nul chcp %utf8Cp%
+
+::initialize
+set "Characters=!data:~1,31!!data:~33,222!"
+:: removed NUL, BEL, TAB, SUB, ESC, breaking whitespace, non breaking whitespace
+set "Characters=!data:~1,6!!data:~8,1!!data:~10,16!!data:~28,4!!data:~33,222!"
+set "Colors=12345679abcdef"
+for %%a in (0 1 2 3 4 5 6 7) do set "Colors[%%~a]=%%~a"
+for %%a in (8 9 a b c d e f) do for /f %%b in ('set /a "0x%%~a-8"') do set "Colors[%%~a]=%%~b;1"
+call :strlen "Characters"  "TotalCharAmount"
+call :strlen     "Colors" "TotalColorAmount"
+for /F %%a in ('echo prompt $E^| cmd') do set "ESC=%%a"
+mode con cols=80 lines=25
+title Retro awesomness.
+:: set cp 437: Needed for AnsiSys.exe
+&gt;nul chcp 437
+
+:loop
+set /a "c=!random! %% !TotalCharAmount!, i=!random! %% %TotalColorAmount%, j=!random! %% %TotalColorAmount%, x=(!random! %% 78) + 2, y=(!random! %% 23) + 2"
+set "color=!Colors:~%i%,1!"
+set "bgcolor=!Colors:~%j%,1!"
+&lt;nul set /p "=!ESC![%y%;%x%f!ESC![1;3!Colors[%color%]!m!ESC![1;4!Colors[%bgcolor%]!m!Characters:~%c%,1!!ESC![0m"
+goto :loop
+goto :eof
+
+:strlen
+:: %~1	environment variable that holds the string to test
+:: %~2	environment variable to store the string length to
+	setlocal enableExtensions enableDelayedExpansion
+	if not defined %~1 (
+		set "%~2=-1"
+	) else (
+		set "len=0"
+		for /l %%a in (12,-1,0) do (
+			set /a "len|=(1&lt;&lt;%%~a)"
+			for %%b in (!len!) do if "!%~1:~%%~b,1!" == "" set /a "len^=(1&lt;&lt;%%~a)"
+		)
+	)
+	endlocal &amp; set /a "%~2=%len%+1"
+	goto :eof
+</code></pre></div>Successfully tested this batch with win 10, x64, german localization with and without AnsiSys.exe.<br>
+<br>
+<br>
+penpen<br>
+<br>
+Edit: Added the missing '&amp;' character when calling the batch.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>31 May 2018 12:48</strong></div>
+				<div class="author">by <strong>1033Forest</strong></div>
+				<div class="content">Did all that was said. Installed AnsiSys and copied the retro awesomeness.bat.<br>
+Shows:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>'AnsiSys.exe)' is not recognized as an internal or external command,
+operable program or batch file.</code></pre></div>
+
+If I remove the ) at the end, it just appears a female sign, which is glyph 12.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cls("Retro awesomeness AnsiSys.bat") | AnsiSys.exe</code></pre></div>
+also does the same thing: shows a female sign.<br>
+<br>
+Removing the cls, it works fine! I also went ahead and did one last modification. Changed the character range from 222 to 254, and I got what I came for. Does work and is fun to stare at.<br>
+<br>
+Code with a few modifications by me added:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableExtensions disableDelayedExpansion
+:: set active, utf-7 and utf8 codepages
+set /A "utf7Cp=65000, utf8Cp=65001"
+set "cp="
+for /f "delims=." %%a in ('2^&gt;nul chcp') do for %%b in (%%a) do set "cp=%%b"
+if not defined cp for /f "tokens=2" %%a in ('2^&gt;nul chcp') do set "cp=%%~a"
+&gt;nul chcp %utf8Cp%
+
+:: define filenames
+set "utf7DataFile=data.utf-7.txt"
+set "dataFile=data.dat"
+
+:: create chinese chcp seperator char
+set "data="
+
+setlocal enableDelayedExpansion
+
+:: create glyph data using only characters in { '+', '-', '/', '0'-'9', 'A'-'Z', 'a'-'z' }
+&gt;nul chcp %utf8Cp%
+rem &gt;"%dataFile%" cmd /a /c^&lt;nul set /p "=+/v8-"
+rem &gt;nul chcp %utf7Cp%
+set "data="
+rem &lt;"%dataFile%" set /p "data="
+rem &gt;nul chcp %utf8Cp%
+set "data=!data!+AF8mOiY7JmUmZiZjJmAgIiXYJcsl2SZCJkAmaiZrJjwluiXEIZUgPAC2AKclrCGoIZEhkyGSIZAiHyGUJbIlvA- +ACEAIgAjAC"
+set "data=!data!QAJQAm-'()+ACo-+-,-./0123456789:+ADsAPAA9AD4-?+AEA-ABCDEFGHIJKLMNOPQRSTUVWXYZ+AFsAXABdAF4AXwBg-abcde"
+set "data=!data!fghijklmnopqrstuvwxyz+AHsAfAB9AH4jAgDHAPwA6QDiAOQA4ADlAOcA6gDrAOgA7wDuAOwAxADFAMkA5gDGAPQA9gDyAPsA+Q"
+set "data=!data!D/ANYA3ACiAKMApSCnAZI-+AOEA7QDzAPoA8QDRAKoAugC/IxAArAC9ALwAoQCrALslkSWSJZMlAiUkJWElYiVWJVUlYyVRJVclX"
+set "data=!data!SVcJVslECUUJTQlLCUcJQAlPCVeJV8lWiVUJWklZiVgJVAlbCVnJWglZCVlJVklWCVSJVMlayVqJRglDCWIJYQljCWQJYADsQDfA"
+set "data=!data!5MDwAOjA8MAtQPEA6YDmAOpA7QiHgPGA7UiKQ-+ImEAsSJlImQjICMhAPciSACwIhkAtyIaIH8AsiWg-+AKA-"
+::  index       0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+::              0         1         2         3         4         5         6         7         8         9         
+cmd /d /a /e:on /v:on /c"&gt;"^!dataFile^!" echo(^!data^!"
+set "data="
+
+:: read data from file
+&gt;nul chcp %utf7Cp%
+set "data="
+&lt;"%dataFile%" set /p "data="
+&gt;nul chcp %utf8Cp%
+
+::initialize
+set "Characters=!data:~1,31!!data:~33,254!"
+:: removed NUL, BEL, TAB, SUB, ESC, breaking whitespace, non breaking whitespace
+set "Characters=!data:~1,6!!data:~8,1!!data:~10,16!!data:~28,4!!data:~33,254!"
+set "Colors=0123456789abcdef"
+for %%a in (0 1 2 3 4 5 6 7) do set "Colors[%%~a]=%%~a"
+for %%a in (8 9 a b c d e f) do for /f %%b in ('set /a "0x%%~a-8"') do set "Colors[%%~a]=%%~b;1"
+call :strlen "Characters"  "TotalCharAmount"
+call :strlen     "Colors" "TotalColorAmount"
+for /F %%a in ('echo prompt $E^| cmd') do set "ESC=%%a"
+mode con cols=80 lines=25
+title Retro awesomeness.
+:: set cp 437: Needed for AnsiSys.exe
+&gt;nul chcp 437
+
+:loop
+set /a "c=!random! %% !TotalCharAmount!, i=!random! %% %TotalColorAmount%, j=!random! %% %TotalColorAmount%, x=(!random! %% 78) + 2, y=(!random! %% 23) + 2"
+set "color=!Colors:~%i%,1!"
+set "bgcolor=!Colors:~%j%,1!"
+&lt;nul set /p "=!ESC![%y%;%x%f!ESC![1;3!Colors[%color%]!m!ESC![1;4!Colors[%bgcolor%]!m!Characters:~%c%,1!!ESC![0m"
+goto :loop
+goto :eof
+
+:strlen
+:: %~1	environment variable that holds the string to test
+:: %~2	environment variable to store the string length to
+	setlocal enableExtensions enableDelayedExpansion
+	if not defined %~1 (
+		set "%~2=-1"
+	) else (
+		set "len=0"
+		for /l %%a in (12,-1,0) do (
+			set /a "len|=(1&lt;&lt;%%~a)"
+			for %%b in (!len!) do if "!%~1:~%%~b,1!" == "" set /a "len^=(1&lt;&lt;%%~a)"
+		)
+	)
+	endlocal &amp; set /a "%~2=%len%+1"
+	goto :eof</code></pre></div>
+
+Last things I want to do: Remove the border around the simulation so it can be the full window, and make black characters (color 0) possible on other colored backgrounds. Then it'll be done.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>31 May 2018 14:44</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">Sorry, i missed the ampersand character ('&amp;') after the cls command  <img class="smilies" src="images/smilies/icon_redface.gif" width="15" height="15" alt=":oops:" title="Embarassed"> :
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;cls&amp;("Retro awesomeness AnsiSys.bat" | AnsiSys.exe)
+</code></pre></div>
+
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>31 May 2018 16:03</strong></div>
+				<div class="author">by <strong>1033Forest</strong></div>
+				<div class="content">No worries I was able to get it to work before you posted that by removing the cls before the command<br>
+<br>
+It works just fine, and I added some modifications to the code as seen above. I just need to make it so that it covers the entire CMD window (so the black border can be gone) and make black (color 0) characters appear on other colored backgrounds.<br>
+<br>
+Characters 7, 8, 9, 10, 13, 26, and 27 seem to be the hardest to implement and do not appear at all in the simulation, even if setting every glyph to appear. I think it's because even though there's glyphs for these numbers these codes are reserved for special cases only.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>31 May 2018 17:55</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist0139.html?mode=viewprofile&amp;u=9235">1033Forest</a> wrote: <a href="viewtopic024f.html?p=57021#p57021" data-post-id="57021" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 May 2018 16:03</div></cite>I just need to make it so that it covers the entire CMD window (so the black border can be gone) and make black (color 0) characters appear on other colored backgrounds.</div></blockquote>Position (80,25) cannot be covered with a character because AnsiSys.exe obviously sets the cursor after printing a character to screen, which results in a page scrolling upwards by 1 line.<br>
+
+<blockquote><div><cite><a href="memberlist0139.html?mode=viewprofile&amp;u=9235">1033Forest</a> wrote: <a href="viewtopic024f.html?p=57021#p57021" data-post-id="57021" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 May 2018 16:03</div></cite>Characters 7, 8, 9, 10, 13, 26, and 27 seem to be the hardest to implement and do not appear at all in the simulation, even if setting every glyph to appear. I think it's because even though there's glyphs for these numbers these codes are reserved for special cases only.</div></blockquote>Yes, you are right, but you should note that "AnsiSys.exe" is just a  proof of concept, and has some (minor) issues; i don't know anything about other vt100 interpreter "out there", but it might be worth to google them.<br>
+<br>
+AnsiSys.exe seems to replace some of the glyphs with its default behaviour, so you won't see any glyphs (but probably black background):<br>
+7(BEL, just sound), 8(BS=backspace), 9 (HT = horizontal tab), 10 (NL=new line), 13(CR= carriage return).<br>
+<br>
+In addition AnsiSys.exe interprets character no 26 (SUB = substitute character) as an eof (end of file delimiter), and finishes, so you won't see anything changing after that character is send to pipe.<br>
+And character 27 (ESC = escape character) may confuse AnsiSys.exe depending on which character follows (may produce unwanted escape sequences, that also could crash AnsiSys.exe in various unexpected ways (i got one "could not mount device nul syntax error" error message which really confused me).<br>
+So better leave out these characters when using AnsiSys.exe.<br>
+<br>
+Sidenote:<br>
+The windows 10 version of the script can handle all of these characters, but sadly it only runs in windows 10 (and actually i only have an x64 version to test)... .<br>
+So there might be a vt100 interpreter which also runs fine with the above characters under win8 and earlier.<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8582&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:15:12 GMT -->
+</html>

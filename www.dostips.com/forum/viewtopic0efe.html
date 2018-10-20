@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8757&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:47:00 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; [BAT] Get-FileHash (MD2, MD4, MD5, SHA1, SHA256, SHA384, SHA512)</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>[BAT] Get-FileHash (MD2, MD4, MD5, SHA1, SHA256, SHA384, SHA512)</h2>
+		<p><a href="viewtopic5844.html?f=3&amp;t=8757">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8757</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>[BAT] Get-FileHash (MD2, MD4, MD5, SHA1, SHA256, SHA384, SHA512)</h3>
+				<div class="date">Posted: <strong>31 Jul 2018 03:59</strong></div>
+				<div class="author">by <strong>Hackoo</strong></div>
+				<div class="content">Hi  <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=":wink:" title="Wink"> <br>
+This script can get all the Hashes <strong class="text-strong">(MD2, MD4, MD5, SHA1, SHA256, SHA384, SHA512)</strong> with Certutil.exe command from a file by drag and drop on this batch script and save the results in a text file.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+Color 0A &amp; Mode 136,10
+Title GET ( MD2, MD4, MD5, SHA1, SHA256, SHA384, SHA512 ) HASHES from file by drag and drop using Certutil by Hackoo 2018
+Set ScriptName=%~nx0
+if "%~1"=="" goto error
+Set LogFile=%~nx1_HASHES.txt
+If Exist "%LogFile%" Del "%LogFile%"
+echo(
+SetLocal EnableDelayedExpansion
+for %%a in (MD2 MD4 MD5 SHA1 SHA256 SHA384 SHA512) do (
+     for /f "skip=1 delims=" %%H in ('CertUtil -hashfile "%~1" %%a ^| findstr /i /v "CertUtil"') do ( set H=%%H)
+( echo %%a=!H!)
+( echo %%a=!H!)&gt;&gt; "!LogFile!"
+)
+EndLocal
+Timeout /T 1 /NoBreak&gt;nul &amp; Start "" "%LogFile%" &amp; Exit
+REM --------------------------------------------------------------------------------------
+:Error
+Color 0C &amp; Mode 104,5
+echo( &amp; echo(
+echo               You should drag and drop a file over this batch file "%ScriptName%"
+Timeout /T 5 /nobreak&gt;nul &amp; exit
+REM --------------------------------------------------------------------------------------</code></pre></div>
+
+So, in order to improve this batch script, i wonder if is it possible to add a function in the same batch file that can check if this script exists on the right context menu; if yes, we exit the funcion, otherwise we create a right click menu for this batch script ?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [BAT] Get-FileHash (MD2, MD4, MD5, SHA1, SHA256, SHA384, SHA512)</h3>
+				<div class="date">Posted: <strong>31 Jul 2018 06:43</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Not an answer to your question, but you might want to check out <a href="viewtopic4a1d.html?f=3&amp;t=7592" class="postlink">HASHSUM.BAT v1.5 - emulate md5sum, shasum, and the like</a><br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [BAT] Get-FileHash (MD2, MD4, MD5, SHA1, SHA256, SHA384, SHA512)</h3>
+				<div class="date">Posted: <strong>31 Jul 2018 10:08</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistc23f.html?mode=viewprofile&amp;u=5494">Hackoo</a> wrote: <a href="viewtopice050.html?p=57604#p57604" data-post-id="57604" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Jul 2018 03:59</div></cite>i wonder if is it possible to add a function in the same batch file that can check if this script exists on the right context menu</div></blockquote>
+Depends what context menu item you're talking about. Could be an item in the Send To which means that it is a link in the SenTo folder. Or it's a registry setting (see <a href="viewtopicfb69.html?f=3&amp;t=8729" class="postlink">viewtopic.php?f=3&amp;t=8729</a>). Not sure what exactly you're referring to.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [BAT] Get-FileHash (MD2, MD4, MD5, SHA1, SHA256, SHA384, SHA512)</h3>
+				<div class="date">Posted: <strong>31 Jul 2018 10:14</strong></div>
+				<div class="author">by <strong>Hackoo</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic4506.html?p=57609#p57609" data-post-id="57609" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Jul 2018 10:08</div></cite>
+<blockquote><div><cite><a href="memberlistc23f.html?mode=viewprofile&amp;u=5494">Hackoo</a> wrote: <a href="viewtopice050.html?p=57604#p57604" data-post-id="57604" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Jul 2018 03:59</div></cite>i wonder if is it possible to add a function in the same batch file that can check if this script exists on the right context menu</div></blockquote>
+Depends what context menu item you're talking about. Could be an item in the Send To which means that it is a link in the SenTo folder. Or it's a registry setting (see <a href="viewtopicfb69.html?f=3&amp;t=8729" class="postlink">viewtopic.php?f=3&amp;t=8729</a>). Not sure what exactly you're referring to.<br>
+<br>
+Steffen
+</div></blockquote>
+Thank you for the relpy !<br>
+I think registry setting that what i want <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=";)" title="Wink"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: [BAT] Get-FileHash (MD2, MD4, MD5, SHA1, SHA256, SHA384, SHA512)</h3>
+				<div class="date">Posted: <strong>31 Jul 2018 10:26</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Did you have a look at the linked thread? Basically all you can do by executing a .reg file can also be done using the REG command. REG QUERY to check if a certain value exists and REG ADD to add or change a value. Just use CMD /C and the full path of your Batch script and forward %1 to the script.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8757&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:47:00 GMT -->
+</html>

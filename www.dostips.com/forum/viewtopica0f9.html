@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8632&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:52 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Line read in a loop from a file doesn't assign properly in batch program</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Line read in a loop from a file doesn't assign properly in batch program</h2>
+		<p><a href="viewtopic2f3e.html?f=3&amp;t=8632">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8632</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Line read in a loop from a file doesn't assign properly in batch program</h3>
+				<div class="date">Posted: <strong>18 Jun 2018 10:21</strong></div>
+				<div class="author">by <strong>jrahman</strong></div>
+				<div class="content">I am reading each line of a .txt file in a .bat program using For /f loop. The .txt file contains all the names of the test cases (e.g. <strong class="text-strong">ShipmentPostErrorPathXPERF.txt</strong>) which I need to read and assign to a variable called <strong class="text-strong">testCaseName </strong>and pass this to another .cmd program as a parameter and continue in loop until it reads all lines (test cases),<br>
+<br>
+Here is my sample batch file, my problem is when I assign <strong class="text-strong"><em class="text-italics">testCaseName=%%A</em></strong>, it only shows assigned to the last line of the file (<strong class="text-strong">REST0007-SHIPMETDATA_POST-XPERF_ErrorPath-ShipmentNULLServiceSchedID_TestCase</strong>). But when I use <strong class="text-strong"><em class="text-italics">echo %%A</em></strong>, it shows all lines as it reads in loop.<br>
+<br>
+Why <strong class="text-strong"><em class="text-italics">set testCaseName=%%A</em></strong> in the batch file only reading the last line ?<br>
+<br>
+.batch file:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo off
+cd d:\SWAT
+set fileNameXPERF=d:\SWAT\ShipmentPostErrorPathXPERF.txt
+for /F "tokens=*" %%A in (D:\SWAT\ShipmentPostErrorPathXPERFxxx.txt) do (
+set testCaseName=%%A
+echo %testCaseName%
+echo %%A
+call d:\SWAT\testRunner.cmd %testCaseName%
+)</code></pre></div>
+The text file (ShipmentPostErrorPathXPERF.txt):<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>REST0007-SHIPMETDATA_POST-XPERF_ErrorPath-ShipmentEmptyDockNum_TestCase
+REST0007-SHIPMETDATA_POST-XPERF_ErrorPath-ShipmentNULLDockNum_TestCase
+REST0007-SHIPMETDATA_POST-XPERF_ErrorPath-ShipmentInvalidDockNum_TestCase
+REST0007-SHIPMETDATA_POST-XPERF_ErrorPath-ShipmentEmptyServiceSchedID_TestCase
+REST0007-SHIPMETDATA_POST-XPERF_ErrorPath-ShipmentNULLServiceSchedID_TestCase</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Line read in a loop from a file doesn't assign properly in batch program</h3>
+				<div class="date">Posted: <strong>18 Jun 2018 11:32</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Hi  jrahman,<br>
+<br>
+I closed your question on StackOverlflow as it is a duplicate of <a href="https://stackoverflow.com/q/30282784/463115" class="postlink">Variables in batch not behaving as expected</a>.<br>
+There is explained why your <strong class="text-strong">echo %testCaseName%</strong> fails.<br>
+Percent expansion is evaluated when a block is parsed, before it will be executed.<br>
+So in your sampe %testCaseName% is expanded to the value it has <strong class="text-strong">BEFORE</strong> you enter the loop.<br>
+It only seems that it shows always the <strong class="text-strong">last</strong> value, because after your first run in testCaseName is the last line.<br>
+<br>
+The solution (see the answers in the duplicate question) is delayed expansion.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+cd d:\SWAT
+set fileNameXPERF=d:\SWAT\ShipmentPostErrorPathXPERF.txt
+for /F "tokens=*" %%A in (D:\SWAT\ShipmentPostErrorPathXPERFxxx.txt) do (
+  set "testCaseName=%%A"
+  echo #1 !testCaseName!
+  echo #2 %%A
+  call d:\SWAT\testRunner.cmd !testCaseName!
+)</code></pre></div>
+
+Hope it helps<br>
+jeb</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Line read in a loop from a file doesn't assign properly in batch program</h3>
+				<div class="date">Posted: <strong>18 Jun 2018 14:35</strong></div>
+				<div class="author">by <strong>jrahman</strong></div>
+				<div class="content">Thank jeb.<br>
+It works !<br>
+You saved my day, thanks a lot !<br>
+<br>
+/jamil</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8632&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:52 GMT -->
+</html>

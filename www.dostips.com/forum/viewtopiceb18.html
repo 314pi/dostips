@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2053&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:17:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; CMD.EXE and ECHO are Broken and fixed.</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>CMD.EXE and ECHO are Broken and fixed.</h2>
+		<p><a href="viewtopic8760.html?f=3&amp;t=2053">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=2053</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>CMD.EXE and ECHO are Broken and fixed.</h3>
+				<div class="date">Posted: <strong>15 Jul 2011 05:36</strong></div>
+				<div class="author">by <strong>alan_b</strong></div>
+				<div class="content">I was using DOS before there were Windows of any sort.<br />The rules are not what I remember.<br /><br />Has your CMD.EXE changed, or will it change ?<br />This test script will find out.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />echo&nbsp; &nbsp; &nbsp; &nbsp;#<br />echo&nbsp; &nbsp; &nbsp; ###<br />echo&nbsp; &nbsp; &nbsp;#####<br />pause</code></pre></div><br />Before I knew better I would have said the display would have 3 lines each starting with a hash, but what I now see is<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; #<br />&nbsp; &nbsp; &nbsp;###<br />&nbsp; &nbsp; #####<br />Press any key to continue . . .</code></pre></div><br /><br />This change will break any code that depends upon the output of echo excluding all initial spaces,<br />but may be convenient where it obviates all the &quot;work-arounds&quot; that have been devised under &quot;ECHO. FAILS to give text or blank line - Instead use ECHO/&quot;<br /><!-- l --><a class="postlink-local" href="viewtopic8ec8.html?f=3&amp;t=774">viewtopic.php?f=3&amp;t=774</a><!-- l --><br /><br />I am always suspicious of Patch Tuesday and &quot;Out of band&quot; Microsoft Updates ;<br />Additional possibilities include :-<br />Changing from 32 bit Laptop to 64 bit Desktop ;<br />Changing from XP Home + SP3 to Windows 7 Ultimate + SP1<br /><br />I see the good, but fear the unknown.<br />Every time Microsoft patch something they always provide a way of attempting to uninstall because they often get it wrong;<br />what are they chances that some new whizz kid has made his mark on undocumented 30 year old source code to fix this ECHO and caused unfortunate side-effects which are waiting to ambush the users ?<br /><br />College of CMD.EXE Gurus, your starter for 10 :-<br />What else got broken in CMD.EXE when ECHO was changed<br /><br />Alan</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CMD.EXE and ECHO are Broken and fixed.</h3>
+				<div class="date">Posted: <strong>15 Jul 2011 16:09</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Well, the cmd is not the only thing they changed <img class="smilies" src="images/smilies/icon_lol.gif" alt=":lol:" title="Laughing" /><br />How ever. Let's talk about cmd and a 2nd issue (that could fix the first).<br /><br />You know that SET /P would display text as well. Here you will find the opposite effect.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;nul set /p &quot;=&nbsp; &nbsp;#&quot;&amp;echo(</code></pre></div><br />Preceding spaces are displayed in XP, but trimmed in Win7.<br /><br />BTW As far as I remember ECHO didn't trim inital spaces in XP <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> <br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CMD.EXE and ECHO are Broken and fixed.</h3>
+				<div class="date">Posted: <strong>16 Jul 2011 02:32</strong></div>
+				<div class="author">by <strong>alan_b</strong></div>
+				<div class="content">I am sorry, 5 months of trying to use the Windows 7 GUI has obviously been damaging my memory faster than my medication can repair the damage ! !<br /><br />After I initially started the topic on blank line creation with &quot;ECHO.&quot; there was much discussion and various alternatives.<br />I have since tended to use &quot;ECHO(&quot; where a plain &quot;ECHO&quot; would not do what I want.<br />I now associate &quot;ECHO(     text&quot;  as a way of controlling the start position of text.<br /><br />Last week I ran a BAT script that I previously used several years ago,<br />and was surprised to see an indentation on one line of an output table.<br />This was due to an extra space character after &quot;ECHO&quot; and before the text.<br />I am sure I would have removed that redundant character had I seen the indented line when using it under XP,<br />hence I deduced that XP trimmed all leading white space but Win 7 only skipped the first space.<br /><br />If I ever finish fighting with Win 7 I will pull XP out of mothballs and investigate further.<br /><br />Thanks<br />Regards<br />Alan</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CMD.EXE and ECHO are Broken and fixed.</h3>
+				<div class="date">Posted: <strong>16 Jul 2011 06:16</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I have confirmed that ECHO on XP preserves leading spaces. I have a vague memory of ECHO in pre-Windows DOS stripping leading spaces unless ECHO. was used. But I haven't a machine to test on.<br /><br /><blockquote><div><cite>alan_b wrote:</cite>I now associate &quot;ECHO( text&quot; as a way of controlling the start position of text.</div></blockquote>Not necessary for controlling start of text...<br />  ...but STILL very necessary for echoing a blank line  <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" />  (unless Windows 7 has some new feature I am not aware of - I'm stuck on Vista)<br /><br />ECHO( is not needed if there is subsequent text, unless the text is in a variable and there is a chance the variable is undefined.<br /><br />Dave Benham</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2053&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:17:25 GMT -->
+</html>

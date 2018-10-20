@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8843&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:11:16 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Mazing.cmd - A Visual Maze Generator for WinNT</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Mazing.cmd - A Visual Maze Generator for WinNT</h2>
+		<p><a href="viewtopicd641.html?f=3&amp;t=8843">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8843</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Mazing.cmd - A Visual Maze Generator for WinNT</h3>
+				<div class="date">Posted: <strong>27 Sep 2018 22:46</strong></div>
+				<div class="author">by <strong>CirothUngol</strong></div>
+				<div class="content">A while back I wrote a small script to replace the command line executable used by a fun little <a href="viewtopic733a.html?f=3&amp;t=7746&amp;hilit=maze" class="postlink">maze game</a> posted here at DosTips. I continued toying with several of the maze generating and solving algorithms found at <a href="http://www.astrolog.org/labyrnth/algrithm.htm" class="postlink">Think Labyrinth</a> sticking with those that create perfect mazes, which elegantly have only one solution for any two chosen points on it's path, and any two points are always connected. I also designed the algorithms around the principle of visibility, so all of them operate on a single string variable containing the entire maze, making output/display/animation rather simple. I actually completed the algorithms about a year ago, but all of their many various options were completely random (hard-wired on purpose) and I wanted to implement some form of control structure before posting it. Over the past year I've tinkered with it a bit (adding more randomness and purely visual elements) and have usually had it running in the background just to catch any odd-case errors and iron-out any issues... besides, it's fun and interesting to watch if you dig mazes. ^_^<br>
+<br>
+A few weeks ago I finally got around to implementing a menu and corralling most of the chaos into nice selectable options. It uses code page 437 and contains some unprintable characters, so careful which text editor you choose to manipulate it with (I use Notepad++). It will generate a log file in %~dp0, a couple of tiny files in %TEMP%, and will generate BG.EXE in %TEMP% if 'BG Color' is selected in the menu and it's not found in the system path (<a href="viewtopicd189.html?f=3&amp;t=8834" class="postlink">BG.EXE v3.9se</a> is required for this option). Hopefully it runs as trouble free for others as it seems to on my Win7 x64 system. Special thanks to dBenham and his inimitable <a href="viewtopic00cd.html?f=3&amp;t=4741&amp;hilit=snake" class="postlink"><strong class="text-strong">SNAKE.BAT</strong></a> for the batch example of a control element for interrupting the script, allowing the menu to be called at any time while running.<br>
+<br>
+It's completely useless and an utter waste of time, so please download and give it a try!<br>
+As always, please post any errors or issues you may have.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::                                                       v0.1
+::                         Mazing.cmd
+:: __________________________________________________________
+:: A maze program written in native WinNT batch script that
+:: includes several maze generation and solving algorithms as
+:: well as a small plethora of options for console display,
+:: stack size, stack orientation, node selection/direction
+:: bias, entrance/exit points, color selection, and wall/box
+:: characters, each with an automatic randomizer, and all of
+:: it easily accessible through an animated custom menu.
+:: Mazes are limited to a maximum practical string length of
+:: 8186 characters. The maze dimensions will be automatically
+:: increased/decreased if minimum/maximum size is exceeded.
+:: 
+:: Mazing operates using 100% WinNT batch script, but it will
+:: use either BG.EXE or CursorPos.exe to place the cursor at
+:: the upper-left if they are located in the system path.
+:: 
+::               Command Line / Mazing.ini File
+:: __________________________________________________________
+:: In addition to the menu, other User Variables are passed
+:: by using either the Mazing.ini file or on the command line
+:: by using the following syntax:
+:: Mazing.cmd ["variable=value"] [variable:value] [...]
+:: 
+:: Several options for minimum/maximum columns/rows, lists
+:: of characters for random walls/crumbs/colors, keys used by
+:: the menu, and output logfile are accessed by command line.
+:: A list of available user variables may be found under the
+:: :mazing_init label located at the bottom of the script.
+::
+::                        Menu Options
+:: __________________________________________________________
+:: Maze Generators: perfect mazes, one path to any two points
+::   Backtracker  - created by random depth-first search
+::   Hunt &amp; Kill  - like Backtracker, but more random
+::   Growing Tree - certainly the most versatile generator
+::   Iterative Division - 'recursive' division in a FOR loop
+::   Eller's Algorithm  - simplest and fastest of them all
+:: Maze solvers: always find the 1 solution to perfect mazes
+::   Don't Solve - only generate and convert mazes
+::   Wall Follow - left or right hand on wall, depth-first
+::   Dead Filler - remove dead-ends until path is revealed
+::   Path Finder - flood maze until exit found, retrace path
+:: Entrance/Exit: where to place the maze entrance and exit
+::   Inside - entrance=any random point, exit=farthest point
+::   Border - entrance=point on border, exit=farthest border
+::   Corner - entrance=random corner, exit=farthest corner
+:: Width: # of vertical columns, limited by minCols/maxCols
+:: Height: # of horizontal rows, limited by minRows/maxRows
+:: Ancillary Setting: different for each maze generator
+::   Hunt &amp; Kill  - type of stack, 0=FIFO, &lt;&gt;0=LIFO
+::   Growing Tree - list size, 0=all+LIFO, &lt;0=FIFO, &gt;0=LIFO
+::   Division - wall open, 0=NW,1=SE,2=NW/SE,3=Mid,4+=Random
+:: Node Selection Bias: % chance of choosing random or stack
+::   Hunt &amp; Kill   - 0=random from stack,100=next from stack
+::   Growing Tree  - 0=random from list, 100=next from stack
+::   Itr. Division - stack order, 0-7=pre-sets, 8+=random
+:: Node Direction Bias: % chance of choosing each direction
+::   0=most vertical, 50=even chance, 100=most horizontal
+::
+::                        Menu Options
+:: __________________________________________________________
+:: Convert: alter maze characters and colors
+::   Random Wall   - replace wall character from random list
+::   Random Box    - replace walls with 1 of 12 pre-set boxes
+::   Don't Convert - continue without altering settings
+::   Random - chose randomly from the previous three options
+:: Delay: # of centiseconds to delay each iteration of the
+::   generation/solving loop, to better view the algorithm
+:: Wall Character:  wall used for initial maze generation
+:: Crumb Character: trail used for initial maze generation
+::   These two may be altered by Convert if it's active
+:: Start Character:  used to indicate entrance to maze
+:: Finish Character: used to indicate exit from maze
+::   Never use the same characters for these four settings^!
+:: Background Color: console display, random=078F
+:: Foreground color: console display, random=1234569ABCDE
+::   Random      - select randomly from each color list
+::   Very Random - select randomly from all 16 colors
+::   Colors are displayed immediately to aid in selection
+:: Display Type: how to display maze in the console window
+::   No Display - only window title and logFile are active
+::   16 Color - change window size+color, show maze animation
+::   BG Color - display with additional colors, requires
+::              Carlos' BG.EXE v3.9se automatically generated
+::              in %TEMP% if not found in system path.
+:: 
+:: 
+:: project by CirothUngol                  September 27, 2018
+::</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Mazing.cmd - A Visual Maze Generator for WinNT</h3>
+				<div class="date">Posted: <strong>30 Sep 2018 20:53</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">@CirothUngol:<br>
+Is very interesting.<br>
+I need choose manually Terminal font for a good display of the characters.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8843&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:11:16 GMT -->
+</html>

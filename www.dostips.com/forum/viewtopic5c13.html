@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8825&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:13:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Find recursively (!) all empty dirs below top folder?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Find recursively (!) all empty dirs below top folder?</h2>
+		<p><a href="viewtopicade8.html?f=3&amp;t=8825">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8825</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Find recursively (!) all empty dirs below top folder?</h3>
+				<div class="date">Posted: <strong>11 Sep 2018 02:22</strong></div>
+				<div class="author">by <strong>pstein</strong></div>
+				<div class="content">Assume I want to find all dirs below a certain top node folder (e.g. D:\data\logs\) which are emtpy?<br>
+<br>
+"recursively" means if a dir contains only empty dirs (and no files) it should be considered as empty as well.<br>
+<br>
+How can code this in a dos batch file?<br>
+<br>
+Peter</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Find recursively (!) all empty dirs below top folder?</h3>
+				<div class="date">Posted: <strong>11 Sep 2018 10:02</strong></div>
+				<div class="author">by <strong>CirothUngol</strong></div>
+				<div class="content">Well, if removing empty directories is what you're after as opposed to Simply locating them, then the following macro does that rather efficiently.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::recursively remove all empty folders from a directory tree
+SET nullDir=FOR %%# IN (1 2)DO IF %%#==2 (%\n%
+	FOR /F "tokens=*" %%: IN ('DIR /AD-S/B/S !##! 2^^^&gt;NUL ^^^|SORT/R')DO RD "%%:"^&gt;NUL 2^&gt;^&amp;1%\n%
+	ENDLOCAL%\n%
+)ELSE SETLOCAL EnableDelayedExpansion^&amp;SET ##=%= \Path\to\Folder =%</code></pre></div>
+The code could be slightly aberrated to merely identifying them instead of removing them, but by Nature a folder with other folders in it isn't actually empty, so those will prove more difficult to identify.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Find recursively (!) all empty dirs below top folder?</h3>
+				<div class="date">Posted: <strong>23 Sep 2018 03:04</strong></div>
+				<div class="author">by <strong>pstein</strong></div>
+				<div class="content">@CirothUngol<br>
+<br>
+Thank you for your suggestion.<br>
+You are right: Finally I want to remove all empty folders.<br>
+But at first I want to list them only.<br>
+<br>
+Unfortunately your code produces an error:<br>
+<br>
+File Not Found<br>
+')ELSE' is not recognized as an internal or external command,<br>
+operable program or batch file.<br>
+<br>
+Whats wrong?<br>
+<br>
+In my batch script I replaced \Path\to\Folder  with the topnode folder. So alltogether my code looks like<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set topnode=D:\data\logs\
+cd /d %topnode%
+echo just listing empty folders
+SET nullDir=FOR %%# IN (1 2)DO IF %%#==2 (%\n%
+  FOR /F "tokens=*" %%: IN ('DIR /AD-S/B/S !##! 2^^^&gt;NUL ^^^|SORT/R')DO echo "%%:"^&gt;NUL 2^&gt;^&amp;1%\n%
+   ENDLOCAL%\n%
+ )ELSE SETLOCAL EnableDelayedExpansion^&amp;SET ##=%= %topnode% =%
+</code></pre></div>
+
+I wonder why you wrote the EnableDelayedExpansion statement into the else branch<br>
+<br>
+Wouldn't it be suffiient to write it once at the top of the script?<br>
+<br>
+Thank you<br>
+Peter</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Find recursively (!) all empty dirs below top folder?</h3>
+				<div class="date">Posted: <strong>23 Sep 2018 09:56</strong></div>
+				<div class="author">by <strong>CirothUngol</strong></div>
+				<div class="content">Oops, sorry 'bout that. <strong class="text-strong">%nullDir%</strong> is a fancy 'macro', a small batch routine contained inside a variable so you don't have to issue a CALL command... which happens to be just about the slowest thing in batch. A more complete and useful version looks like this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+:: define a newline with line continuation 
+(SET \n=^^^
+%= This defines an escaped Line Feed - DO NOT ALTER =%
+)
+
+:: recursively remove all empty folders from a directory tree
+SET nullDir=FOR %%# IN (1 2)DO IF %%#==2 (%\n%
+	FOR /F "tokens=*" %%: IN ('DIR /AD-S/B/S !##! 2^^^&gt;NUL ^^^|SORT/R')DO RD "%%:"^&gt;NUL 2^&gt;^&amp;1%\n%
+	ENDLOCAL%\n%
+)ELSE SETLOCAL EnableDelayedExpansion^&amp;SET ##=%= \Path\to\Folder =%
+
+:: call the macro
+%nullDir% %1
+EXIT /B 0</code></pre></div>
+SETLOCAL is issued inside the routine so the macro can be used in batch scripts that <em class="text-italics">don't</em> use DelayedExpansion. SETLOCAL is used after the ELSE statement to assure that it's the first statement executed by the routine and avoid accidentally clobbering any variables in the script that calls it (maybe it's using %##%? you never know...). Remember, SETLOCAL/ENDLOCAL is a way to keep local variables local, as opposed to global. This is all needlessly fancy, of course.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+:nullDir folderName
+FOR /F "tokens=*" %%: IN ('DIR /AD-S/B/S %1 2^&gt;NUL ^| SORT/R') DO RD "%%:" &gt;NUL 2&gt;&amp;1
+EXIT /B 0</code></pre></div>
+...is all you need, just make sure your parent folder is used for %1. It works by issuing a DIR /A(ttribute)D(irectories)-(ignore)S(ystem folders)/B(are info)/S(earch recursive) and piping it into SORT.EXE /R(everse). This assures that the 'bottom-most' folders are removed first so that nested folders are properly emptied, and conveniently <strong class="text-strong">RD</strong> will remove only empty folders unless the /S switch is used. Of course, any commands you wish may be used. To list the folders as they are emptied, perhaps try:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+:nullDir folderName
+FOR /F "tokens=*" %%: IN ('DIR /AD-S/B/S %1 2^&gt;NUL ^| SORT/R') DO (
+	RD "%%:" &gt;NUL 2&gt;&amp;1
+	IF NOT EXIST "%%:" ECHO %%:
+)
+EXIT /B 0</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8825&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:13:27 GMT -->
+</html>

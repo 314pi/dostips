@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8791&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:41:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; color compatibility with Windows 10 and Windows 7</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>color compatibility with Windows 10 and Windows 7</h2>
+		<p><a href="viewtopice6a5.html?f=3&amp;t=8791">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8791</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>color compatibility with Windows 10 and Windows 7</h3>
+				<div class="date">Posted: <strong>19 Aug 2018 23:17</strong></div>
+				<div class="author">by <strong>kim974</strong></div>
+				<div class="content">Hello,<br>
+<br>
+I have the following code :<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+mode 80, 22
+cls
+echo.
+echo  Test
+echo  ____
+echo.
+echo.
+echo   [101;104m [1] coffee           [0m
+echo   [101;46m [2] Water            [0m
+echo   [101;41m [3] A bed            [0m
+echo   [101;93m [4] A car            [0m
+echo.
+set CHOICE=goaway
+set /P CHOICE=What do you wish ? 
+</code></pre></div>
+
+The result :<br>
+<a href="../../pasteboard.co/HzZYBnn.html" class="postlink">https://pasteboard.co/HzZYBnn.png</a><br>
+<br>
+Unfortunately this code work only with Windows 10.<br>
+Can you help me to get working on both (Windows 10 &amp; 7) ?<br>
+<br>
+Thank you very much</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: color compatibility with Windows 10 and Windows 7</h3>
+				<div class="date">Posted: <strong>20 Aug 2018 04:48</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content"><a href="https://stackoverflow.com/questions/4339649/how-to-have-multiple-colors-in-a-windows-batch-file" class="postlink">https://stackoverflow.com/questions/433 ... batch-file</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: color compatibility with Windows 10 and Windows 7</h3>
+				<div class="date">Posted: <strong>21 Aug 2018 00:29</strong></div>
+				<div class="author">by <strong>kim974</strong></div>
+				<div class="content">I tried some of these code, but not able to get color for space;..<br>
+<br>
+If someone can help me to get the same result as on Windows 10.<br>
+<br>
+Thank you very much !</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: color compatibility with Windows 10 and Windows 7</h3>
+				<div class="date">Posted: <strong>21 Aug 2018 12:33</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><a href="viewtopicfa8f.html?p=41155#p41155" class="postlink">viewtopic.php?p=41155#p41155</a><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+call :Color 07 "  " 97 " [1] coffee           " \n 07 "  " 37 " [2] Water            " \n 07 "  " 47 " [3] A bed            " \n 07 "  " CE " [4] A car            " \n
+pause
+
+goto :eof
+:Color
+:: v23c
+:: Arguments: hexColor text [\n] ...
+:: \n -&gt; newline ... -&gt; repeat
+:: Supported in windows XP, 7, 8.
+:: This version works using Cmd /U
+:: In XP extended ascii characters are printed as dots.
+:: For print quotes, use empty text.
+SetLocal EnableExtensions EnableDelayedExpansion
+Subst `: "!Temp!" &gt;Nul &amp;`: &amp;Cd \
+SetLocal DisableDelayedExpansion
+Echo(|(Pause &gt;Nul &amp;Findstr "^" &gt;`)
+Cmd /A /D /C Set /P "=." &gt;&gt;` &lt;Nul
+For /F %%# In (
+'"Prompt $H &amp;For %%_ In (_) Do Rem"') Do (
+Cmd /A /D /C Set /P "=%%# %%#" &lt;Nul &gt;`.1
+Copy /Y `.1 /B + `.1 /B + `.1 /B `.3 /B &gt;Nul
+Copy /Y `.1 /B + `.1 /B + `.3 /B `.5 /B &gt;Nul
+Copy /Y `.1 /B + `.1 /B + `.5 /B `.7 /B &gt;Nul
+)
+:__Color
+Set "Text=%~2"
+If Not Defined Text (Set Text=^")
+SetLocal EnableDelayedExpansion
+For %%_ In ("&amp;" "|" "&gt;" "&lt;"
+) Do Set "Text=!Text:%%~_=^%%~_!"
+Set /P "LF=" &lt;` &amp;Set "LF=!LF:~0,1!"
+For %%# in ("!LF!") Do For %%_ In (
+\ / :) Do Set "Text=!Text:%%_=%%~#%%_%%~#!"
+For /F delims^=^ eol^= %%# in ("!Text!") Do (
+If #==#! EndLocal
+If \==%%# (Findstr /A:%~1 . \` Nul
+Type `.3) Else If /==%%# (Findstr /A:%~1 . /.\` Nul
+Type `.5) Else (Cmd /A /D /C Echo %%#\..\`&gt;`.dat
+Findstr /F:`.dat /A:%~1 .
+Type `.7))
+If "\n"=="%~3" (Shift
+Echo()
+Shift
+Shift
+If ""=="%~1" Del ` `.1 `.3 `.5 `.7 `.dat &amp;Goto :Eof
+Goto :__Color
+</code></pre></div>
+... just to bring another function in the game. Although (without following the StackOververflow link) I'm sure the already offered solutions are also able to handle spaces properly...<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8791&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:41:41 GMT -->
+</html>

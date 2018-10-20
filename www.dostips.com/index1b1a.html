@@ -1,0 +1,1362 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="en-US">
+
+<!-- Mirrored from www.dostips.com/?i=UnitTest by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 03:26:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<META http-equiv=content-type content="text/html; charset=iso-8859-1">
+<META content=TRUE name=MSSmartTagsPreventParsing>
+<META http-equiv=expires content=-1>
+<META http-equiv=pragma content=no-cache>
+<META content=all name=robots>
+<META name=keywords content='dos,functions,vista,xp,command line,batch,examples,substring,variables,copies,date'>
+<link rel=Stylesheet type="text/css" media=all href="_style0b84.css?v=0001">
+<link rel="shortcut icon" href="favicon.ico" >
+<link rel="icon" href="animated_favicon1.gif" type="image/gif" >
+<title>Unit Test Function Library</title>
+<!--index.php-->
+</head>
+<body>
+
+<div class="nav">
+        <br>
+    <div class="navi">
+        <a href='index.html'><img src='TitleDostips.jpg' height='80' alt='DosTips.com'></a>
+        <br><span style="font-size: 9px; font-weight: bold;">for Windows10,Windows8,Windows7,VISTA,</span>
+        <br><span style="font-size: 9px; font-weight: bold;">XP,NT,Server 2000,Server 2003,Server 2008</span>
+        <br>
+        <br>
+            <!-- SiteSearch Google -->
+<div class="search">
+<script>
+  (function() {
+    var cx = 'partner-pub-4331089886589220:2001057635';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = '../cse.google.com/cse07b6.html?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:searchbox-only></gcse:searchbox-only>
+</div>
+<!-- SiteSearch Google -->
+        <br>
+            <ul>
+        <li class='nsel'><a href='index.html'>Home</a>&nbsp;
+            <ul>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a>Source Script</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='DtCodeBatchFiles.html'>Batch Files</a>&nbsp;</li>
+                <li class='nsel'><a href='DtCodeFunctions.html'>Functions</a>&nbsp;</li>
+                <li class='nsel'><a href='DtCodeCmdLib.html'>Function Library</a>&nbsp;</li>
+                <li class='nsel'><a href='DtCodeSnippets.html'>Script Snippets</a>&nbsp;</li>
+                <li class='nsel'><a href='DtCodeInterfacing.html'>Interfacing</a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a>Tips and Tricks</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='DtTipsXCopy.html'>Copy Tips</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsMenu.html'>Menu in Batch</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsStringManipulation.html'>String Manipulation</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsStringOperations.html'>String Operations</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsDateTime.html'>Date and Time</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsArithmetic.html'>Arithmetic</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsFtpBatchScript.html'>FTP Batch Script</a>&nbsp;</li>
+                <li class='nsel'><a href='DosCommandIndex.html'>Command Index</a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a>Tutorials</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='DtTutoFirstBatch.html'>My First Batch</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTutoFramework.html'>Solid Framework</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTutoFunctions.html'>Functions</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTutoPersistency.html'>Persistency</a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a href='forum/viewforum4d6b.html?f=3'>Forum</a>&nbsp;
+            <ul>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a href='DtGeneGeneral.html'>General</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='DtGeneTermsOfUse.html'>Terms of Use</a>&nbsp;</li>
+                <li class='nsel'><a href='DtGeneEnabler.html'>Enablers</a>&nbsp;</li>
+                <li class='nsel'><a href='DtGeneAboutUs.html'>About Us</a>&nbsp;</li>
+                <li class='nsel'><a href='forum/memberlist8733.html?mode=contactadmin'>Contact Us</a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a>Others</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=9018663'><marquee width="120" scrollamount="2">Want donate a cup of Cafe? . click . </marquee></a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+    </ul>
+    </div>
+</div>
+<H1>Unit Test Function Library</H1>
+<span class='shortText'>Unit Test for DosTips Functions.</span><br><br>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>DOS functions open the door for effective unit test.  Each DOS function can be tested by itself using a unit test function.
+This page lists the unit test functions that are currently available and being used to validate the DOS function provided at <a href="index.html">DosTips.com</a>.</td>
+    </tr>
+  </table>
+<br><table class='menu' cellpadding='0' cellspacing='0'>
+<tr><td colspan='2'>
+</td></tr>
+<tr><td class='title'><a href='index1b1a.html?i=UnitTest'>Unit Test Function Library</a></td>
+<td class='text'>Unit Test for DosTips Functions.</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.bannerPingPong'>:unittest.bannerPingPong</a></td>
+<td class='text'>Test cases for the :bannerPingPong function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.bannerRotate'>:unittest.bannerRotate</a></td>
+<td class='text'>Test cases for the :bannerRotate function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.date2jdate'>:unittest.date2jdate</a></td>
+<td class='text'>Test cases for the :date2jdate function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.dayOfYear'>:unittest.dayOfYear</a></td>
+<td class='text'>Test cases for the :dayOfYear function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.extractFileSection'>:unittest.extractFileSection</a></td>
+<td class='text'>Test cases for the :extractFileSection function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.false'>:unittest.false</a></td>
+<td class='text'>Test cases for the :false function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.format'>:unittest.format</a></td>
+<td class='text'>Test cases for the :format function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.jdate'>:unittest.jdate</a></td>
+<td class='text'>Test cases for the :jdate function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.jdate2date'>:unittest.jdate2date</a></td>
+<td class='text'>Test cases for the :jdate2date function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.lTrim'>:unittest.lTrim</a></td>
+<td class='text'>Test cases for the :lTrim function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.MakeAbsolute'>:unittest.MakeAbsolute</a></td>
+<td class='text'>Test cases for the :MakeAbsolute function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.MakeRelative'>:unittest.MakeRelative</a></td>
+<td class='text'>Test cases for the :MakeRelative function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.rTrim'>:unittest.rTrim</a></td>
+<td class='text'>Test cases for the :rTrim function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.StartsWith'>:unittest.StartsWith</a></td>
+<td class='text'>Test cases for the :StartsWith function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.strLen'>:unittest.strLen</a></td>
+<td class='text'>Test cases for the :strLen function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.substitute'>:unittest.substitute</a></td>
+<td class='text'>Test cases for the :substitute function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.toCamelCase'>:unittest.toCamelCase</a></td>
+<td class='text'>Test cases for the :toCamelCase function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.toLower'>:unittest.toLower</a></td>
+<td class='text'>Test cases for the :toLower function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.toUpper'>:unittest.toUpper</a></td>
+<td class='text'>Test cases for the :toUpper function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.Trim'>:unittest.Trim</a></td>
+<td class='text'>Test cases for the :Trim function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.true'>:unittest.true</a></td>
+<td class='text'>Test cases for the :true function</td>
+</tr>
+<tr><td class='title'><a href='#UnitTest.Unique'>:unittest.Unique</a></td>
+<td class='text'>Test cases for the :Unique function</td>
+</tr>
+</table>    <hr>
+    <a name=''></a>
+    <a name='UnitTest.bannerPingPong'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-03-21</font></font></div>
+    <H2>:unittest.bannerPingPong - Test cases for the :bannerPingPong function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.bannerPingPong'>:unittest.bannerPingPong</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#bannerPingPong">:bannerPingPong</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.bannerPingPong'>:unittest.bannerPingPong</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080321&nbsp;:$changed&nbsp;20080321</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>set&nbsp;&quot;text=hi&nbsp;&nbsp;&nbsp;&nbsp;-&quot;</span><br>
+<span style='color=#000000'>for&nbsp;/l&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(1,1,15)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:bannerPingPong&nbsp;text</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;echo.'<span class=c_pvar>%%t</span>ext%%'</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.bannerPingPong - output
+'-hi---+'
+'--hi--+'
+'---hi-+'
+'----hi+'
+'---hi--'
+'--hi---'
+'-hi----'
+'hi-----'
+'-hi---+'
+'--hi--+'
+'---hi-+'
+'----hi+'
+'---hi--'
+'--hi---'
+'-hi----'
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.bannerRotate'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-03-21</font></font></div>
+    <H2>:unittest.bannerRotate - Test cases for the :bannerRotate function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.bannerRotate'>:unittest.bannerRotate</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#bannerRotate">:bannerRotate</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.bannerRotate'>:unittest.bannerRotate</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080321&nbsp;:$changed&nbsp;20080321</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>set&nbsp;&quot;text=&nbsp;hi&nbsp;there!&nbsp;&quot;</span><br>
+<span style='color=#000000'>for&nbsp;/l&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(1,1,12)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:bannerRotate&nbsp;text</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;echo.'<span class=c_pvar>%%t</span>ext%%'</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.bannerRotate - output
+'hi-there!--'
+'i-there!--h'
+'-there!--hi'
+'there!--hi-'
+'here!--hi-t'
+'ere!--hi-th'
+'re!--hi-the'
+'e!--hi-ther'
+'!--hi-there'
+'--hi-there!'
+'-hi-there!-'
+'hi-there!--'
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.date2jdate'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2009-03-28</font></font></div>
+    <H2>:unittest.date2jdate - Test cases for the :date2jdate function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.date2jdate'>:unittest.date2jdate</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#date2jdate">:date2jdate</a>, <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br><a name='14'>14.</a><br><a name='15'>15.</a><br><a name='16'>16.</a><br><a name='17'>17.</a><br><a name='18'>18.</a><br><a name='19'>19.</a><br><a name='20'>20.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.date2jdate'>:unittest.date2jdate</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080223&nbsp;:$changed&nbsp;20090328</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>for&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2008&nbsp;02&nbsp;23&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2008&nbsp;02&nbsp;23&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2007&nbsp;12&nbsp;31&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2008&nbsp;01&nbsp;01&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2008&nbsp;01&nbsp;06&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2008&nbsp;01&nbsp;07&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2008&nbsp;01&nbsp;08&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2008&nbsp;01&nbsp;09&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;100&nbsp;1&nbsp;1&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;99&nbsp;12&nbsp;31&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;0&nbsp;1&nbsp;1&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:date2jdate&nbsp;s&nbsp;<span class=c_pvar>%%~C</span></span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[35]&nbsp;[35].&quot;&nbsp;&quot;'<span class=c_pvar>%%~C</span>'&quot;&nbsp;&quot;'<span class=c_pvar>%%s</span>%%'&quot;</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.date2jdate - output
+'2008 02 23'                        '2454520'                          .
+'2008 02 23'                        '2454520'                          .
+'2007 12 31'                        '2454466'                          .
+'2008 01 01'                        '2454467'                          .
+'2008 01 06'                        '2454472'                          .
+'2008 01 07'                        '2454473'                          .
+'2008 01 08'                        '2454474'                          .
+'2008 01 09'                        '2454475'                          .
+'100 1 1'                           '1757585'                          .
+'99 12 31'                          '2488069'                          .
+'0 1 1'                             '2451545'                          .
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.dayOfYear'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-06-16</font></font></div>
+    <H2>:unittest.dayOfYear - Test cases for the :dayOfYear function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.dayOfYear'>:unittest.dayOfYear</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#dayOfYear">:dayOfYear</a>, <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br><a name='14'>14.</a><br><a name='15'>15.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.dayOfYear'>:unittest.dayOfYear</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080616&nbsp;:$changed&nbsp;20080616</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>for&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;1/1/2008&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;1/31/2008&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2/1/2008&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;3/31/2008&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;12/31/2008&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;1/1/2009&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:dayOfYear&nbsp;s&nbsp;&quot;<span class=c_pvar>%%~C</span>&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[35]&nbsp;[35].&quot;&nbsp;&quot;'<span class=c_pvar>%%~C</span>'&quot;&nbsp;&quot;'<span class=c_pvar>%%s</span>%%'&quot;</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.dayOfYear - output
+'1/1/2008'                          '1'                                .
+'1/31/2008'                         '31'                               .
+'2/1/2008'                          '32'                               .
+'3/31/2008'                         '91'                               .
+'12/31/2008'                        '366'                              .
+'1/1/2009'                          '1'                                .
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.extractFileSection'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2010-02-05</font></font></div>
+    <H2>:unittest.extractFileSection - Test cases for the :extractFileSection function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.extractFileSection'>:unittest.extractFileSection</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#extractFileSection">:extractFileSection</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br><a name='14'>14.</a><br><a name='15'>15.</a><br><a name='16'>16.</a><br><a name='17'>17.</a><br><a name='18'>18.</a><br><a name='19'>19.</a><br><a name='20'>20.</a><br><a name='21'>21.</a><br><a name='22'>22.</a><br><a name='23'>23.</a><br><a name='24'>24.</a><br><a name='25'>25.</a><br><a name='26'>26.</a><br><a name='27'>27.</a><br><a name='28'>28.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.extractFileSection'>:unittest.extractFileSection</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080219&nbsp;:$changed&nbsp;20100205</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>SETLOCAL&nbsp;Disabledelayedexpansion</span><br>
+<span style='color=#000000'>set&nbsp;&quot;substitute=SUBSTITUTED&quot;</span><br>
+<span style='color=#000000'>echo.extract&nbsp;without&nbsp;substitution</span><br>
+<span style='color=#000000'>call:extractFileSection&nbsp;&quot;+++Section1&quot;&nbsp;&quot;+++&quot;&nbsp;&quot;<span class=c_pvar>%~f0</span>&quot;</span><br>
+<span style='color=#000000'>echo.extract&nbsp;with&nbsp;substitution</span><br>
+<span style='color=#000000'>SETLOCAL&nbsp;Enabledelayedexpansion</span><br>
+<span style='color=#000000'>call:extractFileSection&nbsp;&quot;+++Section2&quot;&nbsp;&quot;+++&quot;&nbsp;&quot;<span class=c_pvar>%~f0</span>&quot;</span><br>
+<span style='color=#000000'><span class=c_cmmt>rem&nbsp;echo.--&nbsp;extract&nbsp;function&nbsp;<span class=c_pvar>%~0</span></span></span><br>
+<span style='color=#000000'><span class=c_cmmt>rem&nbsp;call:extractFileSection&nbsp;&quot;<span class=c_pvar>%~0</span>&quot;&nbsp;&quot;EXIT&nbsp;/b&quot;&nbsp;&quot;<span class=c_pvar>%~f0</span>&quot;</span></span><br>
+<span style='color=#000000'>@EXIT&nbsp;/b</span><br>
+<span style='color=#000000'>+++Section1</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;Extracted&nbsp;Line&nbsp;1</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;Extracted&nbsp;Line&nbsp;2&nbsp;%substitute%</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;a:&nbsp;<span class=c_pvar>%~1</span>&nbsp;%2</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;b:&nbsp;%substitute:~3%</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;c:&nbsp;%substitute:u=%</span><br>
+<span style='color=#000000'>+++</span><br>
+<span style='color=#000000'>+++Section2:S</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;Extracted&nbsp;Line&nbsp;1</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;Extracted&nbsp;Line&nbsp;2&nbsp;%substitute%</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;a:&nbsp;<span class=c_pvar>%~1</span>&nbsp;%2</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;b:&nbsp;%substitute:~3%</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;c:&nbsp;%substitute:u=%</span><br>
+<span style='color=#000000'>+++</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.extractFileSection - output
+extract without substitution
+    Extracted Line 1
+    Extracted Line 2 %substitute%
+    a: %~1 %2
+    b: %substitute:~3%
+    c: %substitute:u=%
+extract with substitution
+    Extracted Line 1
+    Extracted Line 2 SUBSTITUTED
+    a: +++Section2 &quot;+++&quot;
+    b: STITUTED
+    c: SBSTITTED
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.false'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-02-19</font></font></div>
+    <H2>:unittest.false - Test cases for the :false function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.false'>:unittest.false</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#false">:false</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.false'>:unittest.false</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080219&nbsp;:$changed&nbsp;20080219</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>call:false&nbsp;&amp;&amp;&nbsp;echo.TRUE&nbsp;||&nbsp;echo.FALSE</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.false - output
+FALSE
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.format'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-02-19</font></font></div>
+    <H2>:unittest.format - Test cases for the :format function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.format'>:unittest.format</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.format'>:unittest.format</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080219&nbsp;:$changed&nbsp;20080219</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>echo.01234567890123456789012345678901234</span><br>
+<span style='color=#000000'>call:Format&nbsp;&quot;[-9]&nbsp;.&nbsp;[9]&nbsp;.&nbsp;[9]&nbsp;.&quot;&nbsp;column1&nbsp;column2&nbsp;column3</span><br>
+<span style='color=#000000'>call:Format&nbsp;&quot;[9]&nbsp;.&nbsp;[-9]&nbsp;.&nbsp;[9]&nbsp;.&quot;&nbsp;column1&nbsp;column2&nbsp;column3</span><br>
+<span style='color=#000000'>call:Format&nbsp;&quot;[9]&nbsp;.&nbsp;[9]&nbsp;.&nbsp;[-9]&nbsp;.&quot;&nbsp;column1&nbsp;column2&nbsp;column3</span><br>
+<span style='color=#000000'>call:Format&nbsp;&quot;[-9]&nbsp;.&nbsp;[-9]&nbsp;.&nbsp;[-9]&nbsp;.&quot;&nbsp;column1&nbsp;column2&nbsp;column3</span><br>
+<span style='color=#000000'>call:Format&nbsp;&quot;[-9]&nbsp;.&nbsp;[-9]&nbsp;.&nbsp;[-9]&nbsp;.&quot;&nbsp;col1&nbsp;col2&nbsp;col3</span><br>
+<span style='color=#000000'>call:Format&nbsp;&quot;[9]&nbsp;.&nbsp;[-9]&nbsp;.&nbsp;[-9]&nbsp;.&quot;&nbsp;column1column1&nbsp;column2column2&nbsp;column3column3</span><br>
+<span style='color=#000000'>call:Format&nbsp;&quot;[12][12][9]&nbsp;.&quot;&nbsp;column1&nbsp;column2&nbsp;column3</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.format - output
+01234567890123456789012345678901234
+  column1 . column2   . column3   .
+column1   .   column2 . column3   .
+column1   . column2   .   column3 .
+  column1 .   column2 .   column3 .
+     col1 .      col2 .      col3 .
+column1co . n2column2 . n3column3 .
+column1     column2     column3   .
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.jdate'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2009-03-28</font></font></div>
+    <H2>:unittest.jdate - Test cases for the :jdate function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.jdate'>:unittest.jdate</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#jdate">:jdate</a>, <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br><a name='14'>14.</a><br><a name='15'>15.</a><br><a name='16'>16.</a><br><a name='17'>17.</a><br><a name='18'>18.</a><br><a name='19'>19.</a><br><a name='20'>20.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.jdate'>:unittest.jdate</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080223&nbsp;:$changed&nbsp;20090328</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>for&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Sat&nbsp;02/23/2008&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;02/23/2008&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;12/31/2007&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;01/01/2008&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;01/06/2008&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;01/07/2008&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;01/08/2008&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;01/09/2008&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;1/1/100&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;12/31/99&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;1/1/0&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:jdate&nbsp;s&nbsp;&quot;<span class=c_pvar>%%~C</span>&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[35]&nbsp;[35].&quot;&nbsp;&quot;'<span class=c_pvar>%%~C</span>'&quot;&nbsp;&quot;'<span class=c_pvar>%%s</span>%%'&quot;</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.jdate - output
+'Sat 02/23/2008'                    '2454520'                          .
+'02/23/2008'                        '2454520'                          .
+'12/31/2007'                        '2454466'                          .
+'01/01/2008'                        '2454467'                          .
+'01/06/2008'                        '2454472'                          .
+'01/07/2008'                        '2454473'                          .
+'01/08/2008'                        '2454474'                          .
+'01/09/2008'                        '2454475'                          .
+'1/1/100'                           '1757585'                          .
+'12/31/99'                          '2488069'                          .
+'1/1/0'                             '2451545'                          .
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.jdate2date'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-02-23</font></font></div>
+    <H2>:unittest.jdate2date - Test cases for the :jdate2date function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.jdate2date'>:unittest.jdate2date</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#jdate2date">:jdate2date</a>, <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br><a name='14'>14.</a><br><a name='15'>15.</a><br><a name='16'>16.</a><br><a name='17'>17.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.jdate2date'>:unittest.jdate2date</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080223&nbsp;:$changed&nbsp;20080223</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>for&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2454520&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2454466&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2454467&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2454472&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2454473&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2454474&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;2454475&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;&quot;jd=<span class=c_pvar>%%~C</span>&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:jdate2date&nbsp;jd&nbsp;Y&nbsp;M&nbsp;D</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[35]&nbsp;[35].&quot;&nbsp;&quot;'<span class=c_pvar>%%j</span>d%%'&quot;&nbsp;&nbsp;&nbsp;&nbsp;&quot;'<span class=c_pvar>%%Y</span>%%&nbsp;<span class=c_pvar>%%M</span>%%&nbsp;<span class=c_pvar>%%D</span>%%'&quot;</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.jdate2date - output
+'2454520'                           '2008 02 23'                       .
+'2454466'                           '2007 12 31'                       .
+'2454467'                           '2008 01 01'                       .
+'2454472'                           '2008 01 06'                       .
+'2454473'                           '2008 01 07'                       .
+'2454474'                           '2008 01 08'                       .
+'2454475'                           '2008 01 09'                       .
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.lTrim'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-02-27</font></font></div>
+    <H2>:unittest.lTrim - Test cases for the :lTrim function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.lTrim'>:unittest.lTrim</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#lTrim">:lTrim</a>, <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.lTrim'>:unittest.lTrim</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080227&nbsp;:$changed&nbsp;20080227</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>for&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;left&nbsp;trim&nbsp;nothing&nbsp;&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;left&nbsp;trim&nbsp;one&nbsp;&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left&nbsp;trim&nbsp;plenty&nbsp;&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;&quot;s=<span class=c_pvar>%%~C</span>&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:lTrim&nbsp;s</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[35]&nbsp;[35].&quot;&nbsp;&quot;'<span class=c_pvar>%%~C</span>'&quot;&nbsp;&quot;'<span class=c_pvar>%%s</span>%%'&quot;</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.lTrim - output
+'left trim nothing '                'left trim nothing '               .
+' left trim one '                   'left trim one '                   .
+'                left trim plenty ' 'left trim plenty '                .
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.MakeAbsolute'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-02-19</font></font></div>
+    <H2>:unittest.MakeAbsolute - Test cases for the :MakeAbsolute function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.MakeAbsolute'>:unittest.MakeAbsolute</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#MakeAbsolute">:MakeAbsolute</a>, <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.MakeAbsolute'>:unittest.MakeAbsolute</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080219&nbsp;:$changed&nbsp;20080219</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>for&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;..\..\windows\win.ini&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;..\..\windows\..\windows\win.ini&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;.\..\.\..\windows.\.\..\windows\win.ini&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;&quot;s=<span class=c_pvar>%%~C</span>&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:MakeAbsolute&nbsp;s</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[35]&nbsp;[35].&quot;&nbsp;&quot;'<span class=c_pvar>%%~C</span>'&quot;&nbsp;&quot;'<span class=c_pvar>%%s</span>%%'&quot;</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.MakeAbsolute - output
+'..\..\windows\win.ini'             'C:\WINDOWS\win.ini'               .
+'..\..\windows\..\windows\win.ini'  'C:\WINDOWS\win.ini'               .
+'.\..\.\..\windows.\.\..\windows\wi 'C:\WINDOWS\win.ini'               .
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.MakeRelative'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-02-19</font></font></div>
+    <H2>:unittest.MakeRelative - Test cases for the :MakeRelative function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.MakeRelative'>:unittest.MakeRelative</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#MakeRelative">:MakeRelative</a>, <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.MakeRelative'>:unittest.MakeRelative</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080219&nbsp;:$changed&nbsp;20080219</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>for&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;c:\windows\win.ini&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;\windows\win.ini&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;..\..\windows\..\windows\win.ini&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;&quot;s=<span class=c_pvar>%%~C</span>&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:MakeRelative&nbsp;s</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[35]&nbsp;[35].&quot;&nbsp;&quot;'<span class=c_pvar>%%~C</span>'&quot;&nbsp;&quot;'<span class=c_pvar>%%s</span>%%'&quot;</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.MakeRelative - output
+'c:\windows\win.ini'                '..\..\WINDOWS\win.ini'            .
+'\windows\win.ini'                  '..\..\WINDOWS\win.ini'            .
+'..\..\windows\..\windows\win.ini'  '..\..\WINDOWS\win.ini'            .
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.rTrim'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-02-27</font></font></div>
+    <H2>:unittest.rTrim - Test cases for the :rTrim function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.rTrim'>:unittest.rTrim</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#rTrim">:rTrim</a>, <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.rTrim'>:unittest.rTrim</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080227&nbsp;:$changed&nbsp;20080227</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>for&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;right&nbsp;trim&nbsp;nothing&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;right&nbsp;trim&nbsp;one&nbsp;&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;right&nbsp;trim&nbsp;plenty&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;&quot;s=<span class=c_pvar>%%~C</span>&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:rTrim&nbsp;s</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[35]&nbsp;[35].&quot;&nbsp;&quot;'<span class=c_pvar>%%~C</span>'&quot;&nbsp;&quot;'<span class=c_pvar>%%s</span>%%'&quot;</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.rTrim - output
+' right trim nothing'               ' right trim nothing'              .
+' right trim one '                  ' right trim one'                  .
+' right trim plenty                 ' right trim plenty'               .
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.StartsWith'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-03-20</font></font></div>
+    <H2>:unittest.StartsWith - Test cases for the :StartsWith function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.StartsWith'>:unittest.StartsWith</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#StartsWith">:StartsWith</a>, <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br><a name='14'>14.</a><br><a name='15'>15.</a><br><a name='16'>16.</a><br><a name='17'>17.</a><br><a name='18'>18.</a><br><a name='19'>19.</a><br><a name='20'>20.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.StartsWith'>:unittest.StartsWith</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080320&nbsp;:$changed&nbsp;20080320</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>set&nbsp;&quot;text=Hi&nbsp;there&quot;</span><br>
+<span style='color=#000000'>for&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Hi&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;hi&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;h&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;la&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;hi&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:StartsWith&nbsp;&quot;%text%&quot;&nbsp;&quot;<span class=c_pvar>%%~C</span>&quot;&nbsp;&amp;&amp;&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[12]&nbsp;starts&nbsp;with&nbsp;[10]&nbsp;-&nbsp;[5].&quot;&nbsp;&quot;'%text%'&quot;&nbsp;&quot;'<span class=c_pvar>%%~C</span>'&quot;&nbsp;&quot;TRUE&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=c_cmmt>rem</span></span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;||&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[12]&nbsp;starts&nbsp;with&nbsp;[10]&nbsp;-&nbsp;[5].&quot;&nbsp;&quot;'%text%'&quot;&nbsp;&quot;'<span class=c_pvar>%%~C</span>'&quot;&nbsp;&quot;FALSE&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.StartsWith - output
+'Hi there'   starts with 'Hi'       - TRUE .
+'Hi there'   starts with 'hi'       - TRUE .
+'Hi there'   starts with 'h'        - TRUE .
+'Hi there'   starts with ''         - FALSE.
+'Hi there'   starts with 'la'       - FALSE.
+'Hi there'   starts with ' hi'      - FALSE.
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.strLen'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-11-24</font></font></div>
+    <H2>:unittest.strLen - Test cases for the :strLen function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.strLen'>:unittest.strLen</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#strLen">:strLen</a>, <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br><a name='14'>14.</a><br><a name='15'>15.</a><br><a name='16'>16.</a><br><a name='17'>17.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.strLen'>:unittest.strLen</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20081124&nbsp;:$changed&nbsp;20081124</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>for&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;H&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Hi&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Hi_&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Hi&nbsp;T&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Hi&nbsp;There,&nbsp;what's&nbsp;up!&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;&quot;str=<span class=c_pvar>%%~C</span>&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:strLen&nbsp;str&nbsp;len&nbsp;&amp;&amp;&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[5]&nbsp;characters&nbsp;for&nbsp;[20].&quot;&nbsp;&quot;'<span class=c_pvar>%%l</span>en%%'&quot;&nbsp;&quot;'<span class=c_pvar>%%s</span>tr%%'&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.strLen - output
+'0'   characters for ''                  .
+'1'   characters for 'H'                 .
+'2'   characters for 'Hi'                .
+'3'   characters for 'Hi_'               .
+'4'   characters for 'Hi T'              .
+'20'  characters for 'Hi There, what's up.
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.substitute'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-03-26</font></font></div>
+    <H2>:unittest.substitute - Test cases for the :substitute function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.substitute'>:unittest.substitute</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#substitute">:substitute</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br><a name='14'>14.</a><br><a name='15'>15.</a><br><a name='16'>16.</a><br><a name='17'>17.</a><br><a name='18'>18.</a><br><a name='19'>19.</a><br><a name='20'>20.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.substitute'>:unittest.substitute</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080326&nbsp;:$changed&nbsp;20080326</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>(for&nbsp;<span class=c_pvar>%%A</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;two&nbsp;words&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;exclamation&nbsp;!&nbsp;exclamation&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;percent&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%&nbsp;percent&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;ampersand&nbsp;&nbsp;&nbsp;&amp;&nbsp;ampersand&nbsp;&amp;&amp;&nbsp;ampersand&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;vertical&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;vertical&nbsp;&nbsp;||&nbsp;vertical&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;(parenthesis)&nbsp;(parenthesis)&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;least&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;&nbsp;lesser&nbsp;&nbsp;&lt;&nbsp;less&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;greatest&nbsp;&gt;&gt;&nbsp;greater&nbsp;&gt;&nbsp;great&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;next&nbsp;line&nbsp;is&nbsp;empty&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;almost&nbsp;done&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;last&nbsp;line&nbsp;will&nbsp;have&nbsp;line&nbsp;feed&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;for&nbsp;/f&nbsp;&quot;delims=&quot;&nbsp;<span class=c_pvar>%%B</span>&nbsp;in&nbsp;('&quot;echo.&quot;echo.<span class=c_pvar>%%~A</span>&quot;&quot;')&nbsp;do&nbsp;<span class=c_pvar>%%~B</span></span><br>
+<span style='color=#000000'>)&gt;&quot;%temp%.\<span class=c_pvar>%~n0</span>.unittest.txt&quot;</span><br>
+<span style='color=#000000'>call:substitute&nbsp;&quot;t&quot;&nbsp;&quot;.&quot;&nbsp;&quot;%temp%.\<span class=c_pvar>%~n0</span>.unittest.txt&quot;</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.substitute - output
+.wo words
+exclama.ion ! exclama.ion
+percen.     % percen.
+ampersand   &amp; ampersand &amp;&amp; ampersand
+ver.ical    | ver.ical  || ver.ical
+(paren.hesis) (paren.hesis)
+leas.    &lt;&lt; lesser  &lt; less
+grea.es. &gt;&gt; grea.er &gt; grea.
+nex. line is emp.y
+
+almos. done
+las. line will have line feed
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.toCamelCase'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-02-19</font></font></div>
+    <H2>:unittest.toCamelCase - Test cases for the :toCamelCase function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.toCamelCase'>:unittest.toCamelCase</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#toCamelCase">:toCamelCase</a>, <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br><a name='14'>14.</a><br><a name='15'>15.</a><br><a name='16'>16.</a><br><a name='17'>17.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.toCamelCase'>:unittest.toCamelCase</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080219&nbsp;:$changed&nbsp;20080219</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>for&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;this&nbsp;is&nbsp;a&nbsp;camel&nbsp;case&nbsp;test&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;this&nbsp;is&nbsp;a&nbsp;camel&nbsp;case&nbsp;test&nbsp;&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;tHIs&nbsp;is&nbsp;a&nbsp;cAMEL&nbsp;CASE&nbsp;tesT&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;123&nbsp;camel&nbsp;case&nbsp;test&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;camel&nbsp;case&nbsp;test&nbsp;123&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;ThisIsACamelCaseTest&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;&quot;s=<span class=c_pvar>%%~C</span>&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:toCamelCase&nbsp;s</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[35]&nbsp;[35].&quot;&nbsp;&quot;'<span class=c_pvar>%%~C</span>'&quot;&nbsp;&quot;'<span class=c_pvar>%%s</span>%%'&quot;</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.toCamelCase - output
+'this is a camel case test'         'ThisIsACamelCaseTest'             .
+' this is a camel case test '       'ThisIsACamelCaseTest'             .
+'tHIs is a cAMEL CASE tesT'         'ThisIsACamelCaseTest'             .
+'123 camel case test'               '123CamelCaseTest'                 .
+'camel case test 123'               'CamelCaseTest123'                 .
+'ThisIsACamelCaseTest'              'Thisisacamelcasetest'             .
+''                                  ''                                 .
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.toLower'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2009-11-30</font></font></div>
+    <H2>:unittest.toLower - Test cases for the :toLower function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.toLower'>:unittest.toLower</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#toLower">:toLower</a>, <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br><a name='14'>14.</a><br><a name='15'>15.</a><br><a name='16'>16.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.toLower'>:unittest.toLower</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080219&nbsp;:$changed&nbsp;20091130</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>for&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;CONVERT&nbsp;this&nbsp;to&nbsp;lower&nbsp;case&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;123Conver&nbsp;tHIs&nbsp;to&nbsp;Lower&nbsp;case&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Convert&nbsp;this&nbsp;TO&nbsp;lower&nbsp;case123&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;CONVERT&nbsp;THIS&nbsp;TO&nbsp;LOWER&nbsp;CASE&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;convert&nbsp;this&nbsp;to&nbsp;lower&nbsp;case&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;&quot;s=<span class=c_pvar>%%~C</span>&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:toLower&nbsp;s</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[35]&nbsp;[35].&quot;&nbsp;&quot;'<span class=c_pvar>%%~C</span>'&quot;&nbsp;&quot;'<span class=c_pvar>%%s</span>%%'&quot;</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.toLower - output
+'CONVERT this to lower case'        'convert this to lower case'       .
+'123Conver tHIs to Lower case'      '123conver this to lower case'     .
+'Convert this TO lower case123'     'convert this to lower case123'    .
+'CONVERT THIS TO LOWER CASE'        'convert this to lower case'       .
+'convert this to lower case'        'convert this to lower case'       .
+''                                  ''                                 .
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.toUpper'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2009-11-30</font></font></div>
+    <H2>:unittest.toUpper - Test cases for the :toUpper function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.toUpper'>:unittest.toUpper</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#toUpper">:toUpper</a>, <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br><a name='14'>14.</a><br><a name='15'>15.</a><br><a name='16'>16.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.toUpper'>:unittest.toUpper</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080219&nbsp;:$changed&nbsp;20091130</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>for&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;CONVERT&nbsp;this&nbsp;to&nbsp;upper&nbsp;case&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;123Conver&nbsp;tHIs&nbsp;to&nbsp;Upper&nbsp;case&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Convert&nbsp;this&nbsp;TO&nbsp;upper&nbsp;case123&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;CONVERT&nbsp;THIS&nbsp;TO&nbsp;UPPER&nbsp;CASE&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;convert&nbsp;this&nbsp;to&nbsp;upper&nbsp;case&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;&quot;s=<span class=c_pvar>%%~C</span>&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:toUpper&nbsp;s</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[35]&nbsp;[35].&quot;&nbsp;&quot;'<span class=c_pvar>%%~C</span>'&quot;&nbsp;&quot;'<span class=c_pvar>%%s</span>%%'&quot;</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.toUpper - output
+'CONVERT this to upper case'        'CONVERT THIS TO UPPER CASE'       .
+'123Conver tHIs to Upper case'      '123CONVER THIS TO UPPER CASE'     .
+'Convert this TO upper case123'     'CONVERT THIS TO UPPER CASE123'    .
+'CONVERT THIS TO UPPER CASE'        'CONVERT THIS TO UPPER CASE'       .
+'convert this to upper case'        'CONVERT THIS TO UPPER CASE'       .
+''                                  ''                                 .
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.Trim'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-02-27</font></font></div>
+    <H2>:unittest.Trim - Test cases for the :Trim function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.Trim'>:unittest.Trim</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#Trim">:Trim</a>, <a href="#Format">:Format</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.Trim'>:unittest.Trim</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080227&nbsp;:$changed&nbsp;20080227</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>for&nbsp;<span class=c_pvar>%%C</span>&nbsp;in&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;trim&nbsp;nothing&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;trim&nbsp;one&nbsp;left&nbsp;and&nbsp;one&nbsp;right&nbsp;&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;&nbsp;&nbsp;&nbsp;trim&nbsp;plenty&nbsp;left&nbsp;and&nbsp;right&nbsp;&nbsp;&nbsp;&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;&quot;s=<span class=c_pvar>%%~C</span>&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:Trim&nbsp;s</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;call:Format&nbsp;&quot;[35]&nbsp;[35].&quot;&nbsp;&quot;'<span class=c_pvar>%%~C</span>'&quot;&nbsp;&quot;'<span class=c_pvar>%%s</span>%%'&quot;</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.Trim - output
+'trim nothing'                      'trim nothing'                     .
+' trim one left and one right '     'trim one left and one right'      .
+'    trim plenty left and right   ' 'trim plenty left and right'       .
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.true'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-02-19</font></font></div>
+    <H2>:unittest.true - Test cases for the :true function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.true'>:unittest.true</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#true">:true</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.true'>:unittest.true</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080219&nbsp;:$changed&nbsp;20080219</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>call:true&nbsp;&amp;&amp;&nbsp;echo.TRUE||echo.FALSE</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.true - output
+TRUE
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+    <hr>
+    <a name=''></a>
+    <a name='UnitTest.Unique'></a>
+    <div style='float: right;'><font color='darkblue'><a href='#'>TOP</a><br><font size=1>2008-02-19</font></font></div>
+    <H2>:unittest.Unique - Test cases for the :Unique function</H2>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>call<a href='#unittest.Unique'>:unittest.Unique</a> </td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Dependencies:</td>
+      <td class='text'  VALIGN='top'> <a href="#Unique">:Unique</a></td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'><span class=c_labl><a name='unittest.Unique'>:unittest.Unique</a></span><span class=c_cmmt></span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080219&nbsp;:$changed&nbsp;20080219</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>call:Unique&nbsp;s</span><br>
+<span style='color=#000000'>echo.%s%&nbsp;&nbsp;&nbsp;&nbsp;[nocompare]</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script Output:</td>
+      <td class='text'  VALIGN='top'><table class="dosw" border="0" cellspacing="2" cellpadding="3">    <tr><td class="title">&nbsp;<img src="SysIcon.jpg" alt="DOS">&nbsp;Script Output    </td></tr>    <tr><td class="text"><pre>---- :unittest.Unique - output
+200822122544495    [nocompare]
+----
+</pre></td></tr></table></td>
+    </tr>
+  </table>
+<br><br>
+<!-- <a  href="https://www.amazon.com/gp/product/0692681310/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=0692681310&linkCode=as2&tag=dos01-20&linkId=55YDECJJE3E2RZBZ"><img border="0" src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0692681310&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dos01-20" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=dos01-20&l=as2&o=1&a=0692681310" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+ -->
+<a  href="https://www.amazon.com/gp/offer-listing/0692681310/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0692681310&amp;linkCode=am2&amp;tag=dos01-20&amp;linkId=EM5WJJUFV5Z3RZTB"><img border="0" src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&amp;ASIN=0692681310&amp;Format=_SL250_&amp;ID=AsinImage&amp;MarketPlace=US&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=dos01-20" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=dos01-20&amp;l=as2&amp;o=1&amp;a=0692681310" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<div class='bot'>
+<script type="text/javascript">
+    /***********************************************
+    * IFrame SSI script II- Copyright Dynamic Drive DHTML code library (http://www.dynamicdrive.com)
+    * Visit DynamicDrive.com for hundreds of original DHTML scripts
+    * This notice must stay intact for legal use
+    ***********************************************/
+    
+    //Input the IDs of the IFRAMES you wish to dynamically resize to match its content height:
+    //Separate each ID with a comma. Examples: ["myframe1", "myframe2"] or ["myframe"] or [] for none:
+    var iframeids=["myframe"]
+    
+    //Should script hide iframe from browsers that don't support this script (non IE5+/NS6+ browsers. Recommended):
+    var iframehide="yes"
+    
+    var getFFVersion=navigator.userAgent.substring(navigator.userAgent.indexOf("Firefox")).split("index.html")[1]
+    var FFextraHeight=parseFloat(getFFVersion)>=0.1? 16 : 0 //extra height in px to add to iframe in FireFox 1.0+ browsers
+    
+    function resizeCaller() {
+        var dyniframe=new Array()
+        for (i=0; i<iframeids.length; i++){
+            if (document.getElementById)
+                resizeIframe(iframeids[i])
+            //reveal iframe for lower end browsers? (see var above):
+            if ((document.all || document.getElementById) && iframehide=="no"){
+                var tempobj=document.all? document.all[iframeids[i]] : document.getElementById(iframeids[i])
+                tempobj.style.display="block"
+            }
+        }
+    }
+    
+    function resizeIframe(frameid){
+        var currentfr=document.getElementById(frameid)
+        if (currentfr && !window.opera){
+            currentfr.style.display="block"
+            if (currentfr.contentDocument && currentfr.contentDocument.body.offsetHeight) //ns6 syntax
+                currentfr.height = currentfr.contentDocument.body.offsetHeight+FFextraHeight; 
+            else if (currentfr.Document && currentfr.Document.body.scrollHeight) //ie5+ syntax
+                currentfr.height = currentfr.Document.body.scrollHeight;
+            if (currentfr.addEventListener)
+                currentfr.addEventListener("load", readjustIframe, false)
+            else if (currentfr.attachEvent){
+                currentfr.detachEvent("onload", readjustIframe) // Bug fix line
+                currentfr.attachEvent("onload", readjustIframe)
+            }
+        }
+    }
+    
+    function readjustIframe(loadevt) {
+        var crossevt=(window.event)? event : loadevt
+        var iframeroot=(crossevt.currentTarget)? crossevt.currentTarget : crossevt.srcElement
+        if (iframeroot)
+            resizeIframe(iframeroot.id);
+    }
+    
+    function loadintoIframe(iframeid, url){
+        if (document.getElementById)
+        document.getElementById(iframeid).src=url
+    }
+    
+    if (window.addEventListener)
+        window.addEventListener("load", resizeCaller, false)
+    else if (window.attachEvent)
+        window.attachEvent("onload", resizeCaller)
+    else
+        window.onload=resizeCaller
+</script>
+<iframe id="myframe" src="forum/viewforum4d6b.html?f=3"                  marginwidth="0" marginheight="0" frameborder="0" style="overflow:visible; " height=15000 width="100%" scrolling="no" ALLOWTRANSPARENCY="true"></iframe></div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/?i=UnitTest by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 03:26:21 GMT -->
+</html>

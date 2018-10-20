@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8542&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:23:35 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Group and list all size of certain type.</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Group and list all size of certain type.</h2>
+		<p><a href="viewtopic7fac.html?f=3&amp;t=8542">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8542</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Group and list all size of certain type.</h3>
+				<div class="date">Posted: <strong>03 May 2018 09:26</strong></div>
+				<div class="author">by <strong>LuigiKraken</strong></div>
+				<div class="content">?<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Group and list all size of certain type.</h3>
+				<div class="date">Posted: <strong>03 May 2018 09:45</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">The working directory can be changed using CD or CD /D. E.g.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cd /d "C:\somewhere"</code></pre></div>Place this command below of setting the mypath variable.<br>
+If you want to redirect the ECHO outputs then you may append a <span style="color: #0000FF">&gt;&gt;"%mypath%\output.txt"</span> to every ECHO command line.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Group and list all size of certain type.</h3>
+				<div class="date">Posted: <strong>04 May 2018 04:04</strong></div>
+				<div class="author">by <strong>LuigiKraken</strong></div>
+				<div class="content">Thanks this was very helpfull.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Group and list all size of certain type.</h3>
+				<div class="date">Posted: <strong>04 May 2018 04:42</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content">Luigi, it is rude and disengenuous, to pretend that <a href="https://stackoverflow.com/a/50123727/6738015" class="postlink">someone elses code</a> is yours, especially when that person is also a senior member here too!<br>
+<br>
+Had you used and accepted, my answer, there was a particular place to add your directory, and it also outputted to a text file according to your question.<br>
+<br>
+Here it is replicated below:<br>
+<br>
+I would suggest that this task is less than simple for somebody new to batch scripting and will offer a solution which leverages PowerShell instead.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off
+Set "MyDir=%~1"
+If Defined MyDir CD /D "%MyDir%" 2&gt;Nul || Exit /B
+Dir /B/A-D &gt;Nul 2&gt;&amp;1 || Exit /B
+(For /F "Skip=3 Tokens=1-2 Delims=. " %%A In ('PowerShell -NoP -NoL^
+ "GCI -Ex 'lists.txt' -Fo|?{!$_.PSIsContainer}|Group Extension|"^
+ "Select Name,@{n='TS';e={(($_.Group|Measure Length -Sum).Sum)}}"
+') Do Echo %%A %%B bytes)&gt;"%__CD__%lists.txt"</code></pre></div>With this you'd either:<br>
+
+<ul><li>replace %~1 with your target directory.<br>
+ <em class="text-italics">(do not touch the doublequotes)</em></li></ul>
+
+or:<br>
+
+<ul><li>send your target directory as an argument to the script.</li></ul>
+
+If neither are done, it should produce output for the current directory.<br>
+<br>
+<em class="text-italics">(Please note that because the output file overwrites any existing one in the target directory it would include an old size of itself in its own results. For this reason I have added an exclusion, (untested), as part of the PowerShell commands)</em></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8542&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:23:35 GMT -->
+</html>

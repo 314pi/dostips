@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8601&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:05:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Stop Command Prompt Empty Line</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Stop Command Prompt Empty Line</h2>
+		<p><a href="viewtopic5f1a.html?f=3&amp;t=8601">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8601</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>02 Jun 2018 05:41</strong></div>
+				<div class="author">by <strong>flywire</strong></div>
+				<div class="content">I process thousands of files in a batch file with prog.exe (which I didn't write) and redirect output from the batch file to a log file. Each time the program is called the command processor prints a blank line to the shell.<br>
+<br>
+I found <a href="https://superuser.com/a/97308/514126" class="postlink">https://superuser.com/a/97308/514126</a> 
+<blockquote class="uncited"><div>&gt; set /p x=foo&lt;nul<br>
+foo<br>
+&gt; _</div></blockquote>
+
+When I use it it just prints the program name 'prog' rather than running the program.<br>
+<br>
+How can I suppress the blank lines in the shell?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>02 Jun 2018 09:56</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">Can you reveal just a little more of your actual code?  <img class="smilies" src="images/smilies/icon_mrgreen.gif" width="15" height="15" alt=":mrgreen:" title="Mr. Green"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>02 Jun 2018 10:40</strong></div>
+				<div class="author">by <strong>flywire</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2e30.html?mode=viewprofile&amp;u=9092">flywire</a> wrote: <a href="viewtopic1aab.html?p=55719#p55719" data-post-id="55719" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">15 Feb 2018 04:46</div></cite>
+...
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off 
+@echo off 
+:: Usage: NestBat [File (without extension) [File (without extension)]] &gt; Batling.bat 
+:: 
+:: Ver 15/02/2018 (CC BY-SA 4.0) 
+:: 
+echo Generating ...
+:: 
+For %%f in (%1*.dat) do ( 
+  echo ::
+  echo ::*** %%f 
+  echo copy %%f DAT 
+  echo copy %%f.dta DTA 
+  echo copy %%f.dtt DTT 
+  echo :: 
+::   
+  For %%g in (%2*.per) do ( 
+    echo ::** %%g 
+    echo copy %%g.per PER 
+    echo Program 
+    echo copy OUT %%f%%g.out 
+    echo :: 
+  ) 
+  echo :: 
+) 
+echo done. 
+:End 
+</code></pre></div>
+
+Run Batling.bat as: Batling &gt;Batling.log
+</div></blockquote>
+
+I use 'Prog.exe' not 'echo Program'. I get thousands of blank lines written to the shell so the user just sees a blank screen.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>02 Jun 2018 12:05</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">Hello, <br>
+This prog.exe will print all these empty lines to your command line. It means the standard output isn't into handle1. Test the handle number for this output. 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Prog.exe 2&gt;nul
+Prog.exe 3&gt;nul
+...
+Prog.exe 9&gt;nul
+</code></pre></div>
+Or prog.exe to device CON still writes.<br>
+ Idon't now how to realize this
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>con&gt;nul ( prog.exe )
+</code></pre></div>
+Phil</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>02 Jun 2018 18:00</strong></div>
+				<div class="author">by <strong>flywire</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistc1e4.html?mode=viewprofile&amp;u=5414">pieh-ejdsch</a> wrote: <a href="viewtopic0760.html?p=57044#p57044" data-post-id="57044" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">02 Jun 2018 12:05</div></cite>
+This prog.exe will print all these empty lines to your command line. It means the standard output isn't into handle1.</div></blockquote>
+
+No, I think you are wrong. It is a standard exe like any other program. The line comes from the command processor in the shell not the exe. [edit: Tests show the line <em class="text-italics">does</em> come from the program.]<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;prog &gt;nul
+
+&gt;_
+</code></pre></div>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;prog
+[program output]
+
+&gt;_
+</code></pre></div>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;con&gt;nul (prog.exe)
+' ' is not recognized as an internal or external command,
+operable program or batch file.</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>03 Jun 2018 02:09</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">The more I look at this topic the more it becomes clear to me that it is an instance of <a href="https://en.wikipedia.org/wiki/XY_problem" class="postlink">XY Problem</a>. Maybe even a nested one.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>03 Jun 2018 02:58</strong></div>
+				<div class="author">by <strong>flywire</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopic1f7a.html?p=57048#p57048" data-post-id="57048" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">03 Jun 2018 02:09</div></cite>
+XY Problem</div></blockquote>
+
+How so?<br>
+<br>
+* Batch file used for months supplied, original source even generates sample data<br>
+* Program is the same as most other line based executables - windows prompt issues a blank line</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>03 Jun 2018 06:01</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">XY in questions often is a great problem.<br>
+BTW if the echo is on- the CLI will print this empty line.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Set prompt=$g$s
+Prog.exe
+Echo off
+Prog.exe
+</code></pre></div>
+Your batfile is with echo off. The output into redirected file doesn't have empty lines.<br>
+Your example shows an output on the command line with the echo on.<br>
+<br>
+ultimately, for some reason, this program echoes on the command line during output.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>03 Jun 2018 06:03</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2e30.html?mode=viewprofile&amp;u=9092">flywire</a> wrote: <a href="viewtopicd16e.html?p=57050#p57050" data-post-id="57050" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">03 Jun 2018 02:58</div></cite><blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopic1f7a.html?p=57048#p57048" data-post-id="57048" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">03 Jun 2018 02:09</div></cite>XY Problem</div></blockquote>How so?</div></blockquote>I'd define an XY problem as a communication problem in which the cause is masked because the person asking for help has presented incomplete information.<br>
+<br>
+There's absolutely no need to hide the actual name and/or version of the executable you are having difficulty with, <em class="text-italics">it most certainly isn't named prog.exe</em>.<br>
+<br>
+Additionally, other than possibly masking/replacing a few specific characters of your actual output, there's no reason not to provide us with enough of the actual output you are having difficulty with, for us to attempt to diagnose the issue.<br>
+<br>
+<em class="text-italics">How do you expect us to help with the output you haven't provided from a program you are keeping a secret?</em></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>03 Jun 2018 06:14</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2e30.html?mode=viewprofile&amp;u=9092">flywire</a> wrote: <a href="viewtopicd16e.html?p=57050#p57050" data-post-id="57050" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">03 Jun 2018 02:58</div></cite>
+<blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopic1f7a.html?p=57048#p57048" data-post-id="57048" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">03 Jun 2018 02:09</div></cite>
+XY Problem</div></blockquote>
+
+How so?</div></blockquote>If i understand right, what you wrote above:<br>
+You assume that "each time the program is called the command processor prints a blank line to the shell".<br>
+But this is only true for the topmost executable (batch/exe/...), so you won't see more than one additional lineend (carriage return + newline), no matter how many times or how you call that executable (call external file, call function, call *.exe, ...).<br>
+<br>
+So trying to suppressing these (or better this single) blank lines (per topmost executable) can't solve the isssue you have (because it involves more than one single newline).<br>
+<br>
+Proof:<br>
+"test.bat":
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableExtensions disableDelayedExpansion
+for /l %%a in (1, 1, 100) do call "a.bat"
+for /l %%a in (1, 1, 100) do call :b
+for /l %%a in (1, 1, 100) do cmd /c"a.bat"
+::...
+goto :eof
+
+:b
+&lt;nul set /p "=b"
+</code></pre></div>
+"a.bat":
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableExtensions disableDelayedExpansion
+&lt;nul set /p "=a"
+</code></pre></div>
+Result (cmd shell):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Z:\&gt;test.bat
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+Z:\&gt;
+</code></pre></div>
+
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>03 Jun 2018 17:21</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2e30.html?mode=viewprofile&amp;u=9092">flywire</a> wrote: <a href="viewtopicd16e.html?p=57050#p57050" data-post-id="57050" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">03 Jun 2018 02:58</div></cite>
+<blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopic1f7a.html?p=57048#p57048" data-post-id="57048" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">03 Jun 2018 02:09</div></cite>
+XY Problem</div></blockquote>
+
+How so?</div></blockquote>
+
+Ignore this post if your are not interested to know how others may possibly interpret your post and how it is difficult to diagnose the problem and suggest solutions based on the kind of information that is provided.<br>
+<br>
+In the next post I will try to diagnose and suggest a solution or at least try to narrow the search space to find the actual problem, It maybe wrong though because the information is not complete.<br>
+<br>
+You have diagnosed the problem yourself and came to the conclusion that command processor is printing the blank lines to the screen then you decided to hide the details and just seeking for a solution of how to prevent command processor from printing blank lines, but didn't pay attention to the fact that the diagnostics maybe wrong and as a result others maybe put their efforts on solving a problem that is not the actual problem.<br>
+<br>
+Even if the actual problem is what you think, the way you presented it does not suggest that to be true.<br>
+<br>
+Let's start with your first post:
+<blockquote><div><cite><a href="memberlist2e30.html?mode=viewprofile&amp;u=9092">flywire</a> wrote: <a href="viewtopic7224.html?p=57035#p57035" data-post-id="57035" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">02 Jun 2018 05:41</div></cite>
+I process thousands of files in a batch file with prog.exe ...
+</div></blockquote>
+It just doesn't make sense. If someone unfamiliar with batch files sees this, hi/she would probably think that there are thousands of file references in a file called batch file which prog.exe is responsible for processing that batch file, But the ones who are familiar with subject can guess that prog.exe is somehow used inside of batch file but it is still unclear how that prog.exe is involved, what is it responsible for ? does it output something to the screen or it just do something to the files?
+<blockquote><div><cite><a href="memberlist2e30.html?mode=viewprofile&amp;u=9092">flywire</a> wrote: <a href="viewtopic7224.html?p=57035#p57035" data-post-id="57035" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">02 Jun 2018 05:41</div></cite>
+and redirect output from the batch file to a log file
+</div></blockquote>
+This part is clear (Maybe the only part)
+<blockquote><div><cite><a href="memberlist2e30.html?mode=viewprofile&amp;u=9092">flywire</a> wrote: <a href="viewtopic7224.html?p=57035#p57035" data-post-id="57035" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">02 Jun 2018 05:41</div></cite>
+Each time the program is called the command processor prints a blank line to the shell.
+</div></blockquote>
+At first glance this means that the program (prog.exe) is called from inside batch file and all of output of the batch file is redirected to a log file but despite the redirection it still prints blank lines to the console. It seems to be somewhat clear to this point (by guess) but since you related blank line output to calling the prog.exe it is still unclear why you made command processor responsible for printing the blank line to the console. How do you know the blank line is printed by command processor but not prog.exe. You didn't provide any evidence for your claim so others just have to guess or not relay on the incomplete and probably wrong information you provide. (Note that your later explanations made this even more vague and I personally can't decide with certainty what your actual problem is.)<br>
+<br>
+Then comes the superuser site link refrence
+<blockquote><div><cite><a href="memberlist2e30.html?mode=viewprofile&amp;u=9092">flywire</a> wrote: <a href="viewtopic7224.html?p=57035#p57035" data-post-id="57035" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">02 Jun 2018 05:41</div></cite>
+I found <a href="https://superuser.com/a/97308/514126" class="postlink">https://superuser.com/a/97308/514126</a> 
+<blockquote class="uncited"><div>&gt; set /p x=foo&lt;nul<br>
+foo<br>
+&gt; _</div></blockquote>
+
+When I use it it just prints the program name 'prog' rather than running the program.<br>
+<br>
+How can I suppress the blank lines in the shell?
+</div></blockquote>
+You described that you've tried one of the solutions that is provided by that link. But It added even more to the confusion, just so you know. It is obvious that the solution you tried is not a solution at all but it is trowing out the question what you were trying to achieve with that? you probably was seeking the type of output that is provided by set /p but the thing your were seeking with set /p it is completely unrelated to what you have described before.<br>
+<br>
+The question and answer on that link, Just trapped you in the in the same situation that you have created here yourself, and that's not your fault.<br>
+If it was to me I would down-vote both the answer and question on that link to at-least <strong class="text-strong">-1000</strong> and prevented it to be indexed by search engines. Why? because The question does not provide any useful information or code samples to describe what the actual problem is. It is open to be interpreted in many ways, And the one who answered it just made an educated guess on what the questioner is seeking for and it just happened to be what he/she wanted and most probably in the wrong way.<br>
+Based on the text of the question which have no further details, you thought that it is addressing the very same problem you have. That's the problem with this kind of questions and answers.<br>
+<br>
+I hope you see were it is going by providing incomplete and vague information on the problem. No one can read your mind and see the actual problem behind. You have to provide it yourself.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>03 Jun 2018 18:46</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2e30.html?mode=viewprofile&amp;u=9092">flywire</a> wrote: <a href="viewtopic3c52.html?p=57043#p57043" data-post-id="57043" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">02 Jun 2018 10:40</div></cite>
+<blockquote><div><cite><a href="memberlist2e30.html?mode=viewprofile&amp;u=9092">flywire</a> wrote: <a href="viewtopic1aab.html?p=55719#p55719" data-post-id="55719" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">15 Feb 2018 04:46</div></cite>
+...
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off 
+@echo off 
+:: Usage: NestBat [File (without extension) [File (without extension)]] &gt; Batling.bat 
+:: 
+:: Ver 15/02/2018 (CC BY-SA 4.0) 
+:: 
+echo Generating ...
+:: 
+For %%f in (%1*.dat) do ( 
+  echo ::
+  echo ::*** %%f 
+  echo copy %%f DAT 
+  echo copy %%f.dta DTA 
+  echo copy %%f.dtt DTT 
+  echo :: 
+::   
+  For %%g in (%2*.per) do ( 
+    echo ::** %%g 
+    echo copy %%g.per PER 
+    echo Prog.exe 
+    echo copy OUT %%f%%g.out 
+    echo :: 
+  ) 
+  echo :: 
+) 
+echo done. 
+:End 
+</code></pre></div>
+
+Run Batling.bat as: Batling &gt;Batling.log
+</div></blockquote>
+
+I use 'Prog.exe' not 'echo Program'. I get thousands of blank lines written to the shell so the user just sees a blank screen.
+</div></blockquote>
+What do you mean by: <strong class="text-strong">I use 'Prog.exe' not 'echo Program'</strong><br>
+Does it mean in <strong class="text-strong">NestBat</strong> you replace <strong class="text-strong">echo Program</strong> with <strong class="text-strong">Prog.exe</strong> or replace it with <strong class="text-strong">echo Prog.exe</strong> or you mean something entirely different?<br>
+So it is unclear to me whether <strong class="text-strong">Prog.exe</strong> will be executed in the context of <strong class="text-strong">NestBat</strong> or <strong class="text-strong">Batling.bat</strong>?<br>
+I don't understand why didn't you just put Prog.exe in the above code yourself.<br>
+<br>
+Based on what you have described before, It seems that <strong class="text-strong">Batling.bat</strong> is generated by the above batch file and <strong class="text-strong">Prog.exe</strong> is running in the context of <strong class="text-strong">Batling.bat</strong> (which means <strong class="text-strong">echo Prog.exe</strong> in NestBat) and you have problems when running <strong class="text-strong">Batling.bat</strong><br>
+<br>
+If it is running in the context of <strong class="text-strong">Batling.bat</strong> then reason for blank lines is obvious because in <strong class="text-strong">Batling.bat</strong> you didn't turn command echoing off. And again it is unclear whether it is intentional or not.<br>
+In that case the blank line output is not limited to just <strong class="text-strong">prog.exe</strong> as it happens with every other command that is running within Batling.bat like <strong class="text-strong">copy</strong><br>
+But again in that case the blank lines must be redirected to <strong class="text-strong">Batling.log</strong> file <strong class="text-strong">not the screen</strong>.<br>
+<br>
+If my above guess is right and also running Batling.bat with command echoing ON is not what you intended then try this code and report back
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off 
+:: Usage: NestBat [File (without extension) [File (without extension)]] &gt; Batling.bat 
+:: 
+:: Ver 15/02/2018 (CC BY-SA 4.0) 
+:: 
+echo Generating ...&gt;con
+:: 
+echo @echo off
+For %%f in (%1*.dat) do ( 
+  echo ::
+  echo ::*** %%f 
+  echo copy %%f DAT 
+  echo copy %%f.dta DTA 
+  echo copy %%f.dtt DTT 
+  echo :: 
+::   
+  For %%g in (%2*.per) do ( 
+    echo ::** %%g 
+    echo copy %%g.per PER 
+    echo Program 
+    echo copy OUT %%f%%g.out 
+    echo :: 
+  ) 
+  echo :: 
+) 
+echo done.&gt;con
+:End
+</code></pre></div>
+However it prevents the blank lines to be appeared on Batlin.log file as the output is redirected. If after running <strong class="text-strong">Batling.bat&gt;Batling.log</strong> blank lines are still appear on the <strong class="text-strong">Console SCREEN</strong> then the problem resides somewhere else.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>04 Jun 2018 04:28</strong></div>
+				<div class="author">by <strong>flywire</strong></div>
+				<div class="content"><em class="text-italics">[edit:] The exe is a licenced commercial program. I have compiled a few programs in different languages and run them through the same batch file but they do not cause the blank line after each run. One attached here: [edit end]</em>
+<div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/filef6c5.php?id=367">Program.zip</a></dt>
+			<dd><em>This is how Program.exe should behave</em></dd>			<dd>(8 KiB) Downloaded 29 times</dd>
+		</dl>
+		
+		
+			</div>
+.<br>
+I see the forum is busy while I sleep and work.<br>
+<br>
+* Forget the "I use 'Prog.exe' not 'echo Program'".<br>
+* NOTE: Batling.bat is run with echo on to get meaningful output in Batling.log.<br>
+* re XY problem - full filepaths are in quotes in this version but it does not affect this issue.<br>
+<br>
+* Output has seven blank lines for six runs in both instances.<br>
+* Also note no blank line between the batch file command prompts - different to running an exe.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Microsoft Windows [Version 10.0.17134.81]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+E:\bat\NestBat&gt;NestBat &gt; Batling.bat
+E:\bat\NestBat&gt;Batling &gt; Batling.log
+
+
+
+
+
+
+
+E:\bat\NestBat&gt;NestBat2 &gt; Batling2.bat
+Generating ...
+done.
+E:\bat\NestBat&gt;Batling2 &gt; Batling2.log
+
+
+
+
+
+
+E:\bat\NestBat&gt;</code></pre></div>
+
+Batling.bat
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo Generating ... 
+::
+::*** E:\bat\NestBat\Best1 
+copy "E:\bat\NestBat\Best1.dat" DAT 
+copy "E:\bat\NestBat\Best1.dta" DTA 
+copy "E:\bat\NestBat\Best1.dtt" DTT 
+::** E:\bat\NestBat\High 
+copy "E:\bat\NestBat\High.PER" PER 
+Program 
+copy OUT "E:\bat\NestBat\Best1_High.OUT" 
+:: 
+::** E:\bat\NestBat\Low 
+copy "E:\bat\NestBat\Low.PER" PER 
+Program 
+copy OUT "E:\bat\NestBat\Best1_Low.OUT" 
+:: 
+:: 
+::
+::*** E:\bat\NestBat\Test2 
+copy "E:\bat\NestBat\Test2.dat" DAT 
+copy "E:\bat\NestBat\Test2.dta" DTA 
+copy "E:\bat\NestBat\Test2.dtt" DTT 
+::** E:\bat\NestBat\High 
+copy "E:\bat\NestBat\High.PER" PER 
+Program 
+copy OUT "E:\bat\NestBat\Test2_High.OUT" 
+:: 
+::** E:\bat\NestBat\Low 
+copy "E:\bat\NestBat\Low.PER" PER 
+Program 
+copy OUT "E:\bat\NestBat\Test2_Low.OUT" 
+:: 
+:: 
+::
+::*** E:\bat\NestBat\Test3 
+copy "E:\bat\NestBat\Test3.dat" DAT 
+copy "E:\bat\NestBat\Test3.dta" DTA 
+copy "E:\bat\NestBat\Test3.dtt" DTT 
+::** E:\bat\NestBat\High 
+copy "E:\bat\NestBat\High.PER" PER 
+Program 
+copy OUT "E:\bat\NestBat\Test3_High.OUT" 
+:: 
+::** E:\bat\NestBat\Low 
+copy "E:\bat\NestBat\Low.PER" PER 
+Program 
+copy OUT "E:\bat\NestBat\Test3_Low.OUT" 
+:: 
+:: 
+echo done. 
+</code></pre></div>
+
+Batling.log
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>E:\bat\NestBat&gt;echo Generating ...  
+Generating ... 
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\Best1.dat" DAT  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\Best1.dta" DTA  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\Best1.dtt" DTT  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\High.PER" PER  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;Program  
+[program output]
+
+E:\bat\NestBat&gt;copy OUT "E:\bat\NestBat\Best1_High.OUT"  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\Low.PER" PER  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;Program  
+[program output]
+
+E:\bat\NestBat&gt;copy OUT "E:\bat\NestBat\Best1_Low.OUT"  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\Test2.dat" DAT  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\Test2.dta" DTA  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\Test2.dtt" DTT  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\High.PER" PER  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;Program  
+[program output]
+
+E:\bat\NestBat&gt;copy OUT "E:\bat\NestBat\Test2_High.OUT"  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\Low.PER" PER  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;Program  
+[program output]
+
+E:\bat\NestBat&gt;copy OUT "E:\bat\NestBat\Test2_Low.OUT"  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\Test3.dat" DAT  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\Test3.dta" DTA  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\Test3.dtt" DTT  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\High.PER" PER  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;Program  
+[program output]
+
+E:\bat\NestBat&gt;copy OUT "E:\bat\NestBat\Test3_High.OUT"  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;copy "E:\bat\NestBat\Low.PER" PER  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;Program  
+[program output]
+
+E:\bat\NestBat&gt;copy OUT "E:\bat\NestBat\Test3_Low.OUT"  
+        1 file(s) copied.
+
+E:\bat\NestBat&gt;echo done.  
+done. 
+</code></pre></div>
+
+NestBat2.bat
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+:: Usage: NestBat2 [File (without extension) [File (without extension)]] &gt; Batling2.bat
+::
+:: Ver 15/02/2018 (CC BY-SA 4.0)
+::
+echo Generating ...&gt;con
+::
+echo @echo off
+for %%F in ("%1*.dat") do (
+  echo ::
+  echo ::*** %%~pdnF
+  echo copy "%%~pdnF.dat" DAT
+  echo copy "%%~pdnF.dta" DTA
+  echo copy "%%~pdnF.dtt" DTT
+::
+  for %%G in ("%2*.per") do (
+    echo ::** %%~pdnG
+    echo copy "%%~pdnG.PER" PER
+    echo Program
+    echo copy OUT "%%~pdnF_%%~nG.OUT"
+    echo ::
+  )
+  echo ::
+)
+echo done.&gt;con
+:End</code></pre></div>
+
+Batling2.bat
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+::
+::*** E:\bat\NestBat\Best1
+copy "E:\bat\NestBat\Best1.dat" DAT
+copy "E:\bat\NestBat\Best1.dta" DTA
+copy "E:\bat\NestBat\Best1.dtt" DTT
+::** E:\bat\NestBat\High
+copy "E:\bat\NestBat\High.PER" PER
+Program
+copy OUT "E:\bat\NestBat\Best1_High.OUT"
+::
+::** E:\bat\NestBat\Low
+copy "E:\bat\NestBat\Low.PER" PER
+Program
+copy OUT "E:\bat\NestBat\Best1_Low.OUT"
+::
+::
+::
+::*** E:\bat\NestBat\Test2
+copy "E:\bat\NestBat\Test2.dat" DAT
+copy "E:\bat\NestBat\Test2.dta" DTA
+copy "E:\bat\NestBat\Test2.dtt" DTT
+::** E:\bat\NestBat\High
+copy "E:\bat\NestBat\High.PER" PER
+Program
+copy OUT "E:\bat\NestBat\Test2_High.OUT"
+::
+::** E:\bat\NestBat\Low
+copy "E:\bat\NestBat\Low.PER" PER
+Program
+copy OUT "E:\bat\NestBat\Test2_Low.OUT"
+::
+::
+::
+::*** E:\bat\NestBat\Test3
+copy "E:\bat\NestBat\Test3.dat" DAT
+copy "E:\bat\NestBat\Test3.dta" DTA
+copy "E:\bat\NestBat\Test3.dtt" DTT
+::** E:\bat\NestBat\High
+copy "E:\bat\NestBat\High.PER" PER
+Program
+copy OUT "E:\bat\NestBat\Test3_High.OUT"
+::
+::** E:\bat\NestBat\Low
+copy "E:\bat\NestBat\Low.PER" PER
+Program
+copy OUT "E:\bat\NestBat\Test3_Low.OUT"
+::
+::
+</code></pre></div>
+
+Batling2.log
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+[program output]
+        1 file(s) copied.
+        1 file(s) copied.
+[program output]
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+[program output]
+        1 file(s) copied.
+        1 file(s) copied.
+[program output]
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+[program output]
+        1 file(s) copied.
+        1 file(s) copied.
+[program output]
+        1 file(s) copied.
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>04 Jun 2018 10:40</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">Based on the contents of the batch files and the outputs you have posted, Your executable is responsible for printing blank lines to the console.<br>
+<br>
+But since the output is redirected, I can think of two reasons for that behavior:<br>
+1. Prog.exe is printing blank line to the stderr<br>
+2. Prog.exe is directly writing to the console (at-least for that blank line) so it's output can not be redirected.<br>
+<br>
+In your NestBat
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo Prog.exe 2^&gt;nul
+</code></pre></div>
+Or better directly in Batling.bat
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Prog.exe 2&gt;nul
+</code></pre></div>
+and see if that eliminates the blank lines or not. If that doesn't help then you need another workaround.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Stop Command Prompt Empty Line</h3>
+				<div class="date">Posted: <strong>04 Jun 2018 10:55</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">I once tinkered with your createNest, because I first had to understand what should be done when.<br>
+In addition, I had to create a similar test environment. Unfortunately, I do not have the "program" there.<br>
+First of all, I can only repeat myself with the "program" quarreling around it.<br>
+all other issues are fine and do not bring any extra blank lines into any output.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:: Create NestBat.bat and demo files
+::
+:: Ver 15/02/2018 (CC BY-SA 4.0)
+::
+@ ( setlocal
+set prompt=$g$s)
+@echo off
+echo create NestBat and demo files
+mkdir NestBat
+cd NestBat
+call :createNestBat &gt;NestBat.bat
+cd ..
+echo done ...
+pause
+exit /b
+
+:createNestBat
+echo @echo off
+echo ::
+echo :: Usage: NestBat [File (without extension) [File (without extension)]]
+echo ::
+echo :: Ver 15/02/2018 (CC BY-SA 4.0)
+echo ::
+echo @ ( setlocal
+echo set prompt=$g$s)
+echo echo Generating ...
+echo call :createBatling %%1 %%2 ^&gt;Batling.bat
+echo echo done ...
+echo exit /b
+echo :createBatling
+echo For %%%%f in (%%1*.dat) do (
+echo   echo :: make one DAT DTA DTT
+echo   echo ::*** %%%%~dpnf
+echo   echo copy %%%%~ff DAT
+echo   echo copy %%%%~dpnf.dta DTA
+echo   echo copy %%%%~dpnf.dtt DTT
+echo ::
+echo   For %%%%g in (%%2*.per) do (
+echo     echo :: every DAT - make n PER
+echo     echo ::** %%%%~dpng
+echo     echo copy %%%%~fg PER
+echo     echo Program
+echo     echo copy OUT %%%%~dpnf_%%%%~ng.out
+echo     echo ::
+echo   )
+echo   echo ::****  end %%%%~nf
+echo   echo ::
+echo )
+:END createNestBat
+
+:: Test Files
+for %%i in ( Best1.dat
+ Best1.dta
+ Best1.dtt
+ Test2.dat
+ Test2.dta
+ Test2.dtt
+ Test3.dat
+ Test3.dta
+ Test3.dtt
+ High.per
+ Low.per
+ OUT ) do &gt;%%i echo
+
+</code></pre></div>
+Your sample expenses are not good to exploit, because the redirect has arrived in the LOG.<br>
+Leave the diversion first so that you get to see the complete output in the command line.<br>
+You can use that better.<br>
+put your line at the beginning with REM to let the "program" do nothing first -so you see immediately what it is.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8601&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:05:27 GMT -->
+</html>

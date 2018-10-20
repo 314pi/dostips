@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=48865 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:28:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Read key presses via REPLACE - New functions :getKey, :getAnyKey, :getMaskedInput - Page 2 - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic08e7.html?t=7396&amp;start=15">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopicca84.html?f=3&amp;t=7396&amp;start=15">Read key presses via REPLACE - New functions :getKey, :getAnyKey, :getMaskedInput</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting78b0.html?mode=reply&amp;f=3&amp;t=7396" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic4a51.html?f=3&amp;t=7396&amp;start=15&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="7396" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			25 posts
+							<ul>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic20ae.html?f=3&amp;t=7396" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopic20ae.html?f=3&amp;t=7396" role="button">1</a></li>
+			<li class="active"><span>2</span></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p48865" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile48865">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content48865">
+
+						<h3 class="first"><a href="#p48865">Re: Read key presses via REPLACE - New functions :getKey, :getAnyKey, :getMaskedInput</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting73b7.html?mode=quote&amp;f=3&amp;p=48865" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic915f.html?p=48865#p48865" onclick="prompt('Message #16',this.href); return false;">#16</a></span> 
+									<a class="unread" href="viewtopic915f.html?p=48865#p48865" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>06 Sep 2016 18:35
+			</p>
+			
+			
+			
+			<div class="content">Eureeka - I think I solved it <img class="smilies" src="images/smilies/icon_idea.gif" alt=":idea:" title="Idea" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for &quot;skip=1 delims=&quot; %%A in ('replace ? . /w /u ^| findstr /n &quot;^&quot; ^| find /n /v &quot;&quot;') do ...<br /><br />Last Line&nbsp; &nbsp; &nbsp;Character<br />-----------&nbsp; &nbsp;-----------<br />&#91;3&#93;3:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;LF&gt;<br />&#91;3&#93;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;NULL&gt;<br />&#91;2&#93;2:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;Ctrl-Z&gt; (Win 10 only)<br />All Others&nbsp; &nbsp; Last character of last line<br /></code></pre></div><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p48875" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile48875">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content48875">
+
+						<h3 ><a href="#p48875">Re: Read key presses via REPLACE - New functions :getKey, :getAnyKey, :getMaskedInput</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5e83.html?mode=quote&amp;f=3&amp;p=48875" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6c0a.html?p=48875#p48875" onclick="prompt('Message #17',this.href); return false;">#17</a></span> 
+									<a class="unread" href="viewtopic6c0a.html?p=48875#p48875" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>06 Sep 2016 22:19
+			</p>
+			
+			
+			
+			<div class="content">In my computer the &lt;Ctrl-2&gt; key don't works: REPLACE just keep waiting for a key. I must add that my Windows 8.1 lap-top computer keyboard do NOT have the numeric keypad in blue-digits (nor the Num-Lock key), so I have not means to generate bytes with any value via Alt-numbers.<br /><br />If the &lt;Ctrl-2&gt; key would worked in my computer, my next test would be to put two REPLACE's this way:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>( replace.exe ? . /u /w &amp; replace.exe ? . /u /w ) &gt; out.txt<br /></code></pre></div><br />... and then press an extended key: arrow or function key. I <em class="text-italics">suppose</em> that the first REPLACE would get the byte with &lt;NUL&gt; (like the &lt;Ctrl-2&gt; key does) and the second REPLACE would get the next byte. This method would allow to read extended keys via standard Batch commands (although such a method would not work in my computer).<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p48878" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile48878">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search73f1.html?author_id=417&amp;sr=posts">880</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 30 Aug 2007 08:05</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany, Bochum</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content48878">
+
+						<h3 ><a href="#p48878">Re: Read key presses via REPLACE - New functions :getKey, :getAnyKey, :getMaskedInput</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingb5c3.html?mode=quote&amp;f=3&amp;p=48878" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice8bf.html?p=48878#p48878" onclick="prompt('Message #18',this.href); return false;">#18</a></span> 
+									<a class="unread" href="viewtopice8bf.html?p=48878#p48878" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a></strong> &raquo; </span>07 Sep 2016 01:49
+			</p>
+			
+			
+			
+			<div class="content">@Aacini: It's strange, I just now tested &lt;CTRL-2&gt; with Win8.1 and it works for me with the same output as with Win7.<br />I used the &quot;normal&quot; 2-Key, surprisingly using the &quot;2&quot; from the NUM-Pad doesn't work at all, independent of NUM-Lock.<br /><br />Extended keys doesn't work, as they don't seem to produce any key codes at all.<br />I suppose they use a complete different way and need a different way to detect them.<br />PAUSE can read them, two PAUSE commands consume one extended key, but I can't see a way to get the real data from the PAUSE command.<br /><br /><blockquote><div><cite>dbenham wrote:</cite>Wow <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" /><br />Interesting find about &lt;Ctrl-2&gt; and Null.</div></blockquote><br />Yes, but not my finding, I just read this some time ago somewhere at dostips (perhaps from npocmaka_).</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p48888" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile48888">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content48888">
+
+						<h3 ><a href="#p48888">Re: Read key presses via REPLACE - New functions :getKey, :getAnyKey, :getMaskedInput</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0ac9.html?mode=quote&amp;f=3&amp;p=48888" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic8793.html?p=48888#p48888" onclick="prompt('Message #19',this.href); return false;">#19</a></span> 
+									<a class="unread" href="viewtopic8793.html?p=48888#p48888" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>07 Sep 2016 07:19
+			</p>
+			
+			
+			
+			<div class="content">OK, I've modified :getAnyKey to capture Null as an undefined variable. Null is entered by pressing [Ctrl-2].<br /><br />I backtracked and decided to preserve :getKey because I am worried that the added complexity in :getAnyKey might be too slow in some applications. I also abandoned the idea of allowing alternate value mappings for returned characters.<br /><br />The changes can be found in the first post (edited).<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p48890" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile48890">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915" style="color: #00AA00;" class="username-coloured">penpen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1bf7.html?author_id=4915&amp;sr=posts">1612</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Jun 2013 06:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content48890">
+
+						<h3 ><a href="#p48890">Re: Read key presses via REPLACE - New functions :getKey, :getAnyKey, :getMaskedInput</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting725a.html?mode=quote&amp;f=3&amp;p=48890" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5695.html?p=48890#p48890" onclick="prompt('Message #20',this.href); return false;">#20</a></span> 
+									<a class="unread" href="viewtopic5695.html?p=48890#p48890" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915" style="color: #00AA00;" class="username-coloured">penpen</a></strong> &raquo; </span>07 Sep 2016 08:19
+			</p>
+			
+			
+			
+			<div class="content">The &quot;CTRL-2&quot; also works under win 10, 32 bit and Win xp home/prof 32 bit (so it probably depends on the keyboard only if it works).<br /><br /><blockquote><div><cite>jeb wrote:</cite>I just read this some time ago somewhere at dostips (perhaps from npocmaka_).</div></blockquote>I only saw it here (Liviu):<br /><a href="viewtopic8b45.html?p=39814#p39814" class="postlink">http://www.dostips.com/forum/viewtopic.php?p=39814#p39814</a>(In some posts above that, MagicMovingImages uses &quot;ctrl-@&quot; which i assume should be the same key on us-en keyboards.)<br /><br /><br />penpen</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p48900" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile48900">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist742a.html?mode=viewprofile&amp;u=6577" class="username">thefeduke</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search454a.html?author_id=6577&amp;sr=posts">211</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 05 Apr 2015 13:06</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> MA South Shore, USA</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content48900">
+
+						<h3 ><a href="#p48900">Re: Read key presses via REPLACE - New functions :getKey, :getAnyKey, :getMaskedInput</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting834e.html?mode=quote&amp;f=3&amp;p=48900" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5a1a-2.html?p=48900#p48900" onclick="prompt('Message #21',this.href); return false;">#21</a></span> 
+									<a class="unread" href="viewtopic5a1a-2.html?p=48900#p48900" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist742a.html?mode=viewprofile&amp;u=6577" class="username">thefeduke</a></strong> &raquo; </span>07 Sep 2016 15:08
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>dbenham wrote:</cite>I've fixed the two routines and modified the version to 1.1 in my first post.</div></blockquote><br />It seems that a minor bug came in with the documentation.  There is no longer a :getkey label.  Neither of these candidates are a valid target: <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::getKey&nbsp; KeyVar&nbsp; &#91;ValidVar&#93;<br />::<br />::<br />:get key<br />set &quot;%1=&quot;</code></pre></div>BTW, I added some non-intrusive code at the beginning of my copy:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off<br />Set &quot;InternalCall=%~1&quot;<br />If &quot;%InternalCall:~0,1%&quot; EQU &quot;:&quot; SHIFT /1<br />If &quot;%InternalCall:~0,1%&quot; EQU &quot;:&quot; (<br />&nbsp; &nbsp; Call %InternalCall% %1 %2 %3 %4 %5 %6 %7 %8<br />) else (<br />&nbsp; &nbsp; Call :getMaskedInput %1 %2 %3 %4 %5 %6 %7 %8<br />)<br />Set &quot;InternalCall=&quot;<br />exit /b<br /></code></pre></div>This allows the script to act the same as before to run getMaskedInput, but I can access the other functions directly as in <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>getanykey :getkey keyvar</code></pre></div> without peeling off the standalone function to its own script.<br /><br />John A.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p48903" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile48903">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content48903">
+
+						<h3 ><a href="#p48903">Re: Read key presses via REPLACE - New functions :getKey, :getAnyKey, :getMaskedInput</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingb45f.html?mode=quote&amp;f=3&amp;p=48903" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic490d.html?p=48903#p48903" onclick="prompt('Message #22',this.href); return false;">#22</a></span> 
+									<a class="unread" href="viewtopic490d.html?p=48903#p48903" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>07 Sep 2016 16:43
+			</p>
+			
+			
+			
+			<div class="content">Thanks John. If fixed the label. It should be :getKey,  not :get Key.<br /><br />I opted not to change the version.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p50819" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile50819">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content50819">
+
+						<h3 ><a href="#p50819">Re: Read key presses via REPLACE - New functions :getKey, :getAnyKey, :getMaskedInput</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting3473.html?mode=quote&amp;f=3&amp;p=50819" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicbcc9.html?p=50819#p50819" onclick="prompt('Message #23',this.href); return false;">#23</a></span> 
+									<a class="unread" href="viewtopicbcc9.html?p=50819#p50819" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>10 Jan 2017 19:45
+			</p>
+			
+			
+			
+			<div class="content"><strong class="text-strong">Version 2.0 is here</strong> <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br /><br />I can't believe I missed the fact that my 1.x ValidVar checks ignored case, but the documentation implied that it was case sensitive. <img class="smilies" src="images/smilies/icon_mad.gif" alt=":x" title="Mad" /><br />Well that simply can't stand...<br /><br />I decided I would add an option to indicate whether case should be ignore or not, and I also wanted a prompt option, and that set off an intense development effort. It resulted in significant restructuring of the code, and I also changed the rules for validVar.<br /><strong class="text-strong"><em class="text-italics">So version 2.0 of these functions is not compatible with version 1.x</em></strong><br /><br />All three functions use the same calling sequence - <strong class="text-strong">call :xxxxx  [/P &quot;prompt&quot;]  OutputVar  [ValidVar  [/I]]</strong><br /><br />Both :getKey and :getAnyKey will echo the pressed key if the /P option is used, and will remain silent if not used.<br /><br />Case is ignored if the /I option follows ValidVar (old behavior), and case is honored if the /I option is not used (new behavior).<br /><br />The :getAnyKey function has the following additional changes:<br /><ul><li>Defines variables to hold &lt;Ctrl-Z&gt;, &lt;LineFeed&gt;, and &lt;CarriageReturn&gt; characters</li><li>Auxilliary :getAnyKeyInit function can be used to pre-define the &lt;Ctrl-Z&gt;, &lt;LineFeed&gt;, and &lt;CarriageReturn&gt; variables</li><li>The ValidVar argument now only has a single binary 0/1 value at the front to indicate rejection/acceptance of &lt;Null&gt;. LineFeed and CarriageReturn are now included by adding the actual character(s) to ValidVar.</li></ul><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::getMaskedInput&nbsp; &#91;/P &quot;Prompt&quot;&#93;&nbsp; StrVar&nbsp; &#91;ValidVar &#91;/I&#93;&#93;<br />::<br />:: Get a user input string, echoing * for each key pressed. &#91;Backspace&#93; erases<br />:: the previous character. &#91;Enter&#93; completes the string. Additionally, any<br />:: method that generates Null (0x00), LineFeed (0x0A) or Carriage Return (0x0D)<br />:: will also terminate the string. On Windows 10 a &#91;Ctrl-Z&#93; (0x1A) will also<br />:: terminate the string. The final string may contain any characters between<br />:: 0x01 and 0xFF except Backspace, LineFeed, and Carriage Return. On Windows 10<br />:: Ctrl-Z is also excluded.<br />::<br />:: The optional /P parameter is used to specify a &quot;Prompt&quot; that is written to<br />:: stdout, without a newline.<br />::<br />:: The optional ValidVar parameter defines the characters that will be accepted.<br />:: If the variable is not given or not defined, then all characters are accepted.<br />:: If given and defined, then only characters within ValidVar are accepted.<br />::<br />:: If ValidVar is followed by the optional /I switch, then case of standard<br />:: English letters is ignored. The case of the pressed key is preserved in<br />:: the result, but English letters A-Z and a-z are not rejected due to case<br />:: differences when the /I switch is added.<br />::<br />:: Any value (except null) may be entered by holding the &#91;Alt&#93; key and pressing<br />:: the appropriate decimal code on the numeric keypad. For example, holding<br />:: &#91;Alt&#93; and pressing numeric keypad &#91;1&#93; and &#91;0&#93;, and then releasing &#91;Alt&#93; will<br />:: result in a LineFeed.<br />::<br />:: The only way to enter a Null is by holding &#91;Ctrl&#93; and pressing the normal &#91;2&#93;<br />::<br />:: An alternate way to enter control characters 0x01 through 0x1A is by holding<br />:: the &#91;Ctrl&#93; key and pressing any one of the letter keys &#91;A&#93; through &#91;Z&#93;.<br />:: However, &#91;Ctrl-A&#93;, &#91;Ctrl-F&#93;, &#91;Ctrl-M&#93;, and &#91;Ctrl-V&#93; will be blocked on Win 10<br />:: if the console has Ctrl key shortcuts enabled.<br />::<br />:: This function works properly regardless whether delayed expansion<br />:: is enabled or disabled.<br />::<br />:: :getMaskedInput version 2.0 was written by Dave Benham, and originally<br />:: posted at http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7396<br />::<br />:: This work was inspired by posts from carlos and others at<br />:: http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6382<br />::<br />:getMaskedInput<br />setlocal<br />set &quot;notDelayed=!&quot;<br />if /i &quot;%~1&quot; equ &quot;/P&quot; (<br />&nbsp; &lt;nul set /p ^&quot;=%2&quot;<br />&nbsp; shift /1<br />&nbsp; shift /1<br />)<br />setlocal enableDelayedExpansion<br />set &quot;mask=!%2!&quot;<br />for /f %%A in ('&quot;Prompt;$H&amp;for %%A in (1) do rem&quot;') do set &quot;BS=%%A&quot;<br />if defined mask set &quot;mask=1!BS!!mask!&quot;<br />set &quot;str=&quot;<br />:getMaskedInputLoop<br />(<br />&nbsp; call :getKey key mask %3<br />&nbsp; if defined key (<br />&nbsp; &nbsp; if not defined notDelayed (<br />&nbsp; &nbsp; &nbsp; if &quot;!key!&quot; equ &quot;^!&quot; set &quot;key=^^^!&quot;<br />&nbsp; &nbsp; &nbsp; if &quot;!key!&quot; equ &quot;^&quot; set &quot;key=^^&quot;<br />&nbsp; &nbsp; )<br />&nbsp; &nbsp; if &quot;!key!&quot; equ &quot;!BS!&quot; (<br />&nbsp; &nbsp; &nbsp; if defined str (<br />&nbsp; &nbsp; &nbsp; &nbsp; set &quot;str=!str:~0,-1!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &lt;nul set /p &quot;=%BS% %BS%&quot;<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; set &quot;str=!str!!key!&quot;<br />&nbsp; &nbsp; &nbsp; &lt;nul set /p &quot;=*&quot;<br />&nbsp; &nbsp; )<br />&nbsp; &nbsp; goto :getMaskedInputLoop<br />&nbsp; )<br />&nbsp; for /f &quot;delims=&quot; %%A in (&quot;&quot;!str!&quot;&quot;) do (<br />&nbsp; &nbsp; endlocal<br />&nbsp; &nbsp; endlocal<br />&nbsp; &nbsp; set &quot;%1=%%~A&quot; !<br />&nbsp; &nbsp; echo(<br />&nbsp; &nbsp; exit /b<br />&nbsp; )<br />)<br /><br />::getKey&nbsp; &#91;/P &quot;Prompt&quot;&#93;&nbsp; KeyVar&nbsp; &#91;ValidVar &#91;/I&#93;&#93;<br />::<br />:: Read a keypress representing a character between 0x00 and 0xFF and store the<br />:: value in variable KeyVar. Null (0x00), LineFeed (0x0A), and Carriage Return<br />:: (0x0D) will result in an undefined KeyVar. On Windows 10, Ctrl-Z (0x1A) will<br />:: also result in an undefined KeyVar. The simplest way to get an undefined<br />:: KeyVar is to press the &#91;Enter&#93; key.<br />::<br />:: The optional /P parameter is used to specify a &quot;Prompt&quot; that is written to<br />:: stdout, without a newline. Also, the accepted character is ECHOed after the<br />:: prompt if the /P option was used.<br />::<br />:: The optional ValidVar parameter defines the values that will be accepted.<br />:: If the variable is not given or not defined, then all characters are accepted.<br />:: If given and defined, then only characters within ValidVar are accepted. The<br />:: first character within ValidVar should either be 0, meaning ignore undefined<br />:: KeyVar, or 1, meaning accept undefined KeyVar. The remaining characters<br />:: represent themselves. For example, a ValidVar value of 0YN will only accept<br />:: uppercase Y or N. A value of 1YN will additionally accept &#91;Enter&#93; etc.<br />::<br />:: If ValidVar is followed by the optional /I switch, then case of standard<br />:: English letters is ignored. The case of the pressed key is preserved in<br />:: the result, but English letters A-Z and a-z are not rejected due to case<br />:: differences when the /I switch is added.<br />::<br />:: Any value (except null) may be entered by holding the &#91;Alt&#93; key and pressing<br />:: the appropriate decimal code on the numeric keypad. For example, holding<br />:: &#91;Alt&#93; and pressing numeric keypad &#91;1&#93; and &#91;0&#93;, and then releasing &#91;Alt&#93; will<br />:: result in a LineFeed.<br />::<br />:: The only way to enter a Null is by holding &#91;Ctrl&#93; and pressing the normal &#91;2&#93;<br />::<br />:: An alternate way to enter control characters 0x01 through 0x1A is by holding<br />:: the &#91;Ctrl&#93; key and pressing any one of the letter keys &#91;A&#93; through &#91;Z&#93;.<br />:: However, &#91;Ctrl-A&#93;, &#91;Ctrl-F&#93;, &#91;Ctrl-M&#93;, and &#91;Ctrl-V&#93; will be blocked on Win 10<br />:: if the console has Ctrl key shortcuts enabled.<br />::<br />:: This function works properly regardless whether delayed expansion is enabled<br />:: or disabled.<br />::<br />:: :getKey version 2.0 was written by Dave Benham, and originally posted at<br />:: http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7396<br />::<br />:: This work was inspired by posts from carlos and others at<br />:: http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6382<br />::<br />:getKey<br />setlocal disableDelayedExpansion<br />if /i &quot;%~1&quot; equ &quot;/P&quot; (<br />&nbsp; &lt;nul set /p ^&quot;=%2&quot;<br />&nbsp; shift /1<br />&nbsp; shift /1<br />&nbsp; set &quot;getKey./P=1&quot;<br />) else (<br />&nbsp; set &quot;getKey./P=&quot;<br />)<br />:getKeyRetry<br />(<br />&nbsp; endlocal&amp;setlocal disableDelayedExpansion<br />&nbsp; (for /f skip^=1^ delims^=^ eol^= %%A in ('replace.exe ? . /u /w') do for /f delims^=^ eol^= %%B in (&quot;%%A&quot;) do (<br />&nbsp; &nbsp; endlocal<br />&nbsp; &nbsp; if &quot;%%B&quot; equ &quot;&quot; (set &quot;%1=^!&quot;) else set &quot;%1=%%B&quot;<br />&nbsp; &nbsp; setlocal enableDelayedExpansion<br />&nbsp; )) || (<br />&nbsp; &nbsp; endlocal<br />&nbsp; &nbsp; set &quot;%1=&quot;<br />&nbsp; &nbsp; setlocal enableDelayedExpansion<br />&nbsp; )<br />&nbsp; set &quot;getKey./P=%getKey./P%&quot;<br />&nbsp; if defined %1 (set &quot;getKey.key=!%1!&quot;) else set &quot;getKey.key=x&quot;<br />)<br />(<br />&nbsp; if &quot;!%2!&quot; neq &quot;&quot; (<br />&nbsp; &nbsp; if defined %1 (<br />&nbsp; &nbsp; &nbsp; set &quot;getKey.mask=!%2:~1!&quot;<br />&nbsp; &nbsp; &nbsp; if not defined getKey.mask goto :getKeyRetry<br />&nbsp; &nbsp; &nbsp; if /i &quot;%~3&quot; equ &quot;/I&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; if &quot;!%1!&quot; equ &quot;=&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set &quot;getKey.mask=a!getKey.mask!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for /f &quot;delims=&quot; %%A in (&quot;!getKey.mask!&quot;) do if /i &quot;!getKey.mask:%%A=%%A!&quot; equ &quot;!getKey.mask!&quot; goto :getKeyRetry<br />&nbsp; &nbsp; &nbsp; &nbsp; ) else for /f delims^=^ eol^= %%A in (&quot;!%1!&quot;) do if &quot;!getKey.mask:*%%A=!&quot; equ &quot;!getKey.mask!&quot; goto :getKeyRetry<br />&nbsp; &nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; for /f tokens^=1*^ eol^=^%getKey.key%^ delims^=^%getKey.key% %%A in (&quot;!getKey.mask!!getKey.mask!&quot;) do if &quot;%%B&quot; equ &quot;&quot; goto :getKeyRetry<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; ) else if &quot;!%2:~0,1!&quot; equ &quot;0&quot; goto :getKeyRetry<br />&nbsp; )<br />&nbsp; if defined getKey./P echo(!%1!<br />&nbsp; exit /b<br />)<br /><br />::getAnyKey&nbsp; &#91;/P &quot;Prompt&quot;&#93;&nbsp; KeyVar&nbsp; &#91;ValidVar &#91;/I&#93;&#93;<br />::<br />:: Read a keypress representing any character between 0x00 and 0xFF and store<br />:: the character in variable KeyVar. A Null value of 0x00 is represented as an<br />:: undefined KeyVar.<br />::<br />:: Calling :getAnyKey will also define the following three variables:<br />::&nbsp; &nbsp;getAnyKey.LF&nbsp; &nbsp; = Linefeed&nbsp; &nbsp; &nbsp; &nbsp; 0x0A, decimal 10<br />::&nbsp; &nbsp;getAnyKey.CR&nbsp; &nbsp; = Carriage Return 0x0D, decimal 13<br />::&nbsp; &nbsp;getAnyKey.CtrlZ = Control-Z&nbsp; &nbsp; &nbsp; &nbsp;0x1A, decimal 26<br />:: The three variables can be defined in advance by calling :getAnyKeyInit.<br />::<br />:: The optional /P parameter is used to specify a &quot;Prompt&quot; that is written to<br />:: stdout, without a newline. Also, the accepted character is ECHOed after the<br />:: prompt if the /P option was used.<br />::<br />:: The optional ValidVar parameter defines the characters that will be accepted.<br />:: If the variable is not given or not defined, then all values are accepted.<br />:: If given and defined, then only characters within ValidVar are accepted. The<br />:: first character indicates whether Null (0x00) is accepted. A value of 1 means<br />:: acceptance, and 0 means rejection. The remaining characters represent<br />:: themselves. For example, a ValidVar value of 0YN will only accept upper case<br />:: Y or N. A value of 1YN will additionally accept Null.<br />::<br />:: Linefeed, Carriage Return, and/or Control-Z may be added to ValidVar by<br />:: enabling delayedExpansion, calling :getAnyKeyInit, and then appending<br />:: !getAnyKey.LF!, !getAnyKey.CR!, and/or !getAnyKey.CtrlZ! respectively.<br />::<br />:: If ValidVar is followed by the optional /I switch, then case of standard<br />:: English letters is ignored. The case of the pressed key is preserved in<br />:: the result, but English letters A-Z and a-z are not rejected due to case<br />:: differences when the /I switch is added.<br />::<br />:: Note that &#91;Enter&#93; is interpreted as a Carriage Return.<br />::<br />:: Any value (except null) may be entered by holding the &#91;Alt&#93; key and pressing<br />:: the appropriate decimal code on the numeric keypad. For example, holding<br />:: &#91;Alt&#93; and pressing numeric keypad &#91;1&#93; and &#91;0&#93;, and then releasing &#91;Alt&#93; will<br />:: result in a Linefeed.<br />::<br />:: The only way to enter a Null is by holding &#91;Ctrl&#93; and pressing the normal &#91;2&#93;<br />::<br />:: An alternate way to enter control characters 0x01 through 0x1A is by holding<br />:: the &#91;Ctrl&#93; key and pressing any one of the letter keys &#91;A&#93; through &#91;Z&#93;.<br />:: However, &#91;Ctrl-A&#93;, &#91;Ctrl-F&#93;, &#91;Ctrl-M&#93;, and &#91;Ctrl-V&#93; will be blocked on Win 10<br />:: if the console has Ctrl key shortcuts enabled.<br />::<br />:: This function works properly regardless whether delayed expansion is enabled<br />:: or disabled.<br />::<br />:: :getAnyKey version 2.0 was written by Dave Benham, and originally posted at<br />:: http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7396<br />::<br />:: This work was inspired by posts from carlos and others at<br />:: http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6382<br />::<br />:getAnyKey<br />if not defined getAnyKey.CtrlZ call :getAnyKeyInit<br />setlocal<br />if &quot;!!&quot; equ &quot;&quot; set &quot;getAnyKey.delayed=1&quot;<br />(<br />&nbsp; endlocal&amp;setlocal disableDelayedExpansion<br />&nbsp; set &quot;getAnyKey.delayed=%getAnyKey.delayed%&quot;<br />&nbsp; if /i &quot;%~1&quot; equ &quot;/P&quot; (<br />&nbsp; &nbsp; set &quot;getAnyKey./P=1&quot;<br />&nbsp; &nbsp; &lt;nul set /p ^&quot;=%2&quot;<br />&nbsp; &nbsp; shift /1<br />&nbsp; &nbsp; shift /1<br />&nbsp; ) else (<br />&nbsp; &nbsp; set &quot;getAnyKey./P=&quot;<br />&nbsp; )<br />)<br />:getAnyKeyRetry<br />(<br />&nbsp; endlocal&amp;setlocal disableDelayedExpansion<br />&nbsp; for /f &quot;skip=1 delims=&quot; %%A in (<br />&nbsp; &nbsp; 'replace.exe ? . /u /w ^| findstr /n &quot;^&quot; ^| find /n /v &quot;&quot;'<br />&nbsp; ) do set &quot;str=%%A&quot;<br />&nbsp; setlocal enableDelayedExpansion<br />&nbsp; if &quot;!str!&quot; equ &quot;&#91;3&#93;3:&quot; (&nbsp; %= LineFeed =%<br />&nbsp; &nbsp; endlocal&amp;endlocal<br />&nbsp; &nbsp; set ^&quot;%1=^%getAnyKey.LF%%getAnyKey.LF%&quot;<br />&nbsp; ) else (&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; %= Not LineFeed =%<br />&nbsp; &nbsp; if &quot;!str!&quot; equ &quot;&#91;2&#93;2:&quot; (&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;%= Ctrl-Z on Win 10 =%<br />&nbsp; &nbsp; &nbsp; set &quot;key=!getAnyKey.CtrlZ!<br />&nbsp; &nbsp; ) else if &quot;!str!&quot; equ &quot;&#91;3&#93;&quot; (&nbsp; &nbsp; %= Null = %<br />&nbsp; &nbsp; &nbsp; set &quot;key=&quot;<br />&nbsp; &nbsp; ) else (&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;%= All others =%<br />&nbsp; &nbsp; &nbsp; set &quot;key=!str:~-1!&quot;<br />&nbsp; &nbsp; &nbsp; if &quot;%getAnyKey.delayed%&quot;==&quot;1&quot; if &quot;!key!&quot; equ &quot;^!&quot; set &quot;key=^^^!&quot;<br />&nbsp; &nbsp; )<br />&nbsp; &nbsp; for /f &quot;delims=&quot; %%A in (&quot;&quot;!key!&quot;&quot;) do endlocal&amp;endlocal&amp;set &quot;%1=%%~A&quot;<br />&nbsp; )<br />&nbsp; setlocal enableDelayedExpansion<br />&nbsp; set &quot;getAnyKey.delayed=%getAnyKey.delayed%&quot;<br />&nbsp; set &quot;getAnyKey./P=%getAnyKey./P%&quot;<br />&nbsp; set &quot;getAnyKey.key=x&quot;<br />&nbsp; if defined %1 if !%1! neq !getAnyKey.LF! if !%1! neq !getAnyKey.CR! set &quot;getAnyKey.key=!%1!&quot;<br />)<br />(<br />&nbsp; if &quot;!%2!&quot; neq &quot;&quot; (<br />&nbsp; &nbsp; if defined %1 (<br />&nbsp; &nbsp; &nbsp; set &quot;getAnyKey.mask=!%2:~1!&quot;<br />&nbsp; &nbsp; &nbsp; if not defined getAnyKey.mask goto :getAnyKeyRetry<br />&nbsp; &nbsp; &nbsp; if &quot;!%1!&quot; equ &quot;!getAnyKey.LF!&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; for %%A in (&quot;!%1!&quot;) do if &quot;!getAnyKey.mask:%%~A=!&quot; equ &quot;!getAnyKey.mask!&quot; goto :getAnyKeyRetry<br />&nbsp; &nbsp; &nbsp; ) else if &quot;!%1!&quot; equ &quot;!getAnyKey.CR!&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; for /f %%A in (&quot;&quot;!%1!&quot;&quot;) do if &quot;!getAnyKey.mask:%%~A=!&quot; equ &quot;!getAnyKey.mask!&quot; goto :getAnyKeyRetry<br />&nbsp; &nbsp; &nbsp; ) else if /i &quot;%~3&quot; equ &quot;/I&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; if &quot;!%1!&quot; neq &quot;=&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for /f &quot;delims=&quot; %%A in (&quot;&quot;!%1!&quot;&quot;) do if &quot;!getAnyKey.mask:*%%~A=!&quot; equ &quot;!getAnyKey.mask!&quot; goto :getAnyKeyRetry<br />&nbsp; &nbsp; &nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for %%A in (&quot;!getAnyKey.LF!&quot;) do set &quot;getAnyKey.mask=a!getAnyKey.mask:%%~A=!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for /f &quot;delims=&quot; %%A in (&quot;&quot;!getAnyKey.mask!&quot;&quot;) do if /i &quot;!getAnyKey.mask:%%~A=%%~A!&quot; equ &quot;!getAnyKey.mask!&quot; goto :getKeyRetry<br />&nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; for %%A in (&quot;!getAnyKey.LF!&quot;) do set &quot;getAnyKey.mask=!getAnyKey.mask:%%~A=!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; for /f tokens^=1*^ eol^=^%getAnyKey.key%^ delims^=^%getAnyKey.key% %%A in (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;!getAnyKey.mask!!getAnyKey.mask!!getAnyKey.CR!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; ) do if &quot;%%B&quot; equ &quot;&quot; goto :getAnyKeyRetry<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; ) else if &quot;!%2:~0,1!&quot; equ &quot;0&quot; goto :getAnyKeyRetry<br />&nbsp; )<br />&nbsp; if defined getAnyKey./P echo(!%1!<br />&nbsp; exit /b<br />)<br /><br />:getAnyKeyInit<br />:: Ctrl-Z&nbsp; 0x1A&nbsp; decimal 26<br />copy nul &quot;%temp%\ctrlZ.tmp&quot; /a &lt;nul &gt;nul<br />(for /f &quot;usebackq&quot; %%A in (&quot;%temp%\ctrlZ.tmp&quot;) do set &quot;getAnyKey.CtrlZ=%%A&quot;)2&gt;nul||goto :getAnyKeyInit<br />del &quot;%temp%\ctrlZ.tmp&quot; 2&gt;nul<br />:: Linefeed&nbsp; 0x0A&nbsp; decimal 10<br />(set getAnyKey.LF=^<br />%= Do not remove or alter this line =%<br />)<br />:: Carriage Return&nbsp; 0x0D&nbsp; decimal 13<br />for /f %%A in ('copy /z &quot;%~dpf0&quot; nul') do set &quot;getAnyKey.CR=%%A&quot;<br />exit /b<br /></code></pre></div><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57813" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57813">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist7557.html?mode=viewprofile&amp;u=4243" class="username">carlsomo</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search15dd.html?author_id=4243&amp;sr=posts">91</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 02 Oct 2012 17:21</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57813">
+
+						<h3 ><a href="#p57813">Re: Read key presses via REPLACE - New functions :getKey, :getAnyKey, :getMaskedInput</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingfb38.html?mode=quote&amp;f=3&amp;p=57813" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicac48.html?p=57813#p57813" onclick="prompt('Message #24',this.href); return false;">#24</a></span> 
+									<a class="unread" href="viewtopicac48.html?p=57813#p57813" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist7557.html?mode=viewprofile&amp;u=4243" class="username">carlsomo</a></strong> &raquo; </span>23 Aug 2018 00:17
+			</p>
+			
+			
+			
+			<div class="content">How about left, right, up, down, home, end, del keys, etc?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57814" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57814">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57814">
+
+						<h3 ><a href="#p57814">Re: Read key presses via REPLACE - New functions :getKey, :getAnyKey, :getMaskedInput</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting95ef.html?mode=quote&amp;f=3&amp;p=57814" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic0e99.html?p=57814#p57814" onclick="prompt('Message #25',this.href); return false;">#25</a></span> 
+									<a class="unread" href="viewtopic0e99.html?p=57814#p57814" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>23 Aug 2018 03:11
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite><a href="memberlist7557.html?mode=viewprofile&amp;u=4243">carlsomo</a> wrote: <a href="viewtopicac48.html?p=57813#p57813" data-post-id="57813" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">23 Aug 2018 00:17</div></cite>
+How about left, right, up, down, home, end, del keys, etc?
+</div></blockquote>
+
+<a href="viewtopiceba8.html?f=3&amp;t=6936" class="postlink">viewtopic.php?f=3&amp;t=6936</a></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting78b0.html?mode=reply&amp;f=3&amp;t=7396" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic4a51.html?f=3&amp;t=7396&amp;start=15&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7396&amp;start=15">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			25 posts
+							<ul>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic20ae.html?f=3&amp;t=7396" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopic20ae.html?f=3&amp;t=7396" role="button">1</a></li>
+			<li class="active"><span>2</span></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5897.gif?cron_type=cron.task.text_reparser.poll_option" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=48865 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:28:45 GMT -->
+</html>

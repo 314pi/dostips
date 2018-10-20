@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=30&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:59:30 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support - Page 3</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</h2>
+		<p><a href="viewtopicb16d.html?f=3&amp;t=6044">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6044</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>3</strong> of <strong>27</strong></div>
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>07 Dec 2014 04:04</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Greetings Dave!<br /><br />I'd like to pad the numbers at the beginning of a line with leading whitespace.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>4117:hea$der.log<br />307:inputfile.txt<br />307:inputfile2.txt<br />716:IP.bat<br />288:outputfile.txt<br /></code></pre></div><br /><br />Can you please show an example of how I would get this, with a field width of 6 characters and the : replaced with a -<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; 4117-hea$der.log<br />&nbsp; &nbsp;307-inputfile.txt<br />&nbsp; &nbsp;307-inputfile2.txt<br />&nbsp; &nbsp;716-IP.bat<br />&nbsp; &nbsp;288-outputfile.txt<br /></code></pre></div><br /><br /><strong class="text-strong">EDIT: I'm almost there.  Just trying to find out how to add the minus sign</strong><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo 123:abc def|jrepl &quot;(.*?):(.*)&quot; &quot;lpad($1,'&nbsp; &nbsp; &nbsp; ')+$2&quot; /j</code></pre></div><br /><br /><span style="color: #0040FF">All Good!</span><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo 123:abc def|jrepl &quot;(.*?):(.*)&quot; &quot;lpad($1,'&nbsp; &nbsp; &nbsp; ')+'-'+$2&quot; /j</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>07 Dec 2014 08:58</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Nothing to fear, right <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" />  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><br />Another way:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo 123:abc def|jrepl &quot;^(.*?):&quot; &quot;lpad($1,'&nbsp; &nbsp; &nbsp; ')+'-'&quot; /j<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>09 Dec 2014 08:08</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I updated my version 3.1 post to version 3.2 (also updated the top current version post).<br /><br />There was a major bug with the /T option when /JMATCH was not used - the dynamic replace function was missing a set of {}. I don't understand how any of my test cases ever worked, but somehow they did. But there was definitely a bug that needed squashing.<br /><br />I also added a GOTO at the top to improve startup performance. It now skips the documentation without wasting time parsing.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>09 Dec 2014 19:51</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Thanks Dave.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>17 Dec 2014 19:04</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Could JREPL be used to remove CR\LF pairs from a file and output it to a new file without them?<br /><br />I know I can do this with a vbscript by doing a READALL and then use a REPLACE on vbCrLf and then use the WRITE method to output it to a new file.<br /><br />As most of you know I do use some rather large files sometimes. So not sure if this is necessarily the best way to do it. I would assume if I pipe or redirect to JREPL.bat it wouldn't have issues with files larger than 2GB's?<br /><br />For a good third party utility to do this I use TR.exe but I always like the native option if possible.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>17 Dec 2014 20:51</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">If the file is &lt; 2 gigabytes, then you could use:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;\r\n&quot; &quot;&quot; /m /f input.txt /o output.txt<br /></code></pre></div>This one is fairly obvious. It loads the entire file into a single string variable, hence the 2 gigabyte limit. Using a pipe doesn't change anything. The multi-line option still must load the entire input into one string variable.<br /><br /><br />If the file is &gt; 2gigabytes, then:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;^&quot; &quot;&quot; /jEndLn &quot;output.Write($txt); $txt=false;&quot; /f input.txt /o output.txt<br /></code></pre></div>This one doesn't replace anything, but it uses custom JScript to write out each line without the newline, and then disables the normal write that includes newline.<br /><br />This second solution can handle any size file as long as no line exceeds 2 gigabytes. But afterwards, output.txt cannot be processed by JREPL.BAT because it consists of a single line &gt; 2 gigabytes.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>17 Dec 2014 21:08</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">The first one is very similar to using TR.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>tr -d '\r\n' &lt;filein.txt &gt;fileout.txt</code></pre></div><br />The second one looks similar in the way vbscript does a write versus a write line.<br /><br />I should do some timed testing to see which is fastest. I will do your two methods, vbscript and then TR.<br /><br />This will come in handy. Thanks Dave.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>18 Dec 2014 00:11</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">I'd be interested in seeing the speed test results, Squashman.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>18 Dec 2014 07:03</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I'll make a speed test <em class="text-italics"><strong class="text-strong">prediction</strong></em>, from fastest to slowest:<br /><br />1) tr<br />2) dedicated VBScript or JScript<br />3) JREPL option 1 (up until it fails at 2 GB)<br />4) JREPL option 2<br /><br />But I should think the IO would be the overwhelming bottle neck, with none of the options having any advantage there. So I'm guessing all options will be within ~25% of each other, perhaps even more tightly packed.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>18 Dec 2014 08:28</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">I will do all the testing on my Hard drive versus the network drive.  We don't even have a Gigabit Lan and some of our servers are offsite hosted by another company.  We are lucky if we get 40Mb of bandwidth to the offsite servers.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>24 Dec 2014 12:31</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I updated my version 3.2 post to version 3.3 (also updated the top current version post).<br /><br />I fixed a bug that occurred when /JMATCH was combined with /M or /S. The bug was introduced in version 3.0. The bug would never have seen the light of day if I had a proper regression test plan. One of these days...<br /><br />old line 659:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; if (!alterations || str1!=str2) if (multi) {<br /></code></pre></div>became new line 660:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; if (!jmatch) if (!alterations || str1!=str2) if (multi) {<br /></code></pre></div><br />old line 673:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; if (!alterations) output.Write(_g.fmtNum(ln,lnPad)+str2);<br /></code></pre></div> became new line 674:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; if (!jmatch) output.Write(_g.fmtNum(ln,lnPad)+str2);<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>30 Dec 2014 19:03</strong></div>
+				<div class="author">by <strong>skantanka</strong></div>
+				<div class="content">How do you replace three double qoutes (&quot;&quot;&quot;) with two double quotes (&quot;&quot;)?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>13 Jan 2015 22:02</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">You cannot pass a double quote to any CSCRIPT program via the command line. So you must use an escape sequence - either \q or \x22. If used in the replacement string, then you must use the /X option. If \q is used in the search string, then you must use the /X option. But /x22 is OK in the search string without the /X option.<br /><br />There are many ways to substitute 2 quotes for 3. Here are a few options:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl \q\q\q \q\q /x /f test.txt<br />jrepl \x22{3} \x22\x22 /x f test.txt<br />jrepl &quot;(\q\q)\q&quot; $1 /x f test.txt<br />jrepl &quot;(\x22{2})\x22&quot; $1 f test.txt<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expression</h3>
+				<div class="date">Posted: <strong>21 Jan 2015 00:12</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Dave, I've been processing data and it occurred to me that your tool would be useful if it could also process a text file,<br />plus change the case of a certain letter in a certain word - for example:<br /><br />change and capitalise the first letter:<br /><br /><span style="color: blue"><br />give me all your money, and don't sound the alarm!</span><br /><br />to this<br /><br /><span style="color: blue"><br />Give me all your money, and don't sound the alarm!</span><br /><br />but someone may want to capitalise the third letter of the 5th word and the 2nd letter of the last word<br /><br /><span style="color: blue"><br />give me all your moNey, and don't sound the aLarm!</span><br /><br /><br />Do you think there is a solution in your range of tools for something like this?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expression</h3>
+				<div class="date">Posted: <strong>21 Jan 2015 14:52</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">That is exactly the type of problem that <a href="viewtopicb16d.html?f=3&amp;t=6044" class="postlink">JREPL.BAT</a> is designed to solve. The /J option provides a mechanism to apply the JScript toUpperCase() method to a portion of the replacement string.<br /><br />Your question really belongs in the JREPL.BAT thread.<br /><br />Assuming your text is in file test.txt:<br /><br />1) Capitalize the first letter<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;^.&quot; &quot;$0.toUpperCase()&quot; /j /f test.txt /o -<br /></code></pre></div><br /><br />2) Capitalize 3rd letter of 5th word and 2nd letter of last word. I perform this in two steps because there may not be a 5th word, but there is always a last word (except for empty lines). Also, the 5th word might also be the last word.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl &quot;^(\s*(?:\S+\s+){4}\S{2})(\S)&quot; &quot;$1+$2.toUpperCase()&quot; /j /f test.txt /o -<br />call jrepl &quot;((?:^|\s)\S)(\S)(\S*\s*)$&quot; &quot;$1+$2.toUpperCase()+$3&quot; /j /f test.txt /o -<br /></code></pre></div><br />The output of the first JREPL can be piped as input into the second, but then the output file must be a temporary file, followed by a MOVE.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;^(\s*(?:\S+\s+){4}\S{2})(\S)&quot; &quot;$1+$2.toUpperCase()&quot; /j /f test.txt | jrepl &quot;((?:^|\s)\S)(\S)(\S*\s*)$&quot; &quot;$1+$2.toUpperCase()+$3&quot; /j /o test.txt.new<br />move /y test.txt.new test.txt &gt;nul<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>3</strong> of <strong>27</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=30&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:59:30 GMT -->
+</html>

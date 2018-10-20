@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=32&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:44:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Accent lettres are lost / FOR loop to make multiple folders</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Accent lettres are lost / FOR loop to make multiple folders</h2>
+		<p><a href="viewtopicbb2e.html?f=3&amp;t=32">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=32</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Accent lettres are lost / FOR loop to make multiple folders</h3>
+				<div class="date">Posted: <strong>14 Oct 2006 15:25</strong></div>
+				<div class="author">by <strong>budhax</strong></div>
+				<div class="content">Hello,<br /><br />A.<br />The accent letters are lost (transformed: è-&gt;Š) using this BATCH file<br /><!-- m --><a class="postlink" href="http://dostips.cmdtips.com/DtCodeBatchFiles.php#_Toc145951134">http://dostips.cmdtips.com/DtCodeBatchF ... c145951134</a><!-- m --><br />on a French MS Win XP (no SP) system.<br />How to keep the accent letters ?<br />We get the accent in a DOS session, I mean the accents appear.<br /><br />B.<br />FOR /L %%I in (1,2,5) DO (<br />    SET /A v=1+%%I<br />    MD page%%I_%v%<br />)<br />This script should create 3 folders named page1_2, page3_4, page5_6<br />but it creates page1_, page3_, page5_<br />Why the variable v is lost ?<br /><br />Thanks.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>15 Oct 2006 19:10</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">budhax,<br /><br />The easy one first:<br /><br />B)<br />Your problem is that the command interpreter resolves %v% only once right before executing the for-loop.<br />To fix this you can either use DELAYEDEXPANSION or run <strong class="text-strong">MD</strong> in a new batch file context.<br /><br />Use DELAYEDEXPANSION:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>setlocal ENABLEDELAYEDEXPANSION<br />FOR /L %%I in &#40;1,2,5&#41; DO &#40;<br />&nbsp; &nbsp; SET /A v=1+%%I<br />&nbsp; &nbsp; call MD page%%I_!v!<br />&#41;</code></pre></div><br /><br />Use new batch file context:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /L %%I in &#40;1,2,5&#41; DO &#40;<br />&nbsp; &nbsp; SET /A v=1+%%I<br />&nbsp; &nbsp; call MD page%%I_%%v%%<br />&#41;</code></pre></div><br /><br />DOS IT HELP?<br /><br />I will get back to you on issue A.  <img class="smilies" src="images/smilies/icon_lol.gif" alt=":lol:" title="Laughing" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>15 Oct 2006 20:42</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">budhax, <br /><br />Now to your tough one: A  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> <br />Unfortunately I only have an English OS available.<br />I tried A2 as described below using the accent letter you provided by copying the letter from your forum post into the help.bat.  It worked ok, both è and Š appeared properly in the HTML.<br /><br /><br />Here is something to try out for you.<br />A1)<br />-From a command line <strong class="text-strong">run: cmd /U</strong><br />This opens a new batch file context having the output of internal commands to a pipe or file to be Unicode.<br />-Now <strong class="text-strong">run DosCommandRef.bat</strong> from that command line.<br />-<strong class="text-strong">Review</strong> the accent letters in the output and let me know.<br /><br />If the accent letters are still transformed then proceed with A2:<br /><br />A2)<br />- <strong class="text-strong">Download</strong> the latest version of DosCommandRef.bat (Important!) and help.bat into same directory:<br /><a href="../DosCommandRef.html" class="postlink">http://www.dostips.com/DosCommandRef.bat</a><br /><a href="../help.bat" class="postlink">http://www.dostips.com/help.bat</a><br /><br />-<strong class="text-strong">Optionally edit help.bat </strong>with a text editor and add some more accent letters.<br />-<strong class="text-strong">Run: DosCommandRef.bat</strong><br />-<strong class="text-strong">Review</strong> the accent letters in the html output and let me know.<br /><br />help.bat will emulate the WinXP help command to allow better testing.<br />In case you modified the help.bat, please post it's content with your reply.<br />Remove or rename help.bat in order to have DosCommandRef.bat use regular WinXP help information.<br /><br />Thanks in advance ...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>not concluant result</h3>
+				<div class="date">Posted: <strong>16 Oct 2006 12:15</strong></div>
+				<div class="author">by <strong>budhax</strong></div>
+				<div class="content">B. Thank you very much, it helps a lot.<br /><br />A1.<br />Start menu &gt; run &gt; cmd /U<br />DosCommandRef.bat<br /><br />and I got:<br /><br /><blockquote class="uncited"><div>DOS command reference<br />Windows Version :  Microsoft Windows XP [version 5.1.2600]  <br />Document Source :  <!-- m --><a class="postlink" href="http://dostips.cmdtips.com/DosCommandRef.php">http://dostips.cmdtips.com/DosCommandRef.php</a><!-- m --> <br />Created by :  DosCommandRef.bat <br /><br /><br />Test1 Test2 <br /><br />DOS Batch Source Script that created this Document <br /><br /><br />TOPTest1<br /> <br />This is Test1.<br />Here some accent letters Þ - è.  Review this line in HTML page.<br /><br /><br />TOPTest2<br /> <br />This is Test2.<br />Here some accent letters Þ - è.  Review this line in HTML page.<br /><br /></div></blockquote><br />help.bat file:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF<br />REM -- Source dostips.com, provided AS-IS, no warranty what so ever.<br />REM -- This batch fakes out the help command for testing of the DosCommandRef.bat.<br />if &quot;%~1&quot;==&quot;&quot; &#40;<br />&nbsp; &nbsp; echo.Test1<br />&nbsp; &nbsp; echo.Test2<br />&nbsp; &nbsp; GOTO:EOF<br />&#41;<br />rem Below some fake help text.&nbsp; Add some accent letters for testing:<br />echo.This is %~1.<br />echo.Here some accent letters è - Š.&nbsp; Review this line in HTML page.<br />echo.<br /></code></pre></div><br /><br />so, è is transformed to Þ<br />and Š is transformed to è<br /><br /><br /><br />A2.<br />I removed help.bat<br />then run the same line: DosCommandRef.bat<br />and I got:<br /><br /><blockquote class="uncited"><div>DOS command reference<br />Windows Version :  Microsoft Windows XP [version 5.1.2600]  <br />Document Source :  <!-- m --><a class="postlink" href="http://dostips.cmdtips.com/DosCommandRef.php">http://dostips.cmdtips.com/DosCommandRef.php</a><!-- m --> <br />Created by :  DosCommandRef.bat <br /><br /><br />Pour ASSOC AT ATTRIB BREAK CACLS CALL CD CHCP CHDIR CHKDSK CHKNTFS CLS CMD COLOR COMP COMPACT CONVERT COPY DATE DEL DIR DISKCOMP DISKCOPY DOSKEY ECHO ENDLOCAL ERASE EXIT FC FIND FINDSTR FOR FORMAT FTYPE GOTO GRAFTABL HELP IF LABEL MD MKDIR MODE MORE MOVE PATH PAUSE POPD PRINT PROMPT PUSHD RD RECOVER REM REN RENAME REPLACE RMDIR SET SETLOCAL SHIFT SORT SUBST START TIME TITLE TREE TYPE VER VERIFY VOL XCOPY <br /><br />DOS Batch Source Script that created this Document <br /><br /><br />TOPPour<br /> <br />Cette commande n'est pas prise en charge par l'utilitaire d'aide.<br />Essayez "x /?".<br /><br />TOPASSOC<br /> <br />Affiche ou modifie les associations des extensions de fichiers<br /><br />ASSOC [.ext[=[Type du fichier]]]<br /><br />  .ext      Sp‚cifie l'extension de fichier avec laquelle associer le type<br /> Type_de_fichier  Sp‚cifie le type de fichier … associer avec l'extension<br /><br />Entrez ASSOC sans paramŠtres pour afficher les associations actuelles du fichier.<br />Si ASSOC est appel‚ avec uniquement une extension de fichier, il affiche<br />l'association de fichier actuelle pour cette extension. Sp‚cifiez nothing pour<br />le type de fichier et la commande supprimera l'association pour cette extension.<br /></div></blockquote><br /><br />so, accent letters are still transformed <img class="smilies" src="images/smilies/icon_sad.gif" alt=":(" title="Sad" /><br /><br /><br /><br />Output exemple, from the DOS window on a French MS Windows system:<br />Start menu &gt; cmd &gt; help assoc<br /><br /><blockquote class="uncited"><div>C:\&gt;help ASSOC<br />Affiche ou modifie les associations des extensions de fichiers<br /><br />ASSOC [.ext[=[Type du fichier]]]<br /><br />  .ext      Spécifie l'extension de fichier avec laquelle associer le type<br /> Type_de_fichier  Spécifie le type de fichier à associer avec l'extension<br /><br />Entrez ASSOC sans paramètres pour afficher les associations actuelles du fichier<br />.<br />Si ASSOC est appelé avec uniquement une extension de fichier, il affiche<br />l'association de fichier actuelle pour cette extension. Spécifiez nothing pour<br />le type de fichier et la commande supprimera l'association pour cette extension.<br /></div></blockquote><br />[/code]</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>17 Oct 2006 21:27</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">budhax,<br />Thanks for getting back with the results.  This surly is strange  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> <br /><br />After modyfying help.bat to:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF<br />REM -- Source dostips.com, provided AS-IS, no warranty what so ever.<br />REM -- This batch fakes out the help command for testing of the DosCommandRef.bat.<br />if &quot;%~1&quot;==&quot;&quot; &#40;<br />&nbsp; &nbsp; echo.Test1<br />&nbsp; &nbsp; GOTO:EOF<br />&#41;<br />rem Below some fake help text.&nbsp; Add some accent letters for testing:<br />echo.This is %~1.<br />echo.Affiche ou modifie les associations des extensions de fichiers <br />echo.<br />echo.ASSOC &#91;.ext&#91;=&#91;Type du fichier&#93;&#93;&#93; <br />echo.<br />echo..ext Spécifie l'extension de fichier avec laquelle associer le type <br />echo.Type_de_fichier Spécifie le type de fichier à associer avec l'extension <br />echo.<br />echo.Entrez ASSOC sans paramètres pour afficher les associations actuelles du fichier <br />echo.. <br />echo.Si ASSOC est appelé avec uniquement une extension de fichier, il affiche <br />echo.l'association de fichier actuelle pour cette extension. Spécifiez nothing pour <br />echo.le type de fichier et la commande supprimera l'association pour cette extension.</code></pre></div><br />I get the following correct output:<br /><blockquote class="uncited"><div>DOS command reference<br />Windows Version :  Microsoft Windows XP [Version 5.1.2600]  <br />Document Source :  <!-- m --><a class="postlink" href="http://dostips.cmdtips.com/DosCommandRef.php">http://dostips.cmdtips.com/DosCommandRef.php</a><!-- m --> <br />Created by :  DosCommandRef.bat <br /><br /><br />Test1 <br /><br />DOS Batch Source Script that created this Document <br /><br /><br />TOPTest1<br /> <br />This is Test1.<br />Affiche ou modifie les associations des extensions de fichiers <br /><br />ASSOC [.ext[=[Type du fichier]]] <br /><br />.ext Spécifie l'extension de fichier avec laquelle associer le type <br />Type_de_fichier Spécifie le type de fichier à associer avec l'extension <br /><br />Entrez ASSOC sans paramètres pour afficher les associations actuelles du fichier <br />. <br />Si ASSOC est appelé avec uniquement une extension de fichier, il affiche <br />l'association de fichier actuelle pour cette extension. Spécifiez nothing pour <br />le type de fichier et la commande supprimera l'association pour cette extension.<br /></div></blockquote><br />This may be related to the code page setting.<br /><br />Here are two thinkgs to try for you:<br /><br />A3)<br />From a command prompt run:<br /><strong class="text-strong">MODE CON CP</strong><br /><br />Here is what I get:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;mode con cp<br /><br />Status for device CON:<br />----------------------<br />&nbsp; &nbsp; Code page:&nbsp; &nbsp; &nbsp; 437</code></pre></div><br />A4)<br />From a command prompt run:<br /><strong class="text-strong">for %a in (Spécifie paramètres appelé) do @echo.'%a'</strong><br /><br />Here is what I get:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;for %a in &#40;Spécifie paramètres appelé&#41; do @echo.'%a'<br />'Spécifie'<br />'paramètres'<br />'appelé'</code></pre></div><br />Let me know.  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>20 Oct 2006 16:19</strong></div>
+				<div class="author">by <strong>budhax</strong></div>
+				<div class="content">A3)<br />I got:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;mode con cp<br /><br />État du périphérique CON:<br />-------------------------<br />&nbsp; &nbsp; Page de codes :&nbsp; &nbsp;850</code></pre></div><br /><br /><br /><br /><br />A4)<br />I got:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;for %a in &#40;Spécifie paramètres appelé&#41; do @echo.'%a'<br />'Spécifie'<br />'paramètres'<br />'appelé'</code></pre></div><br /><br />Using DosCommandRef.bat and your new help.bat file, I got:<br /><br /><blockquote class="uncited"><div>DOS command reference<br />Windows Version :  Microsoft Windows XP [version 5.1.2600]  <br />Document Source :  <!-- m --><a class="postlink" href="../DosCommandRef-2.html">http://www.dostips.com/DosCommandRef.php</a><!-- m --> <br />Created by :  DosCommandRef.bat <br /><br /><br />Test1 <br /><br />DOS Batch Source Script that created this Document <br /><br /><br />TOPTest1<br /> <br />This is Test1.<br />Affiche ou modifie les associations des extensions de fichiers<br /><br />ASSOC [.ext[=[Type du fichier]]]<br /><br />.ext Spécifie l'extension de fichier avec laquelle associer le type<br />Type_de_fichier Spécifie le type de fichier à associer avec l'extension<br /><br />Entrez ASSOC sans paramètres pour afficher les associations actuelles du fichier<br />.<br />Si ASSOC est appelé avec uniquement une extension de fichier, il affiche<br />l'association de fichier actuelle pour cette extension. Spécifiez nothing pour<br />le type de fichier et la commande supprimera l'association pour cette extension.</div></blockquote><br /><br />So, ...?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>25 Oct 2006 23:08</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">budhax,<br /><br />I changed the code settings on my PC to 850 but couldn't reproduce the problem.<br />It seems that also on your PC the problem cannot be reproduced using the new help.bat file whereas the old help.bat file did show the problem.<br />Very strange  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> <br /><br />I'll need to look into this later and keep you posted.<br /><br />What do you get on your system when typing:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f &quot;delims=&quot; %a in &#40;'help assoc'&#41; do @echo.%a</code></pre></div><br /><br />?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>26 Oct 2006 12:03</strong></div>
+				<div class="author">by <strong>budhax</strong></div>
+				<div class="content">Never mind, it's OK (readable) without accent.<br /><br />Merci beaucoup pour ton aide.<br />(Thanks a lot for you help)</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=32&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:44:40 GMT -->
+</html>

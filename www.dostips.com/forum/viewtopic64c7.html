@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8627&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; .BAT script only running 1st command.</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>.BAT script only running 1st command.</h2>
+		<p><a href="viewtopic65bf.html?f=3&amp;t=8627">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8627</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>.BAT script only running 1st command.</h3>
+				<div class="date">Posted: <strong>16 Jun 2018 06:37</strong></div>
+				<div class="author">by <strong>glennm</strong></div>
+				<div class="content">Hi<br>
+<br>
+I got the batch script below that asks me 3 questions. It comes up with the 1st question OK but when I push Y or N thats it stopsand goes no further. <br>
+<br>
+What am I doing wrong?  Script below.<br>
+<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off 
+setlocal EnableDelayedExpansion
+ 
+rem Define folder paths
+set BaseDir=C:\DOWNLOADS
+set DestDir1=C:\DAVID DOWNLOADS
+set DestDir2=C:\JAMES DOWNLOADS
+set DestDir3=C:\DISK BURNING FOLDER
+
+ 
+rem Quit if no files in download area to process
+set Empty=Y
+for %%A in ("%BaseDir%\*.*") do set Empty=N
+if "%Empty%" EQU "Y" (
+    echo No new files to process, quitting.
+    exit /b
+)
+ 
+rem Prompt for reference number
+set RefNum=
+set /P "RefNum=Enter reference number (blank to exit):"
+ 
+rem If none entered, exit script
+if "%RefNum%" EQU "" exit /b
+ 
+rem Make a subfolder for the reference number
+md "%BaseDir%\%RefNum%"
+ 
+rem Move all files to new subfolder
+move "%BaseDir%\*.*" "%BaseDir%\%RefNum%"
+ 
+rem Ask if DAVID download to determine where to move the new folder
+choice /C YN /M "IS THIS A DAVID DOWNLOAD (Y/N)?"
+if !ERRORLEVEL! EQU 1 (
+  move "%BaseDir%\%RefNum%" "%DestDir1%"
+echo msgbox "DO NOT FORGET TO GO INTO DAVID DOWNLOADS FOLDER” 
+ &gt; "%temp%\popup.vbs"
+wscript.exe "%temp%\popup.vbs"
+) else (
+  choice /C YN /M "IS THIS A JAMES DOWNLOAD(Y/N)?"
+  if !ERRORLEVEL! EQU 1 (
+    move "%BaseDir%\%RefNum%" "%DestDir2%"
+echo msgbox "DO NOT FORGET TO GO INTO JAMES DOWNLOADS  AND PASSWORD PROTECT FOLDER!!!!" &gt; "%temp%\popup.vbs"
+wscript.exe "%temp%\popup.vbs"
+
+) else (
+   choice /C YN /M "IS THIS A BURN TO DISK DOWNLOAD? (Y/N)?"
+   if !ERRORLEVEL! EQU 1 (
+  move "%BaseDir%\%RefNum%" "%DestDir3%"
+
+echo msgbox "NOW GO INTO DVD DRIVE AND BURN TO DISK. " &gt; "%temp%\popup.vbs"
+wscript.exe "%temp%\popup.vbs"
+
+ 
+rem Remove ALL files from base download folder
+del /s /q "%BaseDir%\*.*"
+ 
+rem Remove any remaining subfolders too
+for /d %%A in ("%BaseDir%\*.*") do rd /s /q "%%~A"
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: .BAT script only running 1st command.</h3>
+				<div class="date">Posted: <strong>16 Jun 2018 09:16</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">If the for command does not find any files to process, it will not execute the set command to change the variable to N. You need to reverse your logic.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: .BAT script only running 1st command.</h3>
+				<div class="date">Posted: <strong>16 Jun 2018 09:36</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if NOT ERRORLEVEL 2 (
+  move "%BaseDir%\%RefNum%" "%DestDir1%"
+  &gt; "%temp%\popup.vbs" echo msgbox "DO NOT FORGET TO GO INTO DAVID DOWNLOADS FOLDER” 
+  wscript.exe "%temp%\popup.vbs"
+) else (
+  choice /C YN /M "IS THIS A JAMES DOWNLOAD(Y/N)?"
+  if NOT ERRORLEVEL 2 (
+    move "%BaseDir%\%RefNum%" "%DestDir2%"
+    &gt; "%temp%\popup.vbs" echo msgbox "DO NOT FORGET TO GO INTO JAMES DOWNLOADS  AND PASSWORD PROTECT FOLDER!!!!"
+    wscript.exe "%temp%\popup.vbs"
+  ) else (
+    choice /C YN /M "IS THIS A BURN TO DISK DOWNLOAD? (Y/N)?"
+    if NOT ERRORLEVEL 2 (
+      move "%BaseDir%\%RefNum%" "%DestDir3%"
+      &gt; "%temp%\popup.vbs" echo msgbox "NOW GO INTO DVD DRIVE AND BURN TO DISK. "
+      wscript.exe "%temp%\popup.vbs"
+) ) )
+</code></pre></div>
+
+You have no balanced parenthesis and an incomplete Redirect!<br>
+<br>
+You can test your Batch creations with this batch:<br>
+<a href="viewtopic9aa4.html?p=54962#p54962" class="postlink">checkCMD.cmd</a> MyCreated.Bat<br>
+<br>
+Phil</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: .BAT script only running 1st command.</h3>
+				<div class="date">Posted: <strong>16 Jun 2018 09:40</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Aaaaahhhh  See what you mean now <br>
+<br>
+Thanks</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8627&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:53 GMT -->
+</html>

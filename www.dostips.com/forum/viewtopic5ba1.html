@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8797&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:23:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; help to create a batch-file</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>help to create a batch-file</h2>
+		<p><a href="viewtopic2bed.html?f=3&amp;t=8797">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8797</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>help to create a batch-file</h3>
+				<div class="date">Posted: <strong>27 Aug 2018 13:30</strong></div>
+				<div class="author">by <strong>Pf@nne</strong></div>
+				<div class="content">Hi,<br>
+<br>
+I try to write a little batch that lists the folders of a given directory.<br>
+My current batch looks like this:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+cls
+REM -----------------------------------------
+REM Verzeichnis auslesen und anzeigen
+REM -----------------------------------------
+setlocal EnableDelayedExpansion
+cd _customDevices
+SET /a i = 0
+FOR /D %%G in ("*") DO (
+  SET /a i += 1
+  Echo [!i!] %%~nxG
+)
+Echo Es wurden %i% Verzeichnisse gefunden.
+Echo Welches Device soll geladen werden?
+endlocal
+REM -----------------------------------------
+REM Verzeichnis auswählen
+REM -----------------------------------------
+set /P dirCounter=
+Echo Verzeichnis #%dirCounter%</code></pre></div>
+
+Output:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>[1] DEMO_GPIO
+[2] DEMO_I2C_OW
+[3] lightSensor
+[4] simpleSwitch
+[5] SWA1
+Es wurden 5 Verzeichnisse gefunden.
+Welches Device soll geladen werden?
+4
+Verzeichnis #4</code></pre></div>
+
+this works so far....<br>
+<br>
+The next step is to put the selected directory into a variable.<br>
+What is the best way to do this?<br>
+Run the loop again and break at the selected number?<br>
+<br>
+Can anybody help me to complete the batch?<br>
+<br>
+Greetings from Hamburg<br>
+Pf@nne</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: help to create a batch-file</h3>
+				<div class="date">Posted: <strong>28 Aug 2018 01:57</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Hi Pf@nne,<br>
+<br>
+you could store the directory names in an array (not really an array, but it has the look and feel).<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+cls
+REM -----------------------------------------
+REM Verzeichnis auslesen und anzeigen
+REM -----------------------------------------
+setlocal EnableDelayedExpansion
+cd _customDevices
+SET /a i = 0
+FOR /D %%G in ("*") DO (
+  SET /a i+=1
+  set "deviceDir[!i!]=%%~nxG"
+  Echo [!i!] %%~nxG
+)
+Echo Es wurden %i% Verzeichnisse gefunden.
+Echo Welches Device soll geladen werden?
+
+REM -----------------------------------------
+REM Verzeichnis auswählen
+REM -----------------------------------------
+set /P dirCounter=
+Echo Verzeichnis #%dirCounter%
+echo Device: !deviceDir[%dirCounter%]!
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: help to create a batch-file</h3>
+				<div class="date">Posted: <strong>29 Aug 2018 03:14</strong></div>
+				<div class="author">by <strong>Pf@nne</strong></div>
+				<div class="content">Great, thanks!<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>[/@echo off
+CLS
+
+REM ----------------------------------------------------------------------------
+REM MENU load or archive
+REM ----------------------------------------------------------------------------
+
+:start
+ECHO.
+ECHO what to do?
+ECHO -------------------------------------------
+ECHO.
+ECHO [1] load device from archive
+ECHO [2] archive modified device
+ECHO [3] copy new clean OmniESP.json
+ECHO [4] EXIT
+SET /P toDo=
+
+IF %toDo% == 1 GOTO loadDevice
+IF %toDo% == 2 GOTO archiveDevice
+IF %toDo% == 3 GOTO copyOmniesp
+IF %toDo% == 4 GOTO end
+
+CLS
+ECHO Invalid Selection! Try again
+PAUSE
+CLS
+GOTO start
+
+
+REM ----------------------------------------------------------------------------
+:loadDevice
+CLS
+ECHO load device from framework
+ECHO -------------------------------------------
+ECHO.
+REM -----------------------------------------
+REM clean framework
+REM -----------------------------------------
+ECHO clean framework files....
+DEL data\customDevice\*.json
+DEL src\customDevice\customDevice*.*
+ECHO done
+ECHO.
+
+REM -----------------------------------------
+REM read directory and show
+REM -----------------------------------------
+
+setlocal EnableDelayedExpansion
+CD _customDevices
+SET /a i = 0
+FOR /D %%G in ("*") DO (
+  SET /a i+=1
+  SET "deviceDir[!i!]=%%~nxG"
+  ECHO [!i!] %%~nxG
+)
+CD ..
+ECHO.
+ECHO select Device.....
+
+REM -----------------------------------------
+REM choose device
+REM -----------------------------------------
+
+SET /P dirCounter=
+CLS
+ECHO load Device: !deviceDir[%dirCounter%]!
+ECHO -------------------------------------------
+ECHO.
+
+REM -----------------------------------------
+REM copy Files
+REM -----------------------------------------
+
+ECHO copy files...
+copy %~d0%~p0_customDevices\!deviceDir[%dirCounter%]!\data\customDevice\*.json data\customDevice
+copy %~d0%~p0_customDevices\!deviceDir[%dirCounter%]!\src\customDevice\customDevice*.* src\customDevice
+ECHO done
+
+GOTO end
+
+REM ----------------------------------------------------------------------------
+:archiveDevice
+CLS
+ECHO archive Device
+ECHO -------------------------------------------
+ECHO.
+
+REM -----------------------------------------
+REM read directory and show
+REM -----------------------------------------
+
+setlocal EnableDelayedExpansion
+CD _customDevices
+SET /a i = 0
+FOR /D %%G in ("*") DO (
+  SET /a i+=1
+  SET "deviceDir[!i!]=%%~nxG"
+  ECHO [!i!] %%~nxG
+)
+CD ..
+ECHO.
+ECHO select Device.....
+
+REM -----------------------------------------
+REM choose device
+REM -----------------------------------------
+
+SET /P dirCounter=
+CLS
+ECHO archive Device: !deviceDir[%dirCounter%]!
+ECHO -------------------------------------------
+ECHO.
+
+REM -----------------------------------------
+REM clean archive
+REM -----------------------------------------
+ECHO clean archive files !deviceDir[%dirCounter%]!....
+DEL _customDevices\!deviceDir[%dirCounter%]!\data\customDevice\*.json
+DEL _customDevices\!deviceDir[%dirCounter%]!\firmware\*.bin
+DEL _customDevices\!deviceDir[%dirCounter%]!\firmware\*.tar
+DEL _customDevices\!deviceDir[%dirCounter%]!\src\customDevice\customDevice*.*
+ECHO done
+ECHO.
+
+REM -----------------------------------------
+REM copy Files
+REM -----------------------------------------
+
+ECHO archive files to !deviceDir[%dirCounter%]!
+copy %~d0%~p0data\customDevice\*.json _customDevices\!deviceDir[%dirCounter%]!\data\customDevice
+copy %~d0%~p0update\*.* _customDevices\!deviceDir[%dirCounter%]!\firmware
+copy %~d0%~p0src\customDevice\customDevice*.* _customDevices\!deviceDir[%dirCounter%]!\src\customDevice
+ECHO done
+
+GOTO end
+
+REM ----------------------------------------------------------------------------
+:copyOmniesp
+CLS
+ECHO copy OmniESP to data DIR
+ECHO -------------------------------------------
+ECHO.
+ECHO copy files...
+copy %~d0%~p0_customDevices\OmniESP.json data
+
+:end
+
+code]</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8797&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:23:27 GMT -->
+</html>

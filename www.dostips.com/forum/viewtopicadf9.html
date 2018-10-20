@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8628&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:46 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; batch file to search list of strings in txt files across multiple text files in folder &amp; return counts in txt file</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>batch file to search list of strings in txt files across multiple text files in folder &amp; return counts in txt file</h2>
+		<p><a href="viewtopic1468.html?f=3&amp;t=8628">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8628</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>batch file to search list of strings in txt files across multiple text files in folder &amp; return counts in txt file</h3>
+				<div class="date">Posted: <strong>17 Jun 2018 03:21</strong></div>
+				<div class="author">by <strong>mrshiseido</strong></div>
+				<div class="content">I am new to batch/script &amp; been trying my best to create a batch that look up a list of mac addresses (in xxxx.xxxx.xxxx format as strings) in a text file &amp; count the mac addresses occurrence from raw data text files in a folder. However, the code that I have tried doesn't seems to work properly or as expected. Your assistance &amp; prompt feedback will be highly appreciated. Thanks in advance.<br>
+<br>
+My OBJECTIVE is a batch that search for mac address (1 on each line) in text file, across a list of raw text files (4mb each) under particular folder (i.e. c:\test), count the total no of matches for each occurrence then write the total counts for each string in a separate text file.<br>
+<br>
+@ECHO OFF<br>
+<br>
+::: If this file exists, delete it <br>
+IF EXIST "Results.txt" DEL /Q /F "Results.txt"<br>
+<br>
+::: Bare format DIR command listing ONLY filename.extension <br>
+DIR /B c:\201805\*.txt &gt;&gt; maps.txt<br>
+<br>
+::: Set seq variable to 1 for the first sequence number<br>
+SET seq=1<br>
+<br>
+::: Please go to command line and type FOR /? and look through there for the FOR /F explanations<br>
+::: This is saying for each line in strings.txt do a FIND /I for each string in maps.txt and if FIND /I finds a string, then CALL the SeqAdditionRoutine and pass the string found as the first argument to the CALL :label (:SeqAdditionRoutine in this instance)<br>
+FOR /F "TOKENS=*" %%S IN (mac.txt) DO (FIND /I "%%S" maps.txt &amp;&amp; CALL :SeqAdditionRoutine "%%~S")<br>
+::: GOTO EOF needed here to pass control back to the CALLER or END once loop is complete to it doesn't move on to logic beneath which should only be called<br>
+GOTO :EOF<br>
+<br>
+:SeqAdditionRoutine<br>
+::: This is saying FIND /I but with first argument passed as the string (same as above FIND /I but the first argument is passed here), and if successful (the double AND) ECHO the string equals 1 (or the sequence number variable value) to results.txt<br>
+FIND /I "%~1" maps.txt &amp;&amp; ECHO %~1 = %seq% &gt;&gt; results.txt<br>
+::: This is saying (see SET /?) whatever seq variable is set to, ADD one to it and set it to this new value for whatever adding one to it will make it when it goes to EOF, it'll loop the next command (the CALLing loop) with this new value until it is successful in finding a strings and comes back down here again<br>
+SET /A seq=%seq%+1<br>
+::: GOTO EOF needed here to pass control back to the CALLER or END once loop is complete to it doesn't move on to logic beneath which should only be called<br>
+GOTO :EOF</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: batch file to search list of strings in txt files across multiple text files in folder &amp; return counts in txt file</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 08:33</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistc14b.html?mode=viewprofile&amp;u=9267">mrshiseido</a> wrote: <a href="viewtopic3613.html?p=57176#p57176" data-post-id="57176" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">17 Jun 2018 03:21</div></cite>However, the code that I have tried doesn't seems to work properly or as expected.</div></blockquote>I could interpret your objective in at least two ways, so it would help if you could give us a sample content of the folder, and related files, the output that your batch produces, and what you wanted to get instead.<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8628&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:46 GMT -->
+</html>

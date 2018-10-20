@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8623&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:12 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Reading a delimited file</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Reading a delimited file</h2>
+		<p><a href="viewtopic18f8.html?f=3&amp;t=8623">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8623</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Reading a delimited file</h3>
+				<div class="date">Posted: <strong>13 Jun 2018 01:32</strong></div>
+				<div class="author">by <strong>pp8771</strong></div>
+				<div class="content">I have a very unusual batch requirement.<br>
+I have file with a header and number of rows which are considered as data in the subsequent rows.<br>
+Number of header columns can vary and can be determined from the number of delimters. if there are three delimiters in a row - i will have four columns in the file. <br>
+The data rows(subsequent rows after the header) are not constant it can vary 2 to end of file<br>
+<br>
+Sample file
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>COMPID|COMPNAME|ADDRESS|YEAROFESTABLISTMENT
+100|XYC|AWER RD|12072018
+120|BNM|PQTY RD|12082018</code></pre></div>
+
+<br>
+<br>
+<br>
+Required Output will be header rows followed by subsequent rows.In the end of each row i will mention also the folder name(F1) and file name (u1.dat).<br>
+There are multiple files in each such folders.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>COMPID,COMPNAME,ADDRESS,YEAROFESTABLISTMENT##"100","XYC","AWER RD","12072018"##F1.u1
+COMPID,COMPNAME,ADDRESS,YEAROFESTABLISTMENT##"120","BNM","PQTY RD","12082018"##F1.u1</code></pre></div>
+
+Please how we can we transalate the requirement using batch to an above output.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a delimited file</h3>
+				<div class="date">Posted: <strong>13 Jun 2018 12:09</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">You really haven't specified enough details.  Really need to know what the folder structure is and are you expecting each file to have its own output file or are you combining all the files into one.<br>
+<br>
+Regardless of that, here is the base code to do one file. Hopefully you can figure out the rest.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>    @echo off
+    setlocal enabledelayedexpansion
+    
+    set "filename=u1.dat"
+    set "folder=F1"
+    
+    REM Get header row
+    set /p "header="&lt;"%filename%"
+    set "header=%header:|=,%"
+    
+    REM get base file name witout exention
+    FOR %%G IN ("%filename%") do set "basename=%%~nG"
+    
+    REM Read file
+    FOR /F "skip=1 usebackq delims=" %%G IN ("%filename%") DO (
+    	set "line=%%~G"
+    	set line="!line:|=","!"
+    	echo %header%##!line!##%folder%.%basename%
+    )
+pause</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a delimited file</h3>
+				<div class="date">Posted: <strong>13 Jun 2018 23:03</strong></div>
+				<div class="author">by <strong>pp8771</strong></div>
+				<div class="content">Thanks for the response.<br>
+trrying to answer your question:<br>
+I am not concatenating the all the file contents into one file but will write to different file by appending file name folder name and line no.<br>
+Let say I have parent folder (A1). Under the parent folder A1 it has different subfolder A12,A13, A14 and A15. I want to read this folder name and file name and content of each filename under each folders. Could be some folders do not contain any file then I should not process that folders.<br>
+<br>
+It is in continuation of the requirement.<br>
+I am using this code and listing the folders and files inside the folders by  a looping the folders but encountering few issues while reading  files and printing few name.<br>
+Sample input file is provide below.<br>
+<br>
+Also i need to print the line numbers along with the rows.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+ setlocal enabledelayedexpansion
+ set WORKING_DIRECTORY=%cd%
+pushD %WORKING_DIRECTORY%
+for /f "usebackq tokens=*" %%a in (`dir /b/s/a:d MigrationPoc`) do (
+ echo:%%~nxa
+  set "vfolder=%%~nxa"
+ echo  folder name %vfolder%  ; 
+ for /f "usebackq tokens=*" %%a in (`dir /a-d /b %%a` ) do  (
+  echo:%%~na
+  set vfilename=%%~na
+  set /p "header="&lt;"%vfilename%"
+  set "header=%header:|=,%"
+ FOR /F "skip=1 usebackq delims=" %%G IN ("%vfilename%") DO (
+    	set "line=%%~G"
+    	set line="!line:|=","!"
+    	REM# also i need to print the line number starting from 2
+    	echo %header%##!line!##%vfolder%.%vfilename%
+ )
+ )
+ )
+ pause
+popD</code></pre></div>
+
+<br>
+output:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>F1-----&gt;Folder name appearing properly
+ folder name   ; ----&gt; Folder name is not appearing
+u1 ----&gt; File name
+The system cannot find the path specified.  ---&gt;Output is not coming but the file is present in the path
+sample output:
+COMPID,COMPNAME,ADDRESS,YEAROFESTABLISTMENT##"100","XYC","AWER RD","12072018"##F1.u1##&lt;line no&gt; 2
+COMPID,COMPNAME,ADDRESS,YEAROFESTABLISTMENT##"120","BNM","PQTY RD","12082018"##F1.u1##&lt;line no&gt; 3
+The system cannot find the file .
+b1
+The system cannot find the path specified.
+The system cannot find the file .
+c1
+The system cannot find the path specified.
+The system cannot find the file .
+d1
+The system cannot find the path specified.
+The system cannot find the file .
+Sch_B
+ folder name   ;
+File Not Found ----&gt;If there is not file  inside a folder then file not found should not be print.It should be skipped.
+Sch_C
+ folder name   ;
+File Not Found
+Sch_D
+ folder name   ;
+a1
+The system cannot find the path specified.
+The system cannot find the file .
+b1
+The system cannot find the path specified.
+The system cannot find the file .
+c1
+The system cannot find the path specified.
+The system cannot find the file .
+d1
+The system cannot find the path specified.
+The system cannot find the file .</code></pre></div>
+
+Sample input file u1:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>COMPID|COMPNAME|ADDRESS|YEAROFESTABLISTMENT
+100|XYC|AWER RD|12072018
+120|BNM|PQTY RD|12082018</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a delimited file</h3>
+				<div class="date">Posted: <strong>14 Jun 2018 15:19</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Well you certainly can't read the file if you are stripping the extension from the file name before you try to use that variable to read the file.<br>
+<br>
+Also note my use of delayed expansion variables.  There is a reason I am using exclamation points inside a code block.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a delimited file</h3>
+				<div class="date">Posted: <strong>14 Jun 2018 18:54</strong></div>
+				<div class="author">by <strong>pp8771</strong></div>
+				<div class="content">In that case i will store two things in two variables. One after stripping and one with extension.Thanks for the  advise.<br>
+I have rewritten it.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+ setlocal enabledelayedexpansion
+ set WORKING_DIRECTORY=%cd%
+pushD %WORKING_DIRECTORY%
+REM echo %WORKING_DIRECTORY%
+for /f "usebackq tokens=*" %%a in (`dir /b/s/a:d MigrationPoc`) do (
+ echo:%%~nxa
+  set "vfolder=%%~nxa"
+ for /f "usebackq tokens=*" %%a in (`dir /a-d /b %%a` ) do  (
+  echo %%a
+  echo:%%~na
+  set vfilenamewithext=%%a
+  set vfilename=%%~na
+  set /p "header="&lt;"!vfilenamewithext!"
+  set "header=%header:|=,%"
+ FOR /F "skip=1 usebackq delims=" %%G IN ("!vfilenamewithext!") DO (
+    	set "line=%%~G"
+    	set line="!line:|=","!"
+    	echo %header%##!line!##!vfolder!.!vfilename!
+ )
+ )
+ )
+ pause
+popD</code></pre></div>
+
+But issue with reading the file still persists and I cannot able to print the line number along with file contents.<br>
+<br>
+My output is:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>F1
+u1.sql
+u11
+The system cannot find the file specified.
+The system cannot find the file u1.sql.
+b1.sql
+b1
+The system cannot find the file specified.
+The system cannot find the file b1.sql.
+c1.sql
+c1
+The system cannot find the file specified.
+The system cannot find the file c1.sql.
+d1.sql
+d1
+The system cannot find the file specified.
+The system cannot find the file d1.sql.
+Sch_B
+File Not Found
+Sch_C
+File Not Found
+Sch_D
+a1.sql
+a1
+The system cannot find the file specified.
+The system cannot find the file a1.sql.
+b1.sql
+b1
+The system cannot find the file specified.
+The system cannot find the file b1.sql.
+c1.sql
+c1
+The system cannot find the file specified.
+The system cannot find the file c1.sql.
+d1.sql
+d1
+The system cannot find the file specified.
+The system cannot find the file d1.sql.</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a delimited file</h3>
+				<div class="date">Posted: <strong>15 Jun 2018 17:24</strong></div>
+				<div class="author">by <strong>pp8771</strong></div>
+				<div class="content">really struggling to read file and print in the above format. Any kind of assistance from experts is really appreciated.<br>
+Thanks for the earlier assistance .<br>
+<br>
+<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+ setlocal enabledelayedexpansion
+ set WORKING_DIRECTORY=%cd%
+pushD %WORKING_DIRECTORY%
+REM echo %WORKING_DIRECTORY%
+for /f "usebackq tokens=*" %%a in (`dir /b/s/a:d MigrationPoc`) do (
+ echo:%%~nxa
+  set "vfolder=%%~nxa"
+  set vemptyfolder=
+  dir /b "%%a" | findstr "^" &gt;nul || set "vemptyfolder=%%~nxa"
+  if !vemptyfolder! NEQ !vfolder! (
+ for /f "usebackq tokens=*" %%a in (`dir /a-d /b %%a` ) do  (
+  echo %%a
+  echo:%%~na
+  set vfilenamewithext=%%a
+  set vfilename=%%~na
+  set /p "header="&lt;"MigrationPoc\!vfolder!\!vfilenamewithext!"
+  set "header=%header:|=,%"
+  
+ FOR /F "skip=1 usebackq delims=" %%G IN ("MigrationPoc\!vfolder!\!vfilenamewithext!") DO (
+    	set "line=%%~G"
+    	set line="!line:|=","!"
+    	echo %header%##!line!##!vfolder!.!vfilename!
+		)
+ )
+ )
+ )
+ pause
+popD</code></pre></div>
+
+<strong class="text-strong">Header is not printing</strong>. 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Sch_A
+a1.sql
+a1
+##"100","XYC","AWER RD","12072018"##Sch_A.a1
+##"120","BNM","PQTY RD","12082018"##Sch_A.a1
+##"100","XYC","AWER RD","12072018"##Sch_A.a1
+##"120","BNM","PQTY RD","12082018"##Sch_A.a1
+b1.sql
+b1
+##"100","XYC","AWER RD","12072018"##Sch_A.b1
+##"120","BNM","PQTY RD","12082018"##Sch_A.b1
+c1.sql
+c1
+d1.sql
+d1
+Sch_B
+Sch_C
+Sch_D
+a1.sql
+a1
+b1.sql
+b1
+c1.sql
+c1
+d1.sql
+d1
+Press any key to continue . . .</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8623&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:12 GMT -->
+</html>

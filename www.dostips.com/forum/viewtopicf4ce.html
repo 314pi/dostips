@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=774&start=30&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:54:33 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; ECHO. FAILS to give text or blank line - Instead use ECHO/ - Page 3</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>ECHO. FAILS to give text or blank line - Instead use ECHO/</h2>
+		<p><a href="viewtopic8ec8.html?f=3&amp;t=774">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=774</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>3</strong> of <strong>3</strong></div>
+					<div class="post">
+				<h3>Re: ECHO. FAILS to give text or blank line - Instead use ECH</h3>
+				<div class="date">Posted: <strong>08 May 2014 13:04</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>:shock: My brain hurts<br />(...)<br />Also, within parentheses, it only works as a comment if it follows a label or label comment.<br /></div></blockquote>If the above causes headaches (sorry for that), then try this <img class="smilies" src="images/smilies/icon_twisted.gif" alt=":twisted:" title="Twisted Evil" />  proof that no label (comment) is needed, but another caret (at least under win 7 home 64 bit):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />(<br />&nbsp; &nbsp;echo(What do you expect to see? It's magic.<br />^<br />&nbsp;^<br /><br />&nbsp; &nbsp;echo(Test 1: Do you think you can see me?.<br />&nbsp; &nbsp;echo(Hello caret1!<br />^<br />&nbsp; ^<br /><br />&nbsp; &nbsp;echo(Test 2: Do you think you can see me?.<br />&nbsp; &nbsp;echo(Hello caret2!<br />)<br /></code></pre></div><br />penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ECHO. FAILS to give text or blank line - Instead use ECH</h3>
+				<div class="date">Posted: <strong>08 May 2014 16:57</strong></div>
+				<div class="author">by <strong>Sponge Belly</strong></div>
+				<div class="content">Hi Dave and Penpen!<br /><br />Good effort, but I’ve uncovered something even more obscure about echo. <img class="smilies" src="images/smilies/icon_wink.gif" alt=";-)" title="Wink" /><br /><br />Turns out if the last character in a file is SUB (Ctrl-Z) and echo is used to append to the file, the SUB is clobbered.<br /><br />If anyone can find a use for this, please let us know.<br /><br /><em class="text-italics">- SB</em><br /><br />PS: Same goes for appending to a file with set /p.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ECHO. FAILS to give text or blank line - Instead use ECH</h3>
+				<div class="date">Posted: <strong>08 May 2014 18:38</strong></div>
+				<div class="author">by <strong>Liviu</strong></div>
+				<div class="content"><blockquote><div><cite>penpen wrote:</cite>no label (comment) is needed, but another caret (at least under win 7 home 64 bit)</div></blockquote><br />Confirmed under xp.sp3 as well.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />^<br /><br />echo this line is ignored<br />echo this line is executed<br /><br />(<br />^<br />^<br /><br />echo this line is ignored<br />echo this line is executed<br />)</code></pre></div><br /><blockquote><div><cite>Sponge Belly wrote:</cite>Turns out if the last character in a file is SUB (Ctrl-Z) and echo is used to append to the file, the SUB is clobbered.</div></blockquote>It's the append &quot;&gt;&gt;&quot; redirection that loses the Ctrl-Z, not echo or set/p in particular. For example, if file &quot;some.txt&quot; ends with a Ctrl-Z and you do a &quot;dir &gt;&gt;some.txt&quot; then the Ctrl-Z is dropped, too. Not very surprising, since Ctrl-Z a.k.a. EOF (end of file) in DOS-world is known to have special treatment in text related scenarios.<br /><br />Liviu<br /><br />P.S.  [ <span style="color: #FF0000">EDIT</span> - added this paragraph ]  One other thing to note is that the lines above marked as &quot;ignored&quot; seem to be fully parsed, in fact, just not executed for whatever reason. Replacing &quot;echo this line is ignored&quot; with &quot;echo this line is <span style="color: #FF0000">&amp;</span> ignored&quot; causes an error &quot;'ignored' is not recognized...&quot; - showing that the line was parsed, and was even parsed beyond just the first token.<br /><br />This is relevant because it lessens the chances that the trick could be useful for macro comments. In that case, it's about what's parsed on the right-hand side of the &quot;set&quot; command, not execution. Surely doesn't mean it's impossible, and wish someone proves me wrong <img class="smilies" src="images/smilies/icon_wink.gif" alt=";-)" title="Wink" /> but I couldn't find the right incantation to get the &quot;rem&quot; lines ignored even in a plain vanilla example like this.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />set var=line-1^<br /><br />line-2^<br /><br />rem comment-2^<br /><br />line-3^<br /><br />rem comment-3.a^<br /><br />rem comment-3.b^<br /><br />line-4<br /><br />set var</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ECHO. FAILS to give text or blank line - Instead use ECH</h3>
+				<div class="date">Posted: <strong>09 May 2014 02:16</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">There isn't much magic here.<br /><br />I think it's more or less obvious  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><br />Mainly it's the normal escaping logic.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>^<br /><br />something</code></pre></div><br />Will be shrinked to &lt;LF&gt;something<br /><br />So you get commands preceded with a &lt;LF&gt;.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />SET LF=^<br /><br /><br />REM ***<br />echo #1<br />^<br /><br />#1 ignore this<br /><br />echo #2<br />^%LF%%LF%Same as #1<br /><br />(<br />echo #3<br />:label3<br />^<br /><br />ignore this<br /><br />echo #4<br />:label4<br />^%LF%%LF%Same as #3<br />)</code></pre></div><br />I suppose the &lt;LF&gt; doesn't stop the parser in the special character phase as the &lt;LF&gt; is an escaped version.<br />But later a &lt;LF&gt; seems to be a <em class="text-italics">valid</em> command without any effect.<br /><br /><br /><blockquote><div><cite>penpen wrote:</cite>If the above causes headaches (sorry for that), then try this <img class="smilies" src="images/smilies/icon_twisted.gif" alt=":twisted:" title="Twisted Evil" /> proof that no label (comment) is needed, but another caret (at least under win 7 home 64 bit):<br />Code:<br />@echo off<br />(<br />   echo(What do you expect to see? It's magic.<br />^<br /> ^<br /><br />   echo(Test 1: Do you think you can see me?.<br />   echo(Hello caret1!<br />^<br />  ^<br /><br />   echo(Test 2: Do you think you can see me?.<br />   echo(Hello caret2!<br />)</div></blockquote><br />Even this can be reduced to <br /><blockquote class="uncited"><div>Test1 <br />&lt;escaped space&gt;&lt;LF&gt;echo Test1<br /><br />Test2 <br />&lt;escaped space&gt;&lt;normal space&gt;&lt;LF&gt;echo Test1<br /></div></blockquote><br /><br />There are only some cases left with &lt;LF&gt; in combination with labels and parenthesis.<br />There it's possible that the first token of a line can be dropped.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />(<br />^<br /><br />rem echo You can see this!<br />)<br /></code></pre></div><br /><br />jeb</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ECHO. FAILS to give text or blank line - Instead use ECH</h3>
+				<div class="date">Posted: <strong>14 May 2014 05:49</strong></div>
+				<div class="author">by <strong>Sponge Belly</strong></div>
+				<div class="content">Hi Liviu!<br /><br />Thanks for the explanation.<br /><br />But why doesn’t…<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(call;&gt;&gt;file.txt)<br /></code></pre></div><br /><br />clobber the SUB at the end of file.txt?<br /><br /><em class="text-italics">- SB</em></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ECHO. FAILS to give text or blank line - Instead use ECH</h3>
+				<div class="date">Posted: <strong>14 May 2014 20:47</strong></div>
+				<div class="author">by <strong>Liviu</strong></div>
+				<div class="content"><blockquote><div><cite>Sponge Belly wrote:</cite>But why doesn’t…<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(call;&gt;&gt;file.txt)<br /></code></pre></div>clobber the SUB at the end of file.txt?</div></blockquote><br />Because 'call;' outputs nothing at all. You can check the timestamps of 'file.txt' to see that it wasn't modified. The SUB is only clobbered if there is something actually being appended to the file.<br /><br />Liviu</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ECHO. FAILS to give text or blank line - Instead use ECHO/</h3>
+				<div class="date">Posted: <strong>30 Jan 2018 08:56</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">While trying to <a href="viewtopicdf43.html?f=3&amp;t=8355" class="postlink">refine the rules for how the batch parser works in general</a>, I discovered some new info about this topic.<br>
+<br>
+First, at the <a href="viewtopicdf43.html?f=3&amp;t=8355#p55497" class="postlink">bottom of this post</a> I began to suspect some previous statements in this thread were wrong. <a href="viewtopicdf43.html?f=3&amp;t=8355#p55545" class="postlink">jeb then confirmed the inaccuracy and provided corrected information.</a><br>
+<br>
+I then refined some <a href="viewtopicdf43.html?f=3&amp;t=8355#p55551" class="postlink">proposed rules on how the batch parser determines if a command is an internal or external command.</a> These rules enable me to predict the following:<br>
+<br>
+A safe character to follow ECHO should be any token delimiter that is not white space. That leads me to predict that all of the following should be good:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo(
+echo=
+echo,
+echo;
+</code></pre></div>
+
+But ( is only a command token delimiter in phase 2. So ECHO( cannot be used within a delayed expansion macro.<br>
+Also, ( is not a command token delimiter when it follows an unexecuted label within a parenthesized block. So ECHO( cannot be used there.<br>
+<br>
+But ECHO= ECHO, and ECHO; should always be safe.<br>
+<br>
+I've run some quick tests, and so far, this all seems to be true <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+<br>
+<strong class="text-strong">Edit</strong><br>
+Actually, they are not <strong class="text-strong"><em class="text-italics">always</em></strong> safe, because I don't think a safe form exists for CALL ECHO.<br>
+All of the following will call ECHO.BAT if it exists in the current directory or the PATH:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call echo=
+call echo,
+call echo;
+call echo(
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ECHO. FAILS to give text or blank line - Instead use ECHO/</h3>
+				<div class="date">Posted: <strong>30 Jan 2018 09:37</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic58d5-2.html?p=55553#p55553" data-post-id="55553" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Jan 2018 08:56</div></cite>
+A safe character to follow ECHO should be any token delimiter that is not white space. That leads me to predict that all of the following should be good:<br>
+<br>
+Code: Select all<br>
+<br>
+echo(<br>
+echo=<br>
+echo,<br>
+echo;<br>
+<br>
+But ( is only a command
+</div></blockquote>
+Quite a nice try <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=":wink:" title="Wink">, but not safe for content.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo(/?
+echo=/?
+echo,/?
+echo;/?</code></pre></div>
+
+Only "echo(/?" is able to show "/?", all others show the HELP of echo.<br>
+<br>
+jeb<br>
+PS: I edited the incorrect description in the old post</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ECHO. FAILS to give text or blank line - Instead use ECHO/</h3>
+				<div class="date">Posted: <strong>30 Jan 2018 10:02</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Of course. That makes sense.<br>
+<br>
+When ECHO sees ;/? or ,/? or =/? it sees a token delimiter and then a string beginning with help option. So it prints help.<br>
+<br>
+But (/? does not start with a token delimiter, so the /? is masked. Then the leading character is stripped and the remainder is printed.<br>
+<br>
+Oh well. At least things make sense now.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>3</strong> of <strong>3</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=774&start=30&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:54:33 GMT -->
+</html>

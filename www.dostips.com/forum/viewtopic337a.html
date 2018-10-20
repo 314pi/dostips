@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8769&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:44:34 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; FOR /F with Line Feed - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>FOR /F with Line Feed</h2>
+		<p><a href="viewtopic6d50.html?f=3&amp;t=8769">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8769</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 18:44</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">The method I posted before does not manage "constant strings" in a FOR command, but replaces a character in a variable by a 'LF'. Here it is:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+set "list=Item1 Item2 Item? Item*"
+
+for /F "delims=" %%a in (^"!list: ^=^
+% Do NOT remove this line %
+!^") do (
+  echo %%a
+)
+</code></pre></div>
+
+However, it is possible to manage "constant strings" in a FOR command, although the syntax is not pretty:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F "tokens=1,2 delims=," %%G in (^"^
+1^,Martini Shaker^
+
+2^,Wine Bottle^
+
+3^,Beer Glass^
+
+^") do echo T1=%%G T2=%%H
+</code></pre></div>
+
+Output:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>T1=1 T2=Martini Shaker
+T1=2 T2=Wine Bottle
+T1=3 T2=Beer Glass
+</code></pre></div>
+
+The main problem is that if the delimiter is a FOR delimiter character (comma, semicolon or equal-sign), then it must be escaped... Note that the empty lines between values are mandatory.<br>
+<br>
+It is simpler to do the same via a variable, with a better syntax:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set ^"str=^
+1,Martini Shaker^
+
+2,Wine Bottle^
+
+3,Beer Glass^"
+
+for /F "tokens=1,2 delims=," %%G in ("!str!") do echo T1=%%G T2=%%H
+</code></pre></div>
+
+You may also replace <em class="text-italics">the embedded 'LF's</em> in a variable:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo Original string with embedded LF's:
+echo [!str!]
+echo/
+
+echo Replace each 'LF' by ']+LF+['
+echo [!str:^
+% This is the LF to search for %
+=]^
+% This is the LF to replace %
+[!]
+</code></pre></div>
+
+Output:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Original string with embedded LF's:
+[1,Martini Shaker
+2,Wine Bottle
+3,Beer Glass]
+
+Replace each 'LF' by ']+LF+['
+[1,Martini Shaker]
+[2,Wine Bottle]
+[3,Beer Glass]
+</code></pre></div>
+
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>05 Aug 2018 04:56</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">So in Squashman's case who tried to work with the line feed variable it means that he has to escape the commas if he wants the string literals directly in the arguments clause. Alternatively the string can be saved in a variable where the comma escaping isn't necessary provided delayed expansion is used in the argument clause of the FOR loop. Is that correct Antonio?<br>
+Then the latter could look like that:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo off &amp;setlocal DisableDelayedExpansion
+(set \n=^^^
+%= This creates an escaped Line Feed - DO NOT ALTER =%
+)
+
+set ^"str=^
+1,Martini!!! Shaker%\n%
+2,Wine Bottle%\n%
+3,Beer Glass%\n%
+^"
+
+setlocal EnableDelayedExpansion
+for /F "tokens=1,2 delims=," %%G in ("!str!") do (
+  if "!!"=="" endlocal
+  echo T1=%%G T2=%%H
+)
+
+pause
+</code></pre></div>
+
+<br>
+@Dave I understood the double expansion. Escaping the line feed would be sufficient in that case as you pointed out. As to jeb's original \n variable I still try to understand what it means in terms of the resulting characters. Does the additional SET command lead to triple expansion and the result after the macro expansion is still a single line feed? I'm aware of the addidional escaping, that's not what I'm talking about.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>05 Aug 2018 18:39</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic063e.html?p=57688#p57688" data-post-id="57688" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">05 Aug 2018 04:56</div></cite>
+@Dave I understood the double expansion. Escaping the line feed would be sufficient in that case as you pointed out. As to jeb's original \n variable I still try to understand what it means in terms of the resulting characters. Does the additional SET command lead to triple expansion and the result after the macro expansion is still a single line feed? I'm aware of the addidional escaping, that's not what I'm talking about.
+</div></blockquote>
+No, I'm pretty sure the macro code only gets parsed twice - Once for the definition, and once for the expansion/execution.<br>
+
+<blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic3641.html?p=57672#p57672" data-post-id="57672" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Aug 2018 09:39</div></cite>
+I'm thinking this simpler syntax could be used for macro definition as well, though I would probably use \n for the variable name instead of ;
+</div></blockquote>
+<blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopicb1a2.html?p=57679#p57679" data-post-id="57679" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Aug 2018 12:22</div></cite>
+I'm finally at a PC, and no, it does not work for macros.<br>
+<br>
+This
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(set \n=^
+%= This defines an escaped line feed - DO NOT ALTER =%
+)
+
+echo Hello%\n%
+world!
+</code></pre></div>
+Is just a more pleasing way of writing
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo Hello^
+
+world
+</code></pre></div>
+
+Both the above only get parsed once. The same is true with the IN() clause in earlier posts. But the macro must be parsed twice, once to define the macro, and again to execute the macro. So the more complicated definition is required to define a macro.
+</div></blockquote>
+I didn't test properly - The simplified \n definition does work for macros after all <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation">  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+<br>
+My first error in testing was the result of forgetting that the line feeds within a macro definition only work if they are within parentheses, even though I describe the behavior of &lt;LF&gt; parsing fairly well in Phase 2 (partly at the top, and partly later on regarding parentheses processing).<br>
+<br>
+The other mistake is not realizing that both \n = ^&lt;LF&gt;&lt;LF&gt;^ and \n = ^&lt;LF&gt; produce the exact same macro definition <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"><br>
+They both result in a single &lt;LF&gt; being inserted into the definition, though the path to that result varies a bit.<br>
+<br>
+The original complex definition has ^&lt;LF&gt;&lt;LF&gt;^&lt;CR&gt;&lt;LF&gt; at the end of the line. The &lt;CR&gt; is stripped in Phase 1.5. Then in Phase 2 the ^&lt;LF&gt;&lt;LF&gt; is converted to an escaped &lt;LF&gt; that is not stripped. Then the ^&lt;LF&gt; is stripped, and the next line is read and appended, with the first character of of that line escaped.<br>
+<br>
+The simpler definition has ^&lt;LF&gt;&lt;CR&gt;&lt;LF&gt; at the end of the line. The &lt;CR&gt; is stripped in Phase 1.5, and then in Phase 2 the ^&lt;LF&gt;&lt;LF&gt; is converted to an escaped &lt;LF&gt; that is not stripped, and the next line is simply appended.<br>
+<br>
+Since batch macros with arguments always have an outer FOR statement, all the &lt;LF&gt; are within parentheses, so everything works.<br>
+<br>
+Here is a test script that demonstrates that both \n forms give the same result, and parentheses are needed for the macro to work. The script uses <a href="viewtopic9e4d.html?p=7407#p7407" class="postlink">hexdump.bat</a> to examine the byte values within the variable values.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableDelayedExpansion
+
+(set LF=^
+%= This defines a Line Feed - DO NO ALTER =%
+)
+
+(set \n=^^^%LF%%LF%^%LF%%LF%^^)
+call :test ^^^^LFLF^^^^
+
+(set \n=^^^
+%= This defines an escaped Line Feed - DO NOT ALTER =%
+)
+call :test ^^^^LF
+
+exit /b
+
+:test
+echo(
+echo ======== %1 ========
+
+set test=echo Hello%\n%
+echo World
+
+set \n
+echo(
+&gt;test.txt &lt;nul set /p =!\n!
+call hexdump test.txt
+echo(
+set test
+echo(
+&gt;test.txt &lt;nul set /p =!test!
+call hexdump test.txt
+
+
+echo(
+echo -------- %%test%% --------
+%test%
+
+echo(
+echo -------- (%%test%%) --------
+for /f %%A in (".") do (%test%)
+
+exit /b
+</code></pre></div>
+--OUTPUT--
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>======== ^LFLF^ ========
+\n=^
+
+^
+
+5E 0A 0A 5E                                    
+
+test=echo Hello
+echo World
+
+65 63 68 6F 20 48 65 6C 6C 6F 0A 65 63 68 6F 20
+57 6F 72 6C 64                                 
+
+-------- %test% --------
+Hello
+
+-------- (%test%) --------
+Hello
+World
+
+======== ^LF ========
+\n=^
+
+
+5E 0A                                          
+
+test=echo Hello
+echo World
+
+65 63 68 6F 20 48 65 6C 6C 6F 0A 65 63 68 6F 20
+57 6F 72 6C 64                                 
+
+-------- %test% --------
+Hello
+
+-------- (%test%) --------
+Hello
+World
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8769&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:44:34 GMT -->
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8638&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:22 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Need help deleting the second line in all csvs in a folder</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Need help deleting the second line in all csvs in a folder</h2>
+		<p><a href="viewtopic75aa.html?f=3&amp;t=8638">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8638</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Need help deleting the second line in all csvs in a folder</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 07:56</strong></div>
+				<div class="author">by <strong>capella</strong></div>
+				<div class="content">I just spent an hour and a half Googling how to do what I need to do, but everything I read doesn't explain the syntax of what's going on. I'm just not getting how to do this.<br>
+<br>
+I need to delete the second line from all CSV files in a folder.<br>
+<br>
+The folder will be in the form of a variable, "%OUTPUTFOLDER%" and all CSVs in that folder will have a second line that needs to be deleted. So pseudo code would look something like this:<br>
+<br>
+go through each CSV file in %outputfolder%<br>
+    In the current CSV delete the second line<br>
+    save the CSV with the same name in the same location<br>
+go to the next CSV in the folder<br>
+<br>
+I would <strong class="text-strong">greatly</strong> appreciate your help and an explanation of what's going on at each step!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Need help deleting the second line in all csvs in a folder</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 09:40</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">If your csv files only have lines with less then 8190 characters,<br>
+if all poisonous characters ('&amp;','|',...) are are encapsulated within doublequotes,<br>
+if no line in your csv files start with a double colon character ':', and<br>
+if your line endings are "\r\n" (carriage return, newline/ i hex "0d 0a")<br>
+then you could use a for/f loop (untested):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlcoal enableExtensions disableDelayedExpansion
+
+for %%a in ("%outputfolder%\*.CSV") do (
+	(
+		for /f "tokens=1* delims=:" %%b in ('findstr /n "^" "%%~a"') do if not "%%~a" == "2" (
+			echo(%%c
+		)
+	) &gt; "temp.csv.txt"
+	copy "temp.csv.txt" "%%~a"
+)
+</code></pre></div>The outer for-loop loops over all *.csv files in "%outputfolder%".<br>
+The inner for/f loop loops over all lines produced by the inner command, seperating the line in two parts (before and after the first group of colons).<br>
+The part after the colon group is printed by the echo statement, if the part before the colon is not "2" (if statement).<br>
+The inner (findstr) command echoes the file content of the actual file referenced by the outer for loop and adds the line number and a double colon character.<br>
+The redirection writes all echoed output to a file named "temp.csv.txt".<br>
+The copy command overwrites the old file (actually i don't know how to supress the overwrite confirmation ("/y" or something like that?).<br>
+<br>
+Note that you always should make a backup before experimenting on data.<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Need help deleting the second line in all csvs in a folder</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 09:52</strong></div>
+				<div class="author">by <strong>capella</strong></div>
+				<div class="content">Thanks, penpen. Apparently, I should have been more specific about what's in my file!<br>
+<br>
+The text in the files will look very much like the following:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Name|Address1|Address2|City|State|Zip|ID
+----|--------|--------|----|-----|---|--------
+John Smith|10 Fourth Avenue SE||Some City|MN|12345|82X9Z43
+Mary Anderson|7 4th Avenue SE|PO Box 1234|Another City|CO|54321-1234|9Y28H913</code></pre></div>
+
+These are pipe-delimited CSVs with no quotes in the cells, however, there <strong class="text-strong">may</strong> be quotes in some of the cells as cell data, and the data <strong class="text-strong">could</strong> contain your "poisonous characters", but again, will not have quotes around the individual cell data.<br>
+<br>
+Not necessarily all of the files will have demographic data, but the consistent part is the second line. Dashes, pipe, dashes, pipe, etc, etc. The number of dashes in each column will be dictated by the max width of the data in all rows in that column (my sample above is just that: a sample, as the dashes don't match the column data widths).<br>
+<br>
+And yes, the lines end in \r\n and I am using test files for this, thanks!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Need help deleting the second line in all csvs in a folder</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 10:03</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">So the second line is always a bunch of dashes with the delimiter?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Need help deleting the second line in all csvs in a folder</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 10:04</strong></div>
+				<div class="author">by <strong>capella</strong></div>
+				<div class="content">That's correct.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Need help deleting the second line in all csvs in a folder</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 10:06</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2f61.html?mode=viewprofile&amp;u=9280">capella</a> wrote: <a href="viewtopic4c90.html?p=57232#p57232" data-post-id="57232" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">21 Jun 2018 10:04</div></cite>
+That's correct.
+</div></blockquote>
+Then it could be as simple as a reverse match on a simple regular expression using the FINDSTR command.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Need help deleting the second line in all csvs in a folder</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 10:39</strong></div>
+				<div class="author">by <strong>capella</strong></div>
+				<div class="content">Okay, looking at SS64.com's FINDSTR page I put the following together:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+set _outputfolder="D:\A Folder\A Subfolder\Test Folder"
+
+echo.
+echo %_outputfolder%
+
+@findstr /r /b /c:"-*|" %_outputfolder%\*.csv
+
+echo.
+echo errorlevel: %errorlevel%
+
+@pause</code></pre></div>
+
+And when I run that my output is this:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>"D:\A Folder\A Subfolder\Test Folder"
+D:\A Folder\A Subfolder\Test Folder:----|------------|------------|----|-------|---|-----------
+
+errorlevel: 0</code></pre></div>
+
+Which tells me that it's correctly finding that line, so how do I integrate that into a loop that looks through each file in "Test Folder" and deletes the line it finds?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Need help deleting the second line in all csvs in a folder</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 11:39</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Something like this should work.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+set "_outputfolder=D:\A Folder\A Subfolder\Test Folder"
+echo %_outputfolder%
+pushd "%_outputfolder%"
+for %%G in ("*.CSV") do (
+	findstr /v /r /c:"^-*|-*" "%%~G"&gt;temp.csv.txt
+	move "temp.csv.txt" "%%~G"
+)
+delete temp.csv.txt
+popd
+</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8638&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:22 GMT -->
+</html>

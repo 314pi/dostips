@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8467&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:23:52 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Algorithmic conditions, and returns????</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Algorithmic conditions, and returns????</h2>
+		<p><a href="viewtopicbae9.html?f=3&amp;t=8467">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8467</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>29 Mar 2018 15:44</strong></div>
+				<div class="author">by <strong>IcarusLives</strong></div>
+				<div class="content">I have a rather strange request, but I'm sure that if anyone can conjure this up, and then explain it to me, it would definitely be this place.<br>
+<br>
+I am looking for something really simple.. Typically we have this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if CONDITION ( do this ) else ( do this )</code></pre></div>
+
+I'm looking for a way to make this comparison with pure maths?<br>
+<br>
+Also, if it's possible to utilize the way the math can compare two numbers, or compare another set? Perhaps this code will explain better?
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if (pos.x &gt; width || pos.x &lt; 0) {
+      vel.x *= -1;
+}</code></pre></div>
+
+This is some java code from a project I did, and as you can see, java allows you to say.. "If X is gtr width OR if X is lss 0 then set the velocity*=-1"<br>
+<br>
+So essentially, my question is how could I do such a comparison in batch with pure math? NOT using an IF statement.<br>
+<br>
+Also, if it can be done, PLEASE can you explain it to me? Thank you!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>29 Mar 2018 16:32</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">You're looking for logical operators.<br>
+That topic provides a workaround:<br>
+<a href="viewtopicad92.html?f=3&amp;t=4308" class="postlink">viewtopic.php?f=3&amp;t=4308</a><br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>29 Mar 2018 16:57</strong></div>
+				<div class="author">by <strong>IcarusLives</strong></div>
+				<div class="content">This isn't quite what I'm looking for.<br>
+<br>
+Really, I would like to ONLY use set /a for this if at all possible. I do NOT want to use the actual IF statement.<br>
+<br>
+Below is the %getDistance% macro algorithm. Aacini had made this for me a while back upon request and it's been EXTREMELY useful ever sense.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set getDistance=for %%# in (1 2) do if %%#==2 ( for /f "tokens=1-5" %%1 in ("^!args^!") do (%\n%
+    set /a "%%5=( ?=((((((%%1 - %%2))&gt;&gt;31|1)*((%%1 - %%2)))-((((%%3 - %%4))&gt;&gt;31|1)*((%%3 - %%4))))&gt;&gt;31)+1, ?*(2*((((%%1 - %%2))&gt;&gt;31|1)*((%%1 - %%2)))-((((%%3 - %%4))&gt;&gt;31|1)*((%%3 - %%4)))-(((((%%1 - %%2))&gt;&gt;31|1)*((%%1 - %%2)))-((((%%3 - %%4))&gt;&gt;31|1)*((%%3 - %%4))))) + ^^^!?*(((((%%1 - %%2))&gt;&gt;31|1)*((%%1 - %%2)))-((((%%3 - %%4))&gt;&gt;31|1)*((%%3 - %%4)))-(((((%%1 - %%2))&gt;&gt;31|1)*((%%1 - %%2)))-((((%%3 - %%4))&gt;&gt;31|1)*((%%3 - %%4)))*2)) )"%\n%
+)) else set args=</code></pre></div>
+
+I would really like to simulate an IF condition the same way.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>29 Mar 2018 17:28</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">The logical operators &amp;&amp; and || exist in Batch, but only for the errorlevel. You can try to provoke a SET /A error. E.g. division by zero.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal
+set /a "x=3, y=2"
+
+if %x% lss %y% (echo less than) else echo greater than or equal
+2&gt;nul set /a "1/((x-y)&gt;&gt;31)" &amp;&amp; (echo less than) || echo greater than or equal
+pause
+</code></pre></div>
+The Most Significant Bit of a negative number is 1 and for a positive number is zero. The Shift Right operator shifts always the MSB in. Thus, &gt;&gt;31 results in -1 (all bits set to 1) if the result of x-y was negative. Otherwise it's 0 (all bits set to 0) if the result of x-y was zero or positive.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>29 Mar 2018 19:03</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">You could implement a mathematical function as proposed by Aacini:<br>
+<a href="viewtopic210e.html?f=3&amp;t=6744" class="postlink">viewtopic.php?f=3&amp;t=6744</a>.<br>
+<br>
+A little math library is created by einstein1969:<br>
+<a href="viewtopic8d84.html?f=3&amp;t=5819" class="postlink">viewtopic.php?f=3&amp;t=5819</a>.<br>
+<br>
+Then you should simplify your task (reduce the needed helper functions; compute a value in all if-cases) and then create a formula that computes what you need; a possibility:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableExtensions enableDelayedExpansion
+set /a "pos.x=10, width=5, vel.x=-12"
+
+set "LssZero(x)=(-((x)&gt;&gt;31))"
+
+:: short explaination
+:: 1. "pos.x &gt; width" == "0 &gt; (width-pos.x)" == "(width-pos.x)&lt;0"
+:: 2. "if (pos.x &gt; width || pos.x &lt; 0) { vel.x *= -1; }"
+:: == "if (pos.x &gt; width || pos.x &lt; 0) { vel.x *= -1; } else { vel.x *= 1; }"
+:: == "vel.x *= (pos.x &gt; width || pos.x &lt; 0) ? -1 : 1;"
+:: == "vel.x *= ( (pos.x &gt; width || pos.x &lt; 0) ? -2 : 0 )+1;"
+:: == "vel.x *= ( (pos.x &gt; width || pos.x &lt; 0) ? -1 : 0 )*2+1;"
+:: == "vel.x *= -( (pos.x &gt; width || pos.x &lt; 0) ? 1 : 0 )*2+1;"
+:: == "vel.x *= (-( (pos.x &gt; width || pos.x &lt; 0) ? 1 : 0 )&lt;&lt;1)+1;"
+:: == "vel.x *= (-(((pos.x &gt; width) ? 1 : 0)|((pos.x &lt; 0) ? 1 : 0))&lt;&lt;1)+1;"
+:: == " vel.x *= (-((((width-pos.x)&lt;0) ? 1: 0)|((pos.x &lt; 0) ? 1: 0))&lt;&lt;1)+1;"
+set /a "vel.x *= (-(%LssZero(x):x=width-pos.x%|%LssZero(x):x=pos.x%)&lt;&lt;1)+1"
+
+set "vel.x"
+goto :eof</code></pre></div>
+
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>29 Mar 2018 19:32</strong></div>
+				<div class="author">by <strong>IcarusLives</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915">penpen</a> wrote: <a href="viewtopicb7ad.html?p=56136#p56136" data-post-id="56136" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">29 Mar 2018 19:03</div></cite>
+You could implement a mathematical function as proposed by Aacini:<br>
+<a href="viewtopic210e.html?f=3&amp;t=6744" class="postlink">viewtopic.php?f=3&amp;t=6744</a>.<br>
+<br>
+A little math library is created by einstein1969:<br>
+<a href="viewtopic8d84.html?f=3&amp;t=5819" class="postlink">viewtopic.php?f=3&amp;t=5819</a>.<br>
+<br>
+Then you should simplify your task (reduce the needed helper functions; compute a value in all if-cases) and then create a formula that computes what you need; a possibility:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableExtensions enableDelayedExpansion
+set /a "pos.x=10, width=5, vel.x=-12"
+
+set "LssZero(x)=(-((x)&gt;&gt;31))"
+
+:: short explaination
+:: 1. "pos.x &gt; width" == "0 &gt; (width-pos.x)" == "(width-pos.x)&lt;0"
+:: 2. "if (pos.x &gt; width || pos.x &lt; 0) { vel.x *= -1; }"
+:: == "if (pos.x &gt; width || pos.x &lt; 0) { vel.x *= -1; } else { vel.x *= 1; }"
+:: == "vel.x *= (pos.x &gt; width || pos.x &lt; 0) ? -1 : 1;"
+:: == "vel.x *= ( (pos.x &gt; width || pos.x &lt; 0) ? -2 : 0 )+1;"
+:: == "vel.x *= ( (pos.x &gt; width || pos.x &lt; 0) ? -1 : 0 )*2+1;"
+:: == "vel.x *= -( (pos.x &gt; width || pos.x &lt; 0) ? 1 : 0 )*2+1;"
+:: == "vel.x *= (-( (pos.x &gt; width || pos.x &lt; 0) ? 1 : 0 )&lt;&lt;1)+1;"
+:: == "vel.x *= (-(((pos.x &gt; width) ? 1 : 0)|((pos.x &lt; 0) ? 1 : 0))&lt;&lt;1)+1;"
+:: == " vel.x *= (-((((width-pos.x)&lt;0) ? 1: 0)|((pos.x &lt; 0) ? 1: 0))&lt;&lt;1)+1;"
+set /a "vel.x *= (-(%LssZero(x):x=width-pos.x%|%LssZero(x):x=pos.x%)&lt;&lt;1)+1"
+
+set "vel.x"
+goto :eof</code></pre></div>
+
+penpen
+</div></blockquote>
+
+This is basically EXACTLY what I'm looking for. My problem now lies with HOW do I write such a function? (The actual maths)? In the %getDistance% macro I posted above, it does contain somewhat of an "if" because it checks for the larger integer, but I don't know how it does that..</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>29 Mar 2018 19:33</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">Perhaps <a href="viewtopiced5f.html?f=3&amp;t=3493" class="postlink">this thread</a> may help you.<br>
+<br>
+Although not directly related to your request, I invite you to review <a href="viewtopic4b4e.html?f=3&amp;t=7312" class="postlink">this topic</a>...   <img class="smilies" src="images/smilies/icon_cool.gif" width="15" height="15" alt="8)" title="Cool"> <br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>29 Mar 2018 19:51</strong></div>
+				<div class="author">by <strong>IcarusLives</strong></div>
+				<div class="content">Aacini, this is brilliant! Thank you for sharing!!!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>30 Mar 2018 08:32</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal
+
+REM ----- return 0 if false or 1 if true -----
+set "LSS(x,y)=(((x-y)&gt;&gt;31)&amp;1)"                     &amp;REM &lt;
+set "LEQ(x,y)=((~(y-x)&gt;&gt;31)&amp;1)"                    &amp;REM &lt;=
+set "GTR(x,y)=(((y-x)&gt;&gt;31)&amp;1)"                     &amp;REM &gt;
+set "GEQ(x,y)=((~(x-y)&gt;&gt;31)&amp;1)"                    &amp;REM &gt;=
+set "EQU(x,y)=(((~(y-x)&gt;&gt;31)&amp;1)&amp;((~(x-y)&gt;&gt;31)&amp;1))" &amp;REM ==
+set "NEQ(x,y)=((((x-y)&gt;&gt;31)&amp;1)|(((y-x)&gt;&gt;31)&amp;1))"   &amp;REM !=
+
+REM ----- values of b1 and b2 have to be either 0 or 1 -----
+REM ----- return 0 if false or 1 if true -----
+set "AND(b1,b2)=(b1&amp;b2)"                           &amp;REM &amp;&amp;
+set "OR(b1,b2)=(b1|b2)"                            &amp;REM ||
+
+REM ----- ternary operation: return_value = (bool) ? value1_if_true : value2_if_false -----
+REM ----- value of bool has to be either 0 or 1 -----
+REM ----- returns v1 if bool=1 or v2 if bool=0 -----
+set "TERN(bool,v1,v2)=((bool*v1)|((~bool&amp;1)*v2))"  &amp;REM ?:
+
+
+REM Examples for calculations of (a &gt; b || a &lt; 0) ? c * -1 : c
+set /a "a=-1, b=-3, c=-5"
+call :calc
+
+set /a "a=-1, b=3, c=-5"
+call :calc
+
+set /a "a=1, b=-3, c=-5"
+call :calc
+
+set /a "a=1, b=3, c=-5"
+call :calc
+
+pause
+exit /b
+
+
+:calc
+setlocal
+&lt;nul set /p "=c = (%a% &gt; %b% || %a% &lt; 0) ? %c% * -1 : %c%" &amp;echo(
+set /a "x=a, y=b, b1=%GTR(x,y)%,   y=0, b2=%LSS(x,y)%,   bool=%OR(b1,b2)%,   v1=c*-1, v2=c, c=%TERN(bool,v1,v2)%"
+echo c = %c%
+echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+endlocal &amp;exit /b
+</code></pre></div>
+I refrained from using logical NOT (!) in case delayed expansion matters.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>30 Mar 2018 09:50</strong></div>
+				<div class="author">by <strong>IcarusLives</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopicb8c7.html?p=56140#p56140" data-post-id="56140" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Mar 2018 08:32</div></cite>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal EnableDelayedExpansion
+
+REM ----- return false=0 or true=1 -----
+set "LSS(x,y)=(((x-y)&gt;&gt;31)&amp;1)"
+set "LEQ(x,y)=((~(y-x)&gt;&gt;31)&amp;1)"
+set "GTR(x,y)=(((y-x)&gt;&gt;31)&amp;1)"
+set "GEQ(x,y)=((~(x-y)&gt;&gt;31)&amp;1)"
+set "EQU(x,y)=(((~(y-x)&gt;&gt;31)&amp;1)&amp;((~(x-y)&gt;&gt;31)&amp;1))"
+set "NEQ(x,y)=((((x-y)&gt;&gt;31)&amp;1)|(((y-x)&gt;&gt;31)&amp;1))"
+set "AND(b1,b2)=(b1&amp;b2)"
+set "OR(b1,b2)=(b1|b2)"
+
+REM -----(true) ? value1 : value2
+set "TERN(bool,v1,v2)=((bool*v1)|((~bool&amp;1)*v2))"
+
+
+REM Example
+set /a "a=-1, b=4, c=-12"
+
+REM (a &gt; b || a &lt; 0) ? c *= -1 : c
+set /a "x=a, y=b, b1=%GTR(x,y)%,   y=0, b2=%LSS(x,y)%,   bool=%OR(b1,b2)%,   v1=c*-1, v2=c, c=%TERN(bool,v1,v2)%"
+echo %c%
+
+pause
+</code></pre></div>
+I refrained from using logical NOT (!) in case delayed expansion matters.<br>
+<br>
+Steffen
+</div></blockquote>
+
+*drool* Oh.. Sweet Jesus, I knew I loved this site.<br>
+<br>
+Thank you all for your sharing and contribution! This is all exactly what I was looking for, and my problem is now solved!!<br>
+<br>
+THANK YOU SO MUCH!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>30 Mar 2018 10:46</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist11f0.html?mode=viewprofile&amp;u=8073">IcarusLives</a> wrote: <a href="viewtopic0c9a.html?p=56137#p56137" data-post-id="56137" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">29 Mar 2018 19:32</div></cite>My problem now lies with HOW do I write such a function? (The actual maths)? In the %getDistance% macro I posted above, it does contain somewhat of an "if" because it checks for the larger integer, but I don't know how it does that..
+</div></blockquote><blockquote><div><cite><a href="memberlist11f0.html?mode=viewprofile&amp;u=8073">IcarusLives</a> wrote: <a href="viewtopic1b38.html?p=56143#p56143" data-post-id="56143" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Mar 2018 09:50</div></cite>my problem is now solved!!</div></blockquote>I have posted the complete creation of that exemplary function, so i'm unsure about what is the problematic part exactly, and why it now is solved.<br>
+<br>
+Actually i assume that it may be have been unclear why "(-((x)&gt;&gt;31))" is the same as "(x &lt; 0) ? 1 : 0", so i want to add that:<br>
+The "set/A" command internally uses a 32 bit signed integer datatype (signed integer means that the representation of the stored number is in <a href="https://en.wikipedia.org/wiki/Two%27s_complement" class="postlink">two's complement</a>). In Java and other languages this datatype is referred to as "int".<br>
+A characteristic of this reprasentation is that every bit with index &gt;= 32 of an int is "1" if this int is negative, else "0" (but it isn't stored explicitely, because you only have 32 bits available).<br>
+<br>
+When performing an "arithmetic right shift" (&gt;&gt;) all bits of an int value are moved to the right a given number of bit positions including the not explicitely stored bits.<br>
+Therefore if you shift a given number (n) 31 times ("x&gt;&gt;31"), then the result is either "11111111111111111111111111111111" (which is the representation of "-1") for negative numbers, else "00000000000000000000000000000000" (which is "0").<br>
+Negating the above result (and adding parentheses around the "x" and the result to protect against odd sideeffects) gives you the "LssZero(x)" function.<br>
+<br>
+The functions aGerman has posted, are also fiddling with the bit representation of the given int numbers to compute their result.<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>30 Mar 2018 11:00</strong></div>
+				<div class="author">by <strong>IcarusLives</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915">penpen</a> wrote: <a href="viewtopic82fd.html?p=56145#p56145" data-post-id="56145" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Mar 2018 10:46</div></cite>
+<blockquote><div><cite><a href="memberlist11f0.html?mode=viewprofile&amp;u=8073">IcarusLives</a> wrote: <a href="viewtopic0c9a.html?p=56137#p56137" data-post-id="56137" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">29 Mar 2018 19:32</div></cite>My problem now lies with HOW do I write such a function? (The actual maths)? In the %getDistance% macro I posted above, it does contain somewhat of an "if" because it checks for the larger integer, but I don't know how it does that..
+</div></blockquote><blockquote><div><cite><a href="memberlist11f0.html?mode=viewprofile&amp;u=8073">IcarusLives</a> wrote: <a href="viewtopic1b38.html?p=56143#p56143" data-post-id="56143" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Mar 2018 09:50</div></cite>my problem is now solved!!</div></blockquote>I have posted the complete creation of that exemplary function, so i'm unsure about what is the problematic part exactly, and why it now is solved.<br>
+<br>
+Actually i assume that it may be have been unclear why "(-((x)&gt;&gt;31))" is the same as "(x &lt; 0) ? 1 : 0", so i want to add that:<br>
+The "set/A" command internally uses a 32 bit signed integer datatype (signed integer means that the representation of the stored number is in <a href="https://en.wikipedia.org/wiki/Two%27s_complement" class="postlink">two's complement</a>). In Java and other languages this datatype is referred to as "int".<br>
+A characteristic of this reprasentation is that every bit with index &gt;= 32 of an int is "1" if this int is negative, else "0" (but it isn't stored explicitely, because you only have 32 bits available).<br>
+<br>
+When performing an "arithmetic right shift" (&gt;&gt;) all bits of an int value are moved to the right a given number of bit positions including the not explicitely stored bits.<br>
+Therefore if you shift a given number (n) 31 times ("x&gt;&gt;31"), then the result is either "11111111111111111111111111111111" (which is the representation of "-1") for negative numbers, else "00000000000000000000000000000000" (which is "0").<br>
+Negating the above result (and adding parentheses around the "x" and the result to protect against odd sideeffects) gives you the "LssZero(x)" function.<br>
+<br>
+The functions aGerman has posted, are also fiddling with the bit representation of the given int numbers to compute their result.<br>
+<br>
+penpen
+</div></blockquote>
+
+penpen I would like to personally apologize for my ignorance!! You are right, I did not know about 2s compliment and bit shifting. I greatly appreciate that you took the time to explain it to me! Thank you so much. I have learned a lot from this thread, and it's brought me much joy and excitement!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>03 May 2018 14:36</strong></div>
+				<div class="author">by <strong>IcarusLives</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopicb8c7.html?p=56140#p56140" data-post-id="56140" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Mar 2018 08:32</div></cite>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal
+
+REM ----- return 0 if false or 1 if true -----
+set "LSS(x,y)=(((x-y)&gt;&gt;31)&amp;1)"                     &amp;REM &lt;
+set "LEQ(x,y)=((~(y-x)&gt;&gt;31)&amp;1)"                    &amp;REM &lt;=
+set "GTR(x,y)=(((y-x)&gt;&gt;31)&amp;1)"                     &amp;REM &gt;
+set "GEQ(x,y)=((~(x-y)&gt;&gt;31)&amp;1)"                    &amp;REM &gt;=
+set "EQU(x,y)=(((~(y-x)&gt;&gt;31)&amp;1)&amp;((~(x-y)&gt;&gt;31)&amp;1))" &amp;REM ==
+set "NEQ(x,y)=((((x-y)&gt;&gt;31)&amp;1)|(((y-x)&gt;&gt;31)&amp;1))"   &amp;REM !=
+
+REM ----- values of b1 and b2 have to be either 0 or 1 -----
+REM ----- return 0 if false or 1 if true -----
+set "AND(b1,b2)=(b1&amp;b2)"                           &amp;REM &amp;&amp;
+set "OR(b1,b2)=(b1|b2)"                            &amp;REM ||
+
+REM ----- ternary operation: return_value = (bool) ? value1_if_true : value2_if_false -----
+REM ----- value of bool has to be either 0 or 1 -----
+REM ----- returns v1 if bool=1 or v2 if bool=0 -----
+set "TERN(bool,v1,v2)=((bool*v1)|((~bool&amp;1)*v2))"  &amp;REM ?:
+
+
+REM Examples for calculations of (a &gt; b || a &lt; 0) ? c * -1 : c
+set /a "a=-1, b=-3, c=-5"
+call :calc
+
+set /a "a=-1, b=3, c=-5"
+call :calc
+
+set /a "a=1, b=-3, c=-5"
+call :calc
+
+set /a "a=1, b=3, c=-5"
+call :calc
+
+pause
+exit /b
+
+
+:calc
+setlocal
+&lt;nul set /p "=c = (%a% &gt; %b% || %a% &lt; 0) ? %c% * -1 : %c%" &amp;echo(
+set /a "x=a, y=b, b1=%GTR(x,y)%,   y=0, b2=%LSS(x,y)%,   bool=%OR(b1,b2)%,   v1=c*-1, v2=c, c=%TERN(bool,v1,v2)%"
+echo c = %c%
+echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+endlocal &amp;exit /b
+</code></pre></div>
+I refrained from using logical NOT (!) in case delayed expansion matters.<br>
+<br>
+Steffen
+</div></blockquote>
+
+Sorry to dig this back up. I had a question. Is there an XOR using this method?<br>
+<br>
+bool=%OR(b1,b2)% just means that if either b1 or b2 are 1 then %bool% = 1<br>
+<br>
+Suppose I'm checking if either of them are 1, but not both.<br>
+<br>
+Let me clarify...<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>b1 = 1
+b2 = 1
+
+then bool = 1</code></pre></div>
+
+But if what's in my head is correct, then XOR would return BOOL= 0 during this case.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>03 May 2018 14:58</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">So are you basically saying.<br>
+1 x 1 = 1<br>
+1 x 0 = 0<br>
+<br>
+set /a bool=b1*b2</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Algorithmic conditions, and returns????</h3>
+				<div class="date">Posted: <strong>03 May 2018 15:06</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote class="uncited"><div>But if what's in my head is correct, then XOR would return BOOL= 0 during this case.</div></blockquote>
+Correct.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set "XOR(b1,b2)=((b1+b2)&amp;1)"</code></pre></div>
+The least significant bit is 0 if the result of the addition was either 0 or 2.<br>
+<br>
+But Batch already supports binary XOR, hence ...
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set "XOR(b1,b2)=(b1^b2)"</code></pre></div>
+... would have been easier.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8467&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:23:52 GMT -->
+</html>

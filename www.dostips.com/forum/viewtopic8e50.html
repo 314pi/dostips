@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8769&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:44:09 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; FOR /F with Line Feed</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>FOR /F with Line Feed</h2>
+		<p><a href="viewtopic6d50.html?f=3&amp;t=8769">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8769</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 00:17</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">I thought I remember seeing this type of syntax in the past but have not been able to get it to work.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+set LF=^
+
+
+REM Do Not remove empty lines above
+for /F "tokens=1,2 delims=," %%G in (
+"1,Martini Shaker!LF!"
+"2,Wine Bottle!LF!"
+"3,Beer Glass"
+) do (
+echo T1=%%~G T2=%%~H
+)
+pause</code></pre></div>
+My expectation is to have this as the output
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>T1=1 T2=Martini Shaker
+T1=2 T2=Wine Bottle
+T1=3 T2=Beer Glass</code></pre></div>
+But I end up with this.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>T1=1 T2=Martini Shaker
+T1= "2 T2=Wine Bottle
+T1= "3 T2=Beer Glass</code></pre></div>
+I know this has been done on the forums in the past, I just can't find the thread.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 05:07</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I think several pairs of quotes won't work. A string literal has only one pair of surrounding quotes.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal
+set ^"LF=^
+
+^" Do Not remove the empty line above
+set ^"\n=^^^%LF%%LF%^%LF%%LF%^^"
+for /F "tokens=1,2 delims=," %%G in (^"^
+1^,Martini Shaker%\n%
+2^,Wine Bottle%\n%
+3^,Beer Glass%\n%
+") do (
+echo T1=%%~G T2=%%~H
+)
+pause
+</code></pre></div>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 06:38</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">there was an easier way to the the LF with set and brackets but I cant find the link. If I'm not wrong it was found by Aacini.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 06:45</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I currently don't have access to a Windows machine at the moment, so I can't test or verify. But I think I see a couple problems with aGerman's code.<br>
+<br>
+1) The last quote must be escaped, else the closing parenthesis is treated as a string literal. I don't think that code will run at all. <span style="color: #800000">My mistake. The code should run just fine because the preceding %\n% escapes the end of the line, which is stripped, and then the next character is also escaped, which happens to be the quote.</span><br>
+<br>
+2) The commas should not require escaping, unless you are worried about the <a href="viewtopicf83f.html?f=3&amp;t=1972#p9062" class="postlink">XP FOR /F bug</a>. If you do want the code to be safe on XP, then all token delimiters must be escaped. In this case that would be commas and spaces. Disregarding the XP bug, FOR /F should not require token delimiters to be escaped or quoted. It is only the simple FOR command that uses token delimiters as the iteration delimiter.<br>
+<br>
+If I were to write aGerman's code, I would use USEBACKQ and substitute ' for " so that I don't have to worry about escaping the quotes.<br>
+<br>
+I generally only use the FOR /F &lt;LF&gt; multi line string trick if I have a delimited string that I want to iterate, in which case I would use expansion find/replace to substitute &lt;LF&gt; for the delimiter, all within the IN() clause.<br>
+<br>
+For example (again, untested):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+set "str=1,Martini Shaker|2,Wine Bottle|3,Beer Glass"
+
+(set LF=^
+%= This creates a Line Feed (0x0A) character - DO NOT ALTER =%
+)
+
+setlocal enableDelayedExpansion
+for %%L in ("!LF!") do for /f "tokens=1,2 delims=," %%A in ("!str:|=%%~L!") do (
+  if "!!" == "" endlocal  %= pop SETLOCAL stack only if delayed expansion is enabled to preserve any ! that may be in the strings =%
+  echo T1=%%A  T2=%%B
+)
+</code></pre></div>
+
+If I want to iterate a series of string literals embedded within my source code, then I generally combine the simple FOR with FOR /F. But of course this only works if none of the strings contain * or ?
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+for %%S in (
+  "1,Martini Shaker"
+  "2,Wine Bottle"
+  "3,Beer Glass"
+) do for /f "tokens=1,2 delims=," %%A in ("%%~S") do echo T1=%%A  T2=%%B
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 07:00</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopicb652.html?p=57662#p57662" data-post-id="57662" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Aug 2018 06:45</div></cite>2) The commas should not require escaping</div></blockquote>
+That was surprising for me, too. And for whatever reason the unescaped spaces work flawlessly even if the commas do not.<br>
+Output with unescaped commas (Win10, 32bit):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>T1=1 Martini Shaker T2=
+T1=2 Wine Bottle T2=
+T1=3 Beer Glass T2=
+Drücken Sie eine beliebige Taste . . .
+</code></pre></div>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 07:19</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Hmmm. That means the parser must be substituting space for the comma, in which case I suspect that any contiguous string of unquoted, unescaped token delimiters will be replaced by a single space.<br>
+<br>
+I knew this was done when FOR /F iterates the output of a command. I thought this was part of packaging up the IN clause for insertion into a CMD /C command. I didn't think it applied to string processing. But apparently it is universal to all FOR /F IN() clauses.<br>
+<br>
+I don't think the SO command parsing rules address this point properly. I'll have to wade through them again.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 07:31</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Well it is embedded in phase 2 after all - and I wrote that portion  <img class="smilies" src="images/smilies/icon_redface.gif" width="15" height="15" alt=":oops:" title="Embarassed">
+<blockquote><div><cite>StackOverflow wrote:</cite>
+FOR is split in two after the DO. A syntax error in the FOR construction will result in a fatal syntax error.
+<ul>
+  <li>The portion through DO is the actual FOR iteration command that flows all the way through phase 7
+  <ul>
+    <li>All FOR options are fully parsed in phase 2.</li>
+    <li>The IN parenthesized clause treats &lt;LF&gt; as &lt;space&gt;. After the IN clause is parsed, all tokens are concatenated together to form a single token.</li>
+    <li><strong class="text-strong">Consecutive token delimiters collapse into a single space throughout the FOR command through DO.</strong></li>
+  </ul></li>
+  <li>The portion after DO is a command block that is parsed normally. Subsequent processing of the DO command block is controled by the iteration in phase 7.</li>
+</ul>
+</div></blockquote>
+
+I think the bolded line should be modified to state that only unquoted, unescaped token delimiters are affected<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 07:59</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistfcd9.html?mode=viewprofile&amp;u=4919">npocmaka_</a> wrote: <a href="viewtopic1683.html?p=57661#p57661" data-post-id="57661" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Aug 2018 06:38</div></cite>
+there was an easier way to the the LF with set and brackets but I cant find the link. If I'm not wrong it was found by Aacini.
+</div></blockquote>
+Yes. I that is what I thought as well. I kept trying to find it in his previous posts last night.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 08:04</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopicb652.html?p=57662#p57662" data-post-id="57662" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Aug 2018 06:45</div></cite>
+If I want to iterate a series of string literals embedded within my source code, then I generally combine the simple FOR with FOR /F. But of course this only works if none of the strings contain * or ?
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+for %%S in (
+  "1,Martini Shaker"
+  "2,Wine Bottle"
+  "3,Beer Glass"
+) do for /f "tokens=1,2 delims=," %%A in ("%%~S") do echo T1=%%A  T2=%%B
+</code></pre></div>
+
+<br>
+Dave Benham
+</div></blockquote>
+Yes Dave, that is what I am doing already.  I should have put that in my original post.  For some reason I thought it was possible to do it with a single FOR /F command. I could have sworn Antonio had posted something like I was trying a few years ago.  I even remember posting in the thread.<br>
+<br>
+I did get this to work.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setLocal EnableDelayedExpansion
+set lf=^
+
+
+for /F ^"eol^=^
+
+tokens^=^1^,^2^ delims^=^,^" %%G in ("1,A B!lf!2,C D!lf!3,E F") do echo T1=%%G T2=%%H
+pause</code></pre></div>
+But I was hoping to list each grouping on its own line because they will be larger then this example and was hoping for some readability in the code.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 08:54</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I also vaguely remember Aacini posting something, but I don't remember where, or what it looked like.<br>
+<br>
+Try this. I still can't test, but I think it should work:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+
+(set ;=^^^
+%= This creates an escaped Line Feed - DO NOT ALTER =%
+)
+
+For /f "usebackq tokens=1,2 delims=," %%A in ('^
+1^,line 1%;%
+2^,line 2%;%
+3^,line 3'
+) do echo T1=%%A  T2=%%B
+</code></pre></div>
+
+The ; variable should contain <strong class="text-strong"><span style="font-size: 150%; line-height: normal">^&lt;LF&gt;</span></strong><br>
+<br>
+So the IN clause should effectively look like <strong class="text-strong"><span style="font-size: 150%; line-height: normal">('^string1^&lt;LF&gt;&lt;LF&gt;string2^&lt;LF&gt;&lt;LF&gt;string3')</span></strong></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 09:12</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I'm afraid it still doesn't work without escaping the commas, Dave. As you wrote above you don't need to worry about escaping double quotes using USEBACKQ but besides of that it's still basically the same proposal than mine.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 09:39</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Doh! Of course. I edited the post.<br>
+<br>
+The other main difference is the use of a simple definition for ; as opposed to a fairly complex definition for \n
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(set LF=^
+%= This creates a Line Feed - DO NOT ALTER =%
+)
+set ^"\n=^^^%LF%%LF%^%LF%%LF%^^"
+REM \n = ^&lt;LF&gt;&lt;LF&gt;^
+
+vs.
+
+(set ;=^^^
+%= This creates an escaped Line Feed - DO NOT ALTER =%
+)
+REM ; = ^&lt;LF&gt;
+</code></pre></div>
+
+But the end result is the same - the IN() clause is parsed as one string with multiple &lt;LF&gt; terminated lines.<br>
+<br>
+One potential advantage is the use of \n escapes the line feed and the first character of the next line, but the use of ; only escapes the line feed.<br>
+<br>
+I'm thinking this simpler syntax could be used for macro definition as well, though I would probably use \n for the variable name instead of ;</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 11:20</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Your idea of using your technique for macro definitions sounds great. I remember the original explanation by jeb. He told that the \n variable expands as you said but that it would be required because in the end the two line feeds generate a single line feed the same way as you originally define the LF variable. That seems to be wrong or at least not necessary <img class="smilies" src="images/smilies/icon_surprised.gif" width="15" height="15" alt=":o" title="Surprised"> <br>
+<br>
+Hmm, but we are about to hijack Squashman's thread now ...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 11:26</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic292e-2.html?p=57675#p57675" data-post-id="57675" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Aug 2018 11:20</div></cite>
+Hmm, but we are about to hijack Squashman's thread now ...
+</div></blockquote>
+All for the greater good.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR /F with Line Feed</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 12:22</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I'm finally at a PC, and no, it does not work for macros.<br>
+<br>
+This
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(set \n=^
+%= This defines an escaped line feed - DO NOT ALTER =%
+)
+
+echo Hello%\n%
+world!
+</code></pre></div>
+Is just a more pleasing way of writing
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo Hello^
+
+world
+</code></pre></div>
+
+Both the above only get parsed once. The same is true with the IN() clause in earlier posts. But the macro must be parsed twice, once to define the macro, and again to execute the macro. So the more complicated definition is required to define a macro.<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8769&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:44:09 GMT -->
+</html>

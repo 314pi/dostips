@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8613&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Unable to understand how to use findstr...</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Unable to understand how to use findstr...</h2>
+		<p><a href="viewtopice723.html?f=3&amp;t=8613">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8613</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Unable to understand how to use findstr...</h3>
+				<div class="date">Posted: <strong>09 Jun 2018 08:00</strong></div>
+				<div class="author">by <strong>Bucko</strong></div>
+				<div class="content">My mental abilities are not enough <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=":wink:" title="Wink"> to understand how findstr should be used to extract a part of a text file, more precisely all lines from line number <em class="text-italics">n</em> to line number <em class="text-italics">m</em>, from a text file into an output file.<br>
+<br>
+Could someone here help me?<br>
+<br>
+Please note that my question is limited to <em class="text-italics">findstr</em>, because such a solution could be used for binary files too (which are my real target).<br>
+<br>
+Thank you in advance.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Unable to understand how to use findstr...</h3>
+				<div class="date">Posted: <strong>09 Jun 2018 09:45</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">Binary files don't necessarily have newline characters, so extracting lines M through N may not always be possible. Also, what gave you the idea that findstr was going to be useful for this?<br>
+<br>
+You can, however use a for loop.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+
+:: Specify which line to start returning from
+set get_line=7
+
+:: Specify how many lines to return
+set return_lines=5
+:: In this example, lines 7 through 12 will be returned
+
+:: Trial and error made me add this line. Don't touch it.
+set /a get_line-=2
+
+(
+	for /L %%A in (0,1,%get_line%) do set /p skip_line=
+	for /L %%A in (0,1,%return_count%) do (
+		set /p print_line=
+		echo !print_line!
+	)
+) &lt;file.txt</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Unable to understand how to use findstr...</h3>
+				<div class="date">Posted: <strong>09 Jun 2018 12:22</strong></div>
+				<div class="author">by <strong>Bucko</strong></div>
+				<div class="content">ShadowThief, thank you very much for your support!<br>
+<br>
+You address questions which are not directly relevant to my setting. All my binary files (which I intend to use) have "lines" (i.e. newline characters), and these "lines" are not to long for findstr (there is a length limit). So findstr definitely would work with my binary data. Therefore findstr would be useful for me––why do you wonder so much about this idea?<br>
+<br>
+Your script works fine with text files. (I corrected the variable name in the second for and added &gt;&gt; output.txt to echo.) One question: At the end of the last line a newline is added (in output.txt, a blank 6th line). Do you have an idea how this could be avoided?<br>
+<br>
+But, of course, your script doesn't work with binary files (00!). That's why I ask how to do the same using findstr...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Unable to understand how to use findstr...</h3>
+				<div class="date">Posted: <strong>09 Jun 2018 12:47</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">If your binary files have newlines, you can probably stick a <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type binary_file.exe &gt;file.txt</code></pre></div> at the top of the script and see if that works.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Unable to understand how to use findstr...</h3>
+				<div class="date">Posted: <strong>09 Jun 2018 13:16</strong></div>
+				<div class="author">by <strong>Bucko</strong></div>
+				<div class="content">I tested this, yes, and it doesn't work, as I said (nul character is ignored). This discussion only removes us from my question from the beginning.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Unable to understand how to use findstr...</h3>
+				<div class="date">Posted: <strong>09 Jun 2018 15:10</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Does it absolutely *have* to be findstr? If so, then I can't help you, but if not, then this is precisely the kind of task I would use some quick-and-dirty c code for:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>#include &lt;stdio.h&gt;
+
+int main(int argc, char **argv) {	
+	FILE *fp, *ofp;
+	long si,ei;
+		
+	if (argc &lt;= 3) { puts("Usage: cpbinl file startline endline"); return 1; }
+	si=atoi(argv[2]); ei=atoi(argv[3]);
+	if (si &lt; 1 || ei &lt; 1 || ei &lt; si) { puts("Invalid index"); return 1; }
+	fp=fopen(argv[1], "rb");
+	argv[1][0]='#'; if (fp) ofp=fopen(argv[1], "wb");
+	if (fp &amp;&amp; ofp) {
+		long line=1, read;
+		unsigned char ch;
+		
+		do {
+			read=fread(&amp;ch, 1, 1, fp);
+			if (read &amp;&amp; line &gt;= si &amp;&amp; line &lt;= ei) fwrite(&amp;ch, 1, 1, ofp);
+			if (ch == 0xa) line++;
+		} while(read);
+		
+		if (fp) fclose(fp);
+		if (ofp) fclose(ofp);
+	} else puts("File error");
+	return 0;
+}
+</code></pre></div>
+
+I attached a binary compiled with tcc. It reads and writes byte by byte, so it's no speed demon  <img class="smilies" src="images/smilies/icon_mrgreen.gif" width="15" height="15" alt=":mrgreen:" title="Mr. Green"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Unable to understand how to use findstr...</h3>
+				<div class="date">Posted: <strong>10 Jun 2018 00:41</strong></div>
+				<div class="author">by <strong>Bucko</strong></div>
+				<div class="content"><strong class="text-strong">That's just fantastic, misol101!</strong><br>
+<br>
+It does not solve my problem with using findstr (and I still hope someone will show me a solution), but:<br>
+<br>
+Your answer allows me to think of a very different concept for my general project. I did not know that C and TCC make it possible to write such extremely small programs.<br>
+<br>
+I am extremely excited and thank you very much for your answer.<br>
+<br>
+May I send you a PM?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Unable to understand how to use findstr...</h3>
+				<div class="date">Posted: <strong>10 Jun 2018 05:23</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Sure thing, though I’m not sure how much time I will have to look into it</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Unable to understand how to use findstr...</h3>
+				<div class="date">Posted: <strong>10 Jun 2018 21:29</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistb60b.html?mode=viewprofile&amp;u=9243">Bucko</a> wrote: <a href="viewtopic8bbd-2.html?p=57114#p57114" data-post-id="57114" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">09 Jun 2018 12:22</div></cite>
+... One question: At the end of the last line a newline is added (in output.txt, a blank 6th line). Do you have an idea how this could be avoided?
+</div></blockquote>
+If the lines does not have leading white spaces or equal sign(=) <strong class="text-strong">`set /p "=!var!"&lt;nul&gt;outFile`</strong> can be used for that matter. On Vista and beyond set /p removes leading white spaces from prompt string.<br>
+An Alternate less efficient but working method is to use prompt trick:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>setlocal
+.
+.
+set "prompt=!var:$=$$!"
+cmd /d /k &lt;nul&gt;outFile
+.
+.
+endlocal
+</code></pre></div>
+So using prompt trick as example, that part of code can written as follows
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /L %%A in (0,1,%return_count%) do (
+		set /p print_line=
+		set "prompt=!print_line:$=$$!"
+		cmd /d /k &lt;nul
+		if %%A LSS %return_count% echo,
+	)
+</code></pre></div>
+set /p is more efficient and cleaner approach but it can not be used with arbitrary data. Either way that is too much of overhead for just eliminating the last newline from output.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Unable to understand how to use findstr...</h3>
+				<div class="date">Posted: <strong>11 Jun 2018 01:12</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistb60b.html?mode=viewprofile&amp;u=9243">Bucko</a> wrote: <a href="viewtopic9ec6.html?p=57110#p57110" data-post-id="57110" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">09 Jun 2018 08:00</div></cite>
+Please note that my question is limited to <em class="text-italics">findstr</em>, because such a solution could be used for binary files too (which are my real target).
+</div></blockquote>
+That is not necessarily true. As far as I'm concerned, <strong class="text-strong">findstr</strong> on it's own, does not have the capability to filter specific line numbers. So the assumption that any solution of your task involving findstr, can automatically handle binary files is not true.<br>
+<br>
+However there is a method which can handle binary files based on the criteria you have specified. There is also a method which can only be used to handle text files (Or more precisely files without &lt;NULL&gt; bytes) but in a much more efficient way.<br>
+<br>
+<strong class="text-strong">findstr solution to handle text files:</strong>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableExtensions DisableDelayedExpansion
+
+:: Parameters
+set "Input=input.txt"
+set "Output=output.txt"
+:: The minimum value for startLine is 1
+set /a "startLine=5, endLine=9"
+
+
+set /a "startLine-=1"
+if %startLine% EQU 0 (set "skip=") else set "skip=skip=%startLine%"
+(for /F "%skip% tokens=1* delims=:" %%K in ('findstr /N /R "^" "%Input%"') do (
+    if %%K LEQ %endLine% (echo(%%L)
+))&gt;"%Output%"
+</code></pre></div>
+The above will work well if the difference between endLine and total number lines in input files is relatively small. for example when endLine=130 and totalLines=134<br>
+But as difference gets bigger (endLine=130, totalLines=800) the performance will degrade because batch script have no means of immediate break from FOR loops once the job is done there is no need remain in the loop anymore. The only command that can immediately break FOR loops is <strong class="text-strong">`exit`</strong> but that will also terminates the host cmd instance. The solution is to execute the FOR loop in a child instance of cmd along with exit command.<br>
+So the FOR loop block can replaced with this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;"%Output%" cmd /e:on /v:off /d /c for /F "%skip% tokens=1* delims=:" %%K in ^('findstr /N /R "^" "%Input%"'^) do @if %%K LEQ %endLine% ^(echo(%%L^) else exit
+</code></pre></div>
+This can also be performance killer if the difference between endLine/totalLine is too small and you are processing too many files in this condition. So I think ShadowThief's solution may better suite your needs in this regards. You should test and compare.<br>
+<br>
+<strong class="text-strong">findstr solution to handle binary files:</strong>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableExtensions DisableDelayedExpansion
+
+:: Parameters
+set "Input=input.bin"
+set "Output=output.bin"
+set /a "startLine=5, endLine=9"
+
+
+set /a "cureLine=startLine-1, Lines=endLine-startLine+1, MaxDigits=9"
+(for /L %%. in (1,1,%Lines%) do (
+    set /a "cureLine+=1, Num=cureLine, LeadChars=1"
+    for /L %%. in (1,1,%MaxDigits%) do set /a "LeadChars+=!!Num, Num/=10"
+    findstr /N /R "^" "%Input%"|(findstr /R "^%%cureLine%%:")|((for /L %%. in (1,1,%%LeadChars%%) do @pause)&gt;nul &amp; findstr /R "^")
+
+    REM // This line takes into account the possibility for disabled command extensions. Use instead of above if that is a concern.
+    REM findstr /N /R "^" "%Input%"|(findstr /R "^%%cureLine%%:")|cmd /e:on /d /c ^(for /L %%^^^. in ^(1,1,%%LeadChars%%^) do @pause^)^&gt;nul ^&amp; findstr /R "^"
+))&gt;"%Output%"
+</code></pre></div>
+
+This is based on this assumption:
+<blockquote><div><cite><a href="memberlistb60b.html?mode=viewprofile&amp;u=9243">Bucko</a> wrote: <a href="viewtopic8bbd-2.html?p=57114#p57114" data-post-id="57114" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">09 Jun 2018 12:22</div></cite>
+All my binary files (which I intend to use) have "lines" (i.e. newline characters), and these "lines" are not to long for findstr (there is a length limit). So findstr definitely would work with my binary data.
+</div></blockquote>
+
+Be aware that this method is extremely slow and inefficient in terms of performance but should do the job. That was the best I could come up with.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8613&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:29 GMT -->
+</html>

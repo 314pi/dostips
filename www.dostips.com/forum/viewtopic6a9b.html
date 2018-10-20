@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8715&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:51:20 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; batch job to do string replacement of contents.lst file in all subfolders</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>batch job to do string replacement of contents.lst file in all subfolders</h2>
+		<p><a href="viewtopic588b.html?f=3&amp;t=8715">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8715</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>batch job to do string replacement of contents.lst file in all subfolders</h3>
+				<div class="date">Posted: <strong>12 Jul 2018 13:35</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">Hi all,<br>
+<br>
+I have a new task to do a batch job to replace all subfolders's contents.lst files<br>
+Here is the example:<br>
+<br>
+C:\level1\level2\level3<br>
+                        \level3a\level4<br>
+                                    \level4a\level5                                <br>
+                         \level3b<br>
+Now the requirement is that under level2 folder, there is a contents.lst file which mainly display the list of files and folders under level2<br>
+<br>
+same as level3 subfolder, level3a, level3b... level4, level4a, level5, they all have a contents.lst files<br>
+<br>
+Now I would like to replace all these contents.lst files under different subfolders after level2<br>
+the content I like to replace as below code:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+set optn=T582-08878-0101
+set nptn=T592-08917-0100
+
+@echo off &amp;setlocal
+set "search=%optn%"
+set "replace=%nptn%"
+set "textfile=contents.lst"
+set "newfile=indesnew.txt"
+(for /f "delims=" %%i in (%textfile%) do (
+    set "line=%%i"
+    setlocal enabledelayedexpansion
+    set "line=!line:%search%=%replace%!"
+    echo(!line!
+    endlocal
+))&gt;"%newfile%"
+del %textfile%
+rename %newfile%  %textfile%
+
+</code></pre></div>
+
+Since they all have optn value in these contents.lst files before replace, after replace they all should have nptn value as the above code does.... it works as expected.<br>
+<br>
+Now question will be how we can have a batch script to do them all in one script, instead of doing one level as the above code did...<br>
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: new job to do a batch of replacement of contents.lst</h3>
+				<div class="date">Posted: <strong>12 Jul 2018 14:32</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">I would parse the output of the DIR command with a FOR /F command to get a listing of all the files.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F "delims=" %%G IN ('dir /a-d /b /s contents.lst') DO........</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: new job to do a batch of replacement of contents.lst</h3>
+				<div class="date">Posted: <strong>13 Jul 2018 11:47</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopice96c.html?p=57433#p57433" data-post-id="57433" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">12 Jul 2018 14:32</div></cite>
+I would parse the output of the DIR command with a FOR /F command to get a listing of all the files.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F "delims=" %%G IN ('dir /a-d /b /s contents.lst') DO........</code></pre></div>
+</div></blockquote>
+
+Thanks and tried this following code not working as expected for all subfolders' replacement
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off
+call C:\auto_pkg_build\Scripts\scheme_replace\varconfig.cmd
+call C:\auto_pkg_build\Scripts\scheme_replace\get_src.cmd
+
+set optn=%optn: =%
+set nptn=%nptn: =%
+set opkg=%opkg: =%
+set npkg=%npkg: =%
+
+pushd C:\auto_pkg_build\Workspace\Build_pkg\%npkg%\%nptn%
+
+FOR /F "delims=" %%G IN ('dir /a-d /b /s contents.lst') DO (
+
+Set "search=%optn%"
+Set "replace=%nptn%"
+Set "textfile=contents.lst"
+Set "newfile=indesnew.txt"
+(
+	For /F "Tokens=1* Delims=:" %%A In ('FindStr /N "^" "%textfile%"') Do (
+		If "%%B"=="" (
+			Echo=
+		) Else (
+			Set "line=%%B"
+			SetLocal EnableDelayedExpansion
+			Set "line=!line:%search%=%replace%!"
+			Echo=!line!
+			EndLocal
+		)
+	)
+)&gt;"%newfile%"
+Del "%textfile%"
+Ren "%newfile%" "%textfile%"
+)
+</code></pre></div>
+How to use %%G in the DO clause in the above code??<br>
+only the current contents.lst has been replaced, all the subfolder's contents.lst not replaced at all</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: new job to do a batch of replacement of contents.lst</h3>
+				<div class="date">Posted: <strong>13 Jul 2018 17:05</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">You are forgetting about delayed expansion. The search, replace, newfile and textfile variables can be set outside the code block. No need to have them nested inside the FOR block.<br>
+<br>
+Shouldn't you be using %%G with the FINDSTR command?  That is my best guess. I would think you would better understand your own code logic</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: new job to do a batch of replacement of contents.lst</h3>
+				<div class="date">Posted: <strong>16 Jul 2018 06:58</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">I tried use below code and end up after line 22
+<blockquote class="uncited"><div>
+11<br>
+22<br>
+The system cannot find the path specified.<br>
+C:\auto_pkg_build\Workspace\Build_pkg\T592-08878-0101_Link2500_TCPX_NARInfra_GEN<br>
+_PROD\T592-08878-0101\*, Are you sure (Y/N)?
+</div></blockquote>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off
+SETLOCAL EnableDelayedExpansion
+call C:\auto_pkg_build\Scripts\scheme_replace\varconfig.cmd
+call C:\auto_pkg_build\Scripts\scheme_replace\get_src.cmd
+
+set optn=%optn: =%
+set nptn=%nptn: =%
+set opkg=%opkg: =%
+set npkg=%npkg: =%
+
+pushd C:\auto_pkg_build\Workspace\Build_pkg\%npkg%\%nptn%
+echo 11
+FOR /F "delims=" %%G IN ('dir /a-d /b /s contents.lst') DO (
+echo 22
+		Set "search=%optn%"
+		Set "replace=%nptn%"
+		Set "textfile=contents.lst"
+		Set "newfile=indesnew.txt"
+		(
+echo 44
+			For /F "Tokens=1* Delims=:" %%A In ('FindStr /N "^" "%textfile%"') Do (
+				If "%%B"=="" (
+					Echo=
+				) Else (
+echo 55
+					Set "line=%%B"
+					SetLocal EnableDelayedExpansion
+					Set "line=!line:%search%=%replace%!"
+					Echo=!line!
+					EndLocal
+				)
+echo 66
+			)
+		)&gt;"%newfile%"
+		Del "%textfile%"
+		Ren "%newfile%" "%textfile%"
+echo 99	
+	)
+</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8715&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:51:20 GMT -->
+</html>

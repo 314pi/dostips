@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=47&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:44:37 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Replace a text in a reg file by a other text</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Replace a text in a reg file by a other text</h2>
+		<p><a href="viewtopicc372.html?f=3&amp;t=47">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=47</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Replace a text in a reg file by a other text</h3>
+				<div class="date">Posted: <strong>01 Nov 2006 11:07</strong></div>
+				<div class="author">by <strong>DOSAM</strong></div>
+				<div class="content">Ok let's try to explain. I'm writing a bat file that first detects in wich folder the bat file is, that I allready have and it saves it in variable: %BatchFile%<br />but now, I need to replace in a reg files where stand installdir = "%DIR%" and that must be replaced by the founded folder of the variable %BatchFile%<br /><br />Hope someone can help me</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>02 Nov 2006 00:29</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">DOSAM,<br /><br />To replace a single line in a text file you might want to try something like this:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set BatchFile=%~dp0<br />set filename=myregfile.reg<br />set findthis=installdir<br /><br />&#40;for /f &quot;tokens=1,* delims=&#93;&quot; %%a in &#40;'&quot;find /n /v &quot;&quot; &quot;%filename%&quot;&quot;'&#41; do &#40;<br />&nbsp; &nbsp; &nbsp; &nbsp; echo.%%b|find &quot;%findthis%&quot;&gt;NUL &amp;&amp; &#40; echo.%findthis% = &quot;%BatchFile%&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &#41; || &#40; echo.%%b &#41;<br />&#41;&#41;&gt;&quot;%filename%.tmp&quot;<br />move /y &quot;%filename%.tmp&quot; &quot;%filename%&quot;</code></pre></div><br />DOS IT HELP?  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>02 Nov 2006 05:17</strong></div>
+				<div class="author">by <strong>DOSAM</strong></div>
+				<div class="content">haha yes thanks you <img class="smilies" src="images/smilies/icon_wink.gif" alt=";)" title="Wink" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>04 Nov 2006 13:43</strong></div>
+				<div class="author">by <strong>DOSAM</strong></div>
+				<div class="content">ok now, i need big help! look in that code u wrote that replaces a full line and it makes some things unreadable for regedit and for commands to: let's try to explain. first if I run the code for reg file then it makes at start of reg file a enter and then starts the text for example:<br />first: <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Windows Registry Editor Version 5.00<br /><br />&#91;HKEY_LOCAL_MACHINE\SOFTWARE\EA GAMES\Need For Speed Underground&#93;<br />&quot;DisplayName&quot;=&quot;Need For Speed Underground&quot;<br />&quot;Installed From&quot;=&quot;%cd\\&quot;<br />&quot;3D Device Description&quot;=&quot;NVIDIA GeForce4 Ti 4200 &#91;D3D&#93;&quot;<br />&quot;3D Card&quot;=&quot;Unknown D3D&quot;<br />&quot;Thrash Driver&quot;=&quot;dx&quot;<br />&quot;Group&quot;=&quot;D3D&quot;<br />&quot;D3D Device&quot;=dword:00000000<br />&quot;Triple Buffer&quot;=dword:00000000<br />&quot;Hardware Acceleration&quot;=dword:00000001<br />&quot;Thrash Resolution&quot;=&quot;640x480&quot;<br />&quot;CacheSize&quot;=&quot;1351315456&quot;<br />&quot;SwapSize&quot;=&quot;0&quot;<br />&quot;Language&quot;=&quot;English US&quot;<br />&quot;Locale&quot;=&quot;en_us&quot;<br />&quot;Registration&quot;=&quot;SOFTWARE\\Electronic Arts\\EA GAMES\\Need For Speed Underground\\ergc&quot;<br />&quot;CD Drive&quot;=&quot;C:\\Downloads\\Need For Speed Underground\\Need For Speed Underground\\&quot;<br />&quot;Install Dir&quot;=&quot;C:\\Downloads\\Need For Speed Underground\\Need For Speed Underground\\&quot;<br />&quot;Product GUID&quot;=&quot;&#123;A99968BE-C155-474C-0089-33239DEE1CE2&#125;&quot;<br />&quot;Region&quot;=&quot;region_us&quot;<br /><br />&#91;HKEY_LOCAL_MACHINE\SOFTWARE\EA GAMES\Need For Speed Underground\1.0&#93;<br />&quot;Language&quot;=dword:00000001<br />&quot;DisplayName&quot;=&quot;Need For Speed Underground&quot;<br />&quot;LanguageName&quot;=&quot;English US&quot;<br /><br /></code></pre></div><br /><br />after running the batch file.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp;<br />Windows Registry Editor Version 5.00 <br />&nbsp;<br />&#91;HKEY_LOCAL_MACHINE\SOFTWARE\EA GAMES\Need For Speed Underground&#93; <br />&quot;DisplayName&quot;=&quot;Need For Speed Underground&quot; <br />&quot;Installed From&quot;=&quot;%cd\\&quot; <br />&quot;3D Device Description&quot;=&quot;NVIDIA GeForce4 Ti 4200 &#91;D3D&#93;&quot; <br />&quot;3D Card&quot;=&quot;Unknown D3D&quot; <br />&quot;Thrash Driver&quot;=&quot;dx&quot; <br />&quot;Group&quot;=&quot;D3D&quot; <br />&quot;D3D Device&quot;=dword:00000000 <br />&quot;Triple Buffer&quot;=dword:00000000 <br />&quot;Hardware Acceleration&quot;=dword:00000001 <br />&quot;Thrash Resolution&quot;=&quot;640x480&quot; <br />&quot;CacheSize&quot;=&quot;1351315456&quot; <br />&quot;SwapSize&quot;=&quot;0&quot; <br />&quot;Language&quot;=&quot;English US&quot; <br />&quot;Locale&quot;=&quot;en_us&quot; <br />&quot;Registration&quot;=&quot;SOFTWARE\\Electronic Arts\\EA GAMES\\Need For Speed Underground\\ergc&quot; <br />_DIR_ = &quot;C:\Documents and Settings\***\My Documents\&quot;<br />_DIR_ = &quot;C:\Documents and Settings\***\My Documents\&quot;<br />&quot;Product GUID&quot;=&quot;&#123;A99968BE-C155-474C-0089-33239DEE1CE2&#125;&quot; <br />&quot;Region&quot;=&quot;region_us&quot; <br />&nbsp;<br />&#91;HKEY_LOCAL_MACHINE\SOFTWARE\EA GAMES\Need For Speed Underground\1.0&#93; <br />&quot;Language&quot;=dword:00000001 <br />&quot;DisplayName&quot;=&quot;Need For Speed Underground&quot; <br />&quot;LanguageName&quot;=&quot;English US&quot; <br /></code></pre></div><br />do u see there at first line, there comes a enter, how do I remover it in dos cuz otherwise regedit will not accept the reg file anymore.<br /><br />2nd. looks to the lines where first stands path: _DIR_ and look then in the 2nd there u see lines start with _DIR_ but actually, _DIR_ had to be removed and that install dir and other had must stay stand there! is there a way to fix?<br />btw, here is code of my BAT file:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />title CCZ REG iNJECTOR<br />echo Injecting REG file, wait...<br />::Get the current batch file's short path<br />for %%x in &#40;%0&#41; do set BatchPath=%%~dpsx<br />for %%x in &#40;%BatchPath%&#41; do set BatchPath=%%~dpsx<br />echo.<br />echo reg file <br />echo getting directory..<br />echo.<br />echo.<br />echo directory = %BatchPath%<br />echo now getting it into a textfile...<br />set BatchFile=%~dp0<br />set filename=myregfile.reg<br />set findthis=_DIR_<br /><br />&#40;for /f &quot;tokens=1,* delims=&#93;&quot; %%a in &#40;'&quot;find /n /v &quot;&quot; &quot;%filename%&quot;&quot;'&#41; do &#40;<br />&nbsp; &nbsp; &nbsp; &nbsp; echo.%%b|find &quot;%findthis%&quot;&gt;NUL &amp;&amp; &#40; echo.%findthis% = &quot;%BatchFile%&quot;&#41; || &#40; echo.%%b &#41;<br />&#41;&#41;&gt;&quot;%filename%.tmp&quot;<br />move /y &quot;%filename%.tmp&quot; &quot;%filename%&quot;<br />pause</code></pre></div><br /><br />hope u can help me =)<br />thanks anyway <img class="smilies" src="images/smilies/icon_wink.gif" alt=";)" title="Wink" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>04 Nov 2006 17:33</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">Like this?<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />title CCZ REG iNJECTOR<br />echo.Getting directory..<br />set BatchFile=%~dp0<br />echo.directory = %BatchPath%<br />set filename=myregfile.reg<br />set findthis1=CD Drive<br />set findthis2=Install Dir<br />&#40;for /f &quot;tokens=1,* delims=&#93;&quot; %%a in &#40;'&quot;type &quot;%filename%&quot;|find /n /v &quot;&quot;&quot;'&#41; do &#40;<br />&nbsp; &nbsp; echo.%%b|find &quot;%findthis1%&quot;&gt;NUL &amp;&amp; &#40; echo.&quot;%findthis1%&quot;=&quot;%BatchFile:\=\\%&quot;&#41; || &#40;<br />&nbsp; &nbsp; echo.%%b|find &quot;%findthis2%&quot;&gt;NUL &amp;&amp; &#40; echo.&quot;%findthis2%&quot;=&quot;%BatchFile:\=\\%&quot;&#41; || &#40; <br />&nbsp; &nbsp; &nbsp; &nbsp; echo.%%b&#41;&#41;<br />&#41;&#41;&gt;&quot;%filename%.tmp&quot;<br />move /y &quot;%filename%.tmp&quot; &quot;%filename%&quot;<br />pause<br /></code></pre></div><br /><br /> <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=47&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:44:37 GMT -->
+</html>

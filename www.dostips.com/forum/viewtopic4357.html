@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8636&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Creatively stupid ways to rename files with spaces to underscores</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Creatively stupid ways to rename files with spaces to underscores</h2>
+		<p><a href="viewtopicab57.html?f=3&amp;t=8636">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8636</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Creatively stupid ways to rename files with spaces to underscores</h3>
+				<div class="date">Posted: <strong>20 Jun 2018 15:44</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">This is really just for <a href="https://www.urbandictionary.com/define.php?term=shits%20and%20giggles" class="postlink">shits and giggles</a>. By no means would I ever use this in a production environment.  My initial intent was to do this with no set or goto commands.  My original flawed logic made me think that renaming any file with spaces to underscores would loop the file back into the `FOR` commands index but that didn't seem to be the case.  So I cheated and used a GOTO.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+:loop
+FOR %%G IN ("* *.txt") DO (
+	FOR /F "tokens=1* delims= " %%H IN ("%%~G") DO (
+		IF NOT "%%~I"=="" (
+			rename "%%~G" "%%~H_%%~I"
+			goto loop
+		)
+	)
+)</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Creatively stupid ways to rename files with spaces to underscores</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 13:16</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Interesting challenge.<br>
+<br>
+I've succeeded in surpassing your original requirements <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"> <br>
+<br>
+Here is a command line one liner that does not use any true environment variable, though it does use the dynamic pseudo environment variable %cmdcmdline%. Since it is command line, it obviously cannot use GOTO.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmd /c "@(call &amp;for %F in ("* *.txt") do @for /f "tokens=1* delims= " %A in ("%F") do @if not "%B"=="" (ren "%F" "%A_%B"&amp;call))&amp;if not errorlevel 1 %^cmdcmdline%"
+</code></pre></div>
+
+There are a couple odd restrictions with the above that I do not understand:<br>
+<br>
+1) If the command does not rename any files, then the following unfortunate error message is generated, though I haven't seen any negative impact beyond the message
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>'%cmdcmdline%' is not recognized as an internal or external command,
+operable program or batch file.
+</code></pre></div>
+
+2) The command does not loop properly if the file mask is<span style="font-size: 150%; line-height: normal">"*"</span>or <span style="font-size: 150%; line-height: normal">"*.*"</span><br>
+It only works properly if the file mask has some restriction. For example, <span style="font-size: 150%; line-height: normal">"*.txt"</span> works, as does <span style="font-size: 150%; line-height: normal">"* *"</span><br>
+<br>
+Obviously the code could be adapted for use in a batch file.<br>
+<br>
+<strong class="text-strong">renSpaceTo_.bat</strong>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@cmd /c "(call &amp;for %%F in (%*) do @for /f "tokens=1* delims= " %%A in ("%%F") do @if not "%%B"=="" (ren "%%F" "%%A_%%B"&amp;call))&amp;if not errorlevel 1 %%cmdcmdline%%"
+</code></pre></div>
+
+Now the code is parametized, and <span style="font-size: 150%; line-height: normal">%*</span> allows you to specify multiple file masks.<br>
+For example, the following works perfectly without error as long as at least one file is renamed
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>renSpaceTo_ *.bat *.exe
+</code></pre></div>
+
+Next I thought, why not make a DOSKEY macro variant.<br>
+<br>
+I first tried the obvious:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>doskey renSpaceTo_=cmd /c "@(call &amp;for %F in ($*) do @for /f "tokens=1* delims= " %A in ("%F") do @if not "%B"=="" (ren "%F" "%A_%B"&amp;call))&amp;if not errorlevel 1 %^cmdcmdline%"
+</code></pre></div>
+But there is a mysterious quoting anomaly that drops a quote from the first IF comparison.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\test&gt;doskey /macros
+renSpaceTo_=cmd /c "@(call &amp;for %F in ($*) do @for /f "tokens=1* delims= " %A in ("%F") do @if not "%B"==" (ren "%F" "%A_%B"&amp;call))&amp;if not errorlevel 1 %^cmdcmdline%"
+</code></pre></div>
+
+I managed to find a solution, substitute 3 quotes for the 1 quote that was getting dropped. But I have no idea why this works.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>doskey renSpaceTo_=cmd /c "@(call &amp;for %F in ($*) do @for /f "tokens=1* delims= " %A in ("%F") do @if not "%B"=="""" (ren "%F" "%A_%B"&amp;call))&amp;if not errorlevel 1 %^cmdcmdline%"
+</code></pre></div>
+
+<span style="font-size: 150%; line-height: normal">$*</span> works just like the batch <span style="font-size: 150%; line-height: normal">%*</span>, so the macro also supports multiple file masks.<br>
+<br>
+Of course both the batch file and macro have the same restrictions as the original command one liner.<br>
+<br>
+I'm curious if anyone can figure out the reason behind the restrictions, or why the macro requires the 2 extra quotes.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Creatively stupid ways to rename files with spaces to underscores</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 13:29</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopicf28b.html?p=57216#p57216" data-post-id="57216" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jun 2018 15:44</div></cite>
+made me think that renaming any file with spaces to underscores would loop the file back into the `FOR` commands index
+</div></blockquote>
+It's quite likely that the FOR loop was implemented using <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa364418(v=vs.85).aspx" class="postlink">FindFirstFile</a> and <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa364428(v=vs.85).aspx" class="postlink">FindNextFile</a>. These functions work with file handles and won't process the same file twice. Also the order of the found files isn't necessarily alphabetic. It's rather depending on the file system. E.g. on FAT file systems the files are enumerated in the order they have been added to the FAT file table.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Creatively stupid ways to rename files with spaces to underscores</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 13:44</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Actually the simple FOR statement uses some form of buffering. If all of the matching files fit within the buffer, then newly appearing file names will never be processed. But if there are a lot of files, then the first set of files that fit in the buffer are processed. Then when the next set of files is loaded into the buffer, newly appearing file names may be included, depending on the sort order.<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Creatively stupid ways to rename files with spaces to underscores</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 13:57</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Interesting! I tried this code
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal
+for /l %%i in (1 1 5000) do &gt;"%%i.txt" type nul
+for %%i in (*.txt) do (
+  echo ren "%%i" "X%%i"
+  ren "%%i" "X%%i"
+)
+pause
+</code></pre></div>
+on an NTFS formatted drive and it doesn't stop to rename the files repeatedly.<br>
+I'll try if the API functions already behave the same ...<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Creatively stupid ways to rename files with spaces to underscores</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 14:24</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic3faf.html?p=57238#p57238" data-post-id="57238" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">21 Jun 2018 13:44</div></cite>
+Actually the simple FOR statement uses some form of buffering. If all of the matching files fit within the buffer, then newly appearing file names will never be processed. But if there are a lot of files, then the first set of files that fit in the buffer are processed. Then when the next set of files is loaded into the buffer, newly appearing file names may be included, depending on the sort order.<br>
+<br>
+Dave Benham
+</div></blockquote>
+I was originally just testing with two files that were named the same with multiple spaces except for a 1 and 2 at the end of the base file name.  The file1 would get two of the spaces changed but file2 would only get one space changed.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Creatively stupid ways to rename files with spaces to underscores</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 14:38</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">I gave the doskey macro a try.  <br>
+<br>
+This was my results.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\Squashman\spaces&gt;dir /b
+fu bar 1.txt
+s p aces.txt
+
+C:\Users\Squashman\spaces&gt;renSpaceTo_ *.txt
+
+C:\Users\Squashman\spaces&gt;dir /b
+fu_bar_1.txt
+s_p aces.txt
+
+C:\Users\Squashman\spaces&gt;doskey /macros
+renSpaceTo_=cmd /c "@(call &amp;for %F in ($*) do @for /f "tokens=1* delims= " %A in ("%F") do @if not "%B"=="" (ren "%F" "%A_%B"&amp;call))&amp;if not errorlevel 1 %^cmdcmdline%"
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Creatively stupid ways to rename files with spaces to underscores</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 14:48</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">This C code behaves the same as my second loop above.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>// addx.c
+
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;windows.h&gt;
+
+int main(void)
+{
+  wchar_t buf[MAX_PATH] = {'X'};
+  WIN32_FIND_DATAW finddata = {0};
+  HANDLE f = FindFirstFileW(L"*.txt", &amp;finddata);
+  if (f == INVALID_HANDLE_VALUE)
+    return 1;
+
+  do
+  {
+    wcsncpy(&amp;buf[1], finddata.cFileName, MAX_PATH - 1);
+    wprintf(L"ren %s %s\n", finddata.cFileName, buf);
+    MoveFileExW(finddata.cFileName, buf, MOVEFILE_REPLACE_EXISTING);
+  } while (FindNextFileW(f, &amp;finddata) != FALSE);
+
+  FindClose(f);
+  return 0;
+}
+</code></pre></div>
+Obviously I was wrong with my assumption. There is no buffer for several file names in this code (both buffers finddata.cFileName and buf are repeatedly overwritten with the found name and the new name). This means that the buffering of the list will already be done somewhere in the implementation of the API.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Creatively stupid ways to rename files with spaces to underscores</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 14:56</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopic966e.html?p=57242#p57242" data-post-id="57242" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">21 Jun 2018 14:38</div></cite>
+I gave the doskey macro a try.  <br>
+<br>
+This was my results.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\Squashman\spaces&gt;dir /b
+fu bar 1.txt
+s p aces.txt
+
+C:\Users\Squashman\spaces&gt;renSpaceTo_ *.txt
+
+C:\Users\Squashman\spaces&gt;dir /b
+fu_bar_1.txt
+s_p aces.txt
+
+C:\Users\Squashman\spaces&gt;doskey /macros
+renSpaceTo_=cmd /c "@(call &amp;for %F in ($*) do @for /f "tokens=1* delims= " %A in ("%F") do @if not "%B"=="" (ren "%F" "%A_%B"&amp;call))&amp;if not errorlevel 1 %^cmdcmdline%"
+</code></pre></div>
+</div></blockquote>
+ <img class="smilies" src="images/smilies/icon_eek.gif" width="15" height="15" alt=":shock:" title="Shocked"> That is weird <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"> <br>
+I set up the same test, and it works fine for me. I only get your result if I use <span style="font-size: 150%; line-height: normal">renSpaceTo_ *</span><br>
+<br>
+But I have improved versions that use only one level of CMD /C, without need of %CMDCMDLINE%. These versions eliminate the restrictions, and I suspect they will work for you as well.<br>
+<br>
+<strong class="text-strong">renSpaceTo_.bat</strong>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@cmd /c "for /l %%. in () do @(call&amp;for %%F in (%*) do @for /f "tokens=1* delims= " %%A in ("%%~F") do @if not "%%B"=="" (ren "%%~F" "%%A_%%B"&amp;&amp;call ))&amp;if errorlevel 1 exit 0"
+</code></pre></div>
+
+<strong class="text-strong">macro version</strong>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>doskey renSpaceTo_=cmd /c "for /l %. in () do @(call&amp;for %F in ($*) do @for /f "tokens=1* delims= " %A in ("%~F") do @if not "%B"=="""" (ren "%~F" "%A_%B"&amp;&amp;call ))&amp;if errorlevel 1 exit 0"
+</code></pre></div>
+
+<span style="font-size: 150%; line-height: normal">EDIT</span><br>
+I forgot that <a href="https://stackoverflow.com/a/34968021/1012053" class="postlink">REN always clears the ERRORLEVEL upon success</a>. So the code can be simplified as follows:<br>
+<br>
+<strong class="text-strong">renSpaceTo_.bat</strong>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@cmd /c "for /l %%. in () do @(call&amp;for %%F in (%*) do @for /f "tokens=1* delims= " %%A in ("%%~F") do @if not "%%B"=="" ren "%%~F" "%%A_%%B")&amp;if errorlevel 1 exit 0"
+</code></pre></div>
+
+<strong class="text-strong">macro version</strong>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>doskey renSpaceTo_=cmd /c "for /l %. in () do @(call&amp;for %F in ($*) do @for /f "tokens=1* delims= " %A in ("%~F") do @if not "%B"=="""" ren "%~F" "%A_%B")&amp;if errorlevel 1 exit 0"
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Creatively stupid ways to rename files with spaces to underscores</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 17:39</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic75cb.html?p=57244#p57244" data-post-id="57244" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">21 Jun 2018 14:48</div></cite>This means that the buffering of the list will already be done somewhere in the implementation of the API.</div></blockquote>This is right.<br>
+Typically the content of a directory is stored in a B-tree. When accessing an existing file the node containig this file is associated with the file handle. This copied B-tree node doesn't change even if the orginal B-tree node changes. So you could get all unexpected behaviour:<br>
+- a file (out of the copy of the actual node) is moved to the actual node, and never will be processed by the for loop (or your c-program),<br>
+- a file within the copy of the actual node is moved to another unprocessed node, and will be processed twice<br>
+- ...<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Creatively stupid ways to rename files with spaces to underscores</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 02:27</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">I also tinkered a bit.<br>
+I did not want to think about why I should make a goto out of the for loop.<br>
+That makes no sense - but that's exactly why it should turn here.<br>
+And well I admit it, I screwed up the loop with the delayed variable itself. - I was lazy -<br>
+and had typed this snippet on the smart phone - so not tested.<br>
+But somehow you also have to come across something like that.<br>
+<br>
+I also assumed that the file pointer in the loop is updated. But apparently it succeeds and sometimes not. see for yourself:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+call :set.printErrorLine
+ren . .
+%ID-1:##==1%
+set prompt=$g$s
+set "X= "
+set "Y=_"
+set hide= @
+set /a tests=1
+md testdirRen
+pushd testdirRen
+for %%i in ("fil e 2 1 4 and so on with xx"
+ "fi xy zu drxzbu z543 6gg hg feeev lll juz tre ghj lk 0"
+ "test 3 4 5 6"
+ "test 4 4 5 6"
+ "test 5 4 5 6"
+) do &gt;%%i.txt echo
+call :test1
+popD
+rd /s /q testdirRen
+pause
+exit /b
+
+:test1
+set /a loop#=0
+%ID-1:##==2%
+set "M="
+call :rename1 %hide% rem rem rem rem rem rem
+echo(
+2&gt;nul set /a Htest=1/(tests%%2) || set "hide=rem %hide%"
+set /a tests+=1
+( set "X=%Y%"
+set "Y=%X%" )
+if %tests% leq 14 goto :test1
+
+:test2
+set /a loop#=0
+echo --- with Variable
+call :rename2
+set /a tests+=1
+( set "X=%Y%"
+set "Y=%X%" )
+if %tests% leq 16 goto :test2
+
+:test3
+set /a loop#=0
+echo --- with Parameter
+call :rename3 "*%X%*.txt"
+set /a tests+=1
+( set "X=%Y%"
+set "Y=%X%" )
+if %tests% leq 18 goto :test3
+exit /b
+
+:rename3
+set /a loop#+=1
+if NOT exist "%~1" exit /b
+for /f "tokens=1*delims=%X%" %%i in ("%~nx1") do ( echo loop# %loop#%  ren ^&gt;^&gt;^&gt; "%%i%Y%%%j"
+ ren "%~f1" "%%i%Y%%%j"
+)
+goto %0
+exit /b
+
+
+:rename1
+set /a loop#+=1
+%M% %1 echo --- in for /f -if exist "File*%X%*name" goto %0
+%M% %2 echo --- in for /f -if exist "File*%X%*name" call %0 stackError "_" ^&gt; " "
+%M% %3 echo --- in for /f -call %0
+%M% %4 echo --- in for loop -if exist "*%X%*" goto %0
+%M% %5 echo --- in for loop -if exist "*%X%*" call %0
+%M% %6 echo --- in for loop -call %0
+%M% %7 echo --- behind for loop if exist "*%X%*" goto %0
+set "M=:: "
+(
+ for %%i in ("*%X%*.txt") do ( 
+  for /f "tokens=1*delims=%X%" %%j in ("%%~i") do (
+   if "%%k" neq "" ( echo loop# %loop#% ^&gt;^&gt;^&gt; %%j^%Y%%%k
+    ren "%%i" "%%j%Y%%%k"
+    if errorlevel 1 echo ERROR -- %%i  	%== when NOT leave the for stack this will happen ==%
+    %1 if exist "%%j%Y%*%X%*%%~xk" goto %0	%== exit every loop ==%
+    %2 if exist "%%j%Y%*%X%*%%~xk" call %0 %*	%== leave NOT the for stack ==%
+    %3 call %0 %*					%== leave the FOR stack ==%
+  ))
+  %4 if exist "*%X%*.txt" goto %0
+  %5 if exist "*%X%*" call %0 %*
+  %6 call %0 %*
+ )
+ echo END Loop# %loop#%
+)
+%7 if exist "*%X%*.txt" goto %0 %== get as rounds as max rename sign in filename ==%
+exit /b
+
+:rename2
+setlocal enabledelayedexpansion
+for %%i in ("*%X%*.txt") do ( set "filename=%%i"
+ echo ren ^&gt;^&gt;^&gt; "!filename:%X%=%Y%!"
+ ren "%%i" "!filename:%X%=%Y%!"
+)
+exit /b
+
+
+:set.printErrorLine
+ rem Read the fullline BEFORE into Variables with LineNumber; do something ... 
+ rem  usage: command 1 line before
+ rem         %%ID-1:##==uniqueString%% [&amp; command %%L ... %%M ...]
+set ID-1= @ if errorlevel 1 for /f "usebackQtokens=1*delims=:" %%L in (^
+ `cmd /v /c ^"findstr /nrc:"^!CLString^!ID-1:.#^=^##%%" "%~f0"^"`) do ^&gt;^&amp;2 echo BatchLine: %%L -- %%M 
+for %%L in (^"^
+%== create CR LF searchstring ==%
+) do for /f %%C in ('copy /z "%~f0" nul') do set "CLString=..*%%C*%%~L.*"
+exit /b</code></pre></div>
+Now the question arises why with the one call and the other not.<br>
+<br>
+Phil</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8636&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:19 GMT -->
+</html>

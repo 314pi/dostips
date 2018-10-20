@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=3803&start=30 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:13:57 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Rules for label names vs GOTO and CALL - Page 3 - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic81d2.html?t=3803&amp;start=30">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic6cfc.html?f=3&amp;t=3803&amp;start=30">Rules for label names vs GOTO and CALL</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting685a.html?mode=reply&amp;f=3&amp;t=3803" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicaf15.html?f=3&amp;t=3803&amp;start=30&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="3803" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			54 posts
+							<ul>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic54db.html?f=3&amp;t=3803&amp;start=15" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopic494f.html?f=3&amp;t=3803" role="button">1</a></li>
+				<li><a class="button" href="viewtopic54db.html?f=3&amp;t=3803&amp;start=15" role="button">2</a></li>
+			<li class="active"><span>3</span></li>
+				<li><a class="button" href="viewtopic5232.html?f=3&amp;t=3803&amp;start=45" role="button">4</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic5232.html?f=3&amp;t=3803&amp;start=45" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p42474" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile42474">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content42474">
+
+						<h3 class="first"><a href="#p42474">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5e3d.html?mode=quote&amp;f=3&amp;p=42474" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9b72.html?p=42474#p42474" onclick="prompt('Message #31',this.href); return false;">#31</a></span> 
+									<a class="unread" href="viewtopic9b72.html?p=42474#p42474" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>15 Aug 2015 10:34
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite>The &quot;anonymous subroutine&quot; called by a certain &quot;anonymous call&quot; is the code placed <em class="text-italics">below the &quot;call :%%anonymous%%&quot; line</em>, so there is no need to distinguish one &quot;anonymous subroutine&quot; from another one:<br /></div></blockquote><br />Thanks Aacini - that is exactly what I had in mind. But it didn't dawn on me that not everyone would realize this fact.<br /><br /><br />Dave Benham</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a> on 16 Aug 2015 06:46, edited 1 time in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p42475" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile42475">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistfcd9.html?mode=viewprofile&amp;u=4919" class="username">npocmaka_</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha36f.php?author_id=4919&amp;sr=posts">473</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 24 Jun 2013 17:10</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Bulgaria</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact npocmaka_">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact npocmaka_</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://stackoverflow.com/questions/28043589/how-can-i-compres-zip-and-uncopress-unzip-files-and-folders-with-batch-f" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content42475">
+
+						<h3 ><a href="#p42475">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinga475.html?mode=quote&amp;f=3&amp;p=42475" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic39c5-2.html?p=42475#p42475" onclick="prompt('Message #32',this.href); return false;">#32</a></span> 
+									<a class="unread" href="viewtopic39c5-2.html?p=42475#p42475" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistfcd9.html?mode=viewprofile&amp;u=4919" class="username">npocmaka_</a></strong> &raquo; </span>15 Aug 2015 11:56
+			</p>
+			
+			
+			
+			<div class="content">Oohh <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br />Right.<br /><br />Next thing. Can the anonymous functions be nested?<br />Because whatever I try it does not work.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p42476" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile42476">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8bd9.html?mode=viewprofile&amp;u=6223" class="username">OperatorGK</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search810d.html?author_id=6223&amp;sr=posts">66</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Jan 2015 06:55</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content42476">
+
+						<h3 ><a href="#p42476">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf172.html?mode=quote&amp;f=3&amp;p=42476" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9833.html?p=42476#p42476" onclick="prompt('Message #33',this.href); return false;">#33</a></span> 
+									<a class="unread" href="viewtopic9833.html?p=42476#p42476" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8bd9.html?mode=viewprofile&amp;u=6223" class="username">OperatorGK</a></strong> &raquo; </span>15 Aug 2015 12:09
+			</p>
+			
+			
+			
+			<div class="content">_npocmaka, I tried with different %anonymous% variable value, but this thing prints nothing for me:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal <br />set &quot;anonymous=/?&quot;<br />for /l %%N in (1 1 5) do (<br />&nbsp; &nbsp;set /a N=%%N*2<br />&nbsp; call :%%anonymous%% a b c 3&gt;&amp;1 &gt;nul<br />)<br />if &quot;%0&quot; == &quot;:%anonymous%&quot; (<br />&nbsp; set &quot;anonymous#=/?#&quot;<br />&nbsp; for /l %%M in (1 1 5) do (<br />&nbsp; &nbsp; set /a M=%%M*2<br />&nbsp; &nbsp; call :%%anonymous#%% %1 %2 %3 3&gt;&amp;1 &gt;nul<br />&nbsp; )<br />&nbsp; if &quot;%0&quot; == &quot;:%anonymous#%&quot; (<br />&nbsp; &nbsp; &nbsp; echo %1 %2 %3 %N% %M%<br />&nbsp; &nbsp; &nbsp; exit /b<br />&nbsp; )&gt;&amp;3<br />&nbsp; exit /b<br />)&gt;&amp;3<br /></code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p42477" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile42477">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content42477">
+
+						<h3 ><a href="#p42477">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingdc73.html?mode=quote&amp;f=3&amp;p=42477" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic28a6-2.html?p=42477#p42477" onclick="prompt('Message #34',this.href); return false;">#34</a></span> 
+									<a class="unread" href="viewtopic28a6-2.html?p=42477#p42477" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>15 Aug 2015 16:25
+			</p>
+			
+			
+			
+			<div class="content">This is a bit tricky! <img class="smilies" src="images/smilies/icon_sad.gif" alt=":(" title="Sad" /> <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal <br /><br />set &quot;anonymous=/?&quot;<br /><br />for /l %%N in (1 1 3) do (<br />&nbsp; &nbsp;set &quot;line=Line %%N: &quot;<br />&nbsp; &nbsp;for /l %%M in (1 1 7) do (<br />&nbsp; &nbsp; &nbsp; call :%%anonymous%% ONE %%M 3&gt;&amp;1 &gt;nul<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;if &quot;%1&quot; neq &quot;ONE&quot; call :%%anonymous%% TWO 3&gt;&amp;1 &gt;nul<br />)<br /><br />&nbsp; &nbsp; &nbsp; if &quot;%1&quot; equ &quot;ONE&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;line=%line% %2&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;exit /b<br />&nbsp; &nbsp; &nbsp; )&gt;&amp;3<br /><br />&nbsp; &nbsp;if &quot;%1&quot; equ &quot;TWO&quot; (<br />&nbsp; &nbsp; &nbsp; echo %line%<br />&nbsp; &nbsp; &nbsp; exit /b<br />&nbsp; &nbsp;)&gt;&amp;3<br /></code></pre></div><br />I used this strange arrangement because the purpose of my test was to show results generated inside FOR loops without using delayed expansion. For this reason, the &quot;anonymous subroutines&quot; here are placed outside any code block.<br /><br />If the code in the subroutines does not need to be outside code blocks, then it can be placed nested inside another one. The problem here is find an example that makes sense...<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p42485" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile42485">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content42485">
+
+						<h3 ><a href="#p42485">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinga497.html?mode=quote&amp;f=3&amp;p=42485" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9480.html?p=42485#p42485" onclick="prompt('Message #35',this.href); return false;">#35</a></span> 
+									<a class="unread" href="viewtopic9480.html?p=42485#p42485" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>16 Aug 2015 07:14
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite>If the code in the subroutines does not need to be outside code blocks, then it can be placed nested inside another one.<br /></div></blockquote> <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" />  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> <br />I think not <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /><br />Nesting one anonymous function within the same code block as another is the cause why OperatorGK's attempt does not work. The CALL will parse and execute the next code that follows the currently executing (already parsed) code block. If the 2nd anonymous function is embedded, then it is already parsed, so cannot execute.<br /><br />Here is a fixed version of OperatorGK's code. One can argue as to whether the anonymous functions are truly nested: The code is not physically nested, but the CALLs are logically nested. I believe this is the only way to have one anonymous function CALL another. <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal <br />set &quot;anonymous=/?&quot;<br />for /l %%N in (1 1 5) do (<br />&nbsp; set /a N=%%N*2<br />&nbsp; call :%%anonymous%% a b c 3&gt;&amp;1 &gt;nul<br />)<br />if &quot;%0&quot; == &quot;:%anonymous%&quot; (<br />&nbsp; for /l %%M in (1 1 5) do (<br />&nbsp; &nbsp; set /a M=%%M*2<br />&nbsp; &nbsp; call :%%anonymous%% %1 %2 %3 3&gt;&amp;1 &gt;nul<br />&nbsp; )<br />&nbsp; exit /b<br />)&gt;&amp;3<br />if &quot;%0&quot; == &quot;:%anonymous%&quot; (<br />&nbsp; echo %1 %2 %3 %N% %M%<br />&nbsp; exit /b<br />)&gt;&amp;3<br /></code></pre></div><br />One good outcome of this arrangement is there is no need to change the name of the 2nd anonymous function, as the EXIT /B in the first function prevents it from falling through into the 2nd.<br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p42487" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile42487">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistfcd9.html?mode=viewprofile&amp;u=4919" class="username">npocmaka_</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha36f.php?author_id=4919&amp;sr=posts">473</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 24 Jun 2013 17:10</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Bulgaria</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact npocmaka_">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact npocmaka_</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://stackoverflow.com/questions/28043589/how-can-i-compres-zip-and-uncopress-unzip-files-and-folders-with-batch-f" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content42487">
+
+						<h3 ><a href="#p42487">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingcf56.html?mode=quote&amp;f=3&amp;p=42487" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicdbd4.html?p=42487#p42487" onclick="prompt('Message #36',this.href); return false;">#36</a></span> 
+									<a class="unread" href="viewtopicdbd4.html?p=42487#p42487" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistfcd9.html?mode=viewprofile&amp;u=4919" class="username">npocmaka_</a></strong> &raquo; </span>16 Aug 2015 07:48
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>dbenham wrote:</cite><blockquote><div><cite>Aacini wrote:</cite>If the code in the subroutines does not need to be outside code blocks, then it can be placed nested inside another one.<br /></div></blockquote> <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" />  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> <br />I think not <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /><br />Nesting one anonymous function within the same code block as another is the cause why OperatorGK's attempt does not work. The CALL will parse and execute the next code that follows the currently executing (already parsed) code block. If the 2nd anonymous function is embedded, then it is already parsed, so cannot execute.<br /><br />Here is a fixed version of OperatorGK's code. One can argue as to whether the anonymous functions are truly nested: The code is not physically nested, but the CALLs are logically nested. I believe this is the only way to have one anonymous function CALL another. <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal <br />set &quot;anonymous=/?&quot;<br />for /l %%N in (1 1 5) do (<br />&nbsp; set /a N=%%N*2<br />&nbsp; call :%%anonymous%% a b c 3&gt;&amp;1 &gt;nul<br />)<br />if &quot;%0&quot; == &quot;:%anonymous%&quot; (<br />&nbsp; for /l %%M in (1 1 5) do (<br />&nbsp; &nbsp; set /a M=%%M*2<br />&nbsp; &nbsp; call :%%anonymous%% %1 %2 %3 3&gt;&amp;1 &gt;nul<br />&nbsp; )<br />&nbsp; exit /b<br />)&gt;&amp;3<br />if &quot;%0&quot; == &quot;:%anonymous%&quot; (<br />&nbsp; echo %1 %2 %3 %N% %M%<br />&nbsp; exit /b<br />)&gt;&amp;3<br /></code></pre></div><br />One good outcome of this arrangement is there is no need to change the name of the 2nd anonymous function, as the EXIT /B in the first function prevents it from falling through into the 2nd.<br /><br />Dave Benham</div></blockquote><br /><br />Great  <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" />  <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" />  <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p42496" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile42496">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content42496">
+
+						<h3 ><a href="#p42496">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinge4c2.html?mode=quote&amp;f=3&amp;p=42496" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic646f.html?p=42496#p42496" onclick="prompt('Message #37',this.href); return false;">#37</a></span> 
+									<a class="unread" href="viewtopic646f.html?p=42496#p42496" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>16 Aug 2015 08:45
+			</p>
+			
+			
+			
+			<div class="content">This is strange. In my opinion, this should work:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />set &quot;anonymous=/?&quot;<br />set level=0<br /><br />for /L %%N in (1 1 5) do (<br />&nbsp; &nbsp;echo Inside for cycle: %%N<br />&nbsp; &nbsp;set /A level+=1<br />&nbsp; &nbsp;call :%%anonymous%% 3&gt;&amp;1 &gt;nul<br />&nbsp; &nbsp;if !level! == 1 (<br />&nbsp; &nbsp; &nbsp; echo Inside &quot;anonymous sub&quot;, level=!level!, for cycle=%%N<br />&nbsp; &nbsp; &nbsp; set /A level-=1<br />&nbsp; &nbsp; &nbsp; exit /B<br />&nbsp; &nbsp;)&gt;&amp;3<br />&nbsp; &nbsp;echo After &quot;anonymous sub&quot;<br />)<br /><br />echo Outside for<br /></code></pre></div><br />After the &quot;exit /B&quot; is executed inside the sub, the next line to execute is the &quot;if !level! == 1 &quot; and then, the &quot;echo After...&quot; should be executed and pass to next for iteration; however, the process end at this point.<br /><br />The most strange thing is that a &quot;FOR /L&quot; is broken! <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" /> <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />set &quot;anonymous=/?&quot;<br /><br />for /l %%N in (1 1 5) do (<br />&nbsp; &nbsp;echo Inside for cycle: %%N<br />&nbsp; &nbsp;if %%N == 4 (<br />&nbsp; &nbsp; &nbsp; rem Break the FOR /L, BUT ALSO THE PROGRAM<br />&nbsp; &nbsp; &nbsp; call :%%anonymous%% 3&gt;&amp;1 &gt;nul<br />&nbsp; &nbsp; &nbsp; exit /b<br />&nbsp; &nbsp;)&gt;&amp;3<br />&nbsp; &nbsp;echo After &quot;anonymous sub&quot;<br />)<br /><br />echo Outside for<br /></code></pre></div><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p42497" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile42497">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content42497">
+
+						<h3 ><a href="#p42497">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting817c.html?mode=quote&amp;f=3&amp;p=42497" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic2b19.html?p=42497#p42497" onclick="prompt('Message #38',this.href); return false;">#38</a></span> 
+									<a class="unread" href="viewtopic2b19.html?p=42497#p42497" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>16 Aug 2015 10:23
+			</p>
+			
+			
+			
+			<div class="content">Try this slight variation, and all should be clear <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />set &quot;anonymous=/?&quot;<br />set level=0<br /><br />for /L %%N in (1 1 5) do (<br />&nbsp; &nbsp;echo Inside for cycle: %%N<br />&nbsp; &nbsp;set /A level+=1<br />&nbsp; &nbsp;call :%%anonymous%% 3&gt;&amp;1 &gt;nul<br />&nbsp; &nbsp;if !level! == 1 (<br />&nbsp; &nbsp; &nbsp; echo Inside &quot;anonymous sub&quot;, level=!level!, for cycle=%%N<br />&nbsp; &nbsp; &nbsp; set /A level-=1<br />&nbsp; &nbsp; &nbsp; exit /B<br />&nbsp; &nbsp;)&gt;&amp;3<br />&nbsp; &nbsp;echo After &quot;anonymous sub&quot;<br />)<br /><br />echo Outside for &gt;&amp;3<br /></code></pre></div><br />As I said before, the anonymous block cannot be in the same parsed block that CALLs it.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p42498" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile42498">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content42498">
+
+						<h3 ><a href="#p42498">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9e50.html?mode=quote&amp;f=3&amp;p=42498" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic786c.html?p=42498#p42498" onclick="prompt('Message #39',this.href); return false;">#39</a></span> 
+									<a class="unread" href="viewtopic786c.html?p=42498#p42498" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>16 Aug 2015 12:46
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>dbenham wrote:</cite>[ . . .]<br /><br />As I said before, the anonymous block cannot be in the same parsed block that CALLs it.<br /><br />Dave Benham</div></blockquote><br /><br />Excuse me Dave, but the important point here is: <em class="text-italics">why?</em> A subroutine <em class="text-italics">can</em> be placed in the same parsed block than its CALL, as you can  see in this code:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />for /L %%N in (1 1 5) do (<br />&nbsp; &nbsp;echo For cycle: %%N<br />&nbsp; &nbsp;set /A var=%%N*3<br />&nbsp; &nbsp;call :inSub !var!<br />&nbsp; &nbsp;if 0 == 1 (<br />&nbsp; &nbsp; &nbsp; :inSub<br />&nbsp; &nbsp; &nbsp; echo Parameter: %1, var: %var%<br />&nbsp; &nbsp; &nbsp; exit /B<br />&nbsp; &nbsp;)<br />)<br /></code></pre></div><br />So the question is: why the CALL command behaves differently in the case of an &quot;annonymous subroutine&quot;? In the original SO thread about this topic we concluded that &quot;CALL execute normally&quot;: the &quot;call part&quot; push in the call stack the return address and then execute the &quot;goto :/?&quot; part. This one show the GOTO help screen and does not return any error, so the &quot;call&quot; part continue normally. If this is true, my code above should work! Also, note that that code fail in the EXIT /B, <em class="text-italics">not</em> in the CALL!<br /><br />I think there are some points about this mechanism we can not discover yet...<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p42499" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile42499">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content42499">
+
+						<h3 ><a href="#p42499">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting44be.html?mode=quote&amp;f=3&amp;p=42499" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic0680.html?p=42499#p42499" onclick="prompt('Message #40',this.href); return false;">#40</a></span> 
+									<a class="unread" href="viewtopic0680.html?p=42499#p42499" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>16 Aug 2015 14:20
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite>So the question is: why the CALL command behaves differently in the case of an &quot;annonymous subroutine&quot;? In the original SO thread about this topic we concluded that &quot;CALL execute normally&quot;: the &quot;call part&quot; push in the call stack the return address and then execute the &quot;goto :/?&quot; part. This one show the GOTO help screen and does not return any error, so the &quot;call&quot; part continue normally. If this is true, my code above should work! Also, note that that code fail in the EXIT /B, <em class="text-italics">not</em> in the CALL!<br /><br />I think there are some points about this mechanism we can not discover yet...<br /></div></blockquote><br />I can't claim that there is nothing left to discover, but  <a href="http://stackoverflow.com/a/31990563/1012053" class="postlink">jeb's original analysis</a> fully explains the currently observed behavior.<br /><br />At the time of the CALL, the current file pointer is already at the end of the entire block - batch always parses the entire block before any code is executed. The CALL first pushes the call stack and sets the %0 argument to :/?, and then implicitly invokes GOTO. Normally GOTO would begin scanning for a label, starting at the current file position. But GOTO sees the /? and prints out the help message instead. Upon completion of the help (still within the context of the call) the parser resumes at the current file position (remember - it is already at the end of the block <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> ) The remaining code is executed until EXIT /B, or GOTO :EOF, or end of file, upon which the CALL returns and pops the stack, thus resetting the file pointer to the end of the block with the original CALL. The remainder of the code is executed normally.<br /><br />I see no mystery - It is not possible to CALL an anonymous function that resides within a code block that is shared by the CALL.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p55230" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55230">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55230">
+
+						<h3 ><a href="#p55230">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingba1b.html?mode=quote&amp;f=3&amp;p=55230" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicbc7f.html?p=55230#p55230" onclick="prompt('Message #41',this.href); return false;">#41</a></span> 
+									<a class="unread" href="viewtopicbc7f.html?p=55230#p55230" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>31 Dec 2017 23:08
+			</p>
+			
+			
+			
+			<div class="content">At some point I'd like to get a single comprehensive post that describes all the ins and outs of :label parsing and CALL and GOTO behavior.<br>
+<br>
+I see a couple things that don't look correct in jeb's first post:<br>
+
+<blockquote><div><cite>jeb wrote:</cite>
+Now the label names.<br>
+They also use STOP characters, but not the same, I only know two  :!: 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:+</code></pre></div>
+</div></blockquote> When scanning the file  for the label name, I see that there are 5 (maybe 6) stop characters for the label name instead of two: &lt;+&gt;, &lt;:&gt;, &lt;space&gt;, &lt;tab&gt;, &lt;LF&gt;, and possibly &lt;CR&gt;. The other token delimiters are not stop characters<br>
+
+<blockquote><div><cite>jeb wrote:</cite>
+So these labels are equivalent
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:one
+:one:two
+:one+two
+:one^
+</code></pre></div>
+</div></blockquote>That last :one^ looks incorrect to me - I can never manage to CALL or GOTO that label. I suppose that may be what you were driving at in <a href="viewtopic494f.html?f=3&amp;t=3803#p21921" class="postlink">This post</a><br>
+<br>
+I also cannot find a way to call any of the following labels:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:one^&lt;space&gt;
+:one^&lt;tab&gt;
+:one;
+:one,
+:one=
+:one^+
+:one^:
+</code></pre></div>
+It appears to me that the label scanner does escape label stop characters, such that they are included in the label name. But the GOTO and CALL label parsers do not escape any of the stop characters, even though the escaped characters are included within the token. I think that would explain why the above labels are inaccessible.<br>
+<br>
+One thing that appears to be missing from this discussion is details as to how the batch parser recognizes labels so that they are never executed. I've attempted to partially describe that in a <a href="https://stackoverflow.com/a/4095133/1012053" class="postlink">modified Phase 2 in jeb's SO post</a>. The label detection happens late in phase 2, so there can be some surprising lines that are interpreted as un-executable labels.<br>
+<br>
+One consequence of those rules is redirection can exist prior to the label, and the label will still prevent the line from ever being executed. The redirection will also prevent the label from ever being CALLed (or GOTOed - sorry about the grammer). Note that the redirection never actually takes place.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+&gt;test.txt :label this inaccessible label can never be executed or CALLed
+</code></pre></div> This behavior has been used before. It is critical to the <a href="viewtopic041f.html?p=33963#p33963" class="postlink">WSF hybrid scripting technique</a><br>
+<br>
+More trivial is the fact that any number of expansion terms can exist prior to the label and still make it unexecutable and inaccessible as long as they expand to nothing or token delimiters.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+set local enableDelayedExpansion
+%= undefined =% :Cannot be executed or accessed
+!= undefined =% :Cannot be executed or accessed
+</code></pre></div>
+
+Something that I have never seen demonstrated before, the unexecutable and inaccessible label can appear on the same line as a valid command, after command concatenation. This also is explained by my modifed Phase 2 rules.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+echo This is printed &amp; :The remainder of the line is ignored &amp; echo So this command is never executed
+</code></pre></div>
+
+One thing that is not explained by my modifed Phase 2 rules: Introduction of redirection prior to  the label enables subsequent command concatenation after the inline label. Also, the redirection now takes place.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+&gt;test.txt :This is ignored except redirection takes place - the file is overwritten and made empty &amp; echo This is printed
+echo Part 1 is printed &amp; &gt;test2.txt :This is ignored but redirection takes place &amp; echo Part 2 is printed
+</code></pre></div>
+
+This all can have some interesting effects on labels / comments within parenthesized blocks. But I am too tired  to write these out (I may have the flu - not a good New Year's Eve).<br>
+<br>
+But I do have one quick point to make about comment labels within blocks.<br>
+<br>
+You can use :; instead of :: as a comment. The inaccessible label is legal / never treated as a path. So you can safely use symmetric :; label comments as long as they are paired
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(
+  :;This is a safe comment
+  :;And so is this because they are paired
+)
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p55354" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55354">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55354">
+
+						<h3 ><a href="#p55354">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingc840.html?mode=quote&amp;f=3&amp;p=55354" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb933.html?p=55354#p55354" onclick="prompt('Message #42',this.href); return false;">#42</a></span> 
+									<a class="unread" href="viewtopicb933.html?p=55354#p55354" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>14 Jan 2018 23:53
+			</p>
+			
+			
+			
+			<div class="content">I have confirmed that &lt;CR&gt; functions as a stop character in all cases - for a CALL name, a GOTO name, and also for the label name when scanning for the label.<br>
+<br>
+I also believe I have discovered the source of the "bug" that leads to the "anonymous" CALL behavior that npocmaka discovered.<br>
+<br>
+When CALL executes the GOTO to jump to the :label, it expects a non zero return code if the GOTO failed. This happens as expected if the label token is missing, or if the label is not found.<br>
+<br>
+I always thought that requesting help on a command always returned a 1 return code, but it is not that simple:<br>
+<br>
+Using HELP does indeed return 1:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt;(call )
+
+prompt&gt;help goto &gt;nul
+
+prompt&gt;echo %errorlevel%
+1
+</code></pre></div>
+
+But using the /? option does <strong class="text-strong"><em class="text-italics">not</em></strong> set the errorlevel to 1 unless the || operator is used
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt;(call )
+
+prompt&gt;goto /? &gt;nul
+
+prompt&gt;echo %errorlevel%
+0
+
+prompt&gt;goto /? &gt;nul || rem
+
+prompt&gt;echo %errorlevel%
+1
+</code></pre></div>
+
+But the CALL execution of the subroutine occurs <strong class="text-strong"><em class="text-italics">before</em></strong> the || gets a chance to set the ERRORLEVEL. So CALL never gets the message that the GOTO "failed". The &amp;&amp; fires because the last command of the "CALLed" routine was successful:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableDelayedExpansion
+set "var=/?"
+(call )
+call :%%var%% 3&gt;&amp;1 1&gt;nul &amp;&amp;echo SUCCESS errorlevel=!errorlevel!||echo FAIL errorlevel=!errorlevel!
+&gt;&amp;3 echo %%0=[%0]  errorlevel=[%errorlevel%]
+exit /b
+</code></pre></div>--OUTPUT--<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>%0=[:/?]  errorlevel=[0]
+SUCCESS errorlevel=0
+%0=[test.bat]  errorlevel=[0]
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p55381" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55381">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55381">
+
+						<h3 ><a href="#p55381">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf126.html?mode=quote&amp;f=3&amp;p=55381" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice239-2.html?p=55381#p55381" onclick="prompt('Message #43',this.href); return false;">#43</a></span> 
+									<a class="unread" href="viewtopice239-2.html?p=55381#p55381" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>18 Jan 2018 09:32
+			</p>
+			
+			
+			
+			<div class="content">I have some clarification about the following:
+<blockquote><div><cite>dbenham wrote:</cite>
+One consequence of those rules is redirection can exist prior to the label, and the label will still prevent the line from ever being executed. The redirection will also prevent the label from ever being CALLed (or GOTOed - sorry about the grammer). Note that the redirection never actually takes place.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+&gt;test.txt :label this inaccessible label can never be executed or CALLed
+This behavior has been used before. It is critical to the WSF hybrid scripting technique
+</code></pre></div>
+
+...<br>
+<br>
+One thing that is not explained by my modifed Phase 2 rules: Introduction of redirection prior to the label enables subsequent command concatenation after the inline label. Also, the redirection now takes place.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+&gt;test.txt :This is ignored except redirection takes place - the file is overwritten and made empty &amp; echo This is printed
+echo Part 1 is printed &amp; &gt;test2.txt :This is ignored but redirection takes place &amp; echo Part 2 is printed
+</code></pre></div>
+</div></blockquote>
+Well, the above only works in batch mode. It is <strong class="text-strong"><em class="text-italics">not true</em></strong> for command line mode - the command line attempts to execute the "label". Also, the redirection always takes place (evidence not shown)
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt;&gt;nul :ThisIsNotALabel
+The filename, directory name, or volume label syntax is incorrect.
+
+prompt&gt;echo Part 1&amp;&gt;nul :ThisIsNotALabel&amp;echo Part 2
+Part 1
+The filename, directory name, or volume label syntax is incorrect.
+Part 2
+</code></pre></div>
+With FOR you can look at the ECHO ON output of the DO clause to see how it is parsed, even in command line mode.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt;for %a in (1 2) do echo Part %a.1&amp;&gt;nul :ThisIsNotALabel&amp;echo Part %a.2
+
+prompt&gt;echo Part 1.1  &amp;  &amp; echo Part 1.2
+Part 1.1
+The filename, directory name, or volume label syntax is incorrect.
+Part 1.2
+
+prompt&gt;echo Part 2.1  &amp;  &amp; echo Part 2.2
+Part 2.1
+The filename, directory name, or volume label syntax is incorrect.
+Part 2.2
+</code></pre></div>
+I find it interesting that the ECHO of the DO clause "knows" that the "label" is not a command, but during execution, the "label" is executed anyway.<br>
+<br>
+But in a batch file, the label is never executed. Here is a batch file that demonstrates this, along with a few more quirks about the batch mode:<br>
+<br>
+<strong class="text-strong">test.bat</strong>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo on
+echo Original Content &gt;test.txt
+
+@echo(
+&gt;test.txt :ThisIsALabel_NoRedirection
+type test.txt
+
+@echo(
+for %%a in (1 2) do 2&gt;nul echo part %%a.1&amp;&gt;test.txt :ThisIsALabel_WithRedirection &amp; 2&gt;nul echo Part %%a.2
+type test.txt
+</code></pre></div>
+--OUTPUT--
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt;test
+
+prompt&gt;echo Original Content  1&gt;test.txt
+
+
+prompt&gt;type test.txt
+Original Content
+
+
+prompt&gt;for %a in (1 2) do echo part %a.1 2&gt;nul  &amp;  &amp; echo Part %a.2 2&gt;nul
+
+prompt&gt;echo part 1.1 2&gt;nul  &amp;  &amp; echo Part 1.2 2&gt;nul
+part 1.1
+Part 1.2
+
+prompt&gt;echo part 2.1 2&gt;nul  &amp;  &amp; echo Part 2.2 2&gt;nul
+part 2.1
+Part 2.2
+
+prompt&gt;type test.txt
+
+prompt&gt;</code></pre></div>
+In the first test, I show that the label is not echoed, it is not executed, and the redirection does not take place (the content of test.txt is not cleared)<br>
+<br>
+In the second test with FOR, I show that the label is still not echoed or executed, but the redirection does take place (the content was cleared), even though the redirection is not echoed.<br>
+<br>
+<br>
+Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p55385" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55385">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search73f1.html?author_id=417&amp;sr=posts">880</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 30 Aug 2007 08:05</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany, Bochum</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55385">
+
+						<h3 ><a href="#p55385">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5e75.html?mode=quote&amp;f=3&amp;p=55385" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5270.html?p=55385#p55385" onclick="prompt('Message #44',this.href); return false;">#44</a></span> 
+									<a class="unread" href="viewtopic5270.html?p=55385#p55385" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a></strong> &raquo; </span>18 Jan 2018 13:18
+			</p>
+			
+			
+			
+			<div class="content">I didn't think of testing it in the command line context. <br>
+That was an interresting idea.<br>
+<br>
+But I get other results than you.<br>
+<br>
+Tested on the command line
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo Original &gt; out.txt
+&gt; out.txt :label &amp; dir out.txt</code></pre></div>
+
+I get 
+<blockquote><div><cite>Output wrote:</cite>Die Syntax für den Dateinamen, Verzeichnisnamen oder die Datenträgerbezeichnung ist falsch.<br>
+ Volume in Laufwerk C: hat keine Bezeichnung.<br>
+ Volumeseriennummer: 88BA-1CA5<br>
+<br>
+ Verzeichnis von c:\temp\labels<br>
+<br>
+18.01.2018  20:05                 0 out.txt<br>
+               1 Datei(en),              0 Bytes
+</div></blockquote>
+
+Then I tried the subst trick (I suppose npocmaka had that idea)
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>subst :: C:\temp
+echo dummy &gt; dummy.bat
+&gt; out.txt ::\dummy.bat &amp; echo works without error</code></pre></div>
+It works, but dummy.bat will not be called, but it will be checked for existence.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p55386" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55386">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55386">
+
+						<h3 ><a href="#p55386">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf25f.html?mode=quote&amp;f=3&amp;p=55386" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic17fd.html?p=55386#p55386" onclick="prompt('Message #45',this.href); return false;">#45</a></span> 
+									<a class="unread" href="viewtopic17fd.html?p=55386#p55386" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>18 Jan 2018 19:56
+			</p>
+			
+			
+			
+			<div class="content">Hi jeb. I was hoping you would show up for this  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+<br>
+At first I was confused by your post, but I think I understand your point now.<br>
+<br>
+My statement that the command line attempts to execute the ":label" is wrong. Instead, the command line verifies that the ":label" has valid path syntax for an external command, and issues the error when it doesn't.<br>
+<br>
+You demonstrate how to use SUBST to force it to be a valid command, so the error message is eliminated, but then the true :label behavior kicks in and the command is not executed.<br>
+<br>
+Very interesting <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <br>
+<br>
+I have an additional test that proves your statement about the command line verifying existence of the ":label" external command.<br>
+<br>
+I go through a progression that shows various types of errors, eventually proving that the command line verifies the ":label" external command actually exists.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt;&lt;nul :\notExists.bat &amp; echo OK
+The filename, directory name, or volume label syntax is incorrect.
+OK
+
+prompt&gt;&lt;nul ::\notExists.bat &amp; echo OK
+The system cannot find the drive specified.
+OK
+
+prompt&gt;subst :: c:\test
+
+prompt&gt;&lt;nul ::\notExists.bat &amp; echo OK
+'::\notExists.bat' is not recognized as an internal or external command,
+operable program or batch file.
+OK
+</code></pre></div>
+
+How about the rest of what I documented in my prior 3 posts in this thread? Does that all look good?<br>
+<br>
+If so, then I hope to create a single post that tries to capture all the label rules in one place.<br>
+I'm not sure if I will put that in this thread, or else as a new answer to the <a href="https://stackoverflow.com/q/4094699/1012053" class="postlink">SO cmd.exe Parsing Rules question</a>. I think it would be too large to fold into any of the existing answers.<br>
+<br>
+Speaking of that SO Q&amp;A, how do my edits look to you? I made significantly more additions to your answer, and I always feel better when I get the jeb seal of approval.<br>
+<br>
+<br>
+Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting685a.html?mode=reply&amp;f=3&amp;t=3803" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicaf15.html?f=3&amp;t=3803&amp;start=30&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=3803&amp;start=30">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			54 posts
+							<ul>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic54db.html?f=3&amp;t=3803&amp;start=15" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopic494f.html?f=3&amp;t=3803" role="button">1</a></li>
+				<li><a class="button" href="viewtopic54db.html?f=3&amp;t=3803&amp;start=15" role="button">2</a></li>
+			<li class="active"><span>3</span></li>
+				<li><a class="button" href="viewtopic5232.html?f=3&amp;t=3803&amp;start=45" role="button">4</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic5232.html?f=3&amp;t=3803&amp;start=45" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5495.gif?cron_type=cron.task.text_reparser.poll_title" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=3803&start=30 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:14:16 GMT -->
+</html>

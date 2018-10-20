@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8838&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:10:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; MakeCab, CertUtil, &amp; Expand... best file embedding?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>MakeCab, CertUtil, &amp; Expand... best file embedding?</h2>
+		<p><a href="viewtopic2b5e.html?f=3&amp;t=8838">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8838</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>MakeCab, CertUtil, &amp; Expand... best file embedding?</h3>
+				<div class="date">Posted: <strong>24 Sep 2018 20:27</strong></div>
+				<div class="author">by <strong>CirothUngol</strong></div>
+				<div class="content">I've decided to place the updated script in the first post. Thanks for the suggestions, Carlos! ^_^<br>
+Added commandline options and a brief help. Please suggest better <strong class="text-strong">MakeCab</strong> settings if anyone knows them. I've spent some time attempting to navigate it's vast myriad of options, but I'm far from knowledgeable. Any help is much appreciated.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::------------------------------------------------------------------------------
+:: bin2enc.cmd [/Cn /Kn /Fn] source\folder[\file] [destination\folder]
+:: 
+:: Generates .CAB or self-extracting batch script from a source file or folder
+:: using MakeCab + Expand for compression and CertUtil for Base64 encoding.
+:: 
+:: /Cn compression 0=default=make both and keep smallest, 1=MSZIP, 2=LZX
+:: /Kn keepSrcDir  0=default=ignore folder, 1=retain source folder in archive
+:: /Fn fileType    0=default=make archive.cab, 1=make self-extracting.cmd
+::------------------------------------------------------------------------------
+:: v0.2
+::
+@ECHO OFF
+SETLOCAL EnableExtensions EnableDelayedExpansion
+SET "compression=0"   ' 0=make both and keep smallest, 1=MSZIP, 2=LZX
+SET "keepSrcDir=0"    ' 0=ignore folder, 1=retain source folder in archive
+SET "fileType=0"      ' 0=make archive.cab, 1=make self-extracting.cmd
+SET "targetDir=%~dp0" ' default destination folder for creating files
+SET "SELF=%~f0"
+
+:bin2enc_parse
+:: /Cn /Kn /Fn else shift and ignore
+SET "par=%~1"
+IF /I "!par:~0,1!"=="/" ( SHIFT
+	IF /I "!par:~1,1!"=="C" SET /A "compression=!par:~2!" 2&gt;NUL
+	IF /I "!par:~1,1!"=="K" SET /A "keepSrcDir=!par:~2!" 2&gt;NUL
+	IF /I "!par:~1,1!"=="F" SET /A "fileType=!par:~2!" 2&gt;NUL
+	GOTO :bin2enc_parse
+)
+
+:: exit if no input, input doesn't exist, or file count=0
+SET count=0
+IF NOT EXIST "%~1" GOTO :bin2enc_help
+FOR /F %%A IN ('DIR /S "%~1" 2^&gt;NUL ^| FIND /I "File(s)"') DO SET /A "count=%%A" 2&gt;NUL
+IF %count% EQU 0 GOTO :bin2enc_help
+
+:: get full path to source/target
+FOR %%A IN ("%~1") DO SET "source=%%~fA" &amp; SET "sPath=%%~pnxA" &amp; SET "cabName=%%~nxA"
+FOR %%A IN ("%~2") DO SET "target=%%~fA"
+IF NOT DEFINED target SET "target=!targetDir!"
+MD "!target!" 2&gt;NUL
+IF %keepSrcDir% EQU 0 (SET "destDir=") ELSE SET "destDir=!cabName!"
+
+:: Add the header to the cabinet config file
+SET "ct=MSZIP"
+SET "targetFile=!target!\!cabName!"
+IF %compression% GEQ 2 SET "ct=LZX"
+&gt;"!targetFile!.ddf" (
+	ECHO(; Generated on %DATE% at %TIME: =0%
+	ECHO(.New Cabinet
+	ECHO(.Set CabinetNameTemplate="!cabName!.cab"
+	ECHO(.Set CompressionType=!ct!
+	ECHO(.Set CompressionMemory=21
+	ECHO(.Set DiskDirectoryTemplate="!target!"
+	ECHO(.Set GenerateInf=OFF
+	ECHO(.Set Cabinet=ON
+	ECHO(.Set Compress=ON
+	ECHO(.Set UniqueFiles=ON
+	ECHO(.Set MaxDiskSize=1215751680
+	ECHO(.Set RptFileName=NUL
+	ECHO(.Set InfFileName=NUL
+	ECHO(.Set MaxErrors=1
+)
+
+:: if source is folder add files iteratively
+IF EXIST "!source!\" (
+	FOR /D /R "%source%" %%A IN (*) DO (
+		SET "tDir=%%~pnxA"
+		SET "dDir=!destDir!!tDir:%sPath%=!"
+		ECHO(Adding !cabName!!tDir:%sPath%=!
+		ECHO(.Set DestinationDir=!dDir!&gt;&gt;"!targetFile!.ddf"
+		FOR %%B IN ("%%A\*") DO ECHO("%%~fB"  /inf=no&gt;&gt;"!targetFile!.ddf"
+	)
+	ECHO(Adding !cabName!
+	ECHO(.Set DestinationDir=!destDir!&gt;&gt;"!targetFile!.ddf"
+	FOR %%A IN ("!source!\*") DO ECHO("%%~fA"  /inf=no&gt;&gt;"!targetFile!.ddf"
+	ECHO(
+) ELSE ECHO("!source!"  /inf=no&gt;&gt;"!targetFile!.ddf"
+ECHO(CompressionType=!ct!
+MakeCab /F "!targetFile!.ddf"
+
+:: second compression
+IF %compression% LEQ 0 (
+	&gt;"!targetFile!.lzx.ddf" (
+		ECHO(; Generated on %DATE% at %TIME: =0%
+		ECHO(.New Cabinet
+		ECHO(.Set CabinetNameTemplate="!cabName!.lzx.cab"
+		ECHO(.Set CompressionType=LZX
+		MORE +4 "!targetFile!.ddf"
+	)
+	ECHO(
+	ECHO(CompressionType=LZX
+	MakeCab /F "!targetFile!.lzx.ddf"
+	FOR %%A IN ("!targetFile!.cab") DO FOR %%B IN ("!targetFile!.lzx.cab") DO (
+		IF %%~zA GTR %%~zB ( SET "ct=LZX"
+			DEL /F /A "!targetFile!.cab" "!targetFile!.lzx.ddf"
+			REN "!targetFile!.lzx.cab" "!cabName!.cab"
+		) ELSE DEL /F /A "!targetFile!.lzx.cab" "!targetFile!.lzx.ddf"
+	)
+	ECHO(
+	ECHO(Keeping !ct!
+)
+DEL /F /A "!targetFile!.ddf"
+IF %fileType% EQU 0 EXIT /B 0
+
+:: Generate self-extracting script
+ECHO(
+CertUtil /encode "!targetFile!.cab" "!targetFile!.b64"
+&gt;"!targetFile!.b64.cmd" (
+	ECHO(@ECHO OFF
+	ECHO(CertUtil -decode -f "%%~f0" "%%TEMP%%\!cabName!.cab" ^&gt;NUL
+	ECHO(MD "%%~1" 2^&gt;NUL
+	ECHO(IF "%%~1"=="" ^( Expand -r "%%TEMP%%\!cabName!.cab" -F:* "%%CD%%" ^&gt;NUL
+	ECHO(^) ELSE Expand -r "%%TEMP%%\!cabName!.cab" -F:* "%%~1" ^&gt;NUL
+	ECHO(DEL /F /A "%%TEMP%%\!cabName!.cab"
+	ECHO(EXIT /B 0
+	TYPE "!targetFile!.b64"
+)
+DEL /F /A "!targetFile!.cab" "!targetFile!.b64"
+EXIT /B 0
+
+:bin2enc_help
+FOR /F "usebackq tokens=* delims=:" %%A IN ("%SELF%") DO IF "%%A"=="" (EXIT /B 0) ELSE ECHO(%%A
+</code></pre></div>
+
+OriginalPost:<br>
+I was intending on writing a small script to automate the MakeCab+CertUtil+Expand Base64 file embedding process, which makes me wonder...<br>
+How openly available are all these executables? Hopefully at least as far back as WInXP?<br>
+Has anyone already written a fancy automation script for this (multiple files, individual file extraction, etc)?<br>
+Are these the best windows-included utilities for this operation?<br>
+<br>
+Incidentally, I already know about Carlos' excellent <a href="https://web.archive.org/web/20180922000215/http://consolesoft.com/p/bhx/" class="postlink">BHX</a> VBscript utility, I just like to keep my batch files more winNT-batch-y. ^_^</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: MakeCab, CertUtil, &amp; Expand... best file embedding?</h3>
+				<div class="date">Posted: <strong>24 Sep 2018 20:38</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">I wrote something a while ago that works reasonably well, but I'm sure somebody will find some edge cases that I missed.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::------------------------------------------------------------------------------
+:: Generates a cabinet file from a provided folder that contains all other files
+:: and subfolders that were inside of the main directory. From there, gets
+:: converted to base64 and put in a self-extracting batch script.
+::
+:: Requires certutil.
+::
+:: Taken from http://www.dostips.com/forum/viewtopic.php?t=1977#p8751
+::------------------------------------------------------------------------------
+@echo off
+setlocal enabledelayedexpansion
+
+:: If no folder was provided, exit immediately
+if "%~1"=="" exit /b
+if not exist "%~1\" exit /b
+
+set "config_file=%~dp0\directives.ddf"
+set "target_file=%~dp0\%~n1.cab"
+
+pushd "%~1"
+:: Add the header to the cabinet config file
+&gt;%config_file% (
+	echo ; Generated %date% %time%
+	echo .Option Explicit
+	echo .Set SourceDir="%~1"
+	echo .Set DiskDirectoryTemplate="%~dp0"
+	echo .Set CabinetNameTemplate="%~n1.cab"
+	echo .Set Cabinet=ON
+	echo .Set Compress=ON
+	echo .Set CompressionType=MSZIP
+	echo .Set DestinationDir="%~n1"
+)
+
+:: Add the list of files to the cabinet config file
+echo(Processing all files in %cd%
+for /f "delims=" %%A in ('dir /a:-d /b') do (
+	&gt;&gt;%config_file% echo "%%A"
+)
+
+:: Add the subdirectories and all related files to the cabinet config file
+for /f "delims=" %%A in ('dir /a:d /b /s') do (
+	set "inner_target=%%A"
+	set "inner_target=!inner_target:%~1\=!"
+	echo(Processing all files in !inner_target!
+	&gt;&gt;%config_file% echo .Set SourceDir="%%A"
+	&gt;&gt;%config_file% echo .Set DestinationDir="!inner_target!"
+	for /f "delims=" %%B in ('dir /a:-d /b "%%A"') do (
+		&gt;&gt;%config_file% echo "%%B"
+	)
+)
+popd
+
+:: Generate the cabinet file
+makecab /f %config_file%
+del %~dp0\directives.ddf
+del %~dp1\setup.rpt
+del %~dp1\setup.inf
+
+:: Generate the extraction script
+&gt;&gt;%~n1_setup.bat (
+	echo @echo off
+	echo certutil -decode "%%~0" "%%~n0.cab"
+	echo mkdir "%%~n0" 2^&gt;nul
+	echo expand "%%~n0.cab" -f:* "%%~n0"
+	echo del "%%~n0.cab"
+)
+certutil -encode %target_file% %target_file%.b64
+&gt;&gt;%~n1_setup.bat (
+	echo exit /b
+	type %target_file%.b64
+)
+del %target_file%.b64</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: MakeCab, CertUtil, &amp; Expand... best file embedding?</h3>
+				<div class="date">Posted: <strong>25 Sep 2018 07:24</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">Perhaps you may be interested in <a href="viewtopic43e2.html?f=3&amp;t=4842" class="postlink">BinToBat.bat</a> conversion program...<br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: MakeCab, CertUtil, &amp; Expand... best file embedding?</h3>
+				<div class="date">Posted: <strong>27 Sep 2018 18:47</strong></div>
+				<div class="author">by <strong>CirothUngol</strong></div>
+				<div class="content">Thanks for the great sample script! I've played with it for awhile and determined that MakeCab.exe probably isn't the best solution for multiple files/folders. Not only is it difficult and archaic (but manageable), but I fear that it may be incompatible with many modern features like unicode filenames, large filesizes, and deep recursive folders. I really have only ever used this method to embed a single executable in my batch scripts (BG.EXE), so no biggie.<br>
+<br>
+I will continue to use CertUtil assuming Certificate Services to be available on most machines.<br>
+<br>
+...and thanks for the link to bin2bat, neat script! I was just looking for a simple embedding process that needn't call other scripting languages (Jscript or VBscript).</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: MakeCab, CertUtil, &amp; Expand... best file embedding?</h3>
+				<div class="date">Posted: <strong>27 Sep 2018 18:56</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">Yeah, when I use the script, I generally stick everything in one folder and then just pass that folder as an argument instead of trying to handle multiple files as multiple parameters simultaneously.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: MakeCab, CertUtil, &amp; Expand... best file embedding?</h3>
+				<div class="date">Posted: <strong>09 Oct 2018 23:46</strong></div>
+				<div class="author">by <strong>CirothUngol</strong></div>
+				<div class="content">OK, I think I've finally gotten the <strong class="text-strong">MakeCab</strong> part correct (cantankerous to say the least). Here's the final script I've begun using:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::------------------------------------------------------------------------------
+:: bin2enc.cmd source\folder[\file] [destination\folder]
+:: 
+:: Generates CAB or self-extracting batch script from a source file or folder
+:: using MakeCab + Expand for compression and CertUtil for Base64 encoding.
+::------------------------------------------------------------------------------
+::
+@ECHO OFF
+SETLOCAL EnableExtensions EnableDelayedExpansion
+SET "CompressionType=MSZIP" ' faster compression
+SET "CompressionType=LZX"   ' smaller files
+SET "keepSrcDir=0"          ' 0=don't, 1=retain source folder in archive
+SET "fileType=0"            ' 0=archive.cab, 1=self-extracting.cmd
+
+:: exit if no input, input doesn't exist, or file count=0
+SET count=0
+IF NOT EXIST "%~1" ECHO(No files found&amp; EXIT /B 1
+FOR /F %%A IN ('DIR /S "%~1" 2^&gt;NUL ^| FIND /I "File(s)"') DO SET /A "count=%%A" 2&gt;NUL
+IF %count% EQU 0 ECHO(No files found&amp; EXIT /B 1
+
+:: get full path to source/target
+FOR %%A IN ("%~1") DO SET "source=%%~fA" &amp; SET "sPath=%%~pnxA"
+FOR %%A IN ("%~2") DO SET "target=%%~fA"
+IF NOT DEFINED target SET "target=%~dp0"
+MD "%target%" 2&gt;NUL
+IF %keepSrcDir% EQU 0 (SET "destDir=") ELSE SET "destDir=%~nx1"
+
+:: Add the header to the cabinet config file
+SET "targetFile=%target%\%~nx1"
+&gt;"%targetFile%.ddf" (
+	ECHO(; Generated on %DATE% at %TIME: =0%
+	ECHO(.New Cabinet
+	ECHO(.Set CabinetNameTemplate="%~nx1.cab"
+	ECHO(.Set DiskDirectoryTemplate="%target%"
+	ECHO(.Set GenerateInf=OFF
+	ECHO(.Set Cabinet=ON
+	ECHO(.Set Compress=ON
+	ECHO(.Set UniqueFiles=ON
+	ECHO(.Set CompressionType=%CompressionType%
+	ECHO(.Set MaxDiskSize=1215751680
+	ECHO(.Set RptFileName=NUL
+	ECHO(.Set InfFileName=NUL
+	ECHO(.Set MaxErrors=1
+)
+
+:: if source is folder add files iteratively
+IF EXIST "%source%\" (
+	FOR /D /R "%source%" %%A IN (*) DO (
+		SET "tDir=%%~pnxA"
+		SET "dDir=%destDir%!tDir:%sPath%=!"
+		ECHO(.Set DestinationDir=!dDir!&gt;&gt;"%targetFile%.ddf"
+		FOR %%B IN ("%%A\*") DO ECHO("%%~fB"  /inf=no&gt;&gt;"%targetFile%.ddf"
+	)
+	ECHO(.Set DestinationDir=%destDir%&gt;&gt;"%targetFile%.ddf"
+	FOR %%A IN ("%source%\*") DO ECHO("%%~fA"  /inf=no&gt;&gt;"%targetFile%.ddf"
+) ELSE ECHO("%source%"  /inf=no&gt;&gt;"%targetFile%.ddf"
+MakeCab /F "%targetFile%.ddf"
+DEL /F /A "%targetFile%.ddf"
+IF %fileType% EQU 0 EXIT /B 0
+
+:: Generate self-extracting script
+ECHO(
+CertUtil /encode "%targetFile%.cab" "%targetFile%.b64"
+&gt;"%targetFile%.b64.cmd" (
+	ECHO(@ECHO OFF
+	ECHO(CertUtil -decode -f "%%~f0" "%%TEMP%%\%~nx1.cab" ^&gt;NUL
+	ECHO(MD "%%~1" 2^&gt;NUL
+	ECHO(IF "%%~1"=="" ^( Expand -r "%%TEMP%%\%~nx1.cab" -F:* "%%CD%%" ^&gt;NUL
+	ECHO(^) ELSE Expand -r "%%TEMP%%\%~nx1.cab" -F:* "%%~1" ^&gt;NUL
+	ECHO(DEL /F /A "%%TEMP%%\%~nx1.cab"
+	ECHO(EXIT /B 0
+	TYPE "%targetFile%.b64"
+)
+DEL /F /A "%targetFile%.cab" "%targetFile%.b64"
+EXIT /B 0</code></pre></div>
+It can be used to make cabinet files or self-extracting scripts from a single file or a whole folder, I just drag and drop. ^_^<br>
+If anyone knows of some better settings to use for <strong class="text-strong">MakeCab</strong>, please share. It seems to be handling everything correctly, but it can always be more robust.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: MakeCab, CertUtil, &amp; Expand... best file embedding?</h3>
+				<div class="date">Posted: <strong>10 Oct 2018 06:50</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">@CirothUngol maybe you can add option CompressionMemory=21 to the LZX method, it can save more bytes.<br>
+Maybe is possible dinamycally create two files, one using MSZIP and other using LZX and choose the one that produce less bytes.<br>
+Or even if you provide old diamond.exe <a href="viewtopicd6d5.html?t=7791" class="postlink">viewtopic.php?t=7791</a><br>
+you can create the cab using QUANTUM compression that can be better for small files.  <a href="https://ss64.org/viewtopic.php?id=1597" class="postlink">https://ss64.org/viewtopic.php?id=1597</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: MakeCab, CertUtil, &amp; Expand... best file embedding?</h3>
+				<div class="date">Posted: <strong>10 Oct 2018 23:59</strong></div>
+				<div class="author">by <strong>CirothUngol</strong></div>
+				<div class="content">Great suggestions, and thanks for the info. Sad <strong class="text-strong">MakeCab</strong> doesn't support QUANTUM, but I'll just keep it simple. ^_^<br>
+Updated the script and posted it to the OP.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8838&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:10:05 GMT -->
+</html>

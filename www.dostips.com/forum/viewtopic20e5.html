@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8540&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:23:35 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Variable not stay set</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Variable not stay set</h2>
+		<p><a href="viewtopicd646.html?f=3&amp;t=8540">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8540</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Variable not stay set</h3>
+				<div class="date">Posted: <strong>03 May 2018 04:22</strong></div>
+				<div class="author">by <strong>SIMMS7400</strong></div>
+				<div class="content">Hi Folks -<br>
+<br>
+I have function that checks what day it is and sets it as a variable for a backup process.<br>
+<br>
+The thing is, when I return to the mains script, the variable it not set.  <br>
+<br>
+Also, if i put the SETLOCAL ENABLEDELAYEDEXPANSION just before the call to the function, the function sets the day to Sunday, regardless of what day it is...Why wont SETLOCAL ENABLEDELAYEDEXPANSION work if it's set earlier on in the script?<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:GET_DOW
+SETLOCAL ENABLEDELAYEDEXPANSION
+::-- This parsing method works independently of any regional settings --::
+::-- This works from Windows XP to Windows 2012R2 --::
+::-- Adjust DOW variable to the required format ^[i.e. Sat or Saturday^]
+
+SET "DOW=Sunday Monday Tuesday Wednesday Thursday Friday Saturday"
+SET /A "LINE=0"
+
+FOR /F "tokens=1-9" %%A in ('wmic Path Win32_LocalTime Get Day^,DayOfWeek^,Hour^,Minute^,Month^,Quarter^,Second^,WeekInMonth^,Year ^| FIND /v ""') DO (
+
+  SET /A "LINE += 1"
+  IF "!LINE!"=="1" ( SET "VARA=%%A" &amp; SET "VARB=%%B" &amp; SET "VARC=%%C" &amp; SET "VARD=%%D" &amp; SET "VARE=%%E"
+					 SET "VARF=%%F" &amp; SET "VARG=%%G" &amp; SET "VARH=%%H" &amp; SET "VARI=%%I")
+					 
+  IF "!LINE!"=="2" ( SET "!VARA!=%%A" &amp; SET "!VARB!=%%B" &amp; SET "!VARC!=%%C" &amp; SET "!VARD!=%%D" &amp; SET "!VARE!=%%E"
+					 SET "!VARF!=%%F" &amp; SET "!VARG!=%%G" &amp; SET "!VARH!=%%H" &amp; SET "!VARI!=%%I")
+)
+
+FOR %%A IN (Month Day Hour Minute Second) DO ( IF !%%A! LSS 10 SET %%A=0!%%A!)
+SET /A DoWIndex = DayOfWeek + 1
+FOR /F "tokens=%DoWIndex%" %%A IN ("%DOW%") DO SET "DOWName=%%A"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Variable not stay set</h3>
+				<div class="date">Posted: <strong>03 May 2018 06:11</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Your last line should be
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>endlocal &amp; SET "DOWName=%DOWName%"</code></pre></div>
+
+Read this<br>
+<a href="viewtopic1a62.html?f=3&amp;t=6496" class="postlink">viewtopic.php?f=3&amp;t=6496</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Variable not stay set</h3>
+				<div class="date">Posted: <strong>03 May 2018 08:42</strong></div>
+				<div class="author">by <strong>SIMMS7400</strong></div>
+				<div class="content">Squash -<br>
+<br>
+Thank you so much - works like a charm! <br>
+<br>
+Reading up on your link you provided now, thanks again!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Variable not stay set</h3>
+				<div class="date">Posted: <strong>04 May 2018 04:58</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content">That method seems slightly complex! Would this not work for you, (it uses Call instead of implementing delayed expansion):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:GET_DOW
+Set "_WeekDays=Sunday Monday Tuesday Wednesday Thursday Friday Saturday"
+For /F %%A In ('WMIC Path Win32_LocalTime Get /Value^|FindStr "[0-9]$"') Do Set "_%%A"
+For /F "Tokens=1%_DayOfWeek%" %%A In (". . . . . . . . . %_WeekDays%") Do Set "_DayName=%%A"
+For %%A In (Day Hour Minute Month Second) Do Call Set "_%%A=0%%_%%A%%" &amp; Call Set "_%%A=%%_%%A:~-2%%"
+GoTo :EOF</code></pre></div>…where, you'd have access to the following variables, %_Day%, %_DayName%, %_DayOfWeek%, %_Hour%, %_Minute%, %_Month%, %_Quarter%, %_Second%, %_WeekDays%, %_WeekInMonth% and %_Year%<br>
+<br>
+Also if all you're wanting to return is the name of the day of the week, why are you setting all of those variables when you only need one?<br>
+<br>
+This should do what you need:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:GET_DOW
+For /F %%A In ('WMIC Path Win32_LocalTime Get DayOfWeek') Do For %%B In (
+	Sunday=0 Monday.1 Tuesday.2 Wednesday.3 Thursday.4 Friday.5 Saturday.6
+) Do If "%%~xB"==".%%A" Set "DOWName=%%~nB"
+GoTo :EOF</code></pre></div>…although it wouldn't even need calling, you could just add it in the correct location in your script, <em class="text-italics">you could even have it as a single line if you preferred!</em>:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>For /F %%A In ('WMIC Path Win32_LocalTime Get DayOfWeek') Do For %%B In (Sunday.0 Monday.1 Tuesday.2 Wednesday.3 Thursday.4 Friday.5 Saturday.6) Do If "%%~xB"==".%%A" Set "DOWName=%%~nB"</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8540&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:23:35 GMT -->
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8859&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 04:59:28 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Renaming Data</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Renaming Data</h2>
+		<p><a href="viewtopic3999.html?f=3&amp;t=8859">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8859</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Renaming Data</h3>
+				<div class="date">Posted: <strong>16 Oct 2018 06:53</strong></div>
+				<div class="author">by <strong>Niffer0116</strong></div>
+				<div class="content">Hello Guys,<br>
+<br>
+i have a bunch  of folders with a bunch of data in it.<br>
+I need to rename the data inside into FOLDERNAME_YEAR<br>
+<br>
+The year of each data is in the name of the data, but its completly random where:<br>
+<br>
+Like:<br>
+Foldername:LOLA<br>
+<br>
+Datas:<br>
+hjsdfsdjhf2011.txt<br>
+2012asdasda.txt<br>
+dsfs2014sdfdf.txt<br>
+aso.<br>
+<br>
+need to be:<br>
+LOLA_2011<br>
+LOLA_2012<br>
+LOLA_2014<br>
+aso.<br>
+<br>
+<br>
+Can somebody help me? Please not that it is ok to copy the bat. into the folders. No need for one bat. which does is for all. I hope somebody can help me</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Renaming Data</h3>
+				<div class="date">Posted: <strong>16 Oct 2018 13:08</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Take a look at <a href="viewtopic3986.html?t=6081" class="postlink">JREN.bat</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Renaming Data</h3>
+				<div class="date">Posted: <strong>16 Oct 2018 14:13</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">You should not describe the data by examples <em class="text-italics">only</em>. You should always use clear English to describe the data; otherwise, it could lead to confusions...<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+
+set "letters=abcdefghijklmnopqrstuvwxz"
+
+rem i have a bunch of folders
+for /D %%f in (*) do (
+
+   rem with a bunch of data in it
+   cd "%%f"
+   for /F "delims=" %%d in ('dir /B *.txt') do (
+
+      rem The year of each data is in the name of the data,  *delimited by letters*
+      for /F "delims=%letters%" %%y in ("%%~Nd") do (
+
+         rem I need to rename the data inside into FOLDERNAME_YEAR
+         ECHO ren "%%d" "%%f_%%y"
+
+      )
+   )
+   cd ..
+
+)
+</code></pre></div>
+Put this Batch file in the same folder that contains the "bunch of folders". Try it and, if the displayed REN commands looks correct, remove the ECHO part so the files be renamed...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Renaming Data</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 14:22</strong></div>
+				<div class="author">by <strong>Niffer0116</strong></div>
+				<div class="content">At first I want to thank you for your response.<br>
+<br>
+I try to specify my problem. I have Folders which have the URL of a Company<br>
+<br>
+baesystems.com<br>
+boeing.com<br>
+...<br>
+<br>
+In these Folders are Anual Reports which have quite different names(all in pdf) :<br>
+annual-report-2017<br>
+body_BILANCIO_CONSOLIDATO_2008_ENG_rev_finale_3_<br>
+...<br>
+<br>
+These have to be in this form: (if .com is at the end of the company name, that shouldn't be a problem<br>
+baesystems_2017<br>
+...<br>
+<br>
+I tried ur code but it didn't work.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Renaming Data</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 14:42</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistcc3f.html?mode=viewprofile&amp;u=9426">Niffer0116</a> wrote: <a href="viewtopic45ea.html?p=58165#p58165" data-post-id="58165" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">17 Oct 2018 14:22</div></cite>
+I tried ur code but it didn't work.
+</div></blockquote>
+And why do you think that is?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Renaming Data</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 15:21</strong></div>
+				<div class="author">by <strong>Niffer0116</strong></div>
+				<div class="content">Because I have absolutely no clue what I am doing?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Renaming Data</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 15:25</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistcc3f.html?mode=viewprofile&amp;u=9426">Niffer0116</a> wrote: <a href="viewtopicb606-2.html?p=58171#p58171" data-post-id="58171" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">17 Oct 2018 15:21</div></cite>
+Because I have absolutely no clue what I am doing?
+</div></blockquote>
+No, because the technical specifications within your initial question did not accurately describe the task.  Now we delve into scope creep.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Renaming Data</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 15:39</strong></div>
+				<div class="author">by <strong>Niffer0116</strong></div>
+				<div class="content">So did you now got what my problem is?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Renaming Data</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 15:50</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistcc3f.html?mode=viewprofile&amp;u=9426">Niffer0116</a> wrote: <a href="viewtopicfd8d.html?p=58173#p58173" data-post-id="58173" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">17 Oct 2018 15:39</div></cite>
+So did you now got what my problem is?
+</div></blockquote>
+Yes.  The batch file will have to be completely rewritten because your technical specifications in your initial question did not match what you actually need.  Lets hope someone takes the time to do it.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Renaming Data</h3>
+				<div class="date">Posted: <strong>18 Oct 2018 01:16</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopic8233.html?p=58174#p58174" data-post-id="58174" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">17 Oct 2018 15:50</div></cite> Lets hope someone takes the time to do it.</div></blockquote>
+
+Ordinarily I would, but I still don't have enough sample data.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Renaming Data</h3>
+				<div class="date">Posted: <strong>18 Oct 2018 05:11</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">Actually, I might have enough sample data. Had to guess on a few things, though, which means that there are more assumptions than I would like.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::------------------------------------------------------------------------------
+:: ASSUMPTIONS
+::     - This script is located inside of the main folder that contains all of
+::       the company folders
+::     - All of the folders that are named after company URLs have at least one
+::       period in the folder name
+::     - File names do not contain !, %, or ^
+::     - The first number in the file name that is at least four digits long is
+::       the year that needs to be extracted
+::       -- Note that this means that "file_name_21094_invoice_2016.pdf" will
+::          extract 2109 as the year
+::       -- You are expected to manually fix any file names that may have this
+::          issue before running the script.
+::     - All files that need to be renamed have a year somewhere in their name
+::     - Each file has a unique year
+::     - There are only PDF files in the folder
+::------------------------------------------------------------------------------
+:: SUCCESSFUL TEST FILE NAMES
+::     body_BILANCIO_CONSOLIDATO_2008_ENG_rev_finale_3_.pdf
+::     nospacesatall2009.pdf
+::     2010_weird_layout#hashtag.pdf
+::     it's_a_weird_2011_name.pdf
+::     some file (2012).pdf
+::     how.cr@zy.was.2012.pdf
+::     both-oh-&amp;-no-2013.pdf
+::     who put spaces in this name 2016.txt
+::     annual-report-2017.pdf
+::
+:: UNSUCCESSFUL TEST NAMES
+::     ^5_for_2005.pdf
+::     100%_operational_as_of_2014.pdf
+::     hooray!_for_2006.pdf
+::     uh-oh-21090-bad-mask-2019.pdf
+::------------------------------------------------------------------------------
+@echo off
+setlocal enabledelayedexpansion
+cls
+
+for /f "tokens=1,* delims=." %%A in ('dir /b /a:d') do (
+	pushd "%%A.%%B"
+	echo == %%A ==
+	for /f "delims=" %%C in ('dir /b') do (
+		call :extract_year "%%C" "%%A"
+	)
+	popd
+)
+
+exit /b
+
+::------------------------------------------------------------------------------
+:: Renames a specified file with a more meaningful filename
+::
+:: Arguments: %1 - The current filename
+::            %2 - The prefix of the new filename
+:: Returns:   None
+::------------------------------------------------------------------------------
+:extract_year
+set "in_string=%~1"
+set "string_prefix=%~2"
+
+call :getLength in_string string_length 2&gt;nul
+
+set "year_string="
+for /L %%A in (0,1,!string_length!) do (
+	echo "!in_string:~%%A,4!" | findstr /R "[0-9][0-9][0-9][0-9]" &gt;nul
+	if "!errorlevel!"=="0" (
+		set "year_string=!in_string:~%%A,4!"
+		goto :exit_loop
+	)
+)
+
+:exit_loop
+ren "!in_string!" "!string_prefix!_!year_string!.pdf"
+echo Old file name: !in_string!
+echo New file name: !string_prefix!_!year_string!.pdf
+echo(
+
+exit /b
+
+::------------------------------------------------------------------------------
+:: Gets the length of a given string, minus 3
+::
+:: Adapted from :strlen7 - https://ss64.org/viewtopic.php?pid=6478#p6478
+:: Arguments: %1 - The string to get the length of
+:: Returns:   The length of the string
+::------------------------------------------------------------------------------
+:getLength
+setlocal EnableDelayedExpansion
+set "s=#!%~1!"
+set "len=0"
+for %%N in (4096 2048 1024 512 256 128 64 32 16 8 4 2 1) do (
+	if "!s:~%%N,1!" neq "" (
+		set /a "len+=%%N"
+		set "s=!s:~%%N!"
+	)
+)
+set /a len-=3
+endlocal&amp;set %~2=%len%
+exit /b
+</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8859&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 04:59:29 GMT -->
+</html>

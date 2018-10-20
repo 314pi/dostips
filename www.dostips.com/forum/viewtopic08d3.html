@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6024&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:13:26 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Checking for several different strings in a variable</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Checking for several different strings in a variable</h2>
+		<p><a href="viewtopicae19.html?f=3&amp;t=6024">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6024</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 18:13</strong></div>
+				<div class="author">by <strong>ALbino</strong></div>
+				<div class="content">Hey all,<br /><br />I was trying to think of the cleanest way to do this, but I'm not sure what the best way is, or even how to go about it.<br /><br />Essentially I just want to see if various phrases are in my filename, and if it is then to set a variable one way, and if they're absent, then to set it another.  In a sort of pseudo-code:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if %InputFilename% contains &quot;*example*&quot; OR &quot;*another*version*&quot; OR &quot;*this*and*that*&quot; (<br />&nbsp;set Condition=1<br />&nbsp;) else (<br />&nbsp; &nbsp; set Condition=2<br />)<br /></code></pre></div><br /><br />There may be upwards of 20+ of these conditional phrases.  Is there a way to do this using some type of OR in the if statement?  Or should it just be a giant chain of ELSE IF questions?<br /><br />Also, is there a way to search for &quot;*word1*word3*&quot; with wildcards before, after, and in the middle, so that &quot;word1word2word3.txt&quot; would be found?<br /><br />Any help would be appreciated.  Thanks!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 18:57</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">You can store the phrases to search for in a separate file and then check the filename for each substring one at a time.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enabledelayedexpansion<br /><br />:: Get the filename from user input<br />set filename=%~1<br /><br />if &quot;%filename%&quot;==&quot;&quot; (<br />&nbsp; &nbsp;echo Please provide a string to search.<br />&nbsp; &nbsp;exit /b<br />)<br /><br />:: This isn't a real boolean, but it plays one on TV<br />set substring_found=false<br /><br />:: Check filename against list of strings in DAT file<br />for /f %%A in (namecheck.dat) do (<br />&nbsp; &nbsp;echo %filename%|findstr &quot;%%A&quot; &gt;nul<br />&nbsp; &nbsp;if !errorlevel! equ 0 (<br />&nbsp; &nbsp;&nbsp; &nbsp;set substring_found=true<br />&nbsp; &nbsp;)<br />)<br /><br />if &quot;!substring_found!&quot;==&quot;true&quot; (<br />&nbsp; &nbsp;echo Substring found!<br />) else (<br />&nbsp; &nbsp;echo Substring not found!<br />)<br /></code></pre></div><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>namecheck.dat (sample input)<br />flag_1<br />apples<br />children<br />flag4<br />screwdriver<br />strawberry<br />handbrake<br />flag__8<br />check phrase<br /></code></pre></div><br /><br />Note that there are some characters like ^ that need to be escaped if you've going to use them.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 19:31</strong></div>
+				<div class="author">by <strong>ALbino</strong></div>
+				<div class="content">Ahh, yes, that's a great idea.  Thanks so much for the help!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 20:30</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">It is simpler and faster if you use findstr's /F option, that is, using the same data of ShadowThief's answer:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:: Check filename against list of strings in DAT file<br />echo %filename%|findstr /G:namecheck.dat &gt;nul<br />if %errorlevel% equ 0 (<br />&nbsp; &nbsp;set substring_found=true<br />)<br /></code></pre></div><br />However, this method is slow if you want to check a large number of filenames because FINDSTR must be executed several times, so it would be faster to assemble a long command that check all strings in just one line; for example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set Found=true<br />if &quot;!filename:example=!&quot; equ &quot;%filename%&quot; if &quot;!filename:another version=!&quot; equ &quot;%filename%&quot; if &quot;!filename:this and that=!&quot; equ &quot;%filename%&quot; set Found=false<br /></code></pre></div><br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 20:37</strong></div>
+				<div class="author">by <strong>ALbino</strong></div>
+				<div class="content">Thanks for the suggestion.  Would both of these methods work with multiple strings?  You've written:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if &quot;!filename:this and that=!&quot;</code></pre></div><br /><br />Will that find only &quot;here is this and that.txt&quot; or will it also find &quot;here is this and here is that.txt&quot;?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 20:46</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">This method will only find the exact &quot;this and that&quot; string. You may use FINDSTR method in order to use regular expressions...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 20:56</strong></div>
+				<div class="author">by <strong>ALbino</strong></div>
+				<div class="content">Good to know, thank you.<br /><br />Can anybody recommend a good comprehensive walk through of dealing with strings?  This is what I've been using, but in their examples they rarely show the eventual result:<br /><br /><!-- m --><a class="postlink" href="http://ss64.com/nt/findstr.html">http://ss64.com/nt/findstr.html</a><!-- m --></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 21:38</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">What sort of &quot;dealing with strings&quot; information are you looking for? Because we have <!-- m --><a class="postlink" href="../DtTipsStringOperations.html">http://www.dostips.com/DtTipsStringOperations.php</a><!-- m --> and <!-- m --><a class="postlink" href="../DtTipsStringManipulation.html">http://www.dostips.com/DtTipsStringManipulation.php</a><!-- m --> which should cover a good chunk of basic string coding.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 21:41</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content">vbscript comes with regular expression.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Set objFSO=CreateObject(&quot;Scripting.FileSystemObject&quot;)<br />Set regex = New RegExp<br />With regex<br />&nbsp; &nbsp;.Pattern = &quot;example|this.*that&quot;<br />&nbsp; &nbsp;.IgnoreCase = True<br />&nbsp; &nbsp;.Global = False<br />End With <br />inputFile = WScript.Arguments(0)<br />Set objFile = objFSO.OpenTextFile(inputFile)<br />Do Until objFile.AtEndOfStream<br />&nbsp; &nbsp;strNextLine = objFile.ReadLine<br />&nbsp; &nbsp;Set Matches = regex.Execute(strNextLine)<br />&nbsp; &nbsp;If regex.Test(strNextLine) Then<br />&nbsp; &nbsp;&nbsp; &nbsp;WScript.Echo strNextLine <br />&nbsp; &nbsp;End If <br />Loop<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 21:57</strong></div>
+				<div class="author">by <strong>ALbino</strong></div>
+				<div class="content"><blockquote><div><cite>ShadowThief wrote:</cite>What sort of &quot;dealing with strings&quot; information are you looking for? Because we have <!-- m --><a class="postlink" href="../DtTipsStringOperations.html">http://www.dostips.com/DtTipsStringOperations.php</a><!-- m --> and <!-- m --><a class="postlink" href="../DtTipsStringManipulation.html">http://www.dostips.com/DtTipsStringManipulation.php</a><!-- m --> which should cover a good chunk of basic string coding.</div></blockquote><br /><br />Thank you, I appreciate the link!<br /><br />Your example works with single phrases, but I'm unsure how to use multiple ones.  For example, if I do this:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set filename=word1word2word3.txt</code></pre></div><br /><br />And I put into namecheck.dat:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>word1</code></pre></div><br /><br />Then that returns &quot;Substring found&quot;, which it should.  If I then put into namecheck.dat:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>word1 word2</code></pre></div><br /><br />It also returns &quot;Substring found&quot;, which seems like it's working, but really it's just finding &quot;word1&quot; still, because if I then replace it in namecheck.dat with:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>word1 word9 word2</code></pre></div><br /><br />It still returns &quot;Substring found&quot;.  Ideally in this scenario of word1word2word3.txt would return found only if all three were in namecheck.dat and in the same order, i.e. &quot;*word1*word2*word3*&quot;.  If this is confusing let me know and I'll try and explain it better :)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 21:58</strong></div>
+				<div class="author">by <strong>ALbino</strong></div>
+				<div class="content"><blockquote><div><cite>ghostmachine4 wrote:</cite>vbscript comes with regular expression.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Set objFSO=CreateObject(&quot;Scripting.FileSystemObject&quot;)<br />Set regex = New RegExp<br />With regex<br />&nbsp; &nbsp;.Pattern = &quot;example|this.*that&quot;<br />&nbsp; &nbsp;.IgnoreCase = True<br />&nbsp; &nbsp;.Global = False<br />End With <br />inputFile = WScript.Arguments(0)<br />Set objFile = objFSO.OpenTextFile(inputFile)<br />Do Until objFile.AtEndOfStream<br />&nbsp; &nbsp;strNextLine = objFile.ReadLine<br />&nbsp; &nbsp;Set Matches = regex.Execute(strNextLine)<br />&nbsp; &nbsp;If regex.Test(strNextLine) Then<br />&nbsp; &nbsp;&nbsp; &nbsp;WScript.Echo strNextLine <br />&nbsp; &nbsp;End If <br />Loop<br /></code></pre></div></div></blockquote><br /><br />I'm not sure how to use this... can I call it from a batch script?  Either way, thanks for the effort :)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 22:25</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content"><blockquote class="uncited"><div><br />I'm not sure how to use this... can I call it from a batch script?  Either way, thanks for the effort <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div></blockquote><br /><br />save as a file and on command line<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cscript //nolog myscript.vbs myFileToSearch.txt<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 23:10</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><blockquote><div><cite>ALbino wrote:</cite>Your example works with single phrases, but I'm unsure how to use multiple ones.  For example, if I do this:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set filename=word1word2word3.txt</code></pre></div><br /><br />And I put into namecheck.dat:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>word1</code></pre></div><br /><br />Then that returns &quot;Substring found&quot;, which it should.  If I then put into namecheck.dat:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>word1 word2</code></pre></div><br /><br />It also returns &quot;Substring found&quot;, which seems like it's working, but really it's just finding &quot;word1&quot; still, because if I then replace it in namecheck.dat with:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>word1 word9 word2</code></pre></div><br /><br />It still returns &quot;Substring found&quot;.  Ideally in this scenario of word1word2word3.txt would return found only if all three were in namecheck.dat and in the same order, i.e. &quot;*word1*word2*word3*&quot;.  If this is confusing let me know and I'll try and explain it better <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div></blockquote><br /><br />I copied the following information from FINDSTR help (and translated it to English):<br /><br /><blockquote><div><cite>FINDSTR /? wrote:</cite>Use spaces to separate multiple search strings. For example, 'FINDSTR &quot;one two&quot; x.y' search for &quot;one&quot; or &quot;two&quot; in x.y file.<br /></div></blockquote><br /><br />If you want to search for &quot;word1&quot;, followed by zero or more characters, followed by &quot;word2&quot;, followed by zero or more characters, followed by &quot;word3&quot;, then you must use a <em class="text-italics">regular expression</em>:<br /><br /><blockquote><div><cite>FINDSTR /? wrote:</cite>Regular expression quick reference:<br />  .        Wild-card: any character<br />  *        Repeat: zero or more occurrences of previous character<br /></div></blockquote><br /><br />This way, to match the search described in previous paragraph, you must include the following regular expression into namecheck.dat:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>word1.*word2.*word3<br /></code></pre></div><br /><strong class="text-strong">and</strong> insert /R switch in the FINDSTR command.<br /><br />I suggest you to read about &quot;regular expressions&quot;...<br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 23:30</strong></div>
+				<div class="author">by <strong>ALbino</strong></div>
+				<div class="content">I'll read up on it, thank you Antonio!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Checking for several different strings in a variable</h3>
+				<div class="date">Posted: <strong>01 Nov 2014 09:11</strong></div>
+				<div class="author">by <strong>Yury</strong></div>
+				<div class="content"><blockquote><div><cite>ALbino wrote:</cite>Essentially I just want to see if various phrases are in my filename, and if it is then to set a variable one way, and if they're absent, then to set it another.  In a sort of pseudo-code:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if %InputFilename% contains &quot;*example*&quot; OR &quot;*another*version*&quot; OR &quot;*this*and*that*&quot; (<br />&nbsp;set Condition=1<br />&nbsp;) else (<br />&nbsp; &nbsp; set Condition=2<br />)<br /></code></pre></div><br /><br />There may be upwards of 20+ of these conditional phrases.  Is there a way to do this using some type of OR in the if statement?  Or should it just be a giant chain of ELSE IF questions?</div></blockquote><br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />set &quot;InputFilename=The another new version of the document.txt&quot;<br /><br />:: Add, change or remove regular expressions.<br />:: Don't use «^».<br />:: Change «*» to «.|».<br />for %%i in (<br />&nbsp;&quot;.|example.|&quot;<br />&nbsp;&quot;.|another.|version.|&quot;<br />&nbsp;&quot;.|this.|and.|that.|&quot;<br />&nbsp;) do (<br />&nbsp;rem Don't use «set RegExp=%%i» and «'call echo %%RegExp:|=*%%'». _<br />&nbsp;rem Don't use «set RegExp=&quot;%%~i&quot;» and «'call echo %%RegExp:|=*%%'». _<br />&nbsp;rem Use only «set RegExp=%%~i» and «'call echo &quot;%%RegExp:|=*%%&quot;'».<br />&nbsp;set RegExp=%%~i<br />&nbsp;for /f &quot;delims=&quot; %%j in ('call echo &quot;%%RegExp:|=*%%&quot;') do (<br />&nbsp; call set Args=%%Args%% /c:%%j<br />&nbsp; )<br />&nbsp;)<br /><br />for /f &quot;delims=&quot; %%i in (&quot;%InputFilename%&quot;) do (<br />&nbsp;rem Don't use «echo %%i| findstr ...». _<br />&nbsp;rem It is deadly for the execution of the code _<br />&nbsp;rem if some poison characters are present.<br />&nbsp;echo &quot;%%i&quot;| findstr /ir%Args%&gt;nul&amp;&amp; (<br />&nbsp;set Condition=1<br />&nbsp;)|| (<br />&nbsp;set Condition=2<br />&nbsp;)<br />&nbsp;)<br /><br />set Condition<br /><br />pause&gt;nul<br />exit /b</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6024&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:13:26 GMT -->
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2836&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:20:48 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; foolproof counting of arguments</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>foolproof counting of arguments</h2>
+		<p><a href="viewtopic9303.html?f=3&amp;t=2836">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=2836</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>4</strong></div>
+					<div class="post">
+				<h3>foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>22 Jan 2012 12:27</strong></div>
+				<div class="author">by <strong>Liviu</strong></div>
+				<div class="content">Is there a way to reliably get the count of arguments a batch file was called with, safe against odd inputs, and preferably without invoking external programs or temp files?<br /><br />Some test cases which fail most naive counting approaches would be...<br /><ul><li>&quot;  ---  expected count 1</li><li>&quot;&quot; a  ---  2</li><li>a &quot; b  --- 2</li></ul>...and others involving the usual poison characters.<br /><br />Thanks,<br />Liviu</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>22 Jan 2012 13:57</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Don't think there is much you could do about a string not being closed quoted correctly.  If you just have a set of empty quotes then you can check to see if it is empty.<br />So given your example of <strong class="text-strong">&quot;&quot; a ---</strong><br />This code would correctly count it as 2.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />set count=0<br />for %%I in (%*) do IF NOT &quot;%%~I&quot;==&quot;&quot; set /a count+=1<br />echo %count%</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>22 Jan 2012 14:08</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite>Liviu wrote:</cite>Is there a way to reliably get the count of arguments a batch file was called with, safe against odd inputs, and preferably without invoking external programs or temp files?</div></blockquote><br />I'm afraid the answer is NO.<br />REM is the only command that is able to catch the arguments %* as is.<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>22 Jan 2012 15:36</strong></div>
+				<div class="author">by <strong>Liviu</strong></div>
+				<div class="content"><blockquote><div><cite>Squashman wrote:</cite>Don't think there is much you could do about a string not being closed quoted correctly. If you just have a set of empty quotes then you can check to see if it is empty.<br />So given your example of <strong class="text-strong">&quot;&quot; a ---</strong><br /></div></blockquote><br />I should have made it more clear that the &quot;---&quot; was part of my comment, not part of the arguments. So for example I expect <strong class="text-strong">&quot;&quot; a ---</strong> to be counted as 3 arguments, and <strong class="text-strong">&quot;&quot; a</strong> as just 2. Sorry for the confusion.<br /><br /><blockquote><div><cite>aGerman wrote:</cite>I'm afraid the answer is NO.<br />REM is the only command that is able to catch the arguments %* as is.<br /></div></blockquote><br />I am aware of the REM redirection trick to get %*. In fact, I was wondering if I could get the count in advance, so that I could then get the individual %1, %2 etc arguments as well in one shot, as opposed to (re)using a temp file for each.<br /><br />Guess my original question can be reduced to how to check whether %1 is present or not, in a way safe against odd input like single &quot;, ^&quot;, ^&amp; etc. Since that's a lighter requirement than literally retrieving %1 itself, I was hoping there might be some easier workaround.<br /><br />Thanks,<br />Liviu</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>22 Jan 2012 16:11</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I'm not sure whether this would work in each case:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;x=%*#&quot;<br /><br />setlocal EnableDelayedExpansion<br />if &quot;!x:~1,1!&quot;==&quot;&quot; (endlocal &amp;set &quot;x=0&quot;) else (endlocal &amp;set x=1)<br /><br />echo %x%<br /></code></pre></div><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>22 Jan 2012 16:50</strong></div>
+				<div class="author">by <strong>Liviu</strong></div>
+				<div class="content"><blockquote><div><cite>aGerman wrote:</cite>I'm not sure whether this would work in each case:<br /></div></blockquote><br />Nice! and appears to be doing just what I was looking for, thank you.<br /><br />Side comment: it's even kind of obvious in hindsight now, isn't it <img class="smilies" src="images/smilies/icon_wink.gif" alt=";-)" title="Wink" /> Guess I didn't think at it becaused of the reflex <em class="text-italics">don't set &quot;x=%1&quot; when %1 may contain quotes or unquoted &amp;&lt;&gt;|etc since it's going to be a pain to use later</em>. Of course, just checking that 'x' is empty or not happens to be one case when those special characters don't matter.<br /><br />Variation on the same theme...<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;x=%1&quot;<br />setlocal EnableDelayedExpansion<br />if defined x (endlocal &amp;set x=1) else (endlocal &amp;set x=0)<br />echo %x%<br /></code></pre></div><br />The above looks at %1 instead of %*. Off topic somewhat, but it is possible that %1 is not present, but %* is still not empty, for example when passing a separators-only command line such as ;,=.<br /><br />Thanks,<br />Liviu</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>22 Jan 2012 17:26</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite>Liviu wrote:</cite>The above looks at %1 instead of %*. Off topic somewhat, but it is possible that %1 is not present, but %* is still not empty, for example when passing a separators-only command line such as ;,=.</div></blockquote><br />Yeah, that's exactly the reason why I used %* instead. (You told that you need to look at all odd &quot;poison&quot; characters <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" />)<br />I'm not sure whether you need the hash character. I used it to make sure that a caret would not escape the quotation mark but it was useless in my tests...<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>22 Jan 2012 18:20</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Edit:<br />It's still not exactly foolproof <img class="smilies" src="images/smilies/icon_sad.gif" alt=":(" title="Sad" /> <br /><br />Example argument (jeb):<br /><em class="text-italics">one^&amp;two&quot;&amp;three</em><br /><br />simplified:<br /><em class="text-italics">&quot;&amp;</em> or <em class="text-italics">&quot;&amp;&quot;</em><br /><br />It however detects the character(s) in front of &amp;. For that reason it would probably be sufficient to redirect the error message of the SET line. But it is potentially dangerous since the command in argument<br /><em class="text-italics">&quot;&amp; command &amp;&quot;</em><br />would be executed <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>22 Jan 2012 20:02</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Not only is it susceptible to command injection, it can also completely miss the parameter.<br /><br /><strong class="text-strong"><em class="text-italics">&quot;one&amp;rem &quot;</strong></em>  (quotes included) will be reported as no argument, and it executes the REM command. The one is stripped because it occurs after the last quote, and the rem command could just as easily be something destructive.<br /><br />I really don't think it is possible to safely test for 1 or more arguments without using the REM echoed to a file trick.<br /><br />Here is a clean looking script that safely loads all of the arguments into an arg &quot;array&quot; using the REM trick. There is a space at the end of the temp file that protects against stripping trailing control characters from the argument. I think the only limitation is each argument must be &lt;=1015 bytes long.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enableDelayedExpansion<br />set argCnt=1<br />:getArgs<br />&gt;&quot;%temp%\getArg.txt&quot; &lt;&quot;%temp%\getArg.txt&quot; (<br />&nbsp; setlocal disableExtensions<br />&nbsp; set prompt=#<br />&nbsp; echo on<br />&nbsp; for %%a in (%%a) do rem . %1.<br />&nbsp; echo off<br />&nbsp; endlocal<br />&nbsp; set /p &quot;arg%argCnt%=&quot;<br />&nbsp; set /p &quot;arg%argCnt%=&quot;<br />&nbsp; set &quot;arg%argCnt%=!arg%argCnt%:~7,-2!&quot;<br />&nbsp; if defined arg%argCnt% (<br />&nbsp; &nbsp; set /a argCnt+=1<br />&nbsp; &nbsp; shift /1<br />&nbsp; &nbsp; goto :getArgs<br />&nbsp; ) else set /a argCnt-=1<br />)<br />del &quot;%temp%\getArg.txt&quot;<br />set arg<br /></code></pre></div><br /><br />Edited to guard against following corner cases:<br />/?<br />^ at end (entered as ^^)<br />%a<br />%~a   %~dpa   %~path:a   etc.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>22 Jan 2012 20:12</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I agree with Dave.<br /><br />That's my attempt:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>setlocal DisableDelayedExpansion &amp;prompt $<br />&gt;&quot;%temp%\x.txt&quot; (<br />&nbsp; echo on &amp;for %%i in (1) do rem %*#<br />)<br />@prompt &amp;endlocal &amp;setlocal EnableDelayedExpansion &amp;echo off<br />&lt;&quot;%temp%\x.txt&quot; (for %%i in (1 2) do set /p &quot;x=&quot;)<br />del &quot;%temp%\x.txt&quot;<br />if &quot;!x:~4,-2!&quot;==&quot;&quot; (endlocal &amp;set x=0) else (endlocal &amp;set x=1)<br /><br />echo %x%<br /></code></pre></div><br />The hash character is to protect you from the multi line effect with ^.<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>22 Jan 2012 20:36</strong></div>
+				<div class="author">by <strong>Liviu</strong></div>
+				<div class="content"><blockquote><div><cite>aGerman wrote:</cite>It's still not exactly foolproof <img class="smilies" src="images/smilies/icon_sad.gif" alt=":(" title="Sad" /> <br /><br />Example argument (jeb):<br /><em class="text-italics">one^&amp;two&quot;&amp;three</em><br /><br />simplified:<br /><em class="text-italics">&quot;&amp;</em> or <em class="text-italics">&quot;&amp;&quot;</em><br /></div></blockquote><br />Thanks for that. Somehow thought it couldn't be that easy <img class="smilies" src="images/smilies/icon_wink.gif" alt=";-)" title="Wink" /> And it takes down any following parameters as well.<br /><br />Now, I don't think that'd be much of a problem in my particular use-case, though it's surely disappointing in a more academical sense. What I am actually after is basically &quot;tokenize&quot; the _beginning_ of the %* line in order to simulate an %* &quot;shift&quot; (since the built-in one only shifts the individual %1, %2, etc arguments, but not %* itself). Suppose I wanted to write a simple loggedrun.cmd which would save one line per run to a designated logfile, to be invoked like<br /><br />loggedrun «logfile» «program-to-run» «program-arguments»<br /><br />In a different better world, loggedrun.cmd could contain just<br /><br />@setlocal<br />@set &quot;logfile=%~1&quot;<br />@rem _but_ 'shift' doesn't affect %*<br />@shift<br />@echo &gt;&gt;&quot;%logfile%&quot; %date% %time% starting: %*<br />@%*<br />@echo &gt;&gt;&quot;%logfile%&quot; %date% %time% done: %*<br />@endlocal<br /><br />But of course this wouldn't work as such in the cmd world. Firstly, shift doesn't update %*, and then cmd has its own parsing rules which are different from everybody else's. In my example, what comes before «program-to-run» is obviously intended for the batch file, and would follow the cmd rules. However the «program-arguments» part would be under the control of the target program command-line-parsing logic, and it would need to be literally passed as such by the batch file.<br /><br />Hope here was that combining the REM redirection trick for %*/%1/etc with some time-saving trick to extract the first &quot;cmd-compliant&quot; arguments would then allow me to remove those parts from %* and pass the rest thorugh unchanged.<br /><br />Since my particular case only involves the first parameters which are largely under my/user's control, I could rule out &quot;pathological&quot; values for those parameters, and make it work under that assumption. That said, it would obviously be more &quot;academically satisfying&quot; if there was a general solution to that, more efficient than one temp file per %1/%2/etc argument.<br /><br />Thanks again for all responses,<br />Liviu</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>22 Jan 2012 22:18</strong></div>
+				<div class="author">by <strong>Liviu</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>Here is a clean looking script that safely loads all of the arguments into an arg &quot;array&quot; using the REM trick.<br /></div></blockquote><br />Not sure I fully follow the part about exiting and reentrying the doubly redirected () block, yet, but it looks as if it's internally equivalent to individual per-argument redirections. It's working otherwise, thank you, only nitpick is that &quot;rem %1&quot; should probably be &quot;rem [ %1 ]&quot; or such (and the ~5,-1 offsets adjusted accordingly) in order to handle oddities like /?, ^^.<br /><br />Thanks,<br />Liviu</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>22 Jan 2012 23:09</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Now I understand why jeb had that # in his REM statement, to protect against /?<br /><br />I've edited my previous post to compensate.<br /><br />Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>24 Jan 2012 00:42</strong></div>
+				<div class="author">by <strong>Liviu</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>Now I understand why jeb had that # in his REM statement, to protect against /?<br /><br />I've edited my previous post to compensate.</div></blockquote><br />Pretty sure I've seen this noted before, though I can't find a reference handy now... One other corner case is that the 'for' loop would save the incorrect %1 when passed %a or similar as an argument, presumably because of some loop variable name clash. Didn't look into it much yet, but for whatever reason replacing it with<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%a in (%%a) do rem . %1.</code></pre></div><br />appears to work better under xp.sp3 at least. Again, not fully understood or tested on my part.<br /><br />Liviu</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>24 Jan 2012 07:55</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Thanks <br /><br />You were correct - an argument of %a was being reported as 1.<br /><br />Code has been edited<br /><br />Dave Benham</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>4</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2836&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:20:48 GMT -->
+</html>

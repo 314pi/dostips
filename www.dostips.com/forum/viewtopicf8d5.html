@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5506&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:51:26 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Random number diff from cmd line vs double click</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Random number diff from cmd line vs double click</h2>
+		<p><a href="viewtopic0cbb.html?f=3&amp;t=5506">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5506</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>11 Apr 2014 04:30</strong></div>
+				<div class="author">by <strong>Matt Williamson</strong></div>
+				<div class="content">I was helping a user on SO yesterday when we stumbled upon a strange occurrence with random numbers. Using the following code we want to create a random number between 11 and 21 and again between 0 and 59. When I was testing it, I ran it from a cmd prompt about 20 times and all was fine. But if that script is ran by double clicking on it, the first random number is always the same and it appears to be related to the system clock in some way because during our testing, we found that the random number went up by 1 after the hour on the system clock changed. <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enabledelayedexpansion<br /><br />call :rand 11 21 ret<br />call :rand 0 59 ret2<br />if %ret2% LSS 10 set ret2=0%ret2%<br />%ret%:%ret2%:00<br />pause<br />exit /b<br /><br />:rand<br />setlocal<br />SET /A RAND_NUM=%RANDOM% * (%2 - %1 + 1) / 32768 + %1<br />endlocal &amp; set %~3=%RAND_NUM%<br />exit /b</code></pre></div><br /><br />Does anyone have any idea what is going on here?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>11 Apr 2014 05:55</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">The answer is actually quite simple  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><br />The random number generator is initiated with a seed value every time a CMD.EXE session is launched. The seed number is derived from the system clock, and it only changes once per second. The delta is very small from one second to the next. Your formula to compress the random number into a value between 11 and 21 causes all CMD sessions launched within the same hour to give the same initial value.<br /><br />The random number generator will always yield the identical sequence of numbers if given the same seed number. So every session launched within the same second will yield the exact same sequence. Your sessions that are launched within the same hour, but during different seconds, will yield the same initial &quot;random&quot; number between 11 and 21, but the following sequences will vary.<br /><br />The following math formula will yield different initial values between 11 and 21 every second instead of every hour:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set /a rand_num=%random% %% 11 + 11<br /></code></pre></div><br />I posted some good examples at <!-- m --><a class="postlink" href="http://stackoverflow.com/a/19697361/1012053">http://stackoverflow.com/a/19697361/1012053</a><!-- m --> that demonstrate how the batch random number generator works.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>11 Apr 2014 07:16</strong></div>
+				<div class="author">by <strong>Matt Williamson</strong></div>
+				<div class="content">Very interesting. So, I can just call the :rand function with a dummy return with any values to re-seed the generator and get the correct output when opening new cmd sessions?<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp;@echo off<br />&nbsp; &nbsp;setlocal enabledelayedexpansion<br /><br />&nbsp; &nbsp;call :rand 1 1 dummy<br />&nbsp; &nbsp;call :rand 11 21 ret<br />&nbsp; &nbsp;call :rand 0 59 ret2<br />&nbsp; &nbsp;if %ret2% LSS 10 set ret2=0%ret2%<br />&nbsp; &nbsp;echo %ret%:%ret2%:00<br />&nbsp; &nbsp;pause<br />&nbsp; &nbsp;exit /b<br /><br />&nbsp; &nbsp;:rand<br />&nbsp; &nbsp;setlocal<br />&nbsp; &nbsp;SET /A RAND_NUM=%RANDOM% * (%2 - %1 + 1) / 32768 + %1<br />&nbsp; &nbsp;endlocal &amp; set %~3=%RAND_NUM%<br />&nbsp; &nbsp;exit /b<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>11 Apr 2014 08:25</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite>Matt Williamson wrote:</cite>Very interesting. So, I can just call the :rand function with a dummy return with any values to re-seed the generator and get the correct output when opening new cmd sessions?</div></blockquote><br />No, the random number generator is only seeded when the CMD session is launched, and the seed is derived from the system clock. Multiple CMD sessions launched within the same second will always generate the exact same sequence of random numbers.<br /><br />There is no native method to re-seed the generator, and you cannot control the initial seed value. Well, I suppose you could alter the system clock, but that seems a bit extreme.<br /><br />Given a specific initial seed value (system clock second), the CMD session will always generate the same sequence of &quot;random&quot; numbers. It does not matter if those numbers are generated all within a single call to one script, or by multiple calls to multiple scripts. From the perspective of the CMD session, the sequence will be identical for sessions that started at the same time.<br /><br />Bear in mind that pipes and FOR /F commands execute their commands within implict new CMD sessions. So if you have a script that executes commands via pipes or FOR /F multiple times within the same second, then the random number sequence within those commands will be identical.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>11 Apr 2014 17:19</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">You may generate your own random numbers via a <a href="http://en.wikipedia.org/wiki/List_of_random_number_generators" class="postlink">Random Number Generator</a>, some of which are very simple; for example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />rem Generate random numbers via a Linear Feedback Shift Register(LFSR):<br />rem http://en.wikipedia.org/wiki/Linear_feedback_shift_register<br /><br />rem Fibonacci LFSR with taps: 16 14 13 11; feedback polynomial: x^16 + x^14 + x^13 + x^11 + 1<br /><br />if not defined lfsr for /f &quot;tokens=3,4 delims=:.&quot; %%a in (&quot;%time%&quot;) do set lfsr=3%%a%%b<br />set /A &quot;bit&nbsp; = ( (lfsr &gt;&gt; 0) ^ (lfsr &gt;&gt; 2) ^ (lfsr &gt;&gt; 3) ^ (lfsr &gt;&gt; 5) ) &amp; 1&quot;<br />set /A &quot;lfsr =&nbsp; &nbsp;(lfsr &gt;&gt; 1) | (bit &lt;&lt; 15)&quot;<br />echo %lfsr%<br />exit /B<br /></code></pre></div><br />Output example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt; cmd /C &quot;RandomLFSR &amp; RandomLFSR &amp; RandomLFSR &amp; RandomLFSR &amp; RandomLFSR&quot;<br />50294<br />25147<br />45341<br />55438<br />27719<br /><br />C:\&gt; cmd /C &quot;RandomLFSR &amp; RandomLFSR &amp; RandomLFSR &amp; RandomLFSR &amp; RandomLFSR&quot;<br />17604<br />41570<br />53553<br />26776<br />46156<br /><br />C:\&gt; cmd /C &quot;RandomLFSR &amp; RandomLFSR &amp; RandomLFSR &amp; RandomLFSR &amp; RandomLFSR&quot;<br />50426<br />25213<br />12606<br />39071<br />52303<br /></code></pre></div><br />Previous method generate random numbers between 1 and 65535.<br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>13 Apr 2014 23:11</strong></div>
+				<div class="author">by <strong>Magialisk</strong></div>
+				<div class="content">Back in my cryptography threads I wrote my own random number generator because the trouble with %random% is that it cannot be directly seeded.  Sure, people like Dave have gone to great lengths to explain how %random% derives it's seed based on the system clock, etc. but if you can't force it to use a specific seed value it's of no use for predictable number stream generation.<br /><br />In any case, here's the link to my random function, or at least the version of it that existed back then:  <!-- l --><a class="postlink-local" href="viewtopicf370.html?p=27666#p27666">viewtopic.php?p=27666#p27666</a><!-- l -->.  I know for sure I &quot;macro-ized&quot; it since then, but I don't have that code handy and I don't know what else I might have done to it to improve it.  I know at least one old version of my random function had issues occasionally spitting out negative numbers as well, so you might want to beware of that in case it's this version <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" />  Also I feel I have to repeat that even while I used this function in my threads for demonstrating cryptographic purposes, this is *NOT* in any way a cryptographically secure PRNG.<br /><br />As far as usage, it's intended to be used with two (optional) parameters, a range and a seed value.  The range is formatted as a min and max value separated by a hyphen, ie &quot;0-100&quot;, within the bounds of 0-32767.  The seed is any integer, and as stated previously in this thread, given the same seed the random number will always turn out the same.  If 'rand 0-10 12345' spits out a 7, it will always spit out a 7, no matter how many times you call it or what time of day <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" />  If you don't care about seeding it, leave that parameter out and the function defaults to using %random%.<br /><br />In addition to spitting out the random number, if an input seed is provided, the function also returns the next seed in the generation sequence, so you can use it to generate long streams of repeatable random numbers.  You'll find plenty of usage examples in that cryptography thread if the seeding concept is of interest to you.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>14 Apr 2014 05:59</strong></div>
+				<div class="author">by <strong>Matt Williamson</strong></div>
+				<div class="content"><blockquote><div><cite>Aacini wrote:</cite>You may generate your own random numbers via a <a href="http://en.wikipedia.org/wiki/List_of_random_number_generators" class="postlink">Random Number Generator</a>, some of which are very simple; for example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />rem Generate random numbers via a Linear Feedback Shift Register(LFSR):<br />rem http://en.wikipedia.org/wiki/Linear_feedback_shift_register<br /><br />rem Fibonacci LFSR with taps: 16 14 13 11; feedback polynomial: x^16 + x^14 + x^13 + x^11 + 1<br /><br />if not defined lfsr for /f &quot;tokens=3,4 delims=:.&quot; %%a in (&quot;%time%&quot;) do set lfsr=3%%a%%b<br />set /A &quot;bit&nbsp; = ( (lfsr &gt;&gt; 0) ^ (lfsr &gt;&gt; 2) ^ (lfsr &gt;&gt; 3) ^ (lfsr &gt;&gt; 5) ) &amp; 1&quot;<br />set /A &quot;lfsr =&nbsp; &nbsp;(lfsr &gt;&gt; 1) | (bit &lt;&lt; 15)&quot;<br />echo %lfsr%<br />exit /B<br /></code></pre></div><br /><br />Previous method generate random numbers between 1 and 65535.<br /></div></blockquote><br /><br />Very cool! So, if I wanted to generate a random number between 1 and 262,143 all I would have to do is modify the algorithm to:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if not defined lfsr for /f &quot;tokens=3,4 delims=:.&quot; %%a in (&quot;%time%&quot;) do set lfsr=3%%a%%b<br />set /A &quot;bit&nbsp; = ( (lfsr &gt;&gt; 0) ^ (lfsr &gt;&gt; 7) ) &amp; 1&quot;<br />set /A &quot;lfsr =&nbsp; &nbsp;(lfsr &gt;&gt; 1) | (bit &lt;&lt; 17)&quot;<br />echo %lfsr%<br />exit /B<br /></code></pre></div><br /><br />For 18 bits of precision right? I don't know C but it looks like the bit shifting code in batch is very similar. What is the significance of adding the 3 before the extract from the %time% variable?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>14 Apr 2014 10:39</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">You should add the delimiter ',' when setting up lfsr, so it will not set up as &quot;3%%a&quot; in german windows versions (for example):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if not defined lfsr for /f &quot;tokens=3,4 delims=:.,&quot; %%a in (&quot;%time%&quot;) do set lfsr=3%%a%%b<br /></code></pre></div><br /><br />penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>04 Jul 2018 20:46</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Digging up this old thread just because.  I was commenting on a question at StackOverFlow that was now deleted by the user where they were using this code to generate a 32 character string.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+REM Delay in milliseconds for random number generator to recycle.
+REM pathping -p 2000 -q 1 localhost &gt;nul
+
+break on
+setlocal enabledelayedexpansion
+
+set "xGUID="
+for /L %%n in (1,1,32) do (
+  set /a "hex=!RANDOM! %% 16"
+  if "!hex!"=="10" set "hex=A"
+  if "!hex!"=="11" set "hex=B"
+  if "!hex!"=="12" set "hex=C"
+  if "!hex!"=="13" set "hex=D"
+  if "!hex!"=="14" set "hex=E"
+  if "!hex!"=="15" set "hex=F"
+  set "xGUID=!xGUID!!hex!"
+)
+endlocal &amp; if not "%~1"=="" (set "%~1=%xGUID%") else echo %xGUID%
+exit /b</code></pre></div>
+
+The main question was why running this code from the command prompt would generate the same string.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Batch\GUID&gt;(@for /f "delims=" %a in ('call guid.bat') do @echo %a) &amp;(@for /f "delims=" %a in ('call guid.bat') do @echo %a)
+8227C16A5DDAB03F11EDCDC677CE6300
+8227C16A5DDAB03F11EDCDC677CE6300</code></pre></div>
+If you enable the pathping delay then it would of course generate a different 32 bit string.<br>
+<br>
+But if you ran it from the command prompt this way and with no pathping delay it would generate different strings.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Batch\GUID&gt;call guid.bat &amp;call guid.bat
+7092A72B95EAF5750CF0D9A66CBB05D0
+7E375C1741C206F5180F803677E769CC</code></pre></div>
+
+So that got me thinking I could use the WMIC command to get the seconds down to the thousandths and use that as an additional variable in the random generation.   So I changed the code to this.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+rem Delay in milliseconds for random number generator to recycle.
+REM pathping -p 1000 -q 1 localhost &gt;nul
+
+break on
+setlocal enabledelayedexpansion
+FOR /F "tokens=3 delims==.-" %%G IN ('wmic os get localdatetime /value') DO SET seed=%%G
+set "seed=1%seed:~0,3%"
+
+set "xGUID="
+for /L %%n in (1,1,32) do (
+  set /a "hex=!RANDOM! * seed %% 16"
+  if "!hex!"=="10" set "hex=A"
+  if "!hex!"=="11" set "hex=B"
+  if "!hex!"=="12" set "hex=C"
+  if "!hex!"=="13" set "hex=D"
+  if "!hex!"=="14" set "hex=E"
+  if "!hex!"=="15" set "hex=F"
+  set "xGUID=!xGUID!!hex!"
+)
+endlocal &amp; if not "%~1"=="" (set "%~1=%xGUID%") else echo %xGUID%
+exit /b</code></pre></div>
+That seemed to fix running it from the command line with the FOR command.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Batch\GUID&gt;(@for /f "delims=" %a in ('call guid.bat') do @echo %a) &amp;(@for /f "delims=" %a in ('call guid.bat') do @echo %a)
+F61CE3F57303539CB30F7E0C08DB93A4
+EC28C6EAE606A628660EEC0800A62648</code></pre></div>
+But I got a <span style="color: red">shocking result</span> when I ran the batch file with CALL a couple of times.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Batch\GUID&gt;call guid.bat &amp;call guid.bat
+44AEA0682442644AE6E280E640A0860A
+6EC26FC6A858632C2260E4626F3BB9AF
+
+C:\Batch\GUID&gt;call guid.bat &amp;call guid.bat
+64F1EB9FD572FD6F86C70AF9F129712D
+43DCD0E68692F5AAD03F8CAC4BF43E7C
+
+C:\Batch\GUID&gt;call guid.bat &amp;call guid.bat
+00000000000000000000000000000000
+00000000000000000000000000000000</code></pre></div>
+I almost sharted when I saw that last result come out.  I am not making this up either.  I have a screen shot of this as well if nobody believes me.  My Photochop skills suck.<br>
+<br>
+I am baffled by two 32 character strings of all zeros!  I am probably being dumb right now and not seeing the problem.<br>
+<br>
+Ran it a few more times.  Got a 32 bit string of zeros twice in a row.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Batch\GUID&gt;call guid.bat &amp;call guid.bat
+00000000000000000000000000000000
+0AE2ECC04A6022E60E226A6C06C8CAE8
+
+C:\Batch\GUID&gt;call guid.bat &amp;call guid.bat
+00000000000000000000000000000000
+40D8AD702537153262D6B09B116F5E22</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>04 Jul 2018 22:19</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopica5c8.html?p=57345#p57345" data-post-id="57345" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Jul 2018 20:46</div></cite>
+But I got a <span style="color: red">shocking result</span> when I ran the batch file with CALL a couple of times.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Batch\GUID&gt;call guid.bat &amp;call guid.bat
+44AEA0682442644AE6E280E640A0860A
+6EC26FC6A858632C2260E4626F3BB9AF
+
+C:\Batch\GUID&gt;call guid.bat &amp;call guid.bat
+64F1EB9FD572FD6F86C70AF9F129712D
+43DCD0E68692F5AAD03F8CAC4BF43E7C
+
+C:\Batch\GUID&gt;call guid.bat &amp;call guid.bat
+00000000000000000000000000000000
+00000000000000000000000000000000</code></pre></div>
+I almost sharted when I saw that last result come out.  I am not making this up either.  I have a screen shot of this as well if nobody believes me.  My Photochop skills suck.<br>
+<br>
+I am baffled by two 32 character strings of all zeros!  I am probably being dumb right now and not seeing the problem.<br>
+<br>
+Ran it a few more times.  Got a 32 bit string of zeros twice in a row.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Batch\GUID&gt;call guid.bat &amp;call guid.bat
+00000000000000000000000000000000
+0AE2ECC04A6022E60E226A6C06C8CAE8
+
+C:\Batch\GUID&gt;call guid.bat &amp;call guid.bat
+00000000000000000000000000000000
+40D8AD702537153262D6B09B116F5E22</code></pre></div>
+</div></blockquote>
+No mystery, and I'm pretty sure the CALL issue is a red herring.<br>
+<br>
+The problem is your formula: set /a "hex=!RANDOM! * seed %% 16"<br>
+<br>
+You have a 1 in 16 chance that your seed value will be evenly divisible by 16, which will result in a final string of all zeros.<br>
+<br>
+You could try adding the seed value instead of multiplying.<br>
+<br>
+Another option is to recompute a new seed for each loop iteration. Perhaps you can simply use the last two digits of !time!, which would be much faster than WMIC. I think seed values ranging from 100 to 199 would be enough to get the variability that you need.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>04 Jul 2018 23:21</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Adding instead of multiplying seem to do the trick.  I was roughly getting 674 strings generated a minute and when I was multiplying, I would roughly get 40+ strings with all zeros.  When I changed to adding the seed, I got none.<br>
+<br>
+I tested two ways.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>REM Tested with these two lines
+set /a "hex=(!RANDOM! + seed) %% 16"
+REM set /a "hex=(!RANDOM! + 1!time:~-2!) %% 16"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>05 Jul 2018 00:07</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopica5c8.html?p=57345#p57345" data-post-id="57345" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Jul 2018 20:46</div></cite>
+Digging up this old thread just because.  I was commenting on a question at StackOverFlow that was now deleted by the user where they were using this code to generate a 32 character string.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+REM Delay in milliseconds for random number generator to recycle.
+REM pathping -p 2000 -q 1 localhost &gt;nul
+
+break on
+setlocal enabledelayedexpansion
+
+set "xGUID="
+for /L %%n in (1,1,32) do (
+  set /a "hex=!RANDOM! %% 16"
+  if "!hex!"=="10" set "hex=A"
+  if "!hex!"=="11" set "hex=B"
+  if "!hex!"=="12" set "hex=C"
+  if "!hex!"=="13" set "hex=D"
+  if "!hex!"=="14" set "hex=E"
+  if "!hex!"=="15" set "hex=F"
+  set "xGUID=!xGUID!!hex!"
+)
+endlocal &amp; if not "%~1"=="" (set "%~1=%xGUID%") else echo %xGUID%
+exit /b</code></pre></div>
+
+The main question was why running this code from the command prompt would generate the same string.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Batch\GUID&gt;(@for /f "delims=" %a in ('call guid.bat') do @echo %a) &amp;(@for /f "delims=" %a in ('call guid.bat') do @echo %a)
+8227C16A5DDAB03F11EDCDC677CE6300
+8227C16A5DDAB03F11EDCDC677CE6300</code></pre></div>
+If you enable the pathping delay then it would of course generate a different 32 bit string.<br>
+
+</div></blockquote>
+
+Today I was answering this question on SO but when I hit the post I was shocked by the deleted question. That was very frustrating. All that time, effort and explanation.... poof<br>
+<br>
+This was the suggested code I had prepared:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+
+set "RANDOM="
+set "TIME="
+for /F "tokens=1,3 delims=0123456789" %%A in ("%TIME: =%") do set "time.delims=%%A%%B"
+for /F "tokens=4 delims=%time.delims%" %%A in ("%TIME: =%") do (
+    for /F "tokens=* delims=0" %%A in ("%%A") do (
+        set /a "seed=%%A+1"
+    )
+)
+for /L %%A in (1,1,%seed%) do set /a "!RANDOM!"
+
+set "hDigits=0123456789ABCDEF"
+set "xGUID="
+for /L %%n in (1,1,32) do (
+    set /a "hex=!RANDOM! %% 16"
+    for %%i in (!hex!) do set "xGUID=!xGUID!!hDigits:~%%i,1!" 
+)
+echo %xGUID%
+endlocal &amp; if not "%~1"=="" set "%~1=%xGUID%"
+exit /b
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>05 Jul 2018 04:24</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopica5cd.html?p=57347#p57347" data-post-id="57347" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Jul 2018 23:21</div></cite>
+Adding instead of multiplying seem to do the trick.  I was roughly getting 674 strings generated a minute and when I was multiplying, I would roughly get 40+ strings with all zeros.  When I changed to adding the seed, I got none.<br>
+<br>
+I tested two ways.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>REM Tested with these two lines
+set /a "hex=(!RANDOM! + seed) %% 16"
+REM set /a "hex=(!RANDOM! + 1!time:~-2!) %% 16"</code></pre></div>
+</div></blockquote>
+1 in 16 chance * 674 runs should theoretically yield 42 strings of all zeros. So your results sound about right  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>05 Jul 2018 20:51</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopica5cd.html?p=57347#p57347" data-post-id="57347" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Jul 2018 23:21</div></cite>
+Adding instead of multiplying seem to do the trick.  I was roughly getting 674 strings generated a minute and when I was multiplying, I would roughly get 40+ strings with all zeros.  When I changed to adding the seed, I got none.<br>
+<br>
+I tested two ways.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>REM Tested with these two lines
+set /a "hex=(!RANDOM! + seed) %% 16"
+REM set /a "hex=(!RANDOM! + 1!time:~-2!) %% 16"</code></pre></div>
+</div></blockquote>
+
+It still have a high rate of producing repeating results with successive calls in new instances of cmd (with both wmic and !time!)
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt; (for /L %a in (1,1,50) do @cmd /c guid.bat)|sort
+</code></pre></div>
+
+Raw Output (wmic):
+<blockquote class="uncited"><div>
+D90499C905C6D4550F1B8F0C19B907AB<br>
+95C05585C1829011CBD74BC8D575C367<br>
+407B00307C3D4BCC7682F67380207E12<br>
+1D48DD0D490A1899435FC3405DFD4BEF<br>
+95C05585C1829011CBD74BC8D575C367<br>
+73AE3363AF607EFFA9B529A6B353A145<br>
+1D48DD0D490A1899435FC3405DFD4BEF<br>
+FB26BBEB27E8F677213DA12E3BDB29CD<br>
+B7E277A7E3A4B233EDF96DEAF797E589<br>
+629D22529E5F6DEE98A41895A2429034<br>
+FB26BBEB27E8F677213DA12E3BDB29CD<br>
+B7E277A7E3A4B233EDF96DEAF797E589<br>
+C8F388B8F4B5C344FE0A7EFB08A8F69A<br>
+407B00307C3D4BCC7682F67380207E12<br>
+E3722E38DF60653D066EE650A952761A<br>
+7C0BB7C168F9FEC69FF77FE932EB0FA3<br>
+F4833F49E071764E177FF761BA63872B<br>
+9E2DD9E38A1B10E8B119910B540D21C5<br>
+7C0BB7C168F9FEC69FF77FE932EB0FA3<br>
+49D8849E35C6CB936CC44CB60FB8DC70<br>
+D2611D27CE5F542CF55DD54F98416509<br>
+7C0BB7C168F9FEC69FF77FE932EB0FA3<br>
+0594405AF182875F28800872CB74983C<br>
+C1500C16BD4E431BE44CC43E873054F8<br>
+9E2DD9E38A1B10E8B119910B540D21C5<br>
+5AE995AF46D7DCA47DD55DC710C9ED81<br>
+0594405AF182875F28800872CB74983C<br>
+B04FFB05AC3D320AD33BB32D762F43E7<br>
+7C0BB7C168F9FEC69FF77FE932EB0FA3<br>
+0594405AF182875F28800872CB74983C<br>
+AF3EEAF49B2C21F9C22AA21C651E32D6<br>
+38C7738D24B5BA825BB33BA5FEA7CB6F<br>
+E3722E38DF60653D066EE650A952761A<br>
+C1500C16BD4E431BE44CC43E873054F8<br>
+49D8849E35C6CB936CC44CB60FB8DC70<br>
+8D1CC8D2790A0FD7A00880FA43FC10B4<br>
+3213E7DBFD4E395941F571E97E4029CD<br>
+CBAC706486D7C2E2DA8E0A7207D9B256<br>
+87683C2042938EAE964AC63EC3957E12<br>
+10F1C5B9DB2C17372FD35FC75C2E07AB<br>
+87683C2042938EAE964AC63EC3957E12<br>
+0FE0B4A8CA1B06261EC24EB64B1DF69A<br>
+BA9B6F5375C6B1D1C97DF961F6C8A145<br>
+10F1C5B9DB2C17372FD35FC75C2E07AB<br>
+87683C2042938EAE964AC63EC3957E12<br>
+EDCE9286A8F9E404FCA02C9429FBD478<br>
+543509FD1F605B7B6317930B90624BEF<br>
+CBAC706486D7C2E2DA8E0A7207D9B256<br>
+CBAC706486D7C2E2DA8E0A7207D9B256<br>
+4324F8EC0E5F4A6A520682FA8F513ADE
+</div></blockquote>
+
+Sorted:
+<blockquote class="uncited"><div>
+0594405AF182875F28800872CB74983C<br>
+0594405AF182875F28800872CB74983C<br>
+0594405AF182875F28800872CB74983C<br>
+0FE0B4A8CA1B06261EC24EB64B1DF69A<br>
+10F1C5B9DB2C17372FD35FC75C2E07AB<br>
+10F1C5B9DB2C17372FD35FC75C2E07AB<br>
+1D48DD0D490A1899435FC3405DFD4BEF<br>
+1D48DD0D490A1899435FC3405DFD4BEF<br>
+3213E7DBFD4E395941F571E97E4029CD<br>
+38C7738D24B5BA825BB33BA5FEA7CB6F<br>
+407B00307C3D4BCC7682F67380207E12<br>
+407B00307C3D4BCC7682F67380207E12<br>
+4324F8EC0E5F4A6A520682FA8F513ADE<br>
+49D8849E35C6CB936CC44CB60FB8DC70<br>
+49D8849E35C6CB936CC44CB60FB8DC70<br>
+543509FD1F605B7B6317930B90624BEF<br>
+5AE995AF46D7DCA47DD55DC710C9ED81<br>
+629D22529E5F6DEE98A41895A2429034<br>
+73AE3363AF607EFFA9B529A6B353A145<br>
+7C0BB7C168F9FEC69FF77FE932EB0FA3<br>
+7C0BB7C168F9FEC69FF77FE932EB0FA3<br>
+7C0BB7C168F9FEC69FF77FE932EB0FA3<br>
+7C0BB7C168F9FEC69FF77FE932EB0FA3<br>
+87683C2042938EAE964AC63EC3957E12<br>
+87683C2042938EAE964AC63EC3957E12<br>
+87683C2042938EAE964AC63EC3957E12<br>
+8D1CC8D2790A0FD7A00880FA43FC10B4<br>
+95C05585C1829011CBD74BC8D575C367<br>
+95C05585C1829011CBD74BC8D575C367<br>
+9E2DD9E38A1B10E8B119910B540D21C5<br>
+9E2DD9E38A1B10E8B119910B540D21C5<br>
+AF3EEAF49B2C21F9C22AA21C651E32D6<br>
+B04FFB05AC3D320AD33BB32D762F43E7<br>
+B7E277A7E3A4B233EDF96DEAF797E589<br>
+B7E277A7E3A4B233EDF96DEAF797E589<br>
+BA9B6F5375C6B1D1C97DF961F6C8A145<br>
+C1500C16BD4E431BE44CC43E873054F8<br>
+C1500C16BD4E431BE44CC43E873054F8<br>
+C8F388B8F4B5C344FE0A7EFB08A8F69A<br>
+CBAC706486D7C2E2DA8E0A7207D9B256<br>
+CBAC706486D7C2E2DA8E0A7207D9B256<br>
+CBAC706486D7C2E2DA8E0A7207D9B256<br>
+D2611D27CE5F542CF55DD54F98416509<br>
+D90499C905C6D4550F1B8F0C19B907AB<br>
+E3722E38DF60653D066EE650A952761A<br>
+E3722E38DF60653D066EE650A952761A<br>
+EDCE9286A8F9E404FCA02C9429FBD478<br>
+F4833F49E071764E177FF761BA63872B<br>
+FB26BBEB27E8F677213DA12E3BDB29CD<br>
+FB26BBEB27E8F677213DA12E3BDB29CD
+</div></blockquote>
+
+Mine does not produce repeating results that much but it has a problem of producing shifted results but the amount of shift is small and fixed and is completely noticable:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt; for /L %a in (1,1,4) do @cmd /c sst_guid.bat
+</code></pre></div>
+
+Output:
+<blockquote class="uncited"><div>
+8289B91FF7B6F9E1F3F604EE2B1EAA17<br>
+289B91FF7B6F9E1F3F604EE2B1EAA174<br>
+89B91FF7B6F9E1F3F604EE2B1EAA174A<br>
+9B91FF7B6F9E1F3F604EE2B1EAA174A3
+</div></blockquote>
+
+Changed this line
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set /a "seed=%%A+1"
+</code></pre></div>
+
+to this
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set /a "seed=%%A+1, seed+=((seed %% 10)+1)*100"
+</code></pre></div>
+
+Now the shift is much bigger and variable (it still increases predictably then wraps around)  but no correlation can be detected with naked eye. It has the potential to get optimized further and be more random looking by modular arithmetic.<br>
+Then also adding the seed to !RANDOM! as Squashman did can help to reduce the correlation further.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>05 Jul 2018 20:59</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopic169c.html?p=57352#p57352" data-post-id="57352" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">05 Jul 2018 20:51</div></cite>
+It still have a high rate of producing repeating results with successive calls in new instances of cmd (with both wmic and !time!)
+</div></blockquote>
+Hmm,  I have let it run for a couple of minutes at a time and output thousands of results and have not gotten a duplicate when adding.<br>
+<br>
+Just reran a test using addition with the seed coming from the thousandths seconds from WMIC.  Ran for 6 minutes and got 4148 unique GUID strings.  No duplicates.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5506&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:51:26 GMT -->
+</html>

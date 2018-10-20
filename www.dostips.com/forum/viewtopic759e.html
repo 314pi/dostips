@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6496&p=56356 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:17:31 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>exit function and preserve variable over endlocal barrier - Page 2 - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic9c62.html?t=6496&amp;start=15">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic9ea1-2.html?f=3&amp;t=6496&amp;start=15">exit function and preserve variable over endlocal barrier</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting4bfb.html?mode=reply&amp;f=3&amp;t=6496" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic374b.html?f=3&amp;t=6496&amp;start=15&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="6496" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			24 posts
+							<ul>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic1a62.html?f=3&amp;t=6496" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopic1a62.html?f=3&amp;t=6496" role="button">1</a></li>
+			<li class="active"><span>2</span></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p48590" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile48590">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content48590">
+
+						<h3 class="first"><a href="#p48590">Re: exit function and preserve variable over endlocal barrier</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingcf4f.html?mode=quote&amp;f=3&amp;p=48590" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic43de.html?p=48590#p48590" onclick="prompt('Message #16',this.href); return false;">#16</a></span> 
+									<a class="unread" href="viewtopic43de.html?p=48590#p48590" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>22 Aug 2016 06:17
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>thefeduke wrote:</cite>I am risking some basic questions on scope and barriers. I have been wrestling with CHDIR and PUSHD.<br /><br />Is there such a concept as &quot;implied variables&quot; that would apply to these commands? ...<br /><br />I concluded that %CD% had been localized.<br /></div></blockquote><br /><br />Yes. SETLOCAL/ENDLOCAL commands have an undocumented behavior that saves/restores the current directory as if it was a standard environment variable:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />echo Current directory: %cd%<br /><br />rem SETLOCAL command &quot;saves&quot; the current directory:<br />setlocal<br /><br />md test<br />cd test<br />echo Current directory after changed it: %cd%<br /><br />rem ENDLOCAL command restores last &quot;saved&quot; directory:<br />endlocal<br />echo Current directory after ENDLOCAL:&nbsp; &nbsp;%cd%<br /><br /><br />rem Check this funny error:<br />echo/<br />cd test<br />echo Now in %cd%<br />setlocal<br />cd ..<br />echo Back to %cd%<br />rd test<br />echo The error:<br /></code></pre></div><br />The second example show the &quot;Path not found&quot; error when the Batch file ends, so an implicit ENDLOCAL command is executed and the current directory is tried to  be changed to a non existent directory! This problem was fixed in posterior Windows versions, like in 8.1; I don't remember what was the last Win version that presented this error, but I think was XP.<br /><br />Further details at <a href="viewtopicaff0-2.html?f=3&amp;t=4436" class="postlink">this post</a>.<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p52105" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile52105">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist1887.html?mode=viewprofile&amp;u=8710" class="username">random</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search0379.html?author_id=8710&amp;sr=posts">2</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 28 Apr 2017 10:03</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content52105">
+
+						<h3 ><a href="#p52105">Re: exit function and preserve variable over endlocal barrier</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9aa1.html?mode=quote&amp;f=3&amp;p=52105" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6586.html?p=52105#p52105" onclick="prompt('Message #17',this.href); return false;">#17</a></span> 
+									<a class="unread" href="viewtopic6586.html?p=52105#p52105" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist1887.html?mode=viewprofile&amp;u=8710" class="username">random</a></strong> &raquo; </span>28 Apr 2017 11:04
+			</p>
+			
+			
+			
+			<div class="content">@dbenham<br /><br />I'm using the <a href="viewtopic1a62.html?f=3&amp;t=6496#p41929" class="postlink">RETURN.BAT Version 2.0 you posted in this thread</a> to return a variable with the result from a script doing some string manipulation.<br /><br />The problem is that sometimes the result end up as an empty string. When it does, RETURN.BAT does not return an empty variable, but rather a variable containing <strong class="text-strong">%=%</strong><br /><br />I made a few changes to your test script from the same post to show the issue:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal disableDelayedExpansion<br />call return init<br />for /f %%C in ('copy /z &quot;%~f0&quot; nul') do set &quot;\r=%%C&quot;<br />set ^&quot;\n=^<br /><br />^&quot;<br /><br />set test1=&quot;This &amp; that&quot; ^&amp; the other thing<br />set test2=&quot;This &amp; that&quot; ^&amp; the other thing!<br />set test3=&quot;&amp;&lt;&gt;|%%^&quot; ^&amp;^&lt;^&gt;^|%%^^<br />set test4=&quot;&amp;&lt;&gt;|%%^!&quot; ^&amp;^&lt;^&gt;^|%%^^!<br />setlocal enableDelayedExpansion<br />set &quot;test5=!\n!Line One!\n!hidden!\r!Line Two&quot;<br />set &quot;test6=&quot;<br /><br />set &quot;err1=0&quot;<br />set &quot;err2=1&quot;<br />set &quot;err3=2&quot;<br />set &quot;err4=&quot;<br />set &quot;err5=&quot;<br />set &quot;err6=1&quot;<br /><br />setlocal disableDelayedExpansion<br />echo Delayed expansion is DISABLED<br />:loop<br />echo ------------------------------------------<br />for /l %%N in (1 1 6) do (<br />&nbsp; set &quot;result=&quot;<br />&nbsp; call :test test%%N result err%%N<br />&nbsp; call set &quot;err=%%errorlevel%%&quot;<br />&nbsp; setlocal enableDelayedExpansion<br />&nbsp; echo result=!result!<br />&nbsp; echo errorlevel=!err!<br />&nbsp; endlocal<br />)<br />if &quot;!!&quot; equ &quot;&quot; exit /b<br />echo(<br />echo(<br />setlocal enableDelayedExpansion<br />echo Delayed expansion is ENABLED<br />goto :loop<br /><br /><br />:test<br />setlocal enableDelayedExpansion<br />set rtn=!%1!<br />echo(<br />echo&nbsp; %1=!rtn!<br />call return rtn %2 !%3!<br /></code></pre></div><br /><br />The only changes from the version you posted are an added test6 with a blank/undefined variable:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;test6=&quot;<br />set &quot;err6=1&quot;<br /></code></pre></div><br />And changed 5 to 6 in this for loop:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /l %%N in (1 1 6) do (</code></pre></div><br /><br />I also added a closing <strong class="text-strong">&quot;</strong> to this line. It seemed like it was missing one to me. Not sure if you forgot or if there is some reason for it I don't understand, but the result seems unaffected.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;test5=!\n!Line One!\n!hidden!\r!Line Two&quot;</code></pre></div><br /><br />Output:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Delayed expansion is DISABLED<br />------------------------------------------<br /><br />&nbsp;test1=&quot;This &amp; that&quot; &amp; the other thing<br />result=&quot;This &amp; that&quot; &amp; the other thing<br />errorlevel=0<br /><br />&nbsp;test2=&quot;This &amp; that&quot; &amp; the other thing!<br />result=&quot;This &amp; that&quot; &amp; the other thing!<br />errorlevel=1<br /><br />&nbsp;test3=&quot;&amp;&lt;&gt;|%^&quot; &amp;&lt;&gt;|%^<br />result=&quot;&amp;&lt;&gt;|%^&quot; &amp;&lt;&gt;|%^<br />errorlevel=2<br /><br />&nbsp;test4=&quot;&amp;&lt;&gt;|%^!&quot; &amp;&lt;&gt;|%^!<br />result=&quot;&amp;&lt;&gt;|%^!&quot; &amp;&lt;&gt;|%^!<br />errorlevel=0<br /><br />&nbsp;test5=<br />Line One<br />Line Two<br />result=<br />Line One<br />Line Two<br />errorlevel=0<br /><br />&nbsp;test6=<br />result=%=%<br />errorlevel=1<br /><br /><br />Delayed expansion is ENABLED<br />------------------------------------------<br /><br />&nbsp;test1=&quot;This &amp; that&quot; &amp; the other thing<br />result=&quot;This &amp; that&quot; &amp; the other thing<br />errorlevel=0<br /><br />&nbsp;test2=&quot;This &amp; that&quot; &amp; the other thing!<br />result=&quot;This &amp; that&quot; &amp; the other thing!<br />errorlevel=1<br /><br />&nbsp;test3=&quot;&amp;&lt;&gt;|%^&quot; &amp;&lt;&gt;|%^<br />result=&quot;&amp;&lt;&gt;|%^&quot; &amp;&lt;&gt;|%^<br />errorlevel=2<br /><br />&nbsp;test4=&quot;&amp;&lt;&gt;|%^!&quot; &amp;&lt;&gt;|%^!<br />result=&quot;&amp;&lt;&gt;|%^!&quot; &amp;&lt;&gt;|%^!<br />errorlevel=0<br /><br />&nbsp;test5=<br />Line One<br />Line Two<br />result=<br />Line One<br />Line Two<br />errorlevel=0<br /><br />&nbsp;test6=<br />result=%=%<br />errorlevel=1<br /></code></pre></div><br /><br />As you can see test 6 fails to return an empty string with or without delayed expansion.<br /><br />I was hoping you would be able to fix that issue so I can skip testing for %=% after each call. Apart from returning an empty string I have not found any problems. I have successfully returned stuff like a single space and unicode strings etc.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p52108" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile52108">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content52108">
+
+						<h3 ><a href="#p52108">Re: exit function and preserve variable over endlocal barrier</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8d46.html?mode=quote&amp;f=3&amp;p=52108" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic8dd1.html?p=52108#p52108" onclick="prompt('Message #18',this.href); return false;">#18</a></span> 
+									<a class="unread" href="viewtopic8dd1.html?p=52108#p52108" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>29 Apr 2017 08:24
+			</p>
+			
+			
+			
+			<div class="content">@random - Great first post to this site <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" />  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br />Thanks for your effort.<br /><br />That critical test for undefined result should have been obvious, but somehow I missed it  <img class="smilies" src="images/smilies/icon_redface.gif" alt=":oops:" title="Embarassed" /> <br />The fix just required a couple extra IF DEFINED statements.<br /><br />I've <a href="viewtopicd552.html?f=3&amp;t=6496&amp;p=41929#p41929" class="postlink">updated the post with the fixed v2.1</a>, and incorporated your additional test into the test plan.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p52109" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile52109">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist1887.html?mode=viewprofile&amp;u=8710" class="username">random</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search0379.html?author_id=8710&amp;sr=posts">2</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 28 Apr 2017 10:03</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content52109">
+
+						<h3 ><a href="#p52109">Re: exit function and preserve variable over endlocal barrier</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinge7c7.html?mode=quote&amp;f=3&amp;p=52109" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicf178-2.html?p=52109#p52109" onclick="prompt('Message #19',this.href); return false;">#19</a></span> 
+									<a class="unread" href="viewtopicf178-2.html?p=52109#p52109" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist1887.html?mode=viewprofile&amp;u=8710" class="username">random</a></strong> &raquo; </span>29 Apr 2017 10:54
+			</p>
+			
+			
+			
+			<div class="content">Perfect. Thank you.  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p53466" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile53466">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content53466">
+
+						<h3 ><a href="#p53466">Re: exit function and preserve variable over endlocal barrier</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting1e74.html?mode=quote&amp;f=3&amp;p=53466" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicc3fe.html?p=53466#p53466" onclick="prompt('Message #20',this.href); return false;">#20</a></span> 
+									<a class="unread" href="viewtopicc3fe.html?p=53466#p53466" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>21 Aug 2017 13:19
+			</p>
+			
+			
+			
+			<div class="content">I've updated <a href="viewtopicd552.html?f=3&amp;t=6496&amp;p=41929#p41929" class="postlink">RETURN.BAT</a> to support return of multiple values.<br /><br />Note that the total combined length of all returned variable names and values must be less than ~3.8k bytes. This was the case in earlier versions as well. But the ability to return multiple values makes the limitation more significant.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p56356" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile56356">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc1e4.html?mode=viewprofile&amp;u=5414" class="username">pieh-ejdsch</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search5a70.html?author_id=5414&amp;sr=posts">172</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 04 Mar 2014 11:14</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content56356">
+
+						<h3 ><a href="#p56356">Re: exit function and preserve variable over endlocal barrier</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingd377.html?mode=quote&amp;f=3&amp;p=56356" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic88fd.html?p=56356#p56356" onclick="prompt('Message #21',this.href); return false;">#21</a></span> 
+									<a class="unread" href="viewtopic88fd.html?p=56356#p56356" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc1e4.html?mode=viewprofile&amp;u=5414" class="username">pieh-ejdsch</a></strong> &raquo; </span>14 Apr 2018 18:03
+			</p>
+			
+			
+			
+			<div class="content">I once played around with the return.<br>
+The exclamation point I have replaced in between - as well as the caret.<br>
+Since I'm not quite sure why the exclamation mark in two lines is also available, I left the time as it is.<br>
+Only one variable is used to create variables in delayed and disabled expansion.<br>
+This also eliminates the need to check for delayed expansion.<br>
+<br>
+I leave the version number to Dave.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::RETURN.BAT Version version ??
+@if "%~2" equ "" (goto :return.special) else goto :return
+:::
+:::call RETURN  ValueVar  ReturnVar  [ErrorCode]
+:::  Used by batch functions to EXIT /B and safely return any value across the
+:::  ENDLOCAL barrier.
+:::    ValueVar  = The name of the local variable containing the return value.
+:::    ReturnVar = The name of the variable to receive the return value.
+:::    ErrorCode = The returned ERRORLEVEL, defaults to 0 if not specified.
+:::
+:::call RETURN "ValueVar1 ValueVar2 ..." "ReturnVar1 ReturnVar2 ..." [ErrorCode]
+:::  Same as before, except the first and second arugments are quoted and
+:::  space delimited lists of variable names.
+:::
+:::  Note that the total length of all assignments (variable names and values)
+:::  must be less then 3.8k bytes. No checks are performed to verify that all
+:::  assignments fit within the limit. Variable names must not contain space,
+:::  tab, comma, semicolon, caret, asterisk, question mark, or exclamation point.
+:::
+:::call RETURN  init
+:::  Defines return.LF and return.CR variables. Not required, but should be
+:::  called once at the top of your script to improve performance of RETURN.
+:::
+:::return /?
+:::  Displays this help
+:::
+:::return /V
+:::  Displays the version of RETURN.BAT
+:::
+:::
+:::RETURN.BAT was written by Dave Benham and DosTips user jeb, and was originally
+:::posted within the folloing DosTips thread:
+:::  http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6496
+:::
+::==============================================================================
+::  If the code below is copied within a script, then the :return.special code
+::  can be removed, and your script can use the following calls:
+::
+::    call :return   ValueVar  ReturnVar  [ErrorCode]
+::
+::    call :return.init
+::
+
+:return  ValueVar  ReturnVar  [ErrorCode]
+:: Safely returns any value(s) across the ENDLOCAL barrier. Default ErrorCode is 0
+setlocal enableDelayedExpansion
+if not defined return.LF call :return.init
+if not defined return.CR call :return.init
+set "return.Cmd="
+set "@=%%5"
+set "allReturn.vars=%~2"
+for %%L in ( "!return.LF!" ) do for %%C in ( "!return.CR!"
+ ) do for %%a in (%~1) do for /f "tokens=1*" %%b in ("!allReturn.vars!") do (
+  set "return.var=!%%a!"
+  if defined return.var (
+    set "return.var=!return.var:%%=%%3!"
+    set "return.var=!return.var:%%~L=%%~1!"
+    set "return.var=!return.var:%%~C=%%2!"
+    set "return.var=!return.var:"=%%4!"
+    set "return.var=!return.var:^=%%6!"
+    call set "return.var=%%return.var:^!=^!@^!%%"
+    for /f delims^=^ eol^= %%D in ("!return.var!") do set "return.var=%%D"
+  )
+  set "return.Cmd=!return.Cmd!!return.LF!set "%%b=!return.var!"^!"
+  set "allReturn.vars=%%c"
+)
+
+set "err=%~3"
+if not defined err set "err=0"
+for %%1 in ("!return.LF!") do for /f "tokens=1-3" %%2 in (^"!return.CR! %% "") do (
+  (goto) 2&gt;nul
+  (goto) 2&gt;nul
+  set "%% =1 ^^^! ^^^^"
+  for /f "tokens=2-3" %%5 in ("!%% ! ^") do ( %return.Cmd%
+  )
+  set "%% ="
+  if %err% equ 0 (call ) else if %err% equ 1 (call) else cmd /c exit %err%
+)
+
+:return.special
+@if /i "%~1" equ "init" goto return.init
+@if "%~1" equ "/?" (
+  for /f "tokens=* delims=:" %%A in ('findstr "^:::" "%~f0"') do @echo(%%A
+  exit /b 0
+)
+@if /i "%~1" equ "/V" (
+  for /f "tokens=* delims=:" %%A in ('findstr /rc:"^::RETURN.BAT Version" "%~f0"') do @echo %%A
+  exit /b 0
+)
+@&gt;&amp;2 echo ERROR: Invalid call to RETURN.BAT
+@exit /b 1
+
+:return.init  -  Initializes the return.LF and return.CR variables
+set ^"return.LF=^
+
+^" The empty line above is critical - DO NOT REMOVE
+for /f %%C in ('copy /z "%~f0" nul') do set "return.CR=%%C"
+exit /b 0
+
+</code></pre></div>
+
+PS. check out the variable in: return.SetDelayed with echo - where does the "hidden" come from?<br>
+<br>
+[edit]<br>
+subroutine :return.setDelayed is deleted<br>
+reduced to "call set" and  "for /f "<br>
+[/edit]<br>
+<br>
+Phil</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlistc1e4.html?mode=viewprofile&amp;u=5414" class="username">pieh-ejdsch</a> on 25 Apr 2018 13:16, edited 1 time in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p56454" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile56454">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content56454">
+
+						<h3 ><a href="#p56454">Re: exit function and preserve variable over endlocal barrier</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinge60b.html?mode=quote&amp;f=3&amp;p=56454" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5a59.html?p=56454#p56454" onclick="prompt('Message #22',this.href); return false;">#22</a></span> 
+									<a class="unread" href="viewtopic5a59.html?p=56454#p56454" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>19 Apr 2018 18:00
+			</p>
+			
+			
+			
+			<div class="content">Hi Phil.<br>
+<br>
+The FOR /F loop to handle conditional escaping of ! and ^ is very clever, and the general concept of using 1 return variable instead of 2 is attractive. I did some tests, and your version does seem to work.<br>
+<br>
+But your code is inconsequentially longer, and doesn't seem to perform noticeably faster. The logic is clever, but I find it a bit harder to follow. In my version I intentionally prefix all temporary, local variables with return. so that it is extremely unlikely to ever collide with a user supplied input variable name. You abandoned that strategy by using allReturn.vars, but that is easily fixed by changing to return.vars. Both of our uses of err is after the danger of name collision is past, so it is OK.<br>
+<br>
+In summary, I don't see any compelling reason to switch. But maybe I am missing something  <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question"> <br>
+<br>
+<br>
+Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p56455" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile56455">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search0d5e.html?author_id=2453&amp;sr=posts">1497</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 16 May 2011 08:21</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Flanders(Belgium)</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact Ed Dyreen">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact Ed Dyreen</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://ed-dyreen.ddns.net/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content56455">
+
+						<h3 ><a href="#p56455">Re: exit function and preserve variable over endlocal barrier</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting538a.html?mode=quote&amp;f=3&amp;p=56455" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4ff6.html?p=56455#p56455" onclick="prompt('Message #23',this.href); return false;">#23</a></span> 
+									<a class="unread" href="viewtopic4ff6.html?p=56455#p56455" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a></strong> &raquo; </span>19 Apr 2018 18:34
+			</p>
+			
+			
+			
+			<div class="content">Greetings Dave,<br>
+<br>
+I see that during my absence you've made some remarkable improvements to your return function.<br>
+<br>
+This line I find of particular interest<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set "return.var=%return.var:!=!delayed!%" !
+</code></pre></div>
+I find it odd to see that readtime expansion could succeed if it has nested runtime expansion which based on my current knowledge can never succeed. Can you or anyone link me to the dostips topic where this was first discussed here on dostips ?<br>
+<br>
+<br>
+Thanks in advance.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p56456" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile56456">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content56456">
+
+						<h3 ><a href="#p56456">Re: exit function and preserve variable over endlocal barrier</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5d7b.html?mode=quote&amp;f=3&amp;p=56456" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicfe65.html?p=56456#p56456" onclick="prompt('Message #24',this.href); return false;">#24</a></span> 
+									<a class="unread" href="viewtopicfe65.html?p=56456#p56456" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>19 Apr 2018 18:52
+			</p>
+			
+			
+			
+			<div class="content">Hi Ed.<br>
+<br>
+That line is from Phil (pieh-ejdsch), not me.<br>
+<br>
+There is nothing mysterious about it.<br>
+<br>
+Starting value: <strong class="text-strong"><span style="color: #0000FF"> "return.var=Hello world!"</span></strong><br>
+<br>
+Starting statement: <strong class="text-strong"><span style="color: #0000FF">set "return.var=%return.var:!=!delayed!%"  !</span></strong><br>
+<br>
+After percent expansion: <strong class="text-strong"><span style="color: #0000FF">set "return.var=Hello world!delayed!" !</span></strong><br>
+<br>
+After delayed expansion: <strong class="text-strong"><span style="color: #0000FF">set "return.var=Hello world%5"</span></strong><br>
+<br>
+And then the SET is executed.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting4bfb.html?mode=reply&amp;f=3&amp;t=6496" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic374b.html?f=3&amp;t=6496&amp;start=15&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6496&amp;start=15">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			24 posts
+							<ul>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic1a62.html?f=3&amp;t=6496" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopic1a62.html?f=3&amp;t=6496" role="button">1</a></li>
+			<li class="active"><span>2</span></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5089.gif?cron_type=cron.task.text_reparser.post_text" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6496&p=56356 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:17:31 GMT -->
+</html>

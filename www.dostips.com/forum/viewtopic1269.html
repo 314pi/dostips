@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8761&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:46:28 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Pull from log.txt to delete file</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Pull from log.txt to delete file</h2>
+		<p><a href="viewtopic0053.html?f=3&amp;t=8761">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8761</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Pull from log.txt to delete file</h3>
+				<div class="date">Posted: <strong>01 Aug 2018 09:14</strong></div>
+				<div class="author">by <strong>IanObe@hotmail.com</strong></div>
+				<div class="content">So, I'm trying to make a bat file that copies data but after so many days I want it to delete folders as well. My plan is to have the script write a log giving each backup event a number that counts up 1 every time it runs then after 30 days it will delete the folder. So if the script made backup number 35 it would delete backup number 5. At the moment I have no Idea how to make a log that would count like this or would I know how to make my bat count back so many days to find the file to delete. If it helps here is the way I create my backup folder.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set t = %date:~4,2%-%date:~7,2%-%date:~10,4%@%time:~0,2%.%time:~3,2%
+set destination = C:\OfficeBackups\%t%
+echo Creating directory
+mkdir %destination%</code></pre></div>
+
+I do not want to have to download anything all I want is to know if it is possible to make a database type txt file that keeps counting up 1 every time a file is added and deletes 1 file after 30 other files have been added. If you know a way to avoid having to pull from my log idea please tell me.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Pull from log.txt to delete file</h3>
+				<div class="date">Posted: <strong>01 Aug 2018 10:29</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">May I suggest a different way? As far as I understood you create subfolders in C:\OfficeBackups where you want to keep the 30 newest folders. If there are more than 30 folders then the old folders that exceed this limit shall be deleted. Is that correct?<br>
+<br>
+Try
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+pushd "C:\OfficeBackups"
+for /f "skip=30 delims=" %%i in ('dir /ad /b /tc /o-d') do ECHO rd /s /q "%%i"
+popd
+PAUSE
+</code></pre></div>
+This code doesn't delete anything yet. It only shows the commands. If the right folders were displayed then remove ECHO and PAUSE to perform the deletion.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8761&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:46:28 GMT -->
+</html>

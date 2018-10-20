@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6111&p=38627 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:42:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Request: download a file if and only if its size changes - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopicf70e.html?t=6111">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopicb9a5.html?f=3&amp;t=6111">Request: download a file if and only if its size changes</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="postingf876.html?mode=reply&amp;f=3&amp;t=6111" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic4ebc.html?f=3&amp;t=6111&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="6111" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			9 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p38580" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38580">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2c22.html?mode=viewprofile&amp;u=5646" class="username">transitionality</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchaa6f.html?author_id=5646&amp;sr=posts">10</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 09 Jul 2014 03:53</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38580">
+
+						<h3 class="first"><a href="#p38580">Request: download a file if and only if its size changes</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingd101-2.html?mode=quote&amp;f=3&amp;p=38580" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7d46.html?p=38580#p38580" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopic7d46.html?p=38580#p38580" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2c22.html?mode=viewprofile&amp;u=5646" class="username">transitionality</a></strong> &raquo; </span>09 Dec 2014 13:28
+			</p>
+			
+			
+			
+			<div class="content">I'd like a batch file to do the following:<br /><br />* Read the expected file size of the target file (in bytes) from a save file.<br />* Connect to the server hosting the target file and query its file size (in bytes).<br />* If the two values match, quit. If they don't, download the target file to a specific local path (overwriting the current instance) and update the file size value in the save file.<br /><br />I use curl for command-line downloading, but I can probably adapt solutions using other tools.<br /><br />Thanks.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38587" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38587">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38587">
+
+						<h3 ><a href="#p38587">Re: Request: download a file if and only if its size changes</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingb7bb.html?mode=quote&amp;f=3&amp;p=38587" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicf479.html?p=38587#p38587" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopicf479.html?p=38587#p38587" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>09 Dec 2014 19:57
+			</p>
+			
+			
+			
+			<div class="content">Your question could be improved with further details.<br /><br />See here: <!-- l --><a class="postlink-local" href="viewtopicf756.html?f=3&amp;t=6108">viewtopic.php?f=3&amp;t=6108</a><!-- l --></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38595" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38595">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2c22.html?mode=viewprofile&amp;u=5646" class="username">transitionality</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchaa6f.html?author_id=5646&amp;sr=posts">10</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 09 Jul 2014 03:53</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38595">
+
+						<h3 ><a href="#p38595">Re: Request: download a file if and only if its size changes</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingcd9e.html?mode=quote&amp;f=3&amp;p=38595" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1a47-2.html?p=38595#p38595" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopic1a47-2.html?p=38595#p38595" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2c22.html?mode=viewprofile&amp;u=5646" class="username">transitionality</a></strong> &raquo; </span>09 Dec 2014 22:13
+			</p>
+			
+			
+			
+			<div class="content">No Non-Latin characters are involved.<br /><br />For the purposes of this exercise, assume that the save file is located at C:\save.txt, the target file at C:\target.txt, and on the internet at <!-- m --><a class="postlink" href="http://www.example.com/target.txt">http://www.example.com/target.txt</a><!-- m -->.<br /><br />Assume curl.exe is included in the PATH, so calling curl suffices.<br /><br />Thank you.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38598" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38598">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38598">
+
+						<h3 ><a href="#p38598">Re: Request: download a file if and only if its size changes</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingad92.html?mode=quote&amp;f=3&amp;p=38598" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic2ec7.html?p=38598#p38598" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopic2ec7.html?p=38598#p38598" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>10 Dec 2014 02:09
+			</p>
+			
+			
+			
+			<div class="content">Which part do you need help with.<br /><br />At least you have revealed that it's HTTP and not FTP.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38601" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38601">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8beb.html?mode=viewprofile&amp;u=5056" class="username">ShadowThief</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search9642.html?author_id=5056&amp;sr=posts">853</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Sep 2013 21:28</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Virginia, United States</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38601">
+
+						<h3 ><a href="#p38601">Re: Request: download a file if and only if its size changes</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf7d0.html?mode=quote&amp;f=3&amp;p=38601" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicbd61.html?p=38601#p38601" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopicbd61.html?p=38601#p38601" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8beb.html?mode=viewprofile&amp;u=5056" class="username">ShadowThief</a></strong> &raquo; </span>10 Dec 2014 04:41
+			</p>
+			
+			
+			
+			<div class="content">The fact that you're using cURL makes this much easier. I recommend looking at the official documentation. It sounds like the -I flag is exactly what you need to make this work.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38620" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38620">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2c22.html?mode=viewprofile&amp;u=5646" class="username">transitionality</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchaa6f.html?author_id=5646&amp;sr=posts">10</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 09 Jul 2014 03:53</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38620">
+
+						<h3 ><a href="#p38620">Re: Request: download a file if and only if its size changes</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting1fbe.html?mode=quote&amp;f=3&amp;p=38620" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic2355.html?p=38620#p38620" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopic2355.html?p=38620#p38620" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2c22.html?mode=viewprofile&amp;u=5646" class="username">transitionality</a></strong> &raquo; </span>10 Dec 2014 12:26
+			</p>
+			
+			
+			
+			<div class="content">I'm beginner-intermediate, so I can probably script each individual task, but the branching structure puzzles me. I'd also like to be able to set the file paths and the URL to variables (so I can quickly change them at the top), and I'm not sure of the exact syntax for that. Thanks.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38622" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38622">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38622">
+
+						<h3 ><a href="#p38622">Re: Request: download a file if and only if its size changes</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingc9f7.html?mode=quote&amp;f=3&amp;p=38622" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicd3dd.html?p=38622#p38622" onclick="prompt('Message #7',this.href); return false;">#7</a></span> 
+									<a class="unread" href="viewtopicd3dd.html?p=38622#p38622" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>10 Dec 2014 13:28
+			</p>
+			
+			
+			
+			<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;url=http://www.example.com/target.txt&quot;</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38627" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38627">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist4de0.html?mode=viewprofile&amp;u=5191" class="username">AiroNG</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchab4d.html?author_id=5191&amp;sr=posts">45</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 17 Nov 2013 15:00</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38627">
+
+						<h3 ><a href="#p38627">Re: Request: download a file if and only if its size changes</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting6c69.html?mode=quote&amp;f=3&amp;p=38627" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic0851-2.html?p=38627#p38627" onclick="prompt('Message #8',this.href); return false;">#8</a></span> 
+									<a class="unread" href="viewtopic0851-2.html?p=38627#p38627" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist4de0.html?mode=viewprofile&amp;u=5191" class="username">AiroNG</a></strong> &raquo; </span>11 Dec 2014 01:17
+			</p>
+			
+			
+			
+			<div class="content">Alternatively you could try this: (wget is required though):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:update<br />SET new=%tmp%\%name%\update.bat<br />SET old=update.bat<br /><br />rem get file<br />echo:<br />echo:&nbsp; connecting to server and aquiring file...<br />&nbsp;wget.exe -q -O %tmp%\%name%%ext% %url%%name%%ext% 2&gt;nul<br /><br />rem looks for filesize and puts them into variables<br />&nbsp;FOR %%A IN (%old%) DO ( SET /a &quot;oldsize&quot;=&quot;%%~zA&quot; )<br />&nbsp;FOR %%B IN (%new%) DO ( SET /a &quot;newsize&quot;=&quot;%%~zB&quot; )<br /><br />rem checking filesize<br />&nbsp;IF &quot;%newsize%&quot; gtr &quot;%oldsize%&quot; GOTO update_yes<br />GOTO :eof<br /><br />:update_yes<br />CLS<br />echo:<br />echo: an update is aviable!<br />echo:<br />echo: current filesize: %oldsize% bytes<br />echo:<br />echo: filesize on the server: %newsize% bytes<br />echo:<br />pause<br /></code></pre></div><br /><br />This only checks for updates. It doesn't install/apply them.<br /><br /><br /><br />The code below is my current version of an update script. It<br />needs wget.exe and 7z.exe to work and will install the update<br />if necessary or wanted (forced update). I'm too lazy right now<br />to translate it into english so you've got to deal with it's german comments  <img class="smilies" src="images/smilies/icon_mrgreen.gif" alt=":mrgreen:" title="Mr. Green" /> <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />set url=http://wherever.com/whatever/<br />set name=update<br />set ext=.rar<br />set olddir=%cd%<br />set versionupdate=<br />set versionprog=<br /><br />if &quot;%1&quot;==&quot;-f&quot; goto forceupdate<br />if &quot;%1&quot;==&quot;/f&quot; goto forceupdate<br />if &quot;%1&quot;==&quot;-n&quot; goto normal<br />if &quot;%1&quot;==&quot;/n&quot; goto normal<br />if &quot;%1&quot;==&quot;&quot; goto info<br /><br /><br />:info<br />echo:<br />echo:&nbsp; &nbsp; &nbsp;Updatesystem fuer das USB-Stick-Tool<br />echo:<br />echo: Benutzung: update &#91;-option&#93; oder &#91;/option&#93;<br />echo:<br />echo: -f und /f&nbsp; &nbsp; Erzwingt Update ohne Versionskontrolle<br />echo: -n und /n&nbsp; &nbsp; Startet ein regulaeres Update<br />echo:<br />goto eof<br /><br />:normal<br />:: startet das Updatesystem<br />cls<br /><br />:: Überprüfung ob Update-Ordner bereits existiert und ggf löschung<br />&nbsp;if exist %tmp%\%name%\ (del /Q %tmp%\%name%\)<br /><br />:: Paket holen<br />&nbsp;wget.exe -q -O %tmp%\%name%%ext% %url%%name%%ext% 2&gt;nul<br /><br />:: Entpacken des Update-Paketes<br />&nbsp;7z.exe x -y %tmp%\%name%.rar -o%tmp%\%name% 2&gt;nul<br />&nbsp;<br />:: setzt Variabel für Updateversion<br />find &quot;rem&quot; %name%%ext%&gt;%tmp%\tmp1.txt<br />for /f &quot;tokens=1-3 delims= &quot; %%a in (%tmp%\tmp1.txt) do (<br />&nbsp; &nbsp;if /i &quot;%%a&quot;==&quot;rem&quot; set versionprog=%%c<br />&nbsp; &nbsp; &nbsp; &nbsp; )<br />find &quot;rem&quot; %tmp%\%name%\%name%%ext%&gt;%tmp%\tmp2.txt<br />for /f &quot;tokens=1-3 delims= &quot; %%a in (%tmp%\tmp2.txt) do (<br />&nbsp; &nbsp;if /i &quot;%%a&quot;==&quot;rem&quot; set versionupdate=%%c<br />&nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp;<br />:: Versions-Check<br />&nbsp;if &quot;%versionupdate%&quot; gtr &quot;%versionprog%&quot; goto jop<br />goto nope<br /><br />:jop<br />:: &quot;installiert&quot; neue Dateien und löscht Updateordner und Updatepacket<br />&nbsp;move /y %tmp%\%name%\*.* %olddir%\<br />&nbsp;rmdir /s /q %tmp%\%name%\<br />&nbsp;del /q %tmp%\%name%%ext%<br />&nbsp;echo:<br />&nbsp;echo:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Update erfolgreich durchgefuehrt...<br />&nbsp;echo:<br />&nbsp; if exist %tmp%\tmp1.txt (del /q %tmp%\tmp1.txt)<br />&nbsp; if exist %tmp%\tmp2.txt (del /q %tmp%\tmp2.txt)<br />&nbsp; pause<br />goto ende<br /><br />:nope<br />:: Update nicht nötig<br />&nbsp;rmdir /s /q %tmp%\%name%\<br />&nbsp;del /q %tmp%\%name%%ext%<br />&nbsp;echo:<br />&nbsp;echo:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Update nicht noetig, keine neuere Version vorhanden...<br />&nbsp;echo:<br />&nbsp; if exist %tmp%\tmp1.txt (del /q %tmp%\tmp1.txt)<br />&nbsp; if exist %tmp%\tmp2.txt (del /q %tmp%\tmp2.txt)<br />&nbsp; pause<br />goto ende<br /><br />:forceupdate<br />:: Erzwungenes Update, falls Dateien fehlen oder man die zieldatei geDAUt hat...<br />&nbsp;wget.exe -q -O %tmp%\%name%%ext% %url%%name%%ext% 2&gt;nul<br />&nbsp;7z.exe x -y %tmp%\%name%.rar -o%tmp%\%name% 2&gt;nul<br />&nbsp;move /y %tmp%\%name%\*.* %olddir%\<br />&nbsp;rmdir /s /q %tmp%\%name%\<br />&nbsp;del /q %tmp%\%name%%ext%<br />&nbsp;echo:<br />&nbsp;echo:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Erzwungenes Update durchgefuehrt...<br />&nbsp;echo:<br />&nbsp; if exist %tmp%\tmp1.txt (del /q %tmp%\tmp1.txt)<br />&nbsp; if exist %tmp%\tmp2.txt (del /q %tmp%\tmp2.txt)<br />&nbsp;pause<br />goto ende<br /><br /><br />:ENDE<br /></code></pre></div><br /><br />edit: corrected little mistake</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38631" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38631">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2c22.html?mode=viewprofile&amp;u=5646" class="username">transitionality</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchaa6f.html?author_id=5646&amp;sr=posts">10</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 09 Jul 2014 03:53</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38631">
+
+						<h3 ><a href="#p38631">Re: Request: download a file if and only if its size changes</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0372.html?mode=quote&amp;f=3&amp;p=38631" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic885f.html?p=38631#p38631" onclick="prompt('Message #9',this.href); return false;">#9</a></span> 
+									<a class="unread" href="viewtopic885f.html?p=38631#p38631" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2c22.html?mode=viewprofile&amp;u=5646" class="username">transitionality</a></strong> &raquo; </span>11 Dec 2014 11:30
+			</p>
+			
+			
+			
+			<div class="content">No installation is required, the file in question is a text file, and simply needs to be downloaded.<br /><br />I should be able to adapt the code you provided.<br /><br />Thank you.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="postingf876.html?mode=reply&amp;f=3&amp;t=6111" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic4ebc.html?f=3&amp;t=6111&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6111">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			9 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5897.gif?cron_type=cron.task.text_reparser.poll_option" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6111&p=38627 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:42:21 GMT -->
+</html>

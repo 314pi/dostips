@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8517&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:20:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; stamps - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>stamps</h2>
+		<p><a href="viewtopicf080.html?f=3&amp;t=8517">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8517</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>25 Apr 2018 11:02</strong></div>
+				<div class="author">by <strong>miskox</strong></div>
+				<div class="content">Wow!<br>
+<br>
+Thank you all! Thanks Dave for finding that 'mistake'. <br>
+<br>
+At first it looked like an easy task and it turned out to be a great exercise.<br>
+<br>
+Thank you all.<br>
+<br>
+Saso</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>25 Apr 2018 12:22</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I investigated the performance, and I'm pretty sure the maximum number of CALLs to :solve must be &lt;=111 for any given number.<br>
+<br>
+I tested all values from 1 to 4000, and the maximum number of CALLs was 55, and the vast majority required between 30 and 50 calls.<br>
+<br>
+I looked at the results of running 1 to 4000, and I no longer believe there is a maximum value for which the optimum solution requires 2 x 0.02.<br>
+<br>
+It would be tedious, but it shouldn't be too hard to modify my algorithm to be purely iterative, as one big set of nested FOR loops, without any need for SETLOCAL. I'm sure it would improve performance significantly. But I don't think it would be worth while given that 3905 requiring 55 CALLs takes just 0.4 seconds. Even if there is a value that requires 111 CALLs, it should still take less than 1 second.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>25 Apr 2018 17:00</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">You must have missed one or more optimization steps; some examples:<br>
+260 requires 5 stamps:<br>
+----------------------------------<br>
+2 x D<br>
+1 x 0.05<br>
+1 x 0.02<br>
+1 x 0.01<br>
+<br>
+An optimal solution requires 4 stamps:<br>
+2 x C<br>
+1 x A<br>
+1 x 0,20<br>
+<br>
+<br>
+288 requires 5 stamps:<br>
+----------------------------------<br>
+1 x D<br>
+1 x C<br>
+1 x A<br>
+1 x 0.20<br>
+1 x 0.02<br>
+<br>
+An optimal solution requires 4 stamps:<br>
+2 x C<br>
+1 x B<br>
+1 x A<br>
+<br>
+<br>
+296 requires 5 stamps:<br>
+----------------------------------<br>
+2 x D<br>
+1 x A<br>
+2 x 0.02<br>
+<br>
+An optimal solution requires 4 stamps:<br>
+2 x C<br>
+2 x B<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>25 Apr 2018 22:20</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Thanks penpen. The failure comes from my erroneous 2nd postulate where I only allow a count of n or n-1 for any given denomination. I had to change the algorithm to allow each denomination to test more than 2 counts.<br>
+<br>
+It was surprisingly easy. I didn't spend much time trying to optimize the implementation of the modified algorithm. For example, it often performs a GOTO before it checks if the current count is positive - if I checked the count first then I could avoid a GOTO. The corrective change definitely slows everything down a bit, but it is still plenty fast  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo  off
+setlocal enableDelayedExpansion
+
+:: Define stamps
+set /a n=0
+for %%A in (D@126@0x7FFFFFFF C@100@2 B@48@4 A@40@2 0.20@20@1 0.10@10@1 0.05@5@1 0.02@2@2 0.01@1@1) do (
+  for /f "delims=@ tokens=1-3" %%B in ("%%A") do (
+    set /a n+=1
+    set "stamp.!n!.label=%%B"
+    set /a "stamp.!n!.value=%%C, stamp.!n!.max=%%D"
+  )
+)
+
+call :solve %1 1 solution
+echo(
+if %solution.count% == 1 (echo %1 requires 1 stamp:) else echo %1 requires %solution.count% stamps:
+echo ----------------------------------
+for %%S in (%solution.list%) do for /f "delims=@ tokens=1,2" %%A in ("%%S") do echo %%A x !stamp.%%B.label!
+
+exit /b
+
+:solve  Target  StampIndex  ReturnVar
+setlocal
+set /a "count=%1/stamp.%2.value, remainder=%1%%stamp.%2.value, solution.count+=count, next=%2+1"
+if %count% gtr !stamp.%2.max! exit /b 1
+if %remainder% equ 0 (
+  endlocal
+  set /a %3.count=%count%
+  set "%3.list=%count%@%2"
+  exit /b 0
+)
+call :solve %remainder% %next% A || exit /b 1
+set /a A.count+=count
+if %count% gtr 0 set "A.list=%count%@%2 %A.list%"
+:decrement
+if %count% gtr 0 (
+  set /a "count-=1, remainder+=stamp.%2.value"
+  call :solve !remainder! %next% B &amp;&amp; (
+    set /a B.count+=count
+    if !B.count! lss !A.count! (
+      set /a A.count=B.count
+      if !count! gtr 0 (set "A.list=!count!@%2 !B.list!") else set "A.list=!B.list!"
+    )
+    goto :decrement
+  )
+)
+( endlocal
+  set /a %3.count=%A.count%
+  set "%3.list=%A.list%"
+)
+exit /b 0
+</code></pre></div>
+
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>26 Apr 2018 00:20</strong></div>
+				<div class="author">by <strong>miskox</strong></div>
+				<div class="content">@Dave: Thanks! Great!<br>
+<br>
+Your code is too complicated to understand. Could you please make a list of stamps (values/display) more user friendly so new stamps could be added or removed with ease.<br>
+<br>
+One more thing: how can I use comma as a decimal point? If I replace '0.20' with '0,20' I get divide by zero. Also this message is displayed:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>******  B A T C H   R E C U R S I O N  exceeds STACK limits ******
+Recursion Count=649, Stack Usage=90 percent
+******       B A T C H   PROCESSING IS   A B O R T E D      ******
+</code></pre></div>
+
+Thanks.<br>
+Saso</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>26 Apr 2018 03:15</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">@Dave:<br>
+I've tested the values to 3000, and still found errors:<br>
+344 requires 6 stamps:<br>
+----------------------------------<br>
+2 x D<br>
+1 x B<br>
+1 x A<br>
+2 x 0.02<br>
+<br>
+An optimal solution requires 5 stamps:<br>
+2 x C<br>
+3 x B<br>
+<br>
+470 requires 7 stamps:<br>
+----------------------------------<br>
+3 x D<br>
+1 x B<br>
+1 x A<br>
+2 x 0.02<br>
+<br>
+An optimal solution requires 6 stamps:<br>
+1 x D<br>
+2 x C<br>
+3 x B<br>
+<br>
+If i see it right, then they all have the same structure, :<br>
+344+n*126 requires 6+n stamps:; n &gt;= 0<br>
+----------------------------------<br>
+(2+n) x D<br>
+1 x B<br>
+1 x A<br>
+2 x 0.02<br>
+<br>
+An optimal solution requires 5+n stamps:<br>
+n x D<br>
+2 x C<br>
+3 x B<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>26 Apr 2018 15:14</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist77fa.html?mode=viewprofile&amp;u=1506">miskox</a> wrote: <a href="viewtopicc433.html?p=56533#p56533" data-post-id="56533" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">26 Apr 2018 00:20</div></cite>
+Your code is too complicated to understand. Could you please make a list of stamps (values/display) more user friendly so new stamps could be added or removed with ease.<br>
+<br>
+One more thing: how can I use comma as a decimal point? If I replace '0.20' with '0,20' I get divide by zero.
+</div></blockquote>
+My new code at the bottom of this post is a step in the direction of making it easy to modify the list of stamps. It now supports commas.<br>
+<br>
+But the Max and Continue columns are pre-computed optimizations that enable my code to consistently come up with an optimal solution in under 1.5 seconds, no matter how large the target value. I don't have a simple way to derive those constants. Over the next few days I'll try to use a derivative of penpen's  code to derive Max and Continue constants for each stamp denomination.<br>
+
+<blockquote><div><cite><a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915">penpen</a> wrote: <a href="viewtopic7d06.html?p=56535#p56535" data-post-id="56535" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">26 Apr 2018 03:15</div></cite>
+I've tested the values to 3000, and still found errors:<br>
+344 requires 6 stamps:<br>
+----------------------------------<br>
+2 x D<br>
+1 x B<br>
+1 x A<br>
+2 x 0.02<br>
+<br>
+An optimal solution requires 5 stamps:<br>
+2 x C<br>
+3 x B<br>
+<br>
+470 requires 7 stamps:<br>
+----------------------------------<br>
+3 x D<br>
+1 x B<br>
+1 x A<br>
+2 x 0.02<br>
+<br>
+An optimal solution requires 6 stamps:<br>
+1 x D<br>
+2 x C<br>
+3 x B<br>
+<br>
+If i see it right, then they all have the same structure, :<br>
+344+n*126 requires 6+n stamps:; n &gt;= 0<br>
+----------------------------------<br>
+(2+n) x D<br>
+1 x B<br>
+1 x A<br>
+2 x 0.02<br>
+<br>
+An optimal solution requires 5+n stamps:<br>
+n x D<br>
+2 x C<br>
+3 x B
+</div></blockquote>
+Thanks again. I see the source of my problem.<br>
+<br>
+My stamp.n.max value represents the largest possible optimized count value for stamp n. I build a solution by starting with the largest denomination, and working toward the smallest. When I divide the target (remainder) by a denomination value, I quit (backtrack) if the count is greater than the max. But that strategy fails to take into account the fact that the sum of the optimized smaller denominations may exceed the denomination in question.<br>
+<br>
+My new algorithm adds a second threshold called Continue that represents the largest acceptable initial count for that initial division. If the count exceeds the Continue threshold, then I backtrack. The Continue value is always &gt;= the Max value. To compute Continue, I sum up Max * Value for all lesser denominations, and then divide by my current denomination value. I take this result and add it to the Max to get Continue. I'm pretty sure my computed Continue is sometimes larger than it needs to be, but that is OK. I want to be sure that my algorithm always gives a true optimized solution.<br>
+<br>
+I'm feeling much more confident that I have finally reached the goal <img class="smilies" src="images/smilies/icon_rolleyes.gif" width="15" height="15" alt=":roll:" title="Rolling Eyes">  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+<br>
+Of course the changes slow things down a bit yet again. For "small" numbers my code is no faster than yours (penpen).<br>
+<br>
+But my code has a maximum possible number of computations, regardless how big the target value gets. I have still yet to see any target value take longer than 1.5 seconds.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo  off
+setlocal enableDelayedExpansion
+
+set /a "infinite=0x7FFFFFFF"
+
+:: Define stamps
+set /a n=0
+for %%A in (
+%= Label Value     Max       Continue =%
+  "D       126  %infinite%  %infinite%"
+  "C       100      2           5"
+  "B        48      4           6"
+  "A        40      2           2"
+  "0,20     20      1           1"
+  "0,10     10      1           1"
+  "0,05      5      1           1"
+  "0,02      2      2           2"
+  "0,01      1      1           1"
+) do (
+  for /f "tokens=1-4 delims= " %%B in ("%%~A") do (
+    set /a n+=1
+    set "stamp.!n!.label=%%B"
+    set /a "stamp.!n!.value=%%C, stamp.!n!.max=%%D, stamp.!n!.continue=%%E"
+  )
+)
+
+call :solve %1 1 solution
+echo(
+if %solution.count% == 1 (echo %1 requires 1 stamp:) else echo %1 requires %solution.count% stamps:
+echo ----------------------------------
+for %%S in (%solution.list%) do for /f "delims=@ tokens=1,2" %%A in ("%%S") do echo %%A x !stamp.%%B.label!
+
+exit /b
+
+:solve  Target  StampIndex  ReturnVar
+setlocal
+set /a "count=%1/stamp.%2.value, remainder=%1%%stamp.%2.value, next=%2+1"
+if %count% gtr !stamp.%2.continue! exit /b 1
+if %count% gtr !stamp.%2.max! set /a "count=stamp.%2.max, remainder=%1-stamp.%2.value*count"
+if %remainder% equ 0 (
+  endlocal
+  set /a %3.count=%count%
+  set "%3.list=%count%@%2"
+  exit /b 0
+)
+call :solve %remainder% %next% A || exit /b 1
+set /a A.count+=count
+if %count% gtr 0 set "A.list=%count%@%2 !A.list!"
+:decrement
+if %count% gtr 0 (
+  set /a "count-=1, remainder+=stamp.%2.value"
+  call :solve !remainder! %next% B &amp;&amp; (
+    set /a B.count+=count
+    if !B.count! lss !A.count! (
+      set /a A.count=B.count
+      if !count! gtr 0 (set "A.list=!count!@%2 !B.list!") else set "A.list=!B.list!"
+    )
+    goto :decrement
+  )
+)
+( endlocal
+  set /a %3.count=%A.count%
+  set "%3.list=%A.list%"
+)
+exit /b 0
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>27 Apr 2018 04:05</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic2ee3.html?p=56547#p56547" data-post-id="56547" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">26 Apr 2018 15:14</div></cite>I'm feeling much more confident that I have finally reached the goal <img class="smilies" src="images/smilies/icon_rolleyes.gif" width="15" height="15" alt=":roll:" title="Rolling Eyes">  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> </div></blockquote>I've tested your results up to least common multiple of the cost values (25200), and found no errors.<br>
+<br>
+<br>
+Because this computational problem is kind of cyclic (∀ n ∈ ℕ: Result(n+25200) == Result(n+25200)+"200 x D"), i think your algorithm is error free now.<br>
+<br>
+@Aacini:<br>
+I've tested your algorithm, it gives suboptimal results:<br>
+108 requires 4 stamps:<br>
+----------------------------------<br>
+1 X C<br>
+1 X 0.05<br>
+1 X 0.02<br>
+1 X 0.01<br>
+<br>
+An optimal solution requires3 stamps:<br>
+1 x B<br>
+1 x A<br>
+1 x 0,20<br>
+<br>
+234 requires 5 stamps:<br>
+----------------------------------<br>
+1 X D<br>
+1 X C<br>
+1 X 0.05<br>
+1 X 0.02<br>
+1 X 0.01<br>
+<br>
+An optimal solution requires 4 stamps:<br>
+1 x D<br>
+1 x B<br>
+1 x A<br>
+1 x 0,20<br>
+<br>
+244 requires 5 stamps:<br>
+----------------------------------<br>
+1 X D<br>
+2 X B<br>
+1 X 0.20<br>
+1 X 0.02<br>
+<br>
+An optimal solution requires 4 stamps:<br>
+1 x C<br>
+3 x B<br>
+<br>
+Beside this the result for the value 1 is buggy.<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>28 Apr 2018 20:59</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">As promised, here is a version that allows you to easily modify the list of available stamps. Instructions for how to modify the list are at the bottom of the code.<br>
+<br>
+It is currently configured and optimized to quickly compute solutions for the original list of stamps. But the first time you run with a modified list it will use a modified version of penpen's code to compute the new optimizations and  update the list accordingly - this takes significant time. Subsequent runs will then be fast.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo  off
+setlocal enableDelayedExpansion
+
+:Load stamp definitions at bottom of file
+set /a "big=0x7FFFFFFF"
+for /f "tokens=1-5 delims=: " %%A in ('findstr /rc:"^::: " "%~f0" ^| findstr /n "^"') do (
+  if "%%E" == "" goto :Compute 
+  set "stamp.%%A.label=%%B"
+  set /a "stamp.%%A.value=%%C, stamp.%%A.max=%%D, stamp.%%A.continue=%%E"
+)
+
+call :Solve %1 1 solution
+echo(
+if %solution.count% == 1 (echo %1 requires 1 stamp:) else echo %1 requires %solution.count% stamps:
+echo ----------------------------------
+for %%S in (%solution.list%) do for /f "delims=@ tokens=1,2" %%A in ("%%S") do (
+  set "count=      %%A"
+  echo !count:~-6! x !stamp.%%B.label!
+)
+
+exit /b
+
+:Solve  Target  StampIndex  ReturnVar
+setlocal
+set /a "count=%1/stamp.%2.value, remainder=%1%%stamp.%2.value, next=%2+1"
+if %count% gtr !stamp.%2.continue! exit /b 1
+if %count% gtr !stamp.%2.max! set /a "count=stamp.%2.max, remainder=%1-stamp.%2.value*count"
+if %remainder% equ 0 (
+  endlocal
+  set /a %3.count=%count%
+  set "%3.list=%count%@%2"
+  exit /b 0
+)
+call :Solve %remainder% %next% A || exit /b 1
+set /a A.count+=count
+if %count% gtr 0 set "A.list=%count%@%2 !A.list!"
+:decrement
+if %count% gtr 0 (
+  set /a "count-=1, remainder+=stamp.%2.value"
+  call :Solve !remainder! %next% B &amp;&amp; (
+    set /a B.count+=count
+    if !B.count! lss !A.count! (
+      set /a A.count=B.count
+      if !count! gtr 0 (set "A.list=!count!@%2 !B.list!") else set "A.list=!B.list!"
+    )
+    goto :decrement
+  )
+)
+( endlocal
+  set /a %3.count=%A.count%
+  set "%3.list=%A.list%"
+)
+exit /b 0
+
+:Compute stamp optimizations
+setlocal
+echo Computing stamp optimizations...
+set "o[init]="
+set "prices="
+for /f "tokens=1-3 delims=: " %%A in ('findstr /rc:"^::: " "%~f0" ^| findstr /n "^"') do (
+  set "stamp.%%A.label=%%B"
+  set /a "stamp.%%A.value=%%C, maxN=%%A"
+  set "o[init]=!o[init]! 0"
+  set "prices=!prices! %%C"
+)
+set /a "prev=0"
+for /l %%N in (%maxN% -1 2) do (
+  set /a "euro=value=stamp.%%N.value, max=1"
+  call :Compute2 %%N
+)
+
+:: Write optimizations to file
+set "stamp.1.max=^!big^!"
+set "stamp.1.continue=^!big^!"
+&gt;"%~f0.new" (
+  findstr /v /rc:"^::: " "%~f0"
+  for /l %%N in (1 1 %maxN%) do (
+    set    "label=!stamp.%%N.label!      "
+    set    "value=      !stamp.%%N.value!"
+    set      "max=      !stamp.%%N.max!"
+    set "continue=      !stamp.%%N.continue!"
+    echo ::: !label:~0,6! !value:~-6! !max:~-6! !continue:~-6!
+  )
+)
+move /y "%~f0.new" "%~f0" &gt;nul
+endlocal
+echo(
+findstr /rc:"^::: " "%~f0"
+echo Done
+goto :Load
+
+:Compute2  StampIndex
+set /a "euro+=value, max+=1"
+set "o[0]=!o[init]!"
+echo %1:%max%:%euro%
+for /l %%a in (1, 1, %euro%) do (
+  set /a "priceIndex=-1, bestPriceIndex=-1, bestPrice=0"
+  set /a "bestCount=euro+1"
+  for %%b in (%prices%) do (
+    set /a "priceIndex+=1, index=%%~a-%%~b"
+    if 0 leq !index! (
+      for %%c in ("!index!") do set /a "count=!o[%%~c]: =+!+1"
+      if !count! LSS !bestCount! (
+        set /a "bestCount=count, bestPrice=%%~b, bestPriceIndex=priceIndex"
+      )
+    )
+  )
+  set /a "index=%%~a-bestPrice, n=0"
+  set "o[%%~a]="
+  for %%c in ("!index!") do for %%A in (!o[%%~c]!) do (
+    set /a "cnt=%%A + ^!(bestPriceIndex-n), n+=1"
+    set "o[%%~a]=!o[%%~a]! !cnt!"
+  )
+  set /a "index=%%~a-stamp.1.value-1"
+  set "o[!index!]="
+)
+set /a "N=0"
+for %%C in (!o[%euro%]!) do (
+  set /a "N+=1"
+  if !N! == %%N if %%C == !max! (goto :Compute2) else goto :break
+)
+:break
+set /a "stamp.%N%.max=(max-=1), stamp.%N%.continue=max+prev/stamp.%N%.value, prev+=stamp.%N%.value*max"
+echo !stamp.%N%.label!  !stamp.%N%.value!  !stamp.%N%.max!  !stamp.%N%.continue!
+exit /b
+
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::  STAMP DEFINITIONS:
+::
+::  When modifying the definitions, only the Label and Value should be populated.
+::  The Max and Continue will be computed automatically. The rows must be sorted
+::  by Value descending. The last row must have a value of 1. Each row must begin
+::  with exactly three colons and a space.
+::
+::  Label   Value    Max Continue
+::  ------ ------ ------ --------
+::: D         126  !big!  !big!
+::: C         100      2      5
+::: B          48      4      6
+::: A          40      2      3
+::: 0,20       20      1      2
+::: 0,10       10      1      2
+::: 0,05        5      1      2
+::: 0,02        2      2      2
+::: 0,01        1      1      1
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>08 May 2018 07:15</strong></div>
+				<div class="author">by <strong>miskox</strong></div>
+				<div class="content">Sorry for a short delay (I was offline for more than a week).<br>
+<br>
+Dave! Great!<br>
+<br>
+I just have another challenge:<br>
+<br>
+can available quantity of stamps be added?<br>
+<br>
+For example:<br>
+<br>
+Maybe I don't have stamp 'C' (1.00 EUR) at hand so optimal solution for 0.60 EUR of C+0.20 cannot be used. So next best solution might work.<br>
+<br>
+Thanks.<br>
+Saso</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>16 May 2018 03:04</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">If you have limit stamps, then there is no guarantee, that a solution exists.<br>
+Dave's algorithm relies on the fact that the precomputed optimizations have solutions.<br>
+<br>
+So i don't think that adding such limitations to his algorithm is an easy task if it is possible at all:<br>
+Limiting a NP-complete optimization problem (NP-cop) often results in an EXPTIME-complete optimization problem (EXPTIME-cop);<br>
+Although it actually isn't proven it is assumed by the majority of mathematicians that EXPTIME-cops are a real superset of NP-cops.<br>
+<br>
+You might still use dynamic programming, and just add a test, if you have exceeded the stamp limit.<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8517&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:20:18 GMT -->
+</html>

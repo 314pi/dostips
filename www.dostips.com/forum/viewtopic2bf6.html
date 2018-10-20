@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1747&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:05:48 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Bug in &quot;removing a substring using string substitution&quot;</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Bug in &quot;removing a substring using string substitution&quot;</h2>
+		<p><a href="viewtopicda62.html?f=3&amp;t=1747">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1747</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Bug in &quot;removing a substring using string substitution&quot;</h3>
+				<div class="date">Posted: <strong>05 Apr 2011 09:25</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content">Source: <a href="../DtTipsStringManipulation.html#Snippets.Remove" class="postlink">Remove - Remove a substring using string substitution</a><br /><br />Code tested: WinXP<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\work&gt;type test.bat<br />@echo off<br />set str=the cat in the hat soothe my heart<br />echo.%str%<br />set str=%str:the =%<br />echo.%str%<br /><br />C:\work&gt;test.bat<br />the cat in the hat soothe my heart<br />cat in hat soomy heart<br /></code></pre></div><br /><br />The code is supposed to remove all occurrences of &quot;the&quot; from the string, but fails to cater for words such as &quot;soothe&quot; (which is not &quot;the&quot; ), &quot;breathe&quot;, &quot;blithe&quot; etc. <br /><br />Its better to split the sentence/text using tokens (ie, delimited by spaces). An implementation in vbscript<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>s = Split( WScript.Arguments(0) )<br />For i=0 To UBound(s)<br />&nbsp; &nbsp;If LCase(s(i)) &lt;&gt; &quot;the&quot; Then<br />&nbsp; &nbsp;&nbsp; &nbsp;WScript.StdOut.Write s(i) &amp; &quot; &quot;<br />&nbsp; &nbsp;End If <br />Next<br /></code></pre></div><br /><br />Note: vbscript comes installed by default on most Windows distribution. There is no reason one could not get to know it and harness its capabilities (same with powershell).<br /><br />Example test<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\work&gt;cscript //nologo test1.vbs &quot;the cat in the hat soothe my heart&quot;<br />cat in hat soothe my heart<br /></code></pre></div><br /><br /><br />Now, the exact word &quot;the&quot; are removed. Of course, another method is to use regular expression where the engine can check for boundaries , (normally with \b modifier), but that's another story.<br /><br />Also note that it caters for case-insensitivity, so &quot;the&quot; or &quot;The&quot; , &quot;THe&quot; are removed. The Batch version does not cater for that.<br /><br /><br />DosItNotHelp</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Bug in &quot;removing a substring using string substitution&quot;</h3>
+				<div class="date">Posted: <strong>06 Apr 2011 00:09</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">Yes - the command interpreter allows for simple string substitution not necessarily word substitution.<br />You think this example doesn't get the point across?  If someone want's to propose a better example for string substitution then I would consider it for inclusion.<br /><br /><blockquote class="uncited"><div>Note: vbscript comes installed by default on most Windows distribution. There is no reason one could not get to know it and harness its capabilities (same with powershell).</div></blockquote><br />Agree.  I think the dostips site attracts mainly users that don't have the choice or will to switch away from Batch.  Some users may not even know vbscript but know some batch and want a batch solution.  So to solve a tricky problem within a batch that's easily solved in vbscript, a pure vbscript may just not help them.  What may help is an extensible vbscript function library embedded into a batch function so that the vbs functions can be called from within the batch and the results be received in environment variables.  Well I guess this is a separate Topic...</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1747&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:05:48 GMT -->
+</html>

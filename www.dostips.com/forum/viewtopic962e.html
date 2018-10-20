@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8729&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:47:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Context Menu options using CMD.exe or Powershell</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Context Menu options using CMD.exe or Powershell</h2>
+		<p><a href="viewtopicfb69.html?f=3&amp;t=8729">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8729</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Context Menu options using CMD.exe or Powershell</h3>
+				<div class="date">Posted: <strong>21 Jul 2018 00:03</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Thought this might be a fun thread to start.  Saw someone doing this on StackOverFlow.  I helped them resolve the Date Time Stamp Context Menu.  SST helped them with the file path to the clipboard.<br>
+<br>
+File path to clipboard
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\FilePath2clip\command]
+@="cmd /Q /e:on /c \"for %%a in (\"%1\") do set /p \"=%%~dpa\"&lt;nul | clip\""
+</code></pre></div>
+
+Rename File with Date and Time Stamp
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\Time_Stamp_FileName\command]
+@="cmd /Q /V:ON /E:ON /C \"set TIME=%%TIME: =0%% &amp; set \"DateTimeFn=%%DATE:~10,4%%-%%DATE:~4,2%%-%%DATE:~7,2%%_!TIME:~0,2!-!TIME:~3,2!-!TIME:~6,2!\" &amp;FOR %%G IN (\"%1\") do rename \"%1\" \"%%~nG_!DateTimeFn!%%~xG\" \""
+
+
+</code></pre></div>
+
+Hope everyone can share some more.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Context Menu options using CMD.exe</h3>
+				<div class="date">Posted: <strong>21 Jul 2018 10:48</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content">As an opening comment, I think that the SO answer from sst was overly complex for <a href="https://stackoverflow.com/q/51452418" class="postlink">the task</a>, given that <strong class="text-strong">%W</strong> does what was needed, (the other two answers show it in use)!<br>
+<br>
+Here's something from an answer I used <a href="https://stackoverflow.com/a/49115386" class="postlink">here</a>, which creates a context menu entry for making a new directory with today's date:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Powershell -NoP -C "New-Item 'HKCU:\Software\Classes\Directory\Background\shell\MkStampedDir' -Value 'NOW Folder Here' -Force"; "New-Item 'HKCU:\Software\Classes\Directory\Background\shell\MkStampedDir\command' -Value '\"C:\Windows\system32\WindowsPowerShell\v1.0\Powershell.exe\" -NoP -C \"$dt = get-date -f {yyyy-MMM-dd HHmm}; MD \"\"%V\"\"\$dt\"\"\"' -Force"</code></pre></div><em class="text-italics">(I decided to include it in this thread because it uses PowerShell for the datestamp)</em><br>
+<br>
+If you wanted a reg file, which to me is a backwards step from using REG.EXE, <em class="text-italics">due to the fact Windows wants elevation</em>, then something like this would do:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\MkStampedDir]
+@="NOW Folder Here"
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\MkStampedDir\command]
+@="\"C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Powershell.exe\" -NoP -C \"$dt = get-date -f {yyyy-MMM-dd HHmm}; MD \"\"%V\"\"\\$dt\"\"\""</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Context Menu options using CMD.exe</h3>
+				<div class="date">Posted: <strong>21 Jul 2018 13:06</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">PowerShell while powerful is not a right choice for shell tasks given the crazy slow startup time on first use after boot, probably the user must be more careful to not accidentally click on that item.<br>
+<br>
+I was pretty sure that there are other variables, as I mentioned about <strong class="text-strong">%V</strong>, but didn't take the time to investigate them,  my answer was in part influenced by OP's  confusion and misinterpretation of shell and cmd variables, that something like <strong class="text-strong">%~dp1</strong> can be used directly.<br>
+Anyway good to know about <strong class="text-strong">%W</strong><br>
+<br>
+To me the whole task is nearly useless, in whatever way, simple or complex. One can get the path, simply by coping it from address bar, so while It is true that this particular task and the like can be done in a more simple and efficient way, but the overly complex one can used as the basis for doing much more complex tasks, like what Squashman did for renaming. The other answer ruined the simplicity by piping <strong class="text-strong">echo</strong> to <strong class="text-strong">set /p</strong> to dismiss the prompt, invoking one more extra cmd, Your answer is overly simple, appended new line, usually is not the thing one likes to see in clipboard.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Context Menu options using CMD.exe or Powershell</h3>
+				<div class="date">Posted: <strong>21 Jul 2018 13:45</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content">sst, the point of my very simplified answer to the SO question was the use of %W and I'm also aware that it included a possibly unwanted new line, although it wasn't stated, <em class="text-italics">(only the doublequotes)</em>, which mine didn't have, <em class="text-italics">or a possibly unwanted trailing backslash</em>. BTW, the powershell example I provided was supposed to be copied/pasted at the prompt, so it shouldn't be accidentally clicked on.<br>
+<br>
+I think that the PowerShell start up time on first boot, whilst valid, isn't an issue in real terms. Even if it's the first time I used PowerShell today; <em class="text-italics">given my typing speed/accuracy, I couldn't right click, select New, select Folder and type and enter without mistake, todays date, even if I knew it in advance, quicker than the couple of seconds it takes</em>! If you're really concerned with speed, then as implied in my post above, converting the entry to a batch file using REG.EXE would mean you didn't have to wait for the UAC prompt when wanting to merge the reg file, <em class="text-italics">especially as the entry is for the current user and not a protected registry location</em>. (TBF, the examples above should probably be provided in batch file format given this sites' main focus.)<br>
+<br>
+As I stated, I only added the example above because of its use of PowerShell in retrieving/formatting date entries, to support Squashmans' thread.<br>
+<br>
+<em class="text-italics">TBH I find most context menu entries a waste of time, especially given that the more you have, the more you have to scan to find and select the one you need!</em></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Context Menu options using CMD.exe or Powershell</h3>
+				<div class="date">Posted: <strong>22 Jul 2018 19:22</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist1ec2.html?mode=viewprofile&amp;u=5449">Compo</a> wrote: <a href="viewtopicb433.html?p=57532#p57532" data-post-id="57532" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">21 Jul 2018 13:45</div></cite>
+BTW, the powershell example I provided was supposed to be copied/pasted at the prompt, so it shouldn't be accidentally clicked on.
+</div></blockquote>
+I was referring to usage in context menu as your registry example implies that.
+ <blockquote><div><cite><a href="memberlist1ec2.html?mode=viewprofile&amp;u=5449">Compo</a> wrote: <a href="viewtopicb433.html?p=57532#p57532" data-post-id="57532" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">21 Jul 2018 13:45</div></cite>
+... even if I knew it in advance, quicker than the couple of seconds it takes.
+</div></blockquote>
+I've seen systems that PS first time startup takes more than one minute. On my Win10 laptop, PS sometimes takes between 30 to 40 seconds to get ready and on my other PC about 10 seconds, sometimes more sometimes less. It is highly variable between systems with different software/hardware configurations. I agree that on subsequent usages, the time to perform the task is nearly instant but the first time delay for a right click task which is not time consuming in nature and is expected to be done very quickly, might causes the user to at least postpone using that handy context menu to a later time and creates the folder by hand for that one time, and then makes that decision over and over again.<br>
+<br>
+I was just expressing my personal opinion regarding the matter generally, which partly shaped by the experiences I had with users. And here I referred to folder creation just as an example of a simple task, So it is not and was not a criticism of your post or your solution involving PowerShell. After all the title of this thread asks for using both CMD and PowerShell.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Context Menu options using CMD.exe or Powershell</h3>
+				<div class="date">Posted: <strong>22 Jul 2018 21:23</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">I thought it might be useful to have a hash calculator in context menu using certutil.<br>
+So I've created 3 types on them. One is for use on individual files, right click on a file choose copy hash, to calculate the hash and copy it to clipboard.<br>
+The second and third is available in context menu of directories for generating list of files along with their hash value with a predefined format and copy it to the clipboard, one performs the task only on files which are the direct child of the selected directory and the other will perform the task on the whole subdirectory tree.<br>
+<br>
+I chose SHA1 as the hash algorithm, changing the algorithm is the simple task of performing search and replace over "SHA1".<br>
+<br>
+I appended the registry script to a very simple stub batch code which uses REG.EXE to import the embedded script, addressing the concerns mentioned by Compo regarding UAC prompt by REGEDIT.<br>
+It can be easily used to convert a REG script to a self importer script. e.g:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type Unicode.reg&gt;Ansi.reg &amp; copy ImportStub.bat+Ansi.reg SelfImport.bat &amp; del Ansi.reg
+</code></pre></div>
+
+Hash ContextMenus Script:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:: CmdHashCntxMenu.bat
+:: Hash Files/Directories Context Menu
+:: SelfImporter Registry Script
+@echo off
+setlocal EnableExtensions DisableDelayedExpansion
+set "TIME="
+set "id=%TIME: =0%"
+set "id=%~nx0.%id:~0,2%%id:~3,2%%id:~6,2%%id:~-2%"
+set "RegFile=%TEMP%\RegImport.%id%.reg.tmp"
+(
+    echo REGEDIT4
+    echo,
+    type "%~f0"
+)&gt;"%RegFile%" &amp;&amp; (
+    echo Importing registry script...
+    reg import "%RegFile%"
+    del /f /q "%RegFile%"
+)
+pause
+goto :EOF
+&lt;End of batch script&gt;
+Windows Registry Editor Version 5.00
+
+;-------------------------------------------------------------------------------------------------------
+
+## &lt;File SHA1 Value to Clipboard - Comment related sections to exclude from import&gt;
+[HKEY_CURRENT_USER\Software\Classes\*\shell\CopyFileHashClip]
+@="Copy SHA1 Hash"
+
+[HKEY_CURRENT_USER\Software\Classes\*\shell\CopyFileHashClip\Command]
+@="cmd.exe /q /d /c \"title Calculating SHA1 hash&amp;cd /d \"%%SystemRoot%%\\system32\" &amp; echo Generating SHA1 hash over \"%1\" ...&amp; for /f \"delims=\" %%a in ('certutil -hashfile \"%1\" SHA1 ^| find /v \":\"') do set \"_$hash=%%a\"&amp;call set \"_$hash=%%_$hash: =%%\"&amp;&lt;nul set /p \"=%%_$hash%%\" | clip\""
+
+;; Uninstaller - Uncomment to remove the entry from registry
+;[-HKEY_CURRENT_USER\Software\Classes\*\shell\CopyFileHashClip]
+
+;-------------------------------------------------------------------------------------------------------
+
+## &lt;DIR SHA1 List to Clipboard - Comment all related to exclude from import&gt;
+[HKEY_CURRENT_USER\Software\Classes\Directory\shell\CmdHashListClip]
+@="SHA1 List to Clipboard"
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\shell\CmdHashListClip\Command]
+@="cmd.exe /d /c \"title Generating SHA1 Hash List to Clipboard...&amp;cd /d \"%%SystemRoot%%\\system32\"&amp;echo Generating SHA1 hash List over files in directory of \"%1\"...&amp;(for /f \"eol=* delims=\" %%f in ('dir \"%1\" /b/a-d 2^^^&gt;nul') do @(for /f \"delims=\" %%h in ('certutil -hashfile \"%1\\%%f\" SHA1 ^^^| find /v \":\"') do @(set \"_$hash=%%h\"&amp;call set \"_$hash=%%_$hash: =%%\"&amp;echo \"%1\\%%f\"...&gt;conOUT$&amp;set \"_$file=%1\\%%f\"&amp;&lt;nul call set /p \"=%%_$file%%:SHA1:%%_$hash%%\"&amp;echo,)))|clip\""
+
+;; Uninstaller - Uncomment to remove the entry from registry
+;[-HKEY_CURRENT_USER\Software\Classes\Directory\shell\CmdHashListClip]
+
+
+;-------------------------------------------------------------------------------------------------------
+
+## &lt;DIR SHA1 List to Clipboard (Tree) - Comment related sections to exclude from import&gt;
+[HKEY_CURRENT_USER\Software\Classes\Directory\shell\CmdHashListClipTree]
+@="SHA1 List to Clipboard (Tree)"
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\shell\CmdHashListClipTree\Command]
+@="cmd.exe /d /c \"title Generating SHA1 Hash List to Clipboard... (Tree)&amp;cd /d \"%%SystemRoot%%\\system32\"&amp;echo Generating SHA1 hash List over files in directory tree of \"%1\"...&amp;(for /f \"delims=\" %%f in ('dir \"%1\" /s/b/a-d 2^^^&gt;nul') do @(for /f \"delims=\" %%h in ('certutil -hashfile \"%%f\" SHA1 ^^^| find /v \":\"') do @(set \"_$hash=%%h\"&amp;call set \"_$hash=%%_$hash: =%%\"&amp;echo \"%%f\"...&gt;conOUT$&amp;set \"_$file=%%f\"&amp;&lt;nul call set /p \"=%%_$file%%:SHA1:%%_$hash%%\"&amp;echo,)))|clip\""
+
+;; Uninstaller - Uncomment to remove the entry from registry
+;[-HKEY_CURRENT_USER\Software\Classes\Directory\shell\CmdHashListClipTree]
+</code></pre></div>
+When I was testing the menu, on one particular directory I couldn't get it to work, nothing was in clipboard, then I saw that clip.bat file in the directory, So I decided to first change the current directory to %SystemRoot%\system32 to be safe.<br>
+<br>
+I opted to not pass <strong class="text-strong">/e:on</strong> or <strong class="text-strong">/v:off</strong> to cmd, if I want to cover the edge cases then I have to handle the child cmd instances of pipes and FOR /F as well, and that would turn the one-liner command to a very complex and unmanageable beast, and if don't want to handle the childs then there is no point in passing those parameters to the main cmd.<br>
+<br>
+<strong class="text-strong">Update 2018-07-23</strong><br>
+The directory context menu command which is processing files within the selected directory and not the sub directories, skipped file names beginning with semicolon(;) - Not common for file names but possible - Fixed that.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Context Menu options using CMD.exe or Powershell</h3>
+				<div class="date">Posted: <strong>22 Jul 2018 21:56</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopic858e.html?p=57544#p57544" data-post-id="57544" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 Jul 2018 21:23</div></cite>
+When I was testing the menu, on one particular directory I couldn't get it to work, nothing was in clipboard, then I saw that clip.bat file in the directory, So I decided to first change the current directory to %SystemRoot%\system32 to be safe.
+</div></blockquote>
+Couldn't you have just defined the full path to CLIP.EXE instead of doing a change directory?<br>
+<br>
+Or use the <strong class="text-strong">NoDefaultCurrentDirectoryInExePath</strong> variable to keep it from finding any programs in the current directory?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Context Menu options using CMD.exe or Powershell</h3>
+				<div class="date">Posted: <strong>22 Jul 2018 22:53</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopic4dae.html?p=57545#p57545" data-post-id="57545" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 Jul 2018 21:56</div></cite>
+Couldn't you have just defined the full path to CLIP.EXE instead of doing a change directory?<br>
+<br>
+Or use the <strong class="text-strong">NoDefaultCurrentDirectoryInExePath</strong> variable to keep it from finding any programs in the current directory?
+</div></blockquote>
+<strong class="text-strong">NoDefaultCurrentDirectoryInExePath</strong> causes cmd to use <strong class="text-strong">%PATH%</strong> instead of <strong class="text-strong">.;%PATH%</strong> still there in no guarantee that other software have not added own directory to the start of the path list.<br>
+Providing the full path is another option but I have to it for certutil.exe and find.exe as well, The line will get a little more longer but that's not a problem.<br>
+<br>
+I thought about this before and I couldn't find any potential issue changing directory to system32 as the script will not attempt to write anything to disk so even if UAC is disabled it causes no harm, besides that, the user can easily right click on any of the files or directories inside %SystemRoot% and executes the command so windows or system32 will automatically become the current directory even if I don't do it myself.<br>
+<br>
+I can do it as you said by providing full path but I'd like to know the issues or risks you see in changing the current directory to system32<br>
+<br>
+<strong class="text-strong">EDIT</strong><br>
+Now I see your point (I hope so  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> ), for just one executable, yes your are right, I should use full path instead of changing the directory, I just didn't want to make a workaround based on the experience on my own system and doing it only for clip.exe I mainly did it to keep the line shorter and more manageable. If it was a batch file I wouldn't do any thing about it or would have been used full paths for all executables if necessary, But for a normal user it would be very difficult if not impossible to diagnose a registry command, So the shorter solution cd...</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8729&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:47:53 GMT -->
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=180&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:01:47 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support - Page 13</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</h2>
+		<p><a href="viewtopicb16d.html?f=3&amp;t=6044">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6044</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>13</strong> of <strong>27</strong></div>
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>09 May 2016 18:36</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">The /T switch should help to solve that.<br /><br />Aside to Dave: The /T switch has no documentation to show the syntax in the jrepl help.<br /><br />Newbies like me can't figure out how to use it for multiple characters.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>09 May 2016 22:29</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">No need for the /T switch on this simple request. Just a normal regex character set is all you need, plus you need to worry about how many times to double up the percent within a batch file, plus an escape sequence for the quote.<br /><br />From the command line:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;&#91;=%\q^!&lt;&gt;&amp;|&#93;&quot; &quot; &quot; /x /f input.txt /o output.txt<br /></code></pre></div><br />From within a batch script&#058;<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl &quot;&#91;=%%%%\q^!&lt;&gt;&amp;|&#93;&quot; &quot; &quot; /x /f input.txt /o output.txt<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>10 May 2016 12:39</strong></div>
+				<div class="author">by <strong>catalinnc</strong></div>
+				<div class="content">@dbenham thanks a lot for your support...much respect...<br />_<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;&#91;=%\q^!&lt;&gt;&amp;|&#93;&quot; &quot; &quot; /x /f input.txt /o output.txt</code></pre></div><br /><br />works perfect from command-line prompt...<br />_<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl &quot;&#91;=%%%%\q^!&lt;&gt;&amp;|&#93;&quot; &quot; &quot; /x /f input.txt /o output.txt</code></pre></div><br /><br />works perfect from a .bat file!<br />_</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>04 Jun 2016 16:45</strong></div>
+				<div class="author">by <strong>zimxavier</strong></div>
+				<div class="content">Hello <img class="smilies" src="images/smilies/icon_smile.gif" alt=":-)" title="Smile" /><br /><br />I have 2 issues with JREPL.BAT<br /><br /><strong class="text-strong"><span style="color: #FF8000">1) FIRST ISSUE</span></strong><br /><br /><span style="text-decoration: underline">In my batch</span>:<br /><em class="text-italics">call jrepl.bat &quot;\[[A-Za-z0-9_.]*?FatherMother\]&quot; &quot;m<strong class="text-strong"><span style="color: #00BF00">è</span></strong>re&quot; /x /f TEMP\all_lines.txt /o -<br />call jrepl.bat &quot;\[[A-Za-z0-9_.]*?MasterMistress\]&quot; &quot;ma<strong class="text-strong"><span style="color: #00BF40">î</span></strong>tresse&quot; /x /f TEMP\all_lines.txt /o -</em><br /><br /><span style="text-decoration: underline">In my file</span> I have now <em class="text-italics">m<span style="color: #FF0000"><strong class="text-strong">Þ</strong></span>re</em> and <em class="text-italics">ma<strong class="text-strong"><span style="color: #FF0000">¯</span></strong>tresse</em>.<br /><br />REPL.BAT is incompatible with accents or I missed something ?<br /><br /><strong class="text-strong"><span style="color: #FF8000">2)SECOND ISSUE</span></strong><br /><br /><span style="text-decoration: underline">In my batch</span>:<br />call jrepl.bat &quot;§Y&quot; &quot;&quot; /x /f TEMP\all_lines.txt /o -<br /><br />I want to remove all <strong class="text-strong">§Y</strong> in my file, but there is no change in my file.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>04 Jun 2016 18:15</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote class="uncited"><div>REPL.BAT is incompatible with accents or I missed something ?</div></blockquote>I am not familiar with JREPL (so i cannot help you with &quot;Point 3)&quot;), but it is a JScript application, so i doubt that it is incompatible with accents:<br />If i remember right it internally uses UTF16, so no character should be a problem.<br /><br />I think your issues are all codepage related.<br /><br />I bet your editor (on which you have created the batch file) is using the <a href="https://msdn.microsoft.com/en-us/goglobal/cc305145" class="postlink">codepage 1252</a>, and<br />the cmd window where you have executed the batch is using <a href="https://msdn.microsoft.com/en-us/goglobal/cc305160" class="postlink">codepage 850</a>:<br />You type the character U+00E8 (è) into your editor (notepad?).<br />When you save it to disk you probably use ANSI file format, so this character is translated to the byte 0xE8.<br />The cmd shell interprets this byte as the character U+00FE (Þ).<br /><br />The same happens to the other characters:<br />U+00EE (î) --&gt; 0xEE --&gt; U+00AF (¯).<br />U+00A7 (§) --&gt; 0xA7 --&gt; U+00BA (º).<br /><br /><br />Depending on what characters you are using, it may help you to change the codepage of your command window to 1252:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>chcp 1252<br /></code></pre></div><br /><br />penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>05 Jun 2016 02:19</strong></div>
+				<div class="author">by <strong>zimxavier</strong></div>
+				<div class="content">It works, thank you penpen <img class="smilies" src="images/smilies/icon_smile.gif" alt=":-)" title="Smile" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>17 Jun 2016 10:19</strong></div>
+				<div class="author">by <strong>john67z</strong></div>
+				<div class="content">I have fixed width file with pipe delimeters that sometimes will have a carriage return line feed in one of the columns when it shouldn't.  For example:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Line 1:&nbsp; PC16ABCDEF01|this|is|normal....|****|&lt;CRLF&gt;<br />Line 2:&nbsp; PC16ACCDEF02|this|is|not&lt;CRLF&gt;<br />Line 2:&nbsp; normal.|****|&lt;CRLF&gt;<br /></code></pre></div><br /><br /><br />As you can see, line 2 has a carriage return line feed before the normal end of the line.  A normal line in this example is 37 characters long.  <br />I need to replace any CRLF with a space when the CRLF does not start in position 38.  Is this possible with JREPL?  The reason I need to do this is because I am loading the text file into a SQL database using BULK INSERT.  It fails when it encounters one of the malformed lines.  I am working with the people who create the text file to fix this before they send it to me.  However, in case they can't and to have a backup, I am trying to figure out an alternative.  <br /><br />Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>18 Jun 2016 21:27</strong></div>
+				<div class="author">by <strong>bluesky088</strong></div>
+				<div class="content">Hi,<br /><br />I'm new to this forum and the use of Jreply.bat.<br /><br />Would like some advise on the use of Jeply.bat to replace a particular line (in this case line 4) in one of my configuration files. Sample code from configuration file is as follows:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&#91;global&#93;<br />; Comments 1<br />; Comments 2<br />From=aaa&lt;bbb@ccc.com&gt;<br /><br />; Comment 3<br />; Comment 4&quot;<br />DefaultGroup=&quot;aaa.bbb.ccc&quot;</code></pre></div><br /><br />I saw someone mention the use of the following Jrepl command for this purpose. But nothing seems to happen when I execute the command. Any assistance is greatly appreciated.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;^From.*&quot; &quot;NewLine4Here&quot; /jbegln &quot;skip=(ln!=5)&quot; /f &quot;C:\Users\David\Desktop\Test\.gopoststuff1.conf&quot; /o -</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>18 Jun 2016 22:14</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite>john67z wrote:</cite>I have fixed width file with pipe delimeters that sometimes will have a carriage return line feed in one of the columns when it shouldn't.  For example:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Line 1:&nbsp; PC16ABCDEF01|this|is|normal....|****|&lt;CRLF&gt;<br />Line 2:&nbsp; PC16ACCDEF02|this|is|not&lt;CRLF&gt;<br />Line 2:&nbsp; normal.|****|&lt;CRLF&gt;<br /></code></pre></div><br />As you can see, line 2 has a carriage return line feed before the normal end of the line.  A normal line in this example is 37 characters long.  <br />I need to replace any CRLF with a space when the CRLF does not start in position 38.  Is this possible with JREPL?  The reason I need to do this is because I am loading the text file into a SQL database using BULK INSERT.  It fails when it encounters one of the malformed lines.  I am working with the people who create the text file to fix this before they send it to me.  However, in case they can't and to have a backup, I am trying to figure out an alternative.</div></blockquote><br />Perhaps not intuitive, but the following simple command should do the trick:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;(&#91;\r\n&#93;*&#91;^\r\n&#93;){37}&quot; &quot;$0.replace(/\r|\n/g,'')&quot; /jmatch /m /f input.txt /o -<br /></code></pre></div><br />It uses the /M option to allow searches across multiple lines, and the /JMATCH option to only print out the replacement strings for each match (with &lt;CR&gt;&lt;LF&gt; appended to each).<br /><br />The search matches characters until it finds exactly 37 characters that are not &lt;CR&gt; or &lt;LF&gt;. The replacement string is the entire matched string, which then uses the JScript replace() function to replace all &lt;CR&gt; and &lt;LF&gt; with an empty string.<br /><br />The /O - option overwrites the original file with the end result. Replace the - with a different file name if you want to preserve the original file.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>18 Jun 2016 22:30</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">JREPL has had the ability to process specific lines of a file since version 3.0 (released 2014-11-23), but that required user supplied JScript code involving the skip and ln variables via the /JBEGLN option.<br /><br />It seems that specifying line numbers is a common need, but most users seem to be uncomfortable with providing user supplied JScript.<br /><br />So I decided to add the /INC and /EXC options to specify which lines to include/exclude. This is much easier to use <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br /><br />For example, to remove lines 10 through 15 with the new version 4.0:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;^.*&quot; $0 /jmatch /exc &quot;10:15&quot; /f test.txt /o -<br /></code></pre></div><br />To accomplish the same thing with version 3.8 (this also works in 4.0, but is less convenient):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;^.*&quot; $0 /jmatch /jbegln &quot;skip=(ln&gt;=10&amp;&amp;ln&lt;=15)&quot; /f test.txt /o -<br /></code></pre></div><br /><br />As always, full documentation is embedded within the file, including some more complicated examples showing how the new options work.<br /><br /><strong class="text-strong">JREPL.BAT version 4.0</strong><br /><div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file7429.php?id=15">JREPL4.0.zip</a></dt>
+						<dd>(9.84 KiB) Downloaded 78 times</dd>
+		</dl>
+		
+		
+			</div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>19 Jun 2016 07:58</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite>bluesky088 wrote:</cite>Would like some advise on the use of Jeply.bat to replace a particular line (in this case line 4) in one of my configuration files. Sample code from configuration file is as follows:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&#91;global&#93;<br />; Comments 1<br />; Comments 2<br />From=aaa&lt;bbb@ccc.com&gt;<br /><br />; Comment 3<br />; Comment 4&quot;<br />DefaultGroup=&quot;aaa.bbb.ccc&quot;</code></pre></div><br />I saw someone mention the use of the following Jrepl command for this purpose. But nothing seems to happen when I execute the command. Any assistance is greatly appreciated.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;^From.*&quot; &quot;NewLine4Here&quot; /jbegln &quot;skip=(ln!=5)&quot; /f &quot;C:\Users\David\Desktop\Test\.gopoststuff1.conf&quot; /o -</code></pre></div></div></blockquote><br />You have a simple mistake - that command is skipping the wrong lines. It should be <strong class="text-strong">&quot;skip=(ln!=<span style="color: #FF0000">4</span>)&quot;</strong><br /><br />If you know that only line 4 begins with &quot;From&quot;, then you can simply use:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;^From.*&quot; &quot;NewLine4Here&quot; /f &quot;C:\Users\David\Desktop\Test\.gopoststuff1.conf&quot; /o -<br /></code></pre></div><br />Or if you want to simply replace line 4, regardless of original content, then<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;^.*&quot; &quot;NewLine4Here&quot; /jbegln &quot;skip=(ln!=4)&quot; /f &quot;C:\Users\David\Desktop\Test\.gopoststuff1.conf&quot; /o -<br /></code></pre></div><br />JREPL version 4.0 makes the last solution easier:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;^.*&quot; &quot;NewLine4Here&quot; /inc 4 /f &quot;C:\Users\David\Desktop\Test\.gopoststuff1.conf&quot; /o -<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>23 Jun 2016 06:34</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Here is version 4.1 that greatly improves the help system.<br /><br />I've added examples to the /T documentation.<br /><br />And I've made it possible to request help about a single topic or a single option.<br /><br />For example, the following displays all the options available for HELP<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl /?help<br /></code></pre></div><br />And this displays the new /T documentation<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl /?/t<br /></code></pre></div><br /><br /><strong class="text-strong">JREPL.BAT version 4.1</strong><br /><div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file2728.php?id=16">JREPL4.1.zip</a></dt>
+						<dd>(11.51 KiB) Downloaded 81 times</dd>
+		</dl>
+		
+		
+			</div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>23 Jun 2016 12:46</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Nice work.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; Help is available by supplying a single argument beginning with /?:<br /><br />&nbsp; &nbsp; &nbsp; /?&nbsp; &nbsp; &nbsp; &nbsp; - Writes all available help to stdout.<br />&nbsp; &nbsp; &nbsp; /??&nbsp; &nbsp; &nbsp; &nbsp;- Same as /? except uses MORE for pagination.<br /><br />&nbsp; &nbsp; &nbsp; /?Topic&nbsp; &nbsp;- Writes help about the specified topic to stdout.<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Valid topics are INTRO, OPTIONS, JSCRIPT, RETURN,<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; VERSION, and HELP<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Example: List a summary of all available options<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;jrepl /?options<br /><br />&nbsp; &nbsp; &nbsp; /?/Option - Writes help about the specified /Option to stdout.<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Example: Display paged help about the /T option<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;jrepl /??/t<br /><br />&nbsp; &nbsp; &nbsp; /?REGEX&nbsp; &nbsp;- Opens up Microsoft's JScript regular expression<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; documentation within your browser.<br /><br />&nbsp; &nbsp; &nbsp; /?REPLACE - Opens up Microsoft's JScript REPLACE documentation<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; within your browser.<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>23 Jun 2016 21:15</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Version 4.2 simply improves the documentation for the /?Options summary - it now briefly describes the functionality of each option.<br /><br />JREPL /?OPTIONS output:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; Options:&nbsp; Behavior may be altered by appending one or more options.<br />&nbsp; The option names are case insensitive, and may appear in any order<br />&nbsp; after the Replace argument.<br /><br />&nbsp; &nbsp; &nbsp; /A&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- write Altered lines only<br />&nbsp; &nbsp; &nbsp; /B&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- match Beginning of line<br />&nbsp; &nbsp; &nbsp; /C&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Count number of source lines<br />&nbsp; &nbsp; &nbsp; /E&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- match End of line<br />&nbsp; &nbsp; &nbsp; /EXC LineNumberList&nbsp; &nbsp; - EXClude one or more lines<br />&nbsp; &nbsp; &nbsp; /F InFile&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - read from File<br />&nbsp; &nbsp; &nbsp; /I&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Ignore case<br />&nbsp; &nbsp; &nbsp; /INC LineNumberList&nbsp; &nbsp; - Include one or more lines<br />&nbsp; &nbsp; &nbsp; /J&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- JScript replace expressions<br />&nbsp; &nbsp; &nbsp; /JBEG InitCode&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- initialization JScript code<br />&nbsp; &nbsp; &nbsp; /JBEGLN NewLineCode&nbsp; &nbsp; - line initialization JScript code<br />&nbsp; &nbsp; &nbsp; /JEND FinalCode&nbsp; &nbsp; &nbsp; &nbsp; - finalization JScript code<br />&nbsp; &nbsp; &nbsp; /JENDLN EndLineCode&nbsp; &nbsp; - line finalization JScript code<br />&nbsp; &nbsp; &nbsp; /JLIB FileList&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- load file(s) of initialization code<br />&nbsp; &nbsp; &nbsp; /JMATCH&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - write matching JScript replacements only<br />&nbsp; &nbsp; &nbsp; /L&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Literal search<br />&nbsp; &nbsp; &nbsp; /M&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Multi-line mode<br />&nbsp; &nbsp; &nbsp; /N MinWidth&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - prefix output with liNe numbers<br />&nbsp; &nbsp; &nbsp; /O OutFile&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- write Output to a file<br />&nbsp; &nbsp; &nbsp; /OFF MinWidth&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - prefix JMatch output with byte OFFsets<br />&nbsp; &nbsp; &nbsp; /S VarName&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Source is read from a variable<br />&nbsp; &nbsp; &nbsp; /T DelimiterChar&nbsp; &nbsp; &nbsp; &nbsp;- Translate multiple search/replace pairs<br />&nbsp; &nbsp; &nbsp; /V&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- read search/replace/code from Variables<br />&nbsp; &nbsp; &nbsp; /X&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- enable eXtended escape sequences<br /></code></pre></div><br /><br />JREPL.BAT version 4.2<br /><div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file190a.php?id=17">JREPL4.2.zip</a></dt>
+						<dd>(11.79 KiB) Downloaded 82 times</dd>
+		</dl>
+		
+		
+			</div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>01 Jul 2016 02:05</strong></div>
+				<div class="author">by <strong>mirrormirror</strong></div>
+				<div class="content">Hey guys, I'm cleaning up a couple of older batch scripts and wondered if I might be able to use jRepl or FindRepl to take some bulk out of them.  Here are a couple of examples:<br /><br />1. One routine parses the output from &quot;ipconfig /all&quot; to get the &quot;DNS Servers&quot;. I guess there can be 1 or more, in this case there are three:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp;Subnet Mask . . . . . . . . . . . : 255.255.255.0<br />&nbsp; &nbsp;Lease Obtained. . . . . . . . . . : Thursday, June 30, 2016 12:00P<br />&nbsp; &nbsp;Lease Expires . . . . . . . . . . : Sunday, July 03, 2016 12:00P<br />&nbsp; &nbsp;Default Gateway . . . . . . . . . : 192.168.0.1<br />&nbsp; &nbsp;DHCP Server . . . . . . . . . . . : 192.168.0.1<br />&nbsp; &nbsp;DNS Servers . . . . . . . . . . . : 192.168.0.1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;184.16.4.22<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;192.168.88.134<br />&nbsp; &nbsp;NetBIOS over Tcpip. . . . . . . . : Disabled<br /></code></pre></div> Is there an easy way to put the last DNS server into a variable? And perhaps an alternate version to do the same with the first?<br /><br />2. I have a wordy routine that parses &quot;Local group Membership&quot; from the &quot;NET USER [User Name]&quot; command. The asterik * causes it to be more complex than I'd like. In the example below, I'd like to parse out all of the group names (those beginning with &quot;*test_&quot;). <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>F:\&gt;net user user0<br />User name&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; user0<br />Full Name<br />Comment&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />User's comment<br />Country code&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;000 (System Default)<br />Account active&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Yes<br />Account expires&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Never<br /><br />Password last set&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 6/30/16 9:02p<br />Password expires&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;8/11/16 9:02p<br />Password changeable&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 6/30/16 9:02p<br />Password required&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Yes<br />User may change password&nbsp; &nbsp; &nbsp;Yes<br /><br />Workstations allowed&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;All<br />Logon script<br />User profile<br />Home directory<br />Last logon&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Never<br /><br />Logon hours allowed&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; All<br /><br />Local Group Memberships&nbsp; &nbsp; &nbsp; *test_et_ro&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*test_et_rw<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*test_t_Links&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*test_troot_files<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*test_sConfigLoc&nbsp; &nbsp; &nbsp; *test_rs_Temp<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;*test_rs_WAN&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *Users<br />Global Group memberships&nbsp; &nbsp; &nbsp;*None<br />The command completed successfully.<br /></code></pre></div>Neither of these are pressing needs but as time permits, I'm always looking for better ways to o stuff. So if it is feasible/sensible to use JRepl or FindRepl for these sorts of tasks, I'd appreciate a couple examples to work from.<br /><br />Thanks <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>13</strong> of <strong>27</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=180&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:01:47 GMT -->
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4453&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:57 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Color function v20 patched</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Color function v20 patched</h2>
+		<p><a href="viewtopic6733.html?f=3&amp;t=4453">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4453</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Color function v20 patched</h3>
+				<div class="date">Posted: <strong>03 Apr 2013 20:54</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">Hello. Recently I updated my code of color function. Now is more speedy. I release this version 20 as the ultimate version.<br />Note: 26 august 2013 this code was patched fixing a problem, anyways it have other problem with the ! for example if you try print &quot;!windir!&quot; it prints &quot;C:\WINDOWS&quot;. Please, consider the version 20 as deprecated and please use version 21.<br /><br />Link to version 21: <a href="viewtopic6ddd.html?f=3&amp;t=4881" class="postlink">http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4881</a><br /><br /><img src="http://s1281.photobucket.com/user/carlosmon99/media/color20_zps594c0f96.png.html" class="postimage" alt="Image" /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off<br />Call :Color 9 &quot;##################&quot; \n<br />Call :Color F &quot;&quot;<br />Call :Color A &quot;Final&quot;<br />Call :Color B &quot; Version&quot;<br />Call :Color C &quot; 20&quot;<br />Call :Color F &quot;&quot; \n<br />Call :Color 9 &quot;##################&quot; \n<br />Pause &gt;Nul<br />Exit /B<br /><br />:Color<br />:: v20 deprecated.<br />:: Arguments: hexColor text &#91;\n&#93;<br />:: Supported in windows XP, 7, 8.<br />:: In XP extended ascii characters are printed as dots.<br />:: For print quotes, use empty text.<br />SetLocal EnableExtensions EnableDelayedExpansion<br />Set &quot;Text=%~2&quot;<br />If Not Defined Text (Set Text=^&quot;)<br />Subst `: &quot;!Temp!&quot; &gt;Nul &amp;`: &amp;Cd \<br />If Not Exist `.7 (<br />Echo(|(Pause &gt;Nul &amp;Findstr &quot;^&quot; &gt;`)<br />Set /P &quot;=.&quot; &gt;&gt;` &lt;Nul<br />For /F &quot;delims=;&quot; %%# In (<br />'&quot;Prompt $H;&amp;For %%_ In (_) Do Rem&quot;') Do (<br />Set /P &quot;=%%#%%#%%#&quot; &lt;Nul &gt;`.3<br />Set /P &quot;=%%#%%#%%#%%#%%#&quot; &lt;Nul &gt;`.5<br />Set /P &quot;=%%#%%#%%#%%#%%#%%#%%#&quot; &lt;Nul &gt;`.7))<br />Set /P &quot;LF=&quot; &lt;` &amp;Set &quot;LF=!LF:~0,1!&quot;<br />For %%# in (&quot;!LF!&quot;) Do For %%_ In (<br />\ / :) Do Set &quot;Text=!Text:%%_=%%~#%%_%%~#!&quot;<br />For /F delims^=^ eol^= %%# in (&quot;!Text!&quot;) Do (<br />If #==#! SetLocal DisableDelayedExpansion<br />If \==%%# (Findstr /A:%~1 . \` Nul<br />Type `.3) Else If /==%%# (Findstr /A:%~1 . /.\` Nul<br />Type `.5) Else (Echo %%#\..\`&gt;`.dat<br />Findstr /F:`.dat /A:%~1 .<br />Type `.7))<br />If &quot;\n&quot;==&quot;%~3&quot; (Echo()<br />Goto :Eof<br /><br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Color function v20</h3>
+				<div class="date">Posted: <strong>23 Aug 2013 16:17</strong></div>
+				<div class="author">by <strong>DigitalSnow</strong></div>
+				<div class="content">Thanks for the fun script, but version 20 is not working as well as 19.<br /><br />I have not looked into why yet, but version 20 does not work correctly for me.  This is how it outputs.<br />Windows 7 Enterprise x64<br /><br /><img src="../../i.imgur.com/TDQ28Vh.png" class="postimage" alt="Image" /><br /><br />Also Note that neither version 19 or 20 work when cmd is in unicode /u mode.  In version 19, this could be fixed by changing the .dat echo line to<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>) else (cmd /a /c echo %%#\..\`&gt;`.dat</code></pre></div><br />and version 20 by<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Type `.5) Else (cmd /a /c Echo %%#\..\`&gt;`.dat</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Color function v20</h3>
+				<div class="date">Posted: <strong>23 Aug 2013 23:06</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">It doesn't display quite right in Windows 8 32 bit either.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>##################<br />\=\Final Version 20\=\<br />##################</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Color function v20</h3>
+				<div class="date">Posted: <strong>23 Aug 2013 23:27</strong></div>
+				<div class="author">by <strong>carlsomo</strong></div>
+				<div class="content">Win7 64 bit gives same display as foxdrive win8 32 with \\'s<br />##################<br />\=\Final Version 20\=\<br />##################</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Color function v20</h3>
+				<div class="date">Posted: <strong>23 Aug 2013 23:55</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">Very thanks DigitalSnow, carlsomo and foxidrive for report the problem.<br />I remember be fix the problem, but I forgive post the solution, please sorry.<br /><br />For fix it, please replace:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(Set &quot;Text=%~2&quot;<br />) || (Set Text=^&quot;)<br /></code></pre></div><br /><br />by<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Set &quot;Text=%~2&quot;<br />If &quot;&quot;==&quot;!Text!&quot; (Set Text=^&quot;)<br /></code></pre></div><br /><br />If you test it and works i will post that fixed as the version 20 se.<br /><br />DigitalSnow, also you mentions add support for when we are using cmd /u, you post a partial solution, using /u all output are unicode, then if we remove all the temp files and run this function it will create the files in unicode, that will not work.<br /><br />I thinking produce a version with unicode support coming soon.<br /><br /><br />DigitalSnow:<br />please you can remove all your temp files and run the script. Your screenshoot looks as other problem.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Color function v20</h3>
+				<div class="date">Posted: <strong>24 Aug 2013 01:00</strong></div>
+				<div class="author">by <strong>carlsomo</strong></div>
+				<div class="content">##################<br />&quot;Final Version 20&quot;<br />##################<br /><br />only had to hit a key to get back to prompt</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Color function v20</h3>
+				<div class="date">Posted: <strong>26 Aug 2013 08:11</strong></div>
+				<div class="author">by <strong>DigitalSnow</strong></div>
+				<div class="content">The change fixed the issue for me too.  I used defined instead.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Set &quot;Text=%~2&quot;<br />If Not Defined Text (Set Text=^&quot;)</code></pre></div><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>##################<br />&quot;Final Version 20&quot;<br />##################</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Color function v20</h3>
+				<div class="date">Posted: <strong>26 Aug 2013 16:47</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><blockquote><div><cite>DigitalSnow wrote:</cite>The change fixed the issue for me too.  I used defined instead.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Set &quot;Text=%~2&quot;<br />If Not Defined Text (Set Text=^&quot;)</code></pre></div><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>##################<br />&quot;Final Version 20&quot;<br />##################</code></pre></div></div></blockquote><br /><br />That worked here too in Win 8.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Color function v20 patched</h3>
+				<div class="date">Posted: <strong>26 Aug 2013 19:13</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">Thanks for all, I edited the first post for left the patched version.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Color function v20 patched</h3>
+				<div class="date">Posted: <strong>15 Dec 2013 09:33</strong></div>
+				<div class="author">by <strong>xLightAcex</strong></div>
+				<div class="content">Hey, I've been wondering if theres a way of making it into a .exe that you put into C:\WINDOWS so you can call it that way (unless it's impossible to do it that way)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Color function v20 patched</h3>
+				<div class="date">Posted: <strong>15 Dec 2013 12:23</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite>xLightAcex wrote:</cite>Hey, I've been wondering if theres a way of making it into a .exe that you put into C:\WINDOWS so you can call it that way (unless it's impossible to do it that way)</div></blockquote><br />Save the code of the function as a bat file and call it.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Color function v20 patched</h3>
+				<div class="date">Posted: <strong>15 Dec 2013 15:34</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content"><blockquote><div><cite>xLightAcex wrote:</cite>Hey, I've been wondering if theres a way of making it into a .exe that you put into C:\WINDOWS so you can call it that way (unless it's impossible to do it that way)</div></blockquote><br /><br />Hello. The function 20 is deprecated. The version 21: <a href="viewtopic6ddd.html?f=3&amp;t=4881" class="postlink">http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4881</a> is the last version.<br /><br />If you like a executable version I can post a executable utility that do the same. off course with the source.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Color function v20 patched</h3>
+				<div class="date">Posted: <strong>18 May 2018 09:04</strong></div>
+				<div class="author">by <strong>JMan</strong></div>
+				<div class="content">Nice works perfect on windows 10!<br>
+but i get the error:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FINDSTR: Argument missing after /A</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Color function v20 patched</h3>
+				<div class="date">Posted: <strong>18 May 2018 16:44</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7e3d.html?mode=viewprofile&amp;u=9217">JMan</a> wrote: <a href="viewtopic908f.html?p=56793#p56793" data-post-id="56793" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">18 May 2018 09:04</div></cite>
+Nice works perfect on windows 10!<br>
+but i get the error:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FINDSTR: Argument missing after /A</code></pre></div>
+</div></blockquote>
+Read the post above yours.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Color function v20 patched</h3>
+				<div class="date">Posted: <strong>21 May 2018 04:36</strong></div>
+				<div class="author">by <strong>JMan</strong></div>
+				<div class="content">I created a command for it.<br>
+download: <a href="http://www.filedropper.com/colorecho" class="postlink">http://www.filedropper.com/colorecho</a><br>
+<br>
+Its just a bat file!<br>
+all credits to Carlos! <img class="smilies" src="images/smilies/icon_lol.gif" width="15" height="15" alt=":lol:" title="Laughing"><br>
+<br>
+You can drop the bat file into your project folder.<br>
+<br>
+or you drop it to: "C:\WINDOWS\system32" to set it as a real command!</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4453&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:57 GMT -->
+</html>

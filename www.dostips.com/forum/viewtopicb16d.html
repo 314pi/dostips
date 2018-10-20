@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 04:00:13 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic75d9.html?t=6044">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopicb16d.html?f=3&amp;t=6044">JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="postingdfbb.html?mode=reply&amp;f=3&amp;t=6044" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic89e2.html?f=3&amp;t=6044&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="6044" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			393 posts
+							<ul>
+	<li class="dropdown-container dropdown-button-control dropdown-page-jump page-jump">
+		<a class="button button-icon-only dropdown-trigger" href="#" title="Click to jump to page…" role="button"><i class="icon fa-level-down fa-rotate-270" aria-hidden="true"></i><span class="sr-only">Page <strong>1</strong> of <strong>27</strong></span></a>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+				<li>Jump to page:</li>
+				<li class="page-jump-form">
+					<input type="number" name="page-number" min="1" max="999999" title="Enter the page number you wish to go to" class="inputbox tiny" data-per-page="15" data-base-url=".&#x2F;viewtopic.php&#x3F;f&#x3D;3&amp;amp&#x3B;t&#x3D;6044" data-start-name="start" />
+					<input class="button2" value="Go" type="button" />
+				</li>
+			</ul>
+		</div>
+	</li>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopicdbbc.html?f=3&amp;t=6044&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopice26f.html?f=3&amp;t=6044&amp;start=30" role="button">3</a></li>
+				<li><a class="button" href="viewtopic29a7.html?f=3&amp;t=6044&amp;start=45" role="button">4</a></li>
+				<li><a class="button" href="viewtopicf93e.html?f=3&amp;t=6044&amp;start=60" role="button">5</a></li>
+			<li class="ellipsis" role="separator"><span>…</span></li>
+				<li><a class="button" href="viewtopic54c6.html?f=3&amp;t=6044&amp;start=390" role="button">27</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopicdbbc.html?f=3&amp;t=6044&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p37967" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile37967">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content37967">
+
+						<h3 class="first"><a href="#p37967">JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting4cb3.html?mode=quote&amp;f=3&amp;p=37967" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic2d89.html?p=37967#p37967" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopic2d89.html?p=37967#p37967" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>14 Nov 2014 14:52
+			</p>
+			
+			
+			
+			<div class="content">Here is the current version of JREPL.BAT as of 2018-10-15. Read the subsequent posts for examples of usage and to follow the development history.
+<div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file6a70.php?id=387">JREPL7.14.zip</a></dt>
+						<dd>(27.24 KiB) Downloaded 57 times</dd>
+		</dl>
+		
+		
+			</div>
+
+<br>
+Full documentation is available from the command line via JREPL /?, or JREPL /?? for paged help.<br>
+The entire documentation is also listed at the top of the code, after the history.<br>
+<br>
+Unfortunately the code has gotten too big to post on this site as view-able text. More than half the code is documentation <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <br>
+<br>
+<strong class="text-strong">Index of releases</strong><br>
+<a href="viewtopic2135.html?f=3&amp;t=6044&amp;p=58143#p58143" class="postlink"><strong class="text-strong">v7.14</strong></a> 2018-10-15: Bug fix to allow user defined variables str and/or obj, and to hide xbytes from user code.<br>
+<a href="viewtopic6da9.html?f=3&amp;t=6044&amp;start=360#p57477" class="postlink"><strong class="text-strong">v7.13</strong></a> 2018-07-18: Added ability to create XBYTES.DAT via ADO in case CERTUTIL is missing, Fixed minor bug related to XBYTES.DAT that was sometimes leaving behind one or more copies of XBYTES.HEX, and Fixed major bug with /INC and /EXC regular expression blocks.<br>
+<a href="viewtopicbde8.html?f=3&amp;t=6044&amp;p=56103#p56103" class="postlink"><strong class="text-strong">v7.11</strong></a> 2018-03-26: Added functionality to overwrite input file as ADO UTF without BOM (added support for <strong class="text-strong">/O "-|UTF-?|NB"</strong>).<br>
+<a href="viewtopic93de.html?f=3&amp;t=6044&amp;p=55970#p55970" class="postlink"><strong class="text-strong">v7.10</strong></a> 2018-03-14: Now can block BOM in ADO output files by appending |NB to |CharSet in the /O option and OpenOutput() function.<br>
+<a href="viewtopic69b5.html?f=3&amp;t=6044&amp;p=54742#p54742" class="postlink"><strong class="text-strong">v7.9</strong></a> 2017-11-23: Allow escape sequences with /T "", New /PREPL option to improve /P functionality, plus two minor bug fixes<br>
+<a href="viewtopic2b38.html?f=3&amp;t=6044&amp;p=54672#p54672" class="postlink"><strong class="text-strong">v7.8</strong></a> 2017-11-13:  Emulate FINDSTR /G; Split /X into /XSEQ and /XFILE; New \x{nn-mm} escape sequence<br>
+<a href="viewtopic5eca.html?f=3&amp;t=6044&amp;p=54491#p54491" class="postlink"><strong class="text-strong">v7.7</strong></a> 2017-10-24: Fixed broken MicroSoft links; Allow /O "-|CharSet"; fix decode() bug - make CharSet arg optional<br>
+<a href="viewtopic70c8.html?f=3&amp;t=6044&amp;p=54307#p54307" class="postlink"><strong class="text-strong">v7.6</strong></a> 2017-10-08: New /?CHARSET/[Query] list character sets help option, New /?CHARSET and /?XREGEXP web page help options, and minor bug fix to output.WriteLine()<br>
+<a href="viewtopicd036.html?f=3&amp;t=6044&amp;start=330#p54150" class="postlink"><strong class="text-strong">v7.4</strong></a> 2017-09-25: Modified /X \xnn extended ASCII escape sequence to support any single byte character set, not just Windows-1252<br>
+<a href="viewtopic4f57.html?f=3&amp;p=53520#p53886" class="postlink"><strong class="text-strong">v7.3</strong></a> 2017-09-23: Added ability to select character set for input and output, including Unicode. Also added support for XRegExp enhanced regular expressions<br>
+<a href="viewtopicc61b.html?f=3&amp;t=6044&amp;start=315#p53520" class="postlink"><strong class="text-strong">v6.8</strong></a> 2017-08-25:  Added \c escape sequence for /X, added /APP option, and added openOutput() function.<br>
+<a href="viewtopic9e57.html?f=3&amp;t=6044&amp;p=51846#p51846" class="postlink"><strong class="text-strong">v6.7</strong></a> 2017-04-09: Corrected /OFF, /EXC, and /INC documentation, plus spelling fixes.<br>
+<a href="viewtopice773.html?f=3&amp;t=6044&amp;p=50127#p50127" class="postlink"><strong class="text-strong">v6.6</strong></a> 2016-12-23: New /RTN option to store result in a variable. Improved support for extended ASCII. Fixed documentation error introduced by version 6.0<br>
+<a href="viewtopica8aa.html?f=3&amp;t=6044&amp;start=240#p49641" class="postlink"><strong class="text-strong">v6.4</strong></a> 2016-11-01: Improved peformance by dynamically building optimized main loop based on chosen options<br>
+<a href="viewtopic1ba3.html?f=3&amp;t=6044&amp;p=49151#p49546" class="postlink"><strong class="text-strong">v6.2</strong></a> 2016-10-13: Added /K /R /MATCH /P /PFLAG /JQ /JMATCHQ. Improved /INC /EXC. Improved Performance.<br>
+<a href="viewtopic1ba3.html?f=3&amp;t=6044&amp;p=49151#p49151" class="postlink"><strong class="text-strong">v5.2</strong></a> 2016-09-27: Added /T FILE option<br>
+<a href="viewtopic131d.html?f=3&amp;t=6044&amp;p=49112#p49112" class="postlink"><strong class="text-strong">v5.0</strong></a> 2016-09-18: Added /U option<br>
+<a href="viewtopic2ebc.html?f=3&amp;t=6044&amp;p=48271#p48271" class="postlink"><strong class="text-strong">v4.5</strong></a> 2016-08-03: Added /D option<br>
+<a href="viewtopic5fae.html?f=3&amp;t=6044&amp;p=48255#p48255" class="postlink"><strong class="text-strong">v4.4</strong></a> 2016-08-02: Bug fix for /C when last line missing \n<br>
+<a href="viewtopic5fae.html?f=3&amp;t=6044&amp;p=48255#p48205" class="postlink"><strong class="text-strong">v4.3</strong></a> 2016-07-30: Added rpad() and improved lpad()<br>
+<a href="viewtopic80f2.html?f=3&amp;t=6044&amp;p=47283#p47283" class="postlink"><strong class="text-strong">v4.2</strong></a> 2016-06-24: Improved /?Options help<br>
+<a href="viewtopic4f06.html?f=3&amp;t=6044&amp;p=47247#p47247" class="postlink"><strong class="text-strong">v4.1</strong></a> 2016-06-23: Added help for single option/topic as well as /T examples<br>
+<a href="viewtopic7b5e.html?f=3&amp;t=6044&amp;p=47121#p47121" class="postlink"><strong class="text-strong">v4.0</strong></a> 2016-06-19: Added /INC and /EXC<br>
+<a href="viewtopice95c.html?f=3&amp;t=6044&amp;p=45938#p45938" class="postlink"><strong class="text-strong">v3.8</strong></a> 2016-03-27: Bug fix - hide some additional internal variables<br>
+<a href="viewtopic57d4-2.html?f=3&amp;t=6044&amp;p=44816#p44816" class="postlink"><strong class="text-strong">v3.7</strong></a> 2016-01-14: Bug fix for \xnn and \unnnn in regex with /X<br>
+<a href="viewtopic0e8b.html?f=3&amp;t=6044&amp;p=42089#p42089" class="postlink"><strong class="text-strong">v3.6</strong></a> 2015-07-15: Added /?? paged help option<br>
+<a href="viewtopicfa57.html?f=3&amp;t=6044&amp;p=41616#p41616" class="postlink"><strong class="text-strong">v3.5</strong></a> 2015-06-12: /T bug fix for $n and $nn when not /J or /JMATCH<br>
+<a href="viewtopic84d7.html?f=3&amp;t=6044&amp;p=39381#p39381" class="postlink"><strong class="text-strong">v3.4</strong></a> 2015-01-22: "Hide" internal /TEST variable (instead of TEST)<br>
+<a href="viewtopicec8a.html?f=3&amp;t=6044&amp;p=38247#p38247" class="postlink"><strong class="text-strong">v3.3</strong></a> 2014-12-24: Added /JLIB plus some bug fixes<br>
+<a href="viewtopic4b65.html?f=3&amp;t=6044&amp;p=38213#p38213" class="postlink"><strong class="text-strong">v3.0</strong></a> 2014-11-23: Added /JBEGLN and /JENDLN<br>
+<a href="viewtopic7caf.html?f=3&amp;t=6044&amp;p=38103#p38103" class="postlink"><strong class="text-strong">v2.2</strong></a> 2014-11-21: Added /T option<br>
+<a href="viewtopic7c25.html?f=3&amp;t=6044&amp;p=37969#p37969" class="postlink"><strong class="text-strong">v1.0</strong></a> 2014-11-14: Initial release<br>
+<br>
+<br>
+Dave Benham</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a> on 27 Sep 2016 16:14, edited 25 times in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p37969" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile37969">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content37969">
+
+						<h3 ><a href="#p37969">JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingb276.html?mode=quote&amp;f=3&amp;p=37969" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicfc83.html?p=37969#p37969" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopicfc83.html?p=37969#p37969" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>14 Nov 2014 15:26
+			</p>
+			
+			
+			
+			<div class="content">JREPL.BAT is a powerful, general purpose, command line, regular expression text processor for ASCII data. It is a hybrid JScript/batch script that should run on any Windows machine from XP onward.<br /><br />Here is a trivial example that will substitute &quot;blue&quot; for every occurrence of the word &quot;red&quot; within a file. Changes are made directly to the file:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;\bred\b&quot; &quot;blue&quot; /f test.txt /o -<br /></code></pre></div><br />If the command is used in a batch script, then CALL must be used so that the calling script can continue after JREPL finishes.<br /><br />Full documentation can be accessed by using the following:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl /?<br /></code></pre></div><br />JREPL.BAT is a direct <a href="viewtopicebb5.html?f=3&amp;t=3855" class="postlink">descendent from REPL.BAT</a>. A new name was needed because the calling syntax is not backward compatible.<br /><br />JREPL.BAT uses the same options as REPL.BAT, except instead of concatenating all the options into one string, each option must be listed separately with a slash prefix.<br /><br />Besides having different calling syntax, JREPL version 1.0 offers the following enhancements over REPL.BAT version 6:<br /><ul><li> The input file may be specified using /F &quot;file&quot;. No need to pipe or redirect the input file.<br /></li><li> The output may be sent to a file using /O &quot;file&quot;. No need to redirect the output.<br /></li><li> /O &quot;-&quot; will replace the original file with the result. The output is first written to a temporary file, and then it is MOVEd to replace the original.<br /></li><li> /JMATCH discards all non-matching text, and each match's replacement value is written on a new line. The replacement value is expressed as JScript code.<br /></li><li> /JBEG &quot;code&quot; and /JEND &quot;code&quot; run initialization and termination JSCRIPT code supplied by the user. User defined global variables can be declared and initialized within the /JBEG code. Then the /J or /JMATCH Replacement code can update the variables upon each match. Finally, the /JEND code can write summarized information upon completion.<br /></li><li> /N &quot;width&quot; prefixes each line of output with the corresponding line number from the input. The line numbers may be zero padded to a minimum width.<br /></li><li> /OFF &quot;width&quot; prefixes each line of /JMATCH output with the offset within the source line where the match occurred. The offsets may be zero padded to a minimum width.<br /></li><li> Expanded the number of predefined global variables/methods/objects that may be used by user supplied JScript code.<br /></li><li> All global variables/methods/objects used by the JREPL script itself are hidden behind a single opaque global object named &quot;_g&quot;. User supplied code can create identifiers without fear of corrupting the JREPL script as long as the _g object is avoided.</li></ul><br />Please let me know if you find any bugs - I've done rudimentary testing, but I do not yet have a regression test plan, and the code has grown substantially since the original version of REPL.BAT. I may have unknowingly broken code that worked previously.<br /><br /><div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file3a9f.php?id=6">JREPL1.0.zip</a></dt>
+						<dd>(5.79 KiB) Downloaded 478 times</dd>
+		</dl>
+		
+		
+			</div><br /><br />Dave Benham</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a> on 19 Nov 2014 08:52, edited 3 times in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p37972" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile37972">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content37972">
+
+						<h3 ><a href="#p37972">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0967.html?mode=quote&amp;f=3&amp;p=37972" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9d61.html?p=37972#p37972" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopic9d61.html?p=37972#p37972" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>14 Nov 2014 17:02
+			</p>
+			
+			
+			
+			<div class="content">Me find redundant terms: <span style="color: blue">run user supplied initialization and termination JSCRIPT code supplied by the user.</span><br /><br />I like the concept of Jrepl but I'm unclear on this point - does it do everything that repl.bat did, except with extra features?<br /><br /><br /><br />Forgive me to asking but I've had gastric problems for over 2 months and had less than 4 hours sleep for many of those nights - so my concentration to study complex stuff is sorely lacking.  I'm also not very clued up with Jscript.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p37974" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile37974">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content37974">
+
+						<h3 ><a href="#p37974">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting1ccc.html?mode=quote&amp;f=3&amp;p=37974" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic8f62.html?p=37974#p37974" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopic8f62.html?p=37974#p37974" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>14 Nov 2014 17:15
+			</p>
+			
+			
+			
+			<div class="content">Yes, it does everything that REPL.BAT did, plus more.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p37975" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile37975">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content37975">
+
+						<h3 ><a href="#p37975">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting170a.html?mode=quote&amp;f=3&amp;p=37975" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicc3c4.html?p=37975#p37975" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopicc3c4.html?p=37975#p37975" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>14 Nov 2014 18:41
+			</p>
+			
+			
+			
+			<div class="content">I assume then that the repl syntax will all work the same way, in Jrepl ?<br /><br />There is a thread over at computerhope <!-- m --><a class="postlink" href="http://www.computerhope.com/forum/index.php/topic,147278.msg919079.html#msg919079">http://www.computerhope.com/forum/index ... #msg919079</a><!-- m --><br />where I have attempted to solve the problem using repl, and I think it might be a good question for Jrepl to solve, if you can take the terms from my answer and wrap it in a Jrepl line.<br /><br />It could be a good example for those of us that need functional examples to learn to use these new tools.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p37976" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile37976">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7c64.html?author_id=5042&amp;sr=posts">87</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 01 Sep 2013 20:47</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content37976">
+
+						<h3 ><a href="#p37976">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7ccb.html?mode=quote&amp;f=3&amp;p=37976" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic36e9.html?p=37976#p37976" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopic36e9.html?p=37976#p37976" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a></strong> &raquo; </span>14 Nov 2014 19:30
+			</p>
+			
+			
+			
+			<div class="content">HI,<br /><br />can you give me script that can extract text between html tags specially &lt;title&gt; tag?<br />findstr cant do when a &lt;title&gt; tag is found in a single line together with a long line of css scripts up to 41KB , the findstr error is &quot;...line 2 is too long string...&quot;<br /><br />here is example of html page (only two-lines):<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<br />&lt;!DOCTYPE html PUBLIC &quot;-//WAPFORUM//DTD XHTML Mobile 1.0//EN&quot; &quot;http://www.wapforum.org/DTD/xhtml-mobile10.dtd&quot;&gt;&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;&lt;head&gt;&lt;title&gt;Comments2&lt;/title&gt;&lt;meta name=&quot;referrer&quot; content=&quot;default&quot; id=&quot;meta_referrer&quot; /&gt;&lt;noscript&gt;&lt;meta http-equiv=&quot;X-Frame-Options&quot; content=&quot;DENY&quot; /&gt;&lt;/noscript&gt;&lt;style type=&quot;text/css&quot;&gt;/*&lt;!&#91;CDATA&#91;*/.f{background:#dcdee3;}.b .m{background:#f6f7f8;border:0;font-size:small;margin:0;}.m .bh{font-size:x-small;}.m .bf{font-size:x-small;}.bm .dh{font-size:13px;}.bm .dd .dk a,.bm .dd .dk abbr{white-space:nowrap;}.n{margin:0 6px 6px;padding:6px;}.b .n .n{border-color:#e9eaed;margin:6px 0 0;}.bj{display:inline-block;}.bg{margin-top:5px;}.r,.s{margin:5px 0;}.n a,.n a:visited{color:#2b55ad;}.n a:hover,.n a:focus{background:#2b55ad;color:#fff;}.m .n{font-size:small;padding:4px;}.m .bg{margin-top:6px;}.m .r,.m .s{margin:6px 0;}.b .o{background:white;margin:0;}.x{border:1px solid #ccc;margin:5px 0;word-wrap:break-word;}.t{display:block;}.b .t,.b .t:visited{color:#3e4350;}.b .t:focus,.b .t:hover,.b .t:focus .x,.b .t:hover .x{background:#3b5998;color:#fff;}.b a,.b a:visited{color:#3b5998;text-decoration:none;}.b .bk,.b .bk:visited{color:#6d84b4;}.b a:focus,.b a:hover,.b .bk:focus,.b .bk:hover{background-color:#3b5998;color:#fff;}.v{background:#f6f7f8;}.cl{background:#fff;}.b .cz{padding:0;}.b .cp{padding:2px;}.b .w{padding:4px;}.b .y{border:0;border-collapse:collapse;margin:0;padding:0;width:100%;}.b .y tbody,.b .z&gt;tr&gt;td,.b .z&gt;tbody&gt;tr&gt;td,.b .y td.z{vertical-align:top;}.b .bs&gt;tr&gt;td,.b .bs&gt;tbody&gt;tr&gt;td,.b .y td.bs{vertical-align:middle;}.b .y td{padding:0;}.b .y td.cp{padding:2px;}.b .y td.w{padding:4px;}.b .bb{width:100%;}.k{border:0;display:inline-block;vertical-align:top;}i.k <br /></code></pre></div><br /><br />but i cut a last line cause its too big to paste here but its total kilobytes is 41.<br /><br />did you see &quot;&lt;title&gt;Comments2&lt;/title&gt;&quot; in secondline(also lastline) ? then after &lt;title&gt; tags -- there is  &quot;/*&lt;![CDATA[*&quot; , which i can use &quot;[&quot; as delimiter then copy it output to a file then do findstr again to extract &quot;Comments2&quot; -- thats the way i can solve but its more work and more time as i had thousands webpages that are not named according to its webpage title. but not all html has longline. some &lt;title&gt;<br />tags are separated from a longline of css script like this:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;!DOCTYPE html&gt;<br /><br />&lt;html dir=&quot;ltr&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;en&quot;&gt;<br />&nbsp; &nbsp; &lt;head&gt;&lt;link rel=&quot;canonical&quot; href=&quot;http://msdn.microsoft.com/en-us/library/aa664628(v=vs.71).aspx&quot; /&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; &lt;title&gt;1.1 Getting started (C#)&lt;/title&gt;<br />&nbsp; &nbsp; &nbsp; &nbsp; <br />&nbsp; &nbsp; &nbsp; &nbsp; <br />&lt;meta name=&quot;DCS.dcsuri&quot; content=&quot;/en-us/library/aa664628(d=default,l=en-us,v=vs.71).aspx&quot; /&gt;<br /><br />&lt;meta name=&quot;NormalizedUrl&quot; content=&quot;http://msdn.microsoft.com/en-us/library/aa664628(d=default,l=en-us,v=vs.71).aspx&quot; /&gt;<br /></code></pre></div><br />above &lt;title&gt; tags are easy to extract<br /><br />and some .mht webpage has two-lines of webpage title which is separated by equal symbol &quot;=&quot; like this:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>From: &lt;Saved by Mozilla 5.0 (Windows)&gt;<br />Subject: DosTips.com - View topic - Another way to create a line feed<br />&nbsp;variable<br />Date: Thu, 13 Nov 2014 17:24:51 +0800<br />MIME-Version: 1.0<br />Content-Type: multipart/related;<br />&nbsp; &nbsp;type=&quot;text/html&quot;;<br />&nbsp; &nbsp;boundary=&quot;----=_NextPart_000_0000_EA983E61.0B94984F&quot;<br />X-MAF-Information: Produced By MAF V3.0.3<br /><br />This is a multi-part message in MIME format.<br /><br />------=_NextPart_000_0000_EA983E61.0B94984F<br />Content-Type: text/html;<br />&nbsp; &nbsp;charset=&quot;UTF-8&quot;<br />Content-Transfer-Encoding: quoted-printable<br />Content-Location: http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4439<br /><br />&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.=<br />w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;&lt;html xmlns=3D&quot;http://www.w3.=<br />org/1999/xhtml&quot; dir=3D&quot;ltr&quot; xml:lang=3D&quot;en-gb&quot; lang=3D&quot;en-gb&quot;&gt;&lt;head&gt;<br />&lt;meta http-equiv=3D&quot;content-type&quot; content=3D&quot;text/html; charset=3DUTF-8&quot;&gt;<br /><br />&lt;meta http-equiv=3D&quot;content-type&quot; content=3D&quot;text/html; charset=3DUTF-8&quot;&gt;<br />&lt;meta http-equiv=3D&quot;content-language&quot; content=3D&quot;en-gb&quot;&gt;<br />&lt;meta http-equiv=3D&quot;content-style-type&quot; content=3D&quot;text/css&quot;&gt;<br />&lt;meta http-equiv=3D&quot;imagetoolbar&quot; content=3D&quot;no&quot;&gt;<br />&lt;meta name=3D&quot;resource-type&quot; content=3D&quot;document&quot;&gt;<br />&lt;meta name=3D&quot;distribution&quot; content=3D&quot;global&quot;&gt;<br />&lt;meta name=3D&quot;copyright&quot; content=3D&quot;2000, 2002, 2005, 2007 phpBB Group&quot;&gt;<br />&lt;meta name=3D&quot;keywords&quot; content=3D&quot;&quot;&gt;<br />&lt;meta name=3D&quot;description&quot; content=3D&quot;&quot;&gt;<br /><br />&lt;title&gt;DosTips.com - View topic - Another way to create a line feed variabl=<br />e&lt;/title&gt;<br /><br />&lt;link rel=3D&quot;stylesheet&quot; href=3D&quot;urn:snapshot-9C7CAE89:http://www.dostips.c=<br />om/forum/styles/avalon/theme/stylesheet.css&quot; type=3D&quot;text/css&quot;&gt;<br />&lt;!--&#91;if IE&#93;&gt;<br />&lt;link rel=3D&quot;stylesheet&quot; type=3D&quot;text/css&quot; href=3D&quot;./styles/avalon/theme/ie=<br />7.css&quot; /&gt;<br />&lt;!&#91;endif&#93;--&gt;<br /></code></pre></div><br />as shown above the &lt;title&gt; tags has two-lines:<br /><br />&lt;title&gt;DosTips.com - View topic - Another way to create a line feed variabl=<br />e&lt;/title&gt;<br /><br /><br />other .mht has different string in second line like this for examples:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;title&gt;DosTips.com - View topic - Another way to create a line feed var=<br />iable&lt;/title&gt;<br /></code></pre></div><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;title&gt;DosTips.com - View topic - Another way to create a line feed variable&lt;/tit=<br />le&gt;<br /></code></pre></div><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;title&gt;DosTips.com - View topic - Another way to create a line feed variable&lt;/=<br />title&gt;<br /></code></pre></div><br /><br /><br />i tried this code but no luck in a single long stringline:<br /><br /> type infile.htm |repl &quot;.*&lt;title&gt;(.*)&lt;/title&gt;.*&quot; &quot;$1&quot; &gt;outfile.txt<br /><br /><br />can this repl.bat or jrepl.bat solves problems below:<br /><br />1) extracting between html tags in a oneline in a long strings?<br />2) extracting between html tags (of some .mht webpages) which has two-lines long webpage title separated by equal(=) symbol ?<br /><br />i needs above answers and im still on studying the so-called &quot;regex code&quot;<br /><br />anyway thanks<br /><br />Bars<br /><br />windows xp sp3 32bit user</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p37980" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile37980">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content37980">
+
+						<h3 ><a href="#p37980">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7afd.html?mode=quote&amp;f=3&amp;p=37980" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb031.html?p=37980#p37980" onclick="prompt('Message #7',this.href); return false;">#7</a></span> 
+									<a class="unread" href="viewtopicb031.html?p=37980#p37980" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>14 Nov 2014 23:50
+			</p>
+			
+			
+			
+			<div class="content">@foxidrive - I posted solutions at ComputerHope. I also edited the top post on this thread to briefly describe the difference in syntax between JREPL and REPL. It shouldn't take long to get used to the new syntax.<br /><br />@bars143 - This is really easy (and fast) with JREPL.BAT <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" />  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type test.txt | jrepl &quot;=?\r?\n&quot; &quot;&quot; /m | jrepl &quot;&lt;title&gt;(.*?)&lt;/title&gt;&quot; &quot;$1&quot; /jmatch /m<br /></code></pre></div><br />First I strip out all carriage returns and linefeeds. I also strip out = if it precedes the end of a line. Then I simply search for the title tag, capturing the contents. The /JMATCH option preserves only matched text.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p37985" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile37985">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7c64.html?author_id=5042&amp;sr=posts">87</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 01 Sep 2013 20:47</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content37985">
+
+						<h3 ><a href="#p37985">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting96ce.html?mode=quote&amp;f=3&amp;p=37985" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb160.html?p=37985#p37985" onclick="prompt('Message #8',this.href); return false;">#8</a></span> 
+									<a class="unread" href="viewtopicb160.html?p=37985#p37985" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a></strong> &raquo; </span>15 Nov 2014 01:55
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>dbenham wrote:</cite>@foxidrive - I posted solutions at ComputerHope. I also edited the top post on this thread to briefly describe the difference in syntax between JREPL and REPL. It shouldn't take long to get used to the new syntax.<br /><br />@bars143 - This is really easy (and fast) with JREPL.BAT <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" />  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type test.txt | jrepl &quot;=?\r?\n&quot; &quot;&quot; /m | jrepl &quot;&lt;title&gt;(.*?)&lt;/title&gt;&quot; &quot;$1&quot; /jmatch /m<br /></code></pre></div><br />First I strip out all carriage returns and linefeeds. I also strip out = if it precedes the end of a line. Then I simply search for the title tag, capturing the contents. The /JMATCH option preserves only matched text.<br /><br /><br />Dave Benham</div></blockquote><br /><br /><br />thanks very much!! <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" />  Dave,<br /><br /> it works perfectly on .mht file and .htm file(for a long oneline strings)<br /><br />but i already had working combo of find.exe and REPL.exe to work on testing some 15 webpage in one go.<br />yet needed &quot;[&quot; as delimeter on longline stringd. findstr does not work as its keep saying error message :<br />&quot;...line 2 is too long strings...&quot; and it does not work on .mht file with an equal sign &quot;=&quot; .<br /><br />here is what i made:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />setlocal enabledelayedexpansion<br /><br />rem &quot;xxxx4&quot; is a folder that contents webpages files to be extracted<br /><br />set &quot;PD=%~dp0xxxx4\&quot;<br />dir &quot;%PD%&quot; /b &gt;webpagelist.txt<br />set &quot;WB=webpagelist.txt&quot;<br />set count=0<br />echo %WB%<br /><br />for /f &quot;delims=&quot; %%a in (' type &quot;!WB!&quot; ') do (<br />&nbsp; &nbsp;set &quot;FILE=%%a&quot;<br />&nbsp; &nbsp;set &quot;PFILE=!PD!!FILE!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; set /a count+=1&nbsp; &nbsp;<br />&nbsp; &nbsp;<br />&nbsp; &nbsp;&nbsp; &nbsp;echo this line will cut longline string by delimiting up to &quot;&#91;&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;echo FINDSTR will not work here. i use FIND.<br />&nbsp; &nbsp;&nbsp; &nbsp;for /f &quot;delims=&#91;&quot; %%b in (' type &quot;!PFILE!&quot; ^|find &quot;&lt;title&gt;&quot; ^|repl &quot;.*&lt;title&gt;(.*)&lt;/title&gt;.*&quot; &quot;$1&quot; ') do (<br />&nbsp; &nbsp;&nbsp; &nbsp;set &quot;c=%%b&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;ren &quot;!PD!!FILE!&quot; &quot;!c!.htm&quot;&nbsp; &nbsp;<br />&nbsp; &nbsp;&nbsp; &nbsp;<br />&nbsp; &nbsp;&nbsp; &nbsp;)<br />&nbsp;&nbsp; &nbsp;echo this line will rename some duplicate webpage title<br />&nbsp; &nbsp;if exist &quot;!PD!!FILE!&quot; ren &quot;!PD!!FILE!&quot; &quot;!c!_!count!.htm&quot;<br />)<br />echo above code does not work on .mht files with an equal sign &quot;=&quot; &lt;--it is as a separator of two-lines webpage title.<br />pause<br /><br /></code></pre></div><br /><br />i will try your script soon on some remaining webpages files.<br /><br />Bars</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p37986" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile37986">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search661c.html?author_id=1265&amp;sr=posts">3386</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 22 Jan 2010 18:01</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content37986">
+
+						<h3 ><a href="#p37986">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0b5c.html?mode=quote&amp;f=3&amp;p=37986" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic03ed.html?p=37986#p37986" onclick="prompt('Message #9',this.href); return false;">#9</a></span> 
+									<a class="unread" href="viewtopic03ed.html?p=37986#p37986" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a></strong> &raquo; </span>15 Nov 2014 06:21
+			</p>
+			
+			
+			
+			<div class="content">Bars<br /><br />Use regular expressions on markup languages (like HTML, XML, and the like) very carefully. They may fail! Enjoy reading that legendary post at SO:<br /><a href="http://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454" class="postlink">The &lt;center&gt; cannot hold it is too late.</a><br />Better take the data object model (DOM). JScript is suitable for that task as well. Maybe if I find the time I'll write a command line tool to work around XML issues.<br /><br /><br />Dave<br /><br />Great work! I already used repl.bat very successfully...<br /><br /><br />Regards<br />aGerman</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p37993" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile37993">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7c64.html?author_id=5042&amp;sr=posts">87</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 01 Sep 2013 20:47</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content37993">
+
+						<h3 ><a href="#p37993">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinge493.html?mode=quote&amp;f=3&amp;p=37993" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopiccd11.html?p=37993#p37993" onclick="prompt('Message #10',this.href); return false;">#10</a></span> 
+									<a class="unread" href="viewtopiccd11.html?p=37993#p37993" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a></strong> &raquo; </span>15 Nov 2014 11:47
+			</p>
+			
+			
+			
+			<div class="content">aGerman, thanks for the link. Regards back to you.<br /><br /><br />Dave , i have a problem that some webpages title has one ore more of these characters:  &quot;|&quot; &quot;?&quot; &quot;:&quot; &quot;\&quot; &quot;/&quot; &quot;=&quot; &quot;&lt;&quot; &quot;&gt;&quot;<br /><br />i can delete these chars  &quot;\&quot; &quot;|&quot; &quot;:&quot; &quot;?&quot; &quot;=&quot; by leading with &quot;\&quot; for ex. &quot;\?&quot; &quot;\:&quot;etc<br /><br />but these cant , and dont know how to delete the ff :  &quot;/&quot;  &quot;&lt;&quot; &quot;&gt;&quot; <br /><br /><br />here is my code: <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type test.txt | jrepl &quot;&#91;\|\?\:\=\\&#93;&quot; &quot;&quot; /m | jrepl &quot;&lt;title&gt;(.*?)&lt;/title&gt;&quot; &quot;$1&quot; /jmatch /m &gt;output.txt<br /></code></pre></div> <br /><br />could you give me script that can remove  &quot;/&quot;  &quot;&lt;&quot; &quot;&gt;&quot;  maybe you can add more char i dont know.<br />if you can , then i can rename &quot;/&quot; as [slash] ,  &quot;&lt;&quot; as [lessthan] , &quot;&gt;&quot; as [greaterthan] to be used as part of filename.<br />i always use webpage title as basis for my search query.<br /><br /><br />thanks,<br /><br />Bars</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p37996" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile37996">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content37996">
+
+						<h3 ><a href="#p37996">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingd0e4.html?mode=quote&amp;f=3&amp;p=37996" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5d29.html?p=37996#p37996" onclick="prompt('Message #11',this.href); return false;">#11</a></span> 
+									<a class="unread" href="viewtopic5d29.html?p=37996#p37996" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>15 Nov 2014 13:10
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>bars143 wrote:</cite>Dave , i have a problem that some webpages title has one ore more of these characters:  &quot;|&quot; &quot;?&quot; &quot;:&quot; &quot;\&quot; &quot;/&quot; &quot;=&quot; &quot;&lt;&quot; &quot;&gt;&quot;<br /><br />i can delete these chars  &quot;\&quot; &quot;|&quot; &quot;:&quot; &quot;?&quot; &quot;=&quot; by leading with &quot;\&quot; for ex. &quot;\?&quot; &quot;\:&quot;etc<br /><br />but these cant , and dont know how to delete the ff :  &quot;/&quot;  &quot;&lt;&quot; &quot;&gt;&quot; <br /></div></blockquote><br />Those chars are needed to identify the &lt;title&gt; &lt;/title&gt; tags, so they must be deleted after you extract the title, not before.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type test.txt | jrepl &quot;=?\r?\n&quot; &quot;&quot; /m | jrepl &quot;&lt;title&gt;(.*?)&lt;/title&gt;&quot; &quot;$1&quot; /jmatch /m | jrepl &quot;&#91;|?:/\\=&lt;&gt;&#93;&quot; &quot;&quot;<br /></code></pre></div><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38003" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38003">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38003">
+
+						<h3 ><a href="#p38003">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0999.html?mode=quote&amp;f=3&amp;p=38003" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9108.html?p=38003#p38003" onclick="prompt('Message #12',this.href); return false;">#12</a></span> 
+									<a class="unread" href="viewtopic9108.html?p=38003#p38003" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>15 Nov 2014 22:09
+			</p>
+			
+			
+			
+			<div class="content">Dave, I was wondering if you would consider a transliteration switch like GnuSed has in the Y switch.<br /><br /><span style="color: #0040FF">y/abc/xyz</span> replaces - a with x - and b with y - and c with z.  <br /><br />Do you think that is a worthwhile function to include?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38006" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38006">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7c64.html?author_id=5042&amp;sr=posts">87</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 01 Sep 2013 20:47</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38006">
+
+						<h3 ><a href="#p38006">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingbb6c.html?mode=quote&amp;f=3&amp;p=38006" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic0087.html?p=38006#p38006" onclick="prompt('Message #13',this.href); return false;">#13</a></span> 
+									<a class="unread" href="viewtopic0087.html?p=38006#p38006" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a></strong> &raquo; </span>15 Nov 2014 22:30
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>dbenham wrote:</cite><blockquote><div><cite>bars143 wrote:</cite>Dave , i have a problem that some webpages title has one ore more of these characters:  &quot;|&quot; &quot;?&quot; &quot;:&quot; &quot;\&quot; &quot;/&quot; &quot;=&quot; &quot;&lt;&quot; &quot;&gt;&quot;<br /><br />i can delete these chars  &quot;\&quot; &quot;|&quot; &quot;:&quot; &quot;?&quot; &quot;=&quot; by leading with &quot;\&quot; for ex. &quot;\?&quot; &quot;\:&quot;etc<br /><br />but these cant , and dont know how to delete the ff :  &quot;/&quot;  &quot;&lt;&quot; &quot;&gt;&quot; <br /></div></blockquote><br />Those chars are needed to identify the &lt;title&gt; &lt;/title&gt; tags, so they must be deleted after you extract the title, not before.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type test.txt | jrepl &quot;=?\r?\n&quot; &quot;&quot; /m | jrepl &quot;&lt;title&gt;(.*?)&lt;/title&gt;&quot; &quot;$1&quot; /jmatch /m | jrepl &quot;&#91;|?:/\\=&lt;&gt;&#93;&quot; &quot;&quot;<br /></code></pre></div><br /><br />Dave Benham</div></blockquote><br /><br />oh, thats a simple tweak... , i never though of that , --those chars should be deleted last.  <br />And only backlash needed another backlash inside square parenthesis [|?:/\\=&lt;&gt;*] , &lt;--- i added asterisk since its not allowed as part of filename. but a doublequote symbol  ,i dont know how?<br /><br />edited at nov 16 2014 :<br /><br />now i found it: it is   \q   &lt;---a doublequote regex <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br /><br />anyway thanks Dave for quick reply.<br /><br />Bars</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a> on 16 Nov 2014 01:10, edited 1 time in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38073" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38073">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistfff4.html?mode=viewprofile&amp;u=3621" class="username">brinda</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6a76.html?author_id=3621&amp;sr=posts">78</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 25 Apr 2012 23:51</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38073">
+
+						<h3 ><a href="#p38073">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting55f8.html?mode=quote&amp;f=3&amp;p=38073" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic541a.html?p=38073#p38073" onclick="prompt('Message #14',this.href); return false;">#14</a></span> 
+									<a class="unread" href="viewtopic541a.html?p=38073#p38073" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistfff4.html?mode=viewprofile&amp;u=3621" class="username">brinda</a></strong> &raquo; </span>17 Nov 2014 20:56
+			</p>
+			
+			
+			
+			<div class="content">dave,<br /><br />thank you for Jrepl.<br /><br />Would it be possible to use Jrepl to remove duplicate lines (case sensitive) and  leaving the lines in original order stripping blank lines as well.<br /><br />from your link<a href="http://stackoverflow.com/questions/11689689/batch-to-remove-duplicate-rows-from-text-file" class="postlink">http://stackoverflow.com/questions/11689689/batch-to-remove-duplicate-rows-from-text-file</a><br /><br />example below<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal disableDelayedExpansion<br />set &quot;file=%~1&quot;<br />set &quot;line=%file%.line&quot;<br />set &quot;deduped=%file%.deduped&quot;<br />::Define a variable containing a linefeed character<br />set LF=^<br /><br /><br />::The 2 blank lines above are critical, do not remove<br />&gt;&quot;%deduped%&quot; (<br />&nbsp; for /f usebackq^ eol^=^%LF%%LF%^ delims^= %%A in (&quot;%file%&quot;) do (<br />&nbsp; &nbsp; set &quot;ln=%%A&quot;<br />&nbsp; &nbsp; setlocal enableDelayedExpansion<br />&nbsp; &nbsp; &gt;&quot;%line%&quot; (echo !ln:\=\\!)<br />&nbsp; &nbsp; &gt;nul findstr /xlg:&quot;%line%&quot; &quot;%deduped%&quot; || (echo !ln!)<br />&nbsp; &nbsp; endlocal<br />&nbsp; )<br />)<br />&gt;nul move /y &quot;%deduped%&quot; &quot;%file%&quot;<br />2&gt;nul del &quot;%line%&quot;</code></pre></div><br /><br />If yes, could you please provide how to do? thanks.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38075" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38075">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38075">
+
+						<h3 ><a href="#p38075">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting929a.html?mode=quote&amp;f=3&amp;p=38075" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicdf7b.html?p=38075#p38075" onclick="prompt('Message #15',this.href); return false;">#15</a></span> 
+									<a class="unread" href="viewtopicdf7b.html?p=38075#p38075" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>17 Nov 2014 21:22
+			</p>
+			
+			
+			
+			<div class="content">@brinda - I don't see how JREPL can help with that, especially if the lines are not sorted.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="postingdfbb.html?mode=reply&amp;f=3&amp;t=6044" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic89e2.html?f=3&amp;t=6044&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6044">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			393 posts
+							<ul>
+	<li class="dropdown-container dropdown-button-control dropdown-page-jump page-jump">
+		<a class="button button-icon-only dropdown-trigger" href="#" title="Click to jump to page…" role="button"><i class="icon fa-level-down fa-rotate-270" aria-hidden="true"></i><span class="sr-only">Page <strong>1</strong> of <strong>27</strong></span></a>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+				<li>Jump to page:</li>
+				<li class="page-jump-form">
+					<input type="number" name="page-number" min="1" max="999999" title="Enter the page number you wish to go to" class="inputbox tiny" data-per-page="15" data-base-url=".&#x2F;viewtopic.php&#x3F;f&#x3D;3&amp;amp&#x3B;t&#x3D;6044" data-start-name="start" />
+					<input class="button2" value="Go" type="button" />
+				</li>
+			</ul>
+		</div>
+	</li>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopicdbbc.html?f=3&amp;t=6044&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopice26f.html?f=3&amp;t=6044&amp;start=30" role="button">3</a></li>
+				<li><a class="button" href="viewtopic29a7.html?f=3&amp;t=6044&amp;start=45" role="button">4</a></li>
+				<li><a class="button" href="viewtopicf93e.html?f=3&amp;t=6044&amp;start=60" role="button">5</a></li>
+			<li class="ellipsis" role="separator"><span>…</span></li>
+				<li><a class="button" href="viewtopic54c6.html?f=3&amp;t=6044&amp;start=390" role="button">27</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopicdbbc.html?f=3&amp;t=6044&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5089.gif?cron_type=cron.task.text_reparser.post_text" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 04:00:13 GMT -->
+</html>

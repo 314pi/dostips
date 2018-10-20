@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8576&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Adding Wildcards to variables</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Adding Wildcards to variables</h2>
+		<p><a href="viewtopic8f4e.html?f=3&amp;t=8576">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8576</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Adding Wildcards to variables</h3>
+				<div class="date">Posted: <strong>23 May 2018 13:17</strong></div>
+				<div class="author">by <strong>haishi</strong></div>
+				<div class="content">Hello there! This is my first post here, so please apologize if I do not act strictly on forum rules. <br>
+I hope you can help!<br>
+<br>
+What I'm trying to achieve:<br>
+I am creating a script that allows users tu enter three different variables (number="job number"; customer="Customer Name" and job="job description", that would later create a user path within a specific folder (%number%_%customer%_%job%). That part is easy.<br>
+<br>
+However, what i can not achieve is cross checking if a folder already exists, based solely on the jobnumber.<br>
+What the script should do is check if an entered jobnumer is already in use within the destination folder. If so, it should open the existing folder(s)  in explorer. There might be more than one with the same number (e.g. our dummy jobs all start with "000000").<br>
+<br>
+Here is the simplified part of the script that should check whether there are already folders starting with the same number: <br>
+<br>
+______________________________________________________<br>
+<br>
+@echo off<br>
+set /p number="job number: "<br>
+<br>
+set "folderExist="<br>
+for %%a in ("U:\destination\work in progress\%number%*") do set "folderExist=1" &amp; goto continue<br>
+<br>
+:continue<br>
+IF DEFINED folderExist (<br>
+   start "" "U:\destination\work in progress\\%number%*"<br>
+) ELSE (<br>
+   .... do something else ....<br>
+<br>
+)<br>
+<br>
+______________________________________________________<br>
+<br>
+The asterisk as a wildcard is not recognised.<br>
+<br>
+I hope you understand what I am trying to achieve here and that someone can assist me. Any help yould be greatly appreciated.<br>
+<br>
+Best regards,<br>
+Andreas<br>
+<br>
+P.S. Please note, that the destination folder is on a mapped network drive. I'm not sure if that makes any difference.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding Wildcards to variables</h3>
+				<div class="date">Posted: <strong>23 May 2018 13:58</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">I suggest you reread the help file for the IF command.<br>
+<br>
+IF DEFINED checks if an environmental variable has any value assigned to it.<br>
+IF EXIST checks if a file or folder exists.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding Wildcards to variables</h3>
+				<div class="date">Posted: <strong>24 May 2018 00:25</strong></div>
+				<div class="author">by <strong>haishi</strong></div>
+				<div class="content">The outcome is the same if I use "if exist", i tried that previously. Problem is, that after the variable %number% I am unable to use a wildcard to have the rest of the foldername ignored and open every folder that stards with a value that is equal to the entered %number%.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding Wildcards to variables</h3>
+				<div class="date">Posted: <strong>24 May 2018 13:00</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">Instead of FOR-FILES command, try directly <blockquote class="uncited"><div>IF EXIST "U:\destination\work in progress\%number%*" do (....)</div></blockquote></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding Wildcards to variables</h3>
+				<div class="date">Posted: <strong>24 May 2018 13:08</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Use the FOR command to your advantage. <br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+set /p "number=job number: "
+
+set "folderExist="
+for /D %%G in ("U:\destination\work in progress\%number%*") do (
+	start "" "%%~G"
+	set "folderExist=Y"
+)
+
+IF NOT DEFINED folderExist (
+	.... do something else ....
+)</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding Wildcards to variables</h3>
+				<div class="date">Posted: <strong>25 May 2018 01:14</strong></div>
+				<div class="author">by <strong>haishi</strong></div>
+				<div class="content">WOW Squashman, that does exactly what I need! Thank you very very much!!!  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8576&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:17 GMT -->
+</html>

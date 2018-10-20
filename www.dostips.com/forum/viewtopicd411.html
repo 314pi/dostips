@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5543&start=45&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:23:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; js/vbs/html/hta and more hybrids and chimeras in cmd/bat - Page 4</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>js/vbs/html/hta and more hybrids and chimeras in cmd/bat</h2>
+		<p><a href="viewtopic9fb1.html?f=3&amp;t=5543">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5543</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>4</strong> of <strong>4</strong></div>
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>15 Jun 2015 05:58</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">you need to call the job by its ID:<br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@cScript.EXE //noLogo &quot;%~f0?.WSF&quot; //job:javaScript /arg0:sleep_ /arg1:time<br />@cScript.EXE //noLogo &quot;%~f0?.WSF&quot; //job:VBScript /arg0:sleep_ /arg1:time<br />@exit /b 0<br /><br /><br />&lt;package&gt;<br />&nbsp; &nbsp;&lt;job id=&quot;javaScript&quot;&gt;<br />&nbsp; &nbsp; &nbsp; &lt;script language=&quot;JScript&quot;&gt;<br />&nbsp; &nbsp;&nbsp; &nbsp;WScript.Echo( &quot;hi&quot; );<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;WScript.Echo(WScript.Arguments.Item(1));<br />&nbsp; &nbsp; &nbsp; &lt;/script&gt;<br />&nbsp; &nbsp;&lt;/job&gt;<br /><br />&nbsp; &lt;job id=&quot;VBScript&quot;&gt;<br />&nbsp; &nbsp;&lt;script language=&quot;VBScript&quot;&gt;<br />&nbsp; &nbsp;&nbsp; &nbsp;WScript.Echo(&quot;blah&quot;):<br />&nbsp; &nbsp;&lt;/script&gt;<br />&nbsp; &lt;/job&gt;<br />&lt;/package&gt;</code></pre></div><br /><br />and you need to put your jobs in a package.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>15 Jun 2015 06:16</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">My god what is wrong with me today, I even misspelled job ID. <img class="smilies" src="images/smilies/icon_rolleyes.gif" alt=":roll:" title="Rolling Eyes" /> <br /><br />thank u very much npocmaka_, it works now <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>25 Jun 2015 05:24</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">mshta without splash :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />mshta.exe &quot;%~f0&quot;|more<br />exit /b<br /><br />&lt;HTA:Application<br />&nbsp; &nbsp; &nbsp; &nbsp;ShowInTaskbar = no<br />&nbsp; &nbsp;WindowsState=Minimize<br />&nbsp; &nbsp;SysMenu=No<br />&nbsp; &nbsp;ShowInTaskbar=No<br />&nbsp; &nbsp;Caption=No<br />&nbsp; &nbsp;Border=Thin<br />&gt;<br /><br />&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;<br />&nbsp; &nbsp;window.visible=false;<br />&nbsp; &nbsp;window.resizeTo(1,1);<br />&nbsp; &nbsp;<br />&nbsp; &nbsp;var fso= new ActiveXObject('Scripting.FileSystemObject').GetStandardStream(1);<br />&nbsp; &nbsp;fso.WriteLine(&quot;waiting 5 seconds&quot;);<br />&nbsp; &nbsp;&nbsp; function waitSeconds(iMilliSeconds) {<br />&nbsp; &nbsp;&nbsp; &nbsp;var counter= 0<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;, start = new Date().getTime()<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;, end = 0;<br />&nbsp; &nbsp;&nbsp; &nbsp;while (counter &lt; iMilliSeconds) {<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;end = new Date().getTime();<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;counter = end - start;<br />&nbsp; &nbsp;&nbsp; &nbsp;}<br />&nbsp; &nbsp;&nbsp; }<br />&nbsp; &nbsp;&nbsp; waitSeconds(5000);<br /><br />&nbsp; var fso= new ActiveXObject('Scripting.FileSystemObject').GetStandardStream(1);<br />&nbsp; close(fso.Write(&quot;test hta window visibility&quot;));<br />&lt;/script&gt;</code></pre></div><br /><br />the mshta splash is not visible , but for moment the focus is lost from the cmd console.<br />At the beginning it sets some hta tags to reduce interaction elements (though the hta part can be removed - it is not the important part - without it for a moment a small window will be visible while application is closed) :<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>https://technet.microsoft.com/en-us/library/ee176567.aspx</code></pre></div><br /><br />then applies on the window object (the mother and the father of everything in javascript when the context is a browser) resize and visibility to false.<br />as the HTA is some kind of internet explorer you can use methods/properties  from IWebBrowser2 :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>https://msdn.microsoft.com/en-us/library/aa752127(v=vs.85).aspx</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>01 Jul 2015 02:47</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">One more reason to love mshta.With hta application you can use ecmascript 6 features (while wsh jscript is ecmascript 4 compatible ): <br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />mshta.exe &quot;%~f0&quot;|more<br />exit /b<br /><br />&lt;HTA:Application<br />&nbsp; &nbsp;ShowInTaskbar = no<br />&nbsp; &nbsp;WindowsState=Minimize<br />&nbsp; &nbsp;SysMenu=No<br />&nbsp; &nbsp;ShowInTaskbar=No<br />&nbsp; &nbsp;Caption=No<br />&nbsp; &nbsp;Border=Thin<br />&gt;<br />&lt;meta http-equiv=&quot;x-ua-compatible&quot; content=&quot;ie=edge&quot; /&gt;<br />&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;<br />&nbsp; &nbsp; window.visible=false;<br />&nbsp; &nbsp; window.resizeTo(1,1);<br />&nbsp; &nbsp;var text = '{&quot;name&quot;:&quot;John Johnson&quot;,&quot;street&quot;:&quot;Oslo West 16&quot;,&quot;phone&quot;:&quot;555 1234567&quot;}';<br />&nbsp; &nbsp;var obj = JSON.parse(text);<br />&nbsp; &nbsp;var fso= new ActiveXObject('Scripting.FileSystemObject').GetStandardStream(1);<br />&nbsp; &nbsp;fso.Write(obj.name + &quot;\r\n&quot; + obj.street + &quot;\r\n&quot; + obj.phone);<br />&nbsp; &nbsp;close();<br />&lt;/script&gt;</code></pre></div><br /><br />You need installed IE11 and <strong class="text-strong">&lt;meta http-equiv=&quot;x-ua-compatible&quot; content=&quot;ie=edge&quot; /&gt;</strong> . Probably will be not so useful for old XP/2003 machines , but is good to know as allows usage of callback functions , promises , JSON and so on. Including some cool javascript libraries that cannot be used with wsh/jscript.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>21 Dec 2015 05:52</strong></div>
+				<div class="author">by <strong>siberia-man</strong></div>
+				<div class="content">The script was updated: <a href="viewtopic3fec-2.html?f=3&amp;t=5543&amp;p=37780#p37780" class="postlink">http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5543&amp;p=37780#p37780</a><br /><br />Some cosmetic changes and support for Python were done.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>21 Jul 2016 09:27</strong></div>
+				<div class="author">by <strong>siberia-man</strong></div>
+				<div class="content">The script was updated: <a href="viewtopic3fec-2.html?f=3&amp;t=5543&amp;p=37780#p37780" class="postlink">http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5543&amp;p=37780#p37780</a>. <br />After this thread <a href="viewtopic3962.html?f=3&amp;t=7110#p46346" class="postlink">We can use bash in our scripts now in Win10</a> I decided to add (the variant with heredoc) the support of hybrid of Bash in Cmd.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta and more hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>21 Jul 2016 12:15</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">Anyway the thread was resurrected...<br />Here's one more highly imperfect way to make a hybrid with vbscript that just came to me:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:sub c() :end sub:<br />C: '&amp; @echo off<br />C: '&amp; echo batch<br />C: '&amp; cscript /nologo /E:vbscript %~f0<br />C: '&amp; exit /b 0<br /><br />WScript.Echo &quot;VBScript&quot;<br />WScript.Quit</code></pre></div><br /><br />it just uses jump to drives in the batch part and for the drive letter there's a prepared subroutine in the vbscript part.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta and more hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>16 Sep 2016 13:27</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">turns out rundll32 also can execute jsvascript/vbscript code (though it is calling the mshtml.dll):<br /><br /><blockquote class="uncited"><div>rundll32.exe javascript&#058;&quot;\..\mshtml.dll,RunHTMLApplication &quot;;eval(&quot;w=new%20ActiveXObject(\&quot;WScript.Shell\&quot;);w.Exec(\&quot;calc\&quot;)&quot;);</div></blockquote><br /><br /><!-- m --><a class="postlink" href="https://gist.github.com/subTee/62fc28bb5dc58dbe9efdd56d65921bd2">https://gist.github.com/subTee/62fc28bb ... 6d65921bd2</a><!-- m --></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta and more hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>07 Feb 2017 07:41</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">Rather an <a href="http://stackoverflow.com/questions/42090138/how-to-pass-an-argument-that-starts-with-to-a-wsh-script/42090652#42090652" class="postlink">important note</a> for the wsh scripts.<br /><br />To be able to pass non named arguments to the script that starts with '//' you'll need to put '//' after the script name:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (@X)==(@Y) @end /* JScript comment<br />&nbsp; &nbsp; @echo off<br />&nbsp; &nbsp; cscript //E:JScript //nologo &quot;%~f0&quot; // %*<br />&nbsp; &nbsp; exit /b %errorlevel%<br />@if (@X)==(@Y) @end JScript comment */<br /><br />WScript.Echo(WScript.Arguments.Item(0));</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta and more hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>05 Apr 2018 15:40</strong></div>
+				<div class="author">by <strong>Marblo</strong></div>
+				<div class="content">Maybe you could even add ps support to this script. I don't know how to invoke the batch as a .ps script but the output could look  like this :
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code> 
+&lt;# :: batch part
+Echo hello world
+Exit
+#&gt;
+(some ps commands) 
+</code></pre></div> <br>
+<br>
+Sorry for typos or bad english :rol: <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=":wink:" title="Wink"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta and more hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>05 Apr 2018 19:52</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8acd.html?mode=viewprofile&amp;u=9149">Marblo</a> wrote: <a href="viewtopic2b87.html?p=56207#p56207" data-post-id="56207" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">05 Apr 2018 15:40</div></cite>
+Maybe you could even add ps support to this script. I don't know how to invoke the batch as a .ps script but the output could look  like this :
+</div></blockquote>
+Read the whole thread.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta and more hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>06 Apr 2018 06:11</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8acd.html?mode=viewprofile&amp;u=9149">Marblo</a> wrote: <a href="viewtopic2b87.html?p=56207#p56207" data-post-id="56207" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">05 Apr 2018 15:40</div></cite>
+Maybe you could even add ps support to this script. I don't know how to invoke the batch as a .ps script but the output could look  like this :
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code> 
+&lt;# :: batch part
+Echo hello world
+Exit
+#&gt;
+(some ps commands) 
+</code></pre></div> <br>
+<br>
+Sorry for typos or bad english :rol: <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=":wink:" title="Wink">
+</div></blockquote>
+
+PowerShell support already exists for this script. It's the one time I've ever used it.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta and more hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>01 May 2018 11:49</strong></div>
+				<div class="author">by <strong>jfl</strong></div>
+				<div class="content">I think the PowerShell support can be simplified, based on a post at <a href="https://stackoverflow.com/a/49063524" class="postlink">https://stackoverflow.com/a/49063524</a><br>
+<br>
+Here's an improved version of their script:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;# :# PowerShell comment protecting the Batch section
+@echo off
+setlocal EnableExtensions DisableDelayedExpansion
+
+:# Prepare batch arguments
+set ARGS=%*
+if defined ARGS set ARGS=%ARGS:"=\"%
+if defined ARGS set ARGS=%ARGS:'=''%
+
+echo In Batch
+PowerShell -c ^"Invoke-Expression ('^&amp; { ' + [io.file]::ReadAllText(\"%~f0\") + '} %ARGS%')"
+echo Back in Batch. PowerShell exit code = %ERRORLEVEL%
+exit /b
+
+###############################################################################
+# End of the PS comment around the Batch section; Begin the PowerShell section #&gt;
+
+echo "In PowerShell"
+$Args | % { "PowerShell Args[{0}] = '$_'" -f $i++ }
+exit 0
+</code></pre></div>
+
+The important trick I added is to ^escape the first double quote in the PowerShell command.<br>
+This ensures that the ^ &amp; | &lt; &gt; special characters in quoted batch arguments are still protected by their quotes in the PowerShell command line, and make it through safely.<br>
+Cherry on the cake, you can even pass double quotes by doubling them:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\JFL\SRC\Batch&gt;"bat+ps1.bat" one 2 "three four $#^!&amp;|&lt;&gt;'"""
+In Batch
+In PowerShell
+PowerShell Args[0] = 'one'
+PowerShell Args[1] = '2'
+PowerShell Args[2] = 'three four $#^!&amp;|&lt;&gt;'"'
+Back in Batch. PowerShell exit code = 0
+
+C:\JFL\SRC\Batch&gt;</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: js/vbs/html/hta and more hybrids and chimeras in cmd/bat</h3>
+				<div class="date">Posted: <strong>05 May 2018 04:12</strong></div>
+				<div class="author">by <strong>siberia-man</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8b07.html?mode=viewprofile&amp;u=4311">jfl</a> wrote: <a href="viewtopic03c6.html?p=56628#p56628" data-post-id="56628" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">01 May 2018 11:49</div></cite>
+I think the PowerShell support can be simplified, based on a post at <a href="https://stackoverflow.com/a/49063524" class="postlink">https://stackoverflow.com/a/49063524</a>
+</div></blockquote>
+
+I used another answer from that thread - <a href="https://stackoverflow.com/a/2611487/3627676" class="postlink">https://stackoverflow.com/a/2611487/3627676</a></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>4</strong> of <strong>4</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5543&start=45&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:23:05 GMT -->
+</html>

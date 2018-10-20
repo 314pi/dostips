@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8734&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:47:23 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; how to output multiple results from loop clause</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>how to output multiple results from loop clause</h2>
+		<p><a href="viewtopic0bc0.html?f=3&amp;t=8734">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8734</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>how to output multiple results from loop clause</h3>
+				<div class="date">Posted: <strong>25 Jul 2018 13:38</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">Hi<br>
+<br>
+This could be easy for you but I am not. I had a file as below
+<ul>
+ 	<li>Location 		: TELIUM3\TSA<br>
+	Location 		: TELIUM3\KIA<br>
+	Location 		: TELIUM3\TCPXCOM <br>
+ 	Location 		: TELIUM3\TCPXCORE<br>
+	Location 		: TELIUM3\TCPXHMI<br>
+	Location 		: TELIUM3\TCPXVEGA<br>
+	Location 		: TELIUM3\E2EE_App<br>
+	Location 		: TELIUM3\Web Platform Lock Application <br>
+	Location 		: TELIUM3\Web Platform Lock Parameter <br>
+	Location 		: TELIUM3\E2EE_App_Package<br>
+	Location 		: TELIUM3\E2EE_App_Package</li>
+</ul>
+
+I would like to output only string after \, so I use the below code but it only output the last one, how can I output all the results instead of the last one<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+
+if exist signfder.txt (del signfder.txt)
+
+for /f "tokens=1* delims=\" %%a in (need1sign.txt) do set "base=%%b"
+
+echo %base%&gt;&gt;signfder.txt
+
+</code></pre></div>
+
+I only got the last one E2EE_App_Package in this signfder.txt<br>
+<br>
+Thanks for your help...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: how to output multiple results from loop clause</h3>
+				<div class="date">Posted: <strong>25 Jul 2018 14:07</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">You overwrite variable base multiple times in the loop and of course only the last value is left in the variable after the loop ended. What's the reason why you think you need an additional variable? You already have the values in %%b.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+&gt;"signfder.txt" (for /f "usebackq tokens=1* delims=\" %%a in ("need1sign.txt") do echo %%b)</code></pre></div>
+... should be all that you need.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: how to output multiple results from loop clause</h3>
+				<div class="date">Posted: <strong>25 Jul 2018 14:31</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic6024-2.html?p=57565#p57565" data-post-id="57565" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">25 Jul 2018 14:07</div></cite>
+You overwrite variable base multiple times in the loop and of course only the last value is left in the variable after the loop ended. What's the reason why you think you need an additional variable? You already have the values in %%b.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+&gt;"signfder.txt" (for /f "usebackq tokens=1* delims=\" %%a in ("need1sign.txt") do echo %%b)</code></pre></div>
+... should be all that you need.<br>
+<br>
+Steffen
+</div></blockquote>
+
+Ya that make sense!!! and works....<br>
+BTW, in another case, I got the string I want as above, but the first character of the string is space, can this first space also be eliminated from above?<br>
+<br>
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: how to output multiple results from loop clause</h3>
+				<div class="date">Posted: <strong>25 Jul 2018 14:37</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopicbe23.html?p=57566#p57566" data-post-id="57566" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">25 Jul 2018 14:31</div></cite>BTW, in another case, I got the string I want as above, but the first character of the string is space, can this first space also be eliminated from above?</div></blockquote>
+Certainly it can. But without knowing how the lines look like and what part of them you need I can't give any good advice.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: how to output multiple results from loop clause</h3>
+				<div class="date">Posted: <strong>25 Jul 2018 15:00</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic8e25.html?p=57567#p57567" data-post-id="57567" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">25 Jul 2018 14:37</div></cite>
+<blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopicbe23.html?p=57566#p57566" data-post-id="57566" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">25 Jul 2018 14:31</div></cite>BTW, in another case, I got the string I want as above, but the first character of the string is space, can this first space also be eliminated from above?</div></blockquote>
+Certainly it can. But without knowing how the lines look like and what part of them you need I can't give any good advice.<br>
+<br>
+Steffen
+</div></blockquote>
+
+The file looks like this:<br>
+
+<ul>
+    	<li>Signed file name 	: 8295010610_TSA.P3A<br>
+	Signed file name 	: 8295000530_KIA.P3A<br>
+	Signed file name 	: 8296363001_CPXCOMM.P3A <br>
+    	Signed file name 	: 8296343001_CPXCORE.P3A<br>
+	Signed file name 	: 8520863001_CPXHMI.P3A<br>
+	Signed file name 	: 8296353001_CPXVEGA.P3A<br>
+	Signed file name 	: 8295522012_E2EE.P3A<br>
+	Signed file name 	: 1240000053010200_KIA_LOCK.P3A <br>
+	Signed file name 	: 1240000054010100_KIALCK_PARAM.P3P <br>
+	Signed file name 	: 8295910100_E2ECFGDD.P3P<br>
+	Signed file name 	: 8520300100_E2EBIN.P3P</li>
+</ul>
+
+So I can use the same code as this to get the string after :
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;"signfile.txt" (for /f "usebackq tokens=1* delims=:" %%a in ("need2sign.txt") do echo %%b)
+</code></pre></div>
+I got as expected but the first character is space as original file has for each<br>
+<br>
+ 8295010610_TSA.P3A<br>
+ 8295000530_KIA.P3A<br>
+ 8296363001_CPXCOMM.P3A <br>
+ 8296343001_CPXCORE.P3A<br>
+ 8520863001_CPXHMI.P3A<br>
+ 8296353001_CPXVEGA.P3A<br>
+ 8295522012_E2EE.P3A<br>
+ 1240000053010200_KIA_LOCK.P3A <br>
+ 1240000054010100_KIALCK_PARAM.P3P <br>
+ 8295910100_E2ECFGDD.P3P<br>
+ 8520300100_E2EBIN.P3P</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: how to output multiple results from loop clause</h3>
+				<div class="date">Posted: <strong>25 Jul 2018 15:05</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Just use the space as delimiter (which is the default) and output everything after the fourth token (which is the colon).
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;"signfile.txt" (for /f "usebackq tokens=4*" %%a in ("need2sign.txt") do echo %%b)</code></pre></div>
+
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: how to output multiple results from loop clause</h3>
+				<div class="date">Posted: <strong>26 Jul 2018 07:40</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopicb4a7.html?p=57569#p57569" data-post-id="57569" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">25 Jul 2018 15:05</div></cite>
+Just use the space as delimiter (which is the default) and output everything after the fourth token (which is the colon).
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;"signfile.txt" (for /f "usebackq tokens=4*" %%a in ("need2sign.txt") do echo %%b)</code></pre></div>
+
+Steffen
+</div></blockquote>
+
+Amazing! and good to learn from you case by case.... <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8734&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:47:23 GMT -->
+</html>

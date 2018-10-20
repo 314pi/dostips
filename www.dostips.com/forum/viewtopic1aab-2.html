@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5131&p=30317 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:22:24 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>HELP :- FSUTIL + COPY versus XCOPY /? ; Caches + i/o Buffers - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic8f6d.html?t=5131">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopicaaf9.html?f=3&amp;t=5131">HELP :- FSUTIL + COPY versus XCOPY /? ; Caches + i/o Buffers</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting26fd.html?mode=reply&amp;f=3&amp;t=5131" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic6699.html?f=3&amp;t=5131&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="5131" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			3 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p30290" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile30290">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist306a.html?mode=viewprofile&amp;u=592" class="username">alan_b</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search3aa7.html?author_id=592&amp;sr=posts">357</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 04 Oct 2008 09:49</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content30290">
+
+						<h3 class="first"><a href="#p30290">HELP :- FSUTIL + COPY versus XCOPY /? ; Caches + i/o Buffers</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting90ad.html?mode=quote&amp;f=3&amp;p=30290" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7adc.html?p=30290#p30290" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopic7adc.html?p=30290#p30290" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist306a.html?mode=viewprofile&amp;u=592" class="username">alan_b</a></strong> &raquo; </span>30 Nov 2013 07:48
+			</p>
+			
+			
+			
+			<div class="content">I want a better understanding of the factors affecting :-<br />Both the Real and also the virtual or apparent Speed of Disks ;<br />And pure Read only and also Write only of archive files ;<br />And the transfer of files between partitions on the same Disk and between Disks.<br /><br />I wish to produce a script that will help me evaluate and compare the performance of Removable and Fixed Disks.<br />I am currently focussed on Fixed Disks because I think that will cover Removable.<br /><br />I would appreciate advice and comments upon tentative conclusions based upon the 144 numbered lines created by my script XC.BAT<br /><br />Speed of Copying a 319,334,486 byte file to NUL occupies :-<br />1645 mSec Pure Read from my SSD partition C:\ - lines 129,131,133<br />455 mSec Virtual Read from Windows Cache - lines 134,135,136<br />2185 mSec from my HDD partition D:\ - lines 165,167,169<br />435 mSec Virtual Read from Windows Cache - lines 170,171,172<br /><br />Speed of Copying a 1,014,411,396 byte file to NUL occupies :-<br />5805 mSec Pure Read from my SSD partition C:\ - lines 201,293,205<br />1375 mSec Virtual Read from Windows Cache - lines 206,207,208<br />6825 mSec from my HDD partition D:\ - lines 165,167, and 169<br />1395 mSec Virtual Read from Windows Cache - lines 170, 171, and 172<br /><br />Speed of Copying a 319,334,486 byte file From SSD to Disk 1 HDD occupies :-<br />1850 mSec using FSUTIL + COPY to exclude input cache - lines 101 to 106<br />995 mSec using COPY and both input and ouput buffers - lines 107 to 109<br />1830 mSec using FSUTIL + XCOPY to exclude input cache - lines 110 to 115<br />1045 mSec using XCOPY and both input and ouput buffers - lines 116 to 118<br />2185 mSec using &quot;XCOPY /J&quot; to EXCLUDE input and output buffers - lines 120 to 127<br /><br />Speed of Copying a 319,334,486 byte file From HDD Disk 1 D: to HDD Disk 1 H: occupies :-<br />Slightly longer than SSD to HDD WITH THE EXCEPTION OF<br />5185 mSec using &quot;XCOPY /J&quot; to EXCLUDE input and output buffers - lines 156 to 163<br /><br />Results on lines 173 to 244 are about 3 times as long to handle 1,014,411,396 byte file<br /><br />QUESTIONS :-<br /><br />WHY DOES IT TAKE TWICE AS LONG WHEN TRANSFERING BETWEEN PARTITIONS ON THE SAME DISK ?<br />Is it because my SATA Disc interface data channel is only rated at 3 GBit / Second in one direction at a time ?<br />and can only handle 1.5 GBit/Sec simultaneous input and output ?<br />or is it the Disk Controller ?<br />or is it the Disc Mechanism having to jump between two adjacent 10 GB partitions on a 930 GB HDD ?<br />or what ?<br /><br />COPY is able to write to NUL, XCOPY chooses an error crash instead, Why ?<br />(I do not think I have any need to use XCOPY for writing to NUL, but it surprised me)<br /><br />OBSERVATIONS :-<br /><br />&quot;XCOPY /J&quot; ensures accurate measurement of transfers without input caches or ouput buffers.<br />When the script has in force the variable NO_PAUSE=PAUSE<br />Then every time result is paused and it becomes obvious when watching the HDD activity LED's<br />that there is a solid continuous ON HDD activity for 17325 mSec as shown on line 234<br />after which the drive does not twitch anymore unless it responds to the Internet,<br /><br />BUT Using FSUTIL + COPY has the APPEARANCE of about 2 seconds Disk Activity throughout the 9485 mSec of line 210,<br />But during a very long pause I observe that the Led flashes for about a quarter second once ever three seconds, so there could be another 15 seconds of Disk activity spread over the next 200 Seconds.<br /><br />Deduction :-<br />Windows does a good job at using caches to conceal how slow the drives are,<br />but I only have 8 GByte of RAM so a Partition image backup of my 55 GB SSD could be far to much for Windows caches to handle.<br /><br />Final Question :-<br /><br />XCOPY documentation describes option /J as :-<br />  /J           Copies using unbuffered I/O. Recommended for very large files.<br />Am I correct in assuming that the &quot;output Buffer&quot; is already disabled by default for removable drives,<br />such as USB2, USB3, and eSATA connected HDD ?<br /><br />Regards<br />Alan<br /><br />The Measurement script, which presupposes Source paths C\###-SpeedTest-#\#\S\ and D:\###-SpeedTest-#\#\S\<br />each holding a 200 MB and 1 GB file<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF<br />SETLOCAL EnableDelayedExpansion<br />ECHO File %~f0 changed %~t0 Launched %DATE% %TIME%<br /><br />SET &quot;NO_PAUSE=&quot; &nbsp; &nbsp;REM&nbsp; SHOW TIME AND CONTINUE SCRIPT AUTOMATICALLY<br />SET &quot;NO_PAUSE=PAUSE&quot;&nbsp; &nbsp;REM&nbsp; SHOW TIME AND PAUSE TO OBSERVE DRIVE ACTIVITY LEDS<br /><br />SET &quot;TARGETS=NUL&quot;<br /><br />SET &quot;SOURCE=C: D:&quot;<br />SET &quot;TARGETS=H: NUL&quot;<br />SET &quot;PARENT=###-SpeedTest-#\#&quot;<br />SET &quot;MASK=1 #2&quot;<br />REM&nbsp; EDIT the above 4 lines to control the Source and Destination drives, paths, and files<br /><br />SET /A N=3<br />SET /A L_NUM=100<br /><br />FOR %%m IN (%MASK%) DO FOR %%s IN (%SOURCE%) DO (<br />&nbsp; SET &quot;VOL_T=&quot;<br />&nbsp; for /f &quot;delims=&quot; %%f in (' VOL %%s ') do SET &quot;VOL_T=!VOL_T! %%f &quot;<br />&nbsp; ECHO&nbsp; Source drive %%s =!VOL_T!<br />&nbsp; FOR %%t IN (%TARGETS%) DO (<br />&nbsp; &nbsp; SET &quot;OUT_PATH=%%t\%PARENT%\T\&quot;<br />&nbsp; &nbsp; IF /I &quot;%%t&quot; EQU &quot;NUL&quot; (<br />&nbsp; &nbsp; &nbsp; SET &quot;VOL_T=NUL&quot;<br />&nbsp; &nbsp; &nbsp; SET &quot;OUT_PATH=NUL&quot;<br />&nbsp; &nbsp; ) ELSE (<br />&nbsp; &nbsp; &nbsp; SET &quot;VOL_T=&quot;<br />&nbsp; &nbsp; &nbsp; for /f &quot;delims=&quot; %%f in (' VOL %%t ') do SET &quot;VOL_T=!VOL_T! %%f &quot;<br />&nbsp; &nbsp; &nbsp; IF NOT EXIST &quot;!OUT_PATH!\&quot; MD &quot;!OUT_PATH!\&quot;<br />&nbsp; &nbsp; )<br />&nbsp; &nbsp; ECHO&nbsp; Target drive %%t =!VOL_T!<br />&nbsp; &nbsp; CD /D &quot;%%s\%PARENT%\S&quot;<br />&nbsp; &nbsp; for /f &quot;delims=&quot; %%f in (' DIR &quot;%%m*.*&quot; /b /os /a-d /X ') do (<br />&nbsp; &nbsp; &nbsp; CALL :DO_IT_HELP %%s %%t &quot;%%f&quot; &quot;%%s\%PARENT%\S&quot;<br />&nbsp; &nbsp; &nbsp; FOR /L %%n IN (1,1,%N%) DO CALL :DO_IT_FSU_COPY %%s %%t &quot;%%f&quot; &quot;%%s\%PARENT%\S&quot; %%n<br />&nbsp; &nbsp; &nbsp; FOR /L %%n IN (1,1,%N%) DO CALL :DO_IT_COPY %%s %%t &quot;%%f&quot; &quot;%%s\%PARENT%\S&quot; %%n<br />&nbsp; &nbsp; &nbsp; IF /I &quot;%%t&quot; NEQ &quot;NUL&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; FOR /L %%n IN (1,1,%N%) DO CALL :DO_IT_FSU_XCOPY %%s %%t &quot;%%f&quot; &quot;%%s\%PARENT%\S&quot; %%n<br />&nbsp; &nbsp; &nbsp; &nbsp; FOR /L %%n IN (1,1,%N%) DO CALL :DO_IT_XCOPY %%s %%t &quot;%%f&quot; &quot;%%s\%PARENT%\S&quot; %%n<br />&nbsp; &nbsp; &nbsp; &nbsp; FOR /L %%n IN (1,1,%N%) DO CALL :DO_IT_FSU_XCOPY_J %%s %%t &quot;%%f&quot; &quot;%%s\%PARENT%\S&quot; %%n<br />&nbsp; &nbsp; &nbsp; &nbsp; FOR /L %%n IN (1,1,%N%) DO CALL :DO_IT_XCOPY_J %%s %%t &quot;%%f&quot; &quot;%%s\%PARENT%\S&quot; %%n<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; )<br />&nbsp; )<br />)<br />GOTO :EOF<br /><br />rem for /f &quot;delims=&quot; %%f in (' DIR &quot;%MASK%&quot; /b /os /a-d /X ') do (<br />rem )<br /><br />FOR %%m IN (%MASK%) DO ECHO &#91;&quot;%%m*.*&quot;&#93;<br />goto :eof<br /><br />:DO_IT_HELP<br />ECHO Copying&nbsp; &nbsp; &nbsp;&quot;%~4\&quot;&nbsp; &nbsp;&nbsp; TO&nbsp; &nbsp;&nbsp; &nbsp;&quot;%OUT_PATH%&quot;<br />ECHO Copy File&nbsp; &nbsp;&quot;%~3&quot; Size %~z3 bytes<br />GOTO :EOF<br /><br />:DO_IT_FSU_COPY<br />SET &quot;T1=%TIME%&quot;<br />FSUTIL FILE SETVALIDDATA &quot;%~4\%~3&quot; &quot;%~z3&quot; &gt; NUL<br />CALL :SHOW_TIME %T1% &quot;%5 FSUTIL %~z3&quot;<br />:DO_IT_COPY<br />SET &quot;T1=%TIME%&quot;<br />COPY /B /Y &quot;%~4\%~3&quot; &quot;!OUT_PATH!&quot; &gt; NUL<br />CALL :SHOW_TIME %T1% &quot;%5 COPY /B /Y %~4\{file} !OUT_PATH!&quot;<br />GOTO :EOF<br /><br />:DO_IT_FSU_XCOPY<br />SET &quot;T1=%TIME%&quot;<br />FSUTIL FILE SETVALIDDATA &quot;%~4\%~3&quot; &quot;%~z3&quot; &gt; NUL<br />CALL :SHOW_TIME %T1% &quot;%5 FSUTIL %~z3&quot;<br />:DO_IT_XCOPY<br />SET &quot;T1=%TIME%&quot;<br />XCOPY &quot;%~4\%~3&quot; %OUT_PATH% /Y &gt; NUL<br />CALL :SHOW_TIME %T1% &quot;%5 XCOPY %~4\{file} %OUT_PATH% /Y&quot;<br />GOTO :EOF<br /><br />:DO_IT_FSU_XCOPY_J<br />SET &quot;T1=%TIME%&quot;<br />FSUTIL FILE SETVALIDDATA &quot;%~4\%~3&quot; &quot;%~z3&quot; &gt; NUL<br />CALL :SHOW_TIME %T1% &quot;%5 FSUTIL %~z3&quot;<br />:DO_IT_XCOPY_J<br />SET &quot;T1=%TIME%&quot;<br />XCOPY &quot;%~4\%~3&quot; &quot;%OUT_PATH%&quot; /Y /J &gt; NUL<br />CALL :SHOW_TIME %T1% &quot;%5 XCOPY %~4\{file} %OUT_PATH% /Y /J&quot;<br />GOTO :EOF<br /><br /><br />:SHOW_TIME<br />SET &quot;T2=%TIME%&quot;<br />CALL :T_DIFF %T1% %T2%<br />SET /A L_NUM += 1<br />ECHO %L_NUM% %TIME_DIFF%&nbsp; &nbsp;Running&nbsp; %2<br />%NO_PAUSE%<br />GOTO :EOF<br /><br /><br />:T_DIFF<br />FOR /F &quot;tokens=1-4 delims=:.&quot; %%d in (&quot;%1&quot;) do SET /A mS1=%%d*360000+1%%e*6000+1%%f*100+1%%g-610100<br />FOR /F &quot;tokens=1-4 delims=:.&quot; %%d in (&quot;%2&quot;) do SET /A mS2=%%d*360000+1%%e*6000+1%%f*100+1%%g-610100<br />REM Add 5 mSec extra to avoid subsequent &quot;divide by zero errors&quot;and to +/- split digitization error<br />SET /A DIFF=(((%mS2%-%mS1%)*10)+5)<br />SET &quot;TIME_DIFF=%T2%-%T1% = %ms2%-%ms1% mSec = %DIFF% mSec&quot;<br /></code></pre></div><br /><br />The output script produced by the above<br /><ul>C:\Users\Alan&gt;XC<br />File C:\Users\Alan\XC.BAT changed 30/11/2013 10:36 Launched 30/11/2013 10:37:08.71<br /> Source drive C: =  Volume in drive C is C_OCZ_System   Volume Serial Number is 6E59-9E7D<br /> Target drive H: =  Volume in drive H is Disk2-H_PORTABLE   Volume Serial Number is DF49-8430<br />Copying     &quot;C:\###-SpeedTest-#\#\S\&quot;     TO            &quot;H:\###-SpeedTest-#\#\T\&quot;<br />Copy File   &quot;11FDE5EF506760DB-00-00.mrimg.bin&quot; Size 319334486 bytes<br />101 10:37:08.93-10:37:08.84 = 3822893-3822884 mSec = 95 mSec    Running  &quot;1 FSUTIL 319334486&quot;<br />102 10:37:10.56-10:37:08.94 = 3823056-3822894 mSec = 1625 mSec  Running  &quot;1 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />103 10:37:10.67-10:37:10.57 = 3823067-3823057 mSec = 105 mSec   Running  &quot;2 FSUTIL 319334486&quot;<br />104 10:37:12.36-10:37:10.69 = 3823236-3823069 mSec = 1675 mSec  Running  &quot;2 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />105 10:37:12.49-10:37:12.38 = 3823249-3823238 mSec = 115 mSec   Running  &quot;3 FSUTIL 319334486&quot;<br />106 10:37:14.32-10:37:12.51 = 3823432-3823251 mSec = 1815 mSec  Running  &quot;3 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />107 10:37:15.33-10:37:14.34 = 3823533-3823434 mSec = 995 mSec   Running  &quot;1 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />108 10:37:16.39-10:37:15.35 = 3823639-3823535 mSec = 1045 mSec  Running  &quot;2 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />109 10:37:17.40-10:37:16.41 = 3823740-3823641 mSec = 995 mSec   Running  &quot;3 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />110 10:37:17.52-10:37:17.42 = 3823752-3823742 mSec = 105 mSec   Running  &quot;1 FSUTIL 319334486&quot;<br />111 10:37:19.23-10:37:17.54 = 3823923-3823754 mSec = 1695 mSec  Running  &quot;1 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />112 10:37:19.34-10:37:19.24 = 3823934-3823924 mSec = 105 mSec   Running  &quot;2 FSUTIL 319334486&quot;<br />113 10:37:21.07-10:37:19.36 = 3824107-3823936 mSec = 1715 mSec  Running  &quot;2 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />114 10:37:21.20-10:37:21.09 = 3824120-3824109 mSec = 115 mSec   Running  &quot;3 FSUTIL 319334486&quot;<br />115 10:37:22.96-10:37:21.21 = 3824296-3824121 mSec = 1755 mSec  Running  &quot;3 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />116 10:37:24.01-10:37:22.98 = 3824401-3824298 mSec = 1035 mSec  Running  &quot;1 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />117 10:37:25.09-10:37:24.03 = 3824509-3824403 mSec = 1065 mSec  Running  &quot;2 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />118 10:37:26.13-10:37:25.11 = 3824613-3824511 mSec = 1025 mSec  Running  &quot;3 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />119 10:37:26.26-10:37:26.15 = 3824626-3824615 mSec = 115 mSec   Running  &quot;1 FSUTIL 319334486&quot;<br />120 10:37:28.42-10:37:26.28 = 3824842-3824628 mSec = 2145 mSec  Running  &quot;1 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />121 10:37:28.48-10:37:28.44 = 3824848-3824844 mSec = 45 mSec    Running  &quot;2 FSUTIL 319334486&quot;<br />122 10:37:30.56-10:37:28.49 = 3825056-3824849 mSec = 2075 mSec  Running  &quot;2 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />123 10:37:30.61-10:37:30.58 = 3825061-3825058 mSec = 35 mSec    Running  &quot;3 FSUTIL 319334486&quot;<br />124 10:37:32.79-10:37:30.62 = 3825279-3825062 mSec = 2175 mSec  Running  &quot;3 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />125 10:37:34.97-10:37:32.80 = 3825497-3825280 mSec = 2175 mSec  Running  &quot;1 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />126 10:37:37.18-10:37:34.99 = 3825718-3825499 mSec = 2195 mSec  Running  &quot;2 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />127 10:37:39.36-10:37:37.20 = 3825936-3825720 mSec = 2165 mSec  Running  &quot;3 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br /> Target drive NUL =NUL<br />Copying     &quot;C:\###-SpeedTest-#\#\S\&quot;     TO            &quot;NUL&quot;<br />Copy File   &quot;11FDE5EF506760DB-00-00.mrimg.bin&quot; Size 319334486 bytes<br />128 10:37:39.46-10:37:39.42 = 3825946-3825942 mSec = 45 mSec    Running  &quot;1 FSUTIL 319334486&quot;<br />129 10:37:41.10-10:37:39.47 = 3826110-3825947 mSec = 1635 mSec  Running  &quot;1 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />130 10:37:41.21-10:37:41.11 = 3826121-3826111 mSec = 105 mSec   Running  &quot;2 FSUTIL 319334486&quot;<br />131 10:37:42.87-10:37:41.23 = 3826287-3826123 mSec = 1645 mSec  Running  &quot;2 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />132 10:37:42.99-10:37:42.89 = 3826299-3826289 mSec = 105 mSec   Running  &quot;3 FSUTIL 319334486&quot;<br />133 10:37:44.65-10:37:43.01 = 3826465-3826301 mSec = 1645 mSec  Running  &quot;3 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />134 10:37:45.12-10:37:44.66 = 3826512-3826466 mSec = 465 mSec   Running  &quot;1 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />135 10:37:45.59-10:37:45.14 = 3826559-3826514 mSec = 455 mSec   Running  &quot;2 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />136 10:37:46.03-10:37:45.60 = 3826603-3826560 mSec = 435 mSec   Running  &quot;3 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} NUL&quot;<br /> Source drive D: =  Volume in drive D is D_SAM_DATA_D   Volume Serial Number is 5902-98C0<br /> Target drive H: =  Volume in drive H is Disk2-H_PORTABLE   Volume Serial Number is DF49-8430<br />Copying     &quot;D:\###-SpeedTest-#\#\S\&quot;     TO            &quot;H:\###-SpeedTest-#\#\T\&quot;<br />Copy File   &quot;11FDE5EF506760DB-00-00.mrimg.bin&quot; Size 319334486 bytes<br />137 10:37:46.22-10:37:46.13 = 3826622-3826613 mSec = 95 mSec    Running  &quot;1 FSUTIL 319334486&quot;<br />138 10:37:48.69-10:37:46.24 = 3826869-3826624 mSec = 2455 mSec  Running  &quot;1 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />139 10:37:48.80-10:37:48.71 = 3826880-3826871 mSec = 95 mSec    Running  &quot;2 FSUTIL 319334486&quot;<br />140 10:37:51.34-10:37:48.81 = 3827134-3826881 mSec = 2535 mSec  Running  &quot;2 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />141 10:37:51.46-10:37:51.36 = 3827146-3827136 mSec = 105 mSec   Running  &quot;3 FSUTIL 319334486&quot;<br />142 10:37:53.87-10:37:51.47 = 3827387-3827147 mSec = 2405 mSec  Running  &quot;3 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />143 10:37:54.94-10:37:53.89 = 3827494-3827389 mSec = 1055 mSec  Running  &quot;1 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />144 10:37:55.99-10:37:54.95 = 3827599-3827495 mSec = 1045 mSec  Running  &quot;2 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />145 10:37:57.05-10:37:56.01 = 3827705-3827601 mSec = 1045 mSec  Running  &quot;3 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />146 10:37:57.16-10:37:57.07 = 3827716-3827707 mSec = 95 mSec    Running  &quot;1 FSUTIL 319334486&quot;<br />147 10:37:59.54-10:37:57.17 = 3827954-3827717 mSec = 2375 mSec  Running  &quot;1 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />148 10:37:59.65-10:37:59.56 = 3827965-3827956 mSec = 95 mSec    Running  &quot;2 FSUTIL 319334486&quot;<br />149 10:38:01.99-10:37:59.66 = 3828199-3827966 mSec = 2335 mSec  Running  &quot;2 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />150 10:38:02.09-10:38:02.00 = 3828209-3828200 mSec = 95 mSec    Running  &quot;3 FSUTIL 319334486&quot;<br />151 10:38:04.83-10:38:02.11 = 3828483-3828211 mSec = 2725 mSec  Running  &quot;3 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />152 10:38:05.99-10:38:04.85 = 3828599-3828485 mSec = 1145 mSec  Running  &quot;1 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />153 10:38:07.13-10:38:06.01 = 3828713-3828601 mSec = 1125 mSec  Running  &quot;2 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />154 10:38:08.32-10:38:07.15 = 3828832-3828715 mSec = 1175 mSec  Running  &quot;3 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />155 10:38:08.43-10:38:08.34 = 3828843-3828834 mSec = 95 mSec    Running  &quot;1 FSUTIL 319334486&quot;<br />156 10:38:13.92-10:38:08.44 = 3829392-3828844 mSec = 5485 mSec  Running  &quot;1 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />157 10:38:13.99-10:38:13.94 = 3829399-3829394 mSec = 55 mSec    Running  &quot;2 FSUTIL 319334486&quot;<br />158 10:38:19.13-10:38:14.00 = 3829913-3829400 mSec = 5135 mSec  Running  &quot;2 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />159 10:38:19.19-10:38:19.15 = 3829919-3829915 mSec = 45 mSec    Running  &quot;3 FSUTIL 319334486&quot;<br />160 10:38:24.33-10:38:19.20 = 3830433-3829920 mSec = 5135 mSec  Running  &quot;3 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />161 10:38:29.52-10:38:24.34 = 3830952-3830434 mSec = 5185 mSec  Running  &quot;1 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />162 10:38:34.69-10:38:29.54 = 3831469-3830954 mSec = 5155 mSec  Running  &quot;2 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />163 10:38:39.80-10:38:34.71 = 3831980-3831471 mSec = 5095 mSec  Running  &quot;3 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br /> Target drive NUL =NUL<br />Copying     &quot;D:\###-SpeedTest-#\#\S\&quot;     TO            &quot;NUL&quot;<br />Copy File   &quot;11FDE5EF506760DB-00-00.mrimg.bin&quot; Size 319334486 bytes<br />164 10:38:39.91-10:38:39.87 = 3831991-3831987 mSec = 45 mSec    Running  &quot;1 FSUTIL 319334486&quot;<br />165 10:38:42.10-10:38:39.92 = 3832210-3831992 mSec = 2185 mSec  Running  &quot;1 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />166 10:38:42.22-10:38:42.11 = 3832222-3832211 mSec = 115 mSec   Running  &quot;2 FSUTIL 319334486&quot;<br />167 10:38:44.41-10:38:42.24 = 3832441-3832224 mSec = 2175 mSec  Running  &quot;2 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />168 10:38:44.53-10:38:44.42 = 3832453-3832442 mSec = 115 mSec   Running  &quot;3 FSUTIL 319334486&quot;<br />169 10:38:46.74-10:38:44.55 = 3832674-3832455 mSec = 2195 mSec  Running  &quot;3 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />170 10:38:47.19-10:38:46.76 = 3832719-3832676 mSec = 435 mSec   Running  &quot;1 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />171 10:38:47.64-10:38:47.21 = 3832764-3832721 mSec = 435 mSec   Running  &quot;2 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />172 10:38:48.09-10:38:47.66 = 3832809-3832766 mSec = 435 mSec   Running  &quot;3 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} NUL&quot;<br /> Source drive C: =  Volume in drive C is C_OCZ_System   Volume Serial Number is 6E59-9E7D<br /> Target drive H: =  Volume in drive H is Disk2-H_PORTABLE   Volume Serial Number is DF49-8430<br />Copying     &quot;C:\###-SpeedTest-#\#\S\&quot;     TO            &quot;H:\###-SpeedTest-#\#\T\&quot;<br />Copy File   &quot;#2FE769AFA97E71E8-27-27.DIF_27_23_.mrimg.bin.TXT&quot; Size 1014411396 bytes<br />173 10:38:48.47-10:38:48.23 = 3832847-3832823 mSec = 245 mSec   Running  &quot;1 FSUTIL 1014411396&quot;<br />174 10:38:54.78-10:38:48.49 = 3833478-3832849 mSec = 6295 mSec  Running  &quot;1 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />175 10:38:55.02-10:38:54.80 = 3833502-3833480 mSec = 225 mSec   Running  &quot;2 FSUTIL 1014411396&quot;<br />176 10:39:01.33-10:38:55.04 = 3834133-3833504 mSec = 6295 mSec  Running  &quot;2 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />177 10:39:01.58-10:39:01.35 = 3834158-3834135 mSec = 235 mSec   Running  &quot;3 FSUTIL 1014411396&quot;<br />178 10:39:07.66-10:39:01.60 = 3834766-3834160 mSec = 6065 mSec  Running  &quot;3 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />179 10:39:11.33-10:39:07.69 = 3835133-3834769 mSec = 3645 mSec  Running  &quot;1 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />180 10:39:15.10-10:39:11.35 = 3835510-3835135 mSec = 3755 mSec  Running  &quot;2 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />181 10:39:18.90-10:39:15.13 = 3835890-3835513 mSec = 3775 mSec  Running  &quot;3 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />182 10:39:19.13-10:39:18.92 = 3835913-3835892 mSec = 215 mSec   Running  &quot;1 FSUTIL 1014411396&quot;<br />183 10:39:25.55-10:39:19.15 = 3836555-3835915 mSec = 6405 mSec  Running  &quot;1 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />184 10:39:25.78-10:39:25.57 = 3836578-3836557 mSec = 215 mSec   Running  &quot;2 FSUTIL 1014411396&quot;<br />185 10:39:31.72-10:39:25.80 = 3837172-3836580 mSec = 5925 mSec  Running  &quot;2 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />186 10:39:31.95-10:39:31.74 = 3837195-3837174 mSec = 215 mSec   Running  &quot;3 FSUTIL 1014411396&quot;<br />187 10:39:37.99-10:39:31.97 = 3837799-3837197 mSec = 6025 mSec  Running  &quot;3 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />188 10:39:41.88-10:39:38.01 = 3838188-3837801 mSec = 3875 mSec  Running  &quot;1 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />189 10:39:45.87-10:39:41.90 = 3838587-3838190 mSec = 3975 mSec  Running  &quot;2 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />190 10:39:49.78-10:39:45.90 = 3838978-3838590 mSec = 3885 mSec  Running  &quot;3 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />191 10:39:50.02-10:39:49.80 = 3839002-3838980 mSec = 225 mSec   Running  &quot;1 FSUTIL 1014411396&quot;<br />192 10:39:57.10-10:39:50.03 = 3839710-3839003 mSec = 7075 mSec  Running  &quot;1 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />193 10:39:57.17-10:39:57.12 = 3839717-3839712 mSec = 55 mSec    Running  &quot;2 FSUTIL 1014411396&quot;<br />194 10:40:04.09-10:39:57.18 = 3840409-3839718 mSec = 6915 mSec  Running  &quot;2 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />195 10:40:04.15-10:40:04.12 = 3840415-3840412 mSec = 35 mSec    Running  &quot;3 FSUTIL 1014411396&quot;<br />196 10:40:11.10-10:40:04.16 = 3841110-3840416 mSec = 6945 mSec  Running  &quot;3 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />197 10:40:18.09-10:40:11.12 = 3841809-3841112 mSec = 6975 mSec  Running  &quot;1 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />198 10:40:24.96-10:40:18.11 = 3842496-3841811 mSec = 6855 mSec  Running  &quot;2 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />199 10:40:32.00-10:40:24.98 = 3843200-3842498 mSec = 7025 mSec  Running  &quot;3 XCOPY C:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br /> Target drive NUL =NUL<br />Copying     &quot;C:\###-SpeedTest-#\#\S\&quot;     TO            &quot;NUL&quot;<br />Copy File   &quot;#2FE769AFA97E71E8-27-27.DIF_27_23_.mrimg.bin.TXT&quot; Size 1014411396 bytes<br />200 10:40:32.11-10:40:32.07 = 3843211-3843207 mSec = 45 mSec    Running  &quot;1 FSUTIL 1014411396&quot;<br />201 10:40:37.90-10:40:32.12 = 3843790-3843212 mSec = 5785 mSec  Running  &quot;1 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />202 10:40:38.12-10:40:37.92 = 3843812-3843792 mSec = 205 mSec   Running  &quot;2 FSUTIL 1014411396&quot;<br />203 10:40:43.94-10:40:38.14 = 3844394-3843814 mSec = 5805 mSec  Running  &quot;2 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />204 10:40:44.16-10:40:43.96 = 3844416-3844396 mSec = 205 mSec   Running  &quot;3 FSUTIL 1014411396&quot;<br />205 10:40:49.98-10:40:44.17 = 3844998-3844417 mSec = 5815 mSec  Running  &quot;3 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />206 10:40:51.36-10:40:50.00 = 3845136-3845000 mSec = 1365 mSec  Running  &quot;1 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />207 10:40:52.75-10:40:51.37 = 3845275-3845137 mSec = 1385 mSec  Running  &quot;2 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />208 10:40:54.14-10:40:52.77 = 3845414-3845277 mSec = 1375 mSec  Running  &quot;3 COPY /B /Y C:\###-SpeedTest-#\#\S\{file} NUL&quot;<br /> Source drive D: =  Volume in drive D is D_SAM_DATA_D   Volume Serial Number is 5902-98C0<br /> Target drive H: =  Volume in drive H is Disk2-H_PORTABLE   Volume Serial Number is DF49-8430<br />Copying     &quot;D:\###-SpeedTest-#\#\S\&quot;     TO            &quot;H:\###-SpeedTest-#\#\T\&quot;<br />Copy File   &quot;#2FE769AFA97E71E8-27-27.DIF_27_23_.mrimg.bin.TXT&quot; Size 1014411400 bytes<br />209 10:40:54.49-10:40:54.26 = 3845449-3845426 mSec = 235 mSec   Running  &quot;1 FSUTIL 1014411400&quot;<br />210 10:41:03.99-10:40:54.51 = 3846399-3845451 mSec = 9485 mSec  Running  &quot;1 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />211 10:41:04.21-10:41:04.01 = 3846421-3846401 mSec = 205 mSec   Running  &quot;2 FSUTIL 1014411400&quot;<br />212 10:41:14.61-10:41:04.23 = 3847461-3846423 mSec = 10385 mSec Running  &quot;2 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />213 10:41:14.85-10:41:14.63 = 3847485-3847463 mSec = 225 mSec   Running  &quot;3 FSUTIL 1014411400&quot;<br />214 10:41:25.37-10:41:14.87 = 3848537-3847487 mSec = 10505 mSec Running  &quot;3 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />215 10:41:29.11-10:41:25.39 = 3848911-3848539 mSec = 3725 mSec  Running  &quot;1 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />216 10:41:33.00-10:41:29.13 = 3849300-3848913 mSec = 3875 mSec  Running  &quot;2 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />217 10:41:36.79-10:41:33.02 = 3849679-3849302 mSec = 3775 mSec  Running  &quot;3 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\&quot;<br />218 10:41:37.02-10:41:36.81 = 3849702-3849681 mSec = 215 mSec   Running  &quot;1 FSUTIL 1014411400&quot;<br />219 10:41:46.10-10:41:37.04 = 3850610-3849704 mSec = 9065 mSec  Running  &quot;1 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />220 10:41:46.38-10:41:46.12 = 3850638-3850612 mSec = 265 mSec   Running  &quot;2 FSUTIL 1014411400&quot;<br />221 10:41:56.03-10:41:46.39 = 3851603-3850639 mSec = 9645 mSec  Running  &quot;2 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />222 10:41:56.27-10:41:56.06 = 3851627-3851606 mSec = 215 mSec   Running  &quot;3 FSUTIL 1014411400&quot;<br />223 10:42:05.86-10:41:56.30 = 3852586-3851630 mSec = 9565 mSec  Running  &quot;3 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />224 10:42:09.77-10:42:05.88 = 3852977-3852588 mSec = 3895 mSec  Running  &quot;1 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />225 10:42:13.76-10:42:09.79 = 3853376-3852979 mSec = 3975 mSec  Running  &quot;2 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />226 10:42:17.77-10:42:13.79 = 3853777-3853379 mSec = 3985 mSec  Running  &quot;3 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y&quot;<br />227 10:42:18.00-10:42:17.80 = 3853800-3853780 mSec = 205 mSec   Running  &quot;1 FSUTIL 1014411400&quot;<br />228 10:42:34.99-10:42:18.02 = 3855499-3853802 mSec = 16975 mSec Running  &quot;1 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />229 10:42:35.06-10:42:35.01 = 3855506-3855501 mSec = 55 mSec    Running  &quot;2 FSUTIL 1014411400&quot;<br />230 10:42:51.90-10:42:35.08 = 3857190-3855508 mSec = 16825 mSec Running  &quot;2 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />231 10:42:51.96-10:42:51.92 = 3857196-3857192 mSec = 45 mSec    Running  &quot;3 FSUTIL 1014411400&quot;<br />232 10:43:08.91-10:42:51.97 = 3858891-3857197 mSec = 16945 mSec Running  &quot;3 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />233 10:43:25.80-10:43:08.93 = 3860580-3858893 mSec = 16875 mSec Running  &quot;1 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />234 10:43:43.14-10:43:25.82 = 3862314-3860582 mSec = 17325 mSec Running  &quot;2 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br />235 10:44:00.01-10:43:43.16 = 3864001-3862316 mSec = 16855 mSec Running  &quot;3 XCOPY D:\###-SpeedTest-#\#\S\{file} H:\###-SpeedTest-#\#\T\ /Y /J&quot;<br /> Target drive NUL =NUL<br />Copying     &quot;D:\###-SpeedTest-#\#\S\&quot;     TO            &quot;NUL&quot;<br />Copy File   &quot;#2FE769AFA97E71E8-27-27.DIF_27_23_.mrimg.bin.TXT&quot; Size 1014411400 bytes<br />236 10:44:00.12-10:44:00.07 = 3864012-3864007 mSec = 55 mSec    Running  &quot;1 FSUTIL 1014411400&quot;<br />237 10:44:07.00-10:44:00.13 = 3864700-3864013 mSec = 6875 mSec  Running  &quot;1 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />238 10:44:07.23-10:44:07.02 = 3864723-3864702 mSec = 215 mSec   Running  &quot;2 FSUTIL 1014411400&quot;<br />239 10:44:14.06-10:44:07.24 = 3865406-3864724 mSec = 6825 mSec  Running  &quot;2 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />240 10:44:14.28-10:44:14.08 = 3865428-3865408 mSec = 205 mSec   Running  &quot;3 FSUTIL 1014411400&quot;<br />241 10:44:21.14-10:44:14.30 = 3866114-3865430 mSec = 6845 mSec  Running  &quot;3 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />242 10:44:22.57-10:44:21.16 = 3866257-3866116 mSec = 1415 mSec  Running  &quot;1 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />243 10:44:23.94-10:44:22.59 = 3866394-3866259 mSec = 1355 mSec  Running  &quot;2 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />244 10:44:25.35-10:44:23.96 = 3866535-3866396 mSec = 1395 mSec  Running  &quot;3 COPY /B /Y D:\###-SpeedTest-#\#\S\{file} NUL&quot;<br />C:\Users\Alan&gt;<br /></ul></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p30296" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile30296">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content30296">
+
+						<h3 ><a href="#p30296">Re: HELP :- FSUTIL + COPY versus XCOPY /? ; Caches + i/o Buf</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5508.html?mode=quote&amp;f=3&amp;p=30296" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic950e-3.html?p=30296#p30296" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopic950e-3.html?p=30296#p30296" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>30 Nov 2013 21:44
+			</p>
+			
+			
+			
+			<div class="content">Any read and writes from and to the same HDD happens with a single read write head and it slows down.<br /><br />A SSD would be quicker by far - they are a good investment.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p30317" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile30317">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist306a.html?mode=viewprofile&amp;u=592" class="username">alan_b</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search3aa7.html?author_id=592&amp;sr=posts">357</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 04 Oct 2008 09:49</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content30317">
+
+						<h3 ><a href="#p30317">Re: HELP :- FSUTIL + COPY versus XCOPY /? ; Caches + i/o Buf</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingbb4c.html?mode=quote&amp;f=3&amp;p=30317" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4472.html?p=30317#p30317" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopic4472.html?p=30317#p30317" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist306a.html?mode=viewprofile&amp;u=592" class="username">alan_b</a></strong> &raquo; </span>02 Dec 2013 05:04
+			</p>
+			
+			
+			
+			<div class="content">Thanks for the polite reminder.<br /><br />I realise now it was a stupid question.<br />I learnt when I started using Windows as an administrator at home<br />(instead of a normal User account subject to the control of the I.T. department)<br />that Windows would run faster if Pagefile.sys was on a non-system Disk,<br />because then Windows could leave one head over the programme track it was using whilst the other head stacked over the Pagefile.sys track.<br />I was only able to use that knowledge once I moved from a single disk laptop to a multi-disk desktop.<br /><br />NEW QUESTION :-<br /><br />I can employ FSUTIL for disabling the cache/INPUT-buffer when copying a source file to a target destination.<br />Does FSUTIL have any option to disable the cache/OUTPUT-buffer so that the target file is instantly written to the disk,<br />or is their any other executable in System32 that might be of use to me.<br /><br />Regards<br />Alan</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting26fd.html?mode=reply&amp;f=3&amp;t=5131" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic6699.html?f=3&amp;t=5131&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5131">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			3 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron68e3.gif?cron_type=cron.task.text_reparser.pm_text" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5131&p=30317 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:22:24 GMT -->
+</html>

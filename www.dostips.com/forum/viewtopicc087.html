@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=60&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:59:35 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support - Page 5</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</h2>
+		<p><a href="viewtopicb16d.html?f=3&amp;t=6044">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6044</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>5</strong> of <strong>27</strong></div>
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>07 Apr 2015 18:23</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Your solution works again, Dave, thanks.<br /><br /><strong class="text-strong">EDIT</strong>  I've noticed that when I use /m I expected the entire text to be acted upon as one string.<br />The text has *** in several places and then .* is no longer greedy - it doesn't match until the last occurrence.<br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />(<br />echo(aaa<br />echo(<br />echo(***<br />echo(<br />echo(bbb<br />echo(<br />echo(***<br />echo(<br />echo(<br />echo(***<br />echo(<br />echo(<br />echo(*** ***<br />echo(ZZZ<br />)&gt;accounts.txt<br /><br />:remove text at bottom from last *** and onward<br />echo ======<br />call jrepl &quot;(.*)\*\*\*&#91;\s\S&#93;*&quot; &quot;&quot; /m /f accounts.txt<br />echo ======<br />pause<br /></code></pre></div><br /><br /><br />This is what I see<br /><br /><span style="color: blue">======<br />aaa<br /><br />======</span><br /><br />Did I fail to grasp how /m works??<br /><br /><span style="color: #004000">Original post follows:</span><br /><br /><br /><br />Can you quickly comment on why <span style="color: blue">.*</span> doesn't match all characters and <span style="color: blue">[\s\S]*</span> does match all characters?<br />Is it something to do with line endings?<br /><br />This top version similar to yours works but the lower one doesn't.  I'm trying to understand why.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl &quot;^\*\*\*&#91;\s\S&#93;*&quot; &quot;&quot; /m /f accounts.txt<br /><br />call jrepl &quot;^\*\*\*.*&quot; &quot;&quot; /m /f accounts.txt<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>07 Apr 2015 20:56</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">. matches any character <em class="text-italics">except</em> \n, which explains why .* stops matching at the end of a line.<br /><br />\s matches any whitespace character (including \n)<br />\S matches any non-whitespace character<br /><br />so [\s\S] matches any character<br /><br />You could also use [\d\D]<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>07 Apr 2015 23:56</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>. matches any character <em class="text-italics">except</em> \n, which explains why .* stops matching at the end of a line.<br /></div></blockquote><br /><br />Ahh, the plot thickens.  Ta!<br /><br />You've probably mentioned that oodles of times before but my brain cell was overworked and I missed it.<br /><br /><blockquote class="uncited"><div>\s matches any whitespace character (including \n)<br />\S matches any non-whitespace character<br /><br />so [\s\S] matches any character<br /><br />You could also use [\d\D]<br /></div></blockquote><br /><br />Gotcha.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>23 Apr 2015 13:35</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">So we are making a change from Windows 2003 Server to Windows 2012 server.  The software we are using is still coded for 32 bit so the path to the executable is going to change in all of my batch files.<br />So that is easy enough to change in all off my batch files.<br />Now I am going to use a FOR command to iterate through all of my batch files but for the sake of brevity we are strictly focusing on the JREPL syntax.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;C:\Program Files\WatchDirectory&quot; &quot;C:\Program Files (x86)\WatchDirectory&quot; /L /F ActiveDocIDQuiet.bat /O ActiveDocIDQuiet.bat.txt</code></pre></div><br /><br />The actual line it is changing is this.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&quot;C:\Program Files\WatchDirectory\wdrun.exe&quot; -stop ActiveDocIDQuiet</code></pre></div><br /><br />What I really want to do is change it to this.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>start &quot;&quot; &quot;C:\Program Files (x86)\WatchDirectory\wdrun.exe&quot; -stop ActiveDocIDQuiet</code></pre></div><br />There is no need for the batch file to wait for that command to finish before it executes the remaining commands in the batch file so I want to launch it with the start command instead.<br /><br />How can I get the <strong class="text-strong">start</strong> and extra set of quotes before the program I am executing with one JREPL statement?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>23 Apr 2015 14:34</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;\qC:\Program Files\WatchDirectory&quot; &quot;start \q\q \qC:\Program Files (x86)\WatchDirectory&quot; /L /X /F ActiveDocIDQuiet.bat /O ActiveDocIDQiet.bat.txt<br /></code></pre></div><br />You might want to consider making the search case insensitive, and you could also directly overwrite the source file as long as you have previously made a backup pre-changes.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;\qC:\Program Files\WatchDirectory&quot; &quot;start \q\q \qC:\Program Files (x86)\WatchDirectory&quot; /I /L /X /F ActiveDocIDQuiet.bat /O -<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>24 Apr 2015 09:08</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Looks like I am going to have to do this in a two step process.  Some of them had the start at the beginning already so I can't add another start.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>24 Apr 2015 21:27</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">If it has spaces before the actual term or is at the beginning of the line then the <span style="color: blue">^[ ]*</span> should handle those cases and not change lines that already have <span style="color: blue">start</span> in them.  Could it have leading tab characters too?<br /><br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl &quot;^&#91; &#93;*\qC:\\Program Files\\WatchDirectory&quot; &quot;start \q\q \qC:\Program Files (x86)\WatchDirectory&quot; /I /X /F &quot;file.bat&quot; /O -<br /></code></pre></div><br /><br />I removed the /L literal switch and made a regular expression term - it works in my brief test here.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>01 May 2015 14:04</strong></div>
+				<div class="author">by <strong>AtotIK</strong></div>
+				<div class="content"><strong class="text-strong">dbenham</strong>, hi! I use JREPL for package xml-files edit. But files more than 5kb will be cut when edit. Can you fix it? Or I do something wrong? Thanks!<br /><br />Sample: <!-- m --><a class="postlink" href="http://www.mediafire.com/download/740g9wac13ihxzk/">http://www.mediafire.com/download/740g9wac13ihxzk/</a><!-- m --><br /><br /><br /><span style="color: #FF0000">@AtotIK; no double posting please.</span></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>25 May 2015 00:42</strong></div>
+				<div class="author">by <strong>Grahack</strong></div>
+				<div class="content">Hi all,<br />I can't make jrepl work on several lines. Only the first is printed (see the test below). Is there a switch for jrepl to work on all the lines ?<br /><br />Notes:<br />/A doesn't work either, even though all the lines are altered.<br />I don't want the behavior of /M )I'm using a regex like &quot;^\q(.*)\q$&quot;.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set NLM=^<br /><br /><br />set NL=^^^%NLM%%NLM%^%NLM%%NLM%<br />echo first line%NL%second line | jrepl.bat i o<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>03 Jun 2015 00:28</strong></div>
+				<div class="author">by <strong>Grahack</strong></div>
+				<div class="content">Hi all,<br />Is JREPL.BAT supposed to work on several lines?<br />See this test:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set NLM=^<br /><br /><br />set NL=^^^%NLM%%NLM%^%NLM%%NLM%<br />echo First line%NL%second line | jrepl.bat i o</code></pre></div><br />It only prints «Forst lone».<br />Am I missing something?<br /><br />chri</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>06 Jun 2015 01:18</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">There were three invisible posts above this one here - they just became visible.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>06 Jun 2015 06:50</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite>Grahack wrote:</cite>Hi all,<br />Is JREPL.BAT supposed to work on several lines?<br />See this test:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set NLM=^<br /><br /><br />set NL=^^^%NLM%%NLM%^%NLM%%NLM%<br />echo First line%NL%second line | jrepl.bat i o</code></pre></div><br />It only prints «Forst lone».<br />Am I missing something?</div></blockquote><br />JREPL is working fine - The left side of the pipe is not producing what you think <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br /><br />Each side of the pipe is executed in its own CMD /C process. You don't want %NL% to be expanded until it has reached the child process, so you simply delay the expansion by escaping each percent as %%.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal<br />set NLM=^<br /><br /><br />set NL=^^^%NLM%%NLM%^%NLM%%NLM%<br />echo First line%%NL%%second line | jrepl.bat i o<br /></code></pre></div><br />Note - I'm not exactly sure how your original code produces the result that it does. It appears that the second line is simply dropped as if it never was there, but I don't understand the mechanism.<br /><br />I suppose it has something to do with how batch parses a pipe - probably something that jeb has explained before that I am not remembering  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> <br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>06 Jun 2015 07:25</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite>AtotIK wrote:</cite><strong class="text-strong">dbenham</strong>, hi! I use JREPL for package xml-files edit. But files more than 5kb will be cut when edit. Can you fix it? Or I do something wrong? Thanks!<br /><br />Sample: <!-- m --><a class="postlink" href="http://www.mediafire.com/download/740g9wac13ihxzk/">http://www.mediafire.com/download/740g9wac13ihxzk/</a><!-- m --><br /></div></blockquote><br /><br />Sorry - your message got hung up in the system, and only now appeared.<br /><br />There should not be any problem with a file bigger than 5kb - I have used JREPL with gigabyte files without a problem.<br /><br />Note - If your file has NUL bytes (0x00), then you must use the /M option.<br /><br />If /M does not solve your problem, then I have no idea how to help you. I do not understand what your posted link does, or how it relates to your problem. If you still need help, then please provide a better description of your problem, with example source file (uncompressed), and the exact JREPL command that is failing, with a description of the faulty output. If the file is really large or cannot be posted here for some other reason, then I prefer dropbox.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>06 Jun 2015 14:55</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>Note - I'm not exactly sure how your original code produces the result that it does. It appears that the second line is simply dropped as if it never was there, but I don't understand the mechanism.<br /><br />I suppose it has something to do with how batch parses a pipe - probably something that jeb has explained before that I am not remembering <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /><br /></div></blockquote><br /><br />It's even better, you have posted yourself a solution which used this technic  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><a href="http://stackoverflow.com/a/17098413/463115" class="postlink">How to split string without for loop in batch file</a><br /><br />First I simplify the code<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set NLM=^<br /><br /><br />set NL=^^^%NLM%%NLM%^%NLM%%NLM%<br />echo First line%NL%second line | more</code></pre></div><br />After the first parser run in the batch file there is exactly one &lt;LF&gt; between &quot;First line&quot; and &quot;second line&quot;.<br />This would produce two lines, but when this is transfer to the child cmd.exe (by the pipe) then the line is parsed again.<br />But then the linefeed is &quot;raw&quot; without the necessary esacping so it removes simply the rest of the line.<br />This results in the output of only &quot;First line&quot;.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>06 Jun 2015 16:02</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Thanks jeb - I remember now  <img class="smilies" src="images/smilies/icon_rolleyes.gif" alt=":roll:" title="Rolling Eyes" />  <img class="smilies" src="images/smilies/icon_redface.gif" alt=":oops:" title="Embarassed" /> <br /><br />Too many posts...<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>5</strong> of <strong>27</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=60&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:59:35 GMT -->
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1592&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:57:16 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; string manipulation help - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>string manipulation help</h2>
+		<p><a href="viewtopice264.html?f=3&amp;t=1592">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1592</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>3</strong></div>
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>27 Jan 2011 08:24</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">Yes, sadly. My issue has changed throughout the process due to learning more about how horrible the folder structure is on the networked drive and how most of the folders are named in different formats.<br /><br />I'll try out the code you posted when I get to work later.<br /><br />Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>27 Jan 2011 08:33</strong></div>
+				<div class="author">by <strong>ChickenSoup</strong></div>
+				<div class="content">Ahhh.  Inconsistency.  It is amazing how consistently people are inconsistent.  Good luck.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>27 Jan 2011 18:31</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">I resolved quite a few issues I was having with this batch file thanks to much help from the posts here. However, still having an issue with this particular line, or maybe it's not possible to work in the way I want it to.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>setLocal EnableDelayedExpansion<br />for /f &quot;tokens=* delims= &quot; %%a in ('dir /ad /b /s ^| findstr &quot;%buildPatch%&quot; ^| FINDSTR /s /i /L /M /c:&quot;%choice%&quot; *.txt') do (<br />set /a n+=1<br />set v!n!=%%a<br />echo %%a<br />)</code></pre></div><br /><br />Specifically just this line <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f &quot;tokens=* delims= &quot; %%a in ('dir /ad /b /s ^| findstr &quot;%buildPatch%&quot; ^| FINDSTR /s /i /L /M /c:&quot;%choice%&quot; *.txt') </code></pre></div><br /><br />Basically %buildPatch% will contain a value like the following: 03L<br /><br />I need that portion to find all folder that contain &quot;03L&quot; to then conduct the next portion of search code on FINDSTR /s /i /L /M /c:&quot;%choice%&quot; *.txt<br /><br />An example of a folder that might contain 03L would be the following:<br />7.02.XX.03LQF1<br />7.02.XX.03NQF3<br />7.02.XX.03LQF14<br /><br />So my code above with &quot;03L&quot; in the variable buildPatch, should ONLY search the folders for QF1, and QF14 in the above 3 folder example.<br /><br />However, my code is no longer having an error or just causing the batch to close, but it is searching even folders that dont contain the above. so it doesnt seem to be using the code properly, or rather IM not using the functions correctly. Maybe the solution has already been mentioned and I didn't understand? If I have to use a temp file to get this to work, if someone could provide an example with the above. (Id have to place this temp file where the batch file is being run from though, and not the current directory it is searching in...due to the read only on that drive.)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>28 Jan 2011 10:08</strong></div>
+				<div class="author">by <strong>avery_larry</strong></div>
+				<div class="content">*untested*<br /><br />Try:<br /><br />findstr /i /c:&quot;%buildPatch%&quot;<br /><br />Also, you probably want &quot;delims=&quot;  instead of &quot;tokens=* delmis= &quot;.  On the very rare case that a line *starts* with a delimiter, it will be stripped (which can be very useful when needed).</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>28 Jan 2011 11:01</strong></div>
+				<div class="author">by <strong>ChickenSoup</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f &quot;tokens=* delims= &quot; %%a in ('dir /ad /b /s ^| findstr &quot;%buildPatch%&quot; ^| FINDSTR /s /i /L /M /c:&quot;%choice%&quot; *.txt')</code></pre></div><br /><br />Your problem is that you are doing a directory listing and then sending the output to the FINDSTR that is finding the buildpatch variable and then you are sending the output to a findstr that does absolutely nothing with the output and instead does its own search for the %choice% string in all txt files.  So the final output has nothing to do with the directory listing or the first findstr.<br /><br />An easy example of what you are doing:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo.This is a search test that does not matter | findstr /c:&quot;matter&quot; | echo.I like turtles</code></pre></div><br />Basically, it doesn't matter what happens on the first 2 commands, it will always give an output of:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>I like turtles</code></pre></div><br />I guess this is why am confused as to what you are doing.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>28 Jan 2011 13:39</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">This is probably because I don't understand the for /f  functionality. <br /><br />So basically I need to break it down to a nested for loop or rather just 2 separate for loops? first start out with the dir /ad /b /s | findstr &quot;%buildPatch%. and take the output of that (each folder path) into a temp file. then after that has complete, I do my 2nd for loop with the findstr /s /i /L /M /c: &quot;%choice%&quot; *.txt    using each line from the temp file (that will hold each folder to search).<br /><br />I guess this was my whole confusion, as I thought the for /f could be used like I had it coded, which was what i was trying to ask...if i was using the function correctly or not.<br /><br />So, I'm going to re-work the search function a bit and see if i can get it broken down to two different for loops.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>28 Jan 2011 15:17</strong></div>
+				<div class="author">by <strong>ChickenSoup</strong></div>
+				<div class="content"><blockquote><div><cite>ice_531 wrote:</cite><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:SEARCH<br />&nbsp;<br />set /p buildPatch=Enter the build and patch level:<br />set /p choice=Enter the search word or phrase to find the QF:<br />&nbsp;<br /><br />setLocal EnableDelayedExpansion<br />for /f &quot;tokens=* delims= &quot; %%a in ('dir /ad /b /s | findstr &quot;%buildPatch%&quot; | FINDSTR /s /i /L /M /c:&quot;%choice%&quot; *.txt') do (<br />set /a n+=1<br />set v!n!=%%a<br />echo %%a<br />)</code></pre></div><br /><br />So if the above code worked like i have it written (incorrectly). it would first search for folders containing the build and patch, and then from those folders found, conduct the search for the text file containing the keyword/phrase the user entered. but this search is ONLY conducted on the folders that match the build and patch(partially).. a real folder may read like: 8.03.28.02N  (02N would be the build and patch)<br /><br /></div></blockquote><br />did you try my for loop from several posts ago (below again)?<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f &quot;tokens=* delims=&quot; %%a in ('dir /ad /b /s ^| findstr /i /c:&quot;%buildPatch%&quot; ^| FINDSTR /i /c:&quot;%choice%&quot;') do (...</code></pre></div><br />This first searches the directory for the %buildPatch% and then directs that output the search for the %choice%. This should be exactly what you need.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>28 Jan 2011 15:25</strong></div>
+				<div class="author">by <strong>ChickenSoup</strong></div>
+				<div class="content">I'll give an example set for the dir /ad /b /s | findstr /i /c:&quot;%buildPatch%&quot; | FINDSTR /i /c:&quot;%choice%&quot;:<br /><br />Directories to search (result of 'dir /ad /b /s'):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\sandbox\count<br />C:\sandbox\New<br />C:\sandbox\other<br />C:\sandbox\patches<br />C:\sandbox\Versions<br />C:\sandbox\Versions\1.05<br />C:\sandbox\Versions\2.00<br />C:\sandbox\Versions\Version 1.03<br />C:\sandbox\Versions\version 2.00.a15<br />C:\sandbox\Versions\version 2.00.a16<br />C:\sandbox\Versions\version 2.00.b03<br />C:\sandbox\Versions\Version 3.05<br />C:\sandbox\Versions\Version 3.05.a15</code></pre></div><br /><br />Commands:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set buildPatch=2.00<br />set choice=a15<br />dir /ad /b /s | findstr /i /c:&quot;%buildPatch%&quot; | FINDSTR /i /c:&quot;%choice%&quot;'</code></pre></div><br /><br />Output:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\sandbox\Versions\version 2.00.a15</code></pre></div><br /><br />Is this what you are looking for as an output?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>28 Jan 2011 16:25</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">The only issue is, that %choice% variable, is going to be a txt file within any number of subfolders. so have to use the /s option, but whenever I do this.. it doesnt work. It shows all the text files that contain the choice variable. BUT it doesnt ONLY search the folders that include the keyword from the %buildPatch% variable.<br /><br />I tried your code, and got the same result I was getting before.<br /><br />See. buildpatch is only helping me narrow down which folders to search within; for the choice variable ..which can be a keyword that is in a text file within the folders. The problem I'm having is with getting it to only search the folders that match buildPatch (partially). <br /><br />modified your code a bit. dont need the /s switch on dir command as i only need the folders in the current directory (to look through for buildpatch)<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>dir /ad /b | findstr /i /c:&quot;%buildPatch%&quot; | FINDSTR /s /i /L /M /c:&quot;%choice%&quot; *.txt</code></pre></div><br /><br />I see why the above wont work like you said before, because it just bypasses the first code and only searches for %choice%?<br /><br />BUT this is how I need it to work; so i'm going to have to break the code down into separate parts then, am I not?<br /><br />First code to find the folders that containg %buildPatch% within their folder names. <br /><br />THEN the code to search for %choice% variable (text files) within the folders folder from the previous code^</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>28 Jan 2011 16:35</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">So, this first part returns the output that I need.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>dir /ad /b | findstr /i /c:&quot;%buildPatch%&quot;</code></pre></div><br /><br />So now, I just need to use the other piece of code to search the folders returned by the above code, to look for my %choice% variable within any txt files in the subfolders. <br /><br />Should have gone about it this way a lot sooner.  <img class="smilies" src="images/smilies/icon_cry.gif" alt=":cry:" title="Crying or Very sad" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>29 Jan 2011 12:58</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">Ok, just an update here on what all is working now.<br /><br />I have everything working fine, it is searching by the first variable, and then only searching txt files based on that. Heres what I have so far.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set /p buildPatch=Please enter the build and patch: <br /><br />dir /ad /b | findstr /i /c:&quot;%buildPatch%&quot; &gt; &quot;%myPath%\temp.txt&quot;<br /><br />set /p choice=Enter the search word or phrase to find the QF:<br /><br />set myTemp=&quot;%myPath%\temp.txt&quot;<br /><br />setLocal EnableDelayedExpansion<br />for /f &quot;tokens=1* delims= usebackq&quot; %%a in (%myTemp%) do (<br />set /a n+=1<br />set v!n!=%%a<br /><br />pushD %CD%\%%a\<br />FINDSTR /s /i /L /M /c:&quot;%choice%&quot; *.txt<br />popD<br /><br />)</code></pre></div><br /><br />So it prints the txt file names that were found. It only prints the ones that were found in the %%a which contained the folder names based on the search of buildPatch.<br /><br />This is working fine. However, is there any way instead of printing the name of the textfile, i can print the folder name that contained the txt file? didnt see any switches with findstr that would accomplish this. this might not be possible with how I did my search code also. so let me know any suggestions.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>29 Jan 2011 18:31</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Well, the folder name is in !cd! after pushD. The only thing you have to do is checking the errorlevel that findstr returned.<br />Untested:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal enabledelayedexpansion<br /><br />set /p buildPatch=Please enter the build and patch:<br />set /p choice=Enter the search word or phrase to find the QF:<br /><br />for /f &quot;delims=&quot; %%a in ('dir /ad /b ^|findstr /i /c:&quot;%buildPatch%&quot;') do (<br />&nbsp; pushd &quot;%%~a&quot;<br />&nbsp; findstr /s /i /m /c:&quot;%choice%&quot; *.txt &gt;nul &amp;&amp;(<br />&nbsp; &nbsp; echo !cd!<br />&nbsp; )<br />&nbsp; popd<br />)<br /><br />pause<br /><br /></code></pre></div><br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>29 Jan 2011 19:55</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">I tried that already, just echoing the CD after findstr, however it was giving me weird results. Ill have to wait until I'm back at work on monday, as I didnt save my code this time, and i dont have access to the networked drive, etc from home.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>31 Jan 2011 14:51</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">OK. I just had to use a nested for loop, type format. Everything is working like I wanted now. I'm just fixing it up a bit, I'll post the code to the search function tonight, in case it will help anyone else who may be doing something similar. <br /><br /><br /><br />Thanks again, to everyone who gave me feedback.  <img class="smilies" src="images/smilies/icon_mrgreen.gif" alt=":mrgreen:" title="Mr. Green" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>31 Jan 2011 15:49</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I'm curious about your code. Sometimes I was wondering if nobody could solve your problem. I hope your solution will elucidate things of my confusion.<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>3</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1592&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:57:16 GMT -->
+</html>

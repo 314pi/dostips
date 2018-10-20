@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8544&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:21:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; drawing things with smoothStep algorithm</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>drawing things with smoothStep algorithm</h2>
+		<p><a href="viewtopic087f.html?f=3&amp;t=8544">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8544</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>drawing things with smoothStep algorithm</h3>
+				<div class="date">Posted: <strong>04 May 2018 21:38</strong></div>
+				<div class="author">by <strong>IcarusLives</strong></div>
+				<div class="content">I believe I finally have created (successfully) CLAMP and SMOOTHSTEP macros for graphic drawing in pure batch.<br>
+<br>
+The website I used to check my results are from <a href="http://www.fundza.com/rman_shaders/smoothstep/" class="postlink">http://www.fundza.com/rman_shaders/smoothstep/</a><br>
+<br>
+In computer graphics, clamping is the process of limiting a position to an area. Unlike wrapping, clamping merely moves the point to the nearest available value.<br>
+<br>
+Smoothstep is a family of sigmoid-like interpolation and clamping functions commonly used in computer graphics and video game engines.<br>
+<br>
+The script below shows how to use smoothstep, as well as what you would expect from using it
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp; setlocal enableDelayedExpansion
+
+set ^"LF=^
+
+^" Above empty line is required - do not remove
+set ^"\n=^^^%LF%%LF%^%LF%%LF%^^"
+for /F %%a in ('echo prompt $E^| cmd') do set "ESC=%%a"
+
+rem clamp x min max RETURNVAR
+set clamp=for %%# in (1 2) do if %%#==2 ( for /f "tokens=1-4" %%1 in ("^!args^!") do (%\n%
+	set /a "xx=%%~1", "yy=%%2", "zz=%%3"%\n%
+	for /f "tokens=1-3" %%x in ("^!xx^! ^!yy^! ^!zz^!") do (%\n%
+			   if %%x lss %%y ( set /a "xx=%%y"%\n%
+		) else if %%x gtr %%z ( set /a "xx=%%z" )%\n%
+	)%\n%
+	for /f "tokens=1" %%x in ("^!xx^!") do (%\n%
+		if "%%4" neq "" ( set "%%4=%%x" ) else ( echo=%%x)%\n%
+	)%\n%
+)) else set args=
+
+rem smoothstep min max X RETURNVAR
+set smoothstep=for %%# in (1 2) do if %%#==2 ( for /f "tokens=1-4" %%1 in ("^!args^!") do (%\n%
+	%= Scale, bias and saturate x to 0..10 range =%%\n%
+	set /a "clamped=(%%3 - %%1) * 10 ^/ (%%2 - %%1) + 1"%\n%
+	for /f "tokens=1" %%c in ("^!clamped^!") do ^!clamp^! %%c 0 10 CLAMPED_x %\n%
+	%= Evaluate polynomial =%%\n%
+	set /a "ss=^(3*10 - 2 * CLAMPED_x^) * CLAMPED_x^/10 * CLAMPED_x^/10"%\n%
+	for /f "tokens=1" %%x in ("^!ss^!") do (%\n%
+		if "%%4" neq "" ( set "%%4=%%x" ) else ( echo=%%x)%\n%
+	)%\n%
+)) else set args=
+
+
+&lt;nul set /p "=scale 4 from 3 to 6 = "
+%smoothstep% 3 6 4
+echo.
+
+&lt;nul set /p "=scale 8 from 3 to 6 = "
+%smoothstep% 3 6 8
+echo.
+
+&lt;nul set /p "=scale 1 from 1 to 5 = "
+%smoothstep% 1 5 1
+echo.
+
+&lt;nul set /p "=scale 2 from 1 to 5 = "
+%smoothstep% 1 5 2
+echo.
+
+&lt;nul set /p "=scale 3 from 1 to 5 = "
+%smoothstep% 1 5 3
+echo.
+
+&lt;nul set /p "=scale 4 from 1 to 5 = "
+%smoothstep% 1 5 4
+echo.
+
+&lt;nul set /p "=scale 5 from 1 to 5 = "
+%smoothstep% 1 5 5
+
+pause</code></pre></div>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>scale 4 from 3 to 6 = 3
+
+scale 8 from 3 to 6 = 10
+
+scale 1 from 1 to 5 = 0
+
+scale 2 from 1 to 5 = 2
+
+scale 3 from 1 to 5 = 6
+
+scale 4 from 1 to 5 = 8
+
+scale 5 from 1 to 5 = 10
+Press any key to continue . . .
+</code></pre></div>
+
+Here is a visual representation (with commented code)<br>
+<img src="../../i.gyazo.com/a82f8012609eda499683c6d74351df51.png" class="postimage" alt="Image"><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp; setlocal EnableDelayedExpansion
+mode 100,100
+
+call :macros
+
+rem clamp
+rem for 0 &lt; x &lt; 10
+
+rem smoothstep
+rem x/10 * x/10 * (3*10 - 2 * x)
+
+	set /a "PI=(35500000/113+5)/10, PI_div_2=(35500000/113/2+5)/10, PIx2=2*PI, PI32=PI+PI_div_2"
+    set "_SIN=a-a*a/1920*a/312500+a*a/1920*a/15625*a/15625*a/2560000-a*a/1875*a/15360*a/15625*a/15625*a/16000*a/44800000"
+    set "SIN(x)=(a=(x * 31416 / 180)%%62832, c=(a&gt;&gt;31|1)*a, a-=(((c-47125)&gt;&gt;31)+1)*((a&gt;&gt;31|1)*62832)  +  (-((c-47125)&gt;&gt;31))*( (((c-15709)&gt;&gt;31)+1)*(-(a&gt;&gt;31|1)*31416+2*a)  ), %_SIN%) / 10000"
+    set "COS(x)=(a=(15708 - x * 31416 / 180)%%62832, c=(a&gt;&gt;31|1)*a, a-=(((c-47125)&gt;&gt;31)+1)*((a&gt;&gt;31|1)*62832)  +  (-((c-47125)&gt;&gt;31))*( (((c-15709)&gt;&gt;31)+1)*(-(a&gt;&gt;31|1)*31416+2*a)  ), %_SIN%) / 10000"
+    set "_SIN="
+
+
+for /l %%a in (1,1,36000) do (
+	
+	%= Calculate random values for smoothstep (R1, R2) =%
+	set /a "R1=!random! %% 19 + 11", "R2=!random! %% 59 + 19"
+	
+	%= Utilize R1 and R2 and capture result (sx, sy) =%
+	%smoothstep% 20 30 !R1! sx
+	%smoothstep% 60 80 !R2! sy
+	
+	%= Draw a circle, but translate to center of screen + (50 + (sx, sy)) utlizing (sx, sy) from smoothstep =%
+	set /a "cx=20 * !cos(x):x=%%a! + (50 + sx)"
+	set /a "cy=20 * !sin(x):x=%%a! + (50 + sy)"
+	
+	%= Z = saturate and luminance =%
+	set /a "z=(sx+1)*10 * (sy+1)*10 * 10"
+	
+	%clamp% !z! 100 10000 o
+	
+	set /a "H=%%a %% 360 + 1"
+	
+	%plot_HSL_RGB% !cx! !cy! !H! 10000 !o!
+	
+	&lt;nul set /p "=%esc%[?25l!screen!" &amp; set "screen="
+)
+pause&gt;nul
+
+
+
+
+
+
+
+:macros
+set ^"LF=^
+
+^" Above empty line is required - do not remove
+set ^"\n=^^^%LF%%LF%^%LF%%LF%^^"
+for /F %%a in ('echo prompt $E^| cmd') do set "ESC=%%a"
+
+rem clamp x min max RETURNVAR
+set clamp=for %%# in (1 2) do if %%#==2 ( for /f "tokens=1-4" %%1 in ("^!args^!") do (%\n%
+	set /a "xx=%%~1", "yy=%%2", "zz=%%3"%\n%
+	for /f "tokens=1-3" %%x in ("^!xx^! ^!yy^! ^!zz^!") do (%\n%
+			   if %%x lss %%y ( set /a "xx=%%y"%\n%
+		) else if %%x gtr %%z ( set /a "xx=%%z" )%\n%
+	)%\n%
+	for /f "tokens=1" %%x in ("^!xx^!") do (%\n%
+		if "%%4" neq "" ( set "%%4=%%x" ) else ( echo=%%x)%\n%
+	)%\n%
+)) else set args=
+
+rem smoothstep min max X RETURNVAR
+set smoothstep=for %%# in (1 2) do if %%#==2 ( for /f "tokens=1-4" %%1 in ("^!args^!") do (%\n%
+	%= Scale, bias and saturate x to 0..10 range =%%\n%
+	set /a "clamped=(%%3 - %%1) * 10 ^/ (%%2 - %%1) + 1"%\n%
+	for /f "tokens=1" %%c in ("^!clamped^!") do ^!clamp^! %%c 0 10 CLAMPED_x %\n%
+	%= Evaluate polynomial =%%\n%
+	set /a "ss=^(3*10 - 2 * CLAMPED_x^) * CLAMPED_x^/10 * CLAMPED_x^/10"%\n%
+	for /f "tokens=1" %%x in ("^!ss^!") do (%\n%
+		if "%%4" neq "" ( set "%%4=%%x" ) else ( echo=%%x)%\n%
+	)%\n%
+)) else set args=
+
+rem %RGBplot% x y 0-255 0-255 0-255 CHAR
+set RBGplot=for %%# in (1 2) do if %%#==2 ( for /f "tokens=1-5" %%1 in ("^!args^!") do (%\n%
+  set "screen=^!screen^!^!esc^![%%2;%%1H!esc![38;2;%%3;%%4;%%5mÛ^!esc^![0m"%\n%
+)) else set args=
+
+REM plot_HSL_RGB x y 0-360 0-10000 0-10000
+set plot_HSL_RGB=for %%# in (1 2) do if %%#==2 ( for /f "tokens=1-5" %%1 in ("^!args^!") do (%\n%
+	set /a "H=%%~3", "S=%%~4", "L=%%~5"%\n%
+	if %%3 geq 360 set /a "H=360"%\n%
+	if %%3 leq 0   set /a "H=0"%\n%
+	set /a "va=2*L-10000"%\n%
+	for /f "tokens=1" %%a in ("^!va^!") do if %%a lss 0 set /a "va=-va"%\n%
+	set /a "C=(10000-va)*S/10000"%\n%
+	set /a "h1=H*10000/60"%\n%
+	set /a "mm=(h1 %% 20000) - 10000"%\n%
+	for /f "tokens=1" %%a in ("^!mm^!")  do if %%a lss 0 set /a "mm=-mm"%\n%
+	set /a "X=C *(10000 - mm)/10000"%\n%
+	set /a "m=L - C/2"%\n%
+	for /f "tokens=1" %%a in ("^!H^!") do (%\n%
+		if %%a lss 60  ( set /a "R=C+m", "G=X+m", "B=0+m" ) else (%\n%
+		if %%a lss 120 ( set /a "R=X+m", "G=C+m", "B=0+m" ) else (%\n%
+		if %%a lss 180 ( set /a "R=0+m", "G=C+m", "B=X+m" ) else (%\n%
+		if %%a lss 240 ( set /a "R=0+m", "G=X+m", "B=C+m" ) else (%\n%
+		if %%a lss 300 ( set /a "R=X+m", "G=0+m", "B=C+m" ) else (%\n%
+		if %%a lss 360 ( set /a "R=C+m", "G=0+m", "B=X+m" ))))))%\n%
+	)%\n%
+	set /a "R=R*255/10000", "G=G*255/10000", "B=B*255/10000"%\n%
+	for /f "tokens=1-3" %%a in ("^!R^! ^!G^! ^!B^!") do ^!RBGplot^! %%1 %%2 %%a %%b %%c%\n%
+)) else set args=
+goto :eof</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: drawing things with smoothStep algorithm</h3>
+				<div class="date">Posted: <strong>09 May 2018 10:07</strong></div>
+				<div class="author">by <strong>Emre</strong></div>
+				<div class="content">Fantastic script, you are on your way to create first far as i know batch script with graphics not just ASCII characters. Keep up the good work!</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8544&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:21:45 GMT -->
+</html>

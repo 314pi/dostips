@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8645&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:53:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Extracting subdirectories and files from parent directory, using these to create dirs /copy files.</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Extracting subdirectories and files from parent directory, using these to create dirs /copy files.</h2>
+		<p><a href="viewtopic7f24.html?f=3&amp;t=8645">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8645</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Extracting subdirectories and files from parent directory, using these to create dirs /copy files.</h3>
+				<div class="date">Posted: <strong>24 Jun 2018 07:39</strong></div>
+				<div class="author">by <strong>Robba078</strong></div>
+				<div class="content">am building a small automated deployment pipeline for an application. I am very new to batch files, created a few ones so far with success, but this particular one is driving me nuts.<br>
+<br>
+What I want:<br>
+<br>
+in an inputpath, there can be files and/or subdirectories with files. If these exist in the targetpath, then the the files in the targetpath need to be be renamed to file_OLD.extension.<br>
+<br>
+When this is done the files from inputpath need to be copied there.<br>
+<br>
+If the file, or sub directory with file not exists, the sub directory needs to be created and the file needs to be placed there.<br>
+<br>
+What I have so far:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+
+set inputpath=P:\Deployment\1.DeployToTST\Template
+set targetpath=\\&lt;servername&gt;\Template
+
+for /f %%a in ('dir "%inputpath%"/a-d/b/-p/s^|find /v ""') do (
+
+if exist %targetpath%\%%a (
+xcopy "%targetpath%\%%a" "%targetpath%/%%a_OLD" /Y
+xcopy /S "%%a" "%targetpath%\%%a" /Y /I /K
+
+) ELSE  (
+
+xcopy /S "%%a" %targetpath\%%a%" /Y /I /K)
+
+)
+</code></pre></div>
+
+I feel that the logic is right (it is not rocket science after all), however I cant seem to get it working. as %%a seems to be taking the entire full file path: 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>P:\Deployment\1.DeployToTST\Template\template1.ctx
+P:\Deployment\1.DeployToTST\Template\template1\template1.ctx
+</code></pre></div>
+
+I actually need for %%a to be:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code> template1.ctx
+ template1\template1.ctx
+</code></pre></div>
+
+file extensions differ, so do the subdirectories in my inputpath.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Extracting subdirectories and files from parent directory, using these to create dirs /copy files.</h3>
+				<div class="date">Posted: <strong>24 Jun 2018 10:29</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">You need to replace inputpath with targetpath in the output of DIR /S in order to check the existence and do the renaming. The rest can be done with a subsequent ROBOCOPY call.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal DisableDelayedExpansion
+set "inputpath=P:\Deployment\1.DeployToTST\Template"
+set "targetpath=\\&lt;servername&gt;\Template"
+
+for /f "delims=" %%i in ('dir "%inputpath%" /a-d /b /s') do (
+  set "inpf=%%i"
+  set "inpn=%%~dpni"
+  setlocal EnableDelayedExpansion
+  if exist "!inpf:%inputpath%=%targetpath%!" move /y "!inpf:%inputpath%=%targetpath%!" "!inpn:%inputpath%=%targetpath%!_OLD%%~xi"
+  endlocal
+)
+robocopy "%inputpath%" "%targetpath%" /s /e /r:1 /w:1</code></pre></div>
+Untested though. Not sure if IF EXIST and MOVE can handle network paths.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Extracting subdirectories and files from parent directory, using these to create dirs /copy files.</h3>
+				<div class="date">Posted: <strong>25 Jun 2018 09:17</strong></div>
+				<div class="author">by <strong>Robba078</strong></div>
+				<div class="content">Hi aGerman,<br>
+<br>
+Damm, that did it completely, thanks a lot!!!<br>
+<br>
+I am not fully understanding what you did, but will look at documentation, as I also want to learn to do this completely by myself.<br>
+<br>
+Thanks again, cheers!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Extracting subdirectories and files from parent directory, using these to create dirs /copy files.</h3>
+				<div class="date">Posted: <strong>25 Jun 2018 09:26</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">If you want to read the documentation then I suggest to read it for SET in order to understand how the string replacement works and for FOR in order to learn more about modifiers beginning with a ~ sign. ROBOCOPY just creates folders and files that were not found in the target path.<br>
+If you still have questions then just ask.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8645&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:53:53 GMT -->
+</html>

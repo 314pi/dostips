@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8607&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:39 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Calling variables from a text file</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Calling variables from a text file</h2>
+		<p><a href="viewtopic68f3.html?f=3&amp;t=8607">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8607</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Calling variables from a text file</h3>
+				<div class="date">Posted: <strong>06 Jun 2018 22:27</strong></div>
+				<div class="author">by <strong>Crawfy</strong></div>
+				<div class="content">I have created a simple batch file to open Windows Explorer of a remote PC.<br>
+I would like a way to create a list in a text file of all the remote PC names i need to access then run the batch file to open all of them in separate windows. <br>
+Is this possible?<br>
+<br>
+At the point the batch file asks for user input, I would prefer it refer to a text file, or even a list within this batch file, for the PC names.  I will constantly edit the names and quantity as time goes on.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+:: File to open Remote PC C drive locations in a separate Windows Explorer window
+
+: Beginning
+:: ask for PC name
+echo.
+:: SET /P _inputname= Enter remote computer name:
+echo.
+
+:: Launch explorer, \\PC name\c$
+echo.
+echo Opening Remote C Drive
+start %SystemRoot%\explorer.exe \\%_inputname%\c$ 
+
+goto :Beginning</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Calling variables from a text file</h3>
+				<div class="date">Posted: <strong>08 Jun 2018 02:43</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">If the remote pc names don't use problematic characters, then you could use a for/f loop; "test.bat":
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableExtensions disableDelayedExpansion
+for /f "usebackq delims=*" %%a in ("RemotePcList.txt") do (
+	echo(Remote pc: %%~a
+)
+</code></pre></div>
+"RemotePcList.txt":
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>PC1
+PC2
+...
+PCX</code></pre></div>
+Result:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Z:\&gt;test.bat
+Remote pc: PC1
+Remote pc: PC2
+Remote pc: ...
+Remote pc: PCX</code></pre></div>
+
+penpen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8607&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:39 GMT -->
+</html>

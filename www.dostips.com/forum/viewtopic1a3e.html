@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8568&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:56 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Rename directories and sub directories that do not contain files.</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Rename directories and sub directories that do not contain files.</h2>
+		<p><a href="viewtopicfe64.html?f=3&amp;t=8568">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8568</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Rename directories and sub directories that do not contain files.</h3>
+				<div class="date">Posted: <strong>20 May 2018 21:24</strong></div>
+				<div class="author">by <strong>JimmyTheDos</strong></div>
+				<div class="content">Hi guys, <br>
+<br>
+I am wondering if there is a way to: <br>
+Rename Folders that are empty or only contain Folders with "name + (Empty)" etc <br>
+<br>
+So that if I am browsing through directories I can tell quickly if they're useful or dead legs. (I want to keep the folder structure as it is, to add things into the correct folders as projects develop.) <br>
+<br>
+eg: 
+<ul><li>E:\AS\A\A <br>
+E:\AS\A\A\C <br>
+E:\AS\A\B <br>
+E:\AS\A\B\Work.doc <br>
+E:\AS\B\A <br>
+E:\AS\B\B <br>
+E:\AS\B\B\C</li> </ul>
+
+Would rename to: 
+<ul><li>E:\AS\A\A (Empty) <br>
+E:\AS\A\A (Empty)\C (Empty) <br>
+E:\AS\A\B <br>
+E:\AS\A\B\Work.doc <br>
+E:\AS\B (Empty)\A (Empty) <br>
+E:\AS\B (Empty)\B (Empty) <br>
+E:\AS\B (Empty)\B (Empty)\C (Empty)</li></ul>
+
+<br>
+My idea it is to use something like:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+cls
+:input
+set /p "input=1. Enter Source directory: "
+if not exist "%input%" echo Invalid source: "%input%" enter valid path &amp;&amp; goto :input 
+for /f "delims=" %%I in (' dir /s /b /o:n ') do (
+	set file="%%~I"
+	for %%J in ??? do set "file=???"
+???
+)</code></pre></div>
+
+Where "???" I am not sure what to use.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Rename directories and sub directories that do not contain files.</h3>
+				<div class="date">Posted: <strong>21 May 2018 19:24</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">I'm unsure how you might mean this "(Empty)" part:<br>
+If you only allow the default space character (U+0020), then (if i remember right) this task is impossible to solve, because that space isn't allowed to be the last character in a filename without extension.<br>
+<br>
+But, if it suffices, you could use the non breaking space:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+:: prepare codepages
+set /A "utf7Cp=65000, utf8Cp=65001"
+set "cp="
+for /f "delims=." %%a in ('2^&gt;nul chcp') do for %%b in (%%a) do set "cp=%%b"
+if not defined cp for /f "tokens=2" %%a in ('2^&gt;nul chcp') do set "cp=%%~a"
+
+:: create file ['A', NBSP, 'A']; NBS := non breaking space
+&gt;nul chcp %utf8Cp%
+&gt;"dummy.txt" cmd /a /c^&lt;nul set /p "=A+AKA-A"
+&gt;nul chcp %utf7Cp%
+set "nbs="
+&lt;"dummy.txt" set /p "nbs="
+set "nbs=%nbs:~1,1%"
+
+:: rename "dummy.txt"
+for %%a in ("dummy.txt") do ren "%%~a" "%%~a%nbs%."
+for %%a in ("dummy.*") do echo("%%~a"
+
+:: restore codepage
+&gt;nul chcp %cp%
+goto :eof
+</code></pre></div>
+
+penpen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8568&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:56 GMT -->
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8547&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:20:14 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; 40 000 files search and delete</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>40 000 files search and delete</h2>
+		<p><a href="viewtopic2a59.html?f=3&amp;t=8547">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8547</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>40 000 files search and delete</h3>
+				<div class="date">Posted: <strong>07 May 2018 03:50</strong></div>
+				<div class="author">by <strong>metallon</strong></div>
+				<div class="content">Hi Dos Guru's,<br>
+<br>
+I am running Windows 10 and need to search through about 40 000 .json files that contain a string like "forwardaction=0" or "forwardaction=0.0" and a file name to an image like "imagefilename=myfile.jpeg". I need to go through all of those .json files and whenever the string "forwardaction=0" or "forwardaction=0.0" can be found, delete the .json itself as well as the image file named after "imagefilename=". <br>
+<br>
+Is that possible and if so, how would I do it?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: 40 000 files search and delete</h3>
+				<div class="date">Posted: <strong>07 May 2018 11:33</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist5c63.html?mode=viewprofile&amp;u=9191">metallon</a> wrote: <a href="viewtopic2e3d.html?p=56712#p56712" data-post-id="56712" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">07 May 2018 03:50</div></cite>a string like "forwardaction=0" or "forwardaction=0.0" and a file name to an image like "imagefilename=myfile.jpeg"</div></blockquote>Very unusual for JSON. Things like <span style="color: #0000FF">"forwardaction": 0</span> would look more like JSON.<br>
+
+<blockquote><div><cite><a href="memberlist5c63.html?mode=viewprofile&amp;u=9191">metallon</a> wrote: <a href="viewtopic2e3d.html?p=56712#p56712" data-post-id="56712" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">07 May 2018 03:50</div></cite>I need to go through all of those .json files and whenever the string "forwardaction=0" or "forwardaction=0.0" can be found, delete the .json itself</div></blockquote>That could be probably done using Batch.<br>
+
+<blockquote><div><cite><a href="memberlist5c63.html?mode=viewprofile&amp;u=9191">metallon</a> wrote: <a href="viewtopic2e3d.html?p=56712#p56712" data-post-id="56712" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">07 May 2018 03:50</div></cite>as well as the image file named after "imagefilename="</div></blockquote>That's tricky and the way how to extract the file name does highly depend on the structure of the JSON text (that we don't even know). It might be more reliable to parse the JSON object using a language that supports it. But as I said, without knowing the whole structure it's not possible to give any good advice.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: 40 000 files search and delete</h3>
+				<div class="date">Posted: <strong>09 May 2018 02:50</strong></div>
+				<div class="author">by <strong>metallon</strong></div>
+				<div class="content">Hi aGerman,<br>
+<br>
+Many thanks for your reply.<br>
+<br>
+The .JSON file looks like that:<br>
+<br>
+{"user/angle": 0.03399153759605006, "user/mode": "user", "cam/image_array": "1204_cam-image_array_.jpg", "forwardaction": 0.0}</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: 40 000 files search and delete</h3>
+				<div class="date">Posted: <strong>16 May 2018 03:55</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">This might help you:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableExtensions enableDelayedExpansion
+:: assumed that the json files are encoded in utf-8, and you don't need the console to switch back to your original set codepage, and
+:: assumed that the json files don't contain any exclamation mark ('!') or percentage sign ('%') characters, and also
+:: assumed that no line has more than 1023 characters in it,
+:: the following might help you.
+&gt;nul chcp 65001
+
+cls
+for %%a in (*.json.txt) do (
+	set "file="
+	set "line="
+	&lt;%%a set /p "line="
+	set ^"line=!line:"=!"
+	set "line=!line: =!"
+	set "line=!line:{=!"
+	set "line=!line:}=!,"
+
+	for %%b in (!line!) do (
+		if "forwardaction:0.0" == "%%~b" set "file=!line:*cam/image_array:=!"
+		if "forwardaction:0" == "%%~b" set "file=!line:*cam/image_array:=!"
+	)
+
+	if defined file (
+		for %%b in ("!file:*,=!") do set "file=!file:,%%~b=!"
+		echo(delete "%%~a" "!file!"
+	)
+)
+
+goto :eof</code></pre></div>Note, that this actually doesn't delete any files, but echoes the delete statement (so you can check if the result is right without doing any harm).<br>
+If you want it to delete the files, then just remove the "echo(" in front of the "del"-statement.<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8547&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:20:14 GMT -->
+</html>

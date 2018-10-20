@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8559&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:10 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Dynamically change icon in context menu</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Dynamically change icon in context menu</h2>
+		<p><a href="viewtopicff1c.html?f=3&amp;t=8559">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8559</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>3</strong></div>
+					<div class="post">
+				<h3>Dynamically change icon in context menu</h3>
+				<div class="date">Posted: <strong>16 May 2018 00:26</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">I want to add a new item in Windows 10 to Desktop Context Menu like this:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Switch Power Plan\Shell\Power Saver]
+"MUIVerb"="Power Saver"
+"Icon"="powercpl.dll"
+</code></pre></div>
+
+But the icon type shown in Context Menu on Mouse Hover should depend on whether the listed plan is active or not at present. I tried to do it that way, but it doesn't work:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>"Icon"="for /f "delims=" %a in ('powercfg -getactivescheme') do echo %a | find /i "Saver" &gt; nul &amp;&amp; powercpl.dll,-1 || powercpl.dll,-506"</code></pre></div>
+
+Any suggestions how to accomplish that?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Change icon in context menu</h3>
+				<div class="date">Posted: <strong>16 May 2018 04:52</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">I'm unsure if it is possible to have such a dynamic context menue.<br>
+<br>
+You might better doing it in a similar way (just extend the related commands to also change the item in the context menue):<br>
+<a href="https://winaero.com/blog/add-switch-power-plan-context-menu-to-desktop-in-windows-10/" class="postlink">https://winaero.com/blog/add-switch-pow ... indows-10/</a><br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Change icon in context menu</h3>
+				<div class="date">Posted: <strong>16 May 2018 06:36</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">The link you posted allows to add a choice of Power Plans to Desktop Context Menu. I just checked it and the suggested Registry hack works. The problem I described in the 1st post remains: current Power Plan is not highlighted. To highlight it, I'm thinking of the following change to the code you linked:<br>
+<br>
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Switch Power Plan]<br>
+"Icon"="powercpl.dll"<br>
+"MUIVerb"="Switch Power Plan"<br>
+"Position"="Top"<br>
+"SubCommands"=""<br>
+<br>
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Switch Power Plan\Command]<br>
+@="path\\icon.bat"<br>
+<br>
+Rest of the code is the same as in the link, where <em class="text-italics">icon.bat</em> checks current Power Plan on mouse hover (not mouse click), and sets icon values to "powercpl.dll,-1" or "powercpl.dll,-506" for Power Plan entries in Context Menu "Balanced", High Performance", "Power Saver" listed in the linked code.<br>
+What would be the shortest <em class="text-italics">icon.bat</em> code allowing to do that? Its better to run Cmd window hidden, and limit all activity on changing Power Plans in Context Menu to only one Cmd window, if possible.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Change icon in context menu</h3>
+				<div class="date">Posted: <strong>17 May 2018 11:23</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">I wrote the batch <em class="text-italics">icon.bat</em>, and it works OK by itself. But the shell syntax above doesn't work, so the required Command must be likely placed into a different Registry key for the cascading menu to update icons. Any suggestions?<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+:: The batch changes icon for currently Active Power Plan
+setlocal EnableExtensions EnableDelayedExpansion
+set "key=HKCR\DesktopBackground\Shell\Switch Power Plan\Shell" &amp; set /a i=0 &amp; set /a n=0
+for /f "tokens=4,* skip=3" %%b in ('powercfg -l') do ( set /a i+=1
+	echo %%c | find /i "*" &gt; nul &amp;&amp; set "icon!i!=powercpl.dll,-1" || set "icon!i!=powercpl.dll,-506" )
+	for /f "tokens=*" %%d in ('reg query "%key%"') do ( set /a n+=1
+		for /f "tokens=3,* skip=2" %%e in ('reg query "%%d" /v Icon') do ( call set "ico=%%icon!n!%%"
+		if not "!ico!"=="%%e" ( reg add "%%d" /v Icon /d !ico! /f &gt; nul )))
+endlocal
+exit /b</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Change icon in context menu</h3>
+				<div class="date">Posted: <strong>17 May 2018 13:20</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">My above idea more was something like this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Switch Power Plan\Shell\Balanced\Command]
+@="\"C:\\Windows\\System32\\cmd.exe\" /C\"C:\\Windows\\System32\\reg.exe\" ADD \"HKCR\\DesktopBackground\\Shell\\Switch Power Plan\" /v \"Icon\" /d \"powercpl.dll\" &amp; "powercfg.exe /S..."
+</code></pre></div>Note: I'm writing on my mobile phone, so the "..." must be extended to the full command.<br>
+Also i actually can't test if this idea works - for example i'm unsure, i fear you probably don't have the rights to change the HKCR values from any user profile.<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Change icon in context menu</h3>
+				<div class="date">Posted: <strong>17 May 2018 17:52</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">Did you mean
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@="\"C:\\Windows\\System32\\cmd.exe\" /C\"C:\\Windows\\System32\\reg.exe\" ADD \"HKCR\\DesktopBackground\\Shell\\Switch Power Plan\\Shell\\Balanced\" /v \"Icon\" /d \"powercpl.dll\" /f &amp; "powercfg.exe /S..."</code></pre></div>
+
+You still need to restore the previous icon when the plan is changed again. Unless you suggest to show an icon only for Active plan, and remove it for other plans? Both approaches result in lengthy commandline, so rather require calling a modified batch with a parameter to change the icon while also changing the Plan. So the key below is not required, and Cmd window can be called only once, minimized. I wonder if REG_MULTI_SZ value can be used in the Command key to place a mini-batch into it line by line? Will test that.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Switch Power Plan\Command]</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Change icon in context menu</h3>
+				<div class="date">Posted: <strong>18 May 2018 00:10</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">Following your suggestion, I changed the <em class="text-italics">icon.bat</em> :<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+:: Batch changes Active Power Plan and its icon. Run with parameter [1,2,3] corresponding to chosen Plan
+if not defined mini set "mini=true" &amp;&amp; start "" /min "%~dpnx0" %1 &amp;&amp; exit
+setlocal EnableExtensions EnableDelayedExpansion
+set "key=HKCR\DesktopBackground\Shell\Switch Power Plan\Shell" &amp; set "plan1=Balanced" &amp; set "plan2=High Performance" &amp; set "plan3=Power Saver"
+set "guid1=381b4222-f694-41f0-9685-ff5bb260df2e" &amp; set "guid2=8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c" &amp; set "guid3=a1841308-3541-4fab-bc81-f71556f20b4a"
+for /f "tokens=5,6" %%a in ('powercfg -getactivescheme') do echo %%a %%b | find /i "!plan%1!" &gt; nul &amp;&amp; goto :end
+for %%d in (1 2 3) do (
+	if %%d==%1 ( reg add "%key%\!plan%%d!" /v Icon /d powercpl.dll,-1 /f &gt; nul &amp; powercfg.exe /S !guid%%d!
+	) else ( reg add "%key%\!plan%%d!" /v Icon /d powercpl.dll,-506 /f &gt; nul ))
+:end
+endlocal
+exit</code></pre></div>
+
+Respectively, Command keys in <a href="https://winaero.com/blog/add-switch-power-plan-context-menu-to-desktop-in-windows-10/" class="postlink">this</a> referenced script now look like below.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Switch Power Plan\Shell\Balanced\Command]
+@="path\\icon.bat 1"
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Switch Power Plan\Shell\High Performance\Command]
+@="path\\icon.bat 2"
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Switch Power Plan\Shell\Power Saver\Command]
+@="path\\icon.bat 3"</code></pre></div>
+
+One must change Users permission to Full Control for these keys in Registry for the code to work:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Switch Power Plan\Shell\Balanced]
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Switch Power Plan\Shell\High Performance]
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Switch Power Plan\Shell\Power Saver]</code></pre></div>
+
+<div class="inline-attachment">
+			
+		
+				<dl class="file">
+			<dt class="attach-image"><img src="download/file46ee.jpg?id=358" class="postimage" alt="ContextMenu1.jpg" onclick="viewableArea(this);" /></dt>
+						<dd>ContextMenu1.jpg (14.02 KiB) Viewed 1020 times</dd>
+		</dl>
+		
+		
+		
+			</div>
+Here's how the Context Menu <a href="https://postimg.cc/image/6gzmcn313/" class="postlink"> looks</a> now. <br>
+<br>
+To run the batch minimized, or at least minimize the time of showing Cmd window, I added the 3rd line in the code. To run the batch hidden, one can use the <a href="https://www.raymond.cc/blog/hidden-start-runs-batch-files-silently-without-flickering-console/" class="postlink">following</a> tools. I wonder if anyone can suggest a faster or more elegant solution, possibly based on <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ff468984(v=vs.85).aspx" class="postlink">these</a> <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ee453696(v=vs.85).aspx" class="postlink">methods</a>?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Change icon in context menu</h3>
+				<div class="date">Posted: <strong>18 May 2018 09:39</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist33bb.html?mode=viewprofile&amp;u=9204">MarioZac</a> wrote: <a href="viewtopic540d.html?p=56787#p56787" data-post-id="56787" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">17 May 2018 17:52</div></cite>
+You still need to restore the previous icon when the plan is changed again. Unless you suggest to show an icon only for Active plan, and remove it for other plans?</div></blockquote>The idea was, that you have a menuitem called "Switch Power Plan" with should display the actual power plan representation icon.<br>
+You then change the actual power plan and the icon of the "Switch Power Plan" menuitem by clicking the submenuitems "Balanced", "High Performance", and "Power Saver":<br>
+- Clicking on "Balanced" changes the active powerplan to "Balanced" and also changes the "Switch Power Plan" to "Balanced" icon choice.<br>
+- Clicking on "High Performance" changes the active powerplan to "High Performance" and also changes the "Switch Power Plan" to "High Performance" icon choice.<br>
+- Clicking on "Power Saver" changes the active powerplan to "Power Saver" and also changes the "Switch Power Plan" to "Power Saver" icon choice.<br>
+<br>
+The bad thing i just noticed is, that you can change the active power plan without using these submenuitems, so the item won't change in that case... .<br>
+<br>
+Another idea:<br>
+It might be possible to use the task scheduler ("%windir%\system32\taskschd.msc /s") to execute a program (a script that only changes the icon of the "witch Power Plan" menuitem), whenever "powercfg.exe" changes the power plan.<br>
+According to my google skills, an event (see: "%windir%\system32\eventvwr.msc /s", Windows Protocols\System, Information with source "UserModePowerService") should be triggered, with these properties:<br>
+- Protocol: "System"<br>
+- Source: "UserModePowerService"<br>
+- Event-ID: 12<br>
+<br>
+Sample change icon script (still needs enough rights; maybe you could create that scheduled task using an admin account, so the rights should be ok then):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+powercfg /getactivescheme | &gt;nul findstr "381b4222-f694-41f0-9685-ff5bb260df2e" &amp;&amp; reg add "HKCR\DesktopBackground\Shell\Switch Power Plan" /v "Icon" /d "powercpl.dll,0" /f || ^
+powercfg /getactivescheme | &gt;nul findstr "a1841308-3541-4fab-bc81-f71556f20b4a" &amp;&amp; reg add "HKCR\DesktopBackground\Shell\Switch Power Plan" /v "Icon" /d "powercpl.dll,1" /f || ^
+powercfg /getactivescheme | &gt;nul findstr "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c" &amp;&amp; reg add "HKCR\DesktopBackground\Shell\Switch Power Plan" /v "Icon" /d "powercpl.dll,2" /f || ^
+reg add "HKCR\DesktopBackground\Shell\Switch Power Plan" /v "Icon" /d "powercpl.dll,4" /f
+goto :eof
+</code></pre></div>
+But i'm not firm in using the task scheduler, so I'm not sure what exactly to do to create that.<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dynamically change icon in context menu</h3>
+				<div class="date">Posted: <strong>18 May 2018 10:36</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">Thanks, the task added in Task Scheduler will fix the remaining bug, when icons in Context Menu remain unchanged if a Power Plan was changed by other means like using Power Options panel.<br>
+<br>
+This is the only example I could google of dynamically changing Context Menu icons. However, code examples of using Windows Shell <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ee453696(v=vs.85).aspx" class="postlink">native means</a> to do that would be interesting to see. It should be cleaner, faster, and won't require extra scheduled tasks.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dynamically change icon in context menu</h3>
+				<div class="date">Posted: <strong>18 May 2018 14:21</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">I just noticed something plain trivial and actually i feel really stupid:<br>
+Why the heck did we use HKEY_CLASSES_ROOT all the time... .<br>
+<br>
+How about that "SwitchPowerPlanUser.reg" (before you test this make sure you deleted the stuff from "HKEY_CLASSES_ROOT\DesktopBackground\Shell\Switch Power Plan" within the registry - but backup your sources, or export to *.reg file before deleting):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Windows Registry Editor Version 5.00
+
+; Created by https://winaero.com
+; Modified by penpen https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8559
+
+[HKEY_CURRENT_USER\Software\Classes\DesktopBackground\Shell\Switch Power Plan]
+"Icon"="powercpl.dll,4"
+"MUIVerb"="Switch Power Plan"
+"Position"="Top"
+"SubCommands"=""
+
+[HKEY_CURRENT_USER\Software\Classes\DesktopBackground\Shell\Switch Power Plan\Shell\Balanced]
+"MUIVerb"="Balanced"
+"Icon"="powercpl.dll,0"
+
+[HKEY_CURRENT_USER\Software\Classes\DesktopBackground\Shell\Switch Power Plan\Shell\Balanced\Command]
+@="cmd /c\"powercfg.exe /S 381b4222-f694-41f0-9685-ff5bb260df2e&amp;powercfg /getactivescheme | &gt;nul findstr \"381b4222-f694-41f0-9685-ff5bb260df2e\" &amp;&amp;reg add \"HKCU\\Software\\Classes\\DesktopBackground\\Shell\\Switch Power Plan\" /v \"Icon\" /d \"powercpl.dll,0\" /f\""
+
+[HKEY_CURRENT_USER\Software\Classes\DesktopBackground\Shell\Switch Power Plan\Shell\High Performance]
+"MUIVerb"="High Performance"
+"Icon"="powercpl.dll,2"
+
+[HKEY_CURRENT_USER\Software\Classes\DesktopBackground\Shell\Switch Power Plan\Shell\High Performance\Command]
+@="cmd /c\"powercfg.exe /S 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c&amp;powercfg /getactivescheme | &gt;nul findstr \"8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c\" &amp;&amp;reg add \"HKCU\\Software\\Classes\\DesktopBackground\\Shell\\Switch Power Plan\" /v \"Icon\" /d \"powercpl.dll,2\" /f\""
+
+[HKEY_CURRENT_USER\Software\Classes\DesktopBackground\Shell\Switch Power Plan\Shell\Power Saver]
+"MUIVerb"="Power Saver"
+"Icon"="powercpl.dll,1"
+
+[HKEY_CURRENT_USER\Software\Classes\DesktopBackground\Shell\Switch Power Plan\Shell\Power Saver\Command]
+@="cmd /c\"powercfg.exe /S a1841308-3541-4fab-bc81-f71556f20b4a&amp;powercfg /getactivescheme | &gt;nul findstr \"a1841308-3541-4fab-bc81-f71556f20b4a\" &amp;&amp;reg add \"HKCU\\Software\\Classes\\DesktopBackground\\Shell\\Switch Power Plan\" /v \"Icon\" /d \"powercpl.dll,1\" /f\""
+</code></pre></div>(No need to give any user write access to HKCR.)<br>
+(Note this version doesn't check for executing "powercfg.exe /S" from somewhere else. You still might want to use the task scheduler to update the icons in that case - but the current user is sufficient - no need for admin rights, too.)<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dynamically change icon in context menu</h3>
+				<div class="date">Posted: <strong>18 May 2018 14:44</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">I tested it, and it works very well. This solution requires no extra batch, and neither changing Registry key permissions. Its also very intuitive. Great!<br>
+<br>
+The only issue remaining is the need to have a scheduled task running to update icons when the plan is changed from Power Options panel. However, this shortcoming can possibly be fixed by adding a Command key to <em class="text-italics">HKEY_CURRENT_USER\Software\Classes\DesktopBackground\Shell\Switch Power Plan</em> that will update on Mouse Hover rather than Click. Just dreaming, but there might be other ideas to eliminate the scheduled task, since it must be manually added by a user, and most users have little experience working with Scheduler? Other thing I noticed overtime, generated Event IDs tend to change with Windows updates for the same events or diversify, meaning the task may stop working later.<br>
+<br>
+Another minor issue is Cmd window stays open for awhile, that's why I added to the above batch version to keep it minimized:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if not defined mini set "mini=true" &amp;&amp; start "" /min "%~dpnx0" %1 &amp;&amp; exit
+</code></pre></div>
+<div class="inline-attachment">
+			
+		
+				<dl class="file">
+			<dt class="attach-image"><img src="download/fileef1f.jpg?id=360" class="postimage" alt="ContextMenu2.jpg" onclick="viewableArea(this);" /></dt>
+						<dd>ContextMenu2.jpg (13.26 KiB) Viewed 972 times</dd>
+		</dl>
+		
+		
+		
+			</div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dynamically change icon in context menu</h3>
+				<div class="date">Posted: <strong>19 May 2018 13:22</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist33bb.html?mode=viewprofile&amp;u=9204">MarioZac</a> wrote: <a href="viewtopicfd09.html?p=56804#p56804" data-post-id="56804" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">18 May 2018 14:44</div></cite>This solution requires no extra batch</div></blockquote>Somehow i missed the fact, that i gave a solution without any batch in a batch forum, where someone/you asked for a batch solution  <img class="smilies" src="images/smilies/icon_redface.gif" width="15" height="15" alt=":oops:" title="Embarassed"> !<br>
+I will do better, and there's the chance:
+<blockquote><div><cite><a href="memberlist33bb.html?mode=viewprofile&amp;u=9204">MarioZac</a> wrote: <a href="viewtopicfd09.html?p=56804#p56804" data-post-id="56804" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">18 May 2018 14:44</div></cite>The only issue remaining is the need to have a scheduled task running to update icons when the plan is changed from Power Options panel.</div></blockquote>
+This could be done using a hybrid JScript/batch file.<br>
+<br>
+I have more than the three power plans on my pc, so i created a small "Switch Power Plan.Setup.bat", that should add them all:<br>
+Updated to "Switch Power Plan.Setup v1_1.bat" which can be found <a href="viewtopicc25d.html?f=3&amp;t=8559&amp;p=56847#p56847" class="postlink">viewtopic.php?f=3&amp;t=8559&amp;p=56847#p56847</a>.<br>
+<br>
+You probably only want to use default values, so just hit the [ENTER] key until all is done.<br>
+If you run setup a second time without deleting the involved directory, then one of the questions must be answered by hitting the [Y]/[N]/[A]-key (or [CTRL+C][Y])<br>
+If needed you could see the resulting reg and hybrid jscript/batch file in "%LOCALAPPDATA%\Switch Power Plan" (if you are using the default values).<br>
+You might delete the reg file if you want, but the hybrid jscript/batch file is needed.<br>
+(Task completed and i used a batch file <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> .)<br>
+<br>
+penpen<br>
+<br>
+Edit: Removed the old code and set a link to version 1.1.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dynamically change icon in context menu</h3>
+				<div class="date">Posted: <strong>19 May 2018 15:46</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">I'm not very familiar with hybrid batches, and some other readers probably too. Would you be able to take a moment to explain without details how this new approach works in general, and in particular to eliminate the Scheduled Task?  <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=":wink:" title="Wink"> <br>
+<br>
+Does it update only <em class="text-italics">HKCU\Software\Classes\DesktopBackground\Shell\Switch Power Plan</em> icon each time Power Plan is changed from Power Options panel, while changing <em class="text-italics">HKCU\Software\Classes\DesktopBackground\Shell\Switch Power Plan</em> key icon and current Power Plan GUID when Power Plan is changed from Desktop Context Menu? If that's correct, what triggers Jscript execution - mouse hover on Switch Power Plan menu option?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dynamically change icon in context menu</h3>
+				<div class="date">Posted: <strong>20 May 2018 00:07</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist33bb.html?mode=viewprofile&amp;u=9204">MarioZac</a> wrote: <a href="viewtopiccc3c.html?p=56820#p56820" data-post-id="56820" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">19 May 2018 15:46</div></cite>I'm not very familiar with hybrid batches, and some other readers probably too. Would you be able to take a moment to explain without details how this new approach works in general, and in particular to eliminate the Scheduled Task?  <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=":wink:" title="Wink"> </div></blockquote>Sad to say it's not a new approach:<br>
+It's (nearly) the same, as before - the jscript part just executes the the batch portion that changes the icon within a hidden frame.<br>
+<br>
+As i had not much to to with the task scheduler, i'm unsure if you could create that part using scripts only:<br>
+I will try to, but this might take some time.<br>
+<br>
+If someone says something is a hybrid script/source file, then he means, that this file could be used by two or more interpreters/compilers.<br>
+In case of a hybrid JScript/batch file this single file is a valid JScript file and it is also a valid batch file:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (true==false) @end /*
+@echo off
+powercfg.exe /S "%~1"
+for %%a in ("HKCU\Software\Classes\DesktopBackground\Shell\Switch Power Plan") do (
+	powercfg /getactivescheme | findstr "%~1" &amp;&amp; reg add "%%~a" /v "Icon" /d "%~2" /f || reg add "%%~a" /v "Icon" /d "%~3" /f
+)
+
+goto :eof
+*/
+
+if (WScript.Arguments.Length == 3) {
+	var WshShell = WScript.CreateObject("WScript.Shell");
+	WshShell.Run ("\"" + WScript.ScriptFullName   + "\" \"" + WScript.Arguments(0) + "\" \"" + WScript.Arguments(1) + "\" \"" + WScript.Arguments(2) + "\" ", 0, false);
+} else {
+	WScript.Echo("Usage: WScript.ScriptName \"powerplanId\" \"powerplanIcon\" \"fallbackIcon\".");
+}
+</code></pre></div>The trick in this case is, that the first line, from the perspective of the JScript, is a valid conditional execution (which is never executed because true isn't false; and also won't do anything even if because there is no text parsed between the ')' and "@end"). The "/*" starts a multiline comment, which ends after the batch code so that is completely ignored by JScript. After that the JScript starts itself as a hidden batch frame.<br>
+From the perspective of a batch file the "@" is a special character that tells the command processor not to display the command (within the same line) that should be executed. The next command is an if and the command processor also doesn't execute this line because the strings "(true" and "false)" don't match. So the command processor doesn't even try to interpret the " @end /*" command (which would raise an error message).<br>
+then the batch file updates the icon (based on parameters and success of enabling the new power plan.<br>
+<br>
+I added a fallback item if the power plan couldn't be activated, because someone might delete those.<br>
+In that case you have to run the setup batch a second time.<br>
+Maybe one could also trigger that using the task scheduler, but on the one hand actually i don't know if there is an event that could trigger what is needed, and on the other hand batch simply cannot read the mind of the user, so i don't know which icons to use if someone wishes to have different than std ones, especially if he/she has added own power plans (like me).<br>
+Raising an info message probably would be better in such a case.<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dynamically change icon in context menu</h3>
+				<div class="date">Posted: <strong>20 May 2018 07:12</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">Thanks for the explanation. I found it amazing there isn't much posted on the web about using Windows Shell native methods to program Context Menu, such as <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ee453696(v=vs.85).aspx" class="postlink">Dynamic Verbs</a>, <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb776086(v=vs.85).aspx" class="postlink">IconMenu</a>, <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ff468984(v=vs.85).aspx" class="postlink">Shell Extensions</a>. I wonder if someone could point to a forum where such <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd758091(v=vs.85).aspx" class="postlink">methods</a> are discussed from practical programming standpoint with examples? My assumption is it might be easy to program the task at hand using Windows Shell native means.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>3</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8559&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:10 GMT -->
+</html>

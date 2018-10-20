@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8853&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:10:42 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Text File Encoding ANSI to UTF-8</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Text File Encoding ANSI to UTF-8</h2>
+		<p><a href="viewtopic95a2.html?f=3&amp;t=8853">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8853</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Text File Encoding ANSI to UTF-8</h3>
+				<div class="date">Posted: <strong>09 Oct 2018 08:49</strong></div>
+				<div class="author">by <strong>Nel</strong></div>
+				<div class="content">How to change the Text File Encoding?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Text File Encoding ANSI to UTF-8</h3>
+				<div class="date">Posted: <strong>09 Oct 2018 12:18</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">The easiest way (short of opening the file with a text editor and saving it manually) is probably with <a href="viewtopic75ba.html?f=3&amp;t=7570" class="postlink">ConvertCP.exe</a>. Beyond that, my next thought would be to add the UTF-8 BOM to the front of the text file, but that might not be the best solution for some circumstances.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Text File Encoding ANSI to UTF-8</h3>
+				<div class="date">Posted: <strong>09 Oct 2018 14:56</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I agree, aGerman's ConvertCP.exe utility would be an ideal solution. You want to translate to code page 65001. Add the /B option if you want a BOM in your output.<br>
+<br>
+Alternatively, you could use my <a href="viewtopicb16d.html?f=3&amp;t=6044" class="postlink">JREPL.BAT utility</a>. It is designed to do regular expression find/replace operations on text files, but it has the ability to read and write different encodings.<br>
+<br>
+The following assumes the "ANSI" source encoding matches the default encoding used by your machine:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl "$^" "" /f "input.txt" /o "output.txt|utf-8"
+</code></pre></div>
+The above will terminate every line with carriage return linefeed (\r\n), regardless how the source lines were terminated. If you want to preserve the original line terminators, then add the /M option.<br>
+<br>
+By default the output will include the BOM. If you don't want a BOM, then use /O "output.txt|utf-8|nb".<br>
+<br>
+If the ANSI encoding does not match your machines default, then you will have to specify the encoding within the /I option. For example, if your encoding is Central/Eastern European code page 1250, then
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl "$^" "" /f "input.txt|windows-1250" /o "output.txt|utf-8"
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Text File Encoding ANSI to UTF-8</h3>
+				<div class="date">Posted: <strong>10 Oct 2018 01:30</strong></div>
+				<div class="author">by <strong>Nel</strong></div>
+				<div class="content">Thanks.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8853&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:10:42 GMT -->
+</html>

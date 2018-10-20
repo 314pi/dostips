@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5506&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:52:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Random number diff from cmd line vs double click - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Random number diff from cmd line vs double click</h2>
+		<p><a href="viewtopic0cbb.html?f=3&amp;t=5506">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5506</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>05 Jul 2018 22:19</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopic82f1.html?p=57353#p57353" data-post-id="57353" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">05 Jul 2018 20:59</div></cite>
+Hmm,  I have let it run for a couple of minutes at a time and output thousands of results and have not gotten a duplicate when adding.<br>
+<br>
+Just reran a test using addition with the seed coming from the thousandths seconds from WMIC.  Ran for 6 minutes and got 4148 unique GUID strings.  No duplicates.
+</div></blockquote>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+set "RandomSeq=21213,21941,17920,10457,19086,5729,12553,29660,2929,6968,17472,27711,18025,20260,1593,26714,31301,28749,19661,30131,4415,18317,26301,27669,30665,29733,2199,14050,4234,8110,222,18601"
+
+echo RandomSeq=%RandomSeq%
+for %%s in (1363,1923) do (
+    echo,
+    &lt;nul set /p "=seed=%%s result: "
+    for %%n in (%RandomSeq%) do (
+        set /a "hex=(%%n + %%s) %% 16"
+        &lt;nul set /p "=!hex!,"
+    )
+)
+echo,
+</code></pre></div>
+
+Output:
+<blockquote class="uncited"><div>
+RandomSeq=21213,21941,17920,10457,19086,5729,12553,29660,2929,6968,17472,27711,18025,20260,1593,26714,31301,28749,19661,30131,4415,18317,26301,27669,30665,29733,2199,14050,4234,8110,222,18601<br>
+<br>
+seed=1363 result: 0,8,3,12,1,4,12,15,4,11,3,2,12,7,12,13,8,0,0,6,2,0,0,8,12,8,10,5,13,1,1,12,<br>
+seed=1923 result: 0,8,3,12,1,4,12,15,4,11,3,2,12,7,12,13,8,0,0,6,2,0,0,8,12,8,10,5,13,1,1,12,
+</div></blockquote>
+
+One random sequence two different seeds same result.<br>
+<br>
+It is strange for me how you didn't observe the duplicates as running the two consecutive new cmd instances will most certainty produce the same random sequence it just needs the matching seeds.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>06 Jul 2018 00:10</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">Accordingly to <a href="https://blogs.msdn.microsoft.com/oldnewthing/20100617-00/?p=13673" class="postlink">this Raymond Chen's article</a>, the method cmd.exe uses to seed the random number generator of <strong class="text-strong">%RANDOM%</strong> variable only depends on the time when <strong class="text-strong">cmd.exe</strong> is started, with one-second resolution. This means that the execution of any command not related to %RANDOM% variable, like <strong class="text-strong">ping</strong>, have no effect on the sequence of generated random numbers and that there is no way to modify <strong class="text-strong">the seed used in %RANDOM%</strong> variable, excepting start <strong class="text-strong">cmd.exe</strong> at very different times.<br>
+<br>
+I always have used a very simple method to <em class="text-italics">randomize</em> the sequence of random numbers that consists in generate a number of %RANDOM% numbers equal to the centiseconds given by %TIME% variable, that is:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>rem Randomize:
+for /L %%i in (0,1,%time:~-2%) do set /A "!random!"
+</code></pre></div>
+
+I used the next code for test this method:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+rem Randomize:
+for /L %%i in (0,1,%time:~-2%) do set /A "!random!"
+
+set "hex=0123456789ABCDEF"
+set "result="
+for /L %%n in (1,1,32) do (
+    set /A "i=!random! %% 16"
+    for %%i in (!i!) do set "result=!result!!hex:~%%i,1!" 
+)
+echo %result%
+</code></pre></div>
+
+And I tested this code in the following ways at the command prompt:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(for /L %i in (1,1,50) do @for /F %a in ('test.bat') do @echo %a) | sort
+
+(for /L %i in (1,1,50) do @for /F %a in ('call test.bat') do @echo %a) | sort
+
+(for /L %i in (1,1,50) do @for /F %a in ('cmd /C test.bat') do @echo %a) | sort
+
+(for /L %i in (1,1,50) do @cmd /C test.bat) | sort
+</code></pre></div>
+
+I got not even a single 32-digits hexadecimal number duplicated...<br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number diff from cmd line vs double click</h3>
+				<div class="date">Posted: <strong>06 Jul 2018 06:23</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopic2a5e.html?p=57357#p57357" data-post-id="57357" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">06 Jul 2018 00:10</div></cite>
+I got not even a single 32-digits hexadecimal number duplicated...
+</div></blockquote>
+
+I used the same method as yours which I had posted in previous replays to this thread, And as I said, it has a problem of producing sequences which have obvious patterns in them. sorting will just hides the pattern.<br>
+On My i7 6700 PC the first 30 unsorted samples of the script's output will look like this. I used 30 outputs for the pattern to be easily detectable by eye.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt; for /L %i in (1,1,30) do @cmd /C test.bat
+</code></pre></div>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>05E92823391DF4A9645121267AF9BED9
+92823391DF4A9645121267AF9BED9815
+3391DF4A9645121267AF9BED9815F0D7
+1DF4A9645121267AF9BED9815F0D7717
+A9645121267AF9BED9815F0D77174094
+45121267AF9BED9815F0D77174094D4B
+1267AF9BED9815F0D77174094D4BCAC2
+55F3F1EC493706F4A956581C4593153B
+F1EC493706F4A956581C4593153BFF77
+4255F3F1EC493706F4A956581C459315
+706F4A956581C4593153BFF77E369FEB
+F4A956581C4593153BFF77E369FEBDAB
+956581C4593153BFF77E369FEBDAB04C
+81C4593153BFF77E369FEBDAB04CB544
+4593153BFF77E369FEBDAB04CB5449DE
+3153BFF77E369FEBDAB04CB5449DE079
+3BFF77E369FEBDAB04CB5449DE07914D
+77E369FEBDAB04CB5449DE07914D9DB4
+369FEBDAB04CB5449DE07914D9DB40A0
+FEBDAB04CB5449DE07914D9DB40A0D79
+DAB04CB5449DE07914D9DB40A0D79F75
+4CB5449DE07914D9DB40A0D79F75C81D
+5449DE07914D9DB40A0D79F75C81D24C
+9DE07914D9DB40A0D79F75C81D24C85B
+07914D9DB40A0D79F75C81D24C85B568
+4D9DB40A0D79F75C81D24C85B56852FB
+DB40A0D79F75C81D24C85B56852FBFBE
+0A0D79F75C81D24C85B56852FBFBE11B
+79F75C81D24C85B56852FBFBE11B04D6
+75C81D24C85B56852FBFBE11B04D6A7B
+</code></pre></div>
+This is because the delta time between two invocations of cmd is almost a fixed number so the amount of shifting in sequence is fixed and produces a visible pattern. on slower computers the pattern may get harder to be detected by eye or can disappear altogether if it is too slow.<br>
+<br>
+I used this to simulate a slower computer (at prompt)
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt; set slow=call
+&gt; set slowfactor=40
+&gt; for /L %i in (1,1,%slowfactor%) do @call set slow=%%slow%% call
+&gt; for /L %i in (1,1,50) do @%slow% cmd /C test.bat
+</code></pre></div>
+
+Here (<a href="viewtopic0cbb.html?f=3&amp;t=5506#p57352" class="postlink">viewtopic.php?f=3&amp;t=5506#p57352</a>) I have described a method to use the least significant digit of the centiseconds part to amplify and vary the amount of shifting in the first random sequences.<br>
+<br>
+Apart from all, with this method in it's current form, producing unique sequences is not guaranteed, on a fast enough computer the delta time reaches zero. Using wmic to take advantage of milliseconds resolution can reduce the risk but does not remove theoretical potential for failure. I think combining this with Squashman's method yields more reliable results.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5506&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:52:19 GMT -->
+</html>

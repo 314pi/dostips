@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8718&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:49:48 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Not So Simple Change Window Title</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Not So Simple Change Window Title</h2>
+		<p><a href="viewtopic5e08.html?f=3&amp;t=8718">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8718</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Not So Simple Change Window Title</h3>
+				<div class="date">Posted: <strong>16 Jul 2018 04:00</strong></div>
+				<div class="author">by <strong>platypus</strong></div>
+				<div class="content">Inside a command prompt (cmd.exe) or a batch file this simple line will change a window title:<br>
+<br>
+<strong class="text-strong">Title</strong> <em class="text-italics">Any Chosen Name</em><br>
+<br>
+Here are couple of applets (no command support) that will change the title of any window:<br>
+<br>
+<a href="https://www.murgee.com/window-title-changer/" class="postlink">https://www.murgee.com/window-title-changer/</a><br>
+<a href="https://sourceforge.net/projects/windowtitle/" class="postlink">https://sourceforge.net/projects/windowtitle/</a><br>
+<br>
+After many Google searches, I can't find any commands that will change a batch file window title<br>
+from another script.  In other words, external lines acting upon a desktop command window.<br>
+<br>
+This script at Stack Overflow creates a program (executable) that will change the title of any window:<br>
+<br>
+<a href="https://stackoverflow.com/questions/39021975/changing-title-of-an-application-when-launching-from-command-prompt/39033389#39033389" class="postlink">https://stackoverflow.com/questions/390 ... 9#39033389</a><br>
+<br>
+I want to change the title of cmd.exe windows, not all windows.  Are there specific command lines<br>
+that will do the job, or must I create this SetText.exe program?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Not So Simple Change Window Title</h3>
+				<div class="date">Posted: <strong>16 Jul 2018 10:10</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistebcc.html?mode=viewprofile&amp;u=8568">platypus</a> wrote: <a href="viewtopic43e2-2.html?p=57445#p57445" data-post-id="57445" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">16 Jul 2018 04:00</div></cite>I want to change the title of cmd.exe windows, not all windows.  Are there specific command lines<br>
+that will do the job, or must I create this SetText.exe program?</div></blockquote>
+There is no command to change the title of a foreign window. Maybe it can be done using an emedded Powershell call. But that depends on how you want to select the window. Possible ways are<br>
+- current window title (where all windows with the specified title are changed)<br>
+- process name (where all main windows running with a specifies process name are changed)<br>
+- process id (where you need to know the id beforehand, which is rather unlikely)<br>
+- window class name (not really helpful and rather the same as using the process name)<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Not So Simple Change Window Title</h3>
+				<div class="date">Posted: <strong>17 Jul 2018 07:21</strong></div>
+				<div class="author">by <strong>platypus</strong></div>
+				<div class="content">Thanks aGerman.<br>
+<br>
+I've never used AutoHotKey, but this tiny script could easily run as a command line inside a larger script:<br>
+<br>
+<a href="https://autohotkey.com/docs/commands/WinSetTitle.htm" class="postlink">https://autohotkey.com/docs/commands/WinSetTitle.htm</a><br>
+<br>
+I started to read some of the AutoHotKey features.  Any script can be compiled into an EXE file which makes<br>
+it completely portable.  Looks like I'll be creating that SetText.exe program or using AutoHotKey.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Not So Simple Change Window Title</h3>
+				<div class="date">Posted: <strong>17 Jul 2018 07:40</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistebcc.html?mode=viewprofile&amp;u=8568">platypus</a> wrote: <a href="viewtopic7055.html?p=57459#p57459" data-post-id="57459" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">17 Jul 2018 07:21</div></cite>
+Looks like I'll be creating that SetText.exe program or using AutoHotKey.
+</div></blockquote>
+Of course you can basically use any language that supports the Windows API functions. But that was actually not my point. It's still the question how a program or script shall find the right window. See my list above. Then pick up what meets your requrements and compare with what the Basic program or the AutoHotKey function does to find the window. If either of them already match then use it. If not you should get back with the criteria how to find the window and I might be able to write some lines of Powershell code that you can embed in Batch (even if Powershell is not my favorite and I only have little experiences).<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8718&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:49:48 GMT -->
+</html>

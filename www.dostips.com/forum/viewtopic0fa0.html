@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8860&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 04:59:57 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Multiple Echo statements within a Code Block crashing cmd.exe</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Multiple Echo statements within a Code Block crashing cmd.exe</h2>
+		<p><a href="viewtopic28db.html?f=3&amp;t=8860">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8860</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Multiple Echo statements within a Code Block crashing cmd.exe</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 12:14</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">I am running into case where cmd.exe is crashing and I think it is because I have too much code within a code block that is redirecting to a file.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(
+echo line1
+echo line2
+rem I am actually echoing over 13,700 lines that are 64 bytes each.
+)&gt;decode.tmp</code></pre></div>
+
+I am using  batch file to encode a file using certutil and it in turn creates another batch file to do the decoding. I think I got from Foxidrive or someone else here.<br>
+The executable I am encoding is only 644 bytes but when you run it through certutil it creates over 13,700 encoded lines.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+set suffix=create.bat
+if "%~1"=="" (
+  echo( Syntax: "%~0" "filename.mp3"
+  echo( to encode the filename.mp3 into a filename.%suffix% batch script
+  echo( - any filetype can be encoded into a batch script, even another .bat file
+  echo(
+  pause &amp; goto :EOF
+  )
+echo(creating "%~n1.%suffix%"
+certutil /encode /f "%~1" "encode.tmp"
+find /v /i "CERTIFICATE---" &lt;"encode.tmp" &gt;"encode.tm"
+(
+echo @echo off
+echo if not exist "%~nx1" (
+echo echo creating "%~nx1"
+echo (
+for /f "usebackq delims=" %%a in ("encode.tm") do echo echo %%a
+echo ^)^&gt;"decode.tmp"
+echo certutil /decode /f "decode.tmp" "%~nx1" ^&gt;nul
+echo del "decode.tmp"
+echo ^)
+)&gt;"%~n1.%suffix%"
+del "encode.tm*"</code></pre></div>
+
+I ended up changing it to use  a FOR command to iterate all the lines. But it takes almost 10 seconds to recreate the executable.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+set suffix=create.bat
+if "%~1"=="" (
+  echo( Syntax: "%~0" "filename.mp3"
+  echo( to encode the filename.mp3 into a filename.%suffix% batch script
+  echo( - any filetype can be encoded into a batch script, even another .bat file
+  echo(
+  pause &amp; goto :EOF
+  )
+echo(creating "%~n1.%suffix%"
+certutil /encode /f "%~1" "encode.tmp"
+find /v /i "CERTIFICATE---" &lt;"encode.tmp" &gt;"encode.tm"
+(
+echo @echo off
+echo if not exist "%~nx1" (
+echo echo creating "%~nx1"
+echo (
+echo FOR %%%%G IN (
+for /f "usebackq delims=" %%a in ("encode.tm") do echo "%%a"
+echo ^) DO echo %%%%~G
+echo ^)^&gt;"decode.tmp"
+echo certutil /decode /f "decode.tmp" "%~nx1" ^&gt;nul
+echo del "decode.tmp"
+echo ^)
+)&gt;"%~n1.%suffix%"
+del "encode.tm*"</code></pre></div>
+The executable I am testing with is <a href="http://stahlworks.com/dev/swiss-file-knife.html" class="postlink">SFK</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Multiple Echo statements within a Code Block crashing cmd.exe</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 12:37</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I suspect it has nothing to do with ECHO or redirection, but rather has to do with a maximum code block size, whether it be lines or bytes. I don't know that such a limit exists. But remember that the entire code block must be parsed all at once and the result stored in memory, so it makes sense that there would be a limit.<br>
+<br>
+Currently the dynamically generated code has the form:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(
+echo line1
+echo line2
+...
+echo linen
+)&gt;decode.tmp
+</code></pre></div>
+
+I predict the following structure would eliminate the size limit:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call :makeDecode &gt;decode.tmp
+...
+exit /b
+
+:makeDecode
+echo line1
+echo line2
+...
+echo linen
+exit /b
+</code></pre></div>
+
+Such a change shouldn't be too hard to implement.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Multiple Echo statements within a Code Block crashing cmd.exe</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 12:44</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Thanks Dave,<br>
+I will test that to see if it is faster then using the FOR command.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Multiple Echo statements within a Code Block crashing cmd.exe</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 13:04</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Just testing some more with the original code.  This time I first made a cab file of the executable and then ran certutil on the cab file.  That brought it down to 5,951 lines.  So that makes each line with the CRLF 71 bytes long. That is only 422,521 bytes.  I find it hard to believe it can't handle that much data within a code block.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Multiple Echo statements within a Code Block crashing cmd.exe</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 13:40</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">The amount of data seems to be sporadic on what it can handle.  I tested 5338 lines with echoing 64 bytes and it worked.  I then added one line and it didn't work.  I then put it back to 5338 lines and it didn't work. Making no sense to me. I then subtracted one byte from the last line and it worked.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Multiple Echo statements within a Code Block crashing cmd.exe</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 14:31</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Have you tried the called :proc technique instead of the code block?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Multiple Echo statements within a Code Block crashing cmd.exe</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 14:40</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopicfa6e.html?p=58166#p58166" data-post-id="58166" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">17 Oct 2018 14:31</div></cite>
+Have you tried the called :proc technique instead of the code block?
+</div></blockquote>
+Yes that works fine.  I just wanted to see what the code block limit was.  It seems rather small if it is dying at 378,927 bytes inside the code block.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Multiple Echo statements within a Code Block crashing cmd.exe</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 15:07</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Perhaps the code block limit is not a constant. It could depend on available memory, .... ? I remember that the stack size limit for the total number of CALLs is also unpredictable.<br>
+<br>
+How is the called :proc performance compared to the FOR performance?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Multiple Echo statements within a Code Block crashing cmd.exe</h3>
+				<div class="date">Posted: <strong>17 Oct 2018 15:13</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopicdeb2.html?p=58169#p58169" data-post-id="58169" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">17 Oct 2018 15:07</div></cite>
+How is the called :proc performance compared to the FOR performance?
+</div></blockquote>
+80% quicker!!!</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8860&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 04:59:57 GMT -->
+</html>

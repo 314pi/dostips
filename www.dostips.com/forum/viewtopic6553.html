@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8205&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:35 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Can I get access to an ascii character not in the standard set?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Can I get access to an ascii character not in the standard set?</h2>
+		<p><a href="viewtopicd9fe.html?f=3&amp;t=8205">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8205</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>27 Oct 2017 00:54</strong></div>
+				<div class="author">by <strong>Jer</strong></div>
+				<div class="content">My project which involves a batch-only script and includes boxes, borders,<br />text and any ascii character, except 7, 8, 9, 10, 13, 26 and 27, is doing well<br />to a point, and now I need advice from the experts.<br /><br />One of the options is entering all codes and text content from the command-line.<br />The other way to designate a text source is by entering a file ID, and the box or<br />border configuration codes are also entered from the command-line.<br /><br />For entering all text from the command-line, I found that substituting poison characters<br />up front made it possible to configure (edit) the text for output without having the <br />issues these characters present when being manipulated.  Some character that don't<br />do well from the command-line are accepted in code: [AP] = ampersand, [GT] = greater<br />than symbol, the double quote which may cause an error, [QT], etc.<br />So an entry might be: boxtool 2 /L30 /+ {#Quoth the raven [qt]nevermore[qt]<br />which is box type #2, length of text area is 30 chars., center the line of text.<br />{# means that everything that follows is contents inside the box.  <br /><br />I also found that changing the double quote to another character, ascii #160, until<br />ready to echo to the output file, prevented errors when the double quote was in<br />the same string as other poison characters, during the edit process.<br /><br />The problem is the loss of ascii char. #160 because it is dedicated as a substitution character.<br />The excluded characters mentioned above do not work as substitution characters.<br /><br />The solution needs to have 1 substitution character, in a variable, from another character set.<br />1 substitution character is required because text is being aligned.<br />Thanks for your advice.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>27 Oct 2017 02:14</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">You could access any unicode character using UTF-8 (codepage 65001):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enableExtensions enableDelayedExpansion<br />::ÿþ<br />set &quot;cp=&quot;<br />for /F &quot;tokens=2 delims=:.&quot; %%a in ('chcp') do set &quot;cp=%%~a&quot;<br />if not defined cp set &quot;cp=850&quot;<br />&gt;nul chcp 65001<br />set &quot;quarterNote=â™©&quot;<br />&gt;nul chcp %cp%<br /><br />echo(!quarterNote!<br /><br />endlocal<br />goto :eof<br /></code></pre></div>Notes:<br />There is no guarantee that such characters are displayed in a specific way (=&gt;depends on the font used).<br />I've added the &quot;::ÿþ&quot; line to prevent notepad from autoconverting this text file to UTF-8; you have to store this file using ANSI encoding (which should be the default).<br /><br /><br />penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>27 Oct 2017 10:03</strong></div>
+				<div class="author">by <strong>Jer</strong></div>
+				<div class="content">Thanks penpen. The substitution works but I am having a problem restoring the &quot; characters.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enableExtensions enableDelayedExpansion<br />::ÿþ<br />set &quot;cp=&quot;<br />for /F &quot;tokens=2 delims=:.&quot; %%a in ('chcp') do set &quot;cp=%%~a&quot;<br />if not defined cp set &quot;cp=850&quot;<br />&gt;nul chcp 65001<br />set &quot;quarterNote=â™©&quot;<br />&gt;nul chcp %cp%<br />echo(!quarterNote!<br />Set &quot;string=&quot;quotes&quot;&quot;<br />echo string var: %string%<br />Set &quot;string=%string:&quot;=!quarterNote!%&quot;<br />echo quote characters substituted: %string%<br /><br />rem not working:<br />Set &quot;string=%string:!quarterNote!=&quot;%&quot;<br />echo string should be restored: %string%<br /><br />endlocal<br />goto :eof</code></pre></div><br /><blockquote class="uncited"><div>C:\Temp\DOSBatch&gt;test093<br />♩<br />string var: &quot;quotes&quot;<br />quote characters substituted: ♩quotes♩<br />string should be restored: ♩quotes♩</div></blockquote></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>27 Oct 2017 10:20</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I'm surprised that your first replacement works.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enableExtensions enableDelayedExpansion<br />::ÿþ<br />set &quot;cp=&quot;<br />for /F &quot;tokens=2 delims=:.&quot; %%a in ('chcp') do set &quot;cp=%%~a&quot;<br />if not defined cp set &quot;cp=850&quot;<br />&gt;nul chcp 65001<br />set &quot;quarterNote=â™©&quot;<br />&gt;nul chcp %cp%<br />echo(!quarterNote!<br />Set &quot;string=&quot;quotes&quot;&quot;<br />echo string var: %string%<br />Set &quot;string=!string:&quot;=%quarterNote%!&quot;<br />echo quote characters substituted: %string%<br /><br />Set &quot;string=!string:%quarterNote%=&quot;!&quot;<br />echo string should be restored: %string%<br /><br />endlocal<br />goto :eof<br /></code></pre></div><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>27 Oct 2017 21:57</strong></div>
+				<div class="author">by <strong>Jer</strong></div>
+				<div class="content">penpen &amp; aGerman, you made my day. Thanks a million!<br /><br />One day my non-hybrid batch-zilla creation will be cleaned up and ready<br />for sharing in zipped format with the forum.<br /><br />Jerry<br /><br /><a href="../../www.dropbox.com/s/yiwywbwrznq6s4h/image0004ec75.html?dl=0" class="postlink">https://www.dropbox.com/s/yiwywbwrznq6s4h/image0004.jpg?dl=0</a><br /><br />edit: I need instruction on how to embed an image. I have not used dropbox<br />for a long time and this attempt did not work.  Thanks.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>31 Jan 2018 14:31</strong></div>
+				<div class="author">by <strong>Jer</strong></div>
+				<div class="content">penpen wrote:
+<blockquote class="uncited"><div> You could access any unicode character using UTF-8 (codepage 65001)</div></blockquote>
+
+How is this done?  I put your solution to work in temporarily replacing the double quote<br>
+while the input string is being interpreted for text content and other coded instructions,<br>
+and now would like to explore doing the same for &lt; and &gt; in a particular function that<br>
+brings files together, side-by-side.  The files could contain any ascii character, excluding<br>
+7 characters (7,8,9,10,13,26,27) which can't be echoed to file and displayed with the TYPE command.<br>
+<br>
+Can you describe what is going on with the quarternote solution?  How would I <br>
+assign to variables other UTF-8 characters, different from code page 437 characters,<br>
+and if possible, be able to get the characters myself without just copying and pasting<br>
+your codes?<br>
+Jerry</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>02 Feb 2018 17:39</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">You just need to create a byte sequence (for example using your Windows default ANSI codepage), that equals an UTF-8 code, see:<br>
+<a href="https://en.wikipedia.org/wiki/UTF-8#Description" class="postlink">https://en.wikipedia.org/wiki/UTF-8#Description</a>.<br>
+<br>
+Assumed your default ANSI codepage is 1252:<br>
+<a href="https://en.wikipedia.org/wiki/Windows-1252" class="postlink">https://en.wikipedia.org/wiki/Windows-1252</a><br>
+Note that this codepage has undefined mappings for some (codepage 1252) codepoints (81, 8D, 8F, 90, ... in hex).<br>
+If you need these values you might change to another codepage with a defined mapping for those byte values.<br>
+If i remember right, then codepage 850 should be fully defined for all single byte values (00 .. FF).<br>
+<br>
+A List of all UTF-8 character encoding is, for example, listed here:<br>
+<a href="http://www.fileformat.info/info/charset/UTF-8/list.htm" class="postlink">http://www.fileformat.info/info/charset/UTF-8/list.htm</a><br>
+<br>
+<br>
+The UTF-8 code for the "QUARTER NOTE (U+2669)" character is "E2,99,A9" (in hex), see:<br>
+<a href="http://www.fileformat.info/info/charset/UTF-8/list.htm?start=8192" class="postlink">http://www.fileformat.info/info/charset ... start=8192</a><br>
+<br>
+Now you look up the coding for codepage 1252, and you see get "â™©".<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>09 Feb 2018 01:22</strong></div>
+				<div class="author">by <strong>Jer</strong></div>
+				<div class="content">I spent over an hour browsing through the links, viewing the huge list of UTF-8 codes and characters,<br>
+and I can't say all that reading did me any good.  You gave me the solution when you<br>
+identified the hex code for quarternote, E2,99,A9.  Next in line is eighth note E2,99,AA.<br>
+My text editor, KEDIT, allows me to enter a character by typing in the hex code, so "ci x'e299aa'<br>
+inserts what represents the eighth note character: â™ª<br>
+ci=column insert at the current line, current column of focus<br>
+<br>
+An observation: the eighth note is visible when echoed or viewed with the SET command<br>
+but you can't see it in a file.  I tried dozens of other UTF-8 characters and they all<br>
+displayed as a question mark.  My code page is 437.<br>
+<br>
+I had prepared a short batch file to demonstrate the advantage of double quote substitution<br>
+in a string that also has other poison characters, and that string will be edited, such as<br>
+putting the text in cells by adding interior cell walls at selected intervals.<br>
+Unfortunately, (~|*&amp;"!│=:&lt;%&gt;^) &amp;"!│=:&lt;%&gt;^)(~|* after editing the string by inserting<br>
+a character (vertical cell wall) in the middle, did not produce the same error in the test script<br>
+that my current project did, errors like "&amp; was not expected" or "| was not expected".<br>
+<br>
+Quarternote substitution for double quotes did solve those issues in the big batch script,<br>
+which makes borders and boxes around text, file appending, prepending, overlay, and<br>
+patterns too!  Incoming text lines have their quotes substituted, then restored just before<br>
+the final product is displayed, a TYPEd file.<br>
+<br>
+At this point, substituting other characters is not needed.  Getting the double quotes<br>
+out of the way creates harmony among the cast of characters.<br>
+<br>
+Thanks penpen.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>09 Feb 2018 05:07</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistea39.html?mode=viewprofile&amp;u=6104">Jer</a> wrote: <a href="viewtopic7d5b.html?p=55658#p55658" data-post-id="55658" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">09 Feb 2018 01:22</div></cite>An observation: the eighth note is visible when echoed or viewed with the SET command<br>
+but you can't see it in a file.  I tried dozens of other UTF-8 characters and they all<br>
+displayed as a question mark.  My code page is 437.</div></blockquote>This is the default behaviour.<br>
+The command shell internally stores the characters as UTF-16LE coedpoints, supporting all actual unicode characters, so it is able to display these characters correctly (if your actually selected command shell font contains a glyph for that character). If you print this character to a file, then the command shell uses the codepoint of your actual codepage (437 in your case) for this character:<br>
+If a character isn't part of this codepage then the command shell will just print a predefined character of that codepage, which in most cases is the '?' character.<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>22 May 2018 01:33</strong></div>
+				<div class="author">by <strong>Jer</strong></div>
+				<div class="content">Capturing a character from another codepage is changing the font<br>
+in the console window from a raster font to Courier New 12pt.<br>
+It occurs after this line is executed: &gt;nul chcp 65001<br>
+The width of the window is reduced when this happens,<br>
+and it happens every time I run the code.<br>
+<br>
+I did Windows 10 (64bit) updates today and noticed the problem right after.<br>
+Re-booting did not help.  Any ideas?<br>
+<br>
+edit: same results running in safe mode: run msconfig, selective startup, "system services" only checked<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableExtensions enableDelayedExpansion
+::ÿþ
+set "cp="
+for /F "tokens=2 delims=:." %%a in ('chcp') do set "cp=%%~a"
+if not defined cp set "cp=850"
+&gt;nul chcp 65001
+set "quarterNote=â™©"
+&gt;nul chcp %cp%
+echo(!quarterNote!
+Set "string="quotes""
+echo string var: %string%
+Set "string=!string:"=%quarterNote%!"
+echo quote characters substituted: %string%
+
+Set "string=!string:%quarterNote%="!"
+echo string should be restored: %string%
+
+endlocal
+goto :eof</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>22 May 2018 10:23</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistea39.html?mode=viewprofile&amp;u=6104">Jer</a> wrote: <a href="viewtopic0f16.html?p=56857#p56857" data-post-id="56857" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 May 2018 01:33</div></cite>
+Capturing a character from another codepage is changing the font<br>
+in the console window from a raster font to Courier New 12pt.<br>
+It occurs after this line is executed: &gt;nul chcp 65001<br>
+The width of the window is reduced when this happens,<br>
+and it happens every time I run the code.
+</div></blockquote> <img class="smilies" src="images/smilies/icon_eek.gif" width="15" height="15" alt=":shock:" title="Shocked"> <br>
+Never expected something like that to happen by only changing the codepage!<br>
+<br>
+I might expect that to happen if a character outside the codepage is dispalyed in the shell, so sorry to ask, but:<br>
+Are you sure it isn't one of the "echo"-lines?<br>
+<br>
+Also i've just tested the above code on windows xp (32 bit) (virtual image), win8.1 x86, german localization (virtual image), and win10 x64, german localization and that never happened to me:<br>
+Which version of windows do you use (and which codepages are involved exactly, so i could try to provoke that on one of my systems)?<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>22 May 2018 13:44</strong></div>
+				<div class="author">by <strong>Jer</strong></div>
+				<div class="content">My Windows version: Microsoft Windows [Version 10.0.17134.48]<br>
+<br>
+Now it is the next day and I can't reproduce the problem. <br>
+The only thing different yesterday was doing the Windows updates and<br>
+I did a video capture (for the first time) with the Windows 10 XBOX app.<br>
+<br>
+I did another video capture today and the problem came back.  So that<br>
+seems to be the cause of the issue, the XBOX app.  Then I shut down and immediately<br>
+started up...same issue. Then I shut down and started up 15 minutes later<br>
+and the problem went away.<br>
+<br>
+Thanks for your post penpen.  I had put a pause after each line in the batch<br>
+script to see which line made the font change.  Life is now good and my project<br>
+goes over one more hurdle.<br>
+Jerry</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>22 May 2018 15:11</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">You should report this bug to Microsoft, so i won't get that (experimental?) update - (i'm on 10.0.16299.431):<br>
+<a href="https://www.quora.com/How-do-I-report-a-bug-for-Microsoft" class="postlink">https://www.quora.com/How-do-I-report-a ... -Microsoft</a>.<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>24 May 2018 00:24</strong></div>
+				<div class="author">by <strong>Jer</strong></div>
+				<div class="content">The issue of chcp 65001 changing a raster font to Courier New is back and<br>
+will not go away after 2 days. When I open a cmd window with the raster font<br>
+8x12 and type chcp 65001 the font changes to Courier New 12pt. This does not<br>
+happen with the other 9 raster font sizes.  8x12 happens to be the one I prefer.<br>
+<br>
+This morning I re-installed Windows 10 and that did not solve the problem.<br>
+A potential bug in a pair of  <img class="smilies" src="images/smilies/icon_cool.gif" width="15" height="15" alt="8)" title="Cool">  batch utilities under development.<br>
+Any tricks to try fixing this?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I get access to an ascii character not in the standard set?</h3>
+				<div class="date">Posted: <strong>26 May 2018 14:42</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">I don't even have a guess why something like that happens... (and i've never heard of such a bug before).<br>
+<br>
+I would use a microsoft forum, and would ask for technical help there.<br>
+After finding a solution you should also post an additional note herein.<br>
+<br>
+I'm sorry that i can't help you more <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"> .<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8205&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:35 GMT -->
+</html>

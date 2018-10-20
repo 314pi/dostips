@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4896&p=49742 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:50:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Fastest sin(x) in dos batch - Page 3 - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic4c84.html?t=4896&amp;start=30">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic9367.html?f=3&amp;t=4896&amp;start=30">Fastest sin(x) in dos batch</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="postingddf4.html?mode=reply&amp;f=3&amp;t=4896" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic1a6f.html?f=3&amp;t=4896&amp;start=30&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="4896" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			37 posts
+							<ul>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic91f8-2.html?f=3&amp;t=4896&amp;start=15" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopic2046.html?f=3&amp;t=4896" role="button">1</a></li>
+				<li><a class="button" href="viewtopic91f8-2.html?f=3&amp;t=4896&amp;start=15" role="button">2</a></li>
+			<li class="active"><span>3</span></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p45776" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile45776">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content45776">
+
+						<h3 class="first"><a href="#p45776">Re: Fastest sin(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinga85b.html?mode=quote&amp;f=3&amp;p=45776" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopiceaa6.html?p=45776#p45776" onclick="prompt('Message #31',this.href); return false;">#31</a></span> 
+									<a class="unread" href="viewtopiceaa6.html?p=45776#p45776" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>14 Mar 2016 15:21
+			</p>
+			
+			
+			
+			<div class="content">Here are the new results.  <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FPS=13333.33 &#91;75.0 µs&#93; &#91;#601-1400&#93;<br />FPS=13338.89 &#91;74.9 µs&#93; &#91;#1400-2200&#93;<br />FPS=13245.03 &#91;75.5 µs&#93; &#91;#2200-2994&#93;</code></pre></div><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FPS=20996.37 &#91;47.6 µs&#93; &#91;#1359-2618&#93;<br />FPS=21159.66 &#91;47.2 µs&#93; &#91;#2618-3887&#93;<br />FPS=21009.93 &#91;47.5 µs&#93; &#91;#3887-5147&#93;</code></pre></div><br /><br /><br />For comparison this PC has an Intel i7-2600 CPU 3.7 GHz</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p49658" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile49658">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content49658">
+
+						<h3 ><a href="#p49658">Re: Fastest sin(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting3d59.html?mode=quote&amp;f=3&amp;p=49658" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicdc38-2.html?p=49658#p49658" onclick="prompt('Message #32',this.href); return false;">#32</a></span> 
+									<a class="unread" href="viewtopicdc38-2.html?p=49658#p49658" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>14 Oct 2016 08:25
+			</p>
+			
+			
+			
+			<div class="content">Hi, <br /><br />I have found this new implementation by user neorobin. I thinks that this version of SIN is faster, but I have not done TEST.<br /><br />@neorobin<br />can you explain this part?<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>s1=(t-p#2^t-p3#2)&gt;&gt;31<br /></code></pre></div><br />why that XOR?<br /><br /><br /><br /><blockquote><div><cite>neorobin wrote:</cite>Hi einstein1969<br /><br />I made another implementation, origin from 3D Sphere  <!-- l --><a class="postlink-local" href="viewtopicac1a.html?f=3&amp;t=5594">viewtopic.php?f=3&amp;t=5594</a><!-- l --><br /><br />map rule: [0,2pi) to [-pi/2, pi/2]<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>angle t in &#91;0,2pi)<br /><br />0 &lt;= t &lt; pi/2&nbsp; &nbsp; &nbsp; &nbsp;t -&gt; t&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; in &#91;-pi/2, 0)<br />not need map<br /><br /><br />pi/2 &lt;= t &lt; 3pi/2&nbsp; &nbsp;t -&gt; pi-t&nbsp; &nbsp; &nbsp; &nbsp;in (-pi/2, pi/2&#93;<br /><br />sin(t) = sin(pi-t),&nbsp; &nbsp; cos(t) = -cos(pi-t)<br /><br /><br />3pi/2 &lt;= t &lt; 2pi&nbsp; &nbsp; t -&gt; -2pi+t&nbsp; &nbsp; &nbsp;in &#91;-pi/2, 0)<br /><br />sin(t) = sin(-2pi+t),&nbsp; cos(t) = cos(-2pi+t)<br /></code></pre></div><br /><br /><br />my test code<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />mode 100<br />set &quot;SIN=(t-t*t/1875*t/320000+t*t/1875*t/15625*t/16000*t/2560000-t*t/1875*t/15360*t/15625*t/15625*t/16000*t/44800000)&quot;<br />set &quot;COS=(10000-t*t/20000+t*t/1875*t/15625*t/819200-t*t/1875*t/15360*t/15625*t/15625*t/10240000+t*t/1875*t/15360*t/15625*t/15625*t/16000*t/15625*t/229376000)&quot;<br /><br />REM 15 test angles in &#91;0, 2Pi) step by Pi/8<br />set &quot;List=0,3927,7854,11781,15708,19635,23562,27489,31416,35343,39270,43197,47124,51051,54978,58905&quot;<br />set /a &quot;p=31416, p2=62832, pn2=-62832, p#2=15708, p3#2=47124, p3#2_=p3#2-1&quot;<br />set R_Sin=<br />set R_Cos=<br /><br />for %%a in (%List%) do (<br />&nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;t=%%a&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;t%%=p2,s1=(t-p#2^t-p3#2)&gt;&gt;31, s3=p3#2_-t&gt;&gt;31, t=(-t&amp;s1)+(t&amp;~s1)+(p&amp;s1)+(pn2&amp;s3), r1=%SIN%&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;t=%COS%, r2=(-t&amp;s1)+(t&amp;~s1)&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; setlocal EnableDelayedExpansion<br />&nbsp; &nbsp; &nbsp; &nbsp; set R_Sin=!R_Sin!!r1!,<br />&nbsp; &nbsp; &nbsp; &nbsp; set R_Cos=!R_Cos!!r2!,<br />)<br />set R_<br />pause<br /></code></pre></div><br /><br />test result<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>R_Cos=10000,9238,7071,3826,0,-3826,-7071,-9238,-10000,-9238,-7071,-3826,0,3826,7071,9238,<br />R_Sin=0,3827,7071,9239,9999,9239,7071,3827,0,-3827,-7071,-9239,-9999,-9239,-7071,-3827,<br /></code></pre></div><br /><br /><br />Two usage examples: tested on WIN7 64bit and XP 32bit<br /><br />Please edit the code, replace the ★ to a real TAB character (ASCII 0x9).<br /><br />spiral<br /><br /><img src="../../cdn4.snapgram.co/images/2016/09/23/spiral-resize.gif" class="postimage" alt="Image" /><br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp; setlocal enabledelayedexpansion<br /><br />set &quot;TAB=★&quot; &amp; for /F %%a in ('&quot;prompt $h&amp;for %%b in (1) do rem&quot;')do Set &quot;BS=%%a&quot;<br /><br />set /a &quot;ZM=10000, p=31416, p2=62832, pn2=-62832, p#2=15708, p3#2=47124, p3#2_=p3#2-1, DEG=31416/180&quot;<br />set &quot;SIN=(t-t*t/1875*t/320000+t*t/1875*t/15625*t/16000*t/2560000-t*t/1875*t/15360*t/15625*t/15625*t/16000*t/44800000)&quot;<br />set &quot;COS=(10000-t*t/20000+t*t/1875*t/15625*t/819200-t*t/1875*t/15360*t/15625*t/15625*t/10240000+t*t/1875*t/15360*t/15625*t/15625*t/16000*t/15625*t/229376000)&quot;<br /><br />set /a &quot;wid=75, hei=75, iMax=wid*hei, wid_div_2 = wid / 2 - 3&quot;<br />color 0c &amp; mode !wid!,!hei!<br /><br />(for /l %%i in (1 1 !iMax!) do set &quot;scr= !scr!&quot;) &amp; set &quot;emp=!scr!&quot;<br /><br />set /a &quot;buffwid = wid, linesWantBackAbove = hei - 1, cntBS = 2 + (buffwid + 7) / 8 * linesWantBackAbove&quot;<br /><br />set &quot;BSs=&quot; &amp; for /L %%a in (1 1 !cntBS!) do set &quot;BSs=!BSs!%BS%&quot;<br />set &quot;aLineBS=&quot; &amp; for /L %%a in (1 1 !wid!) do set &quot;aLineBS=!aLineBS!%BS%&quot;<br /><br />set /a &quot;XC = wid/2, YC = hei/2, DEG_unit = 3, ddu=1, th0=!random! %% 360 * DEG&quot;<br /><br />for /L %%i in (5000 -1 0) do (<br /><br />&nbsp; &nbsp; set /a &quot;th=th0+p2+DEG*%%i, DEG_unit+=ddu, DEG_unit= DEG_unit %% 360&quot;<br />&nbsp; &nbsp; <br />&nbsp; &nbsp; for /l %%a in (0 1 !wid_div_2!) do (<br />&nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;th+=p2+DEG * DEG_unit, th %%= p2, th += th&gt;&gt;31&amp;p2, t=th, s1=(t-p#2^t-p3#2)&gt;&gt;31, s3=p3#2_-t&gt;&gt;31, t=(-t&amp;s1)+(t&amp;~s1)+(p&amp;s1)+(pn2&amp;s3), SINt=%SIN%, t=%COS%, COSt=(-t&amp;s1)+(t&amp;~s1)&quot;<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;r=%%a, x=(XC*10000 + r * COSt)/10000, y=(YC*10000 + r * SINt)/10000, inScr=(x-0^x-wid)&amp;(y-0^y-hei)&quot;<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; REM if !inScr! lss 0 (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;ind=x+y*wid+1, lenL=ind-1&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for /f &quot;tokens=1,2&quot; %%a in (&quot;!lenL! !ind!&quot;) do (set scr=!scr:~0,%%a!*!scr:~%%b!)<br />&nbsp; &nbsp; &nbsp; &nbsp; REM )<br />&nbsp; &nbsp; )<br /><br />&nbsp; &nbsp; &lt;nul set /p &quot;=!aLineBS!&quot; &amp; (2&gt;nul echo;%TAB%!BSs!) &amp; &lt;nul set /p &quot;=%BS%&quot;<br />&nbsp; &nbsp; &lt;nul set /p &quot;=%BS%!scr:~0,-1!&quot; &amp; set &quot;scr=!emp!&quot; &amp; title %%i / 5000<br />)<br />&gt;nul pause<br />exit<br /></code></pre></div><br /><br /><br />3D Torus Vortex<br /><img src="../../cdn4.snapgram.co/images/2016/09/27/VORTEX_20160927_214736.png" class="postimage" alt="Image" /><br />Please edit the code, replace the ★ to a real TAB character (ASCII 0x9).<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp; setlocal enabledelayedexpansion &amp; chcp 437 &amp; title 3D Torus Vortex<br /><br />set &quot;Path=%SystemRoot%\system32&quot; &amp; for /f &quot;delims==&quot; %%a in ('set') do if /i &quot;%%a&quot; neq &quot;Path&quot; set &quot;%%a=&quot;<br />set &quot;SIN=(t-t*t/1875*t/320000+t*t/1875*t/15625*t/16000*t/2560000-t*t/1875*t/15360*t/15625*t/15625*t/16000*t/44800000)&quot;<br />set &quot;COS=(10000-t*t/20000+t*t/1875*t/15625*t/819200-t*t/1875*t/15360*t/15625*t/15625*t/10240000+t*t/1875*t/15360*t/15625*t/15625*t/16000*t/15625*t/229376000)&quot;<br />set /a &quot;ZM=10000, p=31416, p2=62832, pn2=-62832, p#2=15708, p3#2=47124, p3#2_=p3#2-1, DEG=31416/180&quot;<br /><br />set /a &quot;Cols=wid=330, lines=hei=130, lines_plus_1=lines+1&quot;<br />mode !Cols!,!lines_plus_1!<br /><br />set &quot;TAB=★&quot; &amp; for /F %%a in ('&quot;prompt $h&amp;for %%b in (1) do rem&quot;')do Set &quot;BS=%%a&quot;<br />set /a &quot;buffwid = wid, linesWantBackAbove = hei - 1 + 1, cntBS = 2 + (buffwid + 7) / 8 * linesWantBackAbove&quot;<br />set &quot;BSs=&quot; &amp; for /L %%a in (1 1 !cntBS!) do set &quot;BSs=!BSs!%BS%&quot;<br />set &quot;aLineBS=&quot; &amp; for /L %%a in (1 1 !wid!) do set &quot;aLineBS=!aLineBS!%BS%&quot;<br /><br />set &quot;LN0=&quot; &amp; for /L %%C in (1 1 !Cols!) do set &quot;LN0= !LN0!&quot;<br />for /L %%L in (1 1 !lines!) do set &quot;LN%%L=!LN0!&quot;<br /><br />set /a &quot;pixel_h=6, pixel_w=4&quot; &amp; rem Fontsize 4X6<br />rem zscr: screen Z coor, zeye: eye point Z coor<br />set /a &quot;XC = Cols/2, YC = lines/2, zscr = 128, zeye = 400, zs2e=zscr-zeye&quot;<br /><br />set /a &quot;R1 = 68, r2 = 60, TH1 = 0, th2 = 0, cntRings=120, cntRings_1=cntRings-1, cntDotPerRing=20, cntDotPerRing_1=cntDotPerRing-1&quot;<br />set /a &quot;sumDots=cntDotPerRing*cntRings&quot;<br />set /a &quot;dth2base=(P2+P2/cntRings)/cntDotPerRing, offsClose=p2-(dth2base*cntDotPerRing-p2)*cntRings&quot;<br />set &quot;offsClose=!offsClose!/!sumDots!&quot;<br />set /a &quot;dTH1base=p2/cntRings, offsCloseBigCircle=p2-dTH1base*cntRings&quot;<br />set &quot;offsCloseBigCircle=!offsCloseBigCircle!/!cntRings!&quot;<br />set /a &quot;Z_cut_ZM=999*ZM&quot; &amp; rem The cutting plane parallel to plane xoy, Cut the front. When this value is large enough, there is no cutting effect<br /><br />for /l %%i in (0 1 !cntRings_1!) do (<br /><br />&nbsp; &nbsp; for /l %%j in (0 1 !cntDotPerRing_1!) do (<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;TH1=%%i*dTH1base+ %%i * %offsCloseBigCircle%, TH1 %%= p2, TH1 += TH1&gt;&gt;31&amp;p2, t=TH1, s1=(t-p#2^t-p3#2)&gt;&gt;31, s3=p3#2_-t&gt;&gt;31, t=(-t&amp;s1)+(t&amp;~s1)+(p&amp;s1)+(pn2&amp;s3), SIN_TH1=%SIN%, t=%COS%, COS_TH1=(-t&amp;s1)+(t&amp;~s1)&quot;<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;t=%%i*cntDotPerRing+%%j,th2=t*dth2base+t*%offsClose%, th2 %%= p2, th2 += th2&gt;&gt;31&amp;p2, t=th2, s1=(t-p#2^t-p3#2)&gt;&gt;31, s3=p3#2_-t&gt;&gt;31, t=(-t&amp;s1)+(t&amp;~s1)+(p&amp;s1)+(pn2&amp;s3), SIN_th2=%SIN%, t=%COS%, COS_th2=(-t&amp;s1)+(t&amp;~s1)&quot;<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; title 3D Torus Vortex&nbsp; %%i/!cntRings_1! %%j/!cntDotPerRing_1!&nbsp; TH1: !TH1! th2: !th2!<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;z_ZM=(R1*ZM + r2*COS_th2)/ZM * SIN_TH1, z_t2eye_ZM=z_ZM -zeye*ZM, x=XC + (R1*ZM + r2*COS_th2)/ZM * COS_TH1 *zs2e* pixel_h /(z_t2eye_ZM * pixel_w), y=YC + r2 * SIN_th2 *zs2e/z_t2eye_ZM, inScr=(x-0^x-wid)&amp;(y-0^y-hei)&quot;<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;inner=(th2-p#2^th2-p3#2)&quot; &amp; rem distance to the y-axis &lt; big circle radius<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; if !z_ZM! LSS !Z_cut_ZM! (<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;ind=x+1, lenL=ind-1&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for /f &quot;tokens=1-3&quot; %%a in (&quot;!lenL! !ind! !y!&quot;) do (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if !TH1! LSS !p! (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if !inner! LSS 0 (&nbsp; set &quot;LN%%c=!LN%%c:~0,%%a!#!LN%%c:~%%b!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ) else (&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set &quot;LN%%c=!LN%%c:~0,%%a!o!LN%%c:~%%b!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if !inner! LSS 0 (&nbsp; rem set &quot;LN%%c=!LN%%c:~0,%%a!*!LN%%c:~%%b!&quot; &amp; Blank the behind half of the inner hole<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ) else (&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set &quot;LN%%c=!LN%%c:~0,%%a!.!LN%%c:~%%b!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; &nbsp; )<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &lt;nul set /p &quot;=!aLineBS!&quot; &amp; (2&gt;nul echo;%TAB%!BSs!) &amp; &lt;nul set /p &quot;=%BS%&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; for /L %%d in (1 1 !lines!) do &lt;nul set /p &quot;=%BS%!LN%%d!&quot;<br />&nbsp; &nbsp; )<br />)<br />&gt;nul pause<br />exit<br /></code></pre></div></div></blockquote></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p49660" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile49660">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8aa8.html?mode=viewprofile&amp;u=3644" class="username">neorobin</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search971b.html?author_id=3644&amp;sr=posts">44</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 01 May 2012 12:18</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content49660">
+
+						<h3 ><a href="#p49660">Re: Fastest sin(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9530.html?mode=quote&amp;f=3&amp;p=49660" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicffea.html?p=49660#p49660" onclick="prompt('Message #33',this.href); return false;">#33</a></span> 
+									<a class="unread" href="viewtopicffea.html?p=49660#p49660" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8aa8.html?mode=viewprofile&amp;u=3644" class="username">neorobin</a></strong> &raquo; </span>14 Oct 2016 11:39
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>einstein1969 wrote:</cite>@neorobin<br />can you explain this part?<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>s1=(t-p#2^t-p3#2)&gt;&gt;31<br /></code></pre></div><br />why that XOR?<br /></div></blockquote><br /><br />Hi, einstein1969<br /><br />I used this test to determine whether the value of t is in this range [Pi / 2, 3 * Pi / 2)<br /><br /><br />This is a general method for test a value t in [a, b) (a &lt;= b)<br /><br />set da=t-a, db=t-b<br /><br />When t is less than a, the MSB (Most significant bit) of da is 1, otherwise (t &gt;= a) it is 0<br /><br /><br />The MSB of ((t-a)^(t-b)) is 1,<br />Only in these conditions:<br /><br />    the MSB of da is 1,  the MSB of db is 0  (Because the condition a &lt;= b is defined, so THIS SITUATION CAN NOT HAPPEN)<br />OR<br />    the MSB of da is 0,  the MSB of db is 1<br /><br />Both of these 2 conditions above satisfy this:  the MSB of da is DIFFERENT (so use XOR) from the MSB of db<br /><br /><br />All other possible scenarios are:<br /><br />    the MSB of da is 1,  the MSB of db is 1 ..... t &lt; a and t &lt; b<br />OR<br />    the MSB of da is 0,  the MSB of db is 0 ..... t &gt;= a and t &gt;= b<br /><br /><br />ps:<br /><br />To ensure that an angle t is non-negative:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>t %%= p2, t += t&gt;&gt;31&amp;p2&nbsp; .....&nbsp; p2 is Pi * 2<br /></code></pre></div><br /><br />A sample code for find the numbers in range [3, 7)<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp; setlocal enableDelayedExpansion<br /><br />REM find the numbers: 3 &lt;= t and t &lt; 7<br /><br />set /a &quot;a = 3, b = 7&quot; &amp; rem a &lt;= b<br /><br />for /L %%t in (-4 1 9) do (<br /><br />&nbsp; &nbsp; set /a &quot;t=%%t, r=t-a^t-b, da=t-a, db=t-b&quot;<br /><br />&nbsp; &nbsp; if !da! lss 0 (echo;%%t ^&lt; %a%) else (echo;%%t ^&gt;= %a%)<br /><br />&nbsp; &nbsp; if !db! lss 0 (echo;%%t ^&lt; %b%) else (echo;%%t ^&gt;= %b%)<br /><br />&nbsp; &nbsp; if !r! lss 0 (echo;%a% ^&lt;= %%t and %%t ^&lt; %b%) else (echo;No intersection)<br /><br />&nbsp; &nbsp; echo;<br />)<br />pause<br />exit /b<br /></code></pre></div><br /><br />result<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>-4 &lt; 3<br />-4 &lt; 7<br />No intersection<br /><br />-3 &lt; 3<br />-3 &lt; 7<br />No intersection<br /><br />-2 &lt; 3<br />-2 &lt; 7<br />No intersection<br /><br />-1 &lt; 3<br />-1 &lt; 7<br />No intersection<br /><br />0 &lt; 3<br />0 &lt; 7<br />No intersection<br /><br />1 &lt; 3<br />1 &lt; 7<br />No intersection<br /><br />2 &lt; 3<br />2 &lt; 7<br />No intersection<br /><br />3 &gt;= 3<br />3 &lt; 7<br />3 &lt;= 3 and 3 &lt; 7<br /><br />4 &gt;= 3<br />4 &lt; 7<br />3 &lt;= 4 and 4 &lt; 7<br /><br />5 &gt;= 3<br />5 &lt; 7<br />3 &lt;= 5 and 5 &lt; 7<br /><br />6 &gt;= 3<br />6 &lt; 7<br />3 &lt;= 6 and 6 &lt; 7<br /><br />7 &gt;= 3<br />7 &gt;= 7<br />No intersection<br /><br />8 &gt;= 3<br />8 &gt;= 7<br />No intersection<br /><br />9 &gt;= 3<br />9 &gt;= 7<br />No intersection<br /></code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p49712" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile49712">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content49712">
+
+						<h3 ><a href="#p49712">Re: Fastest sin(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingfe89.html?mode=quote&amp;f=3&amp;p=49712" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicbae9-2.html?p=49712#p49712" onclick="prompt('Message #34',this.href); return false;">#34</a></span> 
+									<a class="unread" href="viewtopicbae9-2.html?p=49712#p49712" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>19 Oct 2016 08:08
+			</p>
+			
+			
+			
+			<div class="content">very clever! <br /><br />Thanks neorobin</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p49742" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile49742">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content49742">
+
+						<h3 ><a href="#p49742">Re: Fastest sin(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0391.html?mode=quote&amp;f=3&amp;p=49742" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicff07.html?p=49742#p49742" onclick="prompt('Message #35',this.href); return false;">#35</a></span> 
+									<a class="unread" href="viewtopicff07.html?p=49742#p49742" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>20 Oct 2016 04:43
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>einstein1969 wrote:</cite><blockquote><div><cite>neorobin wrote:</cite>Hi einstein1969<br /><br />I made another implementation<br />...<br />spiral<br /><img src="../../cdn4.snapgram.co/images/2016/09/23/spiral-resize.gif" class="postimage" alt="Image" /><br /></div></blockquote></div></blockquote><br /><br />That's so simple in motion but it really appeals to me.  Very nice!</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p49821" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile49821">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content49821">
+
+						<h3 ><a href="#p49821">Re: Fastest sin(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting3ad5.html?mode=quote&amp;f=3&amp;p=49821" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1ea4.html?p=49821#p49821" onclick="prompt('Message #36',this.href); return false;">#36</a></span> 
+									<a class="unread" href="viewtopic1ea4.html?p=49821#p49821" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>23 Oct 2016 23:45
+			</p>
+			
+			
+			
+			<div class="content">I completed the &quot;Spiral in color&quot; modification:<br /><br /><img src="../../i.imgur.com/zrhgqj7.png" class="postimage" alt="Image" /><img src="../../i.imgur.com/HeSqkgX.png" class="postimage" alt="Image" /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />if &quot;%~1&quot; neq &quot;&quot; goto %1<br /><br />rem Original code written by neorobin<br />rem http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7153&amp;p=49643#p49643<br /><br />rem This &quot;Lines in color&quot; version created by Antonio Perez Ayala, aka Aacini<br />rem Use PowerShell to move cursor and show text in color as described at:<br />rem http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6936&amp;p=46206#p46206<br /><br />rem Screen size<br />set /a &quot;wid=75, hei=75&quot;<br />mode %wid%,%hei%<br />cls<br /><br />echo/<br />echo&nbsp; &nbsp;Û&nbsp; &nbsp;Û&nbsp; &nbsp;ÛÛÛÛÛ&nbsp; &nbsp;ÛÛÛ&nbsp; &nbsp;ÛÛÛÛÛ<br />echo&nbsp; &nbsp;Û&nbsp; &nbsp;Û&nbsp; &nbsp;Û&nbsp; &nbsp;Û&nbsp; &nbsp; Û&nbsp; &nbsp; &nbsp; Û<br />echo&nbsp; &nbsp;Û Û Û&nbsp; &nbsp;ÛÛÛÛÛ&nbsp; &nbsp; Û&nbsp; &nbsp; &nbsp; Û<br />echo&nbsp; &nbsp;ÛÛ ÛÛ&nbsp; &nbsp;Û&nbsp; &nbsp;Û&nbsp; &nbsp; Û&nbsp; &nbsp; &nbsp; Û<br />echo&nbsp; &nbsp;Û&nbsp; &nbsp;Û&nbsp; &nbsp;Û&nbsp; &nbsp;Û&nbsp; &nbsp;ÛÛÛ&nbsp; &nbsp; &nbsp;Û&nbsp; &nbsp; Û&nbsp; &nbsp;Û&nbsp; &nbsp;Û<br /><br /><br />&quot;%~F0&quot; Main&nbsp; |&nbsp; &quot;%~F0&quot; Output<br />goto :EOF<br /><br /><br />:Main<br /><br />(<br />for /f &quot;delims==&quot; %%a in ('set') do set &quot;%%a=&quot;<br />set /A &quot;wid=%wid%, hei=%hei%&quot;<br />)<br /><br />REM APA Define the number of branches (colors) in the spiral as function of the angle in degrees:<br />REM APA Center:&nbsp; &nbsp;60&nbsp; &nbsp; &nbsp; &nbsp;72&nbsp; &nbsp; &nbsp; &nbsp;90&nbsp; &nbsp; &nbsp; &nbsp; 120&nbsp; &nbsp; &nbsp; &nbsp;(180)&nbsp; &nbsp; &nbsp; &nbsp;240&nbsp; &nbsp; &nbsp; &nbsp; 270&nbsp; &nbsp; &nbsp; &nbsp; 288&nbsp; &nbsp; &nbsp; &nbsp; 300&nbsp; &nbsp; &nbsp; &nbsp; 330<br />REM APA 0-29=1, 30-65=6, 66-80=5, 81-104=4, 105-149=3, 150-210=2, 211-255=3, 256-279=4, 280-294=5, 295-330=6, 331-360=1<br />set n=0<br />for %%a in (30:6 66:5 81:4 105:3 150:2 211:3 256:4 280:5 295:6 331:1) do for /F &quot;tokens=1,2 delims=:&quot; %%x in (&quot;%%a&quot;) do (<br />&nbsp; &nbsp;set &quot;deg!n!=%%x&quot;<br />&nbsp; &nbsp;set &quot;cols!n!=%%y&quot;<br />&nbsp; &nbsp;set /A n+=1<br />)<br />set /A &quot;c=0, cols=1&quot;<br /><br />REM APA mod&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Original: DEG=174, Modified: DEG=17453 (DEG * 100)<br />set /a &quot;p=31416, p2=62832, pn2=-62832, p#2=15708, p3#2=47124, p3#2_=p3#2-1, DEG=3141593/180&quot;<br />set &quot;SIN=(t-(t2=t*t/1875)*t/320000+(t3=t2*t/15625)*t/16000*t/2560000-(t4=t3*t/15625*t/15360)*t/16000*t/44800000)&quot;<br />set &quot;COS=(10000-t*t/20000+t3*t/819200-t4*t/10240000+t4*t/16000*t/15625*t/229376000)&quot;<br /><br />set /a &quot;wid_div_2 = wid / 2 - 3&quot;<br /><br />REM APA randomize:<br />for /L %%i in (1,1,%time:~-1%) do set /A !random!<br /><br />set /a &quot;XC = wid/2*10000, YC = hei/2*10000, DEG_unit = -1, th0=%random% %% 360 * DEG&quot;<br /><br />REM APA&nbsp; The screen is managed via these 3 variables:<br />REM APA&nbsp; scr2 - New points that needs to be displayed on the screen<br />REM APA&nbsp; scr0 - Old points that needs to be cleared from the screen<br />REM APA&nbsp; scr1 - Auxiliary buffer: it always contain the points that currently appears on the screen<br />set &quot;scr1= &quot;<br /><br />for /L %%# in () do (<br /><br />&nbsp; &nbsp;set &quot;scr0=!scr1!&quot;<br />&nbsp; &nbsp;set &quot;scr2=&quot;<br /><br />&nbsp; &nbsp;set /a &quot;th0 += DEG, th = th0, DEG_unit= (DEG_unit+1) %% 360,&nbsp; chg=^!(DEG_unit-deg!c!), col=-1&quot;<br />&nbsp; &nbsp;if !chg! equ 1 set /A &quot;cols=cols!c!, c=(c+1) %% n&quot;<br />&nbsp; &nbsp; <br />&nbsp; &nbsp;for /L %%r in (0 1 %wid_div_2%) do (<br />&nbsp; &nbsp; &nbsp; set /a &quot;th+=DEG * DEG_unit, t= th/100 %% p2, s1=(t-p#2^t-p3#2)&gt;&gt;31, s3=p3#2_-t&gt;&gt;31, t=(-t&amp;s1)+(t&amp;~s1)+(p&amp;s1)+(pn2&amp;s3), SINt=%SIN%, t=%COS%, COSt=(-t&amp;s1)+(t&amp;~s1)&quot;<br />&nbsp; &nbsp; &nbsp; set /a &quot;x=(XC + %%r * COSt)/10000, y=(YC + %%r * SINt)/10000, inScr=(x-0^x-wid)&amp;(y-0^y-hei),&nbsp; col=(col+1) %% cols, co=15-col&quot;<br /><br />&nbsp; &nbsp; &nbsp; if !inScr! lss 0 (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for /F &quot;tokens=1,2&quot; %%x in (&quot;!x! !y!&quot;) do (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if &quot;!scr1: %%x:%%y:0=!&quot; equ &quot;!scr1!&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;scr1=!scr1! %%x:%%y:0&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;scr2=!scr2! %%x:%%y:!co!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set &quot;scr0=!scr0: %%x:%%y:0=!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; )<br /><br />&nbsp; &nbsp;)<br /><br />&nbsp; &nbsp;if &quot;!scr0!&quot; neq &quot; &quot; (<br />&nbsp; &nbsp; &nbsp; for %%a in (!scr0!) do set &quot;scr1=!scr1: %%a=!&quot;<br />&nbsp; &nbsp; &nbsp; echo !scr0:~2!<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;echo !scr2:~1!<br /><br />)<br />exit<br /><br /><br />:Output<br /><br />rem The parameters received via lines read have this form:<br />rem Series of points, coordinates and color: X1:Y1:C1 X2:Y2:C2 ...<br /><br />PowerShell&nbsp; ^<br />&nbsp; &nbsp;cls;&nbsp; ^<br />&nbsp; &nbsp;$console = $Host.UI.RawUI;&nbsp; ^<br />&nbsp; &nbsp;$console.WindowTitle = 'Spiral in color';&nbsp; ^<br />&nbsp; &nbsp;$console.CursorSize = 0;&nbsp; ^<br />&nbsp; &nbsp;$coords = $console.CursorPosition;&nbsp; ^<br />&nbsp; &nbsp;foreach ( $line in $input ) {&nbsp; ^<br />&nbsp; &nbsp; &nbsp; $point,$line = $line.Split(' ');&nbsp; ^<br />&nbsp; &nbsp; &nbsp; while ( $point ) {&nbsp; ^<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&#91;int&#93;$X,&#91;int&#93;$Y,&#91;int&#93;$Color = $point.Split(':');&nbsp; ^<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;$coords.X = $X;&nbsp; $coords.Y = $Y;&nbsp; $console.CursorPosition = $coords;&nbsp; ^<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Write-Host -ForegroundColor $Color -NoNewLine 'Û';&nbsp; ^<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;$point,$line = $line;&nbsp; ^<br />&nbsp; &nbsp; &nbsp; }&nbsp; ^<br />&nbsp; &nbsp;}<br />%End PowerShell%<br />exit /B<br /></code></pre></div><br /><strong class="text-strong">IMPORTANT</strong>: you must manually adjust the font type and size in the cmd.exe window and then adjust the values of the &quot;Screen size variables&quot;: wid and hei accordingly; it is unlikely that the code as is may show a pleasant animation in your computer...<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p49822" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile49822">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content49822">
+
+						<h3 ><a href="#p49822">Re: Fastest sin(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting1a06.html?mode=quote&amp;f=3&amp;p=49822" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic881e.html?p=49822#p49822" onclick="prompt('Message #37',this.href); return false;">#37</a></span> 
+									<a class="unread" href="viewtopic881e.html?p=49822#p49822" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>24 Oct 2016 04:15
+			</p>
+			
+			
+			
+			<div class="content">thanks Antonio for colorized version!</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="postingddf4.html?mode=reply&amp;f=3&amp;t=4896" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic1a6f.html?f=3&amp;t=4896&amp;start=30&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4896&amp;start=30">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			37 posts
+							<ul>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic91f8-2.html?f=3&amp;t=4896&amp;start=15" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopic2046.html?f=3&amp;t=4896" role="button">1</a></li>
+				<li><a class="button" href="viewtopic91f8-2.html?f=3&amp;t=4896&amp;start=15" role="button">2</a></li>
+			<li class="active"><span>3</span></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron68e3.gif?cron_type=cron.task.text_reparser.pm_text" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4896&p=49742 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:50:06 GMT -->
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5775&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:25:11 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; ReadFormattedLine.bat: Read a line with specific format</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>ReadFormattedLine.bat: Read a line with specific format</h2>
+		<p><a href="viewtopic20b5.html?f=3&amp;t=5775">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5775</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>ReadFormattedLine.bat: Read a line with specific format</h3>
+				<div class="date">Posted: <strong>16 Jul 2014 13:58</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">I have heard this request for Batch files many times before: read a line in a similar way of SET /P command, but with certain restrictions, like a given number of characters, or read only digits, or show the characters read as asterisks, etc. Frequently the asker wants a solution that don't require 3rd party external programs.<br /><br />I developed a pure Batch file solution that works perfectly. The input is defined via a <em class="text-italics">mask</em> comprised of several characters that specify the input format at each input position. The method used in this program may be used as base for other similar data-input routines for Batch files.<br /><br /><strong class="text-strong">EDIT 2014-09-23</strong>: I modified the original routine in order to use a standard input method and added some additional features. I also improved the presentation of the input fields.<br /><br /><strong class="text-strong">EDIT 2014-09-28</strong>: I added a couple modifications suggested by foxidrive and dbenham, besides some others of my own.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />rem ReadFormattedLine.bat: Read a line from keyboard with specific format<br />rem Antonio Perez Ayala<br /><br />cls<br />echo Read a line from keyboard with specific format<br />echo/<br />echo call :ReadFormattedLine var=&quot;mask&quot;&nbsp; &#91;/M &quot;message&quot;&#93;&nbsp; &#91;/P&#93;&nbsp; &#91;/A^|/W^|/F&#93;<br />echo/<br />echo The mask specify valid input characters per position via the following chars:<br />echo/<br />echo&nbsp; &nbsp; #&nbsp; -&nbsp; Any digit<br />echo&nbsp; &nbsp; _&nbsp; -&nbsp; Any letter<br />echo&nbsp; &nbsp; +&nbsp; -&nbsp; A letter that is converted to uppercase<br />echo&nbsp; &nbsp; ?&nbsp; -&nbsp; Any letter or digit<br />echo&nbsp; &nbsp; @&nbsp; -&nbsp; Letter or digit, convert letter to uppercase<br />echo/<br />echo The following characters are just displayed/inserted at their positions:<br />echo&nbsp; &nbsp; $&nbsp; /&nbsp; \&nbsp; (&nbsp; )&nbsp; &#91;&nbsp; &#93;&nbsp; :&nbsp; ;&nbsp; ,&nbsp; .&nbsp; -&nbsp; space&nbsp; letters&nbsp; digits<br />echo/<br />echo Any character in the mask different than previous ones cause an error.<br />echo/<br />echo If /P (password) switch is given, input characters are displayed as asterisks.<br />echo/<br />echo Normally the input is completed when Enter key is pressed after read at least<br />echo one character, but the following switches changes this behavior.<br />echo/<br />echo&nbsp; &nbsp; /A (auto):&nbsp; &nbsp;Input is auto-completed after the last character; Enter key<br />echo&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;is ignored.<br />echo&nbsp; &nbsp; /W (whole):&nbsp; Enter key is accepted at first or last input positions only,<br />echo&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;that is, when input is empty or whole.<br />echo&nbsp; &nbsp; /F (fields): Enter key fills the field with spaces and move the cursor to<br />echo&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;the next input field in the line.<br />echo/<br />echo To input a whole value terminated by Enter, use /W switch and insert any<br />echo character at the first position in the mask.<br />echo/<br />echo/<br />echo Some examples:<br />echo/<br /><br />setlocal<br />rem Define the following variable before call the subroutine<br />set &quot;thisFile=%~F0&quot;<br />call :ReadFormattedLine test=&quot;(_-#-+-#-_)&quot; /M &quot;Enter (_-#-+-#-_): &quot; /W<br />echo Read: &quot;%test%&quot;<br />echo/<br />call :ReadFormattedLine number=&quot;#####&quot; /M &quot;Enter a number of up to 5 digits: &quot;<br />echo Number: &quot;%number%&quot;<br />echo/<br />call :ReadFormattedLine pass=&quot;########&quot; /M &quot;Enter your password (8 digits): &quot; /P /A<br />echo Password: &quot;%pass%&quot;<br />echo/<br />call :ReadFormattedLine phone=&quot;(###)###-####&quot; /M &quot;Enter the telephone with area code: &quot; /W<br />echo Telephone: &quot;%phone%&quot;<br />echo/<br />call :ReadFormattedLine RFC=&quot;&#91;++++-######-@@@&#93;&quot; /M &quot;Enter your RFC &#91;4letters-6digits-3alpha&#93;: &quot; /W<br />echo RFC: &quot;%RFC%&quot;<br />echo/<br />call :ReadFormattedLine timeStamp=&quot;####/##/##&nbsp; HH:MM: ##:##&quot; /M &quot;Enter a time-stamp.&nbsp; YYYY/MM/DD: &quot; /W<br />echo Time-stamp: &quot;%timeStamp%&quot;<br />echo/<br />call :ReadFormattedLine name=&quot;+_______________&nbsp; Last name: +_______________&quot; /M &quot;First name: &quot; /F<br />echo Name: &quot;%name%&quot;<br />echo/<br />echo Enter the list of IP addresses<br />echo (press Enter in an empty line to end the list)<br />set i=0<br />:nextIP<br />&nbsp; &nbsp;set /A i+=1<br />&nbsp; &nbsp;call :ReadFormattedLine IP&#91;%i%&#93;=&quot;###.###.###.###&quot; /M &quot;%i%-&nbsp; &quot; /W<br />if defined IP&#91;%i%&#93; goto nextIP<br />set /A n=i-1<br />echo/<br />echo IP addresses read: %n%<br />set IP&#91;<br />echo/<br />echo/<br />echo End of examples<br />pause<br />goto :EOF<br /><br /><br />:ReadFormattedLine var=&quot;mask&quot; &#91;/M &quot;message&quot;&#93; &#91;/P&#93; &#91;/F /W /A&#93;<br /><br />if &quot;%~2&quot; equ &quot;&quot; echo ERROR: Missing parameters &amp; exit /B 1<br />setlocal EnableDelayedExpansion<br /><br />set &quot;var=%~1&quot;<br />set &quot;mask=%~2&quot;<br />shift &amp; shift<br />set &quot;message=&quot;<br />if /I &quot;%1&quot; equ &quot;/M&quot; set &quot;message=%~2&quot; &amp; shift &amp; shift<br />set &quot;password=&quot;<br />if /I &quot;%1&quot; equ &quot;/P&quot; set &quot;password=1&quot; &amp; shift<br />set &quot;switch=%~1&quot;<br /><br />set quote=&quot;<br />set &quot;digit= 0 1 2 3 4 5 6 7 8 9 &quot;<br />set &quot;letter= A B C D E F G H I J K L M N O P Q R S T U V W X Y Z &quot;<br />set &quot;alphaNum=%digit%%letter%&quot;<br />set &quot;fmt=#_+?@&quot;<br />set &quot;show=$/\()&#91;&#93;:;,.- %digit: =%%letter: =%&quot;<br />for /F %%a in ('copy /Z &quot;%thisFile%&quot; NUL') do set &quot;CR=%%a&quot;<br />for /F %%a in ('echo prompt $H ^| cmd') do set &quot;BS=%%a&quot; &amp; set &quot;SP=.%%a &quot;<br /><br />&lt; NUL (<br />&nbsp; &nbsp;set /P &quot;=%message%&quot;<br />&nbsp; &nbsp;for /F &quot;eol=| delims=&quot; %%a in ('cmd /U /C echo !mask!^| find /V &quot;&quot;') do (<br />&nbsp; &nbsp; &nbsp; if &quot;!fmt:%%a=!&quot; neq &quot;%fmt%&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /P &quot;=Û&quot;<br />&nbsp; &nbsp; &nbsp; ) else if &quot;%%a&quot; neq &quot; &quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /P &quot;=%%a&quot;<br />&nbsp; &nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /P &quot;=!SP!&quot;<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;set /P &quot;=!SP!!CR!%message%&quot;<br />)<br />set &quot;input=&quot;<br />set /A i=0, key=0<br />goto checkFormat<br /><br />:nextKey<br />&nbsp; &nbsp;set &quot;key=&quot;<br />&nbsp; &nbsp;for /F &quot;delims=&quot; %%a in ('xcopy /W &quot;%thisFile%&quot; &quot;%thisFile%&quot; 2^&gt;NUL') do if not defined key set &quot;key=%%a&quot;<br />&nbsp; &nbsp;if &quot;!key:~-1!&quot; neq &quot;!CR!&quot; goto endif<br />&nbsp; &nbsp; &nbsp; if /I &quot;%switch%&quot; equ &quot;/A&quot; goto nextKey<br />&nbsp; &nbsp; &nbsp; if /I &quot;%switch%&quot; neq &quot;/F&quot; goto check/W<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:nextField<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;format=!mask:~%i%,1!&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if &quot;%format%&quot; equ &quot;&quot; goto endRead<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if &quot;!fmt:%format%=!&quot; equ &quot;%fmt%&quot; goto checkFormat<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /P &quot;=Û&quot; &lt; NUL<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;input=%input% &quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A i+=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;goto nextField<br />&nbsp; &nbsp; &nbsp; :check/W<br />&nbsp; &nbsp; &nbsp; if /I &quot;%switch%&quot; neq &quot;/W&quot; goto checkEmpty<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if %i% equ 0 goto endRead<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if &quot;%format%&quot; equ &quot;&quot; goto endRead<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;goto nextKey<br />&nbsp; &nbsp; &nbsp; :checkEmpty<br />&nbsp; &nbsp; &nbsp; if %i% gtr 0 goto endRead<br />&nbsp; &nbsp; &nbsp; goto nextKey<br />&nbsp; &nbsp;:endif<br />&nbsp; &nbsp;set &quot;key=!key:~-1!&quot;<br />&nbsp; &nbsp;if &quot;!key!&quot; equ &quot;!BS!&quot; (<br />&nbsp; &nbsp; &nbsp; if %i% gtr 0 (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if &quot;%format%&quot; equ &quot;&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=!SP!!BS!!BS!Û!BS!&quot; &lt; NUL<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=Û!BS!!BS!Û!BS!&quot; &lt; NUL<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;input=%input:~0,-1%&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A i-=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if !i! equ 0 set key=0<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; goto checkFormat<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;if &quot;%format%&quot; equ &quot;&quot; goto nextKey<br />&nbsp; &nbsp;if &quot;!key!&quot; equ &quot;=&quot; goto nextKey<br />&nbsp; &nbsp;if &quot;!key!&quot; equ &quot;!quote!&quot; goto nextKey<br />&nbsp; &nbsp;if &quot;%format%&quot; equ &quot;#&quot; ( rem Any digit<br />&nbsp; &nbsp; &nbsp; if &quot;!digit: %key% =!&quot; equ &quot;%digit%&quot; goto nextKey<br />&nbsp; &nbsp;) else if &quot;%format%&quot; equ &quot;_&quot; ( rem Any letter<br />&nbsp; &nbsp; &nbsp; if &quot;!letter: %key% =!&quot; equ &quot;%letter%&quot; goto nextKey<br />&nbsp; &nbsp;) else if &quot;%format%&quot; equ &quot;+&quot; ( rem Any letter, convert it to uppercase<br />&nbsp; &nbsp; &nbsp; if &quot;!letter: %key% =!&quot; equ &quot;%letter%&quot; goto nextKey<br />&nbsp; &nbsp; &nbsp; for %%a in (%letter%) do if /I &quot;!key!&quot; equ &quot;%%a&quot; set &quot;key=%%a&quot;<br />&nbsp; &nbsp;) else (<br />&nbsp; &nbsp; &nbsp; rem Rest of formats are alphanumeric: ? @<br />&nbsp; &nbsp; &nbsp; if &quot;!alphaNum: %key% =!&quot; equ &quot;%alphaNum%&quot; goto nextKey<br />&nbsp; &nbsp; &nbsp; if &quot;%format%&quot; equ &quot;@&quot; ( rem Convert letters to uppercase<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for %%a in (%letter%) do if /I &quot;!key!&quot; equ &quot;%%a&quot; set &quot;key=%%a&quot;<br />&nbsp; &nbsp; &nbsp; ) else if &quot;%format%&quot; neq &quot;?&quot; echo ERROR: Invalid format in mask: &quot;%format%&quot; &amp; exit /B 2<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;if defined password (<br />&nbsp; &nbsp; &nbsp; set /P &quot;=*&quot; &lt; NUL<br />&nbsp; &nbsp;) else (<br />&nbsp; &nbsp; &nbsp; set /P &quot;=%key%&quot; &lt; NUL<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;set &quot;input=%input%%key%&quot;<br /><br />&nbsp; &nbsp;:nextFormat<br />&nbsp; &nbsp;set /A i+=1<br />&nbsp; &nbsp;:checkFormat<br />&nbsp; &nbsp;set &quot;format=!mask:~%i%,1!&quot;<br />&nbsp; &nbsp;if &quot;%format%&quot; equ &quot;&quot; (<br />&nbsp; &nbsp; &nbsp; if /I &quot;%switch%&quot; equ &quot;/A&quot; goto endRead<br />&nbsp; &nbsp; &nbsp; if /I &quot;%switch%&quot; equ &quot;/M&quot; goto endRead<br />&nbsp; &nbsp; &nbsp; goto nextKey<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;if &quot;!show:%format%=!&quot; neq &quot;%show%&quot; (<br />&nbsp; &nbsp; &nbsp; if &quot;!key!&quot; equ &quot;!BS!&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if &quot;%format%&quot; neq &quot; &quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=%format%!BS!!BS!Û!BS!&quot; &lt; NUL<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=!SP!!BS!!BS!Û!BS!&quot; &lt; NUL<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;input=%input:~0,-1%&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A i-=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if !i! equ 0 set key=0<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;goto checkFormat<br />&nbsp; &nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if &quot;%format%&quot; neq &quot; &quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=%format%&quot; &lt; NUL<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=!SP!&quot; &lt; NUL<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;input=%input%%format%&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;goto nextFormat<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;if &quot;%input:~-1%!key!&quot; equ &quot; !BS!&quot; (<br />&nbsp; &nbsp; &nbsp; set /P &quot;=Û!BS!!BS!&quot; &lt; NUL<br />&nbsp; &nbsp; &nbsp; set &quot;input=%input:~0,-1%&quot;<br />&nbsp; &nbsp; &nbsp; set /A i-=1<br />&nbsp; &nbsp; &nbsp; goto checkFormat<br />&nbsp; &nbsp;)<br /><br />goto nextKey<br />:endRead<br />echo/<br />endlocal &amp; set &quot;%var%=%input%&quot;<br />exit /B<br /></code></pre></div><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ReadFormattedLine.bat: Read a line with specific format</h3>
+				<div class="date">Posted: <strong>23 Sep 2014 19:43</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">I modified my ReadFormattedLine routine so it now use a standard input method based on xcopy instead of the original choice based one, that was more limited. I also improved the presentation of the input fields.<br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ReadFormattedLine.bat: Read a line with specific format</h3>
+				<div class="date">Posted: <strong>23 Sep 2014 20:52</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">That's great work Antonio!<br /><br />The way you show the examples is nice too - I just have two comments about that.<br /><br />echo Enter the list of IP addresses (press just Enter to end)<br /><br /><span style="color: #0040FF">If the user presses enter here then it aborts.</span><br /><br />set i=0<br />:nextIP<br />   set /A i+=1<br />   call :ReadFormattedLine IP[%i%]=&quot;###.###.###.###&quot; /M &quot;%i%-  &quot; /W<br />if defined IP[%i%] goto nextIP<br />set /A n=i-1<br />echo/<br />echo IP addresses read: %n%<br />set IP[<br /><br /><span style="color: #0040FF">at this point it might be nice to say that it is ending, and then pause for the people that have clicked on the batch file.</span><br /><br /><span style="color: #408000">echo.<br />echo. End of examples<br />pause</span><br />goto :EOF<br /><br /><br />This is a really polished method of keyboard input entry!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ReadFormattedLine.bat: Read a line with specific format</h3>
+				<div class="date">Posted: <strong>24 Sep 2014 06:02</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I agree, this is a very cool and useful routine  <img class="smilies" src="images/smilies/icon_cool.gif" alt="8)" title="Cool" /> <br /><br />There are a number of key presses that give errors and/or crash the routine. A few examples include &amp; &lt; ) = &quot; <br /><br />I think I've managed to modify the :nextKey routine to eliminate the problem. Here is a code excerpt with # showing the added/changed lines (I think I remember all the changes):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:nextKey<br />&nbsp; &nbsp;set &quot;key=&quot;<br />&nbsp; &nbsp;for /F &quot;delims=&quot; %%a in ('xcopy /W &quot;%thisFile%&quot; &quot;%thisFile%&quot; 2^&gt;NUL') do if not defined key set &quot;key=%%a&quot;<br />&nbsp; &nbsp;if &quot;!key:~-1!&quot; neq &quot;!CR!&quot; goto endif<br />&nbsp; &nbsp; &nbsp; if /I &quot;%switch%&quot; equ &quot;/A&quot; goto nextKey<br />&nbsp; &nbsp; &nbsp; if /I &quot;%switch%&quot; neq &quot;/W&quot; goto endRead<br />&nbsp; &nbsp; &nbsp; if %i% equ 0 goto endRead<br />&nbsp; &nbsp; &nbsp; if &quot;%format%&quot; equ &quot;&quot; goto endRead<br />&nbsp; &nbsp; &nbsp; goto nextKey<br />&nbsp; &nbsp;:endif<br />&nbsp; &nbsp;set &quot;key=!key:~-1!&quot;<br />&nbsp; &nbsp;if &quot;!key!&quot; equ &quot;!BS!&quot; (<br />&nbsp; &nbsp; &nbsp; if %i% gtr 0 (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /P &quot;=!BkSpc!&quot; &lt; NUL<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;input=%input:~0,-1%&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A i-=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if !i! equ 0 set key=0<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; goto checkFormat<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;if &quot;%format%&quot; equ &quot;&quot; goto nextKey<br />#&nbsp; if &quot;!key!&quot; equ &quot;=&quot; goto nextKey<br />#&nbsp; if &quot;!key!!key!&quot; equ &quot;&quot;&quot;&quot; goto nextKey<br />&nbsp; &nbsp;if &quot;%format%&quot; equ &quot;#&quot; ( rem Any digit<br />&nbsp; &nbsp; &nbsp; if &quot;!digit: %key% =!&quot; equ &quot;%digit%&quot; goto nextKey<br />&nbsp; &nbsp;) else if &quot;%format%&quot; equ &quot;l&quot; ( rem Any letter<br />&nbsp; &nbsp; &nbsp; if &quot;!letter: %key% =!&quot; equ &quot;%letter%&quot; goto nextKey<br />&nbsp; &nbsp;) else if &quot;%format%&quot; equ &quot;L&quot; ( rem Any letter, convert it to uppercase<br />&nbsp; &nbsp; &nbsp; if &quot;!letter: %key% =!&quot; equ &quot;%letter%&quot; goto nextKey<br />#&nbsp; &nbsp; &nbsp;for %%a in (%letter%) do if /I &quot;!key!&quot; equ &quot;%%a&quot; set &quot;key=%%a&quot;<br />&nbsp; &nbsp;) else (<br />&nbsp; &nbsp; &nbsp; rem Rest of formats are alphanumeric: a A *<br />&nbsp; &nbsp; &nbsp; if &quot;!alphaNum: %key% =!&quot; equ &quot;%alphaNum%&quot; goto nextKey<br />&nbsp; &nbsp; &nbsp; if &quot;%format%&quot; equ &quot;A&quot; ( rem Convert letters to uppercase<br />#&nbsp; &nbsp; &nbsp; &nbsp; for %%a in (%letter%) do if /I &quot;!key!&quot; equ &quot;%%a&quot; set &quot;key=%%a&quot;<br />&nbsp; &nbsp; &nbsp; ) else if &quot;%format%&quot; neq &quot;a&quot; if &quot;%format%&quot; neq &quot;*&quot; echo ERROR: Invalid format in mask &amp; exit /B 2<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;if &quot;%format%&quot; equ &quot;*&quot; (<br />&nbsp; &nbsp; &nbsp; set /P &quot;=*&quot; &lt; NUL<br />&nbsp; &nbsp;) else (<br />&nbsp; &nbsp; &nbsp; set /P &quot;=%key%&quot; &lt; NUL<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;set &quot;input=!input!!key!&quot;<br /></code></pre></div><br /><br />One more minor bug - the backspace implementation is a bit wonky. When at end, it adds an extra grey block to end, and it also replaces formatting characters with grey blocks. It shouldn't be hard to make the backspace implementation a bit more intelligent.<br /><br />I also have a few feature suggestions. Let me know if you are not interested, and I will take a stab at implementing them myself. Otherwise I will leave it to you.<br /><br />1) I think the * format feature should be converted into a mode implemented as an option. This would allow * masking no matter what format is used. For example, it might be nice to mask purely numeric input. I can't think of any cases where I've needed a mixture of masked and unmasked input in a single field.<br /><br />2) A minimum length option would be nice. Required positions could be indicated with your current grey block, and optional positions could be indicated by some other character.<br /><br />3) If masking is implemented as an option, then * can be used to represent unrestricted input. (perhaps a few chars should be rejected). You could add an option that overrides and specifies exactly which characters are accepted. This would be good for a password field.<br /><br />4) Perhaps an option to specify what character is used to represent a required position, and another to specify what character represents an optional position.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ReadFormattedLine.bat: Read a line with specific format</h3>
+				<div class="date">Posted: <strong>24 Sep 2014 14:50</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">@dbenham,<br /><br />Yes, I started to work on the backspace grey block problem and the optimization of the &quot;:init&quot; loop via a for. I like the replacement of * format by a switch and then use * for &quot;any character&quot;, but I don't like the minimum length option nor required/optional positions because these features will made the code much more complex. /W and /A switches are used to indicate that all positions are required; I don't see the usefulness of a line with required <em class="text-italics">and</em> optional positions...<br /><br />@foxidrive,<br /><br />I will add your suggestions in the next modification, thanks!<br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ReadFormattedLine.bat: Read a line with specific format</h3>
+				<div class="date">Posted: <strong>28 Sep 2014 19:33</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">A couple of the suggested modifications in ReadFormattedLine routine are ready besides some others of my own. The new version is in the same place as the original code, at beginning of this thread. Please, test it and report the result.<br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ReadFormattedLine.bat: Read a line with specific format</h3>
+				<div class="date">Posted: <strong>28 Sep 2014 22:03</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Small bug Antonio - second echo should be echo/<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;the next input field in the line.<br />echo</code></pre></div><br /><br />Some extra screen formatting is needed:<br />When I start the script then text disappears off the top of the screen as 25 lines is default (mine is 30 lines).<br /><br />Otherwise it seems fine.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ReadFormattedLine.bat: Read a line with specific format</h3>
+				<div class="date">Posted: <strong>06 Dec 2015 14:18</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">Although ReadFormattedLine subroutine works perfectly, the code is somewhat large and complex and frequently the users are reluctant to use it when they have simpler requirements. The subroutine below is a much simpler version that just emulates the operation of SET /P command. This basic subroutine may be easily modified in order to fulfill any other requirement, like in <a href="http://stackoverflow.com/questions/28239363/only-accept-numeric-characters-in-batch-file-input/28244552#28244552" class="postlink">this example</a> that read only digits with a limited number of characters.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal<br /><br />call :ReadLine line=&quot;Enter a line: &quot;<br />echo Line read: &quot;%line%&quot;<br />goto :EOF<br /><br /><br />:ReadLine var=&quot;prompt&quot;<br /><br />rem Read a line emulating SET /P command<br />rem Antonio Perez Ayala<br /><br />rem Initialize variables<br />setlocal EnableDelayedExpansion<br />echo &gt; _<br />for /F %%a in ('copy /Z _ NUL') do set &quot;CR=%%a&quot;<br />for /F %%a in ('echo prompt $H ^| cmd') do set &quot;BS=%%a&quot;<br /><br />rem Show the prompt and start reading<br />set /P &quot;=%~2&quot; &lt; NUL<br />set &quot;input=&quot;<br />set i=0<br /><br />:nextKey<br />&nbsp; &nbsp;set &quot;key=&quot;<br />&nbsp; &nbsp;for /F &quot;delims=&quot; %%a in ('xcopy /W _ _ 2^&gt;NUL') do if not defined key set &quot;key=%%a&quot;<br /><br />&nbsp; &nbsp;rem If key is CR: terminate input<br />&nbsp; &nbsp;if &quot;!key:~-1!&quot; equ &quot;!CR!&quot; goto endRead<br /><br />&nbsp; &nbsp;rem If key is BS: delete last char, if any<br />&nbsp; &nbsp;set &quot;key=!key:~-1!&quot;<br />&nbsp; &nbsp;if &quot;!key!&quot; equ &quot;!BS!&quot; (<br />&nbsp; &nbsp; &nbsp; if %i% gtr 0 (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /P &quot;=!BS! !BS!&quot; &lt; NUL<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;input=%input:~0,-1%&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A i-=1<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; goto nextKey<br />&nbsp; &nbsp;)<br /><br />&nbsp; &nbsp;rem Insert here any filter on the key<br />&nbsp; &nbsp;rem if &quot;%key%&quot; don't pass the filter:&nbsp; goto nextKey<br /><br />&nbsp; &nbsp;rem Else: show and accept the key<br />&nbsp; &nbsp;set /P &quot;=.!BS!%key%&quot; &lt; NUL<br />&nbsp; &nbsp;set &quot;input=%input%%key%&quot;<br />&nbsp; &nbsp;set /A i+=1<br /><br />goto nextKey<br /><br />:endRead<br />echo/<br />del _<br />endlocal &amp; set &quot;%~1=%input%&quot;<br />exit /B<br /></code></pre></div><br />For example, to show the input characters as asterisks (in order to read a password), just change the &quot;show and accept key&quot; line by SET /P &quot;=*&quot; &lt; NUL.<br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ReadFormattedLine.bat: Read a line with specific format</h3>
+				<div class="date">Posted: <strong>02 Feb 2016 23:11</strong></div>
+				<div class="author">by <strong>RaceQuest</strong></div>
+				<div class="content">I am running this under WIN XP SP3 is this what is should look like?<br /><br /><img src="../../i.imgur.com/15OXUgj.jpg" class="postimage" alt="Image" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ReadFormattedLine.bat: Read a line with specific format</h3>
+				<div class="date">Posted: <strong>03 Feb 2016 07:48</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">It doesn't appear like that here...<br /><br />If you use a special text editor then try pasting the code into notepad and saving it.<br />Or do you use a non-latin language?<br />The console font you using in CMD.EXE may also be a factor.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ReadFormattedLine.bat: Read a line with specific format</h3>
+				<div class="date">Posted: <strong>04 Feb 2016 07:31</strong></div>
+				<div class="author">by <strong>RaceQuest</strong></div>
+				<div class="content"><blockquote><div><cite>foxidrive wrote:</cite>It doesn't appear like that here...<br /><br />If you use a special text editor then try pasting the code into notepad and saving it.<br />Or do you use a non-latin language?<br />The console font you using in CMD.EXE may also be a factor.</div></blockquote><br />Thanks for the tip I was copy and pasting using notepad+  which saved it as &quot;UTF-8&quot; which caused these lines (see below) that have 8bit char codes to be behave different. Edit.com show it as two chars like the image in my previous post.  Notepad saved same pasting as &quot;ANSI&quot;.  Never encountered that issue before - tricky. <br />These lines:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /P &quot;=Û&quot;&nbsp; &nbsp;<br />...<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=Û&quot; &lt; NUL&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />...<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=!SP!!BS!!BS!Û!BS!&quot; &lt; NUL<br />...<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=Û!BS!!BS!Û!BS!&quot; &lt; NUL<br />...<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /P &quot;=%format%!BS!!BS!Û!BS!&quot; &lt; NUL<br />...<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=!SP!!BS!!BS!Û!BS!&quot; &lt; NUL<br />... <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=Û!BS!!BS!&quot; &lt; NUL<br />&nbsp;<br /></code></pre></div><br /><br /><a href="http://pastebin.com/iRr7p5fT" class="postlink">Copied to pastebin</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ReadFormattedLine.bat: Read a line with specific format</h3>
+				<div class="date">Posted: <strong>26 Aug 2018 17:57</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">Although <strong class="text-strong">:ReadFormattedLine</strong> subroutine works very well, it is large and complicated, so new users frequently are reluctant to use it... I developed two new simpler versions of such a subroutine based on CHOICE command that are much smaller, but with less capabilities:<br>
+<br>
+<strong class="text-strong">ReadInput</strong> simplest version:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+
+echo Input like: XY########
+call :ReadInput INPUT="Type input: " "++########"
+echo INPUT=%INPUT%
+goto :EOF
+
+
+:ReadInput var= "Prompt" "mask"
+setlocal EnableDelayedExpansion
+
+rem Characters for the mask are: # digit, + upcase letter, @ digit or upcase letter
+
+rem Define the character sets used in the input
+set "set[#]= 0123456789"
+set "set[+]= ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+set "set[@]=%set[+]%%set[#]:~1%"
+
+rem Initialize input process
+set "var="
+set /P "=%~2" &lt; NUL
+set "mask=%~3"
+set "i=0"
+
+:NextChar
+   set "maskChar=!mask:~%i%,1!"
+   choice /N /C !set[%maskChar%]! &gt; NUL
+   set "var=!var!!set[%maskChar%]:~%errorlevel%,1!"
+   set /P "=!var:~-1!" &lt; NUL
+   set /A i+=1
+if "!mask:~%i%!" neq "" goto NextChar
+echo/
+
+endlocal &amp; set "%~1=%var%"
+exit /B
+</code></pre></div>
+
+This version have these capabilities:<br>
+
+<ul>
+<li> Characters allowed in the mask are: # digit, + upcase letter, @ digit or upcase letter. There is no way to enter any other character, including white space.</li>
+<li> There is no way to delete input characters.</li>
+<li> The input is completed automatically after the last character is entered. No needed/allowed ENTER key.</li>
+</ul>
+
+<strong class="text-strong">ReadInput</strong> full version:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+
+echo To delete a character, just wait 3 seconds
+echo/
+
+echo Telephone number in (##)###-#### format
+call :ReadInput PHONE="Telephone number:   " "(##)###-####"
+echo PHONE=%PHONE%
+echo/
+
+echo Enter RFC in XXXX-######-??? format
+call :ReadInput RFC="Enter RFC:   " "++++-######-@@@"
+echo RFC=%RFC%
+echo/
+
+call :ReadInput PASS="Enter password (8 chars): " "????????" /P
+echo PASS=%PASS%
+goto :EOF
+
+
+:ReadInput var= "Prompt" "mask" [/P]ass
+setlocal EnableDelayedExpansion
+
+rem Characters for the mask are: _ letter, # digit, ? letter or digit
+rem                              + upcase letter,  @ upcase letter or digit
+
+rem Define the DEL delay (seconds after the last character will be deleted)
+set "DelDelay=2"
+
+rem Define the character sets used in the input
+set "set[#]= þ0123456789"
+set "set[+]= þABCDEFGHIJKLMNOPQRSTUVWXYZ"
+set "set[@]=%set[+]%%set[#]:~2%"
+set "set[_]=%set[+]%abcdefghijklmnopqrstuvwxyz" &amp; set "caseSwitch[_]=/CS"
+set "set[?]=%set[_]%%set[#]:~2%"                &amp; set "caseSwitch[?]=/CS"
+for /F %%a in ('echo prompt $H ^| cmd') do set "BS=%%a"
+
+rem Initialize input process
+set "var="
+set /P "=%~2" &lt; NUL
+set "mask=%~3"
+set "i=0"
+
+:NextChar
+   set "maskChar=!mask:~%i%,1!"
+   if defined set[%maskChar%] goto else
+      rem Not mask input char: just show/insert it
+      set "char=%maskChar%"
+      goto endif
+   :else
+      rem Apply masked input
+      choice /N /C !set[%maskChar%]! !caseSwitch[%maskChar%]! /T %DelDelay% /D þ &gt; NUL
+      if errorlevel 2 goto endif2
+         :Delete
+         if %i% equ 0 goto NextChar
+         set /P "=.%BS%%BS%  %BS%%BS%" &lt; NUL
+         set "var=%var:~0,-1%"
+         set /A i-=1
+         set "maskChar=!mask:~%i%,1!"
+         if not defined set[%maskChar%] goto Delete
+         goto NextChar
+      :endif2
+      set "char=!set[%maskChar%]:~%errorlevel%,1!"
+   :endif
+   set "var=%var%%char%"
+   (if /I "%~4" neq "/P" (set /P "=%var:~-1%") else set /P "=*") &lt; NUL
+   set /A i+=1
+if "!mask:~%i%!" neq "" goto NextChar
+echo/
+endlocal &amp; set "%~1=%var%"
+exit /B
+</code></pre></div>
+
+This version have these capabilities, besides the ones in previous version:<br>
+
+<ul>
+<li> Additional characters allowed in the mask are: _ letter, ? letter or digit. This point allows to enter upcase/lowcase letters.</li>
+<li> Any other character in the mask is displayed <em class="text-italics">and</em> included in the returned value.</li>
+<li> The last input character is automatically deleted after 3 seconds of no input activity.</li>
+<li> The <strong class="text-strong">/P</strong> optional fourth parameter allows to enter <em class="text-italics">passwords</em> where asterisks are displayed in place of input characters.</li>
+</ul>
+
+Antonio</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5775&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:25:11 GMT -->
+</html>

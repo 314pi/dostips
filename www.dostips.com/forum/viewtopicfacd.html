@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=24&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:44:44 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; any idea howto retrieve the GUID of network card in a script</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>any idea howto retrieve the GUID of network card in a script</h2>
+		<p><a href="viewtopic9687.html?f=3&amp;t=24">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=24</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>any idea howto retrieve the GUID of network card in a script</h3>
+				<div class="date">Posted: <strong>19 Sep 2006 23:44</strong></div>
+				<div class="author">by <strong>Matice</strong></div>
+				<div class="content">greetz,<br /><br />im facing an issue where i want to accomplish something (enabling to display the network connection status in the taskbar) but for me to be able to write the correct registry key, i need ot retrieve the GUID of the network device.<br /><br />my question is, is there a trick on how to retrieve the GUID?<br /><br />i found the following script but for some reason, it doesnt seem to work any ideas?<br /><br /><!-- m --><a class="postlink" href="http://www.jsifaq.com/SF/Tips/Tip.aspx?id=8270">http://www.jsifaq.com/SF/Tips/Tip.aspx?id=8270</a><!-- m --><br /><br />regards<br />Matice</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>21 Sep 2006 21:58</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">Matice,<br /><br />Use the <strong class="text-strong">:NetworkDeviceName2Guid</strong> function in you main code like this:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>CALL:NetworkDeviceName2Guid &quot;Local Area Connection&quot; guid<br />ECHO.The GUID is: %guid%<br />GOTO:EOF</code></pre></div><br /><br />Copy the <strong class="text-strong">:NetworkDeviceName2Guid</strong> function from here:<br /><a href="../DtCodeCmdLib.html#NetworkDeviceName2Guid" class="postlink">http://www.dostips.com/DtCodeCmdLib.php#NetworkDeviceName2Guid</a><br />to the end of your batch file.<br /><br />DOS IT HELP?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>22 Sep 2006 01:48</strong></div>
+				<div class="author">by <strong>Matice</strong></div>
+				<div class="content">greetz, <br /><br />for some reason i wasnt able to get it to work, i guess it has to do with the different reg.exe version being used in different OS, in my case windows server 2003.<br /><br />here is what i was able to cut down to:<br /><br />ECHO # Enabling "Show Icon in Notification Area When Connected" for WEB, SRVR and BKP NIC Interfaces<br />reg query HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Network\{4D36E972-E325-11CE-BFC1-08002BE10318} /s|findstr "\Connection"|sed -e "s/HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Network\\{4D36E972-E325-11CE-BFC1-08002BE10318}\\//g"|sed -e "s/\\Connection//g" &gt; c:\nicguid.txt<br />for /f %%i in (c:\source\nicguid.txt) do  reg query HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Network\{4D36E972-E325-11CE-BFC1-08002BE10318}\%%i\Connection /v Name|findstr /I "WEB SRVR BKP" &gt; NUL &amp;&amp; if errorlevel 0 ECHO FOUND PROD NIC CONFIGURING .. &amp;&amp; REG.EXE ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Network\{4D36E972-E325-11CE-BFC1-08002BE10318}\%%i\Connection" /f /v "ShowIcon" /t REG_DWORD /d "1"<br />del c:\nicguid.txt<br />echo Modifications applied and will be active on next boot!<br /><br /><br />i guess that could be improved and use something other than sed but i just found sed easier.. bash is just so much easier and more flexible.. well at least it has more documentation to the different tweaks available. <br /><br />this site has some very impresive implementations that i have not seen elsewhere. <br /><br />your kungfuu is strong!!!<br /><br />regards<br />Matice<br /><br /><blockquote><div><cite>DosItHelp wrote:</cite>Matice,<br /><br />Use the <strong class="text-strong">:NetworkDeviceName2Guid</strong> function in you main code like this:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>CALL:NetworkDeviceName2Guid &quot;Local Area Connection&quot; guid<br />ECHO.The GUID is: %guid%<br />GOTO:EOF</code></pre></div><br /><br />Copy the <strong class="text-strong">:NetworkDeviceName2Guid</strong> function from here:<br /><a href="../DtCodeCmdLib.html#NetworkDeviceName2Guid" class="postlink">http://www.dostips.com/DtCodeCmdLib.php#NetworkDeviceName2Guid</a><br />to the end of your batch file.<br /><br />DOS IT HELP?</div></blockquote></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>23 Sep 2006 20:34</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">Matice,<br /><br /> <img class="smilies" src="images/smilies/icon_idea.gif" alt=":idea:" title="Idea" /> Your code is creating data in c:\nicguid.txt but then tries to read it from c:\source\nicguid.txt.<br /><br />A regular expression parser surely is a powerful tool. However this web page tries to suggest portable solution that work on XP systems without extra downloads. <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>25 Sep 2006 00:27</strong></div>
+				<div class="author">by <strong>Matice</strong></div>
+				<div class="content">thats why i posted back here <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br />there is a lot that i could with posix tools that are very hard to implement with in windows.. im just trying to minimize the gap and use windows resources as much as possible</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=24&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:44:44 GMT -->
+</html>

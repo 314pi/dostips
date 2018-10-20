@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=370 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:32:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>FTP pull data files without overwrite - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopicdf69.html?t=370">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic6b67.html?f=3&amp;t=370">FTP pull data files without overwrite</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="postingdd1d.html?mode=reply&amp;f=3&amp;t=370" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic4907.html?f=3&amp;t=370&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="370" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			8 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p995" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile995">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist29bb.html?mode=viewprofile&amp;u=624" class="username">CheeseFox</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchbeba.html?author_id=624&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 02 Dec 2008 19:36</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content995">
+
+						<h3 class="first"><a href="#p995">FTP pull data files without overwrite</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingae99.html?mode=quote&amp;f=3&amp;p=995" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicac83.html?p=995#p995" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopicac83.html?p=995#p995" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist29bb.html?mode=viewprofile&amp;u=624" class="username">CheeseFox</a></strong> &raquo; </span>02 Dec 2008 19:49
+			</p>
+			
+			
+			
+			<div class="content">Hi ppl, 
+<br />
+<br />its nice to see such a forum still around. Batch files are sooo very useful at automating some tasks. 
+<br />
+<br />I'm writing a script to pull datalogs from an offsite FTP server.
+<br />I'm having trouble finding way to write it so that the Script when pulling data does not auto-overwrite old files on local. 
+<br />
+<br />the server generates data files at say 10files a day and keeps a backlog of up to a month. I'm trying not to have to pull all 300+ files everyday just to have the few most updated files in my system. extremely bad for server since i'm not the only one doing such monitoring
+<br />
+<br />in dos, theres the &quot;Echo n | copy *.* c:\store&quot; where it will auto N to overwrite. 
+<br />
+<br />can we do the same for Dos FTP?
+<br />
+<br />
+<br />Thanks people
+<br />
+<br />
+<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>REM FTP System311Monitoring Daily Script<br /><br />REM Going to storage Directory<br />cd System311Monitoring<br /><br />REM Creating temporary script file<br />&gt; script.ftp ECHO &lt;username&gt;<br />&gt;&gt;script.ftp ECHO &lt;password&gt;<br />&gt;&gt;script.ftp ECHO hash<br />&gt;&gt;script.ftp ECHO cd DataStore<br />&gt;&gt;script.ftp ECHO ascii<br />&gt;&gt;script.ftp ECHO prompt n<br />&gt;&gt;script.ftp ECHO mget *SysMon311*.*<br />&gt;&gt;script.ftp ECHO bye<br />:: Use the temporary script for unattended FTP<br />FTP -v -d -s:script.ftp &lt;ftp address&gt;<br />:: Delete script file after use.<br />DEL script.ftp<br /><br />REM Back to Root directory<br />cd ..<br /><br />REM FTP Log Pull Script Complete<br /></code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p1000" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile1000">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search5648.html?author_id=5&amp;sr=posts">239</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 18 Feb 2006 19:54</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content1000">
+
+						<h3 ><a href="#p1000"></a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingc814.html?mode=quote&amp;f=3&amp;p=1000" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicbb97.html?p=1000#p1000" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopicbb97.html?p=1000#p1000" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a></strong> &raquo; </span>05 Dec 2008 01:10
+			</p>
+			
+			
+			
+			<div class="content">CheeseFox,
+<br />
+<br />Check this out:
+<br /><a href="../DtTipsFtpBatchScript.html#Batch_FtpBatchGetNewFilesOnly" class="postlink">http://www.dostips.com/DtTipsFtpBatchScript.php#Batch_FtpBatchGetNewFilesOnly</a>
+<br />
+<br />This batch connects twice to the FTP server. First time it retrieves a list of files on the FTP server. This list is being trimmed to contain only files that don`t already exist locally. The files in the trimmed list are then downloaded during a second connection.
+<br />
+<br />DosItHelp?  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p1005" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile1005">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist29bb.html?mode=viewprofile&amp;u=624" class="username">CheeseFox</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchbeba.html?author_id=624&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 02 Dec 2008 19:36</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content1005">
+
+						<h3 ><a href="#p1005"></a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingdf5f.html?mode=quote&amp;f=3&amp;p=1005" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7eba.html?p=1005#p1005" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopic7eba.html?p=1005#p1005" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist29bb.html?mode=viewprofile&amp;u=624" class="username">CheeseFox</a></strong> &raquo; </span>06 Dec 2008 02:29
+			</p>
+			
+			
+			
+			<div class="content">Hi DosItHelp,
+<br />
+<br />
+<br />been going thru the code since i saw the post... 
+<br />
+<br />i've changed &lt;&lt; %temp%\%~n0.ftp &gt;&gt; to something akin of &lt;&lt; c:\temp.ftp&gt;&gt; to get it to create the temporary script file
+<br />
+<br />figured out why the extractFileSection won't work with Echo On. (i like to use echo on to learn how things work... heeh... ended up Echo Off before extractFileSection and Echo On after it. ) 
+<br />
+<br />
+<br />
+<br />but have hit a stumbling point.. 
+<br />
+<br />on unmasking (removing REM) of the Notepad lines to check the script file, i noted that the script file was only changed from &quot;ls&quot; to &quot;mget&quot; with nothing else. 
+<br />
+<br />but... i cant seem to figure out how this section works :
+<br />
+<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>REM -- Execute Ftp Script, collect File Names<br />Set &quot;FileList=&quot;<br />For /F &quot;Delims=&quot; %%A In &#40;'&quot;Ftp -v -i -s:&quot;%temp%\%~n0.ftp&quot;|Findstr %FindStrArgs%&quot;'&#41; Do &#40;<br />&nbsp; &nbsp; Call Set &quot;FileList=%%FileList%% &quot;%%A&quot;&quot;<br />&#41;<br /></code></pre></div>
+<br />
+<br />
+<br />i didnt see the script connecting to the FTP server the first time to get the list. I only saw the ftp connecting the 2nd time to run mget with no file list. 
+<br />
+<br />
+<br />Any pointers on how that for loop works?
+<br />
+<br />
+<br />Thanks a million!</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p1006" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile1006">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search5648.html?author_id=5&amp;sr=posts">239</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 18 Feb 2006 19:54</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content1006">
+
+						<h3 ><a href="#p1006"></a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting983d.html?mode=quote&amp;f=3&amp;p=1006" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic846b.html?p=1006#p1006" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopic846b.html?p=1006#p1006" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a></strong> &raquo; </span>06 Dec 2008 23:16
+			</p>
+			
+			
+			
+			<div class="content">CheeseFox,
+<br />
+<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>REM -- Execute Ftp Script, collect File Names<br />Set &quot;FileList=&quot;<br />For /F &quot;Delims=&quot; %%A In &#40;'&quot;Ftp -v -i -s:&quot;%temp%\%~n0.ftp&quot;|Findstr %FindStrArgs%&quot;'&#41; Do &#40;<br />&nbsp; &nbsp; Call Set &quot;FileList=%%FileList%% &quot;%%A&quot;&quot;<br />&#41;</code></pre></div><br />is functionally identical with:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>REM -- Execute Ftp Script, collect File Names<br />Set &quot;FileList=&quot;<br />For /F &quot;Delims=&quot; %%A In &#40;'&quot;Ftp -v -i -s:&quot;%temp%\%~n0.ftp&quot;|Findstr %FindStrArgs%&quot;'&#41; Do &#40;<br />&nbsp; &nbsp; Set &quot;FileList=!FileList! &quot;%%A&quot;&quot;<br />&#41;</code></pre></div>
+<br />... except it's not using Delayedexpansion.
+<br />It executes the first ftp script (ls) and sends the output through FINDSTR in order to filter the file names that match the pattern defined in the FindStrArgs variable, i.e. all files ending with &quot;.txt&quot;.
+<br />The FOR loop iterates all resulting file names and adds them to FileList.  The resulting string in the FileList variable should be a space separated list of all file names in the remote directory.
+<br />
+<br />What you could try is:
+<br />After the first FTP script is created in c:\temp.ftp run it and verify that it returns the list of files in the remote directory, i.e. by running
+<br />Ftp -v -i -s:&quot;c:\temp.ftp&quot;
+<br />
+<br />Let me know how it goes.
+<br />DosItHelp</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p1012" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile1012">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist29bb.html?mode=viewprofile&amp;u=624" class="username">CheeseFox</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchbeba.html?author_id=624&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 02 Dec 2008 19:36</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content1012">
+
+						<h3 ><a href="#p1012"></a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting899e-2.html?mode=quote&amp;f=3&amp;p=1012" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic8f57-2.html?p=1012#p1012" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopic8f57-2.html?p=1012#p1012" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist29bb.html?mode=viewprofile&amp;u=624" class="username">CheeseFox</a></strong> &raquo; </span>09 Dec 2008 20:58
+			</p>
+			
+			
+			
+			<div class="content">Hi DosItHelp,
+<br />
+<br />i'm getting the error &quot;The input line is too long&quot; at the line 
+<br />
+<br />Call Set &quot;FileList=%%FileList%% &quot;%%A&quot;&quot;
+<br />
+<br />
+<br />................................
+<br />
+<br />
+<br />a side question, is it possible to pass the %%A variable value into a %temp1% variable for each loop? 
+<br />
+<br />i also noticed that the FTP server replies have a certain hidden character at the end of each line. only visible when opened in edit.com ... i think its screwing some things here.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p1013" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile1013">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist29bb.html?mode=viewprofile&amp;u=624" class="username">CheeseFox</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchbeba.html?author_id=624&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 02 Dec 2008 19:36</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content1013">
+
+						<h3 ><a href="#p1013"></a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2abc.html?mode=quote&amp;f=3&amp;p=1013" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5a2e.html?p=1013#p1013" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopic5a2e.html?p=1013#p1013" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist29bb.html?mode=viewprofile&amp;u=624" class="username">CheeseFox</a></strong> &raquo; </span>09 Dec 2008 21:11
+			</p>
+			
+			
+			
+			<div class="content">I also noticed some junk characters (#) when the 'ls' list is long.
+<br />
+<br />So i guess i'll need to put the %%A into a variable to trim off the hidden character at the end and to remove all the junk #s in the filenames. 
+<br />But i cant seem to do a &quot;set temp1=%%A&quot; or similar at all..
+<br />
+<br />
+<br />been a decade since i last did such stuff. Still kinda fun.. lolx...
+<br />
+<br />Thanks man!</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p1014" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile1014">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist29bb.html?mode=viewprofile&amp;u=624" class="username">CheeseFox</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchbeba.html?author_id=624&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 02 Dec 2008 19:36</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content1014">
+
+						<h3 ><a href="#p1014"></a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2377.html?mode=quote&amp;f=3&amp;p=1014" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic039f.html?p=1014#p1014" onclick="prompt('Message #7',this.href); return false;">#7</a></span> 
+									<a class="unread" href="viewtopic039f.html?p=1014#p1014" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist29bb.html?mode=viewprofile&amp;u=624" class="username">CheeseFox</a></strong> &raquo; </span>10 Dec 2008 04:40
+			</p>
+			
+			
+			
+			<div class="content">here i am talking to myself... LMAO
+<br />
+<br />
+<br />
+<br />ok.. i got it to work... in a fairly different way than the original code. but the basis is still there... 
+<br />
+<br />took me a day to figure out that i needed the &quot;setlocal enabledelayedexpansion&quot; environment variable for some stuff...
+<br />
+<br />
+<br />i'll clean up the code before posing it here... 
+<br />
+<br />hurrah!
+<br />
+<br />thanks dude</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p1024" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile1024">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist29bb.html?mode=viewprofile&amp;u=624" class="username">CheeseFox</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchbeba.html?author_id=624&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 02 Dec 2008 19:36</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content1024">
+
+						<h3 ><a href="#p1024"></a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingc84e.html?mode=quote&amp;f=3&amp;p=1024" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicf0fa-2.html?p=1024#p1024" onclick="prompt('Message #8',this.href); return false;">#8</a></span> 
+									<a class="unread" href="viewtopicf0fa-2.html?p=1024#p1024" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist29bb.html?mode=viewprofile&amp;u=624" class="username">CheeseFox</a></strong> &raquo; </span>22 Dec 2008 23:04
+			</p>
+			
+			
+			
+			<div class="content">Not the shortest nor the most elegant of codes. but it works well.
+<br />
+<br />theres a simple logging function encoded too that shows Start Time, New Files downloaded and End time. 
+<br />
+<br />the extension thing is a workaround as some FTP servers add a LFCR or such character at the end of every reply. 
+<br />
+<br />the &quot;#&quot; removal is to remove junk '#' characters that sometimes appear when listing many many files... 
+<br />
+<br />works for long file names... 
+<br />
+<br />yea.. i think thats all.. 
+<br />
+<br />
+<br />To use... replace all &lt;&lt;????&gt;&gt; with the appropriate things
+<br />
+<br />
+<br />
+<br />Thanks DosItHelp for the inspiration
+<br />
+<br />
+<br />Cheers,
+<br />CheeseFox
+<br />
+<br />
+<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br /><br />REM -- Define Local Folder to store files<br />REM -- Full directory location pls. Eg: C:\temp<br />Set HomeLoc=&lt;&lt;local directory&gt;&gt;<br /><br />REM -- Define logfile<br />Set LogFile=&lt;&lt;logfile name, eg:C:\temp\FTPAUTO.txt&gt;&gt;<br /><br /><br /><br />REM -- Define FTP information<br />Set FTPAddress=&lt;&lt;ftp server&gt;&gt;<br />Set FTPUser=&lt;&lt;ftp username&gt;&gt;<br />Set FTPPassword=&lt;&lt;ftp password&gt;&gt;<br /><br />REM -- Define Remote Folder to pull files<br />REM -- tip: the directory name after logging into ftp server<br />Set RemoteLoc=&lt;&lt;remote directory&gt;&gt;<br />Set ls_string=&lt;&lt;search string: either &quot;ls&quot; for all files or &quot;ls *item1*&quot; to download specific files&gt;&gt;<br /><br />REM -- Define File Filter, <br />REM -- :: example: files with extension .txt<br />REM -- :: Set FileType=ASCII or Binary?<br />REM -- :: Set Extension=.txt<br />Set FileType=ASCII<br />Set Extension=.txt<br /><br /><br />REM ################################################################################################<br />REM ################################################################################################<br />REM ################################################################################################<br /><br /><br /><br />&gt;&gt;%LogFile% Echo.===========================<br />&gt;&gt;%LogFile% Echo Start Time:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Echo exit|cmd /q /k prompt $D $T&gt;&gt;%LogFile%<br />&gt;&gt;%LogFile% Echo.<br />&gt;&gt;%LogFile% Echo.Local Dir: %HomeLoc%<br />&gt;&gt;%LogFile% Echo.Remote ftp: %FTPAddress%<br />&gt;&gt;%LogFile% Echo.Remote Dir: %RemoteLoc%<br />&gt;&gt;%LogFile% Echo.<br />&gt;&gt;%LogFile% Echo.ver0.74 : 16 Dec 2008 9.30am<br />&gt;&gt;%LogFile% Echo.===========================<br />&gt;&gt;%LogFile% Echo.<br /><br /><br /><br />Set FindStrArgs=/E /C:&quot;%Extension%&quot;<br /><br />Set ScpFile1=%HomeLoc%\ftpscript1.ftp<br />Set ScpFile2=%HomeLoc%\ftpscript2.ftp<br /><br />cd %HomeLoc%<br /><br />&gt;&gt;%LogFile% Echo.**Listing<br />REM -- Creating FTP script file for listing out FTP files<br />REM -------------------------------------------<br />&gt;&gt;%ScpFile1% Echo !Title Connecting to %FTPAddress%...<br />&gt;&gt;%ScpFile1% Echo open %FTPAddress%<br />&gt;&gt;%ScpFile1% Echo %FTPUser%<br />&gt;&gt;%ScpFile1% Echo %FTPPassword%<br />&gt;&gt;%ScpFile1% Echo <br />&gt;&gt;%ScpFile1% Echo !Title Setting variables... %FTPAddress%...<br />&gt;&gt;%ScpFile1% Echo cd %RemoteLoc%<br />&gt;&gt;%ScpFile1% Echo lcd %HomeLoc%<br />&gt;&gt;%ScpFile1% Echo %FileType%<br />&gt;&gt;%ScpFile1% Echo hash<br />&gt;&gt;%ScpFile1% Echo <br />&gt;&gt;%ScpFile1% Echo !Title Retrieving File List... %FTPAddress%...<br />&gt;&gt;%ScpFile1% Echo %ls_string%<br />&gt;&gt;%ScpFile1% Echo !Title Disconnecting... %FTPAddress%...<br />&gt;&gt;%ScpFile1% Echo disconnect<br />&gt;&gt;%ScpFile1% Echo bye<br />REM -------------------------------------------<br /><br />REM -- Execute Ftp Script, collect File Names<br />Set &quot;Listing=&quot;<br />Set &quot;FtpCommand=get&quot;<br />REM -------------------------------------------<br />&gt;&gt;%ScpFile2% Echo !Title Connecting to %FTPAddress%...<br />&gt;&gt;%ScpFile2% Echo open %FTPAddress%<br />&gt;&gt;%ScpFile2% Echo %FTPUser%<br />&gt;&gt;%ScpFile2% Echo %FTPPassword%<br />&gt;&gt;%ScpFile2% Echo <br />&gt;&gt;%ScpFile2% Echo !Title Setting variables... %FTPAddress%...<br />&gt;&gt;%ScpFile2% Echo cd %RemoteLoc%<br />&gt;&gt;%ScpFile2% Echo lcd %HomeLoc%<br />&gt;&gt;%ScpFile2% Echo %FileType%<br />&gt;&gt;%ScpFile2% Echo hash<br />&gt;&gt;%ScpFile2% Echo <br />&gt;&gt;%ScpFile2% Echo !Title Downloading Files... %FTPAddress%...<br /><br /><br />&gt;&gt;%LogFile% Echo.**Sorting<br />&gt;&gt;%LogFile% Echo.=== New Files Start ===<br />REM -------------------------------------------<br />setlocal enabledelayedexpansion<br /><br />set Junksearch=#<br />set Junkreplace=<br />set NewFiles=0<br />For /F &quot;Delims=&quot; %%A In &#40;'&quot;Ftp -v -s:%ScpFile1%|Findstr %FindStrArgs%&quot;'&#41; Do &#40;<br />&nbsp; &nbsp;set newline=%%~nA<br />&nbsp; &nbsp;set newline=!newline:%Junksearch%=%Junkreplace%!<br />&nbsp; &nbsp;set emptyline=<br />&nbsp; &nbsp;if Not !newline!==!emptyline! &#40;<br />&nbsp; &nbsp;&nbsp; &nbsp;If Not Exist &quot;!newline!%extension%&quot; &#40;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&gt;&gt; %ScpFile2% Echo.%FtpCommand% !newline!%extension%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&gt;&gt;%LogFile% Echo.%FtpCommand% !newline!%extension%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;set NewFiles=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&#41;<br />&nbsp; &nbsp;&nbsp; &nbsp;&#41;<br />&nbsp; &nbsp;&#41;<br />&gt;&gt;%LogFile% Echo.=== New Files End ===<br />setlocal disabledelayedexpansion<br /><br />REM -------------------------------------------<br /><br />&gt;&gt;%ScpFile2% Echo !Title Disconnecting... %FTPAddress%...<br />&gt;&gt;%ScpFile2% Echo disconnect<br />&gt;&gt;%ScpFile2% Echo bye<br /><br />if %NewFiles%==1 &#40;<br />&nbsp; &nbsp;REM -- Execute Ftp Script, download files<br />&nbsp; &nbsp;&gt;&gt;%LogFile% Echo.**Retrieving<br />&nbsp; &nbsp;ftp -v -d -s:%ScpFile2%<br />&nbsp; &nbsp;&gt;&gt;%LogFile% Echo.ERROR LEVEL:: %ERRORLEVEL%<br />&nbsp; &nbsp;&#41; ELSE &#40;<br />&nbsp; &nbsp;&gt;&gt;%LogFile% Echo.**No New Files<br />&nbsp; &nbsp;&#41;<br />&nbsp; &nbsp;<br /><br />Del %ScpFile1%<br />Del %ScpFile2%<br /><br />&gt;&gt;%LogFile% Echo.**Ending Script<br /><br />&gt;&gt;%LogFile% Echo.===========================<br />&gt;&gt;%LogFile% Echo End time:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Echo exit|cmd /q /k prompt $D $T&gt;&gt;%LogFile%<br />&gt;&gt;%LogFile% Echo.<br />&gt;&gt;%LogFile% Echo.===========================<br />&gt;&gt;%LogFile% Echo.<br />&gt;&gt;%LogFile% Echo.<br />&gt;&gt;%LogFile% Echo.<br /><br /></code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="postingdd1d.html?mode=reply&amp;f=3&amp;t=370" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic4907.html?f=3&amp;t=370&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=370">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			8 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron68e3.gif?cron_type=cron.task.text_reparser.pm_text" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=370 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:32:15 GMT -->
+</html>

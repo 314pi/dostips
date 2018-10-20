@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6839&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:24:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; And now dos batch color secrets? - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>And now dos batch color secrets?</h2>
+		<p><a href="viewtopic0d9b.html?f=3&amp;t=6839">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6839</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Re: And now dos batch color secrets?</h3>
+				<div class="date">Posted: <strong>18 Apr 2016 22:39</strong></div>
+				<div class="author">by <strong>IcarusLives</strong></div>
+				<div class="content">I'm amazed by your colors, Einstein. I've been using this color function for my own personal use. I'm unsure if it is faster, but I'm sure it does not allow some colors like yours does. <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp; setlocal enableDelayedExpansion<br />for /f %%a in ('&quot;prompt $H&amp;for %%b in (1) do rem&quot;') do set &quot;BS=%%a&quot;<br /><br />call :color CF &quot;Hello&quot; 0<br />call :color F9 &quot; World&quot; 1<br /><br />call :color DE &quot;Colors&quot; 1<br /><br />pause &gt; nul &amp; goto :eof<br /><br /><br />:color<br />set nL=%3<br />if not defined nL echo requires third argument &amp; pause &gt; nul &amp; goto :eof<br />if %3 == 0 (<br />&nbsp; &nbsp; &lt;nul set /p &quot;.=%bs%&quot;&gt;%2 &amp; findstr /v /a:%1 /r &quot;^$&quot; %2 nul &amp; del %2 2&gt;&amp;1 &amp; goto :eof<br />) else if %3 == 1 (<br />&nbsp; &nbsp; echo %bs%&gt;%2 &amp; findstr /v /a:%1 /r &quot;^$&quot; %2 nul &amp; del %2 2&gt;&amp;1 &amp; goto :eof<br />)</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: And now dos batch color secrets?</h3>
+				<div class="date">Posted: <strong>21 Apr 2016 08:26</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">Yes, this version of colors don't work. Seem that FINDSTR don't work if filename is on the range of EXTENDED ASCII chars.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: And now dos batch color secrets?</h3>
+				<div class="date">Posted: <strong>29 Apr 2018 21:57</strong></div>
+				<div class="author">by <strong>IcarusLives</strong></div>
+				<div class="content">Sorry to dig this up, but I thought maybe it might be useful to post a VT100 solution for WIN 10 PCs..<br>
+<br>
+HSL<br>
+<img src="../../i.gyazo.com/0883da98ab6f230068823e8a96e07681.png" class="postimage" alt="Image"><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp; setlocal enabledelayedexpansion
+
+mode 90,60
+
+for /F %%a in ('echo prompt $E^| cmd') do set "ESC=%%a"
+
+Set /a s=10000, v1=10000
+
+For /L %%h in (0,15,360) do ( 
+	For /L %%v in (10000,-400,0) do call :plot_HSL_RGB %%h !s! %%v
+	if !v1! geq 0 (   &lt;nul set /p "=%esc%[38;2;0;0;0mÛ"
+		&lt;nul set /p "=%esc%[38;2;0;0;0mÛ"
+        For /L %%l in (0,8,360) do call :plot_HSL_RGB %%l !s! !v1!
+        set /a v1=v1-500
+	)
+   echo(
+)
+
+pause
+exit /b
+
+:Plot_HSL_RGB H S L
+
+	rem H=0..360 S=0..10000 L=0..10000
+
+	set /a H=%1, S=%2, L=%3
+
+	rem When 0 &lt;= H &lt; 360, 0 &lt;= S &lt;= 1 and 0 &lt;= L &lt;= 1:
+
+	if !H! equ 360 set /a H=0
+
+	if !H! lss 0 echo ERROR! &amp; goto :EOF
+
+	set /a va=2*L-10000
+	if !va! lss 0 set /a va=-va
+
+	set /a C=(10000-va)*S/10000
+
+	set /a "h1=h*10000/60, mm = (h1 %% 20000) - 10000"
+
+	if !mm! lss 0 set /a mm=-mm
+
+	set /a X = C *(10000 - mm)/10000 , m = L - C/2
+
+	rem (R,G,B) = (R'+m, G'+m, B'+m)
+
+	if !H! lss 60 (set /a R=C+m, G=X+m, B=0+m) else (
+	   if !H! lss 120 (set /a R=X+m, G=C+m, B=0+m) else (
+		  if !H! lss 180 (set /a R=0+m, G=C+m, B=X+m) else (
+			 if !H! lss 240 (set /a R=0+m, G=X+m, B=C+m) else (
+				if !H! lss 300 (set /a R=X+m, G=0+m, B=C+m) else (
+				   if !H! lss 360 (set /a R=C+m, G=0+m, B=X+m) else (echo ERROR!)
+				)
+			 )
+		  )
+	   )
+	)
+
+	set /a R=R*255/10000, G=G*255/10000, B=B*255/10000
+
+	&lt;nul set /p "=%esc%[38;2;!R!;!G!;!B!mÛ"
+
+goto :eof</code></pre></div>
+
+HSV<br>
+<img src="../../i.gyazo.com/9ed17d7b4f842da7216e7d9a12fc21da.png" class="postimage" alt="Image">
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp; setlocal enabledelayedexpansion
+
+mode 90,60
+
+for /F %%a in ('echo prompt $E^| cmd') do set "ESC=%%a"
+
+Set /a s=10000, v1=10000
+
+For /L %%h in (0,15,360) do ( 
+	For /L %%v in (10000,-400,0) do call :plot_HSV_RGB %%h !s! %%v
+	if !v1! geq 0 (   &lt;nul set /p "=%esc%[38;2;0;0;0mÛ"
+		&lt;nul set /p "=%esc%[38;2;0;0;0mÛ"
+        For /L %%l in (0,8,360) do call :plot_HSV_RGB %%l !s! !v1!
+        set /a v1=v1-500
+	)
+   echo(
+)
+
+pause
+exit /b
+
+:::::::::::::::::::::::::::::::::::::::::::
+:Plot_HSV_RGB H S V
+	rem H=0..360 S=0..10000 V=0..10000
+
+	set /a H=%1, S=%2, V=%3
+
+	rem When 0 &lt;= H &lt; 360, 0 &lt;= S &lt;= 1 and 0 &lt;= V &lt;= 1:
+
+	if !H! equ 360 set /a H=0
+
+	if !H! lss 0 echo ERROR! &amp; goto :EOF
+
+	set /a "h1=h*10000/60, mm = (h1 %% 20000) - 10000"
+
+	if !mm! lss 0 set /a mm=-mm
+
+	set /a C = (V * S) / 10000
+
+	set /a "X = C *(10000 - mm)/10000 , m = V - C"
+
+	rem (R,G,B) = (R'+m, G'+m, B'+m)
+
+	if !H! lss 60 (set /a R=C+m, G=X+m, B=0+m) else (
+	   if !H! lss 120 (set /a R=X+m, G=C+m, B=0+m) else (
+		  if !H! lss 180 (set /a R=0+m, G=C+m, B=X+m) else (
+			 if !H! lss 240 (set /a R=0+m, G=X+m, B=C+m) else (
+				if !H! lss 300 (set /a R=X+m, G=0+m, B=C+m) else (
+				   if !H! lss 360 (set /a R=C+m, G=0+m, B=X+m) else (echo ERROR!)
+	)))))
+
+	set /a "R=R*255/10000, G=G*255/10000, B=B*255/10000"
+
+	&lt;nul set /p "=%esc%[38;2;!R!;!G!;!B!mÛ"
+exit /b</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: And now dos batch color secrets?</h3>
+				<div class="date">Posted: <strong>03 May 2018 10:08</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">Hi Icarus,<br>
+<br>
+This is great result!!!<br>
+<br>
+Einstein1969</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: And now dos batch color secrets?</h3>
+				<div class="date">Posted: <strong>03 May 2018 13:14</strong></div>
+				<div class="author">by <strong>IcarusLives</strong></div>
+				<div class="content">Einstein, my friend, where have you been? Your work on colors has inspired me over time.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6839&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:24:45 GMT -->
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8774&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:43:34 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Retrieve/Iterate all .doc files in a directory</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Retrieve/Iterate all .doc files in a directory</h2>
+		<p><a href="viewtopic213e.html?f=3&amp;t=8774">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8774</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Retrieve/Iterate all .doc files in a directory</h3>
+				<div class="date">Posted: <strong>09 Aug 2018 04:42</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content">What is the recommended method to get <strong class="text-strong">only</strong> the files in a directory with the extension <strong class="text-strong">.doc</strong>?<br>
+<br>
+I often see, <em class="text-italics">and use</em>, examples of <strong class="text-strong">For</strong> loops like this:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>For %A In (*.doc) Do @Echo %A</code></pre></div>or this:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>For /F "Delims=" %A In ('Dir /B/A-D *.doc') Do @Echo %A</code></pre></div>
+
+However in the real world that does not do what is asked; in the straight <strong class="text-strong">For</strong> loop for example:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\Compo&gt;For %A In (Desktop\test\*.doc) Do @Echo %~nxA
+FileName01.docm
+FileName03.docx
+FileName01.doc
+FileName02.doc
+FileName01.docx
+FileName02.docx</code></pre></div>In an example <strong class="text-strong">For /F</strong> loop:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>For /F "Delims=" %A In ('Dir /B/A-D "Desktop\test\*.doc" 2^&gt;Nul') Do @Echo %A
+FileName01.docm
+FileName03.docx
+FileName01.doc
+FileName02.doc
+FileName01.docx
+FileName02.docx</code></pre></div>As you can clearly see, I didn't ask for <strong class="text-strong">.docm</strong> or <strong class="text-strong">.docx</strong> files, and whilst I accept that in many cases getting all of those extensions can be seen as a bonus, running a process on them instead of <strong class="text-strong">Echo</strong> could be potentially catasrophic.<br>
+<br>
+I know the <strong class="text-strong">Where</strong> command is successful:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\Compo&gt;For /F "Delims=" %A In ('Where "Desktop\test":*.doc 2^&gt;Nul') Do @Echo %~nxA
+FileName01.doc
+FileName02.doc</code></pre></div><ul><li>Is there a simpler or better recommended pre-processing method of matching only the extension entered?<br>
+<em class="text-italics">(I'm aware that there are post-processing methods, e.g. piping the output through FindStr or using If %~xA==.doc etc.)</em></li>
+<li>Why does nobody ever seem to complain that <strong class="text-strong">*.doc</strong> is matching extensions they didn't ask for?</li></ul></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Retrieve/Iterate all .doc files in a directory</h3>
+				<div class="date">Posted: <strong>09 Aug 2018 07:43</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist1ec2.html?mode=viewprofile&amp;u=5449">Compo</a> wrote: <a href="viewtopicb272.html?p=57716#p57716" data-post-id="57716" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">09 Aug 2018 04:42</div></cite>
+<ul><li>Is there a simpler or better recommended pre-processing method of matching only the extension entered?<br>
+<em class="text-italics">(I'm aware that there are post-processing methods, e.g. piping the output through FindStr or using If %~xA==.doc etc.)</em></li></ul>
+</div></blockquote>
+I'm not aware of any simple method.<br>
+
+<blockquote><div><cite><a href="memberlist1ec2.html?mode=viewprofile&amp;u=5449">Compo</a> wrote: <a href="viewtopicb272.html?p=57716#p57716" data-post-id="57716" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">09 Aug 2018 04:42</div></cite>
+<ul><li>Why does nobody ever seem to complain that <strong class="text-strong">*.doc</strong> is matching extensions they didn't ask for?</li></ul>
+</div></blockquote>
+Because it doesn't help if you complain <img class="smilies" src="images/smilies/icon_lol.gif" width="15" height="15" alt=":lol:" title="Laughing"> Nothing will change.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Retrieve/Iterate all .doc files in a directory</h3>
+				<div class="date">Posted: <strong>09 Aug 2018 12:32</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">Only If there was a switch or setting in cmd to ignore 8dot3names on pattern matching. So unfortunately no simpler methods other than the ones you are already aware of until someone discovers that magic word; if it exists at all.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Retrieve/Iterate all .doc files in a directory</h3>
+				<div class="date">Posted: <strong>10 Aug 2018 16:07</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">What version of Windows are you using? I can't replicate your results on Windows 7.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Retrieve/Iterate all .doc files in a directory</h3>
+				<div class="date">Posted: <strong>10 Aug 2018 18:03</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8beb.html?mode=viewprofile&amp;u=5056">ShadowThief</a> wrote: <a href="viewtopic84ed.html?p=57738#p57738" data-post-id="57738" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">10 Aug 2018 16:07</div></cite>
+What version of Windows are you using? I can't replicate your results on Windows 7.
+</div></blockquote>
+Most probably short file names creation is disabled either on the volume you are testing or globally through registry. In this case DIR /X should not display short file names for newly created files.<br>
+Or query by
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>fsutil 8dot3name query &lt;NtfsVolumeDriveLetter&gt;:
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Retrieve/Iterate all .doc files in a directory</h3>
+				<div class="date">Posted: <strong>11 Aug 2018 03:52</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8beb.html?mode=viewprofile&amp;u=5056">ShadowThief</a> wrote: <a href="viewtopic84ed.html?p=57738#p57738" data-post-id="57738" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">10 Aug 2018 16:07</div></cite>What version of Windows are you using? I can't replicate your results on Windows 7.</div></blockquote>
+I have confirmed the behavior on several different OS's over the years, and agree with <strong class="text-strong">sst</strong>, that you must have modified settings on your Windows 7 system.<br>
+<br>
+<em class="text-italics">My settings are the defaults, <strong class="text-strong">0</strong> for the volume state, and <strong class="text-strong">2</strong> for the registry state.</em></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8774&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:43:34 GMT -->
+</html>

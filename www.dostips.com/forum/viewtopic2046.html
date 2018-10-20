@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4896 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:49:46 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Fastest sin(x) in dos batch - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic8804.html?t=4896">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic2046.html?f=3&amp;t=4896">Fastest sin(x) in dos batch</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="postingddf4.html?mode=reply&amp;f=3&amp;t=4896" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic96f2-2.html?f=3&amp;t=4896&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="4896" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			37 posts
+							<ul>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopic91f8-2.html?f=3&amp;t=4896&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopic9367.html?f=3&amp;t=4896&amp;start=30" role="button">3</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic91f8-2.html?f=3&amp;t=4896&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p28408" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28408">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28408">
+
+						<h3 class="first"><a href="#p28408">Fastest sin(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9da1.html?mode=quote&amp;f=3&amp;p=28408" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9767.html?p=28408#p28408" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopic9767.html?p=28408#p28408" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>04 Sep 2013 07:41
+			</p>
+			
+			
+			
+			<div class="content">hi,<br /><br />I need to have the sine function in batch. Should be as fast as possible. I only need a few decimal (2-3 or 4) after the decimal point as a result or integer values ​​to be divided. In input also an integer value of degrees or cents / thousandths of degrees.<br /><br />You could use the mathematics of integers of dos batch to be more 'fast?</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a> on 15 Sep 2013 09:00, edited 1 time in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p28409" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28409">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistb405.html?mode=viewprofile&amp;u=4696" class="username">Endoro</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search644b.html?author_id=4696&amp;sr=posts">244</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 27 Mar 2013 01:29</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Bozen</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28409">
+
+						<h3 ><a href="#p28409">Re: Fastest sen(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting6377.html?mode=quote&amp;f=3&amp;p=28409" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9fc5.html?p=28409#p28409" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopic9fc5.html?p=28409#p28409" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistb405.html?mode=viewprofile&amp;u=4696" class="username">Endoro</a></strong> &raquo; </span>04 Sep 2013 07:45
+			</p>
+			
+			
+			
+			<div class="content">please look <a href="http://www.robvanderwoude.com/batexamples.php?fc=S" class="postlink">here</a>.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p28410" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28410">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28410">
+
+						<h3 ><a href="#p28410">Re: Fastest sen(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf049.html?mode=quote&amp;f=3&amp;p=28410" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6d5e.html?p=28410#p28410" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopic6d5e.html?p=28410#p28410" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>04 Sep 2013 08:01
+			</p>
+			
+			
+			
+			<div class="content">I'm sorry, I forgot to add that I would not install anything, so if possible in pure batch dos or with what is available by default.<br /><br />  In that link I could find only two batch but require php.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p28411" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28411">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28411">
+
+						<h3 ><a href="#p28411">Re: Fastest sen(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8c78.html?mode=quote&amp;f=3&amp;p=28411" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1961-2.html?p=28411#p28411" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopic1961-2.html?p=28411#p28411" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>04 Sep 2013 08:42
+			</p>
+			
+			
+			
+			<div class="content">I did a test and still does not seem to be very fast.<br /><br />I cycled about 1000 times and has taken too much on my pc ..<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>E:\x264\provini\php&gt;cmd /V:ON /c &quot;echo %time% &amp; ( for /L %# in (1,1,1000) do @(<br />php.exe -r print(sin(&quot;3&quot;^)^); &gt; nul: ) ) &amp; echo !time!&quot;<br />16:40:08,23<br />16:40:39,43<br /></code></pre></div><br /><br />about 0.030 sec or 30 ms</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p28415" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28415">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28415">
+
+						<h3 ><a href="#p28415">Re: Fastest sen(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingac7f.html?mode=quote&amp;f=3&amp;p=28415" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6895.html?p=28415#p28415" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopic6895.html?p=28415#p28415" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>04 Sep 2013 13:16
+			</p>
+			
+			
+			
+			<div class="content">Ok.<br /><br />I init the skeleton <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br /><br />Int_Sinx:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br />:INT_Sinx&nbsp; Degree&nbsp; &#91;ResultVAR&#93;<br />::<br />::&nbsp; &nbsp;&nbsp; &nbsp;-- Return the sine for the specified angle in degrees. y=sin(x), where x is in integer<br />::&nbsp; &nbsp;&nbsp; &nbsp;<br />::&nbsp; &nbsp;&nbsp; &nbsp;-- Degree &nbsp; &nbsp;&#91;in&#93; &nbsp; &nbsp;Degree is an integer in &#91;0,90&#93;<br />::<br />::&nbsp; &nbsp;&nbsp; &nbsp;-- ResultVAR &nbsp; &nbsp;&#91;out&#93;&nbsp; &nbsp;var reference to return value of y &#91;0,100&#93;<br />::<br />::&nbsp; Version history<br />::<br />:: 0.1&nbsp; &nbsp;4/9/2013&nbsp; &nbsp;First version that use 2 decimal for result e input in integer degree<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;for angle from 0 to 90 degree.<br />::<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;From Francesco Poscetti aka Einstein1969<br />::<br />::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br />SETLOCAL<br /><br />&nbsp; &nbsp;REM.--function body<br />&nbsp; &nbsp;set /a d=%~1<br /><br />&nbsp; &nbsp;if %d% lss 0 echo Not implemented. Exit. &amp; goto :eof<br />&nbsp; &nbsp;if %d% gtr 90 echo Not implemented. Exit. &amp; goto :eof<br /><br />&nbsp; &nbsp;set /a y=(r=x=314*d/180)-(yp=x*x*x)/6/(o=100)/o+yp*x/120*x/o/o/o/o<br /><br />(ENDLOCAL &amp; REM -- RETURN VALUES<br />&nbsp; &nbsp; IF &quot;%~2&quot; NEQ &quot;&quot; (SET %~2=%y%) ELSE Echo %y%<br />)<br />GOTO:EOF<br />::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br /></code></pre></div><br /><br />For now only first quadrant, the other three are easy<br /><br />test_code.cmd<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off <br />setlocal<br />setlocal EnableDelayedExpansion<br /><br />set st=<br />For /L %%# in (1,1,52) do call set st=#%%st%%<br /><br />For /L %%# in (0,4,90) do ( <br />&nbsp; &nbsp;call :Int_Sinx %%# INT_Sinx_result<br /><br />&nbsp; &nbsp;set /a &quot;int_sinx_result&gt;&gt;=1&quot;<br />&nbsp; &nbsp;call set st_=%%st:~0,-!int_sinx_result!%%<br /><br />&nbsp; &nbsp;echo(!st_!<br />)<br />For /L %%# in (90,-4,0) do ( <br />&nbsp; &nbsp;call :Int_Sinx %%# INT_Sinx_result<br /><br />&nbsp; &nbsp;set /a &quot;int_sinx_result&gt;&gt;=1&quot;<br />&nbsp; &nbsp;call set st_=%%st:~0,-!int_sinx_result!%%<br /><br />&nbsp; &nbsp;echo(!st_!<br />)<br /></code></pre></div><br /><br />Result:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>#################################################<br />#############################################<br />##########################################<br />######################################<br />###################################<br />################################<br />############################<br />#########################<br />#######################<br />####################<br />#################<br />###############<br />#############<br />###########<br />#########<br />#######<br />######<br />#####<br />####<br />###<br />##<br />##<br />##<br />##<br />###<br />###<br />####<br />#####<br />#######<br />########<br />##########<br />############<br />##############<br />################<br />###################<br />#####################<br />########################<br />###########################<br />##############################<br />#################################<br />#####################################<br />########################################<br />############################################<br />###############################################<br />###################################################<br /></code></pre></div><br /><br />EDIT: changed for more performance<br /><br /><br />raw performance sin(45)=0.71:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>E:\x264\provini&gt;cmd /V:ON /c &quot;echo %time% &amp; set degree=45 &amp; ( for /L %# in (1,1,10000<br />) do @(set /a &quot;y=(r=x=314*degree/180)-(p=x*x*x)/6/(o=100)/o+p*x/120*x/o/o/o/o&quot;) &gt;nul<br />) &amp; echo !time! &amp; if !y! lss 10 (echo 0.0!y!) else if !y! lss 100 (echo 0.!y!) e<br />lse echo 1.00&quot;<br />22:49:16,89<br />22:49:19,87<br />0.71<br /></code></pre></div><br />3sec/10000= 0.0003s  or 0.3ms<br /><br /><br />.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p28417" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28417">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915" style="color: #00AA00;" class="username-coloured">penpen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1bf7.html?author_id=4915&amp;sr=posts">1612</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Jun 2013 06:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28417">
+
+						<h3 ><a href="#p28417">Re: Fastest sen(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting1fed-2.html?mode=quote&amp;f=3&amp;p=28417" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic3fba.html?p=28417#p28417" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopic3fba.html?p=28417#p28417" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915" style="color: #00AA00;" class="username-coloured">penpen</a></strong> &raquo; </span>04 Sep 2013 15:49
+			</p>
+			
+			
+			
+			<div class="content">One quite fast solution can be read here: <a href="http://lab.polygonal.de/?p=205" class="postlink">http://lab.polygonal.de/?p=205</a>.<br />Although this is not done using integer arithmetics, but it may easily be converted to.<br /><br />penpen</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p28429" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28429">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28429">
+
+						<h3 ><a href="#p28429">Re: Fastest sen(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting322e.html?mode=quote&amp;f=3&amp;p=28429" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic2a53.html?p=28429#p28429" onclick="prompt('Message #7',this.href); return false;">#7</a></span> 
+									<a class="unread" href="viewtopic2a53.html?p=28429#p28429" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>05 Sep 2013 06:50
+			</p>
+			
+			
+			
+			<div class="content">Thanks penpen the link is very full of trick.<br /><br />I have tested the fast quadratic version but there is so much error<br /><br />at 30 degrees the sin(30°)=0,5 but the fast quadratic version is 0,555...<br /><br />I test quality quadratic version now!</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p28438" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28438">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28438">
+
+						<h3 ><a href="#p28438">Re: Fastest sen(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf232.html?mode=quote&amp;f=3&amp;p=28438" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic8ee4.html?p=28438#p28438" onclick="prompt('Message #8',this.href); return false;">#8</a></span> 
+									<a class="unread" href="viewtopic8ee4.html?p=28438#p28438" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>05 Sep 2013 18:14
+			</p>
+			
+			
+			
+			<div class="content">You may think this is cheating, but it certainly is fast, accurate, and pure batch  <img class="smilies" src="images/smilies/icon_twisted.gif" alt=":twisted:" title="Twisted Evil" /> <br /><br />(I did use JScript to initially get the lookup values - not shown)<br /><br />It provides an accurate sin() value for any integral number of degrees, with 5 decimal digits of precision. The 5 was an arbitrary choice.<br /><br />An extremely fast direct lookup is used for values between 0 and 359:   0.09 msec on my machine. <br /><br />A macro is used for any other integral value:   0.81 msec on my machine<br /><br />I can't figure out why the macro &quot;call&quot; must be within parentheses  <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" /> <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal disableDelayedExpansion<br /><br />:: =========================== Begin Initialization ================================<br /><br />set LF=^<br /><br /><br />set ^&quot;\n=^^^%LF%%LF%^%LF%%LF%^^&quot;<br /><br />set ^&quot;sin=%\n%<br />for %%# in (1 2) do if %%#==2 (for /f &quot;tokens=1,2&quot; %%1 in (&quot;!args!&quot;) do (%\n%<br />&nbsp; set /a &quot;N=%%1%%360&quot;%\n%<br />&nbsp; if !N! lss 0 set /a &quot;N+=360&quot;%\n%<br />&nbsp; for %%N in (!N!) do for %%n in (!sin%%N!) do (%\n%<br />&nbsp; &nbsp; endlocal%\n%<br />&nbsp; &nbsp; if &quot;%%2&quot; equ &quot;&quot; (echo %%n) else set &quot;%%2=%%n&quot;%\n%<br />&nbsp; )%\n%<br />)) else setlocal enableDelayedExpansion^&amp;set args=^&quot;<br /><br />setlocal enableDelayedExpansion<br />set N=0<br />for %%V in (<br />0.00000 0.01745 0.03490 0.05234 0.06976 0.08716 0.10453 0.12187 0.13917 0.15643<br />0.17365 0.19081 0.20791 0.22495 0.24192 0.25882 0.27564 0.29237 0.30902 0.32557<br />0.34202 0.35837 0.37461 0.39073 0.40674 0.42262 0.43837 0.45399 0.46947 0.48481<br />0.50000 0.51504 0.52992 0.54464 0.55919 0.57358 0.58779 0.60182 0.61566 0.62932<br />0.64279 0.65606 0.66913 0.68200 0.69466 0.70711 0.71934 0.73135 0.74314 0.75471<br />0.76604 0.77715 0.78801 0.79864 0.80902 0.81915 0.82904 0.83867 0.84805 0.85717<br />0.86603 0.87462 0.88295 0.89101 0.89879 0.90631 0.91355 0.92050 0.92718 0.93358<br />0.93969 0.94552 0.95106 0.95630 0.96126 0.96593 0.97030 0.97437 0.97815 0.98163<br />0.98481 0.98769 0.99027 0.99255 0.99452 0.99619 0.99756 0.99863 0.99939 0.99985<br />1.00000 0.99985 0.99939 0.99863 0.99756 0.99619 0.99452 0.99255 0.99027 0.98769<br />0.98481 0.98163 0.97815 0.97437 0.97030 0.96593 0.96126 0.95630 0.95106 0.94552<br />0.93969 0.93358 0.92718 0.92050 0.91355 0.90631 0.89879 0.89101 0.88295 0.87462<br />0.86603 0.85717 0.84805 0.83867 0.82904 0.81915 0.80902 0.79864 0.78801 0.77715<br />0.76604 0.75471 0.74314 0.73135 0.71934 0.70711 0.69466 0.68200 0.66913 0.65606<br />0.64279 0.62932 0.61566 0.60182 0.58779 0.57358 0.55919 0.54464 0.52992 0.51504<br />0.50000 0.48481 0.46947 0.45399 0.43837 0.42262 0.40674 0.39073 0.37461 0.35837<br />0.34202 0.32557 0.30902 0.29237 0.27564 0.25882 0.24192 0.22495 0.20791 0.19081<br />0.17365 0.15643 0.13917 0.12187 0.10453 0.08716 0.06976 0.05234 0.03490 0.01745<br />0.00000 -0.01745 -0.03490 -0.05234 -0.06976 -0.08716 -0.10453 -0.12187 -0.13917 -0.15643<br />-0.17365 -0.19081 -0.20791 -0.22495 -0.24192 -0.25882 -0.27564 -0.29237 -0.30902 -0.32557<br />-0.34202 -0.35837 -0.37461 -0.39073 -0.40674 -0.42262 -0.43837 -0.45399 -0.46947 -0.48481<br />-0.50000 -0.51504 -0.52992 -0.54464 -0.55919 -0.57358 -0.58779 -0.60182 -0.61566 -0.62932<br />-0.64279 -0.65606 -0.66913 -0.68200 -0.69466 -0.70711 -0.71934 -0.73135 -0.74314 -0.75471<br />-0.76604 -0.77715 -0.78801 -0.79864 -0.80902 -0.81915 -0.82904 -0.83867 -0.84805 -0.85717<br />-0.86603 -0.87462 -0.88295 -0.89101 -0.89879 -0.90631 -0.91355 -0.92050 -0.92718 -0.93358<br />-0.93969 -0.94552 -0.95106 -0.95630 -0.96126 -0.96593 -0.97030 -0.97437 -0.97815 -0.98163<br />-0.98481 -0.98769 -0.99027 -0.99255 -0.99452 -0.99619 -0.99756 -0.99863 -0.99939 -0.99985<br />-1.00000 -0.99985 -0.99939 -0.99863 -0.99756 -0.99619 -0.99452 -0.99255 -0.99027 -0.98769<br />-0.98481 -0.98163 -0.97815 -0.97437 -0.97030 -0.96593 -0.96126 -0.95630 -0.95106 -0.94552<br />-0.93969 -0.93358 -0.92718 -0.92050 -0.91355 -0.90631 -0.89879 -0.89101 -0.88295 -0.87462<br />-0.86603 -0.85717 -0.84805 -0.83867 -0.82904 -0.81915 -0.80902 -0.79864 -0.78801 -0.77715<br />-0.76604 -0.75471 -0.74314 -0.73135 -0.71934 -0.70711 -0.69466 -0.68200 -0.66913 -0.65606<br />-0.64279 -0.62932 -0.61566 -0.60182 -0.58779 -0.57358 -0.55919 -0.54464 -0.52992 -0.51504<br />-0.50000 -0.48481 -0.46947 -0.45399 -0.43837 -0.42262 -0.40674 -0.39073 -0.37461 -0.35837<br />-0.34202 -0.32557 -0.30902 -0.29237 -0.27564 -0.25882 -0.24192 -0.22495 -0.20791 -0.19081<br />-0.17365 -0.15643 -0.13917 -0.12187 -0.10453 -0.08716 -0.06976 -0.05234 -0.03490 -0.01745<br />) do (<br />&nbsp; set &quot;sin!N!=%%V&quot;<br />&nbsp; set /a &quot;N+=1&quot;<br />)<br /><br />:: =========================== End Initialization ================================<br /><br />:: Use direct lookup if angle is known to be an integer between 0 and 359 inclusive<br />for %%N in (0 45 90 135 180 225 270 315) do echo sin(%%N^) = !sin%%N!<br /><br />:: Use macro if angle may be negative or &gt;= 360<br />for %%N in (-45 405) do (<br />&nbsp; (%sin% %%N N)<br />&nbsp; echo sin(%%N^) = !N!<br />)<br /><br />echo(<br />echo Speed test direct lookup between 0 and 359<br />echo %time%<br />for /l %%N in (0 1 10000) do set &quot;N=!sin180!&quot;<br />echo %time%<br /><br />echo(<br />echo Speed test using macro<br />echo %time%<br />for /l %%N in (0 1 10000) do (%sin% %%N N)<br />echo %time%<br /></code></pre></div>=== OUTPUT ===<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>sin(0) = 0.00000<br />sin(45) = 0.70711<br />sin(90) = 1.00000<br />sin(135) = 0.70711<br />sin(180) = 0.00000<br />sin(225) = -0.70711<br />sin(270) = -1.00000<br />sin(315) = -0.70711<br />sin(-45) = -0.70711<br />sin(405) = 0.70711<br /><br />Speed test direct lookup between 0 and 359<br />20:02:53.16<br />20:02:54.12<br /><br />Speed test using macro<br />20:02:54.12<br />20:03:02.22<br /></code></pre></div><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p28469" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28469">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28469">
+
+						<h3 ><a href="#p28469">Re: Fastest sen(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting042c.html?mode=quote&amp;f=3&amp;p=28469" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5541.html?p=28469#p28469" onclick="prompt('Message #9',this.href); return false;">#9</a></span> 
+									<a class="unread" href="viewtopic5541.html?p=28469#p28469" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>06 Sep 2013 16:24
+			</p>
+			
+			
+			
+			<div class="content">Well what to say? it's amazing what you can do!<br /><br />The use of the macro is brilliant and incomprehensible to me. The code is clearly legible and easy to use.<br /><br />How can I use a macro in my function?  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> <br /><br />In the meantime, I wrote a new version that has nothing to do with the final version.<br /><br />The question I asked myself when I read the link posted by penpen is just the limit of the memory space of the variables, so I discarded the version with quick lookup tables because the input function will also have tenths, hundredths and thousandths of a degree.<br /><br />Thank you very much dbenham<br /><br />The new version. More precise e more fast<br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br />:INT_SinD&nbsp; Degree&nbsp; &#91;ResultVAR&#93;<br />::<br />::&nbsp; &nbsp;&nbsp; &nbsp;-- Return the sine for the specified angle in degrees. y=sin(x), where x is in integer<br />::&nbsp; &nbsp;&nbsp; &nbsp;<br />::&nbsp; &nbsp;&nbsp; &nbsp;-- Degree &nbsp; &nbsp;&#91;in&#93; &nbsp; &nbsp;Degree is an integer in &#91;0,90&#93;<br />::<br />::&nbsp; &nbsp;&nbsp; &nbsp;-- ResultVAR &nbsp; &nbsp;&#91;out&#93;&nbsp; &nbsp;var reference to return value of y &#91;0,100&#93;<br />::<br />::<br />::&nbsp; Version history<br />::<br />:: 0.2&nbsp; 6/9/2013&nbsp; &nbsp;<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;1) Improved precision using sine/cosine property<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;2) optimization of integer use and new formula usage<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;3) changhed name for &quot;degree&quot; input<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;4) implemented &quot;round&quot; function for more precision, internal work on 3 digit<br />::<br />:: 0.1&nbsp; &nbsp;4/9/2013&nbsp; &nbsp;<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;First version that use 2 decimal for result e input in integer degree<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;for angle from 0 to 90 degree.<br />::<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;From Francesco Poscetti aka Einstein1969<br />::<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;This Function allow you to calculate almost all other common trigonometric <br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;function. Use the Taylor/Maclaurin function.<br />::<br />::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br />SETLOCAL<br /><br />&nbsp; &nbsp;REM.--function body<br />&nbsp; &nbsp;set /a &quot;d=%~1&quot;<br /><br />&nbsp; &nbsp;if %d% lss 0 echo Not implemented. Exit. &amp; goto :eof<br />&nbsp; &nbsp;if %d% gtr 90 echo Not implemented. Exit. &amp; goto :eof<br /><br />&nbsp; &nbsp;if %d% leq 48 (<br /><br />&nbsp; &nbsp;&nbsp; &nbsp;set /a &quot;y=((x=3141592*d/180/(o=1000))-x*x*x/6/(o*o)+5)/10&quot;<br /><br />&nbsp; &nbsp;) else (<br /><br />&nbsp; &nbsp;&nbsp; &nbsp;set /a &quot;y=((o=1000)-(x=3141592*(90-d)/180/o)*x/2/o+5)/10&quot;<br /><br />&nbsp; &nbsp;)<br /><br />(ENDLOCAL &amp; REM -- RETURN VALUES<br />&nbsp; &nbsp; IF &quot;%~2&quot; NEQ &quot;&quot; (SET %~2=%y%) ELSE Echo %y%<br />)<br />GOTO:EOF<br />::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br /></code></pre></div><br /><br />Einstein1969</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p28473" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28473">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search661c.html?author_id=1265&amp;sr=posts">3386</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 22 Jan 2010 18:01</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28473">
+
+						<h3 ><a href="#p28473">Re: Fastest sen(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2a6e.html?mode=quote&amp;f=3&amp;p=28473" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicf8ef-2.html?p=28473#p28473" onclick="prompt('Message #10',this.href); return false;">#10</a></span> 
+									<a class="unread" href="viewtopicf8ef-2.html?p=28473#p28473" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a></strong> &raquo; </span>06 Sep 2013 17:26
+			</p>
+			
+			
+			
+			<div class="content"><blockquote class="uncited"><div>How can I use a macro in my function?  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> </div></blockquote><br />Try:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal<br /><br />set LF=^<br /><br /><br />set ^&quot;\n=^^^%LF%%LF%^%LF%%LF%^^&quot; &amp;REM Two empty lines required!<br />set sin==for %%i in (1 2) do if %%i==2 (%\n%<br />&nbsp; for /f &quot;tokens=1,2&quot; %%j in (&quot;!argv!&quot;) do (set /a &quot;d=%%~j&quot; ^&amp; set &quot;ret=%%~k&quot;)%\n%<br />&nbsp; if !d! geq 0 (%\n%<br />&nbsp; &nbsp; if !d! leq 90 (%\n%<br />&nbsp; &nbsp; &nbsp; if !d! leq 48 (%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;y=((x=3141592*d/180/(o=1000))-x*x*x/6/(o*o)+5)/10&quot;%\n%<br />&nbsp; &nbsp; &nbsp; ) else (%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;y=((o=1000)-(x=3141592*(90-d)/180/o)*x/2/o+5)/10&quot;%\n%<br />&nbsp; &nbsp; &nbsp; )%\n%<br />&nbsp; &nbsp; &nbsp; for /f &quot;tokens=1,2&quot; %%j in (&quot;!y! !ret!&quot;) do (%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; ENDLOCAL%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; if &quot;%%k&quot; NEQ &quot;&quot; (SET %%k=%%j) ELSE Echo %%j%\n%<br />&nbsp; &nbsp; &nbsp; )%\n%<br />&nbsp; &nbsp; ) else (%\n%<br />&nbsp; &nbsp; &nbsp; ENDLOCAL%\n%<br />&nbsp; &nbsp; &nbsp; echo Not implemented.%\n%<br />&nbsp; &nbsp; )%\n%<br />&nbsp; ) else (%\n%<br />&nbsp; &nbsp; ENDLOCAL%\n%<br />&nbsp; &nbsp; echo Not implemented.%\n%<br />&nbsp; )%\n%<br />) else SETLOCAL EnableDelayedExpansion ^&amp; set argv=<br /><br />:::::::::::::::::::::::::<br /><br />%sin% 0<br /><br />%sin% 45<br /><br />%sin% 90 result<br />echo %result%<br /><br />pause<br /></code></pre></div><br />Regards<br />aGerman</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p28487" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28487">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28487">
+
+						<h3 ><a href="#p28487">Re: Fastest sen(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5799.html?mode=quote&amp;f=3&amp;p=28487" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic2594.html?p=28487#p28487" onclick="prompt('Message #11',this.href); return false;">#11</a></span> 
+									<a class="unread" href="viewtopic2594.html?p=28487#p28487" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>07 Sep 2013 07:53
+			</p>
+			
+			
+			
+			<div class="content">thanks a lot, aGerman!<br /><br />It seems to work fine. Can I ask why there are all those endlocal?<br /><br />However, I baked the new version rather complete and running, however, still to be optimized for better performance.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br />:INT_SinD&nbsp; Degree&nbsp; &#91;ResultVAR&#93;<br />::<br />::&nbsp; &nbsp;&nbsp; &nbsp;-- Return the sine for the specified angle in degrees. <br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;y=INT_sinD(x), where x is in integer and y is an integer<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;y is the integer (rounded) part of sine moltiply 100.<br />::&nbsp; &nbsp;&nbsp; &nbsp;<br />::&nbsp; &nbsp;&nbsp; &nbsp;-- Degree&nbsp; &nbsp;&nbsp; &nbsp;&#91;in&#93; &nbsp; &nbsp;Degree is an integer in &#91;-2147483647,2147483647&#93;<br />::<br />::&nbsp; &nbsp;&nbsp; &nbsp;-- ResultVAR &nbsp; &nbsp;&#91;out&#93;&nbsp; &nbsp;var reference to return value of y &#91;-100,100&#93;<br />::<br />::<br />::&nbsp; Version history<br />::<br />:: 0.3&nbsp; 7/9/2013<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;1) improved precision. Error max=0.0052<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;2) implemented for range in &#91;-2147483647,2147483647&#93; , return &#91;-100,100&#93;<br />::<br />:: 0.2&nbsp; 6/9/2013&nbsp; &nbsp;<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;1) Improved precision using sine/cosine property Sin(x)=...<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;2) optimization of integer use and new formula usage<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;3) changhed name for &quot;degree&quot; input<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;4) implemented &quot;round&quot; function for more precision, internal work on 3 digit<br />::<br />:: 0.1&nbsp; &nbsp;4/9/2013&nbsp; &nbsp;<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;First version that use 2 decimal for result e input in integer degree<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;for angle from 0 to 90 degree.<br />::<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;From Francesco Poscetti aka Einstein1969<br />::<br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;NOTE: This Function allow you to calculate almost all other common <br />::&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;trigonometric function. Uses the Taylor/Maclaurin function.<br />::<br />::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br />Setlocal<br /><br />&nbsp; &nbsp;REM.--function body<br /><br />&nbsp; &nbsp;set /a &quot;d=%~1 %% 360&quot;<br /><br />&nbsp; &nbsp;if %d% lss 0&nbsp; &nbsp;( set /a d=-d, rr=-1 ) else ( set /a rr=1 )<br />&nbsp; &nbsp;if %d% geq 180 ( set /a d=d-180, rr=-rr )<br />&nbsp; &nbsp;if %d% gtr 90&nbsp; ( set /a d=180-d)<br /><br />&nbsp; &nbsp;if %d% leq 45 (<br /><br />&nbsp; &nbsp;&nbsp; &nbsp;set /a &quot;y=(((x=3141592*d/180/(o=1000))-x*x*x/6/(o*o))+5)/10*rr&quot;<br /><br />&nbsp; &nbsp;) else (<br /><br />&nbsp; &nbsp;&nbsp; &nbsp;set /a &quot;y=(((o=1000)-(x=3141592*(90-d)/180/o)*x/2/o+x*x*x/100/2*x/12/(o*o)/10)+4)/10*rr&quot;&nbsp; &nbsp;&nbsp; &nbsp;<br /><br />&nbsp; &nbsp;)<br /><br />(Endlocal &amp; REM -- Return Values<br />&nbsp; &nbsp; If &quot;%~2&quot; neq &quot;&quot; (Set %~2=%y%) Else Echo %y%<br />)<br />Goto:EOF<br />::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br /></code></pre></div><br /><br />EDIT: There where !d! ... replaced with %d%<br /><br />Einstein1969</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a> on 31 Mar 2014 14:01, edited 3 times in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p28488" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28488">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search661c.html?author_id=1265&amp;sr=posts">3386</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 22 Jan 2010 18:01</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28488">
+
+						<h3 ><a href="#p28488">Re: Fastest sen(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2008.html?mode=quote&amp;f=3&amp;p=28488" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicc4d1.html?p=28488#p28488" onclick="prompt('Message #12',this.href); return false;">#12</a></span> 
+									<a class="unread" href="viewtopicc4d1.html?p=28488#p28488" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a></strong> &raquo; </span>07 Sep 2013 08:22
+			</p>
+			
+			
+			
+			<div class="content"><blockquote class="uncited"><div>Can I ask why there are all those endlocal?</div></blockquote><br />The only way to pass arguments to the macro is the <em class="text-italics">SET </em>statement in the <em class="text-italics">ELSE </em>branch at the end of the macro. As you can see there is also a <em class="text-italics">SETLOCAL EnableDelayedExpansion</em> that you need to expand variables inside of the command line block in the associated <em class="text-italics">IF</em> branch.<br />Because of all the other <em class="text-italics">IF</em> statements you need an <em class="text-italics">ENDLOCAL </em>at each point where the macro execution could end up. Otherwise the delayed variable expansion is still valid for the rest of your code (with all its side effects for strings that include exclamation marks).<br /><br />Regards<br />aGerman</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p28501" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28501">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28501">
+
+						<h3 ><a href="#p28501">Re: Fastest sen(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting4f10.html?mode=quote&amp;f=3&amp;p=28501" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1d93.html?p=28501#p28501" onclick="prompt('Message #13',this.href); return false;">#13</a></span> 
+									<a class="unread" href="viewtopic1d93.html?p=28501#p28501" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>08 Sep 2013 13:59
+			</p>
+			
+			
+			
+			<div class="content">Some time ago I used a method to perform operations with SIN(x) over degree values (0-360) using only integer operations, that is to say, I always used the result of SIN(x) to multiply it by an integer value and get an integer as result. I used the same method in a Batch program later that I posted in <a href="viewtopicba56.html?f=3&amp;t=3428&amp;p=17216#p17216" class="postlink">this post</a> (this part appear after 6-CursorPos.exe.hex program):<br /><blockquote><div><cite>Aacini wrote:</cite>We may even draw trigonometric functions if we define a table of SIN(x) values multiplied by a standard factor (ie: 0xFFFF or 65535):<br /><br />This way, to get SIN(x) multiplied by a number, just multiply the SIN[%x%] table value by the number and shift the result 16 bits to the right. This method correctly works with signed values because SET /A right shift operation is an aritmethic one (SAR), although the documentation indicate that is &quot;logical shift&quot; (SHR).<br /></div></blockquote><br />For example:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off <br />setlocal EnableDelayedExpansion<br /><br />call :DefineSinTable<br /><br />set st=<br />For /L %%i in (1,1,52) do set st=#!st!<br /><br />For /L %%x in (0,4,90) do (<br />&nbsp; &nbsp;set /a &quot;int_sinx_result=(SIN&#91;%%x&#93;*52)&gt;&gt;16&quot;<br />&nbsp; &nbsp;call set st_=%%st:~0,-!int_sinx_result!%%<br />&nbsp; &nbsp;echo(!st_!<br />)<br /><br />For /L %%x in (90,-4,0) do ( <br />&nbsp; &nbsp;set /a &quot;int_sinx_result=(SIN&#91;%%x&#93;*52)&gt;&gt;16&quot;<br />&nbsp; &nbsp;call set st_=%%st:~0,-!int_sinx_result!%%<br />&nbsp; &nbsp;echo(!st_!<br />)<br />goto :EOF<br /><br /><br />:DefineSinTable<br /><br />rem Definition of SIN table values (SIN(x)*65535) for 0-360 degrees<br />rem Antonio Perez Ayala<br /><br />set Quad1=0<br />for %%a in ( 1144&nbsp; 2287&nbsp; 3430&nbsp; 4572&nbsp; 5712&nbsp; 6850&nbsp; 7987&nbsp; 9121 10252 11380 12505 13626 14742 15855 16962 <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 18064 19161 20252 21336 22415 23486 24550 25607 26656 27697 28729 29753 30767 31772 32768 <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 33754 34729 35693 36647 37590 38521 39441 40348 41243 42126 42995 43852 44695 45525 46341 <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 47143 47930 48703 49461 50203 50931 51643 52339 53020 53684 54332 54963 55578 56175 56756 <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 57319 57865 58393 58903 59396 59870 60326 60764 61183 61584 61966 62328 62672 62997 63303 <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 63589 63856 64104 64332 64540 64729 64898 65048 65177 65287 65376 65446 65496 65526 65535<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;) do (<br />&nbsp; &nbsp;set /A Quad1+=1, Quad2=180-Quad1, Quad3=180+Quad1, Quad4=360-Quad1<br />&nbsp; &nbsp;set SIN&#91;!Quad1!&#93;=%%a<br />&nbsp; &nbsp;set SIN&#91;!Quad2!&#93;=%%a<br />&nbsp; &nbsp;set SIN&#91;!Quad3!&#93;=-%%a<br />&nbsp; &nbsp;set SIN&#91;!Quad4!&#93;=-%%a<br />)<br />for %%a in (0 180 360) do set SIN&#91;%%a&#93;=0<br />exit /B<br /></code></pre></div><br />Result:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>#################################################<br />#############################################<br />##########################################<br />######################################<br />###################################<br />###############################<br />############################<br />#########################<br />######################<br />###################<br />################<br />##############<br />############<br />#########<br />#######<br />######<br />####<br />###<br />##<br />#<br />#<br />#<br />#<br />#<br />#<br />##<br />###<br />####<br />#####<br />#######<br />########<br />##########<br />#############<br />###############<br />##################<br />####################<br />#######################<br />##########################<br />##############################<br />#################################<br />####################################<br />########################################<br />###########################################<br />###############################################<br />###################################################<br /></code></pre></div><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p28546" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28546">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28546">
+
+						<h3 ><a href="#p28546">Re: Fastest sen(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2897.html?mode=quote&amp;f=3&amp;p=28546" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic0535.html?p=28546#p28546" onclick="prompt('Message #14',this.href); return false;">#14</a></span> 
+									<a class="unread" href="viewtopic0535.html?p=28546#p28546" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>10 Sep 2013 03:08
+			</p>
+			
+			
+			
+			<div class="content">@aGerman<br /><br />Thank you very much for the explanation aGerman. In the new version I have included the use of expanded variables directly,<br />then the approach should be different? The code of the new version will come soon.<br /><br /><br />@Aacini<br />Aacini I appreciate your intervention. I wanted to ask an explanation of the method used by you to maintain information of the decimal. The number of 16-bit has been chosen as a criterion?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p28564" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile28564">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content28564">
+
+						<h3 ><a href="#p28564">Re: Fastest sen(x) in dos batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2d6b-2.html?mode=quote&amp;f=3&amp;p=28564" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic22c4.html?p=28564#p28564" onclick="prompt('Message #15',this.href); return false;">#15</a></span> 
+									<a class="unread" href="viewtopic22c4.html?p=28564#p28564" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>10 Sep 2013 20:34
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>einstein1969 wrote:</cite>@Aacini<br />Aacini I appreciate your intervention. I wanted to ask an explanation of the method used by you to maintain information of the decimal. The number of 16-bit has been chosen as a criterion?</div></blockquote><br />The original method was used in an assembly language program that calculate a series of (x,y) points to draw circles and ellipses via <em class="text-italics">drawpoly</em> BGI function. The radius was a 16-bits number that was multiplied by the value of the Sin table giving the 32-bits result in two separated 16-bits registers, so I directly took the high-order register of the result with no additional operation. This method was at least as fast as the original <em class="text-italics">circle</em> BGI function!<br /><br />The 16-bits Sin(x) table, (Sin(x)*65535 as unsigned 16-bits value, equivalent to a little less than 5 decimal digits, but more than 4) was enough to draw perfect circles in the screen no matter the radius. If you need more precision, you may use more bits for the Sin(x) table and less for the factor. For example, you may use 24 bits for the Sin(x) table (Sin(x)*16777215, equivalent to more than 7 decimal digits) and 7 bits for the factor (a maximum value of 127), and perform the operation this way: <strong class="text-strong">set /A result=(SIN[!x!]*factor)&gt;&gt;24</strong>.<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="postingddf4.html?mode=reply&amp;f=3&amp;t=4896" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic96f2-2.html?f=3&amp;t=4896&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4896">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			37 posts
+							<ul>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopic91f8-2.html?f=3&amp;t=4896&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopic9367.html?f=3&amp;t=4896&amp;start=30" role="button">3</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic91f8-2.html?f=3&amp;t=4896&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5495.gif?cron_type=cron.task.text_reparser.poll_title" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4896 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:50:05 GMT -->
+</html>

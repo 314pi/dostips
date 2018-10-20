@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=57366 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:42 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>FindRepl.bat:New regex utility to search and replace strings - Page 9 - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopicc5fc.html?t=4697&amp;start=120">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopicc178.html?f=3&amp;t=4697&amp;start=120">FindRepl.bat:New regex utility to search and replace strings</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting6172.html?mode=reply&amp;f=3&amp;t=4697" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopice442.html?f=3&amp;t=4697&amp;start=120&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="4697" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			135 posts
+							<ul>
+	<li class="dropdown-container dropdown-button-control dropdown-page-jump page-jump">
+		<a class="button button-icon-only dropdown-trigger" href="#" title="Click to jump to page…" role="button"><i class="icon fa-level-down fa-rotate-270" aria-hidden="true"></i><span class="sr-only">Page <strong>9</strong> of <strong>9</strong></span></a>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+				<li>Jump to page:</li>
+				<li class="page-jump-form">
+					<input type="number" name="page-number" min="1" max="999999" title="Enter the page number you wish to go to" class="inputbox tiny" data-per-page="15" data-base-url=".&#x2F;viewtopic.php&#x3F;f&#x3D;3&amp;amp&#x3B;t&#x3D;4697" data-start-name="start" />
+					<input class="button2" value="Go" type="button" />
+				</li>
+			</ul>
+		</div>
+	</li>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic10f4.html?f=3&amp;t=4697&amp;start=105" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopica720.html?f=3&amp;t=4697" role="button">1</a></li>
+			<li class="ellipsis" role="separator"><span>…</span></li>
+				<li><a class="button" href="viewtopic507f.html?f=3&amp;t=4697&amp;start=60" role="button">5</a></li>
+				<li><a class="button" href="viewtopic2000.html?f=3&amp;t=4697&amp;start=75" role="button">6</a></li>
+				<li><a class="button" href="viewtopic6e90.html?f=3&amp;t=4697&amp;start=90" role="button">7</a></li>
+				<li><a class="button" href="viewtopic10f4.html?f=3&amp;t=4697&amp;start=105" role="button">8</a></li>
+			<li class="active"><span>9</span></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p57351" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57351">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf5c3.html?mode=viewprofile&amp;u=9265" class="username">Newbee</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search9204.html?author_id=9265&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Jun 2018 13:50</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57351">
+
+						<h3 class="first"><a href="#p57351">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingc61b.html?mode=quote&amp;f=3&amp;p=57351" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice7c9-2.html?p=57351#p57351" onclick="prompt('Message #121',this.href); return false;">#121</a></span> 
+									<a class="unread" href="viewtopice7c9-2.html?p=57351#p57351" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf5c3.html?mode=viewprofile&amp;u=9265" class="username">Newbee</a></strong> &raquo; </span>05 Jul 2018 20:15
+			</p>
+			
+			
+			
+			<div class="content">I have this batch file:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+echo Show both the first 10 lines and the last 10 lines (with line numbers):
+echo(
+&lt; input1.txt FindRepl /V /O:10:-10 /N</code></pre></div>
+
+"input1.txt" file
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Line 1
+Lines 1 extra
+Line 2
+Lines 2 extra
+Line 3
+Lines 3 extra
+Line 4
+Lines 4 extra
+Line 5
+Lines 5 extra
+Line 6
+Lines 6 extra
+Line 7
+Lines 7 extra
+Line 8
+Lines 8 extra
+Line 9
+Lines 9 extra
+Line 10
+Lines 10 extra
+Line 11
+Line 11 extra
+Line 12
+Line 12 extra
+Line 13
+Line 13 extra
+Line 14
+Line 14 extra
+Line 15
+Line 15 extra</code></pre></div>
+
+It just display 9 lines from head and 9 lines from tail only. Here is the output:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>d:\4\FindRepl&gt;ex7
+Show both the first 10 lines and the last 10 lines (with line numbers):
+
+1:Line 1
+2:Lines 1 extra
+3:Line 2
+4:Lines 2 extra
+5:Line 3
+6:Lines 3 extra
+7:Line 4
+8:Lines 4 extra
+9:Line 5
+22:Line 11 extra
+23:Line 12
+24:Line 12 extra
+25:Line 13
+26:Line 13 extra
+27:Line 14
+28:Line 14 extra
+29:Line 15
+30:Line 15 extra
+
+d:\4\FindRepl&gt;</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57355" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57355">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57355">
+
+						<h3 ><a href="#p57355">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8a43.html?mode=quote&amp;f=3&amp;p=57355" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4e76.html?p=57355#p57355" onclick="prompt('Message #122',this.href); return false;">#122</a></span> 
+									<a class="unread" href="viewtopic4e76.html?p=57355#p57355" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>05 Jul 2018 22:44
+			</p>
+			
+			
+			
+			<div class="content">Yes. This is the "input1.txt" file with line numbers:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code> 1:Line 1
+ 2:Lines 1 extra
+ 3:Line 2
+ 4:Lines 2 extra
+ 5:Line 3
+ 6:Lines 3 extra
+ 7:Line 4
+ 8:Lines 4 extra
+ 9:Line 5
+10:Lines 5 extra
+11:Line 6
+12:Lines 6 extra
+13:Line 7
+14:Lines 7 extra
+15:Line 8
+16:Lines 8 extra
+17:Line 9
+18:Lines 9 extra
+19:Line 10
+20:Lines 10 extra
+21:Line 11
+22:Line 11 extra
+23:Line 12
+24:Line 12 extra
+25:Line 13
+26:Line 13 extra
+27:Line 14
+28:Line 14 extra
+29:Line 15
+30:Line 15 extra
+</code></pre></div>
+
+The description of <strong class="text-strong">/O:s:e</strong> switch specify: <em class="text-italics">"Show block of lines, from line S to line E... if E is negative, it specifies counting lines from the end of file... the last line of the file is -1"</em>. In this way, the <strong class="text-strong">/O:10:-10</strong> switch means show the block of numbered lines from the line number 10 up to the line number -10, that in this case is the same as line 21. That is to say, the <strong class="text-strong">/O:10:-10</strong> switch <em class="text-italics">alone</em> would show the block of indented lines below:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>   1:Line 1
+   2:Lines 1 extra
+   3:Line 2
+   4:Lines 2 extra
+   5:Line 3
+   6:Lines 3 extra
+   7:Line 4
+   8:Lines 4 extra
+   9:Line 5
+       10:Lines 5 extra
+       11:Line 6
+       12:Lines 6 extra
+       13:Line 7
+       14:Lines 7 extra
+       15:Line 8
+       16:Lines 8 extra
+       17:Line 9
+       18:Lines 9 extra
+       19:Line 10
+       20:Lines 10 extra
+-10    21:Line 11
+-9 22:Line 11 extra
+-8 23:Line 12
+-7 24:Line 12 extra
+-6 25:Line 13
+-5 26:Line 13 extra
+-4 27:Line 14
+-3 28:Line 14 extra
+-2 29:Line 15
+-1 30:Line 15 extra
+</code></pre></div>
+
+The <strong class="text-strong">/V</strong> switch specify: <em class="text-italics">"Show non-matching lines"</em>, that is, show the lines of the file <em class="text-italics">excepting</em> the block of lines from line 10 up to line 21. The result is two block of lines: from line 1 to line 9, and from line 22 to the last line.<br>
+<br>
+In <a href="viewtopica720.html?f=3&amp;t=4697" class="postlink">the first post</a> of this thread there is this example:<br>
+
+<blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopicc116.html?p=27024#p27024" data-post-id="27024" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">26 Jun 2013 21:00</div></cite>
+<br>
+<strong class="text-strong">2. Finding blocks of lines (/E and /O switches)</strong><br>
+<br>
+- Show both the first 15 lines and the last 20 lines (with line numbers):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl /V /O:16:-21 /N</code></pre></div>
+
+</div></blockquote>
+
+Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57356" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57356">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf5c3.html?mode=viewprofile&amp;u=9265" class="username">Newbee</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search9204.html?author_id=9265&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Jun 2018 13:50</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57356">
+
+						<h3 ><a href="#p57356">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting14be.html?mode=quote&amp;f=3&amp;p=57356" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicd30c.html?p=57356#p57356" onclick="prompt('Message #123',this.href); return false;">#123</a></span> 
+									<a class="unread" href="viewtopicd30c.html?p=57356#p57356" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf5c3.html?mode=viewprofile&amp;u=9265" class="username">Newbee</a></strong> &raquo; </span>05 Jul 2018 23:51
+			</p>
+			
+			
+			
+			<div class="content">Thanks for the clarification Antonio.<br>
+It's my fault when not apply the example correctly. I've just read this line<br>
+" Show both the first 15 lines and the last 20 lines (with line numbers):" and <br>
+just go ahead to plug in the same values in the example code.<br>
+My apology for that.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57359" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57359">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf5c3.html?mode=viewprofile&amp;u=9265" class="username">Newbee</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search9204.html?author_id=9265&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Jun 2018 13:50</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57359">
+
+						<h3 ><a href="#p57359">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingd756.html?mode=quote&amp;f=3&amp;p=57359" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice64b.html?p=57359#p57359" onclick="prompt('Message #124',this.href); return false;">#124</a></span> 
+									<a class="unread" href="viewtopice64b.html?p=57359#p57359" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf5c3.html?mode=viewprofile&amp;u=9265" class="username">Newbee</a></strong> &raquo; </span>06 Jul 2018 13:51
+			</p>
+			
+			
+			
+			<div class="content">I have this batch file:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+call FindRepl "D:\1" /S:="%PATH%" &gt; NUL
+echo errorlevel = %errorlevel%
+if %errorlevel% gtr 0 echo The given path exists in system PATH</code></pre></div>
+
+My %errorlevel% is always 0, even though that "D:\1" is in my path.<br>
+<br>
+Here is my path:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>"D:\1;D:\2;D:\gcc\bin;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;"</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57360" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57360">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57360">
+
+						<h3 ><a href="#p57360">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingeb71.html?mode=quote&amp;f=3&amp;p=57360" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic606f.html?p=57360#p57360" onclick="prompt('Message #125',this.href); return false;">#125</a></span> 
+									<a class="unread" href="viewtopic606f.html?p=57360#p57360" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>06 Jul 2018 14:44
+			</p>
+			
+			
+			
+			<div class="content">Yes.  Zero means it found it.  Same errorlevel you would get if you were using the FIND and FINDSTR commands.  If it finds the search string, the errorlevel is set to 0.  If it doesn't find the search string the errorlevel is set to 1.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57361" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57361">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57361">
+
+						<h3 ><a href="#p57361">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingb15e.html?mode=quote&amp;f=3&amp;p=57361" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicbcda.html?p=57361#p57361" onclick="prompt('Message #126',this.href); return false;">#126</a></span> 
+									<a class="unread" href="viewtopicbcda.html?p=57361#p57361" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>06 Jul 2018 15:30
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopicc116.html?p=27024#p27024" data-post-id="27024" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">26 Jun 2013 21:00</div></cite>
+<strong class="text-strong">3. Basic usage of regular expressions</strong><br>
+<br>
+The Search string is not plain text, but a regular expression ("regexp"). In its most basic form, a regexp just includes the literal string to search: "Search this".<br>
+<br>
+Several features may be included in a regexp, most of them selected via a backslash character: \. You may use a backslash followed by another character to specify binary bytes; for example, to specify a &lt;TAB&gt; character you may use \t or \cI (Ctrl-I) or \x09 (Ascii hexa-code 9). For a &lt;LF&gt; (newline) character you may use \n or \cJ or \x0A, and use \r or \cM or \x0D for &lt;CR&gt; (return).<br>
+<br>
+Certain combinations of \ and the next character allows to specify sets of common characters. For example, use \d for any digit (equivalent to [0-9]), \D for nondigit characters (equivalent to [^0-9]), \w for alphanumeric characters and underscore ([A-Za-z0-9_]), \W for the rest of special characters, \s for separators (space, tab, return, new-line) and \S for non-separators. A dot alone match any character except a newline; to search for a dot, precede it with backslash.<br>
+<br>
+You may anchor the beginning of line with ^ or the end of line with $, or use \b to anchor the beginning or end of a word. An asterisk repeat the previous matched character zero or more times, so "\d*" match an optional number. A plus sign repeat previous match one or more times ("\d+" match a required number), and a question mark repeat zero or one time ("\d?" match an optional digit).<br>
+<br>
+For a complete description of this topic, see: http:<em class="text-italics">//</em>msdn.microsoft.com/en-us/library/1400241x(v=vs.84).aspx Please note that you always must escape with backslash the following special characters in order to search for themselves: <strong class="text-strong">\*+?^$.[]{}()|</strong>
+</div></blockquote>
+
+Or, in shorter form from the <strong class="text-strong">FindRepl /?</strong> help screen:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>All search texts must be given in VBScript regular expression format (regexp).
+Matching characters: .=any char, \d=[0-9], \D=non-digit, \w=[A-Za-z0-9_],
+\W=non-alphanumeric, \s=[ \t\r\n], \S=non-space. Anchors: ^=begin of line,
+$=end of line, \b=begin/end of word. Quantifiers (repeats previous match):
+*=zero or more times, +=one or more times, ?=zero or one time. Use parentheses
+to delimit these constructs and create "subexpressions". To search for these
+special characters, place a back-slash before each one of them: \*+?^$.[]{}()|
+</code></pre></div>
+
+Also:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>/S:sSource Text to be processed instead of Stdin file.
+
+If the first character of any text is an equal-sign, it specifies the name of
+a Batch variable that contain the text to be processed.
+</code></pre></div>
+
+Use:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call FindRepl "D:\\1" /S:"%PATH%" &gt; NUL
+</code></pre></div>
+or:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call FindRepl "D:\\1" /S:=PATH &gt; NUL
+</code></pre></div>
+
+Please, <em class="text-italics">read the documentation</em>...<br>
+<br>
+Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57362" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57362">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57362">
+
+						<h3 ><a href="#p57362">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8036.html?mode=quote&amp;f=3&amp;p=57362" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6f91.html?p=57362#p57362" onclick="prompt('Message #127',this.href); return false;">#127</a></span> 
+									<a class="unread" href="viewtopic6f91.html?p=57362#p57362" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>06 Jul 2018 15:35
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopic606f.html?p=57360#p57360" data-post-id="57360" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">06 Jul 2018 14:44</div></cite>
+Yes.  Zero means it found it.  Same errorlevel you would get if you were using the FIND and FINDSTR commands.  If it finds the search string, the errorlevel is set to 0.  If it doesn't find the search string the errorlevel is set to 1.
+</div></blockquote>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>The total number of matchings/replacements is returned in ERRORLEVEL.
+</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57363" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57363">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf5c3.html?mode=viewprofile&amp;u=9265" class="username">Newbee</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search9204.html?author_id=9265&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Jun 2018 13:50</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57363">
+
+						<h3 ><a href="#p57363">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingff47.html?mode=quote&amp;f=3&amp;p=57363" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicbebe.html?p=57363#p57363" onclick="prompt('Message #128',this.href); return false;">#128</a></span> 
+									<a class="unread" href="viewtopicbebe.html?p=57363#p57363" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf5c3.html?mode=viewprofile&amp;u=9265" class="username">Newbee</a></strong> &raquo; </span>06 Jul 2018 17:05
+			</p>
+			
+			
+			
+			<div class="content">I do this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl "D:\\1" /S:=D:\1;D:\2; &gt;NUL</code></pre></div>
+or this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl "D:\\1" /S:="D:\1;D:\2;" &gt;NUL</code></pre></div>
+The %errorlevel% are always 0, is it right?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57364" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57364">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57364">
+
+						<h3 ><a href="#p57364">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0f19.html?mode=quote&amp;f=3&amp;p=57364" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb166.html?p=57364#p57364" onclick="prompt('Message #129',this.href); return false;">#129</a></span> 
+									<a class="unread" href="viewtopicb166.html?p=57364#p57364" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>06 Jul 2018 18:09
+			</p>
+			
+			
+			
+			<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\Antonio\Tests&gt; FindRepl "D:\\1" /S:"D:\1;D:\2;" &gt;NUL
+
+C:\Users\Antonio\Tests&gt; echo %errorlevel%
+1
+
+C:\Users\Antonio\Tests&gt; set "VAR=D:\1;D:\2;"
+
+C:\Users\Antonio\Tests&gt; FindRepl "D:\\1" /S:=VAR &gt;NUL
+
+C:\Users\Antonio\Tests&gt; echo %errorlevel%
+1
+</code></pre></div>
+
+The format of <strong class="text-strong">/S</strong> switch is:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>/S:"string"
+
+Or
+
+/S:=Variable
+</code></pre></div>
+
+If you use <strong class="text-strong">FindRepl "D:\\1" /S:=D:\1;D:\2; &gt;NUL</strong> you are searching the string <strong class="text-strong">D:\1</strong> in a <em class="text-italics">variable</em> named <strong class="text-strong">D:\1;D:\2;</strong>.<br>
+<br>
+If you use <strong class="text-strong">FindRepl "D:\\1" /S:="D:\1;D:\2;" &gt;NUL</strong> you are searching the string <strong class="text-strong">D:\1</strong> in a <em class="text-italics">variable</em> named <strong class="text-strong">"D:\1;D:\2;"</strong>.<br>
+<br>
+<br>
+To search in a string, enclose the string in quotes and do not include the equal-sign: <strong class="text-strong">/S:"literal string"</strong> or <strong class="text-strong">/S:"%Variable%"</strong>.<br>
+<br>
+To search in a variable, include the equal sign and the variable name; do not include quotes nor percent-signs: <strong class="text-strong">/S:=Variable</strong>.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57365" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57365">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist742a.html?mode=viewprofile&amp;u=6577" class="username">thefeduke</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search454a.html?author_id=6577&amp;sr=posts">211</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 05 Apr 2015 13:06</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> MA South Shore, USA</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57365">
+
+						<h3 ><a href="#p57365">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9310.html?mode=quote&amp;f=3&amp;p=57365" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicfbd4.html?p=57365#p57365" onclick="prompt('Message #130',this.href); return false;">#130</a></span> 
+									<a class="unread" href="viewtopicfbd4.html?p=57365#p57365" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist742a.html?mode=viewprofile&amp;u=6577" class="username">thefeduke</a></strong> &raquo; </span>06 Jul 2018 18:20
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite><a href="memberlistf5c3.html?mode=viewprofile&amp;u=9265">Newbee</a> wrote: <a href="viewtopicbebe.html?p=57363#p57363" data-post-id="57363" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">06 Jul 2018 17:05</div></cite>
+I do this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl "D:\\1" /S:=D:\1;D:\2; &gt;NUL</code></pre></div>
+. . .<br>
+The %errorlevel% are always 0, is it right?
+</div></blockquote>Walk before running.  Perhaps it would be easier to correlate the errorlevel with the results if you did not suppress them.  Get rid of &gt;NUL and you can see for yourself if there was output.<br>
+<br>
+John A.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57366" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57366">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf5c3.html?mode=viewprofile&amp;u=9265" class="username">Newbee</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search9204.html?author_id=9265&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Jun 2018 13:50</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57366">
+
+						<h3 ><a href="#p57366">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingcd97.html?mode=quote&amp;f=3&amp;p=57366" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic3050.html?p=57366#p57366" onclick="prompt('Message #131',this.href); return false;">#131</a></span> 
+									<a class="unread" href="viewtopic3050.html?p=57366#p57366" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf5c3.html?mode=viewprofile&amp;u=9265" class="username">Newbee</a></strong> &raquo; </span>06 Jul 2018 18:26
+			</p>
+			
+			
+			
+			<div class="content">Thanks for the clarification Antonio.<br>
+I do this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call FindRepl "D:\\1" /S:"%PATH%" &gt; NUL
+echo errorlevel = %errorlevel%
+if %errorlevel% gtr 0 echo The given path exists in system PATH</code></pre></div>
+
+or this:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call FindRepl "D:\\1" /S:=PATH &gt; NUL
+echo errorlevel = %errorlevel%
+if %errorlevel% gtr 0 echo The given path exists in system PATH</code></pre></div>
+
+They now both give %errorlevel% = 1.<br>
+<br>
+This is really cool.  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57478" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57478">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist7eff.html?mode=viewprofile&amp;u=9326" class="username">MrWinelover</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7db1.html?author_id=9326&amp;sr=posts">2</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 18 Jul 2018 09:43</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57478">
+
+						<h3 ><a href="#p57478">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9b43.html?mode=quote&amp;f=3&amp;p=57478" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic97bf.html?p=57478#p57478" onclick="prompt('Message #132',this.href); return false;">#132</a></span> 
+									<a class="unread" href="viewtopic97bf.html?p=57478#p57478" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist7eff.html?mode=viewprofile&amp;u=9326" class="username">MrWinelover</a></strong> &raquo; </span>18 Jul 2018 10:48
+			</p>
+			
+			
+			
+			<div class="content">I need to manipulate a text file so that a part of each line is replaced (or deleted).<br>
+The first part that must replaced (or deleted) is situated between first and second last occurence of the piping character.<br>
+Another part that must replaced (or deleted) is situated between first and last occurence of minus character.<br>
+<br>
+I have already gone through the description of FindRepl.bat but could not immediately find out how to achieve this.<br>
+Is it possible to do this with FindRepl.bat?<br>
+<br>
+The text file itselfs is already generated by manipulating another (log) file with the command findstr to keep only the lines we need.<br>
+Can the replace command be combined by the findstr command?<br>
+<br>
+Example:<br>
+Original strings: <br>
+18/07/2018 06:36:42|HARDWARE|Base|send|ERROR|10.15.149.65 No communication Counter set-global-level1-occured<br>
+18/07/2018 06:42:07|HARDWARE|Base|send|INFO|10.15.149.65 Communication restored Counter reset-global-level1-fixed<br>
+18/07/2018 10:17:03|HARDWARE|Base|send|ERROR|10.15.149.65 No working position Counter set-main board-level2-occured<br>
+18/07/2018 10:24:19|HARDWARE|Base|send|INFO|10.15.149.65 Normal state Counter reset-main board level2-occured<br>
+<br>
+Wanted result after manipulation thru Batch file<br>
+18/07/2018 06:36:42|ERROR|10.15.149.65 No communication Counter set-occured<br>
+18/07/2018 06:42:07|INFO|10.15.149.65 Communication restored Counter reset-fixed<br>
+18/07/2018 10:17:03|ERROR|10.15.149.65 No working position Counter set-occured<br>
+18/07/2018 10:24:19|INFO|10.15.149.65 Normal state Counter reset-occured</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57488" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57488">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57488">
+
+						<h3 ><a href="#p57488">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8c63.html?mode=quote&amp;f=3&amp;p=57488" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicc31b.html?p=57488#p57488" onclick="prompt('Message #133',this.href); return false;">#133</a></span> 
+									<a class="unread" href="viewtopicc31b.html?p=57488#p57488" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>18 Jul 2018 21:54
+			</p>
+			
+			
+			
+			<div class="content">Why not just use plain old FOR /F commands?
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+(FOR /F "TOKENS=1,5,6 DELIMS=|" %%G IN (input.txt) DO (
+	FOR /F "TOKENS=1,4 DELIMS=-" %%J IN ("%%I") DO echo %%G^|%%H^|%%J-%%K)
+)&gt;output.txt</code></pre></div>
+or
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+(FOR /F "TOKENS=1,5,6 DELIMS=|" %%G IN (input.txt) DO (
+	FOR /F "TOKENS=1* DELIMS=-" %%J IN ("%%I") DO (
+		set "last=%%K"
+		set "last=!last:-= !"
+		FOR %%M IN (!last!) DO set "last=%%M"
+		echo %%G^|%%H^|%%J-!last!)
+	)
+)&gt;output.txt</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57491" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57491">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist7eff.html?mode=viewprofile&amp;u=9326" class="username">MrWinelover</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7db1.html?author_id=9326&amp;sr=posts">2</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 18 Jul 2018 09:43</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57491">
+
+						<h3 ><a href="#p57491">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting559a.html?mode=quote&amp;f=3&amp;p=57491" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb95a.html?p=57491#p57491" onclick="prompt('Message #134',this.href); return false;">#134</a></span> 
+									<a class="unread" href="viewtopicb95a.html?p=57491#p57491" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist7eff.html?mode=viewprofile&amp;u=9326" class="username">MrWinelover</a></strong> &raquo; </span>19 Jul 2018 02:51
+			</p>
+			
+			
+			
+			<div class="content">Thank you for the quick answer, but I would have liked some additional information as I have some knowledge but I am not an expert.<br>
+Due to insufficient knowledge, I have never used this sytax before.<br>
+As far as I can analyze, this only works if the exact positions are known in advance. Correct?<br>
+From where do the %% variables come from?<br>
+How are they determined?<br>
+It is mainly in both examples the piece of code after the second DO that I do not understand<br>
+Can you explain the code a.u.b?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57507" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57507">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57507">
+
+						<h3 ><a href="#p57507">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinga946.html?mode=quote&amp;f=3&amp;p=57507" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1afb.html?p=57507#p57507" onclick="prompt('Message #135',this.href); return false;">#135</a></span> 
+									<a class="unread" href="viewtopic1afb.html?p=57507#p57507" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>19 Jul 2018 15:23
+			</p>
+			
+			
+			
+			<div class="content">The first code only works if the number of pipes is constant and the number of dashes is constant.<br>
+<br>
+The second code still requires the number of pipes to be constant, but the number of dashes can vary.<br>
+<br>
+A variable like %%G within a batch file is a FOR variable. If used on the command line, then it would be %G instead.<br>
+<br>
+FOR loops can be very confusing for beginners because slight changes in syntax can result in totally different function. Getting the exact behavior you want is often difficult and/or tedious even for experienced users.<br>
+<br>
+A simple FOR iterates strings and or files, depending on whether there are wildcards within the IN() clause.<br>
+<br>
+FOR /F parses one or more tokens from each line that it iterates, with a different %%_ variable for each token. The lines that are iterated can either be the content of a file, the output of a command, or a string literal, depending on the syntax used within the IN() clause.<br>
+<br>
+You should carefully read the help text that you get when you execute FOR /? from the command line and try some experiments on your own.<br>
+<br>
+Both of Squashman's codes could be combined with your FINDSTR and eliminate your intermediate file if you change the outer FOR /F loop as follows:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(FOR /F "TOKENS=1,5,6 DELIMS=|" %%G IN ('findstr "yourSearchHere" input.log') DO (
+</code></pre></div>
+
+However, if the output of FINDSTR is huge, then it is much faster to preserve the two steps and use the temporary intermediate file.<br>
+<br>
+===============================<br>
+<br>
+Aacini's FINDREPL is a sophisticated utility. I'm sure it could easily meet your requirements, but I haven't taken the time to learn how to use FINDREPL.<br>
+<br>
+My <a href="viewtopicb16d.html?f=3&amp;t=6044" class="postlink">JREPL.BAT utility</a> serves a similar purpose, but with totally different syntax.<br>
+<br>
+JREPL can solve your problem with a single, fairly short one liner:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl "\|.*(\|.*?\|) -.*-" "$2 -" /t " " /inc "/XXX/" /a /f original.log /o output.txt
+</code></pre></div>
+
+The first argument represents a pair of regular expression search terms, delimited by a space. The second argument specifies the corresponding replacement terms, again delimited by a space. The /T " " option is what dictates that the arguments are space delimited lists of find/replace terms.<br>
+<br>
+The capture group numbering is a bit tricky because each search term is converted into its own captured group behind the scenes. The explicit captured group in the first term is actually group 2 because the first term is group 1. The second term becomes group 3.<br>
+<br>
+The /INC "/XXX/" option specifies which lines should be included in the FIND/REPLACE operation. The XXX represents a regular expression that you would have to supply to take the place of the FINDSTR that you are currently using.<br>
+<br>
+The /A option causes only lines that have been altered to be output, thus preventing the lines that don't match the /INC regular expression to be excluded from the output.<br>
+<br>
+The /F original.log option specifies your input, and /O output.txt specifies your output.<br>
+<br>
+If you want to continue using FINDSTR to filter the lines, then you only need the following
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl "\|.*(\|.*?\|) -.*-" "$2 -" /t " " /f input.txt /o output.txt
+</code></pre></div>
+
+If you have additional questions regarding Squashman's code, or my JREPL solution, then I suggest you start a new topic. I don't want to hijack Aacini's FINDREPL topic anymore than I already have.<br>
+<br>
+<br>
+Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting6172.html?mode=reply&amp;f=3&amp;t=4697" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopice442.html?f=3&amp;t=4697&amp;start=120&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4697&amp;start=120">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			135 posts
+							<ul>
+	<li class="dropdown-container dropdown-button-control dropdown-page-jump page-jump">
+		<a class="button button-icon-only dropdown-trigger" href="#" title="Click to jump to page…" role="button"><i class="icon fa-level-down fa-rotate-270" aria-hidden="true"></i><span class="sr-only">Page <strong>9</strong> of <strong>9</strong></span></a>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+				<li>Jump to page:</li>
+				<li class="page-jump-form">
+					<input type="number" name="page-number" min="1" max="999999" title="Enter the page number you wish to go to" class="inputbox tiny" data-per-page="15" data-base-url=".&#x2F;viewtopic.php&#x3F;f&#x3D;3&amp;amp&#x3B;t&#x3D;4697" data-start-name="start" />
+					<input class="button2" value="Go" type="button" />
+				</li>
+			</ul>
+		</div>
+	</li>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic10f4.html?f=3&amp;t=4697&amp;start=105" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopica720.html?f=3&amp;t=4697" role="button">1</a></li>
+			<li class="ellipsis" role="separator"><span>…</span></li>
+				<li><a class="button" href="viewtopic507f.html?f=3&amp;t=4697&amp;start=60" role="button">5</a></li>
+				<li><a class="button" href="viewtopic2000.html?f=3&amp;t=4697&amp;start=75" role="button">6</a></li>
+				<li><a class="button" href="viewtopic6e90.html?f=3&amp;t=4697&amp;start=90" role="button">7</a></li>
+				<li><a class="button" href="viewtopic10f4.html?f=3&amp;t=4697&amp;start=105" role="button">8</a></li>
+			<li class="active"><span>9</span></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cronc6bf.gif?cron_type=cron.task.text_reparser.user_signature" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=57366 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:42 GMT -->
+</html>

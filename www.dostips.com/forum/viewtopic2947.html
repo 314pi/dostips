@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8581&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:32 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; How does this colour Batch script work?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>How does this colour Batch script work?</h2>
+		<p><a href="viewtopiccb4f.html?f=3&amp;t=8581">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8581</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>How does this colour Batch script work?</h3>
+				<div class="date">Posted: <strong>27 May 2018 11:54</strong></div>
+				<div class="author">by <strong>Grapefruits</strong></div>
+				<div class="content">Sorry for the broad question. I was browsing Dostips when I came across this code in <a href="viewtopic6d38.html?f=3&amp;t=6839&amp;p=56613&amp;hilit=batch+rgb#p56613" class="postlink">viewtopic.php?f=3&amp;t=6839&amp;p=56613&amp;hilit=batch+rgb#p56613</a><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp; setlocal enabledelayedexpansion
+
+mode 90,60
+
+for /F %%a in ('echo prompt $E^| cmd') do set "ESC=%%a"
+
+Set /a s=10000, v1=10000
+
+For /L %%h in (0,15,360) do ( 
+	For /L %%v in (10000,-400,0) do call :plot_HSL_RGB %%h !s! %%v
+	if !v1! geq 0 (   &lt;nul set /p "=%esc%[38;2;0;0;0mÛ"
+		&lt;nul set /p "=%esc%[38;2;0;0;0mÛ"
+        For /L %%l in (0,8,360) do call :plot_HSL_RGB %%l !s! !v1!
+        set /a v1=v1-500
+	)
+   echo(
+)
+
+pause
+exit /b
+
+:Plot_HSL_RGB H S L
+
+	rem H=0..360 S=0..10000 L=0..10000
+
+	set /a H=%1, S=%2, L=%3
+
+	rem When 0 &lt;= H &lt; 360, 0 &lt;= S &lt;= 1 and 0 &lt;= L &lt;= 1:
+
+	if !H! equ 360 set /a H=0
+
+	if !H! lss 0 echo ERROR! &amp; goto :EOF
+
+	set /a va=2*L-10000
+	if !va! lss 0 set /a va=-va
+
+	set /a C=(10000-va)*S/10000
+
+	set /a "h1=h*10000/60, mm = (h1 %% 20000) - 10000"
+
+	if !mm! lss 0 set /a mm=-mm
+
+	set /a X = C *(10000 - mm)/10000 , m = L - C/2
+
+	rem (R,G,B) = (R'+m, G'+m, B'+m)
+
+	if !H! lss 60 (set /a R=C+m, G=X+m, B=0+m) else (
+	   if !H! lss 120 (set /a R=X+m, G=C+m, B=0+m) else (
+		  if !H! lss 180 (set /a R=0+m, G=C+m, B=X+m) else (
+			 if !H! lss 240 (set /a R=0+m, G=X+m, B=C+m) else (
+				if !H! lss 300 (set /a R=X+m, G=0+m, B=C+m) else (
+				   if !H! lss 360 (set /a R=C+m, G=0+m, B=X+m) else (echo ERROR!)
+				)
+			 )
+		  )
+	   )
+	)
+
+	set /a R=R*255/10000, G=G*255/10000, B=B*255/10000
+
+	&lt;nul set /p "=%esc%[38;2;!R!;!G!;!B!mÛ"
+
+goto :eof</code></pre></div>
+
+And it produces :<br>
+<br>
+<a href="https://ibb.co/i0Nx5y" class="postlink"><img src="../../preview.ibb.co/gCLTCd/Jakesalad.png" class="postimage" alt="Image"></a><br>
+<br>
+I looked and pondered over the code, but I can't wrap my head around how it works. I read more and it seems like something to do with Vt100 escape sequences, but after a good Google I still don't get how that script works. Can anyone please explain how the code gets all those colours? Thanks a lot <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How does this colour Batch script work?</h3>
+				<div class="date">Posted: <strong>27 May 2018 16:33</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">The new windows version 10 include more color using VT100 escape sequences<br>
+The code iterate in HSL colors and convert to RGB and put a color char using escape sequence<br>
+<br>
+this code show more colors, use raster fonts 4x6 to get in full screen<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp; setlocal enabledelayedexpansion
+
+mode 260,92
+
+for /F %%a in ('echo prompt $E^| cmd') do set "ESC=%%a"
+
+Set /a s=10000, v1=10000
+
+For /L %%h in (0,4,360) do ( 
+	For /L %%v in (10000,-50,0) do call :plot_HSL_RGB %%h !s! %%v
+	if !v1! geq 0 (   &lt;nul set /p "=%esc%[38;2;0;0;0mÛ"
+		&lt;nul set /p "=%esc%[38;2;0;0;0mÛ"
+        For /L %%l in (0,8,360) do call :plot_HSL_RGB %%l !s! !v1!
+        set /a v1=v1-500
+	)
+   echo(
+)
+
+pause
+exit /b
+
+:Plot_HSL_RGB H S L
+
+	rem H=0..360 S=0..10000 L=0..10000
+
+	set /a H=%1, S=%2, L=%3
+
+	rem When 0 &lt;= H &lt; 360, 0 &lt;= S &lt;= 1 and 0 &lt;= L &lt;= 1:
+
+	if !H! equ 360 set /a H=0
+
+	if !H! lss 0 echo ERROR! &amp; goto :EOF
+
+	set /a va=2*L-10000
+	if !va! lss 0 set /a va=-va
+
+	set /a C=(10000-va)*S/10000
+
+	set /a "h1=h*10000/60, mm = (h1 %% 20000) - 10000"
+
+	if !mm! lss 0 set /a mm=-mm
+
+	set /a X = C *(10000 - mm)/10000 , m = L - C/2
+
+	rem (R,G,B) = (R'+m, G'+m, B'+m)
+
+	if !H! lss 60 (set /a R=C+m, G=X+m, B=0+m) else (
+	   if !H! lss 120 (set /a R=X+m, G=C+m, B=0+m) else (
+		  if !H! lss 180 (set /a R=0+m, G=C+m, B=X+m) else (
+			 if !H! lss 240 (set /a R=0+m, G=X+m, B=C+m) else (
+				if !H! lss 300 (set /a R=X+m, G=0+m, B=C+m) else (
+				   if !H! lss 360 (set /a R=C+m, G=0+m, B=X+m) else (echo ERROR!)
+				)
+			 )
+		  )
+	   )
+	)
+
+	set /a R=R*255/10000, G=G*255/10000, B=B*255/10000
+
+	&lt;nul set /p "=%esc%[38;2;!R!;!G!;!B!mÛ"
+
+goto :eof
+</code></pre></div>
+
+<a href="https://ibb.co/ddziCd" class="postlink"><img src="../../preview.ibb.co/fxs3Cd/hsl.png" class="postimage" alt="Image"></a><br>
+<br>
+einstein1969</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How does this colour Batch script work?</h3>
+				<div class="date">Posted: <strong>27 May 2018 17:47</strong></div>
+				<div class="author">by <strong>Grapefruits</strong></div>
+				<div class="content">Thanks for the reply! <br>
+Instead of outputting the whole range of colours, could it output one specific colour?<br>
+So say I wanted just rgb(42, 51, 66), how would I invoke that? Sorry if I sound ignorant, I'm just curious on how it works.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How does this colour Batch script work?</h3>
+				<div class="date">Posted: <strong>27 May 2018 23:33</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;nul set /p "=%esc%[38;2;!R!;!G!;!B!mÛ"</code></pre></div>
+where !R! is red, !G! is green, and !B! is blue<br>
+<br>
+Û is a solid rectangle in code page 437.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How does this colour Batch script work?</h3>
+				<div class="date">Posted: <strong>28 May 2018 11:03</strong></div>
+				<div class="author">by <strong>Grapefruits</strong></div>
+				<div class="content">Thanks so much!</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8581&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:32 GMT -->
+</html>

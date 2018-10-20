@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8552&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:20:20 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; try to add one string just after another string with comma</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>try to add one string just after another string with comma</h2>
+		<p><a href="viewtopice315.html?f=3&amp;t=8552">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8552</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>try to add one string just after another string with comma</h3>
+				<div class="date">Posted: <strong>08 May 2018 09:24</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">I have a txt file, within this txt file, I have several lines, looks like below<br>
+xxxxxx &lt;T501-08815-0103, 0501-08783-0100&gt;<br>
+xxxxxx &lt;T501-08815-0103&gt;<br>
+<br>
+Now I would like to add one string: <strong class="text-strong">T501-08700-0100</strong> just after sting T501-08815-0103 with a comma to separate them, so after adding, it should looks like:<br>
+<br>
+xxxxxx &lt;T501-08815-0103,<strong class="text-strong">T501-08700-0100</strong>,0501-08783-0100&gt;<br>
+xxxxxx &lt;T501-08815-0103,<strong class="text-strong">T501-08700-0100</strong>&gt;<br>
+<br>
+Any thoughts?<br>
+<br>
+Thanks<br>
+goodywp</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: try to add one string just after another string with comma</h3>
+				<div class="date">Posted: <strong>08 May 2018 10:36</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content">Please try a little harder! You have been given many answers and plenty of help here, and I'd wager sufficient for you to have written some code yourself in attempting the task.<br>
+<br>
+Remember it's your task, we don't have to help; when we do it's expected that you don't just take that help, but use it to further your knowledge.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: try to add one string just after another string with comma</h3>
+				<div class="date">Posted: <strong>08 May 2018 13:46</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">Thanks compo<br>
+Tried it out as below:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+set gen_sch=T501-08815-0103
+set sl_sch=T501-08700-0100
+set fk_sch=0501-08783-0100
+
+Set "search=%gen_sch%"
+Set "replace=%gen_sch%,%sl_sch%"
+Set "textfile=Readme-how-to-use-this-package.txt"
+Set "newfile=indesnew.txt"
+(
+	For /F "Tokens=1* Delims=:" %%A In ('FindStr /N "^" "%textfile%"') Do (
+		If "%%B"=="" (
+			Echo=
+		) Else (
+			Set "line=%%B"
+			SetLocal EnableDelayedExpansion
+			Set "line=!line:%search%=%replace%!"
+			Echo=!line!
+			EndLocal
+		)
+	)
+)&gt;"%newfile%"
+Del "%textfile%"
+Ren "%newfile%" "%textfile%"
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: try to add one string just after another string with comma</h3>
+				<div class="date">Posted: <strong>09 May 2018 07:01</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content">You didn't provide any information with your code above, is it working as you wished, or are there one or more issues with it?<br>
+<br>
+Also, why are you thinking about the task in terms of search and replace? I see it as an insert task!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: try to add one string just after another string with comma</h3>
+				<div class="date">Posted: <strong>10 May 2018 07:52</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist1ec2.html?mode=viewprofile&amp;u=5449">Compo</a> wrote: <a href="viewtopic1b79.html?p=56734#p56734" data-post-id="56734" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">09 May 2018 07:01</div></cite>
+You didn't provide any information with your code above, is it working as you wished, or are there one or more issues with it?<br>
+<br>
+Also, why are you thinking about the task in terms of search and replace? I see it as an insert task!
+</div></blockquote>
+The info provided in the first post. The original task was to re-set the ReadMe file and can be divided into two sub-tasks<br>
+1) When the new profilename is DL and old profilename is SL then need to add scheme pack into ReadMe file such as <br>
+    xxxxxx &lt;T501-08815-0103, 0501-08783-0100&gt;<br>
+    xxxxxx &lt;T501-08815-0103&gt;<br>
+I tried to add  T501-08700-0100  so it looks like this in the new ReadMe file<br>
+xxxxxx &lt;T501-08815-0103,T501-08700-0100,0501-08783-0100&gt;<br>
+xxxxxx &lt;T501-08815-0103,T501-08700-0100&gt;<br>
+<br>
+2) When the new profilename is SL and old profilename is DL then need to remove scheme pack from Read file such as  <br>
+    xxxxxx &lt;T501-08815-0103,T501-08700-0100,0501-08783-0100&gt;<br>
+    xxxxxx &lt;T501-08815-0103,T501-08700-0100&gt;<br>
+I tried to remove T501-08700-0100 so it looks like this in the updated ReadMe file<br>
+    xxxxxx &lt;T501-08815-0103, 0501-08783-0100&gt;<br>
+    xxxxxx &lt;T501-08815-0103&gt;<br>
+<br>
+Here is the code and I got exactly what I want even in format no difference...<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+
+set profname=MOCKUP_DL
+set oprofname=QA_SL
+set profname=%profname:~-2%
+set oprofname=%oprofname:~-2%
+
+if "%profname%"=="DL" (
+
+	if "%oprofname%"=="DL" goto end
+ 
+	if "%oprofname%"=="SL" goto DL
+
+	) else (
+
+	if "%oprofname%"=="DL" goto SL
+ 
+	if "%oprofname%"=="SL" goto end
+
+	)
+
+:: here to remove SL scheme pack from ReadMe file
+:DL
+cd C:\Users\abc
+
+set gen_sch=T501-08815-0103
+set sl_sch=T501-08700-0100
+set fk_sch=0501-08783-0100
+
+@echo off 
+Set "search=%sl_sch%,"
+Set "replace="
+Set "textfile=Readme-how-to-use-this-package.txt"
+Set "newfile=indesnew.txt"
+
+(
+	For /F "Tokens=1* Delims=:" %%A In ('FindStr /N "^" "%textfile%"') Do (
+		If "%%B"=="" (
+			Echo=
+		) Else (
+			Set "line=%%B"
+			SetLocal EnableDelayedExpansion
+			Set "line=!line:%search%=%replace%!"
+			Echo=!line!
+			EndLocal
+		)
+	)
+)&gt;"%newfile%"
+Del "%textfile%"
+Ren "%newfile%" "%textfile%"
+
+timeout /t 1
+
+Set "search=,%sl_sch%"
+Set "replace="
+Set "textfile=Readme-how-to-use-this-package.txt"
+Set "newfile=indesnew.txt"
+
+(
+	For /F "Tokens=1* Delims=:" %%A In ('FindStr /N "^" "%textfile%"') Do (
+		If "%%B"=="" (
+			Echo=
+		) Else (
+			Set "line=%%B"
+			SetLocal EnableDelayedExpansion
+			Set "line=!line:%search%=%replace%!"
+			Echo=!line!
+			EndLocal
+		)
+	)
+)&gt;"%newfile%"
+Del "%textfile%"
+Ren "%newfile%" "%textfile%"
+
+goto end
+
+:: here to add SL scheme pack into ReadMe file
+:SL
+
+Set "search=%gen_sch%"
+Set "replace=%gen_sch%,%sl_sch%"
+Set "textfile=Readme-how-to-use-this-package.txt"
+Set "newfile=indesnew.txt"
+echo 66
+(
+	For /F "Tokens=1* Delims=:" %%A In ('FindStr /N "^" "%textfile%"') Do (
+		If "%%B"=="" (
+			Echo=
+		) Else (
+			Set "line=%%B"
+			SetLocal EnableDelayedExpansion
+			Set "line=!line:%search%=%replace%!"
+			Echo=!line!
+			EndLocal
+		)
+	)
+)&gt;"%newfile%"
+Del "%textfile%"
+Ren "%newfile%" "%textfile%"
+
+:end
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: try to add one string just after another string with comma</h3>
+				<div class="date">Posted: <strong>10 May 2018 20:57</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content">Based on the information you've provided, I think, <em class="text-italics">(it's untested)</em>, this may be nearer to what you need:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off
+Set "profname=MOCKUP_DL"
+Set "oprofname=QA_SL"
+
+If /I Not "%profname:~-2%%oprofname:~-2%"=="DLSL" (
+	If /I Not "%profname:~-2%%oprofname:~-2%"=="SLDL" GoTo :EOF)
+
+Set "gen_sch=T501-08815-0103"
+Set "sl_sch=T501-08700-0100"
+::Set "fk_sch=0501-08783-0100"
+Set "textfile=Readme-how-to-use-this-package.txt"
+Set "srcdir=C:\Users\abc"
+
+If /I "%gen_sch%"=="%sl_sch%" GoTo :EOF
+::If /I "%fk_sch%"=="%gen_sch%" GoTo :EOF
+::If /I "%fk_sch%"=="%sl_sch%" GoTo :EOF
+If Not Exist "%srcdir%\%textfile%" GoTo :EOF
+Find /I "&lt;%gen_sch%"&lt;"%srcdir%\%textfile%"&gt;Nul || GoTo :EOF
+
+(For /F "Tokens=1* Delims=:" %%A In ('FindStr /N "^" "%srcdir%\%textfile%"'
+	) Do If "%%B"=="" (Echo=) Else (SetLocal EnableDelayedExpansion
+		Set "line=%%B"
+		If "%profname:~-2%"=="DL" (Set "line=!line:,%sl_sch%,=,!"
+			Set "line=!line:,%sl_sch%&gt;=&gt;!") Else (
+			Set "line=!line:%gen_sch%=%gen_sch%,%sl_sch%!")
+		Echo=!line!
+		EndLocal))&gt;"%srcdir%\%newfile%"
+Del "%srcdir%\%textfile%"
+Ren "%srcdir%\%newfile%" "%textfile%"</code></pre></div><em class="text-italics">I've commented out three lines, because you didn't use %fk_sch%, but there's absolutely no reason why they cannot be uncommented</em></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: try to add one string just after another string with comma</h3>
+				<div class="date">Posted: <strong>11 May 2018 12:27</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">Thanks a lot!</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8552&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:20:20 GMT -->
+</html>

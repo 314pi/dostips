@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7209&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:07:28 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Start a program with Linux path argument from a batch</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Start a program with Linux path argument from a batch</h2>
+		<p><a href="viewtopicf4d9.html?f=3&amp;t=7209">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7209</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Start a program with Linux path argument from a batch</h3>
+				<div class="date">Posted: <strong>11 Jun 2016 13:57</strong></div>
+				<div class="author">by <strong>sambul35</strong></div>
+				<div class="content">I need to start a microApache server from a batch with its .conf file path as an argument. The problem is, to be recognized by microApache, the path must be in Linux format with forward slashes, which results in error when running the batch. I can't even find an escape character for &quot;/&quot; forward slash on the web, if such can help. Any combination of extra &quot;&quot; anywhere doesn't seem to work:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />start /b &quot;C:\Program Files (x86)\some_program\microapache\mapache.exe&quot; -f &quot;C:/Users/user/AppData/some_program/microApache/httpd_conf.txt&quot;<br />exit /b<br /><br />:: Error<br /><br />The system cannot find the file -f.</code></pre></div><br /><br />Alternatively, I can start from a batch a Windows shortcut with target: &quot;C:\Program Files (x86)\some_program\microapache\mapache.exe&quot; -f &quot;C:/Users/user/AppData/some_program/microApache/httpd_conf.txt&quot;, and in this case the argument is processed correctly:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />start &quot;&quot; &quot;C:\Program Files (x86)\some_program\microapache\mapache&quot;<br />exit /b</code></pre></div><br /><br />But starting the (run minimized) shortcut results in microApache window left open or minimized, when it should ideally remain closed, while the server is running. Is there a way to resolve such issue using a batch? It looks like leaving microApache window closed requires using %comspec%, like shown <a href="https://autohotkey.com/board/topic/54172-startingstopping-windows-apache-from-script/" class="postlink"><span style="color: #0000FF">here</span></a>.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Start a program with Linux path argument from a batch</h3>
+				<div class="date">Posted: <strong>11 Jun 2016 14:21</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I guess your problem is caused by the fact that the first parameter of START enclosed into quotes will be used as window title. Try<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>start&nbsp; &quot;&quot; /b &quot;C:\Program Files (x86)\some_program\microapache\mapache.exe&quot; -f &quot;C:/Users/user/AppData/some_program/microApache/httpd_conf.txt&quot;</code></pre></div><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Start a program with Linux path argument from a batch</h3>
+				<div class="date">Posted: <strong>11 Jun 2016 14:40</strong></div>
+				<div class="author">by <strong>sambul35</strong></div>
+				<div class="content">Hmmm... I didn't expect that using /b switch isn't enough, but it did the trick.  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> So it looks like Cmd can recognize forward slashes in arguments containing a <em class="text-italics">Linux path</em>. This syntax works well now from a batch:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />start &quot;&quot; /d &quot;C:\Program Files (x86)\some_program\microapache&quot; /b &quot;C:\Program Files (x86)\some_program\microapache\mapache.exe&quot; -f &quot;C:/Users/user/AppData/some_program/microApache/httpd_conf.txt&quot; 2&gt;nul<br />exit /b</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Start a program with Linux path argument from a batch</h3>
+				<div class="date">Posted: <strong>11 Jun 2016 15:54</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote class="uncited"><div>So it looks like Cmd can recognize forward slashes in arguments</div></blockquote><br />Forward slashes have no special meaning unless they are used in order to initiate an option. But even in that case it depends on the command/tool if it is a forward slash, a dash, or whatever the programmers decided to use in their command line parsers.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Start a program with Linux path argument from a batch</h3>
+				<div class="date">Posted: <strong>11 Jun 2016 16:48</strong></div>
+				<div class="author">by <strong>sambul35</strong></div>
+				<div class="content">The above suggestion however only addresses my 1st question about not recognizing the program path. What about my 2nd question about keeping microApache Cmd window closed while starting it from a batch called for example by Task Scheduler or double click? Now microApache window gets open, even if start /b option is used in the batch, and if closed manually, microApache server exits. Can %comspec% be used for this in the batch, or any other approach?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Start a program with Linux path argument from a batch</h3>
+				<div class="date">Posted: <strong>11 Jun 2016 17:07</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">As I understood your microApache application runs in a console window. The window is open as long as the application runs. If you close the window the process will be terminated. That's normal behavior for console applications. START /B only means that the started console application runs in the same window as your batch script. The window remains opened until the last process (that uses this window) quits.<br />Thus, if you want to close the window it would also lead to quit microApache. You could hide the window using a hybrid script. But how would you quit the application if you're finished?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Start a program with Linux path argument from a batch</h3>
+				<div class="date">Posted: <strong>11 Jun 2016 17:35</strong></div>
+				<div class="author">by <strong>sambul35</strong></div>
+				<div class="content">MicroApache is controlled by another app service. But at times I need to re-start microApache in the background from Task Scheduler, if it fails to start due to target disk being inaccessible. I wonder if microApache has a commandline option to start in the background, so no hybrid batch is needed for that? Alternatively, how such hybrid may look like?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Start a program with Linux path argument from a batch</h3>
+				<div class="date">Posted: <strong>11 Jun 2016 18:11</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite>sambul35 wrote:</cite>I wonder if microApache has a commandline option to start in the background, so no hybrid batch is needed for that?</div></blockquote><br />Wasn't there any manpage that describes command line options?<br /><br /><blockquote><div><cite>sambul35 wrote:</cite>Alternatively, how such hybrid may look like?</div></blockquote><br />Even if I can't test it I think that should work<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (@a)==(@b) @end /* Batch<br /><br />@echo off &amp;setlocal<br />cscript //nologo //e:jscript &quot;%~fs0&quot;<br />exit /b<br /><br />:: JScript */<br /><br />var objWShell = new ActiveXObject('WScript.Shell');<br />objWShell.Run('cmd.exe /c &quot;start &quot;&quot; /d &quot;C:\\Program Files (x86)\\some_program\\microapache&quot; /b &quot;C:\\Program Files (x86)\\some_program\\microapache\\mapache.exe&quot; -f &quot;C:/Users/user/AppData/some_program/microApache/httpd_conf.txt&quot; 2&gt;nul&quot;', 0, false);<br /></code></pre></div><br />That code should be saved as .bat. You could also use only the last two lines and save as .js in order to avoid the Batch window flashing up.<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Start a program with Linux path argument from a batch</h3>
+				<div class="date">Posted: <strong>11 Jun 2016 19:00</strong></div>
+				<div class="author">by <strong>sambul35</strong></div>
+				<div class="content">Yes, there's a manpage with options, but... using them doesn't appear productive. I tried to run this, but it gives errors, since microApache is not registered as service in this application:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>%img% -d %dir% -n mapache.exe -f %cfg% -k restart<br /><br />:: error<br />&nbsp;No installed service named &quot;mapache.exe&quot;.</code></pre></div><br />As microApache is controlled by another service app, that app seems to have some additional options (directives) or extra code to keep it in the background. Though using a 2nd user account to start microApache in the background from Task Scheduler is mentioned <a href="http://superuser.com/questions/198525/how-can-i-execute-a-windows-command-line-in-background" class="postlink"><span style="color: #0000FF">here</span></a> with option <em class="text-italics">&quot;Run whether user is logged on or not&quot;</em>, as well as starting the exe with Powershell or VBS script from the batch to hide its window.<br /><br />Since my batch that restarts microApache also does some other unrelated things, can you explain what the 1st line of your code does, may be with an example how to integrate your peace in a larger batch?  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Start a program with Linux path argument from a batch</h3>
+				<div class="date">Posted: <strong>12 Jun 2016 05:31</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote class="uncited"><div>can you explain what the 1st line of your code does</div></blockquote><br />The goal is not having crashes or error messages if you run the same code twice - 1st as Batch, 2nd as JScript. In order to exclude the JScript portion from executing as Batch you simply have to quit the Batch code either with EXIT /B or GOTO :EOF beforehand.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:: some Batch code<br />exit /b<br />Whatever here is was never seen.<br /></code></pre></div><br />To exclude the Batch portion from parsing as JScript you have to mark it as comment. That can be done with /* ... */ also for a block of multiple lines.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>/*<br />Whatever here is was never seen.<br />*/<br />// some JScript code<br /></code></pre></div><br />But now we have a /* in the first line that causes an error if parsed as Batch code. What we need is a harmless piece of code that is valid in both Batch and JScript. The only reason for having it is to initiate a JScript comment. Line ...<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (@a)==(@b) @end /*</code></pre></div><br />... is a simple IF statement in Batch. Since (@a)==(@b) is FALSE the rest of the line was never seen.<br />The same line in JScript is a &quot;<a href="https://msdn.microsoft.com/en-us/library/7kx09ct1(v=vs.100).aspx" class="postlink">Conditional Compilation Statement</a>&quot; that is always finished with an @end statement. It does absolutely nothing, JScript sees the /* at the end of the line and recognizes it as beginning of a comment though.<br /><br />Thus, the structure for a JScript hybrid is simple.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (@a)==(@b) @end /* JScript comment starts here<br />:: some Batch code here<br />:: pass this file to cscript.exe in order to run it as JScript&#058;<br />cscript //nologo //e:jscript &quot;%~fs0&quot;<br />:: some Batch code there<br />:: quit Batch code execution:<br />exit /b<br /><br />end of JScript comment: */<br /><br />// some JScript code here</code></pre></div><br />That's it  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Start a program with Linux path argument from a batch</h3>
+				<div class="date">Posted: <strong>12 Jun 2016 17:25</strong></div>
+				<div class="author">by <strong>sambul35</strong></div>
+				<div class="content">@aGerman<br /><br />Thanks for examples and detail explanation. Your script works very fast. It also serves as a simple intro to hybrid code batching.  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br /><br />The script directly works with the batch variables as well:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (@a)==(@b) @end /* Batch<br /><br />@echo off &amp;setlocal<br />set &quot;img=C:\\Program Files (x86)\\some_program\\microapache\\mapache.exe&quot;<br />set &quot;dir=C:\\Program Files (x86)\\some_program\\microapache&quot;<br />set &quot;conf=C:/Users/user/AppData/Roaming/Contaware/some_program/httpd_conf.txt&quot;<br /><br />cscript //nologo //e:jscript &quot;%~fs0&quot;<br />exit /b<br /><br />:: JScript */<br /><br />var objWShell = new ActiveXObject('WScript.Shell');<br />objWShell.Run('cmd.exe /c &quot;start &quot;&quot; /d &quot;%dir%&quot; /b &quot;%img%&quot; -f &quot;%conf%&quot; 2&gt;nul&quot;', 0, false);</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7209&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:07:28 GMT -->
+</html>

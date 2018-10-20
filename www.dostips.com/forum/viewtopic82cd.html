@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1590&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:57:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Remove leading characters and pass to new variable</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Remove leading characters and pass to new variable</h2>
+		<p><a href="viewtopica23d.html?f=3&amp;t=1590">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1590</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Remove leading characters and pass to new variable</h3>
+				<div class="date">Posted: <strong>20 Jan 2011 14:36</strong></div>
+				<div class="author">by <strong>KipKasper</strong></div>
+				<div class="content">Hi All,<br /><br />I have a log listing fully qualified file names that need to be copied.<br /><br />ie.  <br />\\some.server.domain.ca\c$\storage\folder\with\stuff\init.jpg<br />\\some.server.domain.ca\c$\storage\folder\with\stuff\more.jpg<br />\\some.server.domain.ca\c$\storage\folder\with\stuff\again.tif<br /><br />the bit of code I'm fighting with is this<br /><br /><span style="color: #0000FF">setlocal enabledelayedexpansion<br />(for /f &quot;tokens=*&quot; %%a in (!dest2!output.log) do (<br />   set filenames=%%a<br />   set spath=!filenames:~73,0!<br />   xcopy !filenames! !dest2!!spath! /f /h<br />))</span><br /><br />it should, take the fully qualified names and load them into !filenames! to be the source for xcopy, and also remove 73 characters from the front of each line, so xcopy can create the same directory structure in the destination. (those 73 characters are \\some.server.....  which i don't need. )<br /><br />I can't tell if anything is being loaded into !spath! the echo output just shows !spath! rather than the data (if any) in it.<br /><br /> - Kip</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Remove leading characters and pass to new variable</h3>
+				<div class="date">Posted: <strong>21 Jan 2011 08:04</strong></div>
+				<div class="author">by <strong>ChickenSoup</strong></div>
+				<div class="content">You can remove the &quot;\\some.server...&quot; with a better use of for and not be bound to a certain number of characters like below.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f &quot;tokens=1* delims=\&quot; %%a in (output.log) do echo %%b</code></pre></div><br />will give you:<br /><blockquote class="uncited"><div>c$\storage\folder\with\stuff\init.jpg<br />c$\storage\folder\with\stuff\more.jpg<br />c$\storage\folder\with\stuff\again.tif</div></blockquote><br />--or--<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f &quot;tokens=2* delims=\&quot; %%a in (output.log) do echo %%b</code></pre></div><br />will give you:<br /><blockquote class="uncited"><div>storage\folder\with\stuff\init.jpg<br />storage\folder\with\stuff\more.jpg<br />storage\folder\with\stuff\again.tif</div></blockquote><br /><br />You should be able to use the value of %%b to get your desired results in the xcopy and then drop the SET statements.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Remove leading characters and pass to new variable</h3>
+				<div class="date">Posted: <strong>21 Jan 2011 09:50</strong></div>
+				<div class="author">by <strong>avery_larry</strong></div>
+				<div class="content">untested:<br /><br />This part:<br />!filenames:~73,0!<br />will return 0 characters skipping the first 72 characters.  I believe you want:<br />!filenames:~73!<br /><br />Which just skips the first 72 characters and returns everything else.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Remove leading characters and pass to new variable</h3>
+				<div class="date">Posted: <strong>21 Jan 2011 10:11</strong></div>
+				<div class="author">by <strong>KipKasper</strong></div>
+				<div class="content"><blockquote><div><cite>avery_larry wrote:</cite>untested:<br /><br />This part:<br />!filenames:~73,0!<br />will return 0 characters skipping the first 72 characters.  I believe you want:<br />!filenames:~73!<br /><br />Which just skips the first 72 characters and returns everything else.</div></blockquote><br /><br />Thanks avery_larry!<br /><br />I had just looked that function up, I've never used it before, so I'm not surprised I was using it wrong =)<br /><br /> - Kip</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Remove leading characters and pass to new variable</h3>
+				<div class="date">Posted: <strong>21 Jan 2011 10:13</strong></div>
+				<div class="author">by <strong>KipKasper</strong></div>
+				<div class="content"><blockquote><div><cite>ChickenSoup wrote:</cite>You can remove the &quot;\\some.server...&quot; with a better use of for and not be bound to a certain number of characters like below.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f &quot;tokens=1* delims=\&quot; %%a in (output.log) do echo %%b</code></pre></div><br />will give you:<br /><blockquote class="uncited"><div>c$\storage\folder\with\stuff\init.jpg<br />c$\storage\folder\with\stuff\more.jpg<br />c$\storage\folder\with\stuff\again.tif</div></blockquote><br />--or--<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f &quot;tokens=2* delims=\&quot; %%a in (output.log) do echo %%b</code></pre></div><br />will give you:<br /><blockquote class="uncited"><div>storage\folder\with\stuff\init.jpg<br />storage\folder\with\stuff\more.jpg<br />storage\folder\with\stuff\again.tif</div></blockquote><br /><br />You should be able to use the value of %%b to get your desired results in the xcopy and then drop the SET statements.</div></blockquote><br /><br />Your right Chickensoup that would be a better way to go about it, and as avery_larry pointed out I was using :~72,-0 wrong anyway...  thanks!</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1590&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:57:19 GMT -->
+</html>

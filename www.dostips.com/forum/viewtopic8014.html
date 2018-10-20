@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8653&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:53:47 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Need help with batch file</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Need help with batch file</h2>
+		<p><a href="viewtopic3902.html?f=3&amp;t=8653">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8653</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Need help with batch file</h3>
+				<div class="date">Posted: <strong>29 Jun 2018 06:32</strong></div>
+				<div class="author">by <strong>DaVidoSS</strong></div>
+				<div class="content">Hi. I am new here.<br>
+After numerous count of hours i was able to write batch script for convert drag and drop video file to 60FPS.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+setlocal EnableDelayedExpansion
+set "filename=%~1"
+for %%A in ("%filename%") do (
+	SET workdir=%%~dpA
+	SET myfile=%%~nxA
+	SET myfilename=%%~nA
+	SET filetype=%%~xA
+	SET filesize=%%~zA
+	SET convdir=%%~dpACONVERTED
+)
+
+echo "WORK PATH = %workdir%"
+echo "FILE NAME = %myfilename%"
+echo "FILE TYPE = %filetype%"
+echo "FILE SIZE = %filesize%"
+
+
+
+SET mpvopt= --no-audio --no-sub --no-sub-auto --input-ipc-server=mpvencodepipe --vf=vapoursynth:[E:\\ffff.py]:4:8 --ofps 59.940 --of=matroska --ovc=h264_nvenc --ovcopts=b=2752698,rc=vbr_hq,preset=slow,profile=high,gpu=any,level=auto,rc-lookahead=32,b_adapt=0,no-scenecut=1,spatial-aq=1,bf=4,aq-strength=15,temporal-aq=1,surfaces=64,coder=auto,threads=8
+SET ffmopt= -map 1:v -map 0:a? -map 0:s? -vcodec copy -acodec copy -scodec copy
+
+
+cd %workdir%
+mkdir %convdir% 2&gt; NUL
+
+start /wait mpv "%filename%" -o "%convdir%\%myfilename%.mkv" %mpvopt%
+
+start /wait ffmpeg -y -i "%filename%" -i "%convdir%\%myfilename%.mkv" %ffmopt% "%convdir%\%myfile%"
+
+del "%convdir%\%myfilename%.mkv"
+
+pause
+</code></pre></div>
+
+This code works as predicted but i am sure that this could be written in better way.<br>
+Another thing what i need are such code where after execute bat file every video type file in bat file directory  would be affected in cascade way (one after another)<br>
+<br>
+Please help me to improve current script and make the another one.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Need help with batch file</h3>
+				<div class="date">Posted: <strong>29 Jun 2018 08:13</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">You can start by changing this.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+setlocal EnableDelayedExpansion
+SET workdir=%~dp1
+SET myfile=%~nx1
+SET myfilename=%~n1
+SET filetype=%~x1
+SET filesize=%~z1
+SET convdir=%~d1ACONVERTED</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Need help with batch file</h3>
+				<div class="date">Posted: <strong>30 Jun 2018 03:36</strong></div>
+				<div class="author">by <strong>DaVidoSS</strong></div>
+				<div class="content">Well, maybe if i would knew how..</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Need help with batch file</h3>
+				<div class="date">Posted: <strong>30 Jun 2018 13:06</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content">If it works then it cannot really be made more efficient, <em class="text-italics">other than not setting variables unnecessarily</em>.<br>
+<br>
+I suppose it may look tidier to some, <em class="text-italics">by breaking those long lines down into smaller portions</em>, and could possibly be made a little more robust:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off
+CD /D "%~dp1" 2&gt;Nul || Exit /B
+
+Set "cdir=CONVERTED"
+
+If Not Exist "%cdir%\" (MD "%cdir%" 2&gt;Nul || Exit /B)
+
+Echo "WORK PATH = %__CD__%"
+Echo "FILE NAME = %~n1"
+Echo "FILE TYPE = %~x1"
+Echo "FILE SIZE = %~z1"
+
+Set "mext=.mkv"
+Set "mopt=--no-audio --no-sub --no-sub-auto --input-ipc-server=mpvencodepipe"
+Set "mopt=%mopt% --vf=vapoursynth:[E:\\ffff.py]:4:8 --ofps 59.940 --of=matroska"
+Set "mopt=%mopt% --ovc=h264_nvenc --ovcopts=b=2752698,rc=vbr_hq,preset=slow,"
+Set "mopt=%mopt%profile=high,gpu=any,level=auto,rc-lookahead=32,b_adapt=0,"
+Set "mopt=%mopt%no-scenecut=1,spatial-aq=1,bf=4,aq-strength=15,temporal-aq=1,"
+Set "mopt=%mopt%surfaces=64,coder=auto,threads=8"
+Set "fopt=-map 1:v -map 0:a? -map 0:s? -vcodec copy -acodec copy -scodec copy"
+
+mpv "%~1" -o "%cdir%\%~n1%mext%" %mopt%
+ffmpeg -y -i "%~1" -i "%cdir%\%~n1%mext%" %fopt% "%cdir%\%~nx1" 2&gt;Nul &amp;&amp; (
+	Del "%cdir%\%~n1%mext%")
+
+Pause</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8653&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:53:47 GMT -->
+</html>

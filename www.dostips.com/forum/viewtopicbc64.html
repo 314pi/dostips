@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8608&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:33 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; remove quotes from url in .bat file</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>remove quotes from url in .bat file</h2>
+		<p><a href="viewtopic32a0.html?f=3&amp;t=8608">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8608</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>remove quotes from url in .bat file</h3>
+				<div class="date">Posted: <strong>07 Jun 2018 10:25</strong></div>
+				<div class="author">by <strong>linuxteche</strong></div>
+				<div class="content">Hi,  <br>
+<br>
+I am trying to remove a double quotes from a URL but I am unable to remove it<br>
+<br>
+I tried the following code and more things but I am not able to remove the double quotes from the url.  Could you please help me on how to remove the double quotes from url. <br>
+<br>
+Also the url is something like this and the same gets reflected in sample.out, this is the url that comes from an application<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>"https://dummy.com:443/en.server/html/next/index.jsp?dl=dash&amp;envId=00001&amp;planId=0001&amp;Monitoring=false&amp;FilterId=01&amp;Start=1527782791576&amp;End=1528387591576" </code></pre></div>
+
+The FreeText in the does not get the url without quotes.  I want the FreeText (in bold) to have the url without quotes.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal
+setlocal enabledelayedexpansion
+set "PPI=C:\PPI"
+echo "%AnalysisDeepLink%" &gt;&gt; E:\sample.out
+set "ADL=%AnalysisDeepLink%"
+rem set ADL1=!ADL:~1,-1!
+rem echo.%ADL1%
+
+rem set ADL=%ADL:"=%
+rem echo %ADL%
+
+
+rem for /f "useback tokens=*" %%a in ('%ADL%') do set str=%%~a
+rem echo.%ADL%
+
+echo %ADL% &gt;&gt; E:\sample.out
+
+"%PPI%\ppi.exe" -c "%PPI%\ppi4vce.conf" -e "Domain=dummy;OriginSeverity=MAJOR;[b]FreeText[/b]=%ADL%"  -w "%PPI"
+
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: remove quotes from url in .bat file</h3>
+				<div class="date">Posted: <strong>07 Jun 2018 14:15</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">All three of these work for me.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+set ADL="https://dummy.com:443/en.server/html/next/index.jsp?dl=dash&amp;envId=00001&amp;planId=0001&amp;Monitoring=false&amp;FilterId=01&amp;Start=1527782791576&amp;End=1528387591576"
+
+set "ADL1=%ADL:~1,-1%"
+echo !ADL1!
+
+set "ADL1=%ADL:"=%"
+echo !ADL1!
+
+
+for %%G in (%ADL%) do set "ADL1=%%~G"
+echo !ADL1!</code></pre></div>
+output
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\BatchFiles\quotes&gt;quotes.bat
+https://dummy.com:443/en.server/html/next/index.jsp?dl=dash&amp;envId=00001&amp;planId=0001&amp;Monitoring=false&amp;FilterId=01&amp;Start=1527782791576&amp;End=1528387591576
+https://dummy.com:443/en.server/html/next/index.jsp?dl=dash&amp;envId=00001&amp;planId=0001&amp;Monitoring=false&amp;FilterId=01&amp;Start=1527782791576&amp;End=1528387591576
+https://dummy.com:443/en.server/html/next/index.jsp?dl=dash&amp;envId=00001&amp;planId=0001&amp;Monitoring=false&amp;FilterId=01&amp;Start=1527782791576&amp;End=1528387591576</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: remove quotes from url in .bat file</h3>
+				<div class="date">Posted: <strong>07 Jun 2018 19:34</strong></div>
+				<div class="author">by <strong>linuxteche</strong></div>
+				<div class="content">Thanks for your reply Sqashman. I too get the same.<br>
+<br>
+But this url comes from another application, so I refer to that url as<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo "%AnalysisDeepLink%" &gt;&gt; E:\sample.out
+</code></pre></div>
+
+I could see the output in the sample.out as the url with double quotes<br>
+<br>
+So, when I try the other codes, I am expecting the the double quotes removed but its not happening.  In fact the output from <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo ADL1 &gt;&gt; E:\\sample.out</code></pre></div> is not even getting updated.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set "ADL=%AnalysisDeepLink%"
+set "ADL1=%ADL:~1,-1%"
+echo !ADL1!
+echo ADL1 &gt;&gt; E:\\sample.out
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: remove quotes from url in .bat file</h3>
+				<div class="date">Posted: <strong>07 Jun 2018 20:06</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Variable name is irrelevant. Still comes out the same for me.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+set AnalysisDeepLink="https://dummy.com:443/en.server/html/next/index.jsp?dl=dash&amp;envId=00001&amp;planId=0001&amp;Monitoring=false&amp;FilterId=01&amp;Start=1527782791576&amp;End=1528387591576"
+
+set "ADL1=%AnalysisDeepLink:~1,-1%"
+echo !ADL1!
+
+set "ADL1=%AnalysisDeepLink:"=%"
+echo !ADL1!
+
+
+for %%G in (%AnalysisDeepLink%) do set "ADL1=%%~G"
+echo !ADL1!</code></pre></div>
+
+Output
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>https://dummy.com:443/en.server/html/next/index.jsp?dl=dash&amp;envId=00001&amp;planId=0001&amp;Monitoring=false&amp;FilterId=01&amp;Start=1527782791576&amp;End=1528387591576
+https://dummy.com:443/en.server/html/next/index.jsp?dl=dash&amp;envId=00001&amp;planId=0001&amp;Monitoring=false&amp;FilterId=01&amp;Start=1527782791576&amp;End=1528387591576
+https://dummy.com:443/en.server/html/next/index.jsp?dl=dash&amp;envId=00001&amp;planId=0001&amp;Monitoring=false&amp;FilterId=01&amp;Start=1527782791576&amp;End=1528387591576
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: remove quotes from url in .bat file</h3>
+				<div class="date">Posted: <strong>08 Jun 2018 02:58</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistead5.html?mode=viewprofile&amp;u=8993">linuxteche</a> wrote: <a href="viewtopica0fd.html?p=57094#p57094" data-post-id="57094" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">07 Jun 2018 19:34</div></cite><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo !ADL1!
+echo ADL1 &gt;&gt; E:\\sample.out
+</code></pre></div>
+</div></blockquote>You noticed the flaw you made?<br>
+(Missing '!'-characters.)<br>
+
+<blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopicbd9f.html?p=57095#p57095" data-post-id="57095" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">07 Jun 2018 20:06</div></cite><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%G in (%AnalysisDeepLink%) do set "ADL1=%%~G"</code></pre></div></div></blockquote>This line shouldn't work (because of the '?' character in the link - at least under my windows 10).<br>
+<br>
+"test.bat":
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>setlocal enabledelayedexpansion
+set AnalysisDeepLink="https://dummy.com:443/en.server/html/next/index.jsp?dl=dash&amp;envId=00001&amp;planId=0001&amp;Monitoring=false&amp;FilterId=01&amp;Start=1527782791576&amp;End=1528387591576"
+set "ADL1="
+for %%G in (%AnalysisDeepLink%) do set "ADL1=%%~G"
+echo !ADL1!</code></pre></div>
+Result:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Z:\&gt;test
+ECHO ist ausgeschaltet (OFF).
+</code></pre></div>
+
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: remove quotes from url in .bat file</h3>
+				<div class="date">Posted: <strong>08 Jun 2018 07:17</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">I was using Windows 10 when I was testing my code last night.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: remove quotes from url in .bat file</h3>
+				<div class="date">Posted: <strong>08 Jun 2018 07:30</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">You haven't reinitialized ADL1, so you are echoing an older value.<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: remove quotes from url in .bat file</h3>
+				<div class="date">Posted: <strong>08 Jun 2018 08:52</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915">penpen</a> wrote: <a href="viewtopic0436-2.html?p=57100#p57100" data-post-id="57100" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">08 Jun 2018 07:30</div></cite>
+You haven't reinitialized ADL1, so you are echoing an older value.<br>
+<br>
+penpen
+</div></blockquote>
+
+You are correct.  That needs to be changed to a `FOR /F`<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+set AnalysisDeepLink="https://dummy.com:443/en.server/html/next/index.jsp?dl=dash&amp;envId=00001&amp;planId=0001&amp;Monitoring=false&amp;FilterId=01&amp;Start=1527782791576&amp;End=1528387591576"
+
+set "ADL1="
+set "ADL1=%AnalysisDeepLink:~1,-1%"
+echo !ADL1!
+
+set "ADL1="
+set "ADL1=%AnalysisDeepLink:"=%"
+echo !ADL1!
+
+set "ADL1="
+for /f "delims=" %%G in (%AnalysisDeepLink%) do set "ADL1=%%~G"
+echo !ADL1!</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8608&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:33 GMT -->
+</html>

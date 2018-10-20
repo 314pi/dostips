@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8651&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:53:37 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Double expansion ? Trouble expanding a variable inside another variable and displaying it</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Double expansion ? Trouble expanding a variable inside another variable and displaying it</h2>
+		<p><a href="viewtopic3371.html?f=3&amp;t=8651">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8651</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Double expansion ? Trouble expanding a variable inside another variable and displaying it</h3>
+				<div class="date">Posted: <strong>27 Jun 2018 18:07</strong></div>
+				<div class="author">by <strong>Osmium Programming</strong></div>
+				<div class="content">I was working on a command prompt in batch, and for the command that displays text on the screen, when I tried to display a variable it displayed it like this- %variable%<br>
+The relevant code for that is
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set var=4
+set /p a=
+echo %a%</code></pre></div>
+If I enter %var% it displays %var%, not its contents (4).<br>
+<br>
+However, when I change it to this, it works
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set var=4
+set a=%var%
+echo %a%</code></pre></div>
+
+Is there a way to still have user input for a, but output 4?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Double expansion ? Trouble expanding a variable inside another variable and displaying it</h3>
+				<div class="date">Posted: <strong>27 Jun 2018 19:26</strong></div>
+				<div class="author">by <strong>Grapefruits</strong></div>
+				<div class="content">This is coming from a total beginner in batch, but what I think you can do is put "call" before echo, to call the variable when its put out. Like this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set var=4
+set /p a=
+call echo %a%</code></pre></div>
+So it puts out
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>4</code></pre></div>
+So that by putting in %var%, and calling echo a (which equals %var%) it'll expand it and print out 4. I remember reading about it somewhere on Stack Overflow, sorry I can't provide any links. Hope this helps...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Double expansion ? Trouble expanding a variable inside another variable and displaying it</h3>
+				<div class="date">Posted: <strong>28 Jun 2018 07:21</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Um things like that are a little weird. As I understand your question you want the user to enter a variable name. Why?
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal
+set var=4
+set /p "a=Enter a variable name: "
+echo Entered: %a%
+
+:: assign the value of var to the entered name
+set "%a%=%var%"
+
+:: either use call ...
+call echo %a%=%%%a%%%
+
+:: ... or delayed expansion
+setlocal EnableDelayedExpansion
+echo %a%=!%a%!
+endlocal
+
+pause
+</code></pre></div>
+Possible output:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Enter a variable name: X
+Entered: X
+X=4
+X=4
+Drücken Sie eine beliebige Taste . . .</code></pre></div>
+
+@Grapefruits<br>
+I'm afraid your code would only display 4 if the user entered 4 in the set /p statement.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Double expansion ? Trouble expanding a variable inside another variable and displaying it</h3>
+				<div class="date">Posted: <strong>28 Jun 2018 08:53</strong></div>
+				<div class="author">by <strong>Grapefruits</strong></div>
+				<div class="content">@aGerman I thought OsmiumProgramming's question asked if entering a variable name with the percent signs around it in the set /p statement would expand to its contents. So if you enter %var% in the set /p statement, it would expand to its contents (so 4). If you enter %var% in set /p using my code it displays <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>4</code></pre></div> not <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>%var%</code></pre></div>.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Double expansion ? Trouble expanding a variable inside another variable and displaying it</h3>
+				<div class="date">Posted: <strong>28 Jun 2018 09:22</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Also possible. Let's wait for a response  <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=":wink:" title="Wink"> <br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Double expansion ? Trouble expanding a variable inside another variable and displaying it</h3>
+				<div class="date">Posted: <strong>02 Jul 2018 18:07</strong></div>
+				<div class="author">by <strong>Osmium Programming</strong></div>
+				<div class="content">That's not what I was looking for, but thanks anyway aGerman, it's nice to know there is always a person to ask. I appreciate it!<br>
+Also, thanks Grapefruits, that really helps!</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8651&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:53:37 GMT -->
+</html>

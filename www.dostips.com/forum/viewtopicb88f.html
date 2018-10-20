@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7930&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:16:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Special Characters in paths</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Special Characters in paths</h2>
+		<p><a href="viewtopic6002.html?f=3&amp;t=7930">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7930</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Special Characters in paths</h3>
+				<div class="date">Posted: <strong>20 Jun 2017 01:35</strong></div>
+				<div class="author">by <strong>SIMMS7400</strong></div>
+				<div class="content">HI Folks -<br /><br />I have a few variables that have special characters in them. Is the only way around this to perform a replacement on each of the variables that use the path with special characters?<br /><br />For instance:  %HC_EXCEL_SPATH:^=% <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>SET &quot;HC_EXCEL_SPATH=C:\Finance ^&amp; Accounting\FP^&amp;A Files\R^&amp;D Function ^&amp; Site Support\Monthly Reporting\Models\Headcount\&quot;<br />SET &quot;HC_EXCEL_TPATH=C:\Finance ^&amp; Accounting\FP^&amp;A Files\R^&amp;D Function ^&amp; Site Support\Monthly Reporting\Models\Access\Headcount\&quot;<br /><br />&gt;&gt;%LOGFILE% (<br />ECHO.&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; <br />ECHO **********************************************************<br />ECHO Copy Headcount file^(s^) to Network Share Source Directory&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<br />ECHO **********************************************************<br />ECHO.&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; <br />)<br />::-- Headcount files copied to Headcount Process Source directory --::<br /><br />&gt;&gt;%LOGFILE% (<br />ECHO Network Share Source Directory ^:<br />ECHO.<br />ECHO %HC_EXCEL_SPATH:^=%<br />ECHO.<br />)<br /><br />SETLOCAL ENABLEDELAYEDEXPANSION<br /><br />SET &quot;A=0&quot;<br />SET &quot;B=0&quot;<br />SET &quot;NF2=&quot;<br />SET &quot;NF3=&quot;<br /><br />FOR %%H IN ( &quot;%HC_CON%&quot; &quot;%HC_SEC%&quot; &quot;%HC_EMP%&quot; ) DO (<br /><br />&nbsp; &nbsp;IF EXIST &quot;%HC_PROCPATH%%%~H&quot; (<br />&nbsp; &nbsp;&nbsp; &nbsp;ECHO F | XCOPY /F /Y &quot;%HC_PROCPATH%%%~H&quot; &quot;%HC_EXCEL_SPATH:^=%&quot;&gt;nul<br /><br />&nbsp; &nbsp;&nbsp; &nbsp;IF %ERRORLEVEL%==0 ( <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;ECHO Copied ^: %%~H &gt;&gt;%LOGFILE% <br />&nbsp; &nbsp;&nbsp; &nbsp;) ELSE ( <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;ECHO Copy Failed ^: %%~H &gt;&gt;%LOGFILE%<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;SET /A B+=1<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;IF !B!==3 SET &quot;NF3=T&quot;&amp; GOTO AbnormalExit<br />&nbsp; &nbsp;&nbsp; &nbsp;)<br />&nbsp; &nbsp;) ELSE (<br />&nbsp; &nbsp;&nbsp; &nbsp;SET /A A+=1<br />&nbsp; &nbsp;)<br />IF !A!==3 SET &quot;NF2=T&quot;&amp; GOTO AbnormalExit<br /><br />)</code></pre></div><br /><br />Or am I setting this up incorrectly when needing to leverage those variables?</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7930&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:16:41 GMT -->
+</html>

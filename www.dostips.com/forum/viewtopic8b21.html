@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=345&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:08:28 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support - Page 24</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</h2>
+		<p><a href="viewtopicb16d.html?f=3&amp;t=6044">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6044</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>24</strong> of <strong>27</strong></div>
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.9 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>09 Jan 2018 04:55</strong></div>
+				<div class="author">by <strong>naraen87</strong></div>
+				<div class="content">@dbenham<br>
+<br>
+I've created the my bat file as follows to edit my property is that ok<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+if not exist "PropertyFile.txt" goto :EOF
+if not exist "%~dp0jrepl.bat" goto :EOF
+
+call "%~dp0jrepl.bat" "^(Environment=.+)$" "Environment=UAT1-v6.19.13.0" /I /F "PropertyFile.txt" /O -
+
+rem JREPL.BAT v7.9 leaves behind JREPL\XBYTES.HEX in folder for temporary files.
+rd /Q /S "%TEMP%\JREPL" 2&gt;nul</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.9 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>09 Jan 2018 06:28</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Looks good  <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"> <br>
+<br>
+Currently the parentheses are not doing anything useful, but they are doing no harm either. It would work just as well if you did:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call "%~dp0jrepl.bat" "^Environment=.+$" "Environment=UAT1-v6.19.13.0" /I /F "PropertyFile.txt" /O -
+</code></pre></div>
+
+Or, with parentheses, you can save a bit of typing - $1 represents the value matched in the first (only) set of parentheses:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call "%~dp0jrepl.bat" "^(Environment=).+$" "$1UAT1-v6.19.13.0" /I /F "PropertyFile.txt" /O -
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.9 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>10 Jan 2018 05:00</strong></div>
+				<div class="author">by <strong>naraen87</strong></div>
+				<div class="content">Hi Dave<br>
+I'm running my command through a bat file and how could I confirm whether my change is happened or not. Is any errorlevel are you following in JREPL.<br>
+<br>
+Is the following scenario handled in your bat file<br>
+I'm running the below command to change a value in the property file<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>E:\Jenkins_Software\PSTools\PsExec.exe \\10.47.36.182 call "\\10.47.36.182\C$\Users\boonar\Desktop\testscripts\JREPL7.9\JREPL.bat" "^(Environment=.+)$" "Environment=UAT1-v6.19.21.0" /I /F "\\10.47.36.182\C$\narayana\Enviromnet_Setup\WIServerSetup\UAT\MDrive\BaNCSFS\BancsProduct\Intranet\properties\InputFiles\MCSysProp.properties" /O -</code></pre></div>
+
+In the meantime I'm doing some change in the file by manually open that file and edit through Notepad.<br>
+In that time the above command will return error or success. (I guess it needs to return some error or it needs to do the change with my manual change)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.9 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>10 Jan 2018 09:56</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">A full description of error return codes, like everything else, is included in the built in help.<br>
+<br>
+To get a description of the return codes:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt;jrepl /?return
+
+  Possible ERRORLEVEL Return Codes:
+
+      If /? was used, and no other argument
+          0 = Only possible return
+
+      If /MATCH, /JMATCH, /JMATCHQ, /K, and /R were not used
+          0 = At least one change was made
+          1 = No change was made
+          2 = Invalid call syntax or incompatible options
+          3 = JScript runtime error
+
+      If /MATCH, /JMATCH, /JMATCHQ, /K, or /R was used
+          0 = At least one line was written
+          1 = No line was written
+          2 = Invalid call syntax or incompatible options
+          3 = JScript runtime error
+</code></pre></div>
+
+To get a description of all available help:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt;jrepl /?help
+
+  Help is available by supplying a single argument beginning with /? or /??:
+
+      /?        - Writes all available help to stdout.
+      /??       - Same as /? except uses MORE for pagination.
+
+      /?Topic   - Writes help about the specified topic to stdout.
+                  Valid topics are:
+
+                    INTRO   - Basic syntax and default behavior
+                    OPTIONS - Brief summary of all options
+                    JSCRIPT - JREPL objects available to user JScript
+                    RETURN  - All possible return codes
+                    VERSION - Display the version of JREPL.BAT
+                    HISTORY - A summary of all releases
+                    HELP    - Lists all methods of getting help
+
+                  Example: List a summary of all available options
+
+                     jrepl /?options
+
+      /?WebTopic - Opens up a web page within your browser about a topic.
+                  Valid web topics are:
+
+                    REGEX   - Microsoft regular expression documentation
+                    REPLACE - Microsoft Replace method documentation
+                    UPDATE  - DosTips release page for JREPL.BAT
+                    CHARSET - List of possible character set names for ADO I/O
+                              Some character sets may not be installed
+                    XREGEXP - xRegExp.com home page (extended regex docs)
+
+      /?/Option - Writes detailed help about the specified /Option to stdout.
+
+                  Example: Display paged help about the /T option
+
+                     jrepl /??/t
+
+      /?CHARSET/[Query] - List all character set names for use with ADO I/O
+                  that are installed on this computer. Optionally restrict
+                  the list to names that contain Query. Wildcards * and ? may
+                  be used within Query. The default Query is an empty string,
+                  meaning list all available character sets. The list is
+                  generated via reg.exe.
+
+                  Examples:
+
+                     jrepl /??charset/    - Paged list of all available names
+                     jrepl /?charset/utf  - List of names containing "utf"
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.9 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>26 Jan 2018 19:14</strong></div>
+				<div class="author">by <strong>batnoob</strong></div>
+				<div class="content">I am learning to use JavaScript, and JREPL is now very interesting to me. I read your code and *most* of your documentation, but I am still confused about how you called in the javascript portion of your code in a batch file. I would appreciate if you could clarify.<br>
+<br>
+Thanks,<br>
+            BatNoob.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.9 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>27 Jan 2018 06:12</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">In post #10 of the following thread I explained it<br>
+<a href="viewtopic7f58.html?t=7209&amp;p=46984#p46984" class="postlink">viewtopic.php?t=7209&amp;p=46984#p46984</a><br>
+But there are various threads about hybrid scripts on DosTips to learn more.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.9 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>12 Mar 2018 04:14</strong></div>
+				<div class="author">by <strong>muppe1970</strong></div>
+				<div class="content">Is there any way of removing the BOM from the UTF-8 output files? I am reading in an utf-8 file, do some find &amp; replace and write an output file which should also be an utf-8 file but without BOM. I tried to redirect the stdio to a file but it does not create the proper utf-8 file. <br>
+<br>
+Marko</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.9 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>12 Mar 2018 11:37</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Unfortunately ADO always writes UTF-8 with BOM. At one point I researched what it would take to control whether the BOM was written or not, and I wasn't able to come up with a clean solution. I may revisit this in the future and try to come up with a solution.<br>
+<br>
+In the mean time, there is a JREPL hack you can use to remove the BOM after the output has been created - simply treat the output file as binary, and remove the BOM with another JREPL:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl "^\xEF\xBB\xBF" "" /inc 1 /xseq /m /f "yourOutputFile.txt" /o -
+</code></pre></div>
+
+If your machine does not default to a single byte character set, then you need to explicitly force the use of a single byte character set - windows-1252 should work.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl "^\xEF\xBB\xBF" "" /inc 1 /xseq /m /f "yourOutputFile.txt|windows-1252" /o -
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.9 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>12 Mar 2018 15:45</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">The only way to the bom from stream within JScript (as "SaveToFile" copies the whole stream content ignoring the actual stream "Position", untested):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (true==false) @end /*
+@echo off
+setlocal enableExtensions disableDelayedExpansion
+cscript //E:JScript //Nologo "%~f0" /bom:1 
+cscript //E:JScript //Nologo "%~f0" /bom:0 
+goto :eof
+*/
+
+var bom = WScript.Arguments.Named.Exists("bom") ? (WScript.Arguments.Named.Item("bom") == 1) : false;
+var filename = (bom) ? ".\\bom.txt" : ".\\noBom.txt";
+var stream = WScript.CreateObject("ADODB.Stream");
+
+stream.Open();
+stream.Charset = "UTF-8";
+stream.WriteText("\u00e4\u00f6\u00fc");
+
+if (bom) {
+	stream.SaveToFile(filename, 2);                         // adSaveCreateOverWrite = 2
+	stream.Flush();
+} else {
+	var noBomStream = WScript.CreateObject("ADODB.Stream");
+	noBomStream.Type = 1;                                   // adTypeBinary = 1
+	noBomStream.Mode = 3;                                   // adModeReadWrite = 3
+	noBomStream.Open();
+
+	stream.Position = 3;                                    // skip bom
+	stream.CopyTo(noBomStream);
+
+	noBomStream.SaveToFile(filename, 2);                    // adSaveCreateOverWrite = 2
+	noBomStream.Flush();
+	noBomStream.Close();
+}
+
+stream.Close();
+</code></pre></div>
+
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.9 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>12 Mar 2018 15:52</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Yes, I had seen that technique, but I haven't seen a good way to automatically detect when I'm dealing with an encoding that involves a BOM, and what is the size of the BOM. The JREPL /O (output) option lets you choose the encoding (character set). I'm thinking I'd have to hard code recognition of certain character set strings, and I am reluctant to do that.<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.9 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>12 Mar 2018 18:56</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">Actually i'm unsure, if you could get the bom if you "loadFromFile", but if you create a new stream, then you could do something like that:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (true==false) @end /*
+@echo off
+setlocal enableExtensions disableDelayedExpansion
+cscript //E:JScript //Nologo "%~f0" /bom:1 
+cscript //E:JScript //Nologo "%~f0" /bom:0 
+goto :eof
+*/
+
+var bom = WScript.Arguments.Named.Exists("bom") ? (WScript.Arguments.Named.Item("bom") == 1) : false;
+var filename = (bom) ? ".\\bom.txt" : ".\\noBom.txt";
+var stream = WScript.CreateObject("ADODB.Stream");
+var bomBytes = null;
+var bomString = "";
+var bomSize = 0;
+
+
+stream.Open();
+stream.Charset = "UTF-8";
+
+if (bom) {
+	stream.WriteText("");                                 // force bom creation
+	bomSize = stream.Size;                                // get bom size
+
+	bomStream = WScript.CreateObject("ADODB.Stream");     // copy bom to iostream
+	bomStream.Type = 1;                                   // adTypeBinary = 1
+	bomStream.Mode = 3;                                   // adModeReadWrite = 3
+	bomStream.Open();
+	stream.Position = 0; stream.CopyTo(bomStream);
+	stream.Position = bomSize;
+
+	bomStream.Position = 0;                               // read bom from stream
+	bomBytes = bomStream.Read (bomSize);
+	bomStream.Close();
+
+	hex = new ActiveXObject("microsoft.xmldom").createElement("bomBytes"); // read hex
+	hex.dataType = "bin.hex";
+	hex.nodeTypedValue = bomBytes;
+	bomString = hex.text;
+}
+
+WScript.Echo("bomString = [" + bomString + "]");              // echo result
+WScript.Echo("bomSize = " + bomSize);
+
+
+stream.WriteText("\u00e4\u00f6\u00fc");
+
+if (bom) {
+	stream.SaveToFile(filename, 2);                         // adSaveCreateOverWrite = 2
+	stream.Flush();
+} else {
+	var noBomStream = WScript.CreateObject("ADODB.Stream");
+	noBomStream.Type = 1;                                   // adTypeBinary = 1
+	noBomStream.Mode = 3;                                   // adModeReadWrite = 3
+	noBomStream.Open();
+
+	stream.Position = bomSize;                              // skip bom
+	stream.CopyTo(noBomStream);
+
+	noBomStream.SaveToFile(filename, 2);                    // adSaveCreateOverWrite = 2
+	noBomStream.Flush();
+	noBomStream.Close();
+}
+
+stream.Close();
+</code></pre></div>
+
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.9 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>14 Mar 2018 17:44</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Thanks penpen.<br>
+<br>
+I don't need the BOM values, I just need to know that there is a BOM, and the size. It wasn't too hard to modify the strategy a bit.<br>
+<br>
+I manage all ADO stream IO through a custom ADOStream object that emulates a TextStream object. I handle removal of the BOM in two steps.<br>
+<br>
+First in the ADOStream constructor that opens the ADO stream, I added a NoBOM boolean parameter, defaulting to FALSE. The constructor determines if the stream is for output, and what the BOM length is, (if any) using the following:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>var bomSize = 0;
+stream.Open();
+if (mode !== _g.ForReading &amp;&amp; noBom) {
+  stream.WriteText("");
+  stream.Position = bomSize = stream.Size;
+}
+</code></pre></div>
+Then my close routine that actually writes to file does some extra work if there is a BOM that needs to be removed:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Close = function() {
+  if (mode!==_g.ForReading){
+    if (bomSize) {
+      var noBomStream = WScript.CreateObject("ADODB.Stream");
+      noBomStream.Type = 1;
+      noBomStream.Mode = 3;
+      noBomStream.Open();
+      stream.Position = bomSize;
+      stream.CopyTo(noBomStream);
+      noBomStream.SaveToFile( name, 2 );
+      noBomStream.Flush();
+      noBomStream.Close();
+      noBomStream = null;
+    } else stream.SaveToFile( name, 2 );
+  }
+  stream.Close();
+  stream=null;
+}
+</code></pre></div>
+
+The above works well, but I don't like the fact that the entire output must be stored in memory twice if the BOM is to be removed. I fear this could cause problems with large output files. But this seems to be the accepted norm for how to remove the BOM from ADO output.<br>
+<br>
+I'm getting ready to post JREPL v7.10 with the ability to remove the BOM from ADO Unicode output.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.10 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>14 Mar 2018 18:04</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><span style="font-size: 150%; line-height: normal">Here is JREPL v7.10</span> with the new ability to remove the BOM from ADO Unicode output.
+<div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file784c.php?id=340">JREPL7.10.zip</a></dt>
+			<dd><em>Downloaded 94 times from the main release page in 12 days while v7.10 was the current release.</em></dd>			<dd>(26.57 KiB) Downloaded 63 times</dd>
+		</dl>
+		
+		
+			</div>
+
+<br>
+The option to remove the BOM is specified by appending <strong class="text-strong"><span style="color: #0000FF">|NB</span></strong> to the <strong class="text-strong"><span style="color: #0000FF">/O outFile|CharSet</span></strong> parameter<br>
+<br>
+For example <strong class="text-strong"><span style="color: #0000FF">/O "outFile.txt|utf-8|nb"</span></strong> would specify that the output should be written as UTF-8 without BOM.<br>
+<br>
+<span style="font-size: 150%; line-height: normal">Changed documentation excerpts:</span>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt; jrepl /?history
+
+    2018-03-14 v7.10: Now can block BOM in ADO output files by appending |NB
+                      to |CharSet in the /O option and OpenOutput() function.
+&lt;truncated&gt;
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt; jrepl /?/o
+
+      /O OutFile[|CharSet[|NB]]
+
+            Output is written to file OutFile instead of stdout. Any existing
+            OutFile is overwritten unless the /APP option is also used.
+
+            If |CharSet (internet character set name) is appended to OutFile,
+            then the file is opened via ADO using the specified CharSet value.
+            The output line terminator still defaults to \r\n when using ADO,
+            and may be changed to \n with the \U option. Both ADO and the
+            CharSet must be available on the local system. Unicode files
+            written by ADO have a BOM by default. Appending |NB (or |anyvalue)
+            to the CharSet blocks the BOM from being written.
+
+            If /F InFile is also used, then an OutFile value of "-" overwrites
+            the original InFile with the output. A value of "-" preserves the
+            original character set. A value of "-|" explicitly transforms the
+            file into the machine default character set. A "-|CharSet" value
+            explicitly transforms the file into the specified character set.
+            The output is first written to a temporary file with the same path
+            and name, with .new appended. Upon completion, the temp file is
+            moved to replace the InFile.
+
+            It is rarely useful, but /APP may be combined with /O -. But /APP
+            cannot be combined with /O "-|CharSet".
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt; jrepl /?jscript
+&lt;truncated&gt;
+      openOutput( fileName[|CharSet[|NB]] [,appendBoolean [,utfBoolean]] )
+
+               Open a new TextStream object for writing and assign it to the
+               output variable. If appendBoolean is truthy, then open the file
+               for appending.
+
+               If |CharSet is appended to the fileName, then open the file
+               using ADO and the specified internet character set name. The
+               output variable will be set to an object that partially
+               emulates a TextStream object (see the input object). Unicode
+               written by ADO will have a BOM by default. The BOM is blocked
+               by appending |NB (or |anyValue) to the CharSet.
+
+               If utfBoolean is truthy, then output is encoded as unicode
+               (UTF-16LE). The unicode file will automatically have the BOM
+               unless opened for appending. The utfBoolean argument is ignored
+               if |CharSet is also specified.
+
+               If fileName is falsey, then output is written to stdout.
+
+               All subsequent output will be written to the new destination.
+
+               Any prior output file is automatically closed.
+&lt;truncated&gt;               
+</code></pre></div>               <br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.11 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>26 Mar 2018 10:45</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">When I added the |NB output option to suppress any BOM when writing ADO Unicode output, I forgot to provide a mechanism to suppress the BOM when using the /O - overwrite syntax.<br>
+<br>
+<span style="font-size: 150%; line-height: normal">Here is version 7.11 that adds the missing functionality to overwrite UTF without BOM:</span>
+<div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/filed919.php?id=342">JREPL7.11.zip</a></dt>
+			<dd><em>Downloaded 983 times from the main release page in a bit under 4 months while v7.11 was the current release.</em></dd>			<dd>(27.56 KiB) Downloaded 117 times</dd>
+		</dl>
+		
+		
+			</div>
+
+<br>
+Here is an example usage that reads a file using the machine's native character set, changes all red into blue, and overwrites the file as UTF-8 without BOM.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl red blue /f file.txt /o "-|utf-8|nb"
+</code></pre></div>
+
+Normally |NB is not used with the /I option (it is normally ignored when used with /I). But if the output is specified as /O - then it will not only preserve the character set used to read the file, but it will also use any |NB flag that may have been present on the input as an instruction to write the output without a BOM.<br>
+<br>
+The following would simply remove any BOM from a UTF-8 file. If the BOM did not exist, then there would be no change:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl "^" "" /f "file.txt|utf-8|nb" /o -
+</code></pre></div>
+
+Conversely, this example would add a BOM to a UTF-8 file if and only if it did not already have one. If the BOM already existed, then there would be no change.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl "^" "" /f "file.txt|utf-8" /o -
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>How to use within calling batch file?</h3>
+				<div class="date">Posted: <strong>15 Apr 2018 07:35</strong></div>
+				<div class="author">by <strong>Mordru</strong></div>
+				<div class="content">Hello, I've been using JREPL to encode/decode game data, (I've made an online batch game, but that's beside the point) and I have ran into a problem. People are able to intercept the calling parameters and therefore get my encode/decode table.<br>
+<br>
+Is there any possible way I can copy/paste JREPL into my game code, and then call a subroutine for it within the batch file whenever I need to use it? That way people can't intercept the parameters when calling JREPL?</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>24</strong> of <strong>27</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=345&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:08:28 GMT -->
+</html>

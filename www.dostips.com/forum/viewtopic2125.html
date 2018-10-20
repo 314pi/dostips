@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1732&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:05:50 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Oddball: Need to make a string of &quot;=&quot; that changes...</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Oddball: Need to make a string of &quot;=&quot; that changes...</h2>
+		<p><a href="viewtopicb9a3.html?f=3&amp;t=1732">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1732</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Oddball: Need to make a string of &quot;=&quot; that changes...</h3>
+				<div class="date">Posted: <strong>30 Mar 2011 16:52</strong></div>
+				<div class="author">by <strong>BrentNewland</strong></div>
+				<div class="content">I've got a batch file that I use for formatting a log file (made from a batch file that uses wget to download the latest copies of a bunch of software).<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>rem @echo off<br /><br />if &quot;%1&quot; == &quot;&quot; goto error<br />if &quot;%1&quot; == &quot;sec&quot; goto sec<br />if &quot;%1&quot; == &quot;pro&quot; goto pro<br />if &quot;%1&quot; == &quot;nl&quot; goto nl<br />if &quot;%1&quot; == &quot;nl2&quot; goto nl2<br />goto error<br /><br />:sec<br />rem Add section title<br />if &quot;%2&quot; == &quot;&quot; goto error<br />echo ======= &gt; log.txt<br />echo =%2= &gt;&gt; log.txt<br />echo ======= &gt;&gt; log.txt<br />echo. &gt;&gt; log.txt<br />echo. &gt;&gt; log.txt<br />goto end<br /><br />:pro<br />rem Add program title<br />if &quot;%2&quot; == &quot;&quot; goto error<br />echo ==%2== &gt;&gt; log.txt<br />echo. &gt;&gt; log.txt<br />goto end<br /><br />:nl<br />rem New Line<br />echo. &gt;&gt; log.txt<br />goto end<br /><br />:nl2<br />rem New Line x2<br />echo. &gt;&gt; log.txt<br />echo. &gt;&gt; log.txt<br />goto end<br /><br />:error<br />echo. &gt;&gt; log.txt<br />echo bad log.cmd usage &gt;&gt; log.txt<br />:end<br /></code></pre></div><br /><br /><br />It's fairly simple - I use &quot;call log sec Tools&quot; to add the following into log.txt:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>======= <br />=Tools= <br />======= </code></pre></div><br />In Notepad/Notepad_++ (which I use to view the log files), the &quot;=&quot; matches up with each letter, so it makes a nice block of text. But the section names aren't always 5 characters long, and I'd like to use it also for the individual program names (e.g. &quot;BootZilla&quot;).<br /><br /><br />So, basically, I need to figure out how long %2 is, then print %2+2 equal signs to a text file (or save that amount of equal signs to a variable). Any ideas?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Oddball: Need to make a string of &quot;=&quot; that changes...</h3>
+				<div class="date">Posted: <strong>30 Mar 2011 18:43</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">BrentNewland,<br /><br />Try this:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />set &quot;title=Hi There (Title up to 60 characters long)&quot;<br /><br />setlocal<br />set &quot;frame=%title%&nbsp; ============================================================&quot;<br />echo.%frame:~60%&gt;&gt; log.txt<br />echo.=%title%=&gt;&gt; log.txt<br />echo.%frame:~60%&gt;&gt; log.txt<br />endlocal</code></pre></div><br />outputs:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>===========================================<br />=Hi There (Title up to 60 characters long)=<br />===========================================</code></pre></div><br />DisItHelp? <img class="smilies" src="images/smilies/icon_wink.gif" alt=";)" title="Wink" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Oddball: Need to make a string of &quot;=&quot; that changes...</h3>
+				<div class="date">Posted: <strong>31 Mar 2011 10:29</strong></div>
+				<div class="author">by <strong>BrentNewland</strong></div>
+				<div class="content">Very good! I had to add one more &quot;=&quot; to the long one, it was coming up one short, other than that works great. No idea how that works (I think for any advanced batch scripting I would have to use PHP).</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1732&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:05:50 GMT -->
+</html>

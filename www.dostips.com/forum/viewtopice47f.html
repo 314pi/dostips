@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4697&p=38121 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:24 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>FindRepl.bat:New regex utility to search and replace strings - Page 3 - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic2aea.php?t=4697&amp;start=30">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopiccabf.html?f=3&amp;t=4697&amp;start=30">FindRepl.bat:New regex utility to search and replace strings</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting6172.html?mode=reply&amp;f=3&amp;t=4697" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic4cd7.php?f=3&amp;t=4697&amp;start=30&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="4697" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			135 posts
+							<ul>
+	<li class="dropdown-container dropdown-button-control dropdown-page-jump page-jump">
+		<a class="button button-icon-only dropdown-trigger" href="#" title="Click to jump to page…" role="button"><i class="icon fa-level-down fa-rotate-270" aria-hidden="true"></i><span class="sr-only">Page <strong>3</strong> of <strong>9</strong></span></a>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+				<li>Jump to page:</li>
+				<li class="page-jump-form">
+					<input type="number" name="page-number" min="1" max="999999" title="Enter the page number you wish to go to" class="inputbox tiny" data-per-page="15" data-base-url=".&#x2F;viewtopic.php&#x3F;f&#x3D;3&amp;amp&#x3B;t&#x3D;4697" data-start-name="start" />
+					<input class="button2" value="Go" type="button" />
+				</li>
+			</ul>
+		</div>
+	</li>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopicb35e.html?f=3&amp;t=4697&amp;start=15" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopica720.html?f=3&amp;t=4697" role="button">1</a></li>
+				<li><a class="button" href="viewtopicb35e.html?f=3&amp;t=4697&amp;start=15" role="button">2</a></li>
+			<li class="active"><span>3</span></li>
+				<li><a class="button" href="viewtopic31ec.html?f=3&amp;t=4697&amp;start=45" role="button">4</a></li>
+				<li><a class="button" href="viewtopic507f.html?f=3&amp;t=4697&amp;start=60" role="button">5</a></li>
+			<li class="ellipsis" role="separator"><span>…</span></li>
+				<li><a class="button" href="viewtopicc178.html?f=3&amp;t=4697&amp;start=120" role="button">9</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic31ec.html?f=3&amp;t=4697&amp;start=45" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p34453" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile34453">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistbe14.php?mode=viewprofile&amp;u=5546" class="username">Dani</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search924c.php?author_id=5546&amp;sr=posts">1</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 14 May 2014 15:31</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content34453">
+
+						<h3 class="first"><a href="#p34453">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingcd7c.php?mode=quote&amp;f=3&amp;p=34453" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic0b44.php?p=34453#p34453" onclick="prompt('Message #31',this.href); return false;">#31</a></span> 
+									<a class="unread" href="viewtopic0b44.php?p=34453#p34453" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistbe14.php?mode=viewprofile&amp;u=5546" class="username">Dani</a></strong> &raquo; </span>15 May 2014 02:06
+			</p>
+			
+			
+			
+			<div class="content">I'm using /A to make multiple replaces at once. When using regular strings it works fine, however when using a regex with /A it replaces the string with a blank.<br /><br />Example:<br /><br />Content of the file (Regex.txt):<br />Dani.vbs<br />XXX<br />Y*&amp;&amp;^<br />test.txt<br />Dani.vbs<br />10.2.3.4<br />Y*&amp;&amp;^<br />test.txt<br /><br />Command: <br />&lt; &quot;.\Regex.txt&quot; FindRepl &quot;test.txt|XXX&quot; /A &quot;SANITIZED_IPADDRESS|YYY&quot;<br /><br />Output:<br />Dani.vbs &lt;--- First row in the file.<br />YYY   &lt;---- Replaced properly<br />Y*&amp;&amp;^<br />SANITIZED_IPADDRESS  &lt;---- Replaced properly<br />Dani.vbs<br />10.2.3.4<br />Y*&amp;&amp;^ &lt;--- Last row in the file<br /><br />When using a regex as part of the list:<br /><br />D:\C#\SanitizeLogs&gt;&lt; &quot;.\Regex.txt&quot; FindRepl &quot;^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$|XXX&quot; /A &quot;SANITIZED_IPADDRESS|YYY&quot;<br /><br />It replaces all with blanks:<br />Dani.vbs<br />                 &lt;--- Blank<br />Y*&amp;&amp;^<br />test.txt<br />Dani.vbs<br />                 &lt;--- Blank<br />Y*&amp;&amp;^<br />test.txt<br /><br />I did another test, with a single regex, which works unless you add the /A switch<br /><br />Command:<br /><br />&lt; &quot;.\Regex.txt&quot; FindRepl &quot;^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$&quot; SANITIZED_IPADDRESS<br /><br />Output:<br />Dani.vbs<br />XXX<br />Y*&amp;&amp;^<br />test.txt<br />Dani.vbs<br />SANITIZED_IPADDRESS &lt;---- Replaced properly<br />Y*&amp;&amp;^<br />test.txt<br /><br />However, when using the /A switch, the output is:<br /><br />&lt; &quot;.\Regex.txt&quot; FindRepl &quot;^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$&quot; /A SANITIZED_IPADDRESS<br /><br />Dani.vbs<br />XXX<br />Y*&amp;&amp;^<br />test.txt<br />Dani.vbs<br />                 &lt;--- Blank<br />Y*&amp;&amp;^<br />test.txt<br /><br />Is this a bug or am I doing something wrong?<br /><br />Thanks in advance,<br />Dani</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p34923" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile34923">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content34923">
+
+						<h3 ><a href="#p34923">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingaf55-2.php?mode=quote&amp;f=3&amp;p=34923" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicf6a3.php?p=34923#p34923" onclick="prompt('Message #32',this.href); return false;">#32</a></span> 
+									<a class="unread" href="viewtopicf6a3.php?p=34923#p34923" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>02 Jun 2014 07:33
+			</p>
+			
+			
+			
+			<div class="content">Feature request:<br /><br />Antonio, would you think it's a good idea to add a feature to change a specified line number only, and using regular expressions as usual in the rSearch and sReplace ?<br /><br />So findrepl would pass all other lines through unchanged, and only change the desired line number.<br /><br />Command something like this: <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type file.txt | findrepl /LINE 3 &quot;VALUETOCHANGE&quot; &quot;Given Value&quot;</code></pre></div><br /><br />file.txt:<br /><br /><span style="color: #0040FF">aaa VALUETOCHANGE bbb<br />aaa VALUETOCHANGE bbb<br />aaa VALUETOCHANGE bbb<br />aaa VALUETOCHANGE bbb<br />aaa VALUETOCHANGE bbb</span><br /><br />changed text:<br /><br /><span style="color: #0040FF">aaa VALUETOCHANGE bbb<br />aaa VALUETOCHANGE bbb<br />aaa Given Value bbb<br />aaa VALUETOCHANGE bbb<br />aaa VALUETOCHANGE bbb</span><br /><br /><br />or can this be done some way with findrepl itself?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p34927" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile34927">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content34927">
+
+						<h3 ><a href="#p34927">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingce5c.php?mode=quote&amp;f=3&amp;p=34927" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5137.php?p=34927#p34927" onclick="prompt('Message #33',this.href); return false;">#33</a></span> 
+									<a class="unread" href="viewtopic5137.php?p=34927#p34927" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>02 Jun 2014 11:09
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Dani wrote:</cite>I'm using /A to make multiple replaces at once. When using regular strings it works fine, however when using a regex with /A it replaces the string with a blank.<br /><br /><br />Is this a bug or am I doing something wrong?<br /><br />Thanks in advance,<br />Dani</div></blockquote><br />Ok. This point is briefly described in the following phrase in the documentation (perhaps not clearly enough):<br /><br /><blockquote><div><cite>FindRepl.bat description wrote:</cite>it is up to you that each alternative in the rSearch alternation does not match more than one result.<br /></div></blockquote><br />The way that this feature is implemented in FindRepl.bat program is defining in advance an array that directly maps each alternative in the source alternation with the corresponding one in the target alternation. This method is very efficient and it does not depends on the number of options in the alternations, but has the disadvantage that is not possible to use a regex in the rSearch alternation, just literal strings. Sorry...<br /><br />However, the cure for this problem is simple: run FindRepl.bat one time for each replacement of regex -&gt; constant, and one more time for the rest of &quot;source1|source2|sourceEtc&quot; -&gt; &quot;target1|target2|targetEtc&quot; replacements.<br /><br />--------------------------------------<br /><br />@foxidrive: That sounds interesting; I will think about it.<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38009" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38009">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38009">
+
+						<h3 ><a href="#p38009">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting6e0c.php?mode=quote&amp;f=3&amp;p=38009" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4120.php?p=38009#p38009" onclick="prompt('Message #34',this.href); return false;">#34</a></span> 
+									<a class="unread" href="viewtopic4120.php?p=38009#p38009" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>16 Nov 2014 00:02
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>foxidrive wrote:</cite>Dave, I was wondering if you would consider a transliteration switch like GnuSed has in the Y switch.<br /><br /><span style="color: #0040FF">y/abc/xyz</span> replaces - a with x - and b with y - and x with z.  <br /><br />Do you think that is a worthwhile function to include?</div></blockquote><br />@foxidrive:<br /><br />I would like to note that my <a href="viewtopica720.html?f=3&amp;t=4697" class="postlink">FindRepl.bat program</a> have had such feature (called <a href="http://msdn.microsoft.com/en-us/library/kstkz771(v=vs.84).aspx" class="postlink">&quot;alternation&quot;</a> in regexp terminology) since its first release:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;a|b|c&quot; /A &quot;x|y|z&quot;<br /></code></pre></div><br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38012" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38012">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38012">
+
+						<h3 ><a href="#p38012">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9f5f.php?mode=quote&amp;f=3&amp;p=38012" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1b8d.php?p=38012#p38012" onclick="prompt('Message #35',this.href); return false;">#35</a></span> 
+									<a class="unread" href="viewtopic1b8d.php?p=38012#p38012" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>16 Nov 2014 03:57
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite><blockquote><div><cite>foxidrive wrote:</cite>Dave, I was wondering if you would consider a transliteration switch like GnuSed has in the Y switch.<br /><span style="color: #0040FF">y/abc/xyz</span> replaces - a with x - and b with y - and c with z.  <br />Do you think that is a worthwhile function to include?</div></blockquote><br />@foxidrive:<br /><br />I would like to note that my <a href="viewtopica720.html?f=3&amp;t=4697" class="postlink">FindRepl.bat program</a> have had such feature (called <a href="http://msdn.microsoft.com/en-us/library/kstkz771(v=vs.84).aspx" class="postlink">&quot;alternation&quot;</a> in regexp terminology) since its first release:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;a|b|c&quot; /A &quot;x|y|z&quot;<br /></code></pre></div><br /><br />Antonio</div></blockquote><br /><br />That's something I wasn't aware of Antonio, and it works well, thanks.<br /><br />I'd like to briefly explain that I had a lot of difficulty coming to grips with how FindRepl works.<br />Findrepl is a complex tool, and without being critical, I had a lot of trouble with the built-in help <br />for Findrepl which wasn't intuitive in a way that I could easily follow.   <br /><br />At one time I was going to include your sample usages from the forum into Findrepl.bat <br />but I had a lot of difficulty formatting the samples in an easy way and gave up.<br /><strong class="text-strong">EDIT:</strong> What I mean here is that I wanted to see the examples by giving a switch to findrepl.bat so <br />I could figure out how to use a feature again without going to the forum and finding the thread.<br /><br /><br />People like me need lots of examples to learn how to use complex tools effectively, so maybe Findrepl<br />could have a switch to open your web browser to the help pages, and also to a particular thread on dostips forum <br />which could have examples <span style="color: #008000">but without any discussion in the thread</span> so browsing it would be easier.<br /><br />What do you think?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38020" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38020">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38020">
+
+						<h3 ><a href="#p38020">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting4053.php?mode=quote&amp;f=3&amp;p=38020" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic97ef.php?p=38020#p38020" onclick="prompt('Message #36',this.href); return false;">#36</a></span> 
+									<a class="unread" href="viewtopic97ef.php?p=38020#p38020" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>16 Nov 2014 17:08
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>foxidrive wrote:</cite>Dave, I was wondering if you would consider a transliteration switch like GnuSed has in the Y switch.<br /><br /><span style="color: #0040FF">y/abc/xyz</span> replaces - a with x - and b with y - and <span style="color: #FF0000"><strong class="text-strong">c</strong></span> with z.  <br /><br />Do you think that is a worthwhile function to include?</div></blockquote><br />Interesting idea. However, I want to support delimited lists and regular expressions in the search terms. I've got some ideas, but it may take a while.<br /><br /><blockquote><div><cite>Aacini wrote:</cite>I would like to note that my FindRepl.bat program have had such feature (called &quot;alternation&quot; in regexp terminology) since its first release:</div></blockquote><br />I too was not aware of this feature. Nice. <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br />However, I think calling it &quot;alternation&quot; is misleading. It may use the same syntax as regex alternation, and the search may actually use alternation, but the replacement part is an entirely different concept in my mind. I've seen the words &quot;translate&quot;, &quot;transliterate&quot;, and &quot;transform&quot; to describe this feature in other utilities, but never &quot;alternation&quot;.<br /><br /><blockquote><div><cite>foxidrive wrote:</cite>I'd like to briefly explain that I had a lot of difficulty coming to grips with how FindRepl works.<br />Findrepl is a complex tool, and without being critical, I had a lot of trouble with the built-in help <br />for Findrepl which wasn't intuitive in a way that I could easily follow. <br /><br />At one time I was going to include your sample usages from the forum into Findrepl.bat <br />but I had a lot of difficulty formatting the samples in an easy way and gave up.<br />EDIT: What I mean here is that I wanted to see the examples by giving a switch to findrepl.bat so <br />I could figure out how to use a feature again without going to the forum and finding the thread.<br /><br /><br />People like me need lots of examples to learn how to use complex tools effectively, so maybe Findrepl<br />could have a switch to open your web browser to the help pages, and also to a particular thread on dostips forum <br />which could have examples but without any discussion in the thread so browsing it would be easier.<br /><br />What do you think?<br /></div></blockquote><br />I totally understand where foxidrive is coming from. I also was impressed with the power demonstrated by some of the posted examples, but I do not find the syntax intuitive, and I have difficulty understanding the built in help.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38121" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38121">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38121">
+
+						<h3 ><a href="#p38121">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2c92.php?mode=quote&amp;f=3&amp;p=38121" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic21b3.php?p=38121#p38121" onclick="prompt('Message #37',this.href); return false;">#37</a></span> 
+									<a class="unread" href="viewtopic21b3.php?p=38121#p38121" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>20 Nov 2014 02:04
+			</p>
+			
+			
+			
+			<div class="content">I completed several important modifications to FindRepl.bat, so I released a new version of this program called FindRepl.bat version 2 and additional updates in versions 2.1 and 2.2. The new code is in <a href="viewtopica720.html?f=3&amp;t=4697" class="postlink">the first post</a> of this thread above, as usual. The documentation placed after that code is the base that describe all features of the original version, so you should read it before try the features of the new version. In this post just the new features of FindRepl.bat versions 2+2.1+2.2 are described. In order to have an easier access to the documentation, it has been subdivided in numbered sections with a header before each one, so you may use the &quot;Find in this page&quot; feature of the explorer looking for the &quot;#. &quot; (number-dot-space) of the desired section in order to quickly locate it. This is the index:<br /><br /><ol style="list-style-type: decimal"><li>Introduction to version 2</li><li>Execute the replacement string as a JScript expression (/J switch)</li><li>User defined variables (/VAR switch) and predefined functions<br /><ol style="list-style-type: decimal"><li>Range functions</li><li>Date functions</li><li>File, Folder and Drive functions</li><li>Data generating functions (/S switch with /J)</li><li>Other functions</li></ol></li><li>Creating additional data at end of file (/L switch)</li><li>Including expressions in alternations (|| separator)</li><li>Loading alternations from a file (/G switch)</li><li>A final word</li></ol><br /><strong class="text-strong">1. Introduction to version 2</strong><br /><br />The core concept in the design of FindRepl.bat program is the <em class="text-italics">regular expression</em> (regexp). You must learn how to use a regexp in order to appropriately use this program (or any other regexp-based program, for that matter) and there is a large amount of documentation about this subject in the web. The last <a href="http://msdn.microsoft.com/en-us/library/yek4tbz0(v=vs.84).aspx" class="postlink">MS JScript documentation</a> is suggested (version 5.8, before MS nomenclature changed it to IE's &quot;JavaScript&quot;). In FindRepl.bat program the search text is always a regexp and the replace text may only include the standard escaped characters of a JScript string, as described in .replace method at previous documentation.<br /><br />On the other hand, FindRepl.bat allows to easily use the base JScript regexp features in very advanced ways with minimum effort. Since the original version, FindRepl has been capable of process a wide range of data in several related ways, so the user may use the same program to solve a wider range of different problems. The new FindRepl.bat version 2 increases this flexibility so it is now capable of solve a new range of problems, or solve the former problems in an simpler or faster way. In despite of these improvements, all new features are entirely compatible with previous version, so users of new FindRepl.bat version 2 program may use it in the same way than before.<br /><br />This is a summary of the new features that appear in FindRepl.bat version 2 built-in help screen; these features are described in the rest of this post.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&#91;/J&#91;:n&#93; &#91;/L:jLast&#93;&#93; &#91;/G:file&#93; &#91;/VAR:name=value,...&#93;<br /><br />&nbsp; /J&#91;:n&#93;&nbsp; &nbsp; &nbsp;Specifies that sReplace/sSource texts have JScript expressions.<br />&nbsp; /L:jLast&nbsp; &nbsp;Execute jLast as a JScript expression after the last line of file.<br />&nbsp; /G:file&nbsp; &nbsp; Specifies the file to get rSearch and sReplace texts from.<br />&nbsp; /VAR:n=v,..Specifies a series of JScript &quot;name=value&quot; var's to initialize.<br /></code></pre></div><br /><br /><strong class="text-strong">2. Execute the replacement string as a JScript expression (/J switch)</strong><br /><br />If the new /J switch is included, the replacement text is not used as a literal string, but executed as a JScript expression, so the value returned by this expression will be used as the replacement text. This feature is extremely powerful, because it allows to use the full capabilities of JScript language to process the data matched by the search regexp. Of course, in order to appropriately use this feature you must know how to write a valid JScript expression, but in its basic form this point is relatively simple and there are tons of examples and related documentation. For example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo Convert to upper case | FindRepl &quot;\w*&quot; &quot;$0.toUpperCase()&quot; /J<br />COVERT TO UPPER CASE<br /><br />echo Capitalize words | FindRepl &quot;\w*&quot; &quot;$0.substr(0,1).toUpperCase()+$0.substr(1).toLowerCase()&quot; /J<br />Capitalize Words<br /></code></pre></div><br />You may use the JScript Conditional Operator to assemble an If?Then:Else expression:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(echo Create camel case names &amp; echo One in each line) | FindRepl &quot;(&#91; &#93;+(\w*))|(\w*)&quot; &quot;$1?$2.substr(0,1).toUpperCase()+$2.substr(1).toLowerCase():$3.toLowerCase()&quot; /J<br />createCamelCaseNames<br />oneInEachLine<br /></code></pre></div><br />Of course, <em class="text-italics">any</em> JScript operator/function/method may be used in the replacement expression, even those that does not manage strings; if the result is not a string, it is automatically converted before used in the replacement. You may browse this site: http:<em class="text-italics">//</em>msdn.microsoft.com/en-us/library/htbw4ywd(v=vs.84).aspx and select a data type in order to review the methods that exist to manipulate different types of data. Hint: <em class="text-italics">functions</em> are written with parameters enclosed in parentheses: &quot;function2(function1(param1),param2)&quot;, but <em class="text-italics">methods</em> are applied to the previous object separated by a dot: &quot;object1.method1().method2(param2)&quot;.<br /><br />You may also use auxiliary variables to store partial results in order to assemble a more complex result comprised of several intermediate steps, until a large procedure is completed. In this case, you should use variable names that start in a capital letter or underscore, to avoid the undesirable modification of a FindRepl.bat variable by chance. For example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;ROT13=C=$0.charCodeAt(0),C+=C&gt;109?-13:C&gt;96?13:C&gt;77?-13:13,String.fromCharCode(C)&quot;<br />echo Perform ROT13 encryption | FindRepl /I &quot;&#91;A-Z&#93;&quot; &quot;%ROT13%&quot; /J &gt; ROT13.txt<br />type ROT13.txt<br /><br />Cresbez EBG13 rapelcgvba<br /><br />&lt; ROT13.txt FindRepl /I &quot;&#91;A-Z&#93;&quot; &quot;%ROT13%&quot; /J<br /><br />Perform ROT13 encryption <br /></code></pre></div><br />If the JScript expression uses a subexpression that was not defined in the search regexp, a run-time error may be issued. Normally you may use up to 10 saved submatched subexpressions in the JScript expression, from $1 to $10; if you want to use more, include the desired number as parameter of the /J switch. For example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;^(\w+) (\w+) (\w+) (\w+) (\w+) (\w+) (\w+) (\w+) (\w+) (\w+) (\w+) (\w+)&quot; &quot;'The 12th word: '+$12&quot; /J:12<br /></code></pre></div><br />The /J switch also modifies the /S:sSource parameter in the same way as described before, that is, when /J switch is included the sSource text is evaluated as a JScript expression that provide the actual text to process.<br /><br /><br /><strong class="text-strong">3. User defined variables (/VAR switch) and predefined functions</strong><br /><br />The /VAR:name1=value1,name2=value2... switch allows to initialize JScript variables with the names and values given, so they may be used in JScript expressions (in sReplace and /S:sSource texts). For example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;Find=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;<br />set &quot;Repl=nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM&quot;<br />echo Perform ROT13 encryption | FindRepl /VAR:Find='%Find%',Repl='%Repl%' /I &quot;&#91;a-z&#93;&quot; &quot;Repl.substr(Find.indexOf($0),1)&quot; /J<br /></code></pre></div><br />If the value of a variable may contain spaces or special Batch characters, enclose <em class="text-italics">the whole switch</em> in quotes; for example: FindRepl &quot;/VAR:Find='%Find% _',Repl='%Repl%_ '&quot; /I ... To insert a quote in the value of a variable, use \x22. You should use names that start in a capital letter or underscore, to avoid the undesirable modification of any FindRepl.bat variable by chance.<br /><br />You may also use /VAR switch to define equivalent values for frequently used long terms, like: &quot;/VAR:stdin=WScript.StdIn&quot;, or to define shorthand functions of long-named methods, like: &quot;/VAR:lc=function(str){return(str.toLowerCase())}&quot;. Of course, you may define any function you wish in /VAR switch, so its code appear before the sSource and sReplace JScript expressions that uses it instead of being defined inside the hidden code of FindRepl.bat program.<br /><br />There are a large number of JScript functions and methods that allows to obtain any possible result in both the sSource and sReplace JScript expressions. However, there are certain frequently used calculations that requires a somewhat large expression. In order to facilitate these operations, FindRepl.bat program provides several <em class="text-italics">predefined</em> functions and variables that may be used in a very simple way. Note that the names of all these values are case sensitive, so you must write them exactly as shown below.<br /><br /><strong class="text-strong">3.1. Range functions</strong><br /><br />These functions works over a range of &quot;fields&quot; (saved submatched substrings) in each &quot;line&quot; (matched string) and get a result for each line. Also, &quot;global results&quot; (that encompass all processed lines) are obtained when the file ends, so they may be used in the /L last line expression switch. Note that the word &quot;arguments&quot; that appear in first parameter of some functions must be written exactly as shown, that is, &quot;sum&quot; function must be used this way: &quot;sum(arguments,3,8)&quot;; these functions can not be used on the &quot;/Alternations&quot; regular expressions described in section 4 below.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>RANGE FUNCTIONS<br /><br />choose(arguments,i)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Returns the value of $i.<br />hlookup(arguments,a,i,j)&nbsp; &nbsp; &nbsp; &nbsp; - Returns the index of the largest value in $i..$j that is less or equal than a.<br />sum(arguments,i,j)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Returns the sum of $i..$j values; set global SUM&#91;#&#93; and N&#91;#&#93; variables, and line &quot;n&quot; one.<br />prod(arguments,i,j)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Returns the product of $i..$j values, set global PROD&#91;#&#93; variables and line &quot;n&quot; one.<br />max(arguments,i,j)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Returns the maximum value in $i..$j values; set global MAX&#91;#&#93; variables.<br />min(arguments,i,j)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Returns the minimum value in $i..$j values; set global MIN&#91;#&#93; variables.<br /><br />GLOBAL RESULTS<br /><br />SUM&#91;1&#93;=SUM&#91;2&#93;=...=0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Global summations of terms, updated by sum(i,j) function.<br />N&#91;1&#93;=N&#91;2&#93;=...=0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Global numbers of terms, updated by sum(i,j) function.<br />PROD&#91;1&#93;=PROD&#91;2&#93;=...=1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Global products of terms, updated by prod(i,j) function.<br />MAX&#91;1&#93;=MAX&#91;2&#93;=...=-Infinite&nbsp; &nbsp; &nbsp;- Global maximum of terms, updated by max(i,j) function.<br />MIN&#91;1&#93;=MIN&#91;2&#93;=...=Infinite&nbsp; &nbsp; &nbsp; - Global minimum of terms, updated by min(i,j) function.<br /></code></pre></div><br /><strong class="text-strong">3.2. Date functions</strong><br /><br />JScript language manages a <strong class="text-strong">Date</strong> type value that allows to perform several date and time related operations in an easier way. For example, you may convert a string to a Date value via &quot;new Date(string)&quot; expression that allows a wide range of different data formats in the string, so JScript Date methods may be used on this value. The following Date type predefined functions provides other frequently used Date operations.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>DATE FUNCTIONS<br /><br />toDate(string)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Converts a string in locale date format (&quot;M/D/Y&quot; or &quot;D/M/Y&quot;) to a Date value.<br />showDate(date,format)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Converts the Date value to a string with the given format.<br />dateDiff(date1,date2)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Returns the number of days from Date2 to Date1 (Date1-Date2).<br />days(date)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Returns the number of days from today's date to the given Date value.<br />dateAdd(date,days)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Returns the given Date value plus/minus number of days.<br /></code></pre></div><br />You should note that dateDiff, days and dateAdd functions works over values of <strong class="text-strong">Date type</strong>, <em class="text-italics">not strings</em>, so a Date value must be created via a Date type function, like toDate. However, these functions may also work over &quot;an integer value representing the number of elapsed milliseconds since midnight, January 1, 1970 GMT&quot;, as defined in the JScript documentation. The toDate function may also convert this integer value into a Date type one. When values of Date type are displayed, a standard format is used, but you may show dates with a certain format via the second parameter of showDate predefined function. The first example below show all currently supported formats; note that formats 5 and 6 are designed to display <em class="text-italics">elapsed times</em> (number of milliseconds) less than 24 hours.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt; for /L %i in (0,1,12) do @echo/| FindRepl &quot;&quot; &quot;'%i -\t'+showDate(new Date(),%i)&quot; /J<br />0 -&nbsp; &nbsp; &nbsp;Dec/15/2014<br />1 -&nbsp; &nbsp; &nbsp;Mon Dec 15 2014<br />2 -&nbsp; &nbsp; &nbsp;Mon Dec 15 16:18:01 CST 2014<br />3 -&nbsp; &nbsp; &nbsp;16:18:01<br />4 -&nbsp; &nbsp; &nbsp;04:18:01 p. m.<br />5 -&nbsp; &nbsp; &nbsp;22:18:01<br />6 -&nbsp; &nbsp; &nbsp;22:18:01.882<br />7 -&nbsp; &nbsp; &nbsp;15-12-2014<br />8 -&nbsp; &nbsp; &nbsp;2014-12-15<br />9 -&nbsp; &nbsp; &nbsp;2014-12-15@16.18.02<br />10 -&nbsp; &nbsp; 20141215161802<br />11 -&nbsp; &nbsp; lunes, 15 de diciembre de 2014<br />12 -&nbsp; &nbsp; lunes, 15 de diciembre de 2014 04:18:02 p. m.<br /><br />C:\&gt; echo %date%<br />28/11/2014<br /><br />C:\&gt; echo %date% num | FindRepl &quot;(&#91;^ &#93;*) (&#91;^ &#93;*) &quot; &quot;'&#91;'+$1+'&#93; - &#91;'+$2+'&#93;'&quot; /J<br />&#91;28/11/2014&#93; - &#91;num&#93;<br /><br />C:\&gt; echo %date% num | FindRepl &quot;(&#91;^ &#93;*) (&#91;^ &#93;*) &quot; &quot;'&#91;'+toDate($1)+'&#93; - &#91;'+$2+'&#93;'&quot; /J<br />&#91;Fri Nov 28 00:00:00 CST 2014&#93; - &#91;num&#93;<br /><br />C:\&gt; echo %date% -1 | FindRepl &quot;(&#91;^ &#93;*) (&#91;^ &#93;*) &quot; &quot;'&#91;'+dateAdd(toDate($1),$2)+'&#93; - &#91;'+$2+'&#93;'&quot; /J<br />&#91;Thu Nov 27 00:00:00 CST 2014&#93; - &#91;-1&#93;<br /><br />C:\&gt; echo %date% +7 | FindRepl &quot;(&#91;^ &#93;*) (&#91;^ &#93;*) &quot; &quot;'&#91;'+dateAdd(toDate($1),$2).toLocaleDateString()+'&#93; - &#91;'+$2+'&#93;'&quot; /J<br />&#91;viernes, 5 de diciembre de 2014&#93; - &#91;+7&#93;<br /><br />REM The following command-line list the names of the files that were modified more than 30 days ago:<br />(for %a in (*.*) do @echo %~Ta=%a) | FindRepl &quot;(&#91;\d\/&#93;+) .*=(&#91;^\r\n&#93;*)\r\n&quot; &quot;days(toDate($1))&gt;30?$2+'\r\n':''&quot; /J<br /></code></pre></div><br />Please, note that a Date value is also a number of milliseconds. If you subtract two Date values you get an <em class="text-italics">elapsed time</em> in milliseconds that may be displayed via showDate function with formats 5 or 6. There is a predefined variable called startTime that get the Date (time) when FindRepl.bat program start run, so it allows to easily show elapsed times this way:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo/| FindRepl &quot;/L:'Elapsed time: '+showDate(new Date()-startTime,6)&quot; /J<br /></code></pre></div><br /><strong class="text-strong">3.3. File, Folder and Drive functions</strong><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FILE AND FOLDER FUNCTIONS<br /><br />fileExist(file)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Returns True if the specified file exists; False if it does not.<br />folderExist(file)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Returns True if the specified folder exists; False if it does not.<br /><br />fileRename(file,newname)&nbsp; &nbsp; &nbsp; &nbsp; - Renames the name of the specified file.<br />folderRename(folder,newname)&nbsp; &nbsp; - Renames the name of the specified folder.<br /><br />Copy(name,destination)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Copies the given file/folder to the specified destination (not wild-cards).<br />Move(name,destination)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Moves the given file/folder to the specified destination (not wild-cards).<br />Delete(name)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Deletes the given file/folder even if folder is not empty (not wild-cards).<br /><br />fileCopy(source,destination)&nbsp; &nbsp; - Copies one or more files from one location to another (wild-cards allowed).<br />fileMove(source,destination)&nbsp; &nbsp; - Moves one or more files from one location to another (wild-cards allowed).<br />fileDelete(filespec)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Deletes files (wild-cards allowed).<br /><br />folderCopy(source,destination)&nbsp; - Recursively copies a folder from one location to another (wild-cards allowed).<br />folderMove(source,detination)&nbsp; &nbsp;- Moves one or more folders from one location to another (wild-cards allowed).<br />folderDelete(filespec)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Deletes folders and its contents (wild-cards allowed).<br /><br />fileProperty(file,property)&nbsp; &nbsp; &nbsp;- Returns the specified property of the given file.<br />folderProperty(folder,property) - Returns the specified property of the given folder.<br /><br />FILE AND FOLDER PROPERTIES<br /><br />Alias&nbsp; &nbsp;Property name&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Description<br /><br />&nbsp; A&nbsp; &nbsp; &nbsp;&quot;Attributes&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; A number, the sum of: ReadOnly=1, Hidden=2, System=4, Volume=8,<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Directory=16, Archive=32, Alias=1024 (shortcut), Compressed=2048.<br />&nbsp; TC&nbsp; &nbsp; &quot;DateCreated&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;These properties &quot;returns an integer value representing the number<br />&nbsp; TA&nbsp; &nbsp; &quot;DateLastAccessed&quot;&nbsp; &nbsp; &nbsp; of elapsed milliseconds since midnight, January 1, 1970 GMT&quot;; these<br />&nbsp; TW&nbsp; &nbsp; &quot;DateLastModified&quot;&nbsp; &nbsp; &nbsp; numbers may be used as Date type values in the predefined functions.<br />&nbsp; D&nbsp; &nbsp; &nbsp;&quot;Drive&quot;<br />&nbsp; NX&nbsp; &nbsp; &quot;Name&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Name and extension of File/Folder.<br />&nbsp; N&nbsp; &nbsp; &nbsp;&quot;NameOnly&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; This is NOT a File/Folder property, but a result assembled in ...Property function.<br />&nbsp; P&nbsp; &nbsp; &nbsp;&quot;ParentFolder&quot;<br />&nbsp; F&nbsp; &nbsp; &nbsp;&quot;Path&quot;<br />&nbsp; SN&nbsp; &nbsp; &quot;ShortName&quot;<br />&nbsp; SF&nbsp; &nbsp; &quot;ShortPath&quot;<br />&nbsp; Z&nbsp; &nbsp; &nbsp;&quot;Size&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; For folders, returns the size, in bytes, of all files and subfolders contained in the folder.<br />&nbsp; X&nbsp; &nbsp; &nbsp;&quot;Extension&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;This is NOT a File/Folder property, but the result of GetExtensionName() method.<br />&nbsp; T&nbsp; &nbsp; &nbsp;&quot;Type&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; For example, for files ending in .TXT, &quot;Text Document&quot; is returned.<br /><br />EXTRA FOLDER PROPERTIES<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;Files&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;A Files collection consisting of all files contained in the specified folder.<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;IsRootFolder&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; True if the specified folder is the root folder; False if it is not.<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;SubFolders&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; A Folders collection consisting of all folders contained in the specified folder.<br /><br />DRIVE FUNCTION AND PROPERTIES<br /><br />driveProperty(drive,property)&nbsp; &nbsp;- Returns the specified property of the given drive.<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;AvailableSpace&quot;&nbsp; &nbsp; &nbsp; &nbsp; Amount of space available to a user on the specified drive or network share.<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;DriveLetter&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Drive letter of a physical local drive or a network share.<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;DriveType&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Value indicating the type of a specified drive:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0=&quot;Unknown&quot;, 1=&quot;Removable&quot;, 2=&quot;Fixed&quot;, 3=&quot;Network&quot;, 4=&quot;CD-ROM&quot;, 5=&quot;RAM Disk&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;FileSystem&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Type of file system in use for the specified drive: FAT, NTFS, and CDFS.<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;FreeSpace&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Amount of free space available to a user on the specified drive or network share.<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;IsReady&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;True if the specified drive is ready; False if it is not.<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;Path&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Path for a specified file, folder, or drive.<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;RootFolder&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Root folder of a specified drive.<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;SerialNumber&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Decimal serial number used to uniquely identify a disk volume.<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;ShareName&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Network share name for a specified drive.<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;TotalSize&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Total space, in bytes, of a drive or network share.<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;VolumeName&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Volume name of the specified drive.<br /></code></pre></div><br />These functions allows to get information of files, folders and drives, and perform some basic processing on them. The usage of fileProperty function is very simple: just put a file name in the first parameter and a FileSystemObject File object's <em class="text-italics">property name</em> in the second one, both as strings. For example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>fileProperty(&quot;theFile.txt&quot;,&quot;DateCreated&quot;)<br />fileProperty($1,&quot;Path&quot;)<br /></code></pre></div><br />The File properties are fully described at http:<em class="text-italics">//</em>msdn.microsoft.com/en-us/library/1ft05taf(v=vs.84).aspx In order to use this function in a simpler way, there are several predefined variables with shorter names that works like &quot;alias&quot; of the properties, with the same names of equivalent features of FOR or DIR commands. This function is particularly useful to perform command-line queries based on the output of DIR /B command.<br /><br />You must note that in order to appropriately use any function that requires a file name, you must cut the &lt;CR&gt;&lt;LF&gt; line ending characters from the subexpressions used to get the function parameters. An example is given below:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>rem This is test.bat<br />dir /B *.bat<br />dir /B *.bat | FindRepl &quot;(&#91;^\r\n&#93;*)\r\n&quot; &quot;'&#91;'+$1+'&#93;\r\n'&quot; /J<br />dir /B *.bat | FindRepl &quot;(&#91;^\r\n&#93;*)\r\n&quot; &quot;fileProperty($1,TC)+'\t'+$1+'\r\n'&quot; /J<br />echo Created&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Accessed&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Modified&nbsp; &nbsp; &nbsp; &nbsp; Filename &amp; echo/&amp; dir /B *.bat | FindRepl &quot;(&#91;^\r\n&#93;*)\r\n&quot; &quot;showDate(fileProperty($1,TC))+'\t'+showDate(fileProperty($1,TA))+'\t'+showDate(fileProperty($1,TW))+' @ '+showDate(fileProperty($1,TW),3)+'\t'+$1+'\r\n'&quot; /J<br /></code></pre></div><br />The screen output:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\ rem This is test.bat<br /><br />C:\ dir /B *.bat<br />FindRepl-v1.bat<br />FindRepl-v2.1.bat<br />FindRepl-v2.bat<br />FindRepl.bat<br />test.bat<br /><br />C:\ dir /B *.bat&nbsp; &nbsp;| FindRepl &quot;(&#91;^\r\n&#93;*)\r\n&quot; &quot;'&#91;'+$1+'&#93;\r\n'&quot; /J<br />&#91;FindRepl-v1.bat&#93;<br />&#91;FindRepl-v2.1.bat&#93;<br />&#91;FindRepl-v2.bat&#93;<br />&#91;FindRepl.bat&#93;<br />&#91;test.bat&#93;<br /><br />C:\ dir /B *.bat&nbsp; &nbsp;| FindRepl &quot;(&#91;^\r\n&#93;*)\r\n&quot; &quot;fileProperty($1,TC)+'\t'+$1+'\r\<br />n'&quot; /J<br />Thu Jul 11 12:55:54 CDT 2013&nbsp; &nbsp; FindRepl-v1.bat<br />Thu Jul 11 12:55:54 CDT 2013&nbsp; &nbsp; FindRepl-v2.1.bat<br />Fri Nov 21 16:15:47 CST 2014&nbsp; &nbsp; FindRepl-v2.bat<br />Sun Nov 30 09:43:11 CST 2014&nbsp; &nbsp; FindRepl.bat<br />Sun Nov 30 17:05:23 CST 2014&nbsp; &nbsp; test.bat<br /><br />C:\ echo Created&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Accessed&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Modified&nbsp; &nbsp; &nbsp; &nbsp; Filename&nbsp; &nbsp;&amp; ec<br />ho/ &amp; dir /B *.bat&nbsp; &nbsp;| FindRepl &quot;(&#91;^\r\n&#93;*)\r\n&quot; &quot;showDate(fileProperty($1,TC))+<br />'\t'+showDate(fileProperty($1,TA))+'\t'+showDate(fileProperty($1,TW))+' @ '+show<br />Date(fileProperty($1,TW),3)+'\t'+$1+'\r\n'&quot; /J<br />Created&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Accessed&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Modified&nbsp; &nbsp; &nbsp; &nbsp; Filename<br /><br />Jul/11/2013&nbsp; &nbsp; &nbsp;Jul/11/2013&nbsp; &nbsp; &nbsp;Nov/13/2014 @ 10:19:10&nbsp; FindRepl-v1.bat<br />Jul/11/2013&nbsp; &nbsp; &nbsp;Nov/15/2014&nbsp; &nbsp; &nbsp;Nov/30/2014 @ 09:01:05&nbsp; FindRepl-v2.1.bat<br />Nov/21/2014&nbsp; &nbsp; &nbsp;Nov/21/2014&nbsp; &nbsp; &nbsp;Nov/27/2014 @ 18:32:01&nbsp; FindRepl-v2.bat<br />Nov/30/2014&nbsp; &nbsp; &nbsp;Nov/30/2014&nbsp; &nbsp; &nbsp;Nov/30/2014 @ 16:12:48&nbsp; FindRepl.bat<br />Nov/30/2014&nbsp; &nbsp; &nbsp;Nov/30/2014&nbsp; &nbsp; &nbsp;Nov/30/2014 @ 17:11:20&nbsp; test.bat<br /></code></pre></div><br />The other File functions allows to perform simple file management operations. Some examples.<br /><br />- Read a text file with &quot;oldname|newname&quot; filename pairs per line and perform a bulk rename with them (http:<em class="text-italics">//</em>stackoverflow.com/questions/27210024/batch-renaming-of-files-hidden-meta-fields-using-text-file):<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; RenamePairs.txt FindRepl &quot;(&#91;^\|&#93;*)\|(&#91;^\r\n&#93;*)\r\n&quot; &quot;(fileExist($1)?fileRename($1,$2):'File not exists: '+$1)+'\r\n'&quot; /J<br /></code></pre></div><br />- Some examples taken from (http:<em class="text-italics">//</em>www.dostips.com/forum/viewtopic.php?f=3&amp;t=6081):<br /><br />1) Convert all .txt files to lower case in the current directory:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>dir /B | FindRepl &quot;(&#91;^\r\n&#93;*)\r\n&quot; &quot;fileRename($1,$1.toLowerCase())&quot; /J</code></pre></div><br />2) Rename all 76 &quot;.jpg&quot; files in current directory to an increasing padded number followed by a constant string. Resulting file names should look like &quot;01_Christmas2014.jpg&quot;, &quot;02_Christmas2014.jpg&quot;, etc.:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>dir /B *.jpg | FindRepl &quot;(&#91;^\r\n&#93;*)\r\n&quot; &quot;/VAR:Num=100&quot; &quot;fileRename($1,(++Num).toString().substr(1)+'_Christmas2014.jpg')+'\r\n'&quot; /J</code></pre></div><br /><br /><strong class="text-strong">3.4. Data generating functions (Collections)</strong><br /><br />The functions in this section are designed to provide the actual source text to be processed when /S:sSource text is evaluated as a JScript expression (if /J switch is also given), although they may also be used in sReplace text. These functions works over <em class="text-italics">collections</em> of items contained in a group, like the system (that have a collection of Drives), a folder (that have two collections: Files and SubFolders) or a WMI class. Each function returns a series of properties of every item that exists in the collection enclosed in quotes and separated by commas, one item per line (CSV format).<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>DATA GENERATING FUNCTIONS<br /><br />drivesCollection(prop1,prop2,...)&nbsp; &nbsp; &nbsp; &nbsp;- Returns the specified list of properties for all drives in the system.<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; If no parameters are given, returns the Path property of all drives.<br /><br />filesCollection(folder,prop1,prop2...)&nbsp; - Returns the specified list of properties for all Files in the given folder.<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; If no parameters are given, returns the Name property of files in current folder.<br /><br />foldersCollection(folder,prop1,prop2..) - Returns the specified list of properties for all SubFolders in the given folder,<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Files and SubFolders properties can not be directly given (see the description below).<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; If no parameters are given, returns the Name property of subfolders in current folder.<br /><br />specialFolders(special,prop1,prop2...)&nbsp; - Returns the list of properties for all Files or SubFolders in the special folder;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; the desired collection is selected by: 'special.Files' or 'special.SubFolders'.<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; If no parameters are given, returns the Path property of all special folders.<br /><br />wmiCollection(class,prop1,prop2...)&nbsp; &nbsp; &nbsp;- Returns the specified list of properties for all elements in the given WMI class.<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; If just the class is given, returns the names of all properties in the class.<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; If no parameters are given, returns the names of all classes (in default namespace).<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; See: http://msdn.microsoft.com/en-us/library/aa394554(v=vs.85).aspx<br /></code></pre></div><br /><br />Remember that Drive, File and Folder properties are given above. Examples of these functions follows, starting with Drives collection:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\ FindRepl &quot;/S:drivesCollection('Path','FreeSpace','TotalSize')&quot; /J<br />&quot;C:&quot;,&quot;423201288192&quot;,&quot;474821423104&quot;<br />&quot;D:&quot;,&quot;2942341120&quot;,&quot;24459079680&quot;<br />&quot;E:&quot;,&quot;Not ready&quot;,&quot;Not ready&quot;<br /><br />C:\ set &quot;source=drivesCollection('Path','FreeSpace','TotalSize')&quot;<br />C:\ FindRepl /S:=source /Q:# &quot;#(&#91;^#&#93;*)#,#(&#91;^#&#93;*)#,#(&#91;^#&#93;*)#\r\n&quot; &quot;$1+' = '+$2+' = '+$3+'\r\n'&quot; /J<br />C: = 423201288192 = 474821423104<br />D: = 2942341120 = 24459079680<br />E: = Not ready = Not ready<br /><br />C:\ set &quot;search=#(&#91;^#&#93;*)#,#(&#91;^#&#93;*)#,#(&#91;^#&#93;*)#\r\n&quot;<br />C:\ FindRepl /S:=source /Q:# =search &quot;$1+'\t'+(S=Math.floor(100-$2*100/$3))+'% Occupied'+(S&gt;85?'\tRequires cleanup!':'')+'\r\n'&quot; /J<br />C:&nbsp; &nbsp; &nbsp; 10% Occupied<br />D:&nbsp; &nbsp; &nbsp; 87% Occupied&nbsp; &nbsp; Requires cleanup!<br />E:&nbsp; &nbsp; &nbsp; NaN% Occupied<br /></code></pre></div><br /><br />The values returned by filesCollection and foldersCollection functions are similar to the ones produced by DIR command and/or the modifiers of FOR command, with some interesting differences. For example, a simple DIR /A-D /B equivalent:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;/S:filesCollection()&quot; /J<br /></code></pre></div><br />... and a DIR /AD /B one:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;/S:foldersCollection()&quot; /J<br /></code></pre></div><br />Of course, you may specify the folder that will be retrieved and the list of properties that will be listed for each item in such a folder. For example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;/S:filesCollection('.',TC,TA,TW,NX)&quot; /J<br /></code></pre></div><br />Please, note that N (&quot;NameOnly&quot;) and X (&quot;Extension&quot;) are NOT JScript's File/Folder properties, so they can not be used in the list given in filesCollection/foldersCollection functions. You must use NX (&quot;Name&quot;) name-and-extension property besides the rest of properties listed above.<br /><br />The Files and SubFolders properties of each folder (that is, folder.Files and folder.SubFolders) can not be <em class="text-italics">directly</em> used in foldersCollection function because they are <em class="text-italics">collections</em> themselves, so they needs to be converted to a series of files or folders via another function. In the case of Files property, you must write a call to filesCollection function as parameter of foldersCollection, that is:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;/S:foldersCollection('.','Path','filesCollection(folder.Files,\'Name\')')&quot; /J<br /></code></pre></div><br />In previous example the whole parameter that includes the &quot;folder.Files&quot; string is evaluated as a JScript expression, that is, the filesCollection function.<br /><br />In the case of SubFolders property, when you place it as parameter in foldersCollection function there is an <em class="text-italics">implicit recursive call</em> of the same foldersCollection function with the same parameters, but processing the nested folder.SubFolders collection instead. For example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;/S:foldersCollection('.','Path','folder.SubFolders')&quot; /J<br /></code></pre></div><br />In this case, the parameter that contain the &quot;folder.SubFolders&quot; string is evaluated as JScript expression and, if the result is not empty, the nested SubFolders collection is processed. However, you may use this parameter to exclude certain SubFolders from being processed even if they are not empty; to do that, just write an expression that returns a false value that includes the &quot;folder.SubFolders&quot; string. For example, to process the contents of all SubFolders in the current folder, excepting the one called &quot;Backups&quot;:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;/S:foldersCollection('.','Path','folder.Name!=\'Backups\'?folder.SubFolders:false')&quot; /J<br /></code></pre></div><br />Additionally, you may insert another parameter after the &quot;folder.SubFolders&quot; one that will be evaluated after it, so certain advanced manipulations are possible. The command below allows to set the number of levels of nested SubFolders that will be processed. For example, to only process two additional nested levels:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;/VAR:Levels=2&quot; &quot;/S:foldersCollection('.','Path','Levels?(--Levels,folder.SubFolders):false','++Levels')&quot; /J<br /></code></pre></div><br />As said before, the parameter that contains the &quot;folder.Files&quot; string is evaluated as a JScript expression, so it may include a conditional operator that serve to exclude certain Files collections in a similar way. For example, the next command does not process <em class="text-italics">the files</em> included in &quot;Backups&quot; folder, but all existent <em class="text-italics">subfolders</em> are processed including &quot;Backups&quot; folder and all folders (and files) under it:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;/S:foldersCollection('.',F,'folder.Name!=\'Backups\'?filesCollection(folder.Files,NX):\'\'','folder.SubFolders')&quot; /J<br /></code></pre></div><br />Of course, any possible combination of values may be used this way, so foldersCollection predefined function is capable of generate precisely the set of values you need in order to solve your particular problem.<br /><br /><br />The specialFolders is a collection that contains the entire set of Windows special folders, such as the Desktop folder, the Start Menu folder, and the Personal Documents folder. The special folder name is used to retrieve the special folder you want, and the .Files or .SubFolders selector property specifies the type of items to get from the special folder. The specialFolders function returns an empty string if the requested special folder is not available. For example, Windows 95 does not have an AllUsersDesktop special folder and returns an empty string if the first parameter is 'AllUsersDesktop.Files' or 'AllUsersDesktop.SubFolders'.<br /><br />The following special folders are available: <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>AllUsersDesktop<br />AllUsersStartMenu<br />AllUsersPrograms<br />AllUsersStartup<br />Desktop<br />Favorites<br />Fonts<br />MyDocuments<br />NetHood<br />PrintHood<br />Programs<br />Recent<br />SendTo<br />StartMenu<br />Startup<br />Templates<br /></code></pre></div><br />A few examples:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;/S:specialFolders()&quot; /J<br />FindRepl &quot;/S:specialFolders('MyDocuments.SubFolders','Name')&quot; /J<br />FindRepl &quot;/S:specialFolders('Fonts.Files','Name')&quot; /J<br />FindRepl &quot;/S:specialFolders('Fonts.Files','Name')&quot; /J &quot;.*\.FNT&quot;<br /></code></pre></div><br /><br />The wmiCollection predefined function is the key to have access to a huge amount of information related to the system. In order to not waste even more words in an over-described topic, you are encouraged to review the WMI documentation at the site linked in the FindRepl /help screen. Below there is a list of just a few useful classes and properties that appear in the first two divisions at http:<em class="text-italics">//</em>msdn.microsoft.com/en-us/library/aa394388(v=vs.85).aspx site. The elements in the list are written as parameters of wmiCollection function (the class first, followed by its properties) so you may easily copy and paste they in the command line in order to execute FindRepl.bat program and show the result.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>1- Computer System Hardware Classes<br /><br />'Win32_Keyboard','Description','DeviceID','Layout'<br />'Win32_DiskDrive','Description','MediaLoaded','SerialNumber','Status'<br />'Win32_PhysicalMemory','Capacity','Name','Speed'<br />'Win32_Processor','CurrentClockSpeed','DataWidth','Description','Manufacturer','Name','NumberOfCores'<br />'Win32_Battery','BatteryStatus','Description','DeviceID','EstimatedChargeRemaining','EstimatedRunTime','Status'<br /><br />2- Operating System Classes<br /><br />'Win32_Environment','Name','SystemVariable','UserName','VariableValue'<br />'Win32_SystemDriver','Name','ServiceType','Started','State'<br />'Win32_Directory','CreationDate','Extension','FileName','FileSize','FileType','LastAccessed','LastModified','Name','Status'<br />'Win32_DiskPartition','BootPartition','Caption','Size','Type'<br />'Win32_LogicalDisk','DeviceID','DriveType','FileSystem','FreeSpace','MediaType','Size','VolumeName'<br />'Win32_ComputerSystem','Description','Manufacturer','Model','NumberOfProcessors','SystemType','TotalPhysicalMemory','UserName'<br />'Win32_OperatingSystem','CountryCode','LocalDateTime','Name','RegisteredUser','SerialNumber','Version','WindowsDirectory'<br />'Win32_Process','Handle','Name','ParentProcessId'<br />'Win32_Service','Name','ServiceType','Started','State'<br />'Win32_LocalTime','Day','DayOfWeek','Hour','Minute','Month','Quarter','Second','WeekInMonth','Year'<br />'Win32_Account','Caption','Name','SID','Status'<br />'Win32_UserAccount','Caption','FullName','Name','SID','Status'<br /><br />For example:<br /><br />FindRepl &quot;/S:wmiCollection('Win32_Service','Name','ServiceType','Started','State')&quot; /J<br /></code></pre></div><br />You must be aware that certain WMI requests may take several seconds, like class 'Win32_Directory' that returns the data of <em class="text-italics">all files and folders</em> that exists in the disk, or executing wmiCollection() with no parameters in order to display the names of all existent classes in the default name space (root\cimv2). For example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;/S:wmiCollection()&quot; &quot;/L:'Elapsed time: '+showDate(new Date()-startTime,6)&quot; /J<br /></code></pre></div><br /><br /><strong class="text-strong">3.5. Other functions</strong><br /><br />The functions in this section does not fits in anyone of previous sections.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>OTHER FUNCTIONS<br /><br />env(varName)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Returns the value of the given environment variable.<br />prompt(message)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Prompts the user with the given message, returns the value entered at keyboard.<br />FOR(arguments,init,test,inc,body) - Emulates the operation of &quot;for&quot; JScript statement:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; the successive values of &quot;body&quot; are joined together and returned as result.<br /></code></pre></div><br />The prompt function allows to prompt the user for the value that will be used in each replacement, so it can provide the final solution when the matching of search and replacement values can not be expressed in terms of any rules, or when you need to input data. This function allows FindRepl.bat program to complete prefilled forms or to interactively select options. A couple examples:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt; echo NAME's favorite color is COLOR and favorite pets are PETS. | FindRepl &quot;NAME|COLOR|PETS&quot; &quot;prompt('Enter your '+$0+': ')&quot; /J<br />Enter your NAME: Antonio<br />Enter your COLOR: green<br />Enter your PETS: dogs<br />Antonio's favorite color is green and favorite pets are dogs.<br /></code></pre></div><br />- List files that were modified more than 30 days ago and size larger than 1 MB, and allows the user to selectively delete them:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>dir /B | FindRepl &quot;(&#91;^\r\n&#93;*)\r\n&quot; &quot;(days(fileProperty($1,TW))&gt;30)&amp;&amp;(fileProperty($1,Z)&gt;1048576)?prompt('Delete '+$1+'? ').substr(0,1).toUpperCase()=='Y'?Delete($1)+'\r\n':'':''&quot; /J<br /></code></pre></div><br />There are some examples on FOR predefined function later.<br /><br /><br /><strong class="text-strong">4. Creating additional data at end of file (/L switch)</strong><br /><br />If /J switch was given to evaluate JScript expressions, then an additional JScript expression may be evaluated after the last line of data file. This feature allows to generate final results based on previously processed data that must be generated when the input file was processed. An example of such processing is sum(i,j) FindRepl predefined function that accumulate the $1, $2, ... processed values into SUM[1], SUM[2], ... &quot;global&quot; predefined array elements (and the number of processed terms in N[1], N[2], ...).<br /><br />For example, given this MagicSquare.txt file:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>37 78 29 70 21 62 13 54 5 <br />6 38 79 30 71 22 63 14 46 <br />47 7 39 80 31 72 23 55 15 <br />16 48 8 40 81 32 64 24 56 <br />57 17 49 9 41 73 33 65 25 <br />26 58 18 50 1 42 74 34 66 <br />67 27 59 10 51 2 43 75 35 <br />36 68 19 60 11 52 3 44 76 <br />77 28 69 20 61 12 53 4 45 <br /></code></pre></div><br />... and the following code:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />set &quot;search=^(\d+) (\d+) (\d+) (\d+) (\d+) (\d+) (\d+) (\d+) (\d+)&quot;<br />set &quot;replace='&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;'+$1+' + '+$2+' + '+$3+' + '+$4+' + '+$5+' + '+$6+' + '+$7+' + '+$8+' + '+$9+'&nbsp; =&nbsp; '+sum(arguments,1,9)&quot;<br />set &quot;lastLine='\r\nTotals: '+SUM&#91;1&#93;+'&nbsp; '+SUM&#91;2&#93;+'&nbsp; '+SUM&#91;3&#93;+'&nbsp; '+SUM&#91;4&#93;+'&nbsp; '+SUM&#91;5&#93;+'&nbsp; '+SUM&#91;6&#93;+'&nbsp; '+SUM&#91;7&#93;+'&nbsp; '+SUM&#91;8&#93;+'&nbsp; '+SUM&#91;9&#93;&quot;<br />&lt; MagicSquare.txt FindRepl =search =replace /J /L:=lastLine<br /></code></pre></div><br />... this output is obtained:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;37 + 78 + 29 + 70 + 21 + 62 + 13 + 54 + 5&nbsp; =&nbsp; 369<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;6 + 38 + 79 + 30 + 71 + 22 + 63 + 14 + 46&nbsp; =&nbsp; 369<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;47 + 7 + 39 + 80 + 31 + 72 + 23 + 55 + 15&nbsp; =&nbsp; 369<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;16 + 48 + 8 + 40 + 81 + 32 + 64 + 24 + 56&nbsp; =&nbsp; 369<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;57 + 17 + 49 + 9 + 41 + 73 + 33 + 65 + 25&nbsp; =&nbsp; 369<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;26 + 58 + 18 + 50 + 1 + 42 + 74 + 34 + 66&nbsp; =&nbsp; 369<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;67 + 27 + 59 + 10 + 51 + 2 + 43 + 75 + 35&nbsp; =&nbsp; 369<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;36 + 68 + 19 + 60 + 11 + 52 + 3 + 44 + 76&nbsp; =&nbsp; 369<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;77 + 28 + 69 + 20 + 61 + 12 + 53 + 4 + 45&nbsp; =&nbsp; 369<br /><br />Totals: 369&nbsp; 369&nbsp; 369&nbsp; 369&nbsp; 369&nbsp; 369&nbsp; 369&nbsp; 369&nbsp; 369<br /></code></pre></div><br />You may also obtain the same result with this lastLine, that uses the FOR FindRepl predefined function:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;lastLine='\r\nTotals: '+FOR(arguments,'I=1','I&lt;=9','I++','SUM&#91;I&#93;+@&nbsp; @')&quot;<br /></code></pre></div><br />... that uses at-signs instead of quotes, so /Q:@ switch needs to be included this way:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; MagicSquare.txt FindRepl =search =replace /J /L:=lastLine /Q:@<br /></code></pre></div><br /><br /><strong class="text-strong">5. Including expressions in alternations (|| separator)</strong><br /><br />In the original version of FindRepl, when /A switch is used to define several pairs of search-replacement strings (separating each value by | to form an &quot;<em class="text-italics">alternation</em>&quot;) the alternatives in both parts can only be literal strings:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;Sun|Mon|Tue|Wed|Thu|Fri|Sat&quot; /A &quot;Dom|Lun|Mar|Mié|Jue|Vie|Sab&quot;<br /></code></pre></div><br />In new version 2, when /J switch is given both parts are comprised of expressions, that is, the search part have regular expressions and the replacement part have JScript expressions:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;Sun|Mon|Tue|Wed|Thu|Fri|Sat&quot; /A &quot;'A day of week'&quot; /J<br /></code></pre></div><br />In this example all input data that matches anyone of the values of the search regexp are <em class="text-italics">grouped in</em> (replaced by) the same string. Please, note the difference: in the original example there are <em class="text-italics">seven literal strings</em> that are replaced by <em class="text-italics">seven literal strings</em>; in the new /J example, there is <em class="text-italics">one regular expression</em> (an alternation) that is replaced by <em class="text-italics">one JScript expression</em>.<br /><br />You may include <em class="text-italics">several expressions</em> (regexp or JScript) in each part; to do that, just separate each expression by two pipe characters || in order to form an &quot;hyper-alternation&quot;. Below there is an example with three alternatives that are all alternations themselves:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;Red|Green|Blue||Peter|Paul|Mary||North|South|East|West&quot; /A &quot;'A color'||'A name'||'A cardinal point'&quot; /J<br /><br />rem For example:<br />set &quot;search=Red|Green|Blue||Peter|Paul|Mary||North|South|East|West&quot;<br />set &quot;replace='A color'||'A name'||'A cardinal point'&quot;<br />echo Peter bought a red house at North of city | FindRepl /I =search /A =replace /J<br /><br />A name bought a A color house at A cardinal point of city<br /></code></pre></div><br />Each alternative in both the search and replacement parts are independant from each other. You may use $0 in each one of the replacement JScript expressions in order to retrieve the data matched by its corresponding regular expression, like in:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;replace='A color: '+$0||'A name: '+$0||'A cardinal point: '+$0&quot;<br /></code></pre></div><br />You may subdivide parts of different strings, enclose they in parentheses in a nested alternation and combine it with common parts in order to reassemble larger strings. For example: &quot;UpperCase|LowerCase||North|South|East|West&quot; /A &quot;'A letter size'||'A cardinal point'&quot; /J may also be written this way: &quot;(Upp|Low)erCase||(Nor|Sou)th|(Ea|We)st&quot; /A &quot;'A letter size'||'A cardinal point'&quot; /J.<br /><br />The alternatives are evaluated in left-to-right order and stops at the first one that matchs. This means that if narrow regexps are placed first and wider ones after, the last regexps will get just those data that was not &quot;captured&quot; by anyone of previous regexps. For example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;\d||\w||.&quot; /A &quot;'Digits'||'Just letters \(not digits\)'||'The rest of characters \(not digits nor letters\)'&quot; /J<br /></code></pre></div><br />If the regexp alternatives have subexpressions enclosed in parentheses (as explained in the base documentation of original FindRepl version and in the previous alternation documentation), then each one of the replacement JScript expressions may use $1, $2, $3, etc. in order to retrieve the corresponding saved submatched subexpression. An example of this point follows.<br /><br />Suppose that a data file contain several email addresses and URI locations that needs to be processed, like this one:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Line with an email address: joedoe@unknown.org<br />Line with an URI location: http://msdn.microsoft.com:80/scripting/default.htm<br />Please send mail to george@contoso.com and someone@example.com. Thanks!<br /></code></pre></div><br />Previous data file may be processed with original FindRepl.bat via two executions, one for each different regexp:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>rem Process the email addresses of the data file:<br />&lt; theFile.txt FindRepl.bat &quot;(\w+)@(\w+)\.(\w+)&quot; &quot;Email: $1 ATSIGN $2 DOT $3&quot; &gt; newFile.txt<br />move /Y newFile.txt theFile.txt<br /><br />rem Process the URI locations of the data file:<br />&lt; theFile.txt FindRepl.bat &quot;(\w+):\/\/(&#91;^/:&#93;+)(:\d*)?(&#91;^# &#93;*)&quot; &quot;URI: $1 SITE $2 PORT $3 PATH $4&quot; &gt; newFile.txt<br /></code></pre></div><br />Previous process may be achieved in one step grouping the regular expressions and the replacement strings (changed into JScript expressions) in two alternations and use they in just one execution of FindRepl.bat version 2:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl.bat &quot;(\w+)@(\w+)\.(\w+)||(\w+):\/\/(&#91;^/:&#93;+)(:\d*)?(&#91;^# &#93;*)&quot; /A<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;'Email: '+$1+' ATSIGN '+$2+' DOT '+$3||'URI: '+$1+' SITE '+$2+' PORT '+$3+' PATH '+$4&quot; /J &gt; newFile.txt<br /></code></pre></div><br />When alternations are used, it is not necessary to define the maximum number of subexpressions that will be used in the regexps. If a number is given in /J:n switch, it is ignored. However, JScript language limits the total number of subexpressions that may be used in <em class="text-italics">all</em> alternations to 99.<br /><br /><br /><strong class="text-strong">6. Loading alternations from a file (/G switch)</strong><br /><br />The new /G switch allows to place the search/replace alternations in a file. The use of this feature is simple because all previously described facilities works in the same way; the only difference is that the search/replacement alternations are read from a file instead of placed in parameters. <br /><br />In the description of || feature at previous point, the /J switch allows to use regexps/JScript expressions instead of literal strings, and /A switch is used to set a find-replace operation instead of a find-only one. The same 4 combinations of /A and /J switches are used in the same way when /G switch is added, as shown below:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Command:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; File lines have:&nbsp; &nbsp; &nbsp; &nbsp;Operation performed:<br /><br />FindRepl /G:filename.txt&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; literal&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Find literals<br />FindRepl /G:filename.txt&nbsp; /A&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; literalS|literalR&nbsp; &nbsp; &nbsp; Find literalS, replace by literalR<br />FindRepl /G:filename.txt&nbsp; &nbsp; &nbsp; /J&nbsp; &nbsp; &nbsp; &nbsp; regexp&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Find regexps<br />FindRepl /G:filename.txt&nbsp; /A&nbsp; /J&nbsp; &nbsp; &nbsp; &nbsp; regexp||JScript&nbsp; &nbsp; &nbsp; &nbsp; Find regexp, replace by JScript expression<br /></code></pre></div><br />This simple example of search alternation:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;one|two|three&quot;<br /></code></pre></div><br />... is equivalent to have this Search.txt text file:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>one<br />two<br />three<br /></code></pre></div><br />... and execute FindRepl this way:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl /G:Search.txt<br /></code></pre></div><br />To define search and replace alternations, include the /A switch and separate each search-replace literals pair by a single pipe | character. For example, this search-replace alternation:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;Sun|Mon|Tue|Wed|Thu|Fri|Sat&quot; /A &quot;Dom|Lun|Mar|Mié|Jue|Vie|Sab&quot;<br /></code></pre></div><br />... may be placed in SearchRepl.txt file this way:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Sun|Dom<br />Mon|Lun<br />Tue|Mar<br />Wed|Mié<br />Thu|Jue<br />Fri|Vie<br />Sat|Sab<br /></code></pre></div><br />... and execute FindRepl this way:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl /G:SearchRepl.txt /A<br /></code></pre></div><br />In order to define regexp-JScript pairs, add the /J switch and separate each search-replace pair by two pipe || characters. This previous example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;Red|Green|Blue||Peter|Paul|Mary||North|South|East|West&quot; /A &quot;'A color: '+$0||'A name: '+$0||'A cardinal point: '+$0&quot; /J<br /><br /></code></pre></div><br />... is equivalent to have this SearchReplaceJ.txt file:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Red|Green|Blue||'A color: '+$0<br />Peter|Paul|Mary||'A name: '+$0<br />North|South|East|West||'A cardinal point: '+$0<br /></code></pre></div><br />... and execute FindRepl this way:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl /G:SearchReplaceJ.txt /A /J<br /></code></pre></div><br />The same file used for a find-replace operation may also be used for a find-only operation; if /A switch is not given, just the search alternatives are loaded. This previous example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl.bat &quot;(\w+)@(\w+)\.(\w+)||(\w+):\/\/(&#91;^/:&#93;+)(:\d*)?(&#91;^# &#93;*)&quot; /A<br />&nbsp; &nbsp; &nbsp; &nbsp; &quot;'Email: '+$1+' ATSIGN '+$2+' DOT '+$3||'URI: '+$1+' SITE '+$2+' PORT '+$3+' PATH '+$4&quot; /J &gt; newFile.txt<br /></code></pre></div><br />... is equivalent to have this BothUsesJ.txt file:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(\w+)@(\w+)\.(\w+)||'Email: '+$1+' ATSIGN '+$2+' DOT '+$3<br />(\w+):\/\/(&#91;^/:&#93;+)(:\d*)?(&#91;^# &#93;*)||'URI: '+$1+' SITE '+$2+' PORT '+$3+' PATH '+$4<br /></code></pre></div><br />... and execute FindRepl this way:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl /G:BothUsesJ.txt /A /J &gt; newFile.txt<br /></code></pre></div><br />... but the same file may be used in a find-only operation this way:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl /G:BothUsesJ.txt /J<br /></code></pre></div><br />The JScript regular expressions documentation does not specify any limit in the number of regexps that may be defined this way.<br /><br />Remember that you can not include quotes in any line of the file, so you may use /Q switch in order to use a replacement character instead of quotes. However, you may insert quotes at beginning and end of the lines to clearly delimit the replacement part; this may be useful if the replace literal string is not given, that is commonly used to eliminate the search part. For example, the following find-replace file allows to convert a .m3u playlist into a different format(http:<em class="text-italics">//</em>stackoverflow.com/questions/27280981/converting-a-m3u-playlist-with-sed):<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&quot;\.\.\\\.\.\\|C:\\Users\\Me\\&quot;<br />&quot;\.\.\\|C:\\Users\\Me\\Music\\&quot;<br />&quot;#EXTM3U|&quot;<br />&quot;:0,|:-1,&quot;<br />&quot;\\|\/&quot;<br />&quot;C:\/|file:\/\/\/C:\/&quot;<br />&quot;\.mp3\r\nfile|\r\nfile&quot;<br />&quot;^\r\n|&quot;<br /></code></pre></div><br /><br />In order to write clearer find-replace files you may include empty lines and <em class="text-italics">comment lines</em> that starts in a double-backslash, and also <em class="text-italics">var lines</em> with the same format of JScript's ones that allows to include the variables initialization in the file itself. For example, a find-replace file in charge of remove unwanted characters from an OCR scanned file may be large and complex (http:<em class="text-italics">//</em>www.dostips.com/forum/viewtopic.php?f=3&amp;t=6044&amp;p=38111#p38111), but this complexity becomes more readable when an explanation is added to the file in the form of comments:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>// OCRfix.txt: Fix the data captured via OCR scan, used with FindRepl.bat program<br /><br />// These characters must be escaped with backslash: \*+?^$.&#91;&#93;{}()|<br />// * match &quot;zero or more&quot;, + match &quot;one or more&quot;, ? match &quot;zero or one&quot;<br /><br />// a) for the symbols ,?!. is found, they should follow a word(no space).<br />//&nbsp; &nbsp; A space should be there after ,?!. before the next word<br />// -&gt; Replace &quot;zero or more spaces&quot; &quot;,|?|!|.&quot; &quot;zero or more spaces&quot; by<br />//&nbsp; &nbsp; &quot;no spaces&quot; &quot;,|?|!|.&quot; &quot;one space&quot;<br />// c) Capitalization of first character after ?!.<br />// -&gt; Convert next character, after NOT &quot;,&quot;, to uppercase<br />&nbsp;*(,|\?|!|\.) *(.)||$1+' '+($1!=',')?$2.toUpperCase():$2<br /><br />// b) &quot;(open quote) should have a space before and &quot;(close quote) a space after<br />// -&gt; Initialize &quot;inQuote&quot; variable with false<br />var inQuote=false;<br />// -&gt; Replace &quot;zero or more spaces&quot; &quot;quote&quot; IF NOT inQuote by &quot;space&quot; &quot;quote&quot; AND set inQuote to true<br />&nbsp;*\x22||inQuote?$0:inQuote=true,' \x22'<br />// -&gt; Replace &quot;quote&quot; &quot;zero or more spaces&quot; IF inQuote by &quot;quote&quot; &quot;space&quot; AND set inQuote to false<br />\x22 *||inQuote?inQuote=false,'\x22 \':$0<br /><br />// Previous lines use \x22 for &quot;quote&quot;, because a literal quote can NOT be included;<br />// this way, this file does NOT depend on using the /Q switch in FindRepl execution<br /><br />// d) paragraph begins is determined by 2 times ENTER and end after with 2 times enter as well.<br />// -&gt; paragraph ends at &quot;\r\n\r\n&quot;&nbsp; &nbsp; (Or should it be &quot;\r\r&quot;?)<br /><br />// e) A tab is needed at the beginning of a paragraph with first letter capitalize.<br />// -&gt; Replace &quot;\r\n\r\n&quot; &quot;any char&quot; by &quot;\r\n\r\n&quot; &quot;tab&quot; &quot;any char capitalized&quot;<br />\r\n\r\n(.)||'\r\n\r\n\t'+$1.toUpperCase()<br /><br />// f) If there is ENTER in between this paragraph, strip the enter<br />// -&gt; Remove any ENTER that passed previous rules<br />\r\n||''<br /><br />// g) Any other tab or extra spaces should be strip.<br />//&nbsp; &nbsp; Only a single space before and after a word.<br />// -&gt; Replace multiple tabs/spaces by one space<br />(\t| )+||' '<br /></code></pre></div><br /><br /><strong class="text-strong">7. A final word</strong><br /><br />FindRepl.bat version 2 is a large and complex program. There are many possible situations in which this program may fail. By its nature, any JScript program may present run-time errors and this possibility augments by the fact that FindRepl allows to insert executable code provided by the user. It is simply impossible that FindRepl may detect all possible problematic situations and run error-free all the time.<br /><br />FindRepl.bat program grow from a series of features that were added after the other, so it is not as efficient as could be. It requires a deep redesign and a large rewrite, but I have not enough time to do that right now. Unfortunately, the new version 2 features were added in the same unplanned way, but they works pretty well in the cases I tested. However, they may present unexpected behaviour when old and new features are combined in unusal ways. I had to write and post this program this way because I was in urgent need of publish my new ideas as soon as possible!<br /><br />You should not forget that the goal is to obtain useful results from FindRepl.bat program, not to test in which situations it may fail. If you provide the right parameters accordingly to the documentation, you surely will obtain useful results. If you are sure that your parameters are right and you get a wrong result, please report this situation with complete details so I am able to fix it. If you help me to debug this program, all of us will get a better utility in the benefit of the community...<br /><br />Antonio</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a> on 15 Dec 2014 23:30, edited 2 times in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38122" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38122">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38122">
+
+						<h3 ><a href="#p38122">Re: JREPL.BAT - regex text processor - successor to REPL.BAT</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinge4b5.php?mode=quote&amp;f=3&amp;p=38122" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopiccc83.php?p=38122#p38122" onclick="prompt('Message #38',this.href); return false;">#38</a></span> 
+									<a class="unread" href="viewtopiccc83.php?p=38122#p38122" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>20 Nov 2014 02:42
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>foxidrive wrote:</cite>I'd like to briefly explain that I had a lot of difficulty coming to grips with how FindRepl works.<br />Findrepl is a complex tool, and without being critical, I had a lot of trouble with the built-in help <br />for Findrepl which wasn't intuitive in a way that I could easily follow. <br /><br />At one time I was going to include your sample usages from the forum into Findrepl.bat <br />but I had a lot of difficulty formatting the samples in an easy way and gave up.<br />EDIT: What I mean here is that I wanted to see the examples by giving a switch to findrepl.bat so <br />I could figure out how to use a feature again without going to the forum and finding the thread.<br /><br /><br />People like me need lots of examples to learn how to use complex tools effectively, so maybe Findrepl<br />could have a switch to open your web browser to the help pages, and also to a particular thread on dostips forum <br />which could have examples but without any discussion in the thread so browsing it would be easier.<br /><br />What do you think?<br /></div></blockquote><br /><br /><blockquote><div><cite>dbenham wrote:</cite>I totally understand where foxidrive is coming from. I also was impressed with the power demonstrated by some of the posted examples, but I do not find the syntax intuitive, and I have difficulty understanding the built in help.<br /><br /><br />Dave Benham<br /></div></blockquote><br /><br />The built-in help screen is just a quick reference guide; FindRepl.bat is complex enough so it can not be adequately described in just text screens. However, the documentation in this site is very good: it explains FindRepl features with detail, starting from the basic ones and advancing to the more complex with numerous examples. Most of the examples had been taken from real problems posted elsewhere and the link to each one of them is included, so the interested user may review the original problem description and solution, and compare such solution with the way to achieve it with FindRepl...<br /><br />Perhaps the problem is the same than before: this site is not a good place to post documentation. I subdivided the documentation in sections and included an index at beginning so the user may know in advance its contents and look for specific parts; I also included a way to easily open the different sites referred in the documentation via the FindRepl help screen. I hope these changes may encourage a more easier and complete review of the documentation. What do you think?<br /><br /><br /><br /><blockquote><div><cite>dbenham wrote:</cite>However, I think calling it &quot;alternation&quot; is misleading. It may use the same syntax as regex alternation, and the search may actually use alternation, but the replacement part is an entirely different concept in my mind. I've seen the words &quot;translate&quot;, &quot;transliterate&quot;, and &quot;transform&quot; to describe this feature in other utilities, but never &quot;alternation&quot;.<br /></div></blockquote><br /><br />I always use the same nomenclature of original JScript/regexp documentation when I use the same features, so any user that wants to review them in the original source can found the same terms; otherwise, the documentation may look confusing. For example: &quot;This feature is called <em class="text-italics">transliteration</em>, but if you want to review its description in the JScript/regexp documentation, look for <em class="text-italics">alternation</em> instead&quot; (?). Besides, I think that the regexp description of this feature is clear enough: 'Alternation in a regular expression enables you to group choices between two or more alternatives. You can essentially specify &quot;this OR that&quot; in a pattern'. I just have extended this concept a little in order to apply it in the same way to the replacement part...<br /><br />Antonio</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a> on 20 Nov 2014 21:37, edited 1 time in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38123" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38123">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38123">
+
+						<h3 ><a href="#p38123">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting3e7e.php?mode=quote&amp;f=3&amp;p=38123" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4962.php?p=38123#p38123" onclick="prompt('Message #39',this.href); return false;">#39</a></span> 
+									<a class="unread" href="viewtopic4962.php?p=38123#p38123" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>20 Nov 2014 03:18
+			</p>
+			
+			
+			
+			<div class="content">Thank you for all your work Antonio, the extra help options are very useful.<br /><br />Some suggestions and comments follow, after an initial look:<br /><br />Help Option 3 and 4 seem to display the same page in my browser.<br /><br />Would you consider changing some help text that may make it clearer for your readers?<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; /B:rBlock&nbsp; Extra text to be searched for in the blocks of lines.<br />&nbsp; /R&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Prints only lines that are changed.<br />&nbsp; /A&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;a|b&quot; /A &quot;j|k&quot; will replace a with j and b with k :extra terms can be added<br /></code></pre></div><br /><br /><br />On an initial reading I am not sure what these refer to Antonio.   <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; /$:1:2...&nbsp; Specifies to print saved submatched substrings instead of lines.<br />&nbsp; /ARG1:...&nbsp; Specifies texts to initialize JScript variables with same names.</code></pre></div><br /><br />Is this what the second one means?<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp;/ARG:... Specifies and initializes JScript variable names.</code></pre></div><br /><br /><br />Some other readers might like to comment too - I find the following format to be easier to read, if it outlines what you mean.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>The top three methods define Blocks of lines when using the rSearch option:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />/O:s:e&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Add S and E (Start/End with optional signs) to matching lines.<br />/E:rEndBlk&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;From rSearch line&nbsp; to rEndBlk line.<br />/E:rEndBlk /O:s:e&nbsp; &nbsp; &nbsp; Add S to rSearch line and E to rEndBlk line.<br />/O:s:e&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;When rSearch is not given: From line S to line E.<br /><br />If S or E is negative: It specifies counting lines from the end of file.<br />If E is not given:&nbsp; &nbsp; &nbsp;It defaults to the last line of the file (same as -1).<br /><br /></code></pre></div><br /><br />The following is difficult for me to understand properly: it was a big issue with me and findrepl V1 help.<br />I am not sure how to reformat it to be clearer.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>The output varies with the parameters and switches used, as follows:<br /><br />rSearch&nbsp; &nbsp; &nbsp; &nbsp; /V&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Block&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; /B:rBlock&nbsp; &nbsp; &nbsp; &nbsp; /$:1:2...<br />-------------------------------------------------------------------------------<br />Matched&nbsp; &nbsp; &nbsp; &nbsp; Non-matched&nbsp; &nbsp; &nbsp; &nbsp; Blocks of&nbsp; &nbsp; &nbsp; &nbsp; Search /B:&nbsp; &nbsp; &nbsp; &nbsp;Saved<br />lines.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;lines.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;lines.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;in blocks&nbsp; &nbsp; &nbsp; &nbsp; submatches.<br /><br />sReplace&nbsp; &nbsp; &nbsp; &nbsp;/R&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Block&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; /B:rBlock<br />-------------------------------------------------------------------------------<br />All file&nbsp; &nbsp; &nbsp; &nbsp;Only replaced&nbsp; &nbsp; &nbsp; Search /B:rBlock in blocks<br />lines.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;file lines.&nbsp; &nbsp; &nbsp; &nbsp; and replaces matched lines.</code></pre></div><br /><br /><br />I hope you find this constructive.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38137" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38137">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38137">
+
+						<h3 ><a href="#p38137">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingd3be.php?mode=quote&amp;f=3&amp;p=38137" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5a11.php?p=38137#p38137" onclick="prompt('Message #40',this.href); return false;">#40</a></span> 
+									<a class="unread" href="viewtopic5a11.php?p=38137#p38137" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>20 Nov 2014 17:42
+			</p>
+			
+			
+			
+			<div class="content">Antonio, a small bug here - I had a use for findrepl today and V2.0 doesn't allow this syntax:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findrepl /o:1:1 &lt;file.txt</code></pre></div><br /><br /><span style="color: blue">FindRepl: No search part given</span></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38138" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38138">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38138">
+
+						<h3 ><a href="#p38138">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting348b.php?mode=quote&amp;f=3&amp;p=38138" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic393d.php?p=38138#p38138" onclick="prompt('Message #41',this.href); return false;">#41</a></span> 
+									<a class="unread" href="viewtopic393d.php?p=38138#p38138" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>20 Nov 2014 18:58
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>foxidrive wrote:</cite>Antonio, a small bug here - I had a use for findrepl today and V2.0 doesn't allow this syntax:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findrepl /o:1:1 &lt;file.txt</code></pre></div><br /><br /><span style="color: blue">FindRepl: No search part given</span></div></blockquote><br /><br />Yes, it was a small bug. Thanks for report it. I just fixed it and modified the posted code. I want also to do several modifications based on your suggestions for a clearer descriptions (I like they <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> ). I will post a notice when I completed all these changes, but I think that fixing this bug was an urgent thing!<br /><br />Antonio<br /><br />PS - There is a new answer at S.O. that show a very clear example of /O and /B switches usage; perhaps you want to review it. It is <a href="http://stackoverflow.com/questions/27013999/using-a-batch-program-to-search-for-a-keyword-and-copy-offset-content-to-a-file/27047465#27047465" class="postlink">here</a>.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38139" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38139">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38139">
+
+						<h3 ><a href="#p38139">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingadb3.php?mode=quote&amp;f=3&amp;p=38139" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopica5bd.php?p=38139#p38139" onclick="prompt('Message #42',this.href); return false;">#42</a></span> 
+									<a class="unread" href="viewtopica5bd.php?p=38139#p38139" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>20 Nov 2014 19:30
+			</p>
+			
+			
+			
+			<div class="content">From a few posts ago:<blockquote><div><cite>Aacini wrote:</cite>Accordingly to <!-- m --><a class="postlink" href="http://msdn.microsoft.com/en-us/library/kstkz771(v=vs.84">http://msdn.microsoft.com/en-us/library ... 71(v=vs.84</a><!-- m -->).aspx regexp alternation documentation, &quot;The largest possible expression on either side of the pipe character is matched&quot;. This means that if the input data can be matched by more than one regular expression in the alternation, the selected one will be the largest possible one; if several regexps are of the same size, they are tested to match in left-to-right order.</div></blockquote><br />I believe you are misinterpreting the MS doc. (I also was puzzled at first). It is simply stating that the entire expression on either side is alternated. For example: &quot;a b|c d&quot; should be thought of as &quot;(a b) or (c d)&quot;, not &quot;a (b or c) d&quot;.<br /><br />The regex engine works left to right, and short circuits once a matching alternation is found. It does <strong class="text-strong">not</strong> pick the largest one when multiple expressions match.<br />For example:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\test&gt;echo abc abc|findrepl &quot;^a|ab&quot; &quot;&quot;<br />bc c<br /></code></pre></div><br />The &quot;^a&quot; expression matches the &quot;a&quot; at the beginning of the line and short circuits, thus not allowing the &quot;ab&quot; to match the beginning. But the second a is not at the line beginning, so &quot;ab&quot; gets a chance to match the 2nd occurrence.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38141" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38141">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7c64.html?author_id=5042&amp;sr=posts">87</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 01 Sep 2013 20:47</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38141">
+
+						<h3 ><a href="#p38141">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting387d.php?mode=quote&amp;f=3&amp;p=38141" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic327a.php?p=38141#p38141" onclick="prompt('Message #43',this.href); return false;">#43</a></span> 
+									<a class="unread" href="viewtopic327a.php?p=38141#p38141" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a></strong> &raquo; </span>20 Nov 2014 20:40
+			</p>
+			
+			
+			
+			<div class="content">Hi! Antonio,<br /><br />i have a problem matching uppercase and lowercase in /A switch?<br /><br />inputfile.txt<br /><br /><blockquote class="uncited"><div>View - leading uppercase<br />view - all lowercase<br />VIEW - all uppercase<br />vieW - trailing uppercase<br /></div></blockquote><br /><br />test.bat<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />echo using leading uppercase with &quot;/i&quot;<br />echo type inputfile.txt ^|FindRepl /i &quot;View&quot; /a &quot;displayed&quot;<br />echo.<br />&nbsp; &nbsp;&nbsp; &nbsp;type inputfile.txt |FindRepl &quot;View&quot; /a &quot;displayed&quot;<br />echo.<br /><br />echo using leading uppercase with no &quot;/i&quot;<br />echo type inputfile.txt ^|FindRepl &quot;View&quot; /a &quot;displayed&quot;<br />echo.<br />&nbsp; &nbsp;&nbsp; &nbsp;type inputfile.txt |FindRepl &quot;View&quot; /a &quot;displayed&quot;<br />echo.<br /><br />echo using all-lowercase with &quot;/i&quot;<br />echo type inputfile.txt ^|FindRepl /i &quot;view&quot; /a &quot;displayed&quot;<br />echo.<br />&nbsp; &nbsp;&nbsp; &nbsp;type inputfile.txt |FindRepl &quot;view&quot; /a &quot;displayed&quot;<br />echo.<br /><br />echo using all-lowercase with no &quot;/i&quot;<br />echo type inputfile.txt ^|FindRepl &quot;view&quot; /a &quot;displayed&quot;<br />echo.<br />&nbsp; &nbsp;&nbsp; &nbsp;type inputfile.txt |FindRepl &quot;view&quot; /a &quot;displayed&quot;<br />echo.<br /><br />pause<br /></code></pre></div><br /><br />ouput in console:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>using leading uppercase with &quot;/i&quot;<br />type inputfile.txt |FindRepl /i &quot;View&quot; /a &quot;displayed&quot;<br /><br />displayed - leading uppercase<br />view - all lowercase<br />VIEW - all uppercase<br />vieW - trailing uppercase<br /><br />using leading uppercase with no &quot;/i&quot;<br />type inputfile.txt |FindRepl &quot;View&quot; /a &quot;displayed&quot;<br /><br />displayed - leading uppercase<br />view - all lowercase<br />VIEW - all uppercase<br />vieW - trailing uppercase<br /><br />using all-lowercase with &quot;/i&quot;<br />type inputfile.txt |FindRepl /i &quot;view&quot; /a &quot;displayed&quot;<br /><br />View - leading uppercase<br />displayed - all lowercase<br />VIEW - all uppercase<br />vieW - trailing uppercase<br /><br />using all-lowercase with no &quot;/i&quot;<br />type inputfile.txt |FindRepl &quot;view&quot; /a &quot;displayed&quot;<br /><br />View - leading uppercase<br />displayed - all lowercase<br />VIEW - all uppercase<br />vieW - trailing uppercase<br /><br />Press any key to continue . . .<br /></code></pre></div><br /><br />result does not replace all case insensitive &quot;view&quot; to &quot;displayed&quot;<br /><br />do you have script to search string with no case sensitive?<br /><br />thanks<br /><br />Bars<br /><br />windows xp sp3 32bit user</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38148" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38148">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38148">
+
+						<h3 ><a href="#p38148">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting92dd.php?mode=quote&amp;f=3&amp;p=38148" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopiccf27.php?p=38148#p38148" onclick="prompt('Message #44',this.href); return false;">#44</a></span> 
+									<a class="unread" href="viewtopiccf27.php?p=38148#p38148" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>20 Nov 2014 22:07
+			</p>
+			
+			
+			
+			<div class="content">Well, your program does <em class="text-italics">NOT</em> execute any FindRepl with the /i switch, although the echo messages said so!<br /><br />After I added the /i switches to the right commands (below the echo commands with the /i switch), I got this output:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;test<br />using leading uppercase with &quot;/i&quot;<br />type inputfile.txt |FindRepl /i &quot;View&quot; /a &quot;displayed&quot;<br /><br />displayed - leading uppercase<br />&nbsp;- all lowercase<br />&nbsp;- all uppercase<br />&nbsp;- trailing uppercase<br /><br />using leading uppercase with no &quot;/i&quot;<br />type inputfile.txt |FindRepl &quot;View&quot; /a &quot;displayed&quot;<br /><br />displayed - leading uppercase<br />view - all lowercase<br />VIEW - all uppercase<br />vieW - trailing uppercase<br /><br />using all-lowercase with &quot;/i&quot;<br />type inputfile.txt |FindRepl /i &quot;view&quot; /a &quot;displayed&quot;<br /><br />&nbsp;- leading uppercase<br />displayed - all lowercase<br />&nbsp;- all uppercase<br />&nbsp;- trailing uppercase<br /><br />using all-lowercase with no &quot;/i&quot;<br />type inputfile.txt |FindRepl &quot;view&quot; /a &quot;displayed&quot;<br /><br />View - leading uppercase<br />displayed - all lowercase<br />VIEW - all uppercase<br />vieW - trailing uppercase<br /><br />Presione una tecla para continuar . . .<br /></code></pre></div><br />What happen? Well, the documentation explain this point clearly:<br /><br /><blockquote><div><cite>FindRepl documentation wrote:</cite>Please note that this multi-string replacement can only be achieved with case sensitive literal strings. If a search alternative match different input texts (i.e. if it is a regular expression), the result will be wrong; for example: FindRepl /I &quot;One|Two|Three&quot; /A &quot;Uno|Dos|Tres&quot;. Previous example will replace &quot;One&quot; word by &quot;Uno&quot;, but any other word that may be matched as result of the /I switch will be deleted, like &quot;one&quot;, &quot;onE&quot;, etc. You may use FindRepl &quot;One|one|Two|two&quot; /A &quot;Uno|uno|Dos|dos&quot; as a provisional fix, but the next version of the program will solve this problem.<br /></div></blockquote><br /><br />If you explain what should be the expected output in each case, I could assemble the right version 2 regexp/JScript pair...<br /><br /><strong class="text-strong">EDIT</strong>: For example, to replace <em class="text-italics">all</em> case insensitive possibilities by the same replacement string, use:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; type inputfile.txt |FindRepl /i &quot;view&quot; /a &quot;'displayed'&quot; /J<br /></code></pre></div><br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p38150" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile38150">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7c64.html?author_id=5042&amp;sr=posts">87</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 01 Sep 2013 20:47</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content38150">
+
+						<h3 ><a href="#p38150">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting469d.php?mode=quote&amp;f=3&amp;p=38150" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicd0bb.php?p=38150#p38150" onclick="prompt('Message #45',this.href); return false;">#45</a></span> 
+									<a class="unread" href="viewtopicd0bb.php?p=38150#p38150" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a></strong> &raquo; </span>21 Nov 2014 00:14
+			</p>
+			
+			
+			
+			<div class="content">Aacini , its working with &quot;/J&quot; switch but i dont know that your machine produced blanks as compared to my windows xp sp3 32it.<br /><br />its really easy to replace multiple string in one go rather using 3 or more pipes.<br /><br />now i will start testing your scripts to be use in extracting webpage title , webpage series number , and other important string,  then copy all and paste as part of a file name for easy querying.<br /><br />i will soon ask if i have a further problem<br /><br />thank for quick reply.<br /><br />Bars</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting6172.html?mode=reply&amp;f=3&amp;t=4697" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic4cd7.php?f=3&amp;t=4697&amp;start=30&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4697&amp;start=30">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			135 posts
+							<ul>
+	<li class="dropdown-container dropdown-button-control dropdown-page-jump page-jump">
+		<a class="button button-icon-only dropdown-trigger" href="#" title="Click to jump to page…" role="button"><i class="icon fa-level-down fa-rotate-270" aria-hidden="true"></i><span class="sr-only">Page <strong>3</strong> of <strong>9</strong></span></a>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+				<li>Jump to page:</li>
+				<li class="page-jump-form">
+					<input type="number" name="page-number" min="1" max="999999" title="Enter the page number you wish to go to" class="inputbox tiny" data-per-page="15" data-base-url=".&#x2F;viewtopic.php&#x3F;f&#x3D;3&amp;amp&#x3B;t&#x3D;4697" data-start-name="start" />
+					<input class="button2" value="Go" type="button" />
+				</li>
+			</ul>
+		</div>
+	</li>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopicb35e.html?f=3&amp;t=4697&amp;start=15" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopica720.html?f=3&amp;t=4697" role="button">1</a></li>
+				<li><a class="button" href="viewtopicb35e.html?f=3&amp;t=4697&amp;start=15" role="button">2</a></li>
+			<li class="active"><span>3</span></li>
+				<li><a class="button" href="viewtopic31ec.html?f=3&amp;t=4697&amp;start=45" role="button">4</a></li>
+				<li><a class="button" href="viewtopic507f.html?f=3&amp;t=4697&amp;start=60" role="button">5</a></li>
+			<li class="ellipsis" role="separator"><span>…</span></li>
+				<li><a class="button" href="viewtopicc178.html?f=3&amp;t=4697&amp;start=120" role="button">9</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic31ec.html?f=3&amp;t=4697&amp;start=45" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5897.gif?cron_type=cron.task.text_reparser.poll_option" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4697&p=38121 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:24 GMT -->
+</html>

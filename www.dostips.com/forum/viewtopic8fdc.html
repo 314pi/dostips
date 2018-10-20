@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=12&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:44:47 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; double expansion of variables</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>double expansion of variables</h2>
+		<p><a href="viewtopicbb82.html?f=3&amp;t=12">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=12</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>double expansion of variables</h3>
+				<div class="date">Posted: <strong>12 Jul 2006 07:54</strong></div>
+				<div class="author">by <strong>dizze</strong></div>
+				<div class="content">Hello,<br /><br />Is it possible to echo the value of a variable when the name of the variable is itself a variable. <br /><br />I have (stripping other nonsence)<br /><br /><strong class="text-strong">:loop<br />set cols=0<br />set /a c%cols%=%random%<br />set /a cols=%cols%+1<br />if cols==10 (goto :wherever) else (goto :loop)</strong><br /><br />And i want to be able to echo whatever %random% is which will be stored under whatever value is generate by c%cols%<br /><br />This required (i think) a double expansion of a variable, but i cannot convince dos to do this. <br /><br />Any ideas?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>15 Jul 2006 20:47</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">dizze,<br /><br />Yes you can, in your case use:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call echo.%%c%cols%%%</code></pre></div><br />Before executing the line the command interpreter will resolve:<br /><strong class="text-strong"><br />%cols% --&gt; value of cols variable<br />%% ------&gt; %</strong><br /><br />Assuming the value of the cols variable is 0 and the value of c0 is 12345 this means:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call echo.%%c%cols%%%</code></pre></div><br />will be resolved to:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call echo.%c0%</code></pre></div><br />Then the command line will be executed starting with call command which again will make the command interpreter resolve all variables first:<br /><blockquote class="uncited"><div>echo.12345</div></blockquote><br />Hope this helps  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Sucess!</h3>
+				<div class="date">Posted: <strong>17 Jul 2006 09:39</strong></div>
+				<div class="author">by <strong>dizze</strong></div>
+				<div class="content">Thanks DosItHelp  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> ,<br /><br />That works perfectly, i can now get rid of my tempory file hack.<br /><br />Dizz-E</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=12&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:44:47 GMT -->
+</html>

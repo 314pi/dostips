@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1564&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:58:08 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Set list of sobfolder as string</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Set list of sobfolder as string</h2>
+		<p><a href="viewtopica6a2.html?f=3&amp;t=1564">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1564</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Set list of sobfolder as string</h3>
+				<div class="date">Posted: <strong>11 Jan 2011 02:37</strong></div>
+				<div class="author">by <strong>fabio.geraci</strong></div>
+				<div class="content">Hello everyone,<br /><br />I am new at batch coding. I want to get all the folder and subfolder of a directory (full path), set the as VAR in strings and parse them to get the parts i need.<br /><br />I have this at the moment<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />set count=1<br />for /f %%a in ('dir /s /on /b /ad') do (call :sdosums %%a)<br />goto :eof<br /><br />:sdosums<br />&nbsp; echo str%count%=%1<br />&nbsp; set /a count+=1<br />&nbsp; pause<br />&nbsp; goto :eof<br /></code></pre></div><br /><br />It does echo what i want but I do not know how to create a workable string from it<br /><br />Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Set list of sobfolder as string</h3>
+				<div class="date">Posted: <strong>11 Jan 2011 03:20</strong></div>
+				<div class="author">by <strong>!k</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enableextensions<br />cd.&gt;str.txt<br />for /f %%a in ('dir /s /on /b /ad') do (call :sdosums %%a)<br />set /p str=&lt;str.txt<br />del str.txt /q<br />set str<br />pause<br />goto :eof<br /><br />:sdosums<br />&nbsp; &lt;nul set /p str=%1;%str%&gt;&gt;str.txt<br />goto :eof<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Set list of sobfolder as string</h3>
+				<div class="date">Posted: <strong>11 Jan 2011 04:53</strong></div>
+				<div class="author">by <strong>fabio.geraci</strong></div>
+				<div class="content">Thanks,<br /><br />as I said am new where can I manipulate the str created<br /><br />cheers</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Set list of sobfolder as string</h3>
+				<div class="date">Posted: <strong>11 Jan 2011 11:30</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">If you have a lot of folders you will get an overflow of variable str. IMHO not a good idea to work with a &quot;string&quot;. Maybe you could &quot;manipulate&quot; the pathes on the fly. Depends on what you meant if you said you would like to &quot;manipulate&quot; something.<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Set list of sobfolder as string</h3>
+				<div class="date">Posted: <strong>11 Jan 2011 13:05</strong></div>
+				<div class="author">by <strong>fabio.geraci</strong></div>
+				<div class="content">I need to separate with &quot;/&quot; and rebuild a paths over a remote server so that is way I was looking to get something on the line:<br /><br />str1=c:/blabla/test1<br />str2=c:/blabla/test2<br />str3=c:/blabla/test3<br /><br />then from there rebuild as:<br /><br />i/caf/test1<br />i/caf/test2<br />i/caf/test3<br /><br />I do understand that for instance with python i would have a better choice, but not everybody has a python at the office.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Set list of sobfolder as string</h3>
+				<div class="date">Posted: <strong>11 Jan 2011 13:11</strong></div>
+				<div class="author">by <strong>avery_larry</strong></div>
+				<div class="content"><blockquote class="uncited"><div>but not everybody has a python at the office.</div></blockquote><br />So true, so true.<br /><br /><br /> <img class="smilies" src="images/smilies/icon_lol.gif" alt=":lol:" title="Laughing" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Set list of sobfolder as string</h3>
+				<div class="date">Posted: <strong>11 Jan 2011 15:22</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Hmm. It seems you want to replace a substring of the path and convert the Windows path (back slashes) to an Unix path (slashes).<br /><br />The whole thing on the fly:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal<br />set &quot;OldStr=C:\blabla&quot;<br />set &quot;NewStr=i/caf&quot;<br /><br /><br />for /f &quot;delims=&quot; %%a in ('dir /s /on /b /ad') do (<br />&nbsp; set &quot;str=%%~a&quot;<br />&nbsp; setlocal enabledelayedexpansion<br />&nbsp; set &quot;str=!str:%OldStr%=%NewStr%!&quot;<br />&nbsp; set &quot;str=!str:\=/!&quot;<br />&nbsp; echo !str!<br />&nbsp; endlocal<br />)<br />pause<br /></code></pre></div><br /><br />What next?<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Set list of sobfolder as string</h3>
+				<div class="date">Posted: <strong>12 Jan 2011 02:46</strong></div>
+				<div class="author">by <strong>fabio.geraci</strong></div>
+				<div class="content">aGerman<br /><br />thanks, I will have a go at it and report</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1564&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:58:08 GMT -->
+</html>

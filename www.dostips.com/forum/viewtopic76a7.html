@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8139&p=54094 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:28:55 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>math.cmd: a math expression parser written in native WinNT batch script - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic8c5a.html?t=8139">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopica9f4.html?f=3&amp;t=8139">math.cmd: a math expression parser written in native WinNT batch script</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting892e.html?mode=reply&amp;f=3&amp;t=8139" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic2805.html?f=3&amp;t=8139&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="8139" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			18 posts
+							<ul>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopic4f36.html?f=3&amp;t=8139&amp;start=15" role="button">2</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic4f36.html?f=3&amp;t=8139&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p54039" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54039">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3eee.html?mode=viewprofile&amp;u=8894" class="username">CirothUngol</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdccb.html?author_id=8894&amp;sr=posts">44</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Sep 2017 18:37</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54039">
+
+						<h3 class="first"><a href="#p54039">math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingadae.html?mode=quote&amp;f=3&amp;p=54039" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice9b6.html?p=54039#p54039" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopice9b6.html?p=54039#p54039" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3eee.html?mode=viewprofile&amp;u=8894" class="username">CirothUngol</a></strong> &raquo; </span>16 Sep 2017 02:46
+			</p>
+			
+			
+			
+			<div class="content">OK, I'm ready to start trying to optimize my latest script with some of the goodies found here at Dostips, but before I go tinkering with tools that I know precious little about and wind up wrecking what is at the moment a mostly complete and seemingly working batch script, I thought I might post it here and ask others to play with it and hopefully find any obvious bugs or glaring errors it may have. I'd like to correct or add such stuff while re-writing to accommodate my introduction to (multi-line) macros. It spends most of it's time in loops, but I figure a few macros couldn't hurt... besides, they look like fun! ^_^<br /><br />So, once upon a time I needed to compare really big numbers in batch (file sizes). I found a nice little COMPARE utility by Brian Williams and liked how clever it was. He also wrote ADD (which I also needed) and MULTIPLY (which I <em class="text-italics">did not</em> need) utilities for really big numbers, which I also liked for their cleverness... so I re-wrote them to try and make them clever-er. Then I thought... that's two out of four. If I added subtraction and division... there's really nothing that couldn't be done (mathematically speaking), right?<br /><br />math.cmd is an 'expression parser' because I saw the term while researching the shunting-yard algorithm and thought it sounded brainy, I'm not even sure it's true. It uses brute-force style string manipulation to add, subtract, multiply, and divide insanely large decimal numbers (probably thousands of digits), and the parser accepts parenthesis, functions, assignments, etc. I was nearly done with optimizations, but now the only ones left require macros so here's my before shot... let's see how much faster some macros can make it. Brief word of warning, I'm not a math guy. I had to (at least minimally) research the procedure for literally everything here except addition, and the shunting-yard algorithm is ~90% straight pseudo-code. Run with no options or double-click to bring up the help screens, there's a little interactive bit at the end.<br />Here's the help screens, zipped file is below.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:math &#91;/An|/Dn|/Mn|/Rn|/Sn|/Un|/H|/?&#93; In-line_Math_Expression &#91;;...&#93;&nbsp; &nbsp; &nbsp; &nbsp;v0.2<br />:: <br />:: Full-featured expression parser written in 100% native WinNT batch script.<br />:: Supports functions, assignments, numbers to thousands of decimal places,<br />:: and provides the following full range of operators in order of precedence:<br />:: <br />:: Highest : $ Exponent : &amp; NthRoot<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: * Multiply : / Divide : @ Modulus<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: + Addition : - Subtraction<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &lt;=&gt; Raw Compare (returns 1=greater, -1=less, 0=equals)<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &lt; LessThan : &gt; GreaterThan : &lt;= LessOrEqual : &gt;= GreaterOrEqual<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: ## EqualTo : &lt;&gt; NotEqualTo (comparisons return 1=true, 0=false)<br />:: Lowest&nbsp; : = Equals (assignment)&nbsp; &nbsp; &nbsp; : ; Expression Separator<br />:: <br />:: Operations are left-to-right, except for '$ &amp;' which are right associative.<br />:: '&lt;&gt;^&amp;' must be wrapped in double-quotes. If needed, # can always replace =.<br />:: <br />:: Operands may be digits and/or variables and expressions can be of any size.<br />:: Result of the operation is always returned in the user variable {math}.<br />:: Up to 32 return variables may be assigned (eg. var1=var2=x*y+(var3=z-1)).<br />:: <br />:: ECHO&#91;n&#93; may be used as a returnVariable to echo result with &#91;n&#93; line feeds.<br />:: {math*} and {_math*} are reserved variable names and should not be used.<br />::<br />:: ------&nbsp; Many standard functions are available for use in expressions&nbsp; ------<br />:: <br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;abs(num) returns the absolute value of num<br />::&nbsp; avg(num1,num2&#91;,numX&#93;) returns the average value of a given list of values<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ceil(num) returns the nearest integer not less than num<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;dim(num1,num2) returns the positive difference between num1 and num2<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;e(#decimals) returns the constant 'e' to given number of decimals<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; fact(num) returns the factorial of int(num)<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;floor(num) returns the nearest integer not greater than num<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;gcd(num1,num2) returns the greatest common divisor of two values<br />::&nbsp; if(cond,true&#91;,false&#93;) returns {true} if cond &lt;&gt; 0, {false} or 0 if cond = 0<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;int(num) returns the nearest integer with magnitude &lt;= num<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;lcm(num1,num2) returns the least common multiple of two values<br />::&nbsp; max(num1,num2&#91;,numX&#93;) returns the largest of the given list of values<br />::&nbsp; min(num1,num2&#91;,numX&#93;) returns the smallest of the given list of values<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; nth(base,exp) returns the exp-th root of the given base value<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; pi(#decimals) returns the constant 'pi' to given number of decimals<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; pow(base,exp) returns the given base raised to the power of exp<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; sign(num) returns 1 if num &gt; 0, 0 if num = 0, or -1 if num &lt; 0<br />:: <br />:: The left parenthesis is part of the function name, no white-space is allowed.<br />:: Functions may have an unlimited number of parameters and are easily mod-able,<br />:: simply follow the pattern in the script and add the name to the function list.<br />::<br />:: -----&nbsp; If operation is successful the following ErrorLevel is returned&nbsp; -----<br />::&nbsp; -1 Negative\LessThan&nbsp; &nbsp;: 0 Zero\EqualTo\False : 1 Positive\GreaterThan\True<br />:: <br />:: ----&nbsp; If operation is unsuccessful the following ErrorLevel is returned&nbsp; ----<br />::&nbsp; 2 Non-numeric operand&nbsp; :&nbsp; 3 Missing operand&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: 4 Missing operator<br />::&nbsp; 5 Unsupported operator :&nbsp; 6 Unbalanced parenthesis&nbsp; : 7 Divide by zero error<br />::&nbsp; 8 Non-integer radical&nbsp; :&nbsp; 9 Negative root undefined : 10 Function parameter<br />:: 11 Assignment error&nbsp; &nbsp; &nbsp;: 12 Negative factorial<br />:: <br />:: ---&nbsp; Environment Variables shown with /Command Switch and Default Values&nbsp; ---<br />::&nbsp; _MATH_ABSOLUTE_VALUE /A0 0=respect negative input, 1=all input is positive<br />::&nbsp; &nbsp; &nbsp;_MATH_MAX_DECIMAL /D9 9=maximum number of decimal places to return<br />::&nbsp; &nbsp;_MATH_MODULUS_UNARY /M0 0=dividend, 1=divisor, 2=always positive<br />::&nbsp; &nbsp; &nbsp;_MATH_ROUND_UP_ON /R5 5=round up on this value or greater, 0=truncate<br />::&nbsp; &nbsp; &nbsp;_MATH_SHOW_RESULT /S0 0=never, 1=if no assignment, 2=expression, 3=both<br />::&nbsp; &nbsp; &nbsp; _MATH_SHOW_UNARY /U0 0=negative only, 1=both, 2=none (absolute value)<br />:: <br />::&nbsp; &nbsp; &nbsp; /?, /H, or a lack of math expression will display this help screen.<br />:: <br />:: If numbers are small enough SET /A is used for fast decimal arithmetic. The <br />:: script keeps track of decimal and unary adding them back to the result, but<br />:: when adding 9+, dividing by 9+, subtracting 10+, or multiplying by 10+ digits<br />:: batch routines and recursive calls are used, which are exponentially slower.<br />::<br />:: Examples:<br />:: math.cmd /d15 echo = 245850922 / 78256779<br />:: Returns '3.141592653589793' in variable {math} + echo to the screen (no LF).<br />:: <br />:: math.cmd result=a1+100/(b1-4)*3<br />:: Parses {a1} + ((100 / ({b1} - 4)) * 3) and places answer in {result}.<br />:: Variable assignments must always begin a block (eg. after left parenthesis).<br />:: <br />:: math.cmd /d256 /r0 /a1 echo1=answer=myVarName<br />:: Returns the absolute value in {myVarName} truncated to 256 decimals using<br />:: variable {answer} and echos the value (1 LF). 32 return variables are allowed.<br />:: <br />:: math.cmd &quot;a1=avg(n1,n2,n3,n4); a2=avg(n5,n6,n7,n8); highAvg=if(a1 &gt; a2,a1,a2)&quot;<br />:: Returns the average of the two lists in {a1} and {a2} and returns the greater<br />:: of the two averages in {highAvg}. Note the quotes are required for '&lt;&gt;^&amp;'.<br />:: <br />:: math.cmd &quot;value1 &gt;= value2&quot; &amp;&amp; GOTO :false || GOTO :true<br />:: Returns ERRORLEVEL=1 if true, 0 if false. Provides a full range of comparison<br />:: operators and can evaluate numbers of virtually any size (large or small).<br />:: <br />:: math.cmd guess = (((root - 1) * guess) + (base / (guess $ (root - 1)))) / root<br />:: Computes the {root} of {base} number through convergence starting at {guess}.<br />:: Run in a loop, gets more accurate each time. Very slow, start with best guess.<br />::<br />:: math.cmd v0.2 2017/09/21 written by CirothUngol.<br />:: Inspired by Brian Williams' Big Math batch utilities.<br />:: http://www.robvanderwoude.com/battech_math.php<br />::<br />:: v0.2 2017/09/21<br />::&nbsp; &nbsp; &nbsp; Replaced functions for removing leading and trailing zeros with macros.<br />::&nbsp; &nbsp; &nbsp; Replaced all error GOTOs and exit GOTOs with macros.<br />::&nbsp; &nbsp; &nbsp; Added ';' as an expression separator, now supports multiple expressions.<br />::&nbsp; &nbsp; &nbsp; Changed SHOW_RESULT to display only if no assignment, emulates SET /A.<br />::&nbsp; &nbsp; &nbsp; Increased number of allowed return variables from 9 to 32.<br />::&nbsp; &nbsp; &nbsp; Fixed macros to load correctly before or after the SETLOCAL.<br />::<br />:: v0.1 2017/09/15<br />::&nbsp; &nbsp; &nbsp; Initial release on DOStips.</code></pre></div></div>
+
+							<dl class="attachbox">
+					<dt>
+						Attachments
+					</dt>
+											<dd>
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file5384.php?id=240">math_v02.zip</a></dt>
+			<dd><em>math.cmd v0.2 2017/09/21</em></dd>			<dd>(20.06 KiB) Downloaded 63 times</dd>
+		</dl>
+		
+		
+			</dd>
+											<dd>
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file03db.php?id=237">math.zip</a></dt>
+			<dd><em>math.cmd v0.1 2017/09/15</em></dd>			<dd>(19.27 KiB) Downloaded 60 times</dd>
+		</dl>
+		
+		
+			</dd>
+									</dl>
+			
+													<div class="notice">
+					Last edited by <a href="memberlist3eee.html?mode=viewprofile&amp;u=8894" class="username">CirothUngol</a> on 21 Sep 2017 23:36, edited 2 times in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54041" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54041">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search661c.html?author_id=1265&amp;sr=posts">3386</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 22 Jan 2010 18:01</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54041">
+
+						<h3 ><a href="#p54041">Re: math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9f85.html?mode=quote&amp;f=3&amp;p=54041" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6afc.html?p=54041#p54041" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopic6afc.html?p=54041#p54041" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a></strong> &raquo; </span>16 Sep 2017 04:39
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>CirothUngol wrote:</cite>zipped file is below</div></blockquote><br /> <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> Nope <img class="smilies" src="images/smilies/icon_mrgreen.gif" alt=":mrgreen:" title="Mr. Green" /> <br /><br />Steffen</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54047" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54047">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3eee.html?mode=viewprofile&amp;u=8894" class="username">CirothUngol</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdccb.html?author_id=8894&amp;sr=posts">44</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Sep 2017 18:37</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54047">
+
+						<h3 ><a href="#p54047">Re: math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting076d.html?mode=quote&amp;f=3&amp;p=54047" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic21e4.html?p=54047#p54047" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopic21e4.html?p=54047#p54047" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3eee.html?mode=viewprofile&amp;u=8894" class="username">CirothUngol</a></strong> &raquo; </span>16 Sep 2017 11:23
+			</p>
+			
+			
+			
+			<div class="content">Oops again... don't know what happened, probably shouldn't post stuff at 3am. ^_^</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54053" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54053">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search661c.html?author_id=1265&amp;sr=posts">3386</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 22 Jan 2010 18:01</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54053">
+
+						<h3 ><a href="#p54053">Re: math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingc3f1.html?mode=quote&amp;f=3&amp;p=54053" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopica100.html?p=54053#p54053" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopica100.html?p=54053#p54053" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a></strong> &raquo; </span>16 Sep 2017 14:14
+			</p>
+			
+			
+			
+			<div class="content">Great <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54078" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54078">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search661c.html?author_id=1265&amp;sr=posts">3386</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 22 Jan 2010 18:01</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54078">
+
+						<h3 ><a href="#p54078">Re: math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting74fb.html?mode=quote&amp;f=3&amp;p=54078" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic861b.html?p=54078#p54078" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopic861b.html?p=54078#p54078" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a></strong> &raquo; </span>18 Sep 2017 15:57
+			</p>
+			
+			
+			
+			<div class="content">Your script might be applicable in a forum question, see<br /><!-- l --><a class="postlink-local" href="viewtopic0bcd.html?f=3&amp;t=8134">viewtopic.php?f=3&amp;t=8134</a><!-- l --><br />I wasnt't able to figure out if you implemented a separator for different assignments as the comma in SET /A<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set /a &quot;x=1+2,y=3+4&quot;</code></pre></div>I used the # which is an equivalent of = as you wrote in your help text. It doesn't cause an error message but I assume some kind of assignment operation will be performed which is useless in that case. Did you implement any separator that should have been used instead?<br /><br />Steffen</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54080" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54080">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3eee.html?mode=viewprofile&amp;u=8894" class="username">CirothUngol</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdccb.html?author_id=8894&amp;sr=posts">44</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Sep 2017 18:37</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54080">
+
+						<h3 ><a href="#p54080">Re: math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingb18e.html?mode=quote&amp;f=3&amp;p=54080" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic30f7.html?p=54080#p54080" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopic30f7.html?p=54080#p54080" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3eee.html?mode=viewprofile&amp;u=8894" class="username">CirothUngol</a></strong> &raquo; </span>19 Sep 2017 01:18
+			</p>
+			
+			
+			
+			<div class="content">The assignment is legal if it's at the beginning of a clause, ie. following a comma or left parenthesis:<br /><br /><strong class="text-strong">CALL :math 32 * (xx=V1-V2)</strong><br />This would put the value of <strong class="text-strong">V1 - V2</strong> in variable <strong class="text-strong">xx</strong> (and the final result into variable <strong class="text-strong">math</strong>, always). You could assign several operations in this way, as long as the syntax was correct, the comma is only used in functions:<br /><br /><strong class="text-strong">CALL :math val1=val2=fnc(n1, x=n2+1, n3*(y=n4-1))</strong><br />This returns <strong class="text-strong">x=n2 + 1</strong> and <strong class="text-strong">y=n4 - 1</strong> as well as the entire result in <strong class="text-strong">val1</strong>, <strong class="text-strong">val2</strong>, and <strong class="text-strong">math</strong>. If not calling a function, just make sure the syntax is correct:<br /><br /><strong class="text-strong">CALL :math result=echo1=(x=1+2) + (y=3+4) + (z=5*6)</strong><br />This will return x=3, y=7, z=30, math=40, result=40, and echo '40' to the console (1 LF). Up to 9 variables may be returned this way (not counting 'ECHO').<br /><br />As for the equals sign, the script first subs &quot;\&quot; for &quot;/&quot;, then &quot;=*^&quot; for &quot;#\$&quot; just to make the string stuff easier. All of those should work as input as well as &quot;&lt;&gt;&amp;&quot; if they're escaped or quoted as needed. Too much trouble for &quot;==&quot; though, you have to use &quot;##&quot;.<br /><br />I've actually rid the script of all but the basic CALL functions and all GOTOs (except for the jump to Help Screens) by installing some short macros. Still spends most of it's time in loops, so the speed increase is minimal, but I'm currently attempting to move all basic operations into macros (+-*/). That may actually alleviate the need to make <em class="text-italics">any</em> calls at all... maybe. ^_^<br /><br />Thanks for the link, I'll be sure to have a look.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54082" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54082">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search661c.html?author_id=1265&amp;sr=posts">3386</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 22 Jan 2010 18:01</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54082">
+
+						<h3 ><a href="#p54082">Re: math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting98b3.html?mode=quote&amp;f=3&amp;p=54082" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic49e0.html?p=54082#p54082" onclick="prompt('Message #7',this.href); return false;">#7</a></span> 
+									<a class="unread" href="viewtopic49e0.html?p=54082#p54082" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a></strong> &raquo; </span>19 Sep 2017 01:48
+			</p>
+			
+			
+			
+			<div class="content">I think I pretty much understood how your script works. My point was a little different though. Meanwhile you answered in the linked thread and proposed to use a comparision operator. So that actually answers my question. Currently there is no operator that just separates different calculations without having any <em class="text-italics">real</em> operation (like comparison) in place.<br /><br />Steffen</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54083" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54083">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3eee.html?mode=viewprofile&amp;u=8894" class="username">CirothUngol</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdccb.html?author_id=8894&amp;sr=posts">44</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Sep 2017 18:37</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54083">
+
+						<h3 ><a href="#p54083">Re: math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5fb3.html?mode=quote&amp;f=3&amp;p=54083" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicdcc6.html?p=54083#p54083" onclick="prompt('Message #8',this.href); return false;">#8</a></span> 
+									<a class="unread" href="viewtopicdcc6.html?p=54083#p54083" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3eee.html?mode=viewprofile&amp;u=8894" class="username">CirothUngol</a></strong> &raquo; </span>19 Sep 2017 06:35
+			</p>
+			
+			
+			
+			<div class="content">Yes. Sorry, I should have looked at the other thread first.<br />Didn't really think about using a separator for multiple expressions (like in SET), but that's a good idea. How about a semi-colon ';' ? That should be easy to implement.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54085" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54085">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search661c.html?author_id=1265&amp;sr=posts">3386</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 22 Jan 2010 18:01</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54085">
+
+						<h3 ><a href="#p54085">Re: math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting27e8.html?mode=quote&amp;f=3&amp;p=54085" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicad27-2.html?p=54085#p54085" onclick="prompt('Message #9',this.href); return false;">#9</a></span> 
+									<a class="unread" href="viewtopicad27-2.html?p=54085#p54085" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a></strong> &raquo; </span>19 Sep 2017 10:52
+			</p>
+			
+			
+			
+			<div class="content">It's your decision. I'm okay with comma, semi-colon, colon ... whatever you think to be suitable <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><br />Steffen</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54094" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54094">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistba6b.html?mode=viewprofile&amp;u=4238" class="username">Sponge Belly</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchc7ad.html?author_id=4238&amp;sr=posts">192</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 01 Oct 2012 13:32</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Ireland</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact Sponge Belly">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact Sponge Belly</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://sbjh.wordpress.com/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54094">
+
+						<h3 ><a href="#p54094">Re: math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting1300.html?mode=quote&amp;f=3&amp;p=54094" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicc2e3.html?p=54094#p54094" onclick="prompt('Message #10',this.href); return false;">#10</a></span> 
+									<a class="unread" href="viewtopicc2e3.html?p=54094#p54094" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistba6b.html?mode=viewprofile&amp;u=4238" class="username">Sponge Belly</a></strong> &raquo; </span>20 Sep 2017 15:03
+			</p>
+			
+			
+			
+			<div class="content">Hi CirothUngol! <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br /><br />Are you aware of Judago’s <a href="viewtopicf87b.html?t=7170" class="postlink">str_math.bat</a> script?<br /><br /><em class="text-italics">- SB</em></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54097" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54097">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3eee.html?mode=viewprofile&amp;u=8894" class="username">CirothUngol</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdccb.html?author_id=8894&amp;sr=posts">44</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Sep 2017 18:37</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54097">
+
+						<h3 ><a href="#p54097">Re: math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingca37.html?mode=quote&amp;f=3&amp;p=54097" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7d9d.html?p=54097#p54097" onclick="prompt('Message #11',this.href); return false;">#11</a></span> 
+									<a class="unread" href="viewtopic7d9d.html?p=54097#p54097" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3eee.html?mode=viewprofile&amp;u=8894" class="username">CirothUngol</a></strong> &raquo; </span>21 Sep 2017 09:09
+			</p>
+			
+			
+			
+			<div class="content">No, I was not! I got the seed of this idea from Brian Williams big math batch utilities. Before getting involved in it, I did search for an equivalent online but never found one.<br />I'm most interested in taking a look at his batch script just to see how we have done things differently (or the same), but the link you provided only mentions an update to the script and the link to the script on that page leads to nowhere ( at least it goes to nowhere when I tap with my phone). Any idea where the updated script might be?<br /><br />Thanks for the info, and I hope to get a chance to take a look at it.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54099" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54099">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist1ec2.html?mode=viewprofile&amp;u=5449" class="username">Compo</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf4cb.html?author_id=5449&amp;sr=posts">485</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 21 Mar 2014 08:50</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54099">
+
+						<h3 ><a href="#p54099">Re: math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinge020.html?mode=quote&amp;f=3&amp;p=54099" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic971e.html?p=54099#p54099" onclick="prompt('Message #12',this.href); return false;">#12</a></span> 
+									<a class="unread" href="viewtopic971e.html?p=54099#p54099" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist1ec2.html?mode=viewprofile&amp;u=5449" class="username">Compo</a></strong> &raquo; </span>21 Sep 2017 09:32
+			</p>
+			
+			
+			
+			<div class="content"><a href="https://pastebin.com/hrDVeeU1" class="postlink">Version 2.1</a> from December 2016!</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54103" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54103">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54103">
+
+						<h3 ><a href="#p54103">Re: math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7d69-2.html?mode=quote&amp;f=3&amp;p=54103" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic325c.html?p=54103#p54103" onclick="prompt('Message #13',this.href); return false;">#13</a></span> 
+									<a class="unread" href="viewtopic325c.html?p=54103#p54103" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>21 Sep 2017 10:27
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>CirothUngol wrote:</cite>I got the seed of this idea from Brian Williams</div></blockquote><br />Didn't know he was a batch guy.<br /><img src="../../www.thewrap.com/wp-content/uploads/2015/02/nbc-nightly-news-150205-brian-williams.jpg" class="postimage" alt="Image" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54104" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54104">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54104">
+
+						<h3 ><a href="#p54104">Re: math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingfcd9.html?mode=quote&amp;f=3&amp;p=54104" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicd43f.html?p=54104#p54104" onclick="prompt('Message #14',this.href); return false;">#14</a></span> 
+									<a class="unread" href="viewtopicd43f.html?p=54104#p54104" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>21 Sep 2017 10:31
+			</p>
+			
+			
+			
+			<div class="content">Judago used to have his math scripts split up into each operator.  I use his division.bat.  His code is not limited to the 32bit maximum and it will also do floating point math.<br /><br />Here was another thread about using division.<br /><!-- l --><a class="postlink-local" href="viewtopicf667.html?f=3&amp;t=3854">viewtopic.php?f=3&amp;t=3854</a><!-- l --></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54105" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54105">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54105">
+
+						<h3 ><a href="#p54105">Re: math.cmd: a math expression parser written in native WinNT batch script</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting271c-2.html?mode=quote&amp;f=3&amp;p=54105" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6878.html?p=54105#p54105" onclick="prompt('Message #15',this.href); return false;">#15</a></span> 
+									<a class="unread" href="viewtopic6878.html?p=54105#p54105" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>21 Sep 2017 11:51
+			</p>
+			
+			
+			
+			<div class="content">Perhaps you may be interested in <a href="viewtopic5d59.html?f=3&amp;t=2704" class="postlink">this topic</a> and also in <a href="viewtopic4831.html?f=3&amp;t=6795&amp;p=44035#p44035" class="postlink">this one</a>...<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting892e.html?mode=reply&amp;f=3&amp;t=8139" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic2805.html?f=3&amp;t=8139&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8139">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			18 posts
+							<ul>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopic4f36.html?f=3&amp;t=8139&amp;start=15" role="button">2</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic4f36.html?f=3&amp;t=8139&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cronc6bf.gif?cron_type=cron.task.text_reparser.user_signature" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8139&p=54094 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:28:55 GMT -->
+</html>

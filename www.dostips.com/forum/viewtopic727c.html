@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8833&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:14:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Batch file to copy and rename file with ipaddress.extension</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Batch file to copy and rename file with ipaddress.extension</h2>
+		<p><a href="viewtopic5e97.html?f=3&amp;t=8833">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8833</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Batch file to copy and rename file with ipaddress.extension</h3>
+				<div class="date">Posted: <strong>21 Sep 2018 04:46</strong></div>
+				<div class="author">by <strong>Mushroomking</strong></div>
+				<div class="content">I'm not too familiar with batch files. Most commonly i use VBA/PHP, but i would like to have this one a go <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile">.<br>
+<br>
+I would like to:<br>
+<br>
+Fetch the user's IP address, Copy a file, and rename that file to ipadres.extension<br>
+<br>
+So the new file name should be the IP.<br>
+<br>
+for example:<br>
+<br>
+ipconfig | find "IPv4" copy /y Expeditool.accdb Expeditool"IPv4".accdb<br>
+<br>
+I tried...but just puts IPv4 in file name...<br>
+<br>
+Could anyone help me out with this one? Thanks!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch file to copy and rename file with ipaddress.extension</h3>
+				<div class="date">Posted: <strong>21 Sep 2018 08:05</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Try
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f "delims=: tokens=2" %%i in ('ipconfig^|findstr "\&lt;IPv4"') do for /f "tokens=*" %%j in ("%%i") do copy "Expeditool.accdb" "Expeditool%%j.accdb"</code></pre></div>
+The IP address is assigned to %%j in this example.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch file to copy and rename file with ipaddress.extension</h3>
+				<div class="date">Posted: <strong>21 Sep 2018 08:54</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">Systems can have multiple ethernet cards and thus multiple IP addresses but usually only a single gateway. If you don't want to run the risk receiving an invalid IP or one that is not assigned a gateway and thus cannot be used to access the internet then you should filter gateway first &amp;&amp; then IP.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8833&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:14:17 GMT -->
+</html>

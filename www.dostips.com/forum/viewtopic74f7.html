@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5492 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:01:23 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>REPLVAR.BAT - regex search and replace for variables - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic82b3.html?t=5492">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic74f7.html?f=3&amp;t=5492">REPLVAR.BAT - regex search and replace for variables</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting66b5.html?mode=reply&amp;f=3&amp;t=5492" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic226f-2.html?f=3&amp;t=5492&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="5492" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			33 posts
+							<ul>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopiccff0.html?f=3&amp;t=5492&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopic22e3.html?f=3&amp;t=5492&amp;start=30" role="button">3</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopiccff0.html?f=3&amp;t=5492&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p33442" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33442">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33442">
+
+						<h3 class="first"><a href="#p33442">REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7096.html?mode=quote&amp;f=3&amp;p=33442" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice212.html?p=33442#p33442" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopice212.html?p=33442#p33442" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>05 Apr 2014 00:12
+			</p>
+			
+			
+			
+			<div class="content">I was thinking about the problem of replacing = characters in variable content, as well as <a href="viewtopic96e5.html?f=3&amp;t=1485" class="postlink">other thorny string search and replace issues</a> in batch. My <a href="viewtopic4a81.html?f=3&amp;p=20753" class="postlink">REPL.BAT utility</a> was primarily built to work with files (via pipes or redirection), but it also supports input via an environment variable. The difficulty is how to reliably capture the stdout output in a variable. FOR /F can be used, but carriage returns and line feeds can be troublesome. And then there is the problem of corruption of ! (and ^) when expanding FOR variables while delayed expansion is enabled.<br /><br />I initially came up with a powerful solution combining the safe return technique with a series of piped REPL.BAT operations. It worked well, but it was very slow. So I decided to build a dedicated REPLVAR.BAT hybrid JScript/batch utility that manages to do all the needed replacements with a single JScript call. It borrows heavily from the REPL.BAT script.<br /><br />It has most of the same options as REPL.BAT, except input is always from a variable, so no S option, and the search always uses multi-line mode, so no M option.<br /><br />It has an impressive list of features:<br /><ul><li>Both the input and output values are passed by reference via variable names.</li><li>Searches can be interpreted as regular expressions, or as string literals.</li><li>Searches can be case sensitive or insensitive.</li><li>Replacement strings can reference matched content from the search.</li><li>Many escape sequences are supported in both the search and target strings: All possible byte codes are supported (except NULL 0x00).</li><li>The utility can be safely called with delayed expansion enabled or disabled, and all input and output characters will be preserved.</li></ul><br />Note - REPLVAR.BAT effectively treats all strings as extended ASCII. The source variable value should map properly to the active code page. If the source value is unicode that does not map to the active code page, then the value will be silently transformed into a different value that does map to the active code page. Also, the final output must be compatible with the active code page, otherwise an error is raised.<br /><br />Usage is simple:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enableDelayedExpansion<br />set &quot;input=1 + 1 = 3!&quot;<br />call replVar input output &quot;=&quot; &quot;&lt;&gt;&quot; L<br />echo(!output!<br /></code></pre></div>--OUTPUT--<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>1 + 1 &lt;&gt; 3!<br /></code></pre></div><br />A single call takes about 110 milliseconds on my machine. Certainly not fast, but not too bad for batch, considering the power.<br /><br />Full documentation is embedded within the script.<br /><br />Let me know if you find any bugs. I've done moderate testing, but I wouldn't be shocked if there are some bugs lurking somewhere.<br /><br /><strong class="text-strong">REPLVAR.BAT</strong><em class="text-italics"><br /><span style="color: #0000BF"><strong class="text-strong">EDIT 2014-04-06, version 1.1:</strong> Detect and raise an error if the result is incompatible with the active code page. Also explicitly set ERRORLEVEL to 0 or 1 as appropriate upon return.</span><br /><span style="color: #800000"><strong class="text-strong">EDIT 2014-04-07, version 1.2:</strong> Fixed a bug with output when the input included extended ASCII values. Also dropped the V option, so the search and replace strings must now be passed as strings, never by reference using variable names.</span><br /><span style="color: #0000BF"><strong class="text-strong">EDIT 2014-04-08, version 1.3:</strong> Modified the documentation to better explain the limits on the source content.</span><br /><span style="color: #800000"><strong class="text-strong">EDIT 2014-04-24, version 1.4:</strong> Fixed the A option that was broken with V1.2.</span><br /></em><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (@X)==(@Y) @end /* Harmless hybrid line that begins a JScript comment<br /><br />::************ Documentation ***********<br />::REPLVAR.BAT version 1.4<br />:::<br />:::REPLVAR&nbsp; InVar&nbsp; OutVar&nbsp; Search&nbsp; Replace&nbsp; &#91;Options&#93;<br />:::REPLVAR&nbsp; /?&#91;REGEX|REPLACE&#93;<br />:::REPLVAR&nbsp; /V<br />:::<br />:::&nbsp; Performs a global regular expression search and replace on the contents of<br />:::&nbsp; variable InVar and writes the result to variable OutVar.<br />:::<br />:::&nbsp; REPLVAR.BAT works properly with delayed expansion enabled or disabled.<br />:::<br />:::&nbsp; REPLVAR.BAT treats the source variable value as extended ASCII. The value<br />:::&nbsp; should map properly to the active code page. Unicode source values that<br />:::&nbsp; do not map to the active code page will be silently transformed to a new<br />:::&nbsp; value that does map to the active code page. The result of the search and<br />:::&nbsp; replace must be compatible with the active code page, otherwise an error<br />:::&nbsp; is raised.<br />:::<br />:::&nbsp; The maximum supported output string length usually approaches the 8191<br />:::&nbsp; maximum for most strings. But it could be significantly less if the output<br />:::&nbsp; string contains many % &quot; \r or \n characters, as they must be temporarily<br />:::&nbsp; expanded into 2 or 3 bytes. Also, ^ and ! characters are temporarily<br />:::&nbsp; expanded into 2 bytes if delayed expansion is enabled.<br />:::<br />:::&nbsp; REPLVAR.BAT returns with ERRORLEVEL 0 upon success, and ERRORLEVEL 1<br />:::&nbsp; upon error. If the A option is used and the input was not altered then<br />:::&nbsp; OutVar is undefined and ERRORLEVEL set to 2.<br />:::<br />:::&nbsp; Each parameter may be optionally enclosed by double quotes. The double<br />:::&nbsp; quotes are not considered part of the argument. The quotes are required<br />:::&nbsp; if the parameter contains a batch token delimiter like space, tab, comma,<br />:::&nbsp; semicolon. The quotes should also be used if the argument contains a<br />:::&nbsp; batch special character like &amp;, |, etc. so that the special character<br />:::&nbsp; does not need to be escaped with ^.<br />:::<br />:::&nbsp; If called with a single argument of /?, then prints help documentation<br />:::&nbsp; to stdout. If a single argument of /?REGEX, then opens up Microsoft's<br />:::&nbsp; JScript regular expression documentation within your browser. If a single<br />:::&nbsp; argument of /?REPLACE, then opens up Microsoft's JScript REPLACE<br />:::&nbsp; documentation within your browser.<br />:::<br />:::&nbsp; If called with a single argument of /V, case insensitive, then prints<br />:::&nbsp; the version of REPLVAR.BAT.<br />:::<br />:::&nbsp; InVar&nbsp; &nbsp;- The name of a variable containing the source string.<br />:::<br />:::&nbsp; OutVar&nbsp; - The name of a variable where the result should be stored.<br />:::<br />:::&nbsp; Search&nbsp; - By default, this is a case sensitive JScript (ECMA) regular<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; expression expressed as a string.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; The search is conducted using the regular expression g (global)<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; and m (multilline) flags.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; JScript regex syntax documentation is available at<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; http://msdn.microsoft.com/en-us/library/ae5bf541(v=vs.80).aspx<br />:::<br />:::&nbsp; Replace - By default, this is the string to be used as a replacement for<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; each found search expression. Full support is provided for<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; substituion patterns available to the JScript replace method.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; For example, $&amp; represents the portion of the source that matched<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; the entire search pattern, $1 represents the first captured<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; submatch, $2 the second captured submatch, etc. A $ literal<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; can be escaped as $$.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; An empty replacement string must be represented as &quot;&quot;.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Replace substitution pattern syntax is fully documented at<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; http://msdn.microsoft.com/en-US/library/efy6s3e6(v=vs.80).aspx<br />:::<br />:::&nbsp; Options - An optional string of characters used to alter the behavior<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; of REPLVAR. The option characters are case insensitive, and may<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; appear in any order.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; I - Makes the search case-insensitive.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; L - The Search is treated as a string literal instead of a<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; regular expression. Also, all $ found in Replace are<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; treated as $ literals.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; B - The Search must match the beginning of a line.<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Mostly used with literal searches.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; E - The Search must match the end of a line.<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Mostly used with literal searches.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; A - Only return a value if the input was altered. If not altered,<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; then ERRORLEVEL is set to 2.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; X - Enables extended substitution pattern syntax with support<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for the following escape sequences within the Replace string:<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; \\&nbsp; &nbsp; &nbsp;-&nbsp; Backslash<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; \b&nbsp; &nbsp; &nbsp;-&nbsp; Backspace<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; \f&nbsp; &nbsp; &nbsp;-&nbsp; Formfeed<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; \n&nbsp; &nbsp; &nbsp;-&nbsp; Newline<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; \q&nbsp; &nbsp; &nbsp;-&nbsp; Quote<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; \r&nbsp; &nbsp; &nbsp;-&nbsp; Carriage Return<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; \t&nbsp; &nbsp; &nbsp;-&nbsp; Horizontal Tab<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; \v&nbsp; &nbsp; &nbsp;-&nbsp; Vertical Tab<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; \xnn&nbsp; &nbsp;-&nbsp; Extended ASCII byte code expressed as 2 hex digits<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; \unnnn -&nbsp; Unicode character expressed as 4 hex digits<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Also enables the \q escape sequence for the Search string.<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; The other escape sequences are already standard for a regular<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; expression Search string.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Also modifies the behavior of \xnn in the Search string to work<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; properly with extended ASCII byte codes.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Extended escape sequences are supported even when the L option<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; is used. Both Search and Replace support all of the extended<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; escape sequences if both the X and L opions are combined.<br />:::<br />::: REPLVAR.BAT was written by Dave Benham, with assistance from DosTips users<br />::: Aacini and Liviu regarding complications due to JScript's use of unicode vs.<br />::: cmd.exe's use of extended ASCII. REPLVAR.BAT also uses a modifed form of the<br />::: safe return technique developed by DosTips user jeb. Updates to REPLVAR.BAT<br />::: will be posted to the original posting site:<br />::: http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5492<br />:::<br /><br />::************ Batch portion ***********<br /><br />@echo off<br />if .%4 equ . (<br />&nbsp; if &quot;%~1&quot; equ &quot;/?&quot; (<br />&nbsp; &nbsp; for /f &quot;delims=: tokens=1*&quot; %%A in ('findstr /n &quot;^:::&quot; &quot;%~f0&quot;') do echo(%%B<br />&nbsp; &nbsp; exit /b 0<br />&nbsp; ) else if /i &quot;%~1&quot; equ &quot;/?REGEX&quot; (<br />&nbsp; &nbsp; start &quot;&quot; &quot;http://msdn.microsoft.com/en-us/library/ae5bf541(v=vs.80).aspx&quot;<br />&nbsp; &nbsp; exit /b 0<br />&nbsp; ) else if /i &quot;%~1&quot; equ &quot;/?REPLACE&quot; (<br />&nbsp; &nbsp; start &quot;&quot; &quot;http://msdn.microsoft.com/en-US/library/efy6s3e6(v=vs.80).aspx&quot;<br />&nbsp; &nbsp; exit /b 0<br />&nbsp; ) else if /i &quot;%~1&quot; equ &quot;/V&quot; (<br />&nbsp; &nbsp; for /f &quot;delims=: tokens=1*&quot; %%A in ('findstr /nblc:&quot;::REPLVAR.BAT version&quot; &quot;%~f0&quot;') do echo(%%B<br />&nbsp; &nbsp; exit /b 0<br />&nbsp; ) else (<br />&nbsp; &nbsp; call :err &quot;Insufficient arguments&quot;<br />&nbsp; &nbsp; exit /b 1<br />&nbsp; )<br />)<br />echo(%~5|findstr /i &quot;&#91;^ILEBXA&#93;&quot; &gt;nul &amp;&amp; (<br />&nbsp; call :err &quot;Invalid option(s)&quot;<br />&nbsp; exit /b 1<br />)<br /><br />setlocal<br />set &quot;$replVar.notDelayed=!!&quot;<br />setlocal enableDelayedExpansion<br />for /f &quot;delims==&quot; %%V in ('set ~ 2^&gt;nul') do set &quot;%%V=&quot;<br />set &quot;~=!%~1!&quot;<br />setlocal disableDelayedExpansion<br />set &quot;rtn=&quot;<br />for /f delims^=^ eol^= %%A in (<br />&nbsp; 'set ~ 2^&gt;nul^|cscript //E:JScript //nologo &quot;%~f0&quot; &quot;%$replVar.notDelayed%&quot; %3 %4 %5'<br />) do set &quot;rtn=%%A&quot;<br />if defined rtn (<br />&nbsp; set &quot;err=%rtn:~0,1%&quot;<br />&nbsp; set &quot;rtn=%rtn:~1%&quot;<br />) else set &quot;err=2&quot;<br />if %err% equ 1 (echo ERROR: Result not compatible with active code page) &gt;&amp;2<br />if %err% equ 2 (echo Input not altered) &gt;&amp;2<br />setlocal enableDelayedExpansion<br />set ^&quot;LF=^<br /><br />^&quot;<br />for /f %%A in ('copy /z &quot;%~dpf0&quot; nul') do set &quot;CR=%%A&quot;<br />set &quot;replace=%% &quot;&quot;&quot; !CR!!CR!&quot;<br />for /f &quot;tokens=1,2,3&quot; %%J in (&quot;!replace!&quot;) do for %%M in (&quot;!LF!&quot;) do (<br />&nbsp; endlocal<br />&nbsp; endlocal<br />&nbsp; endlocal<br />&nbsp; endlocal<br />&nbsp; set &quot;%~2=%rtn%&quot; !<br />&nbsp; exit /b %err%<br />)<br /><br />:err<br />&gt;&amp;2 echo ERROR: %~1. Use replVar /? to get help.<br />exit /b<br /><br /><br />************* JScript portion **********/<br />var env=WScript.CreateObject(&quot;WScript.Shell&quot;).Environment(&quot;Process&quot;);<br />var args=WScript.Arguments;<br />var search=args.Item(1);<br />var replace=args.Item(2);<br />var options=&quot;gm&quot;;<br />if (args.length&gt;3) options+=args.Item(3).toLowerCase();<br />var alterations=(options.indexOf(&quot;a&quot;)&gt;=0);<br />if (alterations) options=options.replace(/a/g,&quot;&quot;);<br />if (options.indexOf(&quot;x&quot;)&gt;=0) {<br />&nbsp; options=options.replace(/x/g,&quot;&quot;);<br />&nbsp; replace=replace.replace(/\\\\/g,&quot;\\B&quot;);<br />&nbsp; replace=replace.replace(/\\q/g,&quot;\&quot;&quot;);<br />&nbsp; replace=replace.replace(/\\x80/g,&quot;\\u20AC&quot;);<br />&nbsp; replace=replace.replace(/\\x82/g,&quot;\\u201A&quot;);<br />&nbsp; replace=replace.replace(/\\x83/g,&quot;\\u0192&quot;);<br />&nbsp; replace=replace.replace(/\\x84/g,&quot;\\u201E&quot;);<br />&nbsp; replace=replace.replace(/\\x85/g,&quot;\\u2026&quot;);<br />&nbsp; replace=replace.replace(/\\x86/g,&quot;\\u2020&quot;);<br />&nbsp; replace=replace.replace(/\\x87/g,&quot;\\u2021&quot;);<br />&nbsp; replace=replace.replace(/\\x88/g,&quot;\\u02C6&quot;);<br />&nbsp; replace=replace.replace(/\\x89/g,&quot;\\u2030&quot;);<br />&nbsp; replace=replace.replace(/\\x8&#91;aA&#93;/g,&quot;\\u0160&quot;);<br />&nbsp; replace=replace.replace(/\\x8&#91;bB&#93;/g,&quot;\\u2039&quot;);<br />&nbsp; replace=replace.replace(/\\x8&#91;cC&#93;/g,&quot;\\u0152&quot;);<br />&nbsp; replace=replace.replace(/\\x8&#91;eE&#93;/g,&quot;\\u017D&quot;);<br />&nbsp; replace=replace.replace(/\\x91/g,&quot;\\u2018&quot;);<br />&nbsp; replace=replace.replace(/\\x92/g,&quot;\\u2019&quot;);<br />&nbsp; replace=replace.replace(/\\x93/g,&quot;\\u201C&quot;);<br />&nbsp; replace=replace.replace(/\\x94/g,&quot;\\u201D&quot;);<br />&nbsp; replace=replace.replace(/\\x95/g,&quot;\\u2022&quot;);<br />&nbsp; replace=replace.replace(/\\x96/g,&quot;\\u2013&quot;);<br />&nbsp; replace=replace.replace(/\\x97/g,&quot;\\u2014&quot;);<br />&nbsp; replace=replace.replace(/\\x98/g,&quot;\\u02DC&quot;);<br />&nbsp; replace=replace.replace(/\\x99/g,&quot;\\u2122&quot;);<br />&nbsp; replace=replace.replace(/\\x9&#91;aA&#93;/g,&quot;\\u0161&quot;);<br />&nbsp; replace=replace.replace(/\\x9&#91;bB&#93;/g,&quot;\\u203A&quot;);<br />&nbsp; replace=replace.replace(/\\x9&#91;cC&#93;/g,&quot;\\u0153&quot;);<br />&nbsp; replace=replace.replace(/\\x9&#91;dD&#93;/g,&quot;\\u009D&quot;);<br />&nbsp; replace=replace.replace(/\\x9&#91;eE&#93;/g,&quot;\\u017E&quot;);<br />&nbsp; replace=replace.replace(/\\x9&#91;fF&#93;/g,&quot;\\u0178&quot;);<br />&nbsp; replace=replace.replace(/\\b/g,&quot;\b&quot;);<br />&nbsp; replace=replace.replace(/\\f/g,&quot;\f&quot;);<br />&nbsp; replace=replace.replace(/\\n/g,&quot;\n&quot;);<br />&nbsp; replace=replace.replace(/\\r/g,&quot;\r&quot;);<br />&nbsp; replace=replace.replace(/\\t/g,&quot;\t&quot;);<br />&nbsp; replace=replace.replace(/\\v/g,&quot;\v&quot;);<br />&nbsp; replace=replace.replace(/\\x&#91;0-9a-fA-F&#93;{2}|\\u&#91;0-9a-fA-F&#93;{4}/g,<br />&nbsp; &nbsp; function($0,$1,$2){<br />&nbsp; &nbsp; &nbsp; return String.fromCharCode(parseInt(&quot;0x&quot;+$0.substring(2)));<br />&nbsp; &nbsp; }<br />&nbsp; );<br />&nbsp; replace=replace.replace(/\\B/g,&quot;\\&quot;);<br />&nbsp; search=search.replace(/\\\\/g,&quot;\\B&quot;);<br />&nbsp; search=search.replace(/\\q/g,&quot;\&quot;&quot;);<br />&nbsp; search=search.replace(/\\x80/g,&quot;\\u20AC&quot;);<br />&nbsp; search=search.replace(/\\x82/g,&quot;\\u201A&quot;);<br />&nbsp; search=search.replace(/\\x83/g,&quot;\\u0192&quot;);<br />&nbsp; search=search.replace(/\\x84/g,&quot;\\u201E&quot;);<br />&nbsp; search=search.replace(/\\x85/g,&quot;\\u2026&quot;);<br />&nbsp; search=search.replace(/\\x86/g,&quot;\\u2020&quot;);<br />&nbsp; search=search.replace(/\\x87/g,&quot;\\u2021&quot;);<br />&nbsp; search=search.replace(/\\x88/g,&quot;\\u02C6&quot;);<br />&nbsp; search=search.replace(/\\x89/g,&quot;\\u2030&quot;);<br />&nbsp; search=search.replace(/\\x8&#91;aA&#93;/g,&quot;\\u0160&quot;);<br />&nbsp; search=search.replace(/\\x8&#91;bB&#93;/g,&quot;\\u2039&quot;);<br />&nbsp; search=search.replace(/\\x8&#91;cC&#93;/g,&quot;\\u0152&quot;);<br />&nbsp; search=search.replace(/\\x8&#91;eE&#93;/g,&quot;\\u017D&quot;);<br />&nbsp; search=search.replace(/\\x91/g,&quot;\\u2018&quot;);<br />&nbsp; search=search.replace(/\\x92/g,&quot;\\u2019&quot;);<br />&nbsp; search=search.replace(/\\x93/g,&quot;\\u201C&quot;);<br />&nbsp; search=search.replace(/\\x94/g,&quot;\\u201D&quot;);<br />&nbsp; search=search.replace(/\\x95/g,&quot;\\u2022&quot;);<br />&nbsp; search=search.replace(/\\x96/g,&quot;\\u2013&quot;);<br />&nbsp; search=search.replace(/\\x97/g,&quot;\\u2014&quot;);<br />&nbsp; search=search.replace(/\\x98/g,&quot;\\u02DC&quot;);<br />&nbsp; search=search.replace(/\\x99/g,&quot;\\u2122&quot;);<br />&nbsp; search=search.replace(/\\x9&#91;aA&#93;/g,&quot;\\u0161&quot;);<br />&nbsp; search=search.replace(/\\x9&#91;bB&#93;/g,&quot;\\u203A&quot;);<br />&nbsp; search=search.replace(/\\x9&#91;cC&#93;/g,&quot;\\u0153&quot;);<br />&nbsp; search=search.replace(/\\x9&#91;dD&#93;/g,&quot;\\u009D&quot;);<br />&nbsp; search=search.replace(/\\x9&#91;eE&#93;/g,&quot;\\u017E&quot;);<br />&nbsp; search=search.replace(/\\x9&#91;fF&#93;/g,&quot;\\u0178&quot;);<br />&nbsp; if (options.indexOf(&quot;l&quot;)&gt;=0) {<br />&nbsp; &nbsp; search=search.replace(/\\b/g,&quot;\b&quot;);<br />&nbsp; &nbsp; search=search.replace(/\\f/g,&quot;\f&quot;);<br />&nbsp; &nbsp; search=search.replace(/\\n/g,&quot;\n&quot;);<br />&nbsp; &nbsp; search=search.replace(/\\r/g,&quot;\r&quot;);<br />&nbsp; &nbsp; search=search.replace(/\\t/g,&quot;\t&quot;);<br />&nbsp; &nbsp; search=search.replace(/\\v/g,&quot;\v&quot;);<br />&nbsp; &nbsp; search=search.replace(/\\x&#91;0-9a-fA-F&#93;{2}|\\u&#91;0-9a-fA-F&#93;{4}/g,<br />&nbsp; &nbsp; &nbsp; function($0,$1,$2){<br />&nbsp; &nbsp; &nbsp; &nbsp; return String.fromCharCode(parseInt(&quot;0x&quot;+$0.substring(2)));<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; );<br />&nbsp; &nbsp; search=search.replace(/\\B/g,&quot;\\&quot;);<br />&nbsp; } else search=search.replace(/\\B/g,&quot;\\\\&quot;);<br />}<br />if (options.indexOf(&quot;l&quot;)&gt;=0) {<br />&nbsp; options=options.replace(/l/g,&quot;&quot;);<br />&nbsp; search=search.replace(/(&#91;.^$*+?()&#91;{\\|&#93;)/g,&quot;\\$1&quot;);<br />&nbsp; replace=replace.replace(/\$/g,&quot;$$$$&quot;);<br />}<br />if (options.indexOf(&quot;b&quot;)&gt;=0) {<br />&nbsp; options=options.replace(/b/g,&quot;&quot;);<br />&nbsp; search=&quot;^&quot;+search<br />}<br />if (options.indexOf(&quot;e&quot;)&gt;=0) {<br />&nbsp; options=options.replace(/e/g,&quot;&quot;);<br />&nbsp; search=search+&quot;$&quot;<br />}<br />var search=new RegExp(search,options);<br /><br />var str1, str2, delay;<br />delay=args.Item(0);<br /><br />if (!WScript.StdIn.AtEndOfStream) str1=WScript.StdIn.ReadAll(); else str1=&quot;&quot;;<br />str1=str1.substr(2,str1.length-4);<br />str2=str1.replace(search,replace);<br />if (!alterations || str1!=str2) {<br />&nbsp; str2=str2.replace(/%/g,&quot;%J&quot;);<br />&nbsp; str2=str2.replace(/\&quot;/g,&quot;%~K&quot;);<br />&nbsp; str2=str2.replace(/\r/g,&quot;%L&quot;);<br />&nbsp; str2=str2.replace(/\n/g,&quot;%~M&quot;);<br />&nbsp; if (delay==&quot;&quot;) {<br />&nbsp; &nbsp; str2=str2.replace(/\^/g,&quot;^^&quot;);<br />&nbsp; &nbsp; str2=str2.replace(/!/g,&quot;^!&quot;);<br />&nbsp; }<br />&nbsp; try {<br />&nbsp; &nbsp; WScript.Stdout.Write(&quot;0&quot;+str2);<br />&nbsp; } catch (e) {<br />&nbsp; &nbsp; WScript.Stdout.Write(&quot;1&quot;);<br />&nbsp; }<br />}<br /></code></pre></div><br /><br />Dave Benham</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a> on 24 Apr 2014 13:02, edited 7 times in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p33452" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33452">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche861.html?author_id=3077&amp;sr=posts">470</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Jan 2012 21:24</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33452">
+
+						<h3 ><a href="#p33452">Re: REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2167.html?mode=quote&amp;f=3&amp;p=33452" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic330b-2.html?p=33452#p33452" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopic330b-2.html?p=33452#p33452" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a></strong> &raquo; </span>05 Apr 2014 22:51
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>dbenham wrote:</cite>My <a href="viewtopic4a81.html?f=3&amp;p=20753" class="postlink">REPL.BAT utility</a> was primarily built to work with files (via pipes or redirection), but it also supports input via an environment variable. [...] I decided to build a dedicated REPLVAR.BAT hybrid JScript/batch utility [...] It has most of the same options as REPL.BAT, except input is always from a variable</div></blockquote><br />Taking the input from a variable vs. file or piped input raises the bar considerably. Critical difference is that environment variables are natively Unicode, while file or piped input is always &quot;narrowed down&quot; to the current codepage, first.<br /><br />The second run of the following doesn't seem to work as expected.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;set &quot;input=&lt;abcde&gt;&quot; &amp; set input<br />input=&lt;abcde&gt;<br /><br />C:\tmp&gt;replVar input output &quot;c&quot; &quot; ? &quot; LX &amp; set output<br />output=&lt;ab ? de&gt;<br /><br />C:\tmp&gt;set &quot;input=‹αß©∂€›&quot; &amp; set input<br />input=‹αß©∂€›<br /><br />C:\tmp&gt;replVar input output &quot;©&quot; &quot; ? &quot; LX &amp; set output<br />C:\tmp\replVar.bat(298, 3) Microsoft JScript runtime error: Invalid procedure call or argument<br /><br />Environment variable output not defined<br /></code></pre></div><br />Liviu</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p33454" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33454">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33454">
+
+						<h3 ><a href="#p33454">Re: REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting6af5.html?mode=quote&amp;f=3&amp;p=33454" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb4d8.html?p=33454#p33454" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopicb4d8.html?p=33454#p33454" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>05 Apr 2014 23:45
+			</p>
+			
+			
+			
+			<div class="content">Thanks Liviu for finding that.<br /><br />I've done some debugging and verified that the JScript works perfectly until the very last statement that writes the final result to stdout.<br /><br />I tested by writing the value of the intermediate strings to stderr. The really weird thing is, I can write the final result to stderr, but when I try to write the same final string to stdout it throws the exception.<br /><br />Could WScript.Stdout.WriteLine() be going through some unicode to code page gyrations that StdErr does not <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" /> <br /><br />Perhaps the output string contains a unicode value that does not translate to the active code page, and attempting to write to stderr throws the exception. But it seems really odd that stderr does not do the same  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" />  <img class="smilies" src="images/smilies/icon_sad.gif" alt=":(" title="Sad" /> <br /><br />My guess is that everything works as long as all output characters map properly to the active code page.<br /><br />Any ideas?<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p33456" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33456">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche861.html?author_id=3077&amp;sr=posts">470</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Jan 2012 21:24</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33456">
+
+						<h3 ><a href="#p33456">Re: REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting6ff1-2.html?mode=quote&amp;f=3&amp;p=33456" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1717-2.html?p=33456#p33456" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopic1717-2.html?p=33456#p33456" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a></strong> &raquo; </span>06 Apr 2014 00:41
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>dbenham wrote:</cite>The really weird thing is, I can write the final result to stderr, but when I try to write the same final string to stdout it throws the exception.</div></blockquote>That's odd, indeed. However, something still breaks underneath, since if I just replace &quot;stdout&quot; with &quot;stderr&quot; on the last line then I can see the output, but it's still followed by &quot;<em class="text-italics">Environment variable output not defined</em>&quot; right after. Don't have any constructive idea offhand, and don't know that it's actually solvable, since the for/f loop on the receiving end in the batch file flattens everything down to the active codepage.<br /><br /><blockquote><div><cite>dbenham wrote:</cite>My guess is that everything works as long as all output characters map properly to the active code page.</div></blockquote>Possibly so, but the problem remains to detect what works in advance , or at least catch what doesn't afterwards. Because, in the failure cases, there can be wrong and active-codepage-dependent outcomes, other than hard errors.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;set &quot;input=&lt;ab©de&gt;&quot; &amp; set input<br />input=&lt;ab©de&gt;<br /><br />C:\tmp&gt;chcp 437<br />Active code page: 437<br /><br />C:\tmp&gt;replVar input output &quot;c&quot; &quot; ? &quot; LX &amp; set output<br />output=&lt;ab⌐de&gt;<br /><br />C:\tmp&gt;chcp 850<br />Active code page: 850<br /><br />C:\tmp&gt;replVar input output &quot;c&quot; &quot; ? &quot; LX &amp; set output<br />output=&lt;ab®de&gt;</code></pre></div><br />Liviu</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p33459" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33459">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist7557.html?mode=viewprofile&amp;u=4243" class="username">carlsomo</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search15dd.html?author_id=4243&amp;sr=posts">91</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 02 Oct 2012 17:21</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33459">
+
+						<h3 ><a href="#p33459">Re: REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting33f5-2.html?mode=quote&amp;f=3&amp;p=33459" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic26f1-2.html?p=33459#p33459" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopic26f1-2.html?p=33459#p33459" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist7557.html?mode=viewprofile&amp;u=4243" class="username">carlsomo</a></strong> &raquo; </span>06 Apr 2014 01:01
+			</p>
+			
+			
+			
+			<div class="content">problems with ...'s<br /><br />C:\&gt;set input=111111111111??<br /><br />C:\&gt;replvar input output &quot;...&quot; &quot;ttt&quot;<br /><br />C:\&gt;set output<br />output=tttttttttttt??<br /><br />C:\&gt;replvar input output &quot;222&quot; &quot;ttt&quot;<br /><br />C:\&gt;set output<br />output=111111111111??</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p33465" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33465">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33465">
+
+						<h3 ><a href="#p33465">Re: REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting4b30.html?mode=quote&amp;f=3&amp;p=33465" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicf5dd.html?p=33465#p33465" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopicf5dd.html?p=33465#p33465" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>06 Apr 2014 07:48
+			</p>
+			
+			
+			
+			<div class="content">@carlsomo - both your examples are giving the expected result: &quot;...&quot; is a regular expression that matches any 3 characters other than &lt;CR&gt; or &lt;LF&gt;<br /><br />@Liviu - I've done some more experiments, and the problem is with FOR /F - it cannot handle unicode values that do not map to the active code page. If it receives them, then it must be reporting an error back to JScript. I had forgotten that this is a known issue with FOR /F. I had seen reports how FOR /F cannot parse the output of DIR properly if a file name contains unicode that does not map to the active page.<br /><br />I believe the command shell (and/or FOR /F) will automatically map some characters that are not in the active code page to different, but related characters that are within the active code page. I don't see how this can be detected, other than to maintain a list of all possible mappings (or somehow access the mappings that CMD is using). This is not something I want to attempt.<br /><br />The way the code stands now, it is up to the user to make sure the output is compatible with the active code page.<br /><br />I've modified the script to detect if there was an error writing the output, in which case the output variable is not set, and the ERRORLEVEL is set to 1. I also made a few changes to ensure that all exit points properly set the ERRORLEVEL to 0 or 1 as needed. I've posted v1.1 to the first post on this thread.<br /><br />There is still one aspect of REPLVAR.BAT that I am nervous about. I am using the mappings that Aacini provided for REPL.BAT to translate \xNN codes into the appropriate \uNNNN unicode such that it yields the desired extended ASCII character. But I've never been comfortable with how it works. I was worried that it might be impacted by the active code page, but my tests on REPL.BAT did not show any problems with different code pages. Even if REPL.BAT works, I'm wondering if REPLVAR.BAT might have some problems with different code pages.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p33473" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33473">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche861.html?author_id=3077&amp;sr=posts">470</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Jan 2012 21:24</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33473">
+
+						<h3 ><a href="#p33473">Re: REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5d19.html?mode=quote&amp;f=3&amp;p=33473" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb2f2.html?p=33473#p33473" onclick="prompt('Message #7',this.href); return false;">#7</a></span> 
+									<a class="unread" href="viewtopicb2f2.html?p=33473#p33473" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a></strong> &raquo; </span>06 Apr 2014 17:15
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Liviu wrote:</cite><blockquote><div><cite>dbenham wrote:</cite>The really weird thing is, I can write the final result to stderr, but when I try to write the same final string to stdout it throws the exception.</div></blockquote>That's odd, indeed.</div></blockquote>Actually, it's not all that odd. What happens is that stderr is not captured by for/f and goes directly to the console as full Unicode, without any codepage translation.<br /><br /><blockquote><div><cite>dbenham wrote:</cite>I believe the command shell (and/or FOR /F) will automatically map some characters that are not in the active code page to different, but related characters that are within the active code page. I don't see how this can be detected</div></blockquote>This can be detected with something like the following...<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />for /f &quot;delims=&quot; %%x in ('echo &quot;%~1&quot;') do (<br />&nbsp; if &quot;%%~x&quot;==&quot;%~1&quot; (exit /b 0) else exit /b 1<br />)</code></pre></div>...saved as, say, 'isInCP.cmd', then...<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;chcp 437<br />Active code page: 437<br /><br />C:\tmp&gt;(call isincp &quot;.αß....&quot;) &amp;&amp; (echo + OK) || (echo - err)<br />+ OK<br /><br />C:\tmp&gt;chcp 1252<br />Active code page: 1252<br /><br />C:\tmp&gt;(call isincp &quot;.αß....&quot;) &amp;&amp; (echo + OK) || (echo - err)<br />- err<br /><br />C:\tmp&gt;chcp 437<br />Active code page: 437<br /><br />C:\tmp&gt;(call isincp &quot;‹.ß©.€›&quot;) &amp;&amp; (echo + OK) || (echo - err)<br />- err<br /><br />C:\tmp&gt;chcp 1252<br />Active code page: 1252<br /><br />C:\tmp&gt;(call isincp &quot;‹.ß©.€›&quot;) &amp;&amp; (echo + OK) || (echo - err)<br />+ OK<br /></code></pre></div>Of course, the code is oversimplified and will fail on some of the usual poison characters, but it's just to make the point that it's technically possible.<br /><br /><blockquote><div><cite>dbenham wrote:</cite>The way the code stands now, it is up to the user to make sure the output is compatible with the active code page.</div></blockquote>I don't think even that restriction is strong enough. Consider the following, where &quot;αß&quot; are valid in CP 437, but a dummy replacement still fails to return the original string. (The fact that &quot;ß&quot; is returned correctly under CP 1252 is also significant, will get back to that below.)<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;chcp 437<br />Active code page: 437<br /><br />C:\tmp&gt;set &quot;input=.αß....&quot; &amp; set input<br />input=.αß....<br /><br />C:\tmp&gt;(call replVar input output &quot;x&quot; &quot;y&quot; LX) &amp;&amp; (set output) || (echo *** error)<br />output=.a▀....<br /><br />C:\tmp&gt;chcp 1252<br />Active code page: 1252<br /><br />C:\tmp&gt;(call replVar input output &quot;x&quot; &quot;y&quot; LX) &amp;&amp; (set output) || (echo *** error)<br />output=.aß....</code></pre></div><br /><blockquote><div><cite>dbenham wrote:</cite>There is still one aspect of REPLVAR.BAT that I am nervous about. I am using the mappings that Aacini provided for REPL.BAT to translate \xNN codes into the appropriate \uNNNN unicode such that it yields the desired extended ASCII character. But I've never been comfortable with how it works. I was worried that it might be impacted by the active code page</div></blockquote>That hardcoded mapping does indeed make the replacement codepage dependent. In addition to the &quot;ß&quot; example above, here is another one.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;set &quot;input=‹.ß©.€›&quot; &amp; set input<br />input=‹.ß©.€›<br /><br />C:\tmp&gt;chcp 437<br />Active code page: 437<br /><br />C:\tmp&gt;(call replVar input output &quot;x&quot; &quot;y&quot; LX) &amp;&amp; (set output) || (echo *** error)<br />output=ï.▀⌐.Ç¢<br /><br />C:\tmp&gt;chcp 1252<br />Active code page: 1252<br /><br />C:\tmp&gt;(call replVar input output &quot;x&quot; &quot;y&quot; LX) &amp;&amp; (set output) || (echo *** error)<br />output=‹.ß©.€›<br /></code></pre></div>Without having followed it all the way through, but it looks to me as if this only works reliably when (a) the string is only using characters that are present in codepage 1252, and (b) the active codepage is 1252 - which is not too common in practice since that's an ANSI codepage, while the cmd prompt is set by default to an OEM codepage such as 437 or 850.<br /><br /><blockquote><div><cite>dbenham wrote:</cite>but my tests on REPL.BAT did not show any problems with different code pages. Even if REPL.BAT works, I'm wondering if REPLVAR.BAT might have some problems with different code pages.</div></blockquote>Repl.bat does its own output in JScript, so it's not subject to the &quot;flattening back to codepage&quot; issues of a for/f loop - but any caller code that tries to capture that output in a variable would have the same problems that replVar does.<br /><br />Liviu<br /><br />P.S. There is something odd about repl.bat, too, but I am not closely enough familiar with JScript to put my finger on it. For one thing, it fails with a hard error when output is redirected, and it includes out-of-codepage characters.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;chcp 437<br />Active code page: 437<br /><br />C:\tmp&gt;repl &quot;©&quot; &quot;-!-&quot; LXS input<br />‹αß-!-∂€›<br /><br />C:\tmp&gt;repl &quot;©&quot; &quot;-!-&quot; LXS input &gt;nul<br />C:\tmp\repl.bat(283, 5) Microsoft JScript runtime error: Invalid procedure call or argument<br /><br /><br />C:\tmp&gt;cmd /u/c repl &quot;©&quot; &quot;-!-&quot; LXS input ^&gt;repltest.tmp<br />C:\tmp\repl.bat(283, 5) Microsoft JScript runtime error: Invalid procedure call or argument<br /></code></pre></div><br />I tried a variation on the output method in repl.bat by forcing the output stream to 'Unicode mode' explicitly.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>var fso = new ActiveXObject(&quot;Scripting.FileSystemObject&quot;);<br />var stdoutW = fso.GetStandardStream(1, true)<br /><br />if (srcVar) {<br />&nbsp; str1=env(args.Item(3));<br />&nbsp; str2=str1.replace(search,replace);<br />&nbsp; if (!alterations || str1!=str2) if (multi) {<br />&nbsp; &nbsp; stdoutW.Write(str2);<br />&nbsp; } else {<br />&nbsp; &nbsp; stdoutW.WriteLine(str2);<br />&nbsp; }<br />} else { /*... */<br /></code></pre></div>This allowed redirection to work, but (surprisingly) the output is _always_ Unicode, even at a 'cmd /a' prompt.<br /><br />Still, combined with the new UTF-8 support in Windows 7 (<a href="viewtopicfd0c.html?f=3&amp;t=5358" class="postlink">http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5358</a>) this allowed the following to use repl.bat and capture its output to a variable.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;chcp 437&nbsp; &amp;rem start in default OEM codepage<br />Active code page: 437<br /><br />C:\tmp&gt;set &quot;input=‹αß©∂€›&quot; &amp; set input<br />input=‹αß©∂€›<br /><br />C:\tmp&gt;chcp 1252&nbsp; &amp;rem necessary in order to generate the UTF16-LE BOM<br />Active code page: 1252<br /><br />C:\tmp&gt;(set /p =ÿþ) &lt;nul &gt;repl-u16.tmp 2&gt;nul&nbsp; &amp;rem write BOM to file<br /><br />C:\tmp&gt;chcp 437&nbsp; &amp;rem return to default OEM codepage<br />Active code page: 437<br /><br />C:\tmp&gt;repl &quot;©&quot; &quot;-!-&quot; LXS input &gt;&gt;repl-u16.tmp&nbsp; &amp;rem save UTF16-LE string<br /><br />C:\tmp&gt;type repl-u16.tmp&nbsp; &amp;rem verify file contents OK<br />‹αß-!-∂€›<br /><br />C:\tmp&gt;chcp 65001&nbsp; &amp;rem change to UTF-8 codepage<br />Active code page: 65001<br /><br />C:\tmp&gt;type repl-u16.tmp &gt;repl-u8.tmp&nbsp; &amp;rem convert file to UTF-8<br /><br />C:\tmp&gt;for /f &quot;delims=&quot; %s in (repl-u8.tmp) do @(set &quot;output=%s&quot; &amp; set output)<br />output=‹αß-!-∂€›<br /><br />C:\tmp&gt;chcp 437&nbsp; &amp;rem return to default OEM codepage<br />Active code page: 437<br /><br />C:\tmp&gt;set &quot;output&quot;&nbsp; &amp;rem verify 'output' variable OK<br />output=‹αß-!-∂€›<br /></code></pre></div>Again, the above only works in Windows 7+ (not XP), and the whole 'stdoutW' trick smells hack'ish, so I would not recommend it for production code, at least not without a whole lot more investigation.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p33474" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33474">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33474">
+
+						<h3 ><a href="#p33474">Re: REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting41d1-2.html?mode=quote&amp;f=3&amp;p=33474" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic3ed8.html?p=33474#p33474" onclick="prompt('Message #8',this.href); return false;">#8</a></span> 
+									<a class="unread" href="viewtopic3ed8.html?p=33474#p33474" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>06 Apr 2014 19:08
+			</p>
+			
+			
+			
+			<div class="content">Thanks Liviu, your experiments and explanation help.<br /><br />but based on your results... Major bummer  <img class="smilies" src="images/smilies/icon_cry.gif" alt=":cry:" title="Crying or Very sad" /> <br /><br />I did some experiments, and REPLVAR is able to generate all 255 byte codes properly using \xNN in the replacement string.<br /><br />But if I pass in a variable containing extended ASCII, then the value gets corrupted.<br /><br />I'm thinking I have to abandon reading string values directly from the environment. Instead I think I have to always deal with string literals, either piped in, or else on the command line.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p33498" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33498">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915" style="color: #00AA00;" class="username-coloured">penpen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1bf7.html?author_id=4915&amp;sr=posts">1612</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Jun 2013 06:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33498">
+
+						<h3 ><a href="#p33498">Re: REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf8c9.html?mode=quote&amp;f=3&amp;p=33498" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic8165.html?p=33498#p33498" onclick="prompt('Message #9',this.href); return false;">#9</a></span> 
+									<a class="unread" href="viewtopic8165.html?p=33498#p33498" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915" style="color: #00AA00;" class="username-coloured">penpen</a></strong> &raquo; </span>07 Apr 2014 17:09
+			</p>
+			
+			
+			
+			<div class="content">Won't it work if you avoid &quot;WScript.Stdout.Write(&quot;0&quot;+str2);&quot;<br />Maybe this works (actually using Win95 can't check that myself):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp;try {<br />&nbsp; &nbsp; WScript.Echo(&quot;0&quot;+str2);<br />&nbsp; } catch (e) {<br />&nbsp; &nbsp; WScript.Stdout.Write(&quot;1&quot;);<br />&nbsp; }<br /></code></pre></div><br />penpen</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p33500" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33500">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33500">
+
+						<h3 ><a href="#p33500">Re: REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting16fa.html?mode=quote&amp;f=3&amp;p=33500" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicbb13.html?p=33500#p33500" onclick="prompt('Message #10',this.href); return false;">#10</a></span> 
+									<a class="unread" href="viewtopicbb13.html?p=33500#p33500" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>07 Apr 2014 19:38
+			</p>
+			
+			
+			
+			<div class="content">@penpen - I don't think so, but I haven't tested, as I have a new version that fixes the problems.<br /><br />Rightly or wrongly, I've come to the conclusion that letting JScript read environment variables directly is always going to create problems when dealing with extended ASCII codes &gt;127 (0x7F). This is true for my REPL.BAT utility as well. I have confirmed that use of the S and V options can lead to incorrect results with REPL.BAT.<br /><br />I now use SET to write the value of the source variable and pipe the result into JScript. I also removed the V option, so the search and replace strings must be passed as strings on the command line, they cannot be passed by reference using variable names.<br /><br />I've updated the code at the beginning of this thread with version 1.2.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p33503" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33503">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche861.html?author_id=3077&amp;sr=posts">470</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Jan 2012 21:24</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33503">
+
+						<h3 ><a href="#p33503">Re: REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8614.html?mode=quote&amp;f=3&amp;p=33503" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic20b7.html?p=33503#p33503" onclick="prompt('Message #11',this.href); return false;">#11</a></span> 
+									<a class="unread" href="viewtopic20b7.html?p=33503#p33503" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a></strong> &raquo; </span>07 Apr 2014 21:12
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>dbenham wrote:</cite>Rightly or wrongly, I've come to the conclusion that letting JScript read environment variables directly is always going to create problems when dealing with extended ASCII codes &gt;127 (0x7F).</div></blockquote>That's odd. You said that the previous version was writing the correct strings to stderr, which means that JScript was receiving the input string correctly, pointing the issue at the for/f on the return path.<br /><br /><blockquote><div><cite>dbenham wrote:</cite>This is true for my REPL.BAT utility as well. I have confirmed that use of the S and V options can lead to incorrect results with REPL.BAT.</div></blockquote>Just curious, what's a failure case for S? I haven't tested it in any depth, but the example in the P.S. of my previous post worked correctly.<br /><br /><blockquote><div><cite>dbenham wrote:</cite>I now use SET to write the value of the source variable and pipe the result into JScript.</div></blockquote>Piping 'set' reduces the input to the active codepage upfront, before JScript ever sees it. I assume it works from there on, but it's not possible to catch codepage-violation errors without some checking done on the batch side of the code prior to calling JScript. For example, the following passes a string that's not valid in either codepage...<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;chcp 437 &gt;nul<br /><br />C:\tmp&gt;set &quot;input=‹αß©∂€›&quot; &amp; set input<br />input=‹αß©∂€›<br /><br />C:\tmp&gt;(call replVar input output &quot;a&quot; &quot;-&quot; LX) &amp;&amp; (set output) || (echo *** error)<br />output=&lt;αßc??&gt;<br /><br />C:\tmp&gt;chcp 1252 &gt;nul<br /><br />C:\tmp&gt;(call replVar input output &quot;a&quot; &quot;-&quot; LX) &amp;&amp; (set output) || (echo *** error)<br />output=‹-ß©?€›</code></pre></div>...but replVar does not return an error, the results are different in the two cases, and both wrong - without the caller having any indication of failure.<br /><br />Liviu</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p33506" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33506">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33506">
+
+						<h3 ><a href="#p33506">Re: REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5c3a.html?mode=quote&amp;f=3&amp;p=33506" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicad21.html?p=33506#p33506" onclick="prompt('Message #12',this.href); return false;">#12</a></span> 
+									<a class="unread" href="viewtopicad21.html?p=33506#p33506" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>07 Apr 2014 22:51
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Liviu wrote:</cite><blockquote><div><cite>dbenham wrote:</cite>Rightly or wrongly, I've come to the conclusion that letting JScript read environment variables directly is always going to create problems when dealing with extended ASCII codes &gt;127 (0x7F).</div></blockquote>That's odd. You said that the previous version was writing the correct strings to stderr, which means that JScript was receiving the input string correctly, pointing the issue at the for/f on the return path.</div></blockquote>Yes, but in my next post I said that further experiments showed the issue was with FOR /F, not any difference between stderr and stdout. The stderr was not going through FOR /F, so it appeared to be working.<br /><br />I don't see any choice other than FOR /F. I could write the output to a file, but then I need to somehow read the content into a variable. SET /P has major length limititations, so I am back to using FOR /F.<br /><br /><blockquote><div><cite>Liviu wrote:</cite><blockquote><div><cite>dbenham wrote:</cite>This is true for my REPL.BAT utility as well. I have confirmed that use of the S and V options can lead to incorrect results with REPL.BAT.</div></blockquote>Just curious, what's a failure case for S? I haven't tested it in any depth, but the example in the P.S. of my previous post worked correctly.</div></blockquote>I simply put some extended ASCII in a variable, and then did a REPL with S, redirecting output to a file. I then read the content back into a variable using SET /P, and got a different value than my original.<br /><br /><blockquote><div><cite>Liviu wrote:</cite><blockquote><div><cite>dbenham wrote:</cite>I now use SET to write the value of the source variable and pipe the result into JScript.</div></blockquote>Piping 'set' reduces the input to the active codepage upfront, before JScript ever sees it. I assume it works from there on, but it's not possible to catch codepage-violation errors without some checking done on the batch side of the code prior to calling JScript. For example, the following passes a string that's not valid in either codepage...</div></blockquote>Yes, that is exactly my intent. REPLVAR only works properly if the before and after is within the active code page. I am at a loss how to improve it any more, given that batch inherently does not work well with environment variables containing content that does not map to the active code page.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p33507" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33507">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistcb12.html?mode=viewprofile&amp;u=1621" class="username">carlos</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchda66.html?author_id=1621&amp;sr=posts">472</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 20 Aug 2010 13:57</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Chile</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact carlos">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact carlos</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="https://web.archive.org/web/20180902091521/http://consolesoft.com/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33507">
+
+						<h3 ><a href="#p33507">Re: REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf637-2.html?mode=quote&amp;f=3&amp;p=33507" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9dfe.html?p=33507#p33507" onclick="prompt('Message #13',this.href); return false;">#13</a></span> 
+									<a class="unread" href="viewtopic9dfe.html?p=33507#p33507" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistcb12.html?mode=viewprofile&amp;u=1621" class="username">carlos</a></strong> &raquo; </span>07 Apr 2014 23:50
+			</p>
+			
+			
+			
+			<div class="content">Dave what about not using for /f and create a temp file like this:<br /><br />temp.cmd<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;var=content&quot;<br /></code></pre></div><br /><br />and call it from replvar.bat</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p33508" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33508">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche861.html?author_id=3077&amp;sr=posts">470</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Jan 2012 21:24</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33508">
+
+						<h3 ><a href="#p33508">Re: REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf574.html?mode=quote&amp;f=3&amp;p=33508" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1fc1.html?p=33508#p33508" onclick="prompt('Message #14',this.href); return false;">#14</a></span> 
+									<a class="unread" href="viewtopic1fc1.html?p=33508#p33508" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a></strong> &raquo; </span>08 Apr 2014 00:08
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>dbenham wrote:</cite><blockquote><div><cite>Liviu wrote:</cite><blockquote><div><cite>dbenham wrote:</cite>Rightly or wrongly, I've come to the conclusion that letting JScript read environment variables directly is always going to create problems when dealing with extended ASCII codes &gt;127 (0x7F).</div></blockquote>That's odd. You said that the previous version was writing the correct strings to stderr, which means that JScript was receiving the input string correctly, pointing the issue at the for/f on the return path.</div></blockquote>Yes, but in my next post I said that further experiments showed the issue was with FOR /F, not any difference between stderr and stdout. The stderr was not going through FOR /F, so it appeared to be working.</div></blockquote>OK, we agree on that point. But then, piping 'set' instead of reading the variable in JScript - like v1.2 does - does not really help with anything. On the contrary, it &quot;truncates&quot; the string to the active codepage before JScript even sees it, thus denying it any chance to work correctly with out-of-codepage characters, or at least attempt to catch and return an error in those cases.<br /><br /><blockquote><div><cite>dbenham wrote:</cite>I don't see any choice other than FOR /F. I could write the output to a file, but then I need to somehow read the content into a variable. SET /P has major length limititations, so I am back to using FOR /F.</div></blockquote>IMHO this is the crux of the issue. Leaving aside JScript and regex, the basic problem here is that a child process (cscript) has a string value that the parent (batch) needs to capture in a variable. For all I know, there is no portable and unicode-safe solution to this problem. It can be partially solved with temp files in the active codepage (all Windows versions - but corrupts out-of-codepage characters), or it can be partially solved with a UTF16-LE temp file (Unicode safe, using the technique in my p.s. above plus patches to deal with the ASCII poison characters - but that only works in Win7+, not XP). I don't know that it can be done both Unicode-safe and XP-compatible, though I'd be more than happy to be proven wrong <img class="smilies" src="images/smilies/icon_wink.gif" alt=";-)" title="Wink" /><br /><br /><blockquote><div><cite>dbenham wrote:</cite><blockquote><div><cite>Liviu wrote:</cite>Just curious, what's a failure case for S? I haven't tested it in any depth, but the example in the P.S. of my previous post worked correctly.</div></blockquote>I simply put some extended ASCII in a variable, and then did a REPL with S, redirecting output to a file. I then read the content back into a variable using SET /P, and got a different value than my original.</div></blockquote>Redirecting to a file saves 8-bit text in the active codepage, unless you run 'cmd /u' or 'cscript //u', which could well explain the discrepancy. My test run in the previous post seemed to be working correctly. I can retest if you give me a specific example.<br /><br /><blockquote><div><cite>dbenham wrote:</cite><blockquote><div><cite>Liviu wrote:</cite>For example, the following passes a string that's not valid in either codepage...</div></blockquote>Yes, that is exactly my intent. REPLVAR only works properly if the before and after is within the active code page.</div></blockquote>To be clear, I don't have any issue at all with code relying on known, documented assumptions. And I wouldn't raise a question if replVar was restricted to plain ASCII - after all, having regex work even on just the ASCII subset of characters is a nice useful feature in itself. Still, the &quot;within the active code page&quot; part is too vague from a user's standpoint. Some restrictions, such as &quot;no control characters, or embedded quotes&quot; are easy to satisfy when, for example, the string is a filename and the user knows it can't contain either. But the casual user won't know what &quot;within the active code page&quot; even means, and if they do, they have no easy way to check whether an arbitrary string (or filename) is compliant. That leaves a user calling replVar get back a result with no indication whether it's correct, or just a silent failure.<br /><br />Liviu<br /><br />P.S. <blockquote><div><cite>carlos wrote:</cite>Dave what about not using for /f and create a temp file like this:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;var=content&quot;</code></pre></div>and call it from replvar.bat</div></blockquote>For the temp file to be call'able as a batch, it needs to be an 8-bit text file. Down-converting Unicode text to 8-bit encoding is lossy, and such a temp batch file would be subject to all the same limitations as Dave's code itself.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p33509" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile33509">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistcb12.html?mode=viewprofile&amp;u=1621" class="username">carlos</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchda66.html?author_id=1621&amp;sr=posts">472</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 20 Aug 2010 13:57</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Chile</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact carlos">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact carlos</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="https://web.archive.org/web/20180902091521/http://consolesoft.com/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content33509">
+
+						<h3 ><a href="#p33509">Re: REPLVAR.BAT - regex search and replace for variables</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting6edd.html?mode=quote&amp;f=3&amp;p=33509" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9867.html?p=33509#p33509" onclick="prompt('Message #15',this.href); return false;">#15</a></span> 
+									<a class="unread" href="viewtopic9867.html?p=33509#p33509" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistcb12.html?mode=viewprofile&amp;u=1621" class="username">carlos</a></strong> &raquo; </span>08 Apr 2014 01:00
+			</p>
+			
+			
+			
+			<div class="content">Liviu: but cmd support hold unicode text in the variables? in both modes (script/ interactive) ?<br />I did a investigation here:<br /><a href="viewtopic3dab.html?f=3&amp;t=5500" class="postlink">http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5500</a></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting66b5.html?mode=reply&amp;f=3&amp;t=5492" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic226f-2.html?f=3&amp;t=5492&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5492">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			33 posts
+							<ul>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopiccff0.html?f=3&amp;t=5492&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopic22e3.html?f=3&amp;t=5492&amp;start=30" role="button">3</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopiccff0.html?f=3&amp;t=5492&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cronc6bf.gif?cron_type=cron.task.text_reparser.user_signature" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5492 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:01:46 GMT -->
+</html>

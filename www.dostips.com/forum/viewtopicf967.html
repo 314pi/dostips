@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2518&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:43:57 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Macros with parameters appended - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Macros with parameters appended</h2>
+		<p><a href="viewtopic1ca9.html?f=3&amp;t=2518">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=2518</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Re: Macros with parameters appended</h3>
+				<div class="date">Posted: <strong>12 Dec 2011 07:46</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Ok, it's obvious: I didn't test it before  <img class="smilies" src="images/smilies/icon_sad.gif" alt=":(" title="Sad" /> <br />But also that the brackets are unbalanced <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br />That's the test against newbies  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br /><br />It should be<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set LF=^<br /><br /><br />set ^&quot;\n=^^^%LF%%LF%^%LF%%LF%^^&quot;<br />set $SomeMacro=for /L %%n in (1 1 2) do if %%n==2 (%\n%<br />&nbsp; &nbsp; &nbsp; set argv%\n%<br />&nbsp; &nbsp; &nbsp; for /f &quot;delims=&quot; %%r in (&quot;!argv!&quot;) do endlocal^&amp; echo.set &quot;%%~3=%%~r&quot; %\n%<br />) ELSE setlocal enableDelayedExpansion ^&amp; echo ProofOfconcept is showed only once %%n ^&amp; set argv=,<br /><br />%$SomeMacro% a,b,c<br /></code></pre></div><br /><br /><blockquote><div><cite>Output wrote:</cite>ProofOfconcept is showed only once 1<br />argv=, a,b,c<br />set &quot;%~3=, a,b,c&quot;<br /></div></blockquote><br /><br />jeb</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Macros with parameters appended</h3>
+				<div class="date">Posted: <strong>12 Dec 2011 07:53</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">'<br />I see, but to get oopsy at the bottom you still need bracket <img class="smilies" src="images/smilies/icon_sad.gif" alt=":(" title="Sad" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />set LF=^<br /><br /><br />set ^&quot;\n=^^^%LF%%LF%^%LF%%LF%^^&quot;<br />set $SomeMacro=for /L %%n in (1 1 2) do if %%n==2 (%\n%<br />&nbsp; &nbsp; &nbsp; set argv%\n%<br />&nbsp; &nbsp; &nbsp; for /f &quot;delims=&quot; %%r in (&quot;!argv!&quot;) do endlocal^&amp; echo.set &quot;%%~3=%%~r&quot; %\n%<br />) ELSE setlocal enableDelayedExpansion ^&amp; echo ProofOfconcept is showed only once %%n ^&amp; set argv=,<br /><br />%$SomeMacro% a,b,c &amp;echo.oopsy<br /><br />pause<br />exit<br /></code></pre></div><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ProofOfconcept is showed only once 1<br />oopsy<br />argv=, a,b,c<br />set &quot;%~3=, a,b,c &quot;<br />Druk op een toets om door te gaan. . .<br /></code></pre></div><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />set LF=^<br /><br /><br />set ^&quot;\n=^^^%LF%%LF%^%LF%%LF%^^&quot;<br />set $SomeMacro=for /L %%n in (1 1 2) do if %%n==2 (%\n%<br />&nbsp; &nbsp; &nbsp; set argv%\n%<br />&nbsp; &nbsp; &nbsp; for /f &quot;delims=&quot; %%r in (&quot;!argv!&quot;) do endlocal^&amp; echo.set &quot;%%~3=%%~r&quot; %\n%<br />) ELSE setlocal enableDelayedExpansion ^&amp; echo ProofOfconcept is showed only once %%n ^&amp; set argv=,<br /><br />( %$SomeMacro% a,b,c ) &amp;echo.oopsy<br /><br />pause<br />exit<br /></code></pre></div><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ProofOfconcept is showed only once 1<br />argv=, a,b,c<br />set &quot;%~3=, a,b,c &quot;<br />oopsy<br />Druk op een toets om door te gaan. . .<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Macros with parameters appended</h3>
+				<div class="date">Posted: <strong>12 Dec 2011 21:55</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><blockquote><div><cite>jeb wrote:</cite>Welcome Aacini to the expert discussions <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br /><br />Thanks, jeb. <br /><br /><blockquote><div><cite>Aacini wrote:</cite>Because this trick use textual substitution of whichever text placed after the macro, if another &amp; COMMAND is placed after macro params, that command will also be carried into the for body and hence also executed 2 times:<br />[...]<br />The only way to avoid this effect is isolating the macro and parameters from the rest of the line by enclosing they in parentheses, as Ed indicated.</div></blockquote><br />Did I said that I love to disprove such declarations <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" />  <img class="smilies" src="images/smilies/icon_cool.gif" alt="8)" title="Cool" /> <br /><br />I simply forgot to post the solution for this<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set $SomeMacro=for /L %%n in (1 1 2) do if %%n==2 (%\n%<br />&nbsp; &nbsp;&nbsp; &nbsp;rem *** MACRO Content<br />&nbsp; &nbsp;&nbsp; &nbsp;for /f &quot;delims=&quot; %%r in (&quot;!result!&quot;) do endlocal^&amp; set &quot;%%~3=%%~r&quot; %\n%<br />&nbsp; &nbsp;) %\n%<br />) ELSE setlocal enableDelayedExpansion ^&amp; echo ProofOfconcept is showed only once %%n ^&amp; set argv=,<br /></code></pre></div><br />In this case it is really obvious, isn't it?<br /><br />jeb</div></blockquote><br />Although you are right, we are talking about two different things.<br /><br />All my description is based on your first example, where the FOR command have parentheses to enclose its body:<br /><blockquote><div><cite>jeb wrote:</cite>The main idea is this:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR/L %%n in (1,1,2) DO (<br />&nbsp; if %%n==2 ( // Now we can access the parameters<br />&nbsp; &nbsp; &nbsp;// get the parameters<br />&nbsp; &nbsp; &nbsp;// run the macro<br />&nbsp; )<br />) &amp; set parameters=<br /></code></pre></div><br /><br />And here is a working sample...<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&#91;...&#93;<br />set $strLen=for /L %%n in (1 1 2) do ( %\n%<br />&nbsp; &nbsp;if %%n==2 (%\n%<br />&#91;...&#93;<br /></code></pre></div><br /><br />jeb</div></blockquote><br />When dbenham noted that ...<br /><blockquote><div><cite>jeb wrote:</cite><blockquote><div><cite>dbenham wrote:</cite>Two minor inconveniences: [...]<br /><br />2) Any command added on the same line after the macro call will be executed twice</div></blockquote><br /><br />The solution for these two points is obviously  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><br />- Do the set argv and the rest only if %%n==1<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&#91;...&#93;<br />set argv=original<br />set $strLen=for /L %%n in (1 1 2) do if %%n==2 (%\n%<br />&#91;...&#93;<br /></code></pre></div><br />[...]<br />jeb</div></blockquote><br />... you &quot;forgot&quot; to mention that, in order for this method to work, the parentheses of the FOR body <strong class="text-strong">MUST</strong> be deleted <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" />  I didn't realized that these parentheses were removed until now. This change mades my description about this problem totally nonsense, including the FOR with 3 IF's example. I must modify these parts in my explanation... <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> <br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Macros with parameters appended</h3>
+				<div class="date">Posted: <strong>15 Dec 2011 22:46</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">jeb: I modified my original answer as I said. Perhaps you would like to review it looking for a new declaration to disprove  <img class="smilies" src="images/smilies/icon_neutral.gif" alt=":|" title="Neutral" />  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Macros with parameters appended</h3>
+				<div class="date">Posted: <strong>18 Dec 2011 17:01</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">@Aacini: The explanation looks fine  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br /><br />Currently I haven't an idea to solve the &amp; append command problem, so the command will be executed after the rest of the macro.<br /><br />Pipes have the required precedence, but they seem to be unsuitable for a solution here.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>macro .... | set argv=&nbsp; &nbsp;.... &amp; echo This executes at the end<br />( echo 1 &amp; echo 2 ) | more &amp; echo end</code></pre></div><br /><br />jeb</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Macros with parameters appended</h3>
+				<div class="date">Posted: <strong>27 Dec 2011 00:28</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><blockquote><div><cite>Ed Dyreen wrote:</cite>And while you're at it, how about&#058;<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set /a $var=%StrLen% ( &quot;I wish this worked&quot; ) + %random%<br /></code></pre></div> Now that would be really impressive. <img class="smilies" src="images/smilies/icon_lol.gif" alt=":lol:" title="Laughing" /></div></blockquote><br /><br />Yes, it can be done now this way:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;string=I wish this worked&quot;<br />%set/a% $var=StrLen(string)+%random%<br /></code></pre></div><br />See my SET/A macro at <a href="viewtopic537b.html?t=2704" class="postlink">this topic</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Macros with parameters appended</h3>
+				<div class="date">Posted: <strong>28 Jul 2016 19:39</strong></div>
+				<div class="author">by <strong>mirrormirror</strong></div>
+				<div class="content">I'm working to get my head around macros and just wanted to ask if this thread contained the most recent developments / syntax conventions that you guys use.  In particular, I'm relying on this post: <a href="viewtopic1ca9.html?f=3&amp;t=2518#p12045" class="postlink">http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=2518#p12045</a> and hoping the info. is up to date.<br /><br />I've read through newer threads discussing techniques to add comments to macros but they seemed to use the same conventions as discussed here.<br /><br />I'm trying to write a couple of macros and just want to use the latest and greatest methods if possible.<br /><br />btw: a special thanks to Aacini for taking the time to document this in detail.  A question on your post though... Was there supposed to be a code example in here - right before the &quot;Second Part:...&quot; ?<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>However, because this method use textual substitution of whichever text placed after the macro, if another &amp; COMMAND is placed after macro params, then that command also belongs to ELSE part and will also be executed before the macro, that is an unexpected behavior. The only way to avoid this effect is isolating the macro and parameters from the rest of the line by enclosing they in parentheses.<br /><br /><br /><br />Second part: An additional contribution.<br /><br />When we define a macroFuncWithParams variable with this format, we may duplicate the original macroFunc code in the macro execution part, taking the parameters from argv variable (as in jeb example above); or we may use the original macroFunc code over argv variable in a nested macro invocation:</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Macros with parameters appended</h3>
+				<div class="date">Posted: <strong>29 Jul 2016 16:56</strong></div>
+				<div class="author">by <strong>mirrormirror</strong></div>
+				<div class="content">Also, Aacini, when I try your code from this post: <strong class="text-strong"><a href="viewtopic1ca9.html?f=3&amp;t=2518#p12045" class="postlink">http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=2518#p12045</a></strong> it doesn't work - i.e. my output differs from what you indicated in your post:<br />your code:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />cls<br />setlocal DisableDelayedExpansion<br />set LF=^<br /><br /><br /><br />::Above 2 blank lines are required - do not remove<br />set ^&quot;\n=^^^%LF%%LF%^%LF%%LF%^^&quot;<br /><br /><br />set strLen=(%\n%<br />&nbsp; &nbsp;setlocal enableDelayedExpansion%\n%<br />&nbsp; &nbsp;set &quot;str=A!%%~b!&quot;%\n%<br />&nbsp; &nbsp;set &quot;len=0&quot;%\n%<br />&nbsp; &nbsp;for /l %%A in (12,-1,0) do (%\n%<br />&nbsp; &nbsp; &nbsp; set /a &quot;len|=1&lt;&lt;%%A&quot;%\n%<br />&nbsp; &nbsp; &nbsp; for %%B in (!len!) do if &quot;!str:~%%B,1!&quot;==&quot;&quot; set /a &quot;len&amp;=~1&lt;&lt;%%A&quot;%\n%<br />&nbsp; &nbsp;)%\n%<br />&nbsp; &nbsp;for %%v in (!len!) do endlocal^&amp;if &quot;%%~a&quot; neq &quot;&quot; (set &quot;%%~a=%%v&quot;) else echo %%v%\n%<br />)<br /><br /><br />set let=for %%n in (1 2) do if %%n==2 (%\n%<br />&nbsp; &nbsp; &nbsp; for /F &quot;tokens=1-4 delims==(,) &quot; %%1 in (&quot;!argv!&quot;) do (%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo -------------------------- %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set macroFunc=%%1%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo macroFunc=!macroFunc! %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set param1=%%2%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo param1=!param1! %\n%<br />REM&nbsp; &nbsp; &nbsp; set param2=%%3%\n%<br />REM&nbsp; &nbsp; &nbsp; echo param2=!param2! %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set resultVar=%%3%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo resultVar=!resultvar! %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;call !macroFunc! !param1! !param2! resultValue%\n%<br />REM&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for /F &quot;tokens=1-26&quot; %%a in (&quot;!param1! !param2! resultValue&quot;) do (%\n%<br />REM&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;nested call %%%%macroFunc%%%% %\n%<br />REM&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for %%v in (!resultValue!) do endlocal^&amp;set &quot;%%1=%%v&quot;%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo -------------------------- %\n%<br />&nbsp; &nbsp; &nbsp; )%\n%<br />&nbsp; &nbsp;) else setlocal enableDelayedExpansion ^&amp; set argv=<br /><br /><br />set &quot;testString=this has a length of 23&quot;<br />echo Test string is (&quot;%testString%&quot;)<br />echo/<br /><br />echo Original (FOR /F ...) strLen macro invocation:<br />for /F &quot;tokens=1-26&quot; %%a in (&quot;testString forResult&quot;) do %strLen%<br />echo Original FOR macro invocation result is %forResult%<br />echo/<br /><br />echo Original &quot;CALL :strLen testString subResult&quot; subroutine invocation:<br />call :strLen testString subResult=<br />echo Original CALL subroutine invocation result is %subResult%<br />echo/<br /><br />echo %%Let%% letResult=:strLen(testString) invocation:<br />%let% letResult=:strLen(testString)<br />echo LET letResult=strLen(testString) result is %letResult%<br /><br />goto :EOF<br /><br /><br />:strLen string resultVar=<br />setlocal enableDelayedExpansion<br />set &quot;str=0!%~1!&quot;<br />set &quot;len=0&quot;<br />for /l %%A in (12,-1,0) do (<br />&nbsp; &nbsp;set /a &quot;len|=1&lt;&lt;%%A&quot;<br />&nbsp; &nbsp;for %%B in (!len!) do if &quot;!str:~%%B,1!&quot;==&quot;&quot; set /a &quot;len&amp;=~1&lt;&lt;%%A&quot;<br />)<br />for %%v in (!len!) do endlocal&amp;if &quot;%~2&quot; neq &quot;&quot; (set &quot;%~2=%%v&quot;) else echo %%v<br />exit /B<br /></code></pre></div> Your Output:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Test string is (&quot;this has a length of 23&quot;)<br /><br />Original (FOR /F ...) strLen macro invocation:<br />Original FOR macro invocation result is 23<br /><br />Original &quot;CALL :strLen testString subResult&quot; subroutine invocation:<br />Original CALL subroutine invocation result is 23<br /><br />%Let% letResult=:strLen(testString) invocation:<br />--------------------------<br />macroFunc=:strLen<br />param1=testString<br />resultVar=letResult<br />--------------------------<br />LET letResult=strLen(testString) result is 23</code></pre></div><br />My Output:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Test string is (&quot;this has a length of 23&quot;)<br /><br />Original (FOR /F ...) strLen macro invocation:<br />Original FOR macro invocation result is<br /><br />Original &quot;CALL :strLen testString subResult&quot; subroutine invocation:<br />Original CALL subroutine invocation result is 1<br /><br />%Let% letResult=:strLen(testString) invocation:<br />--------------------------<br />macroFunc=letResult<br />param1=:strLen<br />resultVar=testString<br />'letResult' is not recognized as an internal or external command,<br />operable program or batch file.<br />--------------------------<br />LET letResult=strLen(testString) result is</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Macros with parameters appended</h3>
+				<div class="date">Posted: <strong>31 Jul 2016 05:31</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Hi mirrormirror,<br /><br />yes, I suppose it's more or less the <em class="text-italics">state of art</em> for macro programming.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Macros with parameters appended</h3>
+				<div class="date">Posted: <strong>05 Aug 2018 19:49</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">The \n value used to create multi-line macros <a href="viewtopic3740.html?f=3&amp;t=8769&amp;start=15#p57691" class="postlink">can be greatly simplified as ^&lt;LF&gt; instead of ^&lt;LF&gt;&lt;LF&gt;^</a>.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(set \n=^^^
+%= This creates an escaped Line Feed - DO NOT ALTER =%
+)
+</code></pre></div>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Macros with parameters appended</h3>
+				<div class="date">Posted: <strong>06 Aug 2018 11:32</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Do you remember what the caret at the end was good for if you read that, Dave?<br>
+<a href="viewtopicbcaf.html?f=3&amp;t=1827#p7358" class="postlink">viewtopic.php?f=3&amp;t=1827#p7358</a><br>
+I tried to follow that old thread but with all these double and triple escapings I'm not able to recognize it anymore  <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"> <br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Macros with parameters appended</h3>
+				<div class="date">Posted: <strong>06 Aug 2018 12:19</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Sure.<br>
+<br>
+The old \n was defined as ^^^&lt;LF&gt;&lt;LF&gt;^&lt;LF&gt;&lt;LF&gt;^^<br>
+<br>
+After parsing the definition, the actual stored value is ^&lt;LF&gt;&lt;LF&gt;^<br>
+<br>
+When included at the end of a macro definition line, the ^&lt;LF&gt;&lt;LF&gt; inserts a single &lt;LF&gt; into the macro definition, <strong class="text-strong"><span style="color: #0000FF">and the trailing ^ escapes the (&lt;CR&gt;)&lt;LF&gt; at the end of the source code line</span></strong> so that the next source line is included in the definition. The first character of that next line is escaped during the definition of the macro -  But that typically doesn't matter.<br>
+<br>
+The new \n is defined as ^^^(&lt;CR&gt;)&lt;LF&gt;(&lt;CR&gt;)&lt;LF&gt;<br>
+<br>
+After parsing the definition, the actual stored value is ^&lt;LF&gt;<br>
+<br>
+When included at the end of a macro definition line, the ^&lt;LF&gt; is in front of the (&lt;CR&gt;)&lt;LF&gt; at the end of the source line, which is parsed as a single &lt;LF&gt; that gets inserted into the definition, and the next line is still appended to the definition. This time the first character of the next line is not escaped during the definition - Again, this typically does not matter.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Macros with parameters appended</h3>
+				<div class="date">Posted: <strong>06 Aug 2018 13:10</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic514c.html?p=57695#p57695" data-post-id="57695" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">06 Aug 2018 12:19</div></cite>Again, this typically does not matter.</div></blockquote>
+That's what I wasn't clear anymore <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=":wink:" title="Wink"> I just wanted to make sure there was no exception where escaping the first character would have been required.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Macros with parameters appended</h3>
+				<div class="date">Posted: <strong>06 Aug 2018 15:25</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">No, that was a side effect rather than a goal. We mistakenly thought the \n definition required ^&lt;LF&gt;&lt;LF&gt;, meaning the (&lt;CR&gt;)&lt;LF&gt; at the end of the line would normally terminate the definition. The trailing ^ was just to force the next line to be appended to the definition.<br>
+<br>
+The escaped first character of the next line is only during the definition of the macro. So if the first character of the next line happens to be a special character that normally requires escaping, then the old definition avoids the need to explicitly escape it. The only case I can think of where this makes sense in a macro definition is if you put redirection at the front of a command.<br>
+<br>
+I also often get confused between the escapes in the definition vs the execution of the macro.  <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"> <br>
+In a previous post I think I said there could be an advantage of the new \n, but now I don't see any.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2518&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:43:57 GMT -->
+</html>

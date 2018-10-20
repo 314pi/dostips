@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=360&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:09:02 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support - Page 25</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</h2>
+		<p><a href="viewtopicb16d.html?f=3&amp;t=6044">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6044</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>25</strong> of <strong>27</strong></div>
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.11 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>15 Apr 2018 15:14</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistdecd.html?mode=viewprofile&amp;u=9162">Mordru</a> wrote: <a href="viewtopice823.html?p=56371#p56371" data-post-id="56371" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">15 Apr 2018 07:35</div></cite>
+Hello, I've been using JREPL to encode/decode game data, (I've made an online batch game, but that's beside the point) and I have ran into a problem. People are able to intercept the calling parameters and therefore get my encode/decode table.<br>
+<br>
+Is there any possible way I can copy/paste JREPL into my game code, and then call a subroutine for it within the batch file whenever I need to use it? That way people can't intercept the parameters when calling JREPL?
+</div></blockquote>
+I don't like that concept for a number of reasons.
+<ul>
+<li> JREPL is already quite large for a script - adding it to a complete game script will only increase the issue.</li>
+<li> Putting anything in batch is inherently insecure. Sure, you can obfuscate text within a script, but anyone who really wants to crack the code can easily do so any number of ways, no matter what you do. It should be enough to use minimal encryption (obfuscation) to discourage casual cheating. Anything beyond that seems pointless to me. That is the strategy I use with my batch port of <a href="viewtopic53e0.html?t=4876" class="postlink">Colossal Cave Adventure</a>. And that was easily done with pure batch - no need for a complicated regular expression text processing utility.</li>
+<li> If you are going to use JScript as part of your game, (even if it is embedded within an encryption/decryption utility) you might as well simply write the entire game in JScript. You can easily provide a much richer game experience with a lot less effort. The only reason I used hybrid JScript/batch with JREPL is because I wanted powerful and convenient regular expression text processing for command line and batch environments, and CSCRIPT scripts are inconvenient to call from the command line or a batch script. The batch portion is simply devoted to providing a convenient batch interface. I can't see any such benefit with a self contained game.</li>
+<li> Something just feels wrong about embedding JREPL within some other program - sorry. I don't mind distribution of the complete, stand-alone JREPL.BAT script as part of some larger collection of files, but I prefer to keep the files separate.</li>
+</ul>
+
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.11 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>15 Apr 2018 16:50</strong></div>
+				<div class="author">by <strong>Mordru</strong></div>
+				<div class="content">Thanks for the quick reply... The reason I coded the game in batch is because I mainly work on it at work in my frequent spare time, and notepad is the only program I can use. JREPL is used to encode/decode gamesave data. My batch file is compiled to exe using "Advanced batch file converter" or something along those lines. It does not just place the .bat file in a temp folder and call it, so I am not worried about the bat source code being read.<br>
+<br>
+Do you know any other solution then if I can not call JREPL within the same batch file?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.11 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>18 May 2018 08:14</strong></div>
+				<div class="author">by <strong>floppyh4x</strong></div>
+				<div class="content">I am trying to convert several tab delimited files to commas. I have attached some examples that need to be converted into the following:<br>
+<br>
+Example:<br>
+
+    <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>1122.777.434  M.Q. TER HORST                           10    20     03     AFV    2018-06-30 22   TOETS HOOFD</code></pre></div>
+
+this needs to look like this:<br>
+
+    <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>1122.777.434,M.Q. TER HORST,10,20,03,AFV,2010-06-30,22,TOETS HOOFD</code></pre></div>
+
+in the numbers, the dots need to remain the same, in the customer name, no conversion is needed to comma's. At the end its no problem if theres a comma or a space in between. I have 10.000 of these exactly the same records, different content. I failed to use JREPL because I dont know if those are spaces or tabs. Whenever im selecting white space it looks like spaces. Is there anyone out there willing to help me out of this situation?<br>
+<br>
+Here are more examples of how it could look like:<br>
+
+    <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>    1178.916.332  ZILVEREN PENSIOEN- EN LEVE LANG                40    20     40     SOS    2018-06-30 19   EXPIRATIE GEMENGDE VERZEKERING                                 
+                                                                                                                                                                
+    1178.917.657  J. HUPOIRN ESO                            40    20     50     SOH    2018-06-00 18   EINDE HOOFD TWEE
+                                                                                                                                                                
+    1178.928.446  J.J.K.P. JANSEN                           40    32     02     AFV    2018-06-00 22   TOETS HOOFDEN
+                                                                                                                                                                    
+    1178.928.756  J.G.O. JANSENS                           40    32     02     AFV    2018-06-00 22   TOETS HOOFD     </code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.11 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>22 May 2018 21:17</strong></div>
+				<div class="author">by <strong>Jtpo1983</strong></div>
+				<div class="content">Hi there,<br>
+<br>
+A big thank you to the developer for all your work on JREPL.  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+<br>
+I am having trouble with the pre and post context for /K<br>
+<br>
+Looking at a previous example, can you tell me how I would use pre and post in order to return x number of lines before and after matches?<br>
+<br>
+JREPL search.txt "" /K 0:file /F input.txt &gt; output.txt<br>
+<br>
+I've tried a large number of variations but I haven't had any results returns (whereas the above example does return the line containing the match - which is awesome BTW).<br>
+<br>
+Thank you in advance</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.11 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>08 Jun 2018 14:03</strong></div>
+				<div class="author">by <strong>amitabhob</strong></div>
+				<div class="content">Thanks to you all, the Developer for this impressive utility, and everyone of you, for your constant help &amp; and valuable inputs.<br>
+<br>
+I am very novice in the scripting area, and came across this forum while trying to find a solution for one requirement I have. Advance thanks to you all for your time and any help.<br>
+<br>
+I have a big 300-400mb file, with contents something similar to, what is shown below. <br>
+The need is: <br>
+To replace, Only the 1st 3 characters i.e "ABC" with "00XXXX00-" (excluding quotes), in every line, but, only when, the first 15 chars begin with ABC and ends with DEF. <br>
+If this pattern exists somewhere else in the same line, then, no replacement to be done on the other patterns found.<br>
+<br>
+For example: sampleTest.txt file has below content:<br>
+<strong class="text-strong">ABC123456789DEF</strong>AAAB1R$R36<strong class="text-strong">ABC123456789DEF</strong>-0AAAB123AAAB12EF1TRYU<br>
+ABC1234567891234DEF--0AAAB123A124561AA2AEF34DEF111AATRE&amp;*90<br>
+<strong class="text-strong">ABC671243598DEF</strong>34DEF111AAAB12EF111AAAB12#45*999SAHTYUP-0RRLKU<br>
+<br>
+Expected output of the new file resultFile.txt is:<br>
+<strong class="text-strong">00XXXX00-</strong>123456789DEFAAAB1R$R36<strong class="text-strong">ABC123456789DEF</strong>-0AAAB123AAAB12EF1TRYU<br>
+ABC1234567891234DEF--0AAAB123A124561AA2AEF34DEF111AATRE&amp;*90<br>
+<strong class="text-strong">00XXXX00-</strong>671243598DEF34DEF111AAAB12EF111AAAB12#45*999SAHTYUP-0RRLKU<br>
+<br>
+Note: on 1st line, there were 2 matching patterns, but replacement is done only on the 1st pattern on that line.<br>
+<br>
+I was able to construct the command upto this:<br>
+         type "sampleTest.txt"|jrepl "ABC.........DEF" "00XXXX00-" /B &gt; "resultFile.txt"<br>
+<br>
+With this, I am able to limit search to 1st 15 chars, but, this command will also replace all 15 chars, not just the 1st 3 Chars ABC, which is what I want to fix.<br>
+<br>
+If you can please help, with the right command. Thanks again.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.11 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>08 Jun 2018 15:09</strong></div>
+				<div class="author">by <strong>jpeni</strong></div>
+				<div class="content">Is there a collection of example commands and scripts for JREPL.BAT?<br>
+<br>
+I can find many individual examples of JREPL.BAT and many suggested solutions to<br>
+search and replace questions, but no combined collections that would make it easier<br>
+to understand the many options and functions of JREPL.BAT.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.11 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>09 Jun 2018 23:29</strong></div>
+				<div class="author">by <strong>amitabhob</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistcf83.html?mode=viewprofile&amp;u=9247">amitabhob</a> wrote: <a href="viewtopicc244.html?p=57103#p57103" data-post-id="57103" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">08 Jun 2018 14:03</div></cite>
+Thanks to you all, the Developer for this impressive utility, and everyone of you, for your constant help &amp; and valuable inputs.<br>
+<br>
+I am very novice in the scripting area, and came across this forum while trying to find a solution for one requirement I have. Advance thanks to you all for your time and any help.<br>
+<br>
+I have a big 300-400mb file, with contents something similar to, what is shown below. <br>
+The need is: <br>
+To replace, Only the 1st 3 characters i.e "ABC" with "00XXXX00-" (excluding quotes), in every line, but, only when, the first 15 chars begin with ABC and ends with DEF. <br>
+If this pattern exists somewhere else in the same line, then, no replacement to be done on the other patterns found.<br>
+<br>
+For example: sampleTest.txt file has below content:<br>
+<strong class="text-strong">ABC123456789DEF</strong>AAAB1R$R36<strong class="text-strong">ABC123456789DEF</strong>-0AAAB123AAAB12EF1TRYU<br>
+ABC1234567891234DEF--0AAAB123A124561AA2AEF34DEF111AATRE&amp;*90<br>
+<strong class="text-strong">ABC671243598DEF</strong>34DEF111AAAB12EF111AAAB12#45*999SAHTYUP-0RRLKU<br>
+<br>
+Expected output of the new file resultFile.txt is:<br>
+<strong class="text-strong">00XXXX00-</strong>123456789DEFAAAB1R$R36<strong class="text-strong">ABC123456789DEF</strong>-0AAAB123AAAB12EF1TRYU<br>
+ABC1234567891234DEF--0AAAB123A124561AA2AEF34DEF111AATRE&amp;*90<br>
+<strong class="text-strong">00XXXX00-</strong>671243598DEF34DEF111AAAB12EF111AAAB12#45*999SAHTYUP-0RRLKU<br>
+<br>
+Note: on 1st line, there were 2 matching patterns, but replacement is done only on the 1st pattern on that line.<br>
+<br>
+I was able to construct the command upto this:<br>
+         type "sampleTest.txt"|jrepl "ABC.........DEF" "00XXXX00-" /B &gt; "resultFile.txt"<br>
+<br>
+With this, I am able to limit search to 1st 15 chars, but, this command will also replace all 15 chars, not just the 1st 3 Chars ABC, which is what I want to fix.<br>
+<br>
+If you can please help, with the right command. Thanks again.
+</div></blockquote>
+
+Seems like, I was able to find the solution for this. This is what I have done:<br>
+         <strong class="text-strong">jrepl "^ABC(.{8}.DEF.*)" "'00XXXX00-'+$1" /j /f sampleTest.txt /o resultFile.txt</strong><br>
+<br>
+This seems to be serving my purpose. Thanks again !!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.11 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>15 Jun 2018 03:26</strong></div>
+				<div class="author">by <strong>mrshiseido</strong></div>
+				<div class="content">Hi Dave, <br>
+<br>
+I would like to make use of the JREPL to search for a series of strings (PC mac address, seperated by .) on each line in a text file throughout a list of data text files (4Mb) under particular folder (i.e. c:\test), count the total no of matches for each string once from those data text files, then write the total count for each string in a separate text file, and if possible, put the total count next to the related string that have been searched in the output text file. <br>
+<br>
+I am new to dos batch &amp; script and been trying my best to look around for the best tools, I came across JREPL &amp; want to make use of it. Your assistance &amp; prompt feedback will be highly appreciated. Thanks in advance.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.13 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>18 Jul 2018 09:42</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><span style="font-size: 150%; line-height: normal"><strong class="text-strong">Here is version 7.<span style="color: #0000FF">13</span></strong></span>
+<div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file06d3.php?id=375">JREPL7.13.zip</a></dt>
+			<dd><em>Downloaded 760 times in 3 months from the main release post while v7.13 was the current release</em></dd>			<dd>(27.12 KiB) Downloaded 44 times</dd>
+		</dl>
+		
+		
+			</div>
+
+<br>
+<span style="font-size: 150%; line-height: normal"><strong class="text-strong">Summary of changes</strong></span>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>prompt&gt;jrepl /?history
+
+    2018-07-19 v7.13: Bug fix - /INC and /EXC regex failed to match any
+                      line that immediately followed a prior block.
+                      Added ADO code to create XBYTES.DAT in case CERTUTIL is
+                      missing.
+    2018-07-18 v7.12: Fixed XBYTES.DAT creation cleanup bugs, and improved docs
+ &lt;truncated...&gt;
+</code></pre></div>
+
+<span style="font-size: 150%; line-height: normal"><strong class="text-strong">1) /INC and /EXC bug fix</strong></span><br>
+<br>
+A regular expression /INC or /EXC block would fail to match a line if it immediately followed a prior block. As a trivial example, the <strong class="text-strong"><span style="color: #0000FF">/INC "/^/"</span></strong> option should specify a line block that matches all lines, but the bug was causing every other line to be skipped.<br>
+<br>
+I'm shocked and embarrassed that this nasty bug was not detected sooner. It was easy to fix by simply moving a couple lines of code.<br>
+<br>
+<span style="font-size: 150%; line-height: normal"><strong class="text-strong">2) Added ADO code to create XBYTES.DAT in case CERTUTIL is missing</strong></span><br>
+<br>
+The /XSEQ option utilizes an XBYTES.DAT file to properly map a given \xnn escape sequence to the correct Unicode code point that generates the desired byte value, depending on the character set. JREPL automatically tries to create the XBYTES.DAT using CERTUTIL, but some XP machines do not have CERTUTIL.<br>
+<br>
+Version 7.13 adds the ability to create the file using ADO when CERTUTIL is missing, thanks to some nice code provided by Steffen (aGerman)<br>
+<br>
+It is possible that an XP machine may be missing both CERTUTIL and ADO, in which case XBYTES.DAT still cannot be created, and \xnn defaults to the Windows-1252 character set for its map.<br>
+<br>
+<span style="font-size: 150%; line-height: normal"><strong class="text-strong">3) Fixed XBYTES.DAT creation cleanup</strong></span><br>
+<br>
+During creation of XBYTES.DAT, Versions prior to v7.12 were sometimes leaving behind an intermediate XBYTES.HEX file that should have been deleted. Version 7.12 fixed this minor bug.<br>
+<br>
+Note that the bug fix will not remove any already existing XBYTES.HEX that was left behind by an earlier version. But the file is small, out of the way, and harmless.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.12 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>18 Jul 2018 10:52</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Would that be a way to work around a missing certutil.exe?<br>
+<br>
+*.js
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>var Stream=WScript.CreateObject('ADODB.Stream'),
+    Node=WScript.CreateObject('Microsoft.XMLDOM').createElement('e');
+Node.dataType='bin.base64';
+Node.text='AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4v'
++ 'MDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5f'
++ 'YGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6P'
++ 'kJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/'
++ 'wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v'
++ '8PHy8/T19vf4+fr7/P3+/w==';
+Stream.Type=1;
+Stream.Open();
+Stream.Write(Node.nodeTypedValue);
+Stream.SaveToFile('all.bin');
+</code></pre></div>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.12 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>18 Jul 2018 12:18</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">That works great on my Win 10 machine. I like the code <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy">  <br>
+<br>
+But I have no way to test on XP. I suppose it depends on what ADO versions it works on.<br>
+<br>
+I didn't think ADO was standard on any version of Windows, let alone XP. So I think there still could be some XP machines where it could fail.<br>
+<br>
+I'm not overly concerned if some XP users do not have access to the XBYTES.DAT functionality. The XBYTES.DAT is only needed when working with escape sequences for byte codes greater than 127, and Microsoft dropped support for XP years ago.<br>
+<br>
+But if someone can verify that your code works on XP, and reassure me that ado is most likely going to be present on XP, then I think the code would be a great addition.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.12 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>18 Jul 2018 16:06</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I can't verify that it works on XP but I remember that I used ADO streams on XP back then. The stream object was introduced with ADO 2.5 (Windows 2000 already).<br>
+<a href="https://docs.microsoft.com/en-us/sql/ado/guide/ado-history?view=sql-server-2017" class="postlink">https://docs.microsoft.com/en-us/sql/ad ... erver-2017</a><br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.13 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>19 Jul 2018 13:53</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Great news <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"><br>
+<br>
+I found a StackOverflow user that was able to confirm that his XP machine that was missing CERTUTIL was able to run the ADO code to create XBYTES.DAT.<br>
+<br>
+So I incorporated the code into JREPL and updated the <a href="viewtopic6da9.html?f=3&amp;t=6044&amp;start=360#p57477" class="postlink">prior release post</a> to v7.13.<br>
+<br>
+I also squashed an unrelated nasty bug concerning /INC and /EXC.<br>
+<br>
+Thanks for your help Steffen.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.13 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>19 Jul 2018 15:12</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">You're wellcome Dave <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"> <br>
+<br>
+I still have a suggestion (and sorry that I didn't mention that in the first place)...<br>
+Now that you know it works on XP while you also know that certutil might not be available - why not <em class="text-italics">only </em>use the code that will work in each case?<br>
+Furthermore: You're struggling to find the right place where to save the file. Then you write a temporary file with hex codes that you need for certutil. Then you need certutil to create the binary file. Then you have to remove the temporary file. Then you have to read the file into the stream object... That sounds all quite complicated and eventually might waste too much time.<br>
+Using just the few lines of JScript you already have the binary content in a stream object. Just keep it and use it whenever you need. What do you think, is it still worth to write the XBYTES.DAT file for future use?<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT v7.13 - regex text processor now with Unicode and XRegExp support</h3>
+				<div class="date">Posted: <strong>19 Jul 2018 16:54</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Yes, I thought about that. But I was influenced by my memory of reading something about ADO not being native to any base install of Windows, regardless of version. As far as I know, it is possible to be missing from any version of Windows. That being said, I think it is available to most Windows installs. Contrast that with CERTUTIL that is native to all versions of Windows except XP, which is no longer supported. So I decided it is better to preserve both techniques to maximize the likelihood of creation of the file.<br>
+<br>
+As long as XBYTES.DAT has been created once, the code to create it is never executed again, so I'm not too worried about the delay. And the CERTUTIL code is pretty fast any way, though certainly not as fast as the ADO. The only thing that concerns me is the rare machine where neither is available, and the short delay is present every time you run JREPL. But I don't think I should worry too much about operating systems that have long ago lost MS support. At least the utility runs cleanly there, albeit a bit slower.<br>
+<br>
+If I see some documentation that ADO can be expected to be on all machines, then I will probably remove the CERTUTIL code.<br>
+<br>
+<br>
+Dave</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>25</strong> of <strong>27</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=360&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:09:02 GMT -->
+</html>

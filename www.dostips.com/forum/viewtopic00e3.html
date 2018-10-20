@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5702 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:03:09 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Safely parse nearly any CSV with parseCSV.bat - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic6cdd-2.html?t=5702">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic00e3.html?f=3&amp;t=5702">Safely parse nearly any CSV with parseCSV.bat</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting1674.html?mode=reply&amp;f=3&amp;t=5702" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopice014.html?f=3&amp;t=5702&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="5702" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			9 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p35272" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35272">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35272">
+
+						<h3 class="first"><a href="#p35272">Safely parse nearly any CSV with parseCSV.bat</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting1c6d.html?mode=quote&amp;f=3&amp;p=35272" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6d0c.html?p=35272#p35272" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopic6d0c.html?p=35272#p35272" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>19 Jun 2014 00:15
+			</p>
+			
+			
+			
+			<div class="content">It is fairly common that someone wants to parse CSV using FOR /F. This is a simple task if you know all columns are populated, and there are no commas, newlines, or quotes within values. Assume there are 4 columns:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />for /f &quot;tokens=1-4 delims=,&quot; %%A in (test.csv) do (<br />&nbsp; echo ----------------------<br />&nbsp; echo A=%%~A<br />&nbsp; echo B=%%~B<br />&nbsp; echo C=%%~C<br />&nbsp; echo D=%%~D<br />&nbsp; echo(<br />)<br /></code></pre></div><br />But things become more difficult if any of the following conditions occur:<br /><br />1 - Values may be empty, with consecutive commas. FOR /F treats consecutive delimiters as one, so it will throw off the column assignment.<br /><br />2 - Quoted values may contain commas. FOR /F will incorrectly treat a quoted comma as a column delimiter.<br /><br />3 - Quoted values may contain newlines. FOR /F will break the line at the newline and incorrectly treat the one row as two.<br /><br />4 - Quoted values may contain paired quotes that represent one quote. For example, &quot;He said, &quot;&quot;Hello there&quot;&quot;. A method is needed to convert &quot;&quot; into &quot;.<br /><br />Then there is a secondary problems that can crop up if delayed expansion is enabled.<br /><br />5 - A FOR variable %%A will be corrupted if it contains ! (or sometimes ^) if delayed expansion is enabled when the variable is expanded.<br /><br />There are fairly easy solutions for some of these issues, but solving all of them is extremely difficult (and slow) with pure batch.<br /><br />I have written a hybrid JScript/batch utility called parseCSV.bat that makes it easy and relatively efficient to correctly parse nearly any CSV file with FOR /F.<br /><br /><strong class="text-strong"><em class="text-italics"><span style="color: #0000BF">EDIT 2017-02-19: Updated to version 1.1 to enable CSV transformations for purposes other than parsing by FOR /F. Also now supports escape sequences.</span></em></strong><br /><strong class="text-strong"><em class="text-italics"><span style="color: #008040">EDIT 2017-02-20: Updated to version 1.2 to fix a bug concerning /E with /Q:N, added the /U option, and improved performance</span></em></strong><br /><br /><strong class="text-strong">parseCSV.bat</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (@X)==(@Y) @end /* harmless hybrid line that begins a JScrpt comment<br /><br />::************ Documentation ***********<br />::parseCSV.bat version 1.2<br />:::<br />:::parseCSV&nbsp; &#91;/option&#93;...<br />:::<br />:::&nbsp; Parse stdin as CSV and write it to stdout in a way that can be safely<br />:::&nbsp; parsed by FOR /F. All columns will be enclosed by quotes so that empty<br />:::&nbsp; columns may be preserved. It also supports delimiters, newlines, and<br />:::&nbsp; escaped quotes within quoted values. Two consecutive quotes within a<br />:::&nbsp; quoted value are converted into one quote by default.<br />:::<br />:::&nbsp; Available options:<br />:::<br />:::&nbsp; &nbsp; /I:string = Input delimiter. Default is a comma (,)<br />:::<br />:::&nbsp; &nbsp; /O:string = Output delimiter. Default is a comma (,)<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;The entire option must be quoted if specifying poison character<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;or whitespace literals as a delimiters for /I or /O.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Examples:&nbsp; pipe = &quot;/I:|&quot;<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;space = &quot;/I: &quot;<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Standard JScript escape sequences can also be used.<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Examples:&nbsp; &nbsp; &nbsp; &nbsp;tab = /I:\t&nbsp; or&nbsp; /I:\x09<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;backslash = /I:\\<br />:::<br />:::&nbsp; &nbsp; /E = Encode output delimiter literal within value as \D<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Encode newline within value as \N<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Encode backslash within value as \S<br />:::<br />:::&nbsp; &nbsp; /D = escape exclamation point and caret for Delayed expansion<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;! becomes ^!<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;^ becomes ^^<br />:::<br />:::&nbsp; &nbsp; /L = treat all input quotes as quote Literals<br />:::<br />:::&nbsp; &nbsp; /Q:QuoteOutputFormat<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp;Controls output of Quotes, where QuoteOutputFormat may be any<br />:::&nbsp; &nbsp; &nbsp; &nbsp;one of the following:<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;L = all columns quoted, quote Literals output as &quot;&nbsp; &nbsp;(Default)<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;E = all columns quoted, quote literals Escaped as &quot;&quot;<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;N = No columns quoted, quote literals output as &quot;<br />:::<br />:::&nbsp; &nbsp; &nbsp; &nbsp;The /Q:E and /Q:N options are useful for transforming data for<br />:::&nbsp; &nbsp; &nbsp; &nbsp;purposes other than parsing by FOR /F<br />:::<br />:::&nbsp; &nbsp; /U = Write unix style lines with newline (\n) instead of the default<br />:::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Windows style of carriage return and linefeed (\r\n).<br />:::<br />:::parseCSV&nbsp; /?<br />:::<br />:::&nbsp; Display this help<br />:::<br />:::parseCSV&nbsp; /V<br />:::<br />:::&nbsp; Display the version of parseCSV.bat<br />:::<br />:::parseCSV.bat was written by Dave Benham. Updates are available at the original<br />:::posting site: http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5702<br />:::<br /><br />::************ Batch portion ***********<br />@echo off<br />if &quot;%~1&quot; equ &quot;/?&quot; (<br />&nbsp; setlocal disableDelayedExpansion<br />&nbsp; for /f &quot;delims=: tokens=*&quot; %%A in ('findstr &quot;^:::&quot; &quot;%~f0&quot;') do echo(%%A<br />&nbsp; exit /b 0<br />)<br />if /i &quot;%~1&quot; equ &quot;/V&quot; (<br />&nbsp; for /f &quot;delims=:&quot; %%A in ('findstr /bc:&quot;::%~nx0 version &quot; &quot;%~f0&quot;') do echo %%A<br />&nbsp; exit /b 0<br />)<br />cscript //E:JScript //nologo &quot;%~f0&quot; %*<br />exit /b 0<br /><br /><br />************ JScript portion ***********/<br />var args&nbsp; &nbsp; &nbsp;= WScript.Arguments.Named,<br />&nbsp; &nbsp; stdin&nbsp; &nbsp; = WScript.Stdin,<br />&nbsp; &nbsp; stdout&nbsp; &nbsp;= WScript.Stdout,<br />&nbsp; &nbsp; escape&nbsp; &nbsp;= args.Exists(&quot;E&quot;),<br />&nbsp; &nbsp; literalQ = args.Exists(&quot;L&quot;),<br />&nbsp; &nbsp; escapeQ&nbsp; = (args.Item(&quot;Q&quot;)&amp;&amp;args.Item(&quot;Q&quot;).toUpperCase()==&quot;E&quot;),<br />&nbsp; &nbsp; quoteCol = (args.Item(&quot;Q&quot;)&amp;&amp;args.Item(&quot;Q&quot;).toUpperCase()==&quot;N&quot;) ? '' : '&quot;',<br />&nbsp; &nbsp; delayed&nbsp; = args.Exists(&quot;D&quot;),<br />&nbsp; &nbsp; inDelim&nbsp; = args.Item(&quot;I&quot;) ? eval('&quot;'+args.Item(&quot;I&quot;)+'&quot;') : &quot;,&quot;,<br />&nbsp; &nbsp; outDelim = args.Item(&quot;O&quot;) ? eval('&quot;'+args.Item(&quot;O&quot;)+'&quot;') : &quot;,&quot;,<br />&nbsp; &nbsp; newline&nbsp; = args.Exists(&quot;U&quot;) ? &quot;\n&quot; : &quot;\r\n&quot;,<br />&nbsp; &nbsp; quote&nbsp; &nbsp; = false,<br />&nbsp; &nbsp; ln, c, n, out;<br />while (!stdin.AtEndOfStream) {<br />&nbsp; ln=stdin.ReadLine();<br />&nbsp; out=&quot;&quot;;<br />&nbsp; if (!quote) stdout.Write(quoteCol);<br />&nbsp; for (n=0; n&lt;ln.length; n++ ) {<br />&nbsp; &nbsp; c=ln.charAt(n);<br />&nbsp; &nbsp; if (c == '&quot;') {<br />&nbsp; &nbsp; &nbsp; if (literalQ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; if (escapeQ) c+='&quot;';<br />&nbsp; &nbsp; &nbsp; } else if (quote &amp;&amp; ln.charAt(n+1) == '&quot;') {<br />&nbsp; &nbsp; &nbsp; &nbsp; n++;<br />&nbsp; &nbsp; &nbsp; &nbsp; if (escapeQ) c+='&quot;';<br />&nbsp; &nbsp; &nbsp; } else {<br />&nbsp; &nbsp; &nbsp; &nbsp; quote=!quote;<br />&nbsp; &nbsp; &nbsp; &nbsp; continue;<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; }<br />&nbsp; &nbsp; else if (c == inDelim &amp;&amp; !quote) c=quoteCol+outDelim+quoteCol;<br />&nbsp; &nbsp; else if (escape) {<br />&nbsp; &nbsp; &nbsp; if (c == outDelim) c=&quot;\\D&quot;;<br />&nbsp; &nbsp; &nbsp; if (c == &quot;\\&quot;) c=&quot;\\S&quot;;<br />&nbsp; &nbsp; }<br />&nbsp; &nbsp; else if (delayed) {<br />&nbsp; &nbsp; &nbsp; if (c == &quot;!&quot;) c=&quot;^!&quot;;<br />&nbsp; &nbsp; &nbsp; if (c == &quot;^&quot;) c=&quot;^^&quot;;<br />&nbsp; &nbsp; }<br />&nbsp; &nbsp; out+=c;<br />&nbsp; }<br />&nbsp; out += (quote) ? ((escape) ? &quot;\\N&quot; : newline) : quoteCol+newline;<br />&nbsp; stdout.Write(out);<br />}<br /></code></pre></div><br />I have also written a script that defines a macro to assist with parsing the most problematic CSV files. See <!-- l --><a class="postlink-local" href="viewtopicbcaf.html?f=3&amp;t=1827">viewtopic.php?f=3&amp;t=1827</a><!-- l --> for background information about batch macros with arguments.<br /><strong class="text-strong"><em class="text-italics"><span style="color: #0000BF">EDIT 2015-01-08: Updated to version 1.1 to fix a silly mistake in the Example usage code</span></em></strong><br /><br /><strong class="text-strong">define_csvGetCol.bat</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::define_csvGetCol.bat version 1.1<br />::<br />:: Defines variable LF and macro csvGetCol to be used with<br />:: parseCSV.bat to parse nearly any CSV file.<br />::<br />:: This script must be called with delayedExpansion disabled.<br />::<br />:: The %csvGetCol% macro must be used with delayedExpansion enabled.<br />::<br />:: Example usage:<br />::<br />::&nbsp; &nbsp;@echo off<br />::&nbsp; &nbsp;setlocal disableDelayedExpansion<br />::&nbsp; &nbsp;call define_csvGetCol<br />::&nbsp; &nbsp;setlocal enableDelayedExpansion<br />::&nbsp; &nbsp;for /f &quot;tokens=1-3 delims=,&quot; %%A in ('parseCSV /d /e ^&lt;test.csv') do (<br />::&nbsp; &nbsp; &nbsp;%== Load and decode column values ==%<br />::&nbsp; &nbsp; &nbsp;%csvGetCol% A &quot;,&quot; %%A<br />::&nbsp; &nbsp; &nbsp;%csvGetCol% B &quot;,&quot; %%B<br />::&nbsp; &nbsp; &nbsp;%csvGetCol% C &quot;,&quot; %%C<br />::&nbsp; &nbsp; &nbsp;%== Display the result ==%<br />::&nbsp; &nbsp; &nbsp;echo ----------------------<br />::&nbsp; &nbsp; &nbsp;for %%V in (A B C) do echo %%V=!%%V!<br />::&nbsp; &nbsp; &nbsp;echo(<br />::&nbsp; &nbsp;)<br />::<br />:: Written by Dave Benham<br />::<br /><br />:: Delayed expansion must be disabled during macro definition<br /><br />:: Define LF to contain a linefeed (0x0A) character<br />set ^&quot;LF=^<br /><br />^&quot; The empty line above is critical - DO NOT REMOVE<br /><br />:: define a newline with line continuation<br />set ^&quot;\n=^^^%LF%%LF%^%LF%%LF%^^&quot;<br /><br />:: Define csvGetCol<br />:: %csvGetCol%&nbsp; envVarName&nbsp; &quot;Delimiter&quot;&nbsp; FORvar<br />set csvGetCol=for %%# in (1 2) do if %%#==2 (%\n%<br />setlocal enableDelayedExpansion^&amp;for /f &quot;tokens=1,2*&quot; %%1 in (&quot;!args!&quot;) do (%\n%<br />&nbsp; endlocal^&amp;endlocal%\n%<br />&nbsp; set &quot;%%1=%%~3&quot;!%\n%<br />&nbsp; if defined %%1 (%\n%<br />&nbsp; &nbsp; for %%L in (&quot;!LF!&quot;) do set &quot;%%1=!%%1:\N=%%~L!&quot;%\n%<br />&nbsp; &nbsp; set &quot;%%1=!%%1:\D=%%~2!&quot;%\n%<br />&nbsp; &nbsp; set &quot;%%1=!%%1:\S=\!&quot;%\n%<br />&nbsp; )%\n%<br />)) else setlocal disableDelayedExpansion ^&amp; set args=<br /></code></pre></div><br /><br />Usage is extremely simple if you know there are no commas or newlines in any values, and delayed expansion is not needed:<br /><br /><strong class="text-strong">test1.csv</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&quot;value1 with &quot;&quot;quotes&quot;&quot;&quot;,value2: No problem!,value3: 2^3=8,value4: (2^2)!=16<br />value1,,value3,value4<br />value1,,,value4<br />value1,,,<br />,,,value4<br /></code></pre></div><br /><strong class="text-strong">test1.bat</strong> - no delayed expansion, no commas or newlines in values<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />for /f &quot;tokens=1-4 delims=,&quot; %%A in ('parseCSV ^&lt;test1.csv') do (<br />&nbsp; echo -------------<br />&nbsp; echo(A=%%~A<br />&nbsp; echo(B=%%~B<br />&nbsp; echo(C=%%~C<br />&nbsp; echo(D=%%~D<br />&nbsp; echo(<br />)<br /></code></pre></div><br /><strong class="text-strong">--OUTPUT1--</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>-------------<br />A=value1 with &quot;quotes&quot;<br />B=value2: No problem!<br />C=value3: 2^3=8<br />D=value4: (2^2)!=16<br /><br />-------------<br />A=value1<br />B=<br />C=value3<br />D=value4<br /><br />-------------<br />A=value1<br />B=<br />C=<br />D=value4<br /><br />-------------<br />A=value1<br />B=<br />C=<br />D=<br /><br />-------------<br />A=<br />B=<br />C=<br />D=value4<br /></code></pre></div><br /><br />It is also quite simple when commas are in values if you know of a character that does not exist in any value. Simply specify a unique character for the output delimiter.<br /><br /><strong class="text-strong">test2.csv</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&quot;value1 with &quot;&quot;quotes&quot;&quot;&quot;,&quot;value2, No problem!&quot;,&quot;value3, 2^3=8&quot;,&quot;value4, (2^2)!=16&quot;<br />value1,,value3,value4<br />value1,,,value4<br />value1,,,<br />,,,value4<br /></code></pre></div><br /><strong class="text-strong">test2.bat</strong> - no delayed expansion, no newlines or pipes in values <em class="text-italics"><span style="color: #0000FF"><strong class="text-strong">EDIT: Note that the entire option must be quoted if the delimiter is a poison character</strong></span></em><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />for /f &quot;tokens=1-4 delims=|&quot; %%A in ('parseCSV &quot;/o:|&quot; ^&lt;test2.csv') do (<br />&nbsp; echo -------------<br />&nbsp; echo(A=%%~A<br />&nbsp; echo(B=%%~B<br />&nbsp; echo(C=%%~C<br />&nbsp; echo(D=%%~D<br />&nbsp; echo(<br />)<br /></code></pre></div><br /><strong class="text-strong">--OUTPUT2--</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>-------------<br />A=value1 with &quot;quotes&quot;<br />B=value2, No problem!<br />C=value3, 2^3=8<br />D=value4, (2^2)!=16<br /><br />-------------<br />A=value1<br />B=<br />C=value3<br />D=value4<br /><br />-------------<br />A=value1<br />B=<br />C=<br />D=value4<br /><br />-------------<br />A=value1<br />B=<br />C=<br />D=<br /><br />-------------<br />A=<br />B=<br />C=<br />D=value4<br /></code></pre></div><br /><br />It only takes a bit more code if values may contain newlines or if you don't know of a character that does not appear in any value. This solution encodes newlines, delimiters, and slashes as \N, \D, and \S. Delayed expansion is needed within the loop to decode the values, so ! and ^ must be escaped as ^! and ^^.<br /><br /><strong class="text-strong">test3.csv</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&quot;2^3=8&quot;,&quot;(2^2)!=16&quot;,&quot;Success!&quot;,Value4<br />value1,value2,value3,value4<br />,,,value4<br />&quot;value1&quot;,&quot;value2&quot;,&quot;value3&quot;,&quot;value4&quot;<br />&quot;He said, &quot;&quot;Hey cutie.&quot;&quot;&quot;,&quot;She said, &quot;&quot;Drop dead!&quot;&quot;&quot;,&quot;value3 line1<br />value3 line2&quot;,c:\Windows<br /></code></pre></div><br /><strong class="text-strong">test3.bat</strong> - Allow virtually any valid CSV, without using a macro.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enableDelayedExpansion<br /><br />:: Define LF to contain a linefeed (0x0A) character<br />set ^&quot;LF=^<br /><br />^&quot; The empty line above is critical - DO NOT REMOVE<br /><br />for /f &quot;tokens=1-4 delims=,&quot; %%A in ('parseCSV /e /d ^&lt;test3.csv') do (<br />&nbsp; %== Load columns with encoded values. The trailing ! is important ==%<br />&nbsp; set &quot;A=%%~A&quot;!<br />&nbsp; set &quot;B=%%~B&quot;!<br />&nbsp; set &quot;C=%%~C&quot;!<br />&nbsp; set &quot;D=%%~D&quot;!<br />&nbsp; %== Decode values ==%<br />&nbsp; for %%L in (&quot;!LF!&quot;) do for %%V in (A B C D) do if defined %%V (<br />&nbsp; &nbsp; set &quot;%%V=!%%V:\N=%%~L!&quot;<br />&nbsp; &nbsp; set &quot;%%V=!%%V:\D=,!&quot;<br />&nbsp; &nbsp; set &quot;%%V=!%%V:\S=\!&quot;<br />&nbsp; )<br />&nbsp; %== Print results ==%<br />&nbsp; echo ---------------------<br />&nbsp; for %%V in (A B C D) do echo(%%V=!%%V!<br />&nbsp; echo(<br />)<br /></code></pre></div><br /><strong class="text-strong">--OUTPUT3--</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>---------------------<br />A=2^3=8<br />B=(2^2)!=16<br />C=Success!<br />D=Value4<br /><br />---------------------<br />A=value1<br />B=value2<br />C=value3<br />D=value4<br /><br />---------------------<br />A=<br />B=<br />C=<br />D=value4<br /><br />---------------------<br />A=value1<br />B=value2<br />C=value3<br />D=value4<br /><br />---------------------<br />A=He said, &quot;Hey cutie.&quot;<br />B=She said, &quot;Drop dead!&quot;<br />C=value3 line1<br />value3 line2<br />D=c:\Windows<br /></code></pre></div><br /><strong class="text-strong">test4.bat</strong> - Allow virtually any valid CSV, but now use the %csvGetCol% macro.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />:: Delayed expansion must be disabled during macro definition<br />setlocal disableDelayedExpansion<br />call define_csvGetCol<br /><br />:: Delayed expansion must be enabled when using %csvGetCol%<br />setlocal enableDelayedExpansion<br />for /f &quot;tokens=1-4 delims=,&quot; %%A in ('parseCSV /e /d ^&lt;test3.csv') do (<br />&nbsp; %== Load and decode column values ==%<br />&nbsp; %csvGetCol% A &quot;,&quot; %%A<br />&nbsp; %csvGetCol% B &quot;,&quot; %%B<br />&nbsp; %csvGetCol% C &quot;,&quot; %%C<br />&nbsp; %csvGetCol% D &quot;,&quot; %%D<br />&nbsp; %== Print results ==%<br />&nbsp; echo ---------------------<br />&nbsp; for %%V in (A B C D) do echo(%%V=!%%V!<br />&nbsp; echo(<br />)<br /></code></pre></div><br />Output is identical to test3.bat<br /><br /><br />If the CSV file is very large, then it is much more efficient to save the output of parseCSV.bat to a temporary file, and then use the FOR /F loop to read the temporary file.<br /><br /><br />There are still a couple inherent limitations that are true for all FOR /F usage:<br /><br />1) A single FOR /F cannot parse more than 32 columns.<br /><br />2) Batch line length restriction of 8191 characters can still be a problem.<br /><br /><br />Dave Benham</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a> on 08 Jan 2015 10:14, edited 3 times in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35668" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35668">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist1513.html?mode=viewprofile&amp;u=4964" class="username">Samir</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchd50c.html?author_id=4964&amp;sr=posts">341</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 16 Jul 2013 12:00</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> HSV</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact Samir">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact Samir</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://www.huntsvillecarscene.com/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35668">
+
+						<h3 ><a href="#p35668">Re: Safely parse nearly any CSV with parseCSV.bat</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinga411.html?mode=quote&amp;f=3&amp;p=35668" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6a15.html?p=35668#p35668" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopic6a15.html?p=35668#p35668" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist1513.html?mode=viewprofile&amp;u=4964" class="username">Samir</a></strong> &raquo; </span>08 Jul 2014 11:41
+			</p>
+			
+			
+			
+			<div class="content">Very nice.  I need to remember this for an upcoming batch where I'll need to a parse by tabs...</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p36629" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile36629">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content36629">
+
+						<h3 ><a href="#p36629">Re: Safely parse nearly any CSV with parseCSV.bat</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingfe1a.html?mode=quote&amp;f=3&amp;p=36629" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7d8c.html?p=36629#p36629" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopic7d8c.html?p=36629#p36629" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>03 Sep 2014 08:16
+			</p>
+			
+			
+			
+			<div class="content">Not sure if I have the right end of the stick - I tend to skim read large texts - but is this the way to handle pipe delimited .csv Dave?<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>d:\&gt;type file.csv |ParseCSV.bat /I:&quot;|&quot; &gt;file2.csv<br />| was unexpected at this time.</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p36635" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile36635">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content36635">
+
+						<h3 ><a href="#p36635">Re: Safely parse nearly any CSV with parseCSV.bat</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting3c79.html?mode=quote&amp;f=3&amp;p=36635" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic0d3a.html?p=36635#p36635" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopic0d3a.html?p=36635#p36635" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>03 Sep 2014 09:06
+			</p>
+			
+			
+			
+			<div class="content">Maybe you can't pipe input to ParseCSV???  All of Dave's examples are redirected input.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p36637" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile36637">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content36637">
+
+						<h3 ><a href="#p36637">Re: Safely parse nearly any CSV with parseCSV.bat</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf8e7.html?mode=quote&amp;f=3&amp;p=36637" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb7fe-2.html?p=36637#p36637" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopicb7fe-2.html?p=36637#p36637" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>03 Sep 2014 09:50
+			</p>
+			
+			
+			
+			<div class="content">Whoa <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" />  <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" />  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" />  <img class="smilies" src="images/smilies/icon_redface.gif" alt=":oops:" title="Embarassed" />  <img class="smilies" src="images/smilies/icon_evil.gif" alt=":evil:" title="Evil or Very Mad" /><br /><br />Sorry guys. I don't know what I have done. I swear this used to work with a poison character as a delimiter. But now it clearly doesn't. I tested all those examples, and the output was real. <br /><br />I must have made some change after testing that broke things, without realizing it.<br /><br />I'll try to fix this to work properly with poison character delimiters within the next couple days.<br /><br />BTW - It should work with either pipe or redirection, although I think redirection is a bit more efficient.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p36641" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile36641">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content36641">
+
+						<h3 ><a href="#p36641">Re: Safely parse nearly any CSV with parseCSV.bat</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingc2b9.html?mode=quote&amp;f=3&amp;p=36641" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb7cc.html?p=36641#p36641" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopicb7cc.html?p=36641#p36641" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>03 Sep 2014 10:12
+			</p>
+			
+			
+			
+			<div class="content">OK, I must have made an invalid change to the test2.bat example after testing.<br /><br />When quoting a delimiter, the entire option must be quoted, not just the value. So <strong class="text-strong"><span style="color: #0000FF">&quot;/i:|&quot;</span></strong> is correct, and <strong class="text-strong"><span style="color: #0000FF">/i:&quot;|&quot;</span></strong> fails. I don't understand the mechanism, but I don't have time to investigate at the moment.<br /><br />I've edited the top post to fix test2.bat.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p36644" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile36644">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content36644">
+
+						<h3 ><a href="#p36644">Re: Safely parse nearly any CSV with parseCSV.bat</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting72f9.html?mode=quote&amp;f=3&amp;p=36644" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7c29.html?p=36644#p36644" onclick="prompt('Message #7',this.href); return false;">#7</a></span> 
+									<a class="unread" href="viewtopic7c29.html?p=36644#p36644" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>03 Sep 2014 10:34
+			</p>
+			
+			
+			
+			<div class="content">Thanks Dave.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p51234" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile51234">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content51234">
+
+						<h3 ><a href="#p51234">Re: Safely parse nearly any CSV with parseCSV.bat</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinge0ed.html?mode=quote&amp;f=3&amp;p=51234" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic99bd.html?p=51234#p51234" onclick="prompt('Message #8',this.href); return false;">#8</a></span> 
+									<a class="unread" href="viewtopic99bd.html?p=51234#p51234" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>18 Feb 2017 23:28
+			</p>
+			
+			
+			
+			<div class="content">Squashman presented a good idea in his comment to <a href="http://stackoverflow.com/q/42288195/1012053" class="postlink">this StackOverflow question dealing with CSV format conversion</a>. The OP there wanted to change the delimiter from semicolon to comma. Squashman suggests using parseCSV.bat to do the conversion. I had never thought of this use for my utility, and I think it is a good idea. However, there is one problem in that escaped quote literals are transformed into un-escaped literals for the purpose of FOR /F parsing. This is not desirable for a simple conversion.<br /><br />So I decided to add some new options to make parseCSV.bat generally useful for nearly any type of CSV format transformation, as long as both the input and output use delimiter separated values. While I was at it, I modified the /I and /O options to accept escape sequences for the delimiters. This is especially useful for specifying tab as the input delimiter using <strong class="text-strong">/I:\t</strong>.<br /><br />There are two new options, one of which has multiple forms:<br /><br />/L - specifies that all quotes within the input are quote literals. This is useful for CSV input that does not follow the standard of quoting values that contain quotes, and doubling quote literals.<br /><br />/Q:E - Escape quote literals as &quot;&quot; within the output. Also encloses each column within quotes.<br /><br />/Q:N - Do not quote column values in the output, and quote literals are not escaped (not doubled). This is only useful if you know that none of the column values contain the output delimiter.<br /><br />For completeness, there is also /Q:L - which is the same as the original default behavior: All output columns are quoted, and quote literals are not escaped (not doubled).<br /><br />I've updated the code in the first post of this thread to version 1.1, with the above changes.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p51244" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile51244">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content51244">
+
+						<h3 ><a href="#p51244">Re: Safely parse nearly any CSV with parseCSV.bat</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting95a7.html?mode=quote&amp;f=3&amp;p=51244" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic05d9.html?p=51244#p51244" onclick="prompt('Message #9',this.href); return false;">#9</a></span> 
+									<a class="unread" href="viewtopic05d9.html?p=51244#p51244" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>19 Feb 2017 22:53
+			</p>
+			
+			
+			
+			<div class="content">I updated the first post to version 1.2 with the following changes:<br /><br /><ul><li>Fixed a bug that caused all output delimiters to be escaped if /E was combined /Q:N.</li><li>Modified behavior to write Windows style lines with \r\n terminators by default, and added the /U option to specify Unix style output with \n terminators.</li><li>Improved performance by writing entire lines instead of one character at a time.</li></ul><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting1674.html?mode=reply&amp;f=3&amp;t=5702" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopice014.html?f=3&amp;t=5702&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5702">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			9 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5897.gif?cron_type=cron.task.text_reparser.poll_option" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5702 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:03:09 GMT -->
+</html>

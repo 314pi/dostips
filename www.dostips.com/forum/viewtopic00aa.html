@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=27042 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:35 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>FindRepl.bat:New regex utility to search and replace strings - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic14e3.html?t=4697">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopica720.html?f=3&amp;t=4697">FindRepl.bat:New regex utility to search and replace strings</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting6172.html?mode=reply&amp;f=3&amp;t=4697" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic794c.html?f=3&amp;t=4697&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="4697" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			135 posts
+							<ul>
+	<li class="dropdown-container dropdown-button-control dropdown-page-jump page-jump">
+		<a class="button button-icon-only dropdown-trigger" href="#" title="Click to jump to page…" role="button"><i class="icon fa-level-down fa-rotate-270" aria-hidden="true"></i><span class="sr-only">Page <strong>1</strong> of <strong>9</strong></span></a>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+				<li>Jump to page:</li>
+				<li class="page-jump-form">
+					<input type="number" name="page-number" min="1" max="999999" title="Enter the page number you wish to go to" class="inputbox tiny" data-per-page="15" data-base-url=".&#x2F;viewtopic.php&#x3F;f&#x3D;3&amp;amp&#x3B;t&#x3D;4697" data-start-name="start" />
+					<input class="button2" value="Go" type="button" />
+				</li>
+			</ul>
+		</div>
+	</li>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopicb35e.html?f=3&amp;t=4697&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopiccabf.html?f=3&amp;t=4697&amp;start=30" role="button">3</a></li>
+				<li><a class="button" href="viewtopic31ec.html?f=3&amp;t=4697&amp;start=45" role="button">4</a></li>
+				<li><a class="button" href="viewtopic507f.html?f=3&amp;t=4697&amp;start=60" role="button">5</a></li>
+			<li class="ellipsis" role="separator"><span>…</span></li>
+				<li><a class="button" href="viewtopicc178.html?f=3&amp;t=4697&amp;start=120" role="button">9</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopicb35e.html?f=3&amp;t=4697&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p27024" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27024">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27024">
+
+						<h3 class="first"><a href="#p27024">FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting1f50.html?mode=quote&amp;f=3&amp;p=27024" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicc116.html?p=27024#p27024" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopicc116.html?p=27024#p27024" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>26 Jun 2013 21:00
+			</p>
+			
+			
+			
+			<div class="content">FIND.EXE program was the first DOS command designed to search strings in files, followed by FINDSTR.EXE that include a limited regular expression management. The Windows Script Host, present in all Windows versions from XP on, provide an advanced regular expression support that had been used to write &quot;search and replace&quot; JScript and VBScript programs designed to be used in Batch environment, like the large <a href="viewtopicebb5.html?f=3&amp;t=3855" class="postlink">dbenham's REPL.BAT</a> program, or the small foxidrive's sar.bat one (http:<em class="text-italics">//</em>www.dostips.com/forum/viewtopic.php?f=3&amp;t=3676&amp;p=19387#p19387).<br /><br /><strong class="text-strong">FindRepl.bat</strong> is my own version of this type of programs. I have included several additional features that allows it to output a more extensive set of results, so the same program may be used to solve a wider range of similar problems. The source code of the program is included below with a detailed documentation after it. In order to have an easier access to the documentation, I subdivided it in numbered sections with a header before each one, so you may use the &quot;Find in this page&quot; feature of the explorer looking for the &quot;#. &quot; (number-dot-space) of the desired section in order to quickly locate it. This is the index:<br /><br /><ul><li>FIND STRINGS<br /><ol style="list-style-type: decimal"><li>Basic find string usage</li><li>Finding blocks of lines (/E and /O switches)</li><li>Basic usage of regular expressions</li><li>Storing search strings in Batch variables</li><li>Search an extra string in a block of lines (/B switch)</li><li>Defining and using subexpressions (/$ switch)</li><li>A large example</li></ol></li><li>FIND AND REPLACE STRINGS<br /><ol style="list-style-type: decimal"><li>Basic find and replace string usage</li><li>Replacing line delimiters</li><li>Find and replace multiple strings (/A switch)</li></ol></li></ul><br /><strong class="text-strong">EDIT 2014-11-20</strong>: A new version of FindRepl.bat program has been released. The code below include the new modifications; the new features of FindRepl.bat version 2 program are described at <a href="viewtopice47f.html?f=3&amp;t=4697&amp;p=38121#p38121" class="postlink">this post</a>.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (@CodeSection == @Batch) @then<br /><br />:: The first line above is...<br />:: - in Batch: a valid IF command that does nothing.<br />:: - in JScript&#058; a conditional compilation IF statement that is false,<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;so this Batch section is omitted until next &quot;at-sign end&quot;.<br /><br /><br />@echo off<br /><br />rem FindRepl.bat: Utility to search and search/replace strings in a file<br />rem http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4697<br />rem Antonio Perez Ayala <br /><br />rem&nbsp; &nbsp;- Jun/26/2013: first version.<br />rem&nbsp; &nbsp;- Jul/02/2013: use /Q in submatched substrings, use /VR for /V in Replace, eliminate &quot;\r\n&quot; in blocks.<br />rem&nbsp; &nbsp;- Jul/07/2013: change /VR by /R, search for &quot;\r\n&quot; with /$ and no /V, /N nor blocks.<br /><br />rem&nbsp; &nbsp;- Nov/20/2014: Version 2&nbsp; &nbsp;- New switches: /J, /L, /G, /ARG#, and || separate regexp's in /Alternations.<br />rem&nbsp; &nbsp;- Nov/30/2014: Version 2.1 - Changed /ARG# by /VAR. Replacements on numbered-blocks of lines.<br />rem&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; New sets of predefined functions for Date, File, Folder and Drive management.<br />rem&nbsp; &nbsp;- Dic/15/2014: Version 2.2 - New &quot;data generating &quot; predefined functions for /S switch combined with /J<br /><br />if &quot;%~1&quot; equ &quot;/?&quot; goto showUsage<br />if /I &quot;%~1&quot; equ &quot;/help&quot; goto showHelp<br /><br />CScript //nologo //E:JScript &quot;%~F0&quot; %*<br />if %errorlevel% equ -1 goto showUsage<br />exit /B %errorlevel%<br /><br />&lt;usage&gt;<br />Searches for strings in Stdin file, and prints or replaces them.<br /><br />FINDREPL &#91;/I&#93; &#91;/V&#93; &#91;/N&#93; &#91;rSearch&#93; &#91;/E:rEndBlk&#93; &#91;/O:s:e&#93; &#91;/B:rBlock&#93; &#91;/$:1:2...&#93;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&#91;&#91;/R&#93; &#91;/A&#93; sReplace&#93; &#91;/Q:c&#93; &#91;/S:sSource&#93;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&#91;/J&#91;:n&#93; &#91;/L:jLast&#93;&#93; &#91;/G:file&#93; &#91;/VAR:name=value,...&#93;<br /><br />&nbsp; /I&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Specifies that the search is not to be case-sensitive.<br />&nbsp; /V&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Prints only lines that do not contain a match.<br />&nbsp; /N&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Prints the line number before each line that matches.<br />&nbsp; rSearch&nbsp; &nbsp; Text to be searched for. Also mark the Start of a block of lines.<br />&nbsp; /E:rEndBlk Text to be searched for that mark the End of a block of lines.<br />&nbsp; /O:s:e&nbsp; &nbsp; &nbsp;Specifies signed numbers to add to Start/End lines of blocks.<br />&nbsp; /B:rBlock&nbsp; Extra text to be searched for in the blocks of lines.<br />&nbsp; /$:1:2...&nbsp; Specifies to print saved submatched substrings instead of lines.<br />&nbsp; sReplace&nbsp; &nbsp;Text that will replace the matched text.<br />&nbsp; /R&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Prints only replaced lines.<br />&nbsp; /A&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Specifies that sReplace has alternative values matching rSearch.<br />&nbsp; /Q:c&nbsp; &nbsp; &nbsp; &nbsp;Specifies a character that is used in place of quotation marks.<br />&nbsp; /S:sSource Text to be processed instead of Stdin file.<br />&nbsp; /J&#91;:n&#93;&nbsp; &nbsp; &nbsp;Specifies that sReplace/sSource texts have JScript expressions.<br />&nbsp; /L:jLast&nbsp; &nbsp;Execute jLast as a JScript expression after the last line of file.<br />&nbsp; /G:file&nbsp; &nbsp; Specifies the file to get rSearch and sReplace texts from.<br />&nbsp; /VAR:n=v,..Specifies a series of JScript &quot;name=value&quot; var's to initialize.<br /><br />The /Q:c switch allows to use the given character in the search/replacement<br />texts in the places where quotes are needed, and replace them later.<br /><br />If the first character of any text is an equal-sign, it specifies the name of<br />a Batch variable that contain the text to be processed.<br /><br />The /J switch specifies that sReplace/sSource texts contain JScript expressions<br />that are evaluated in order to provide the actual replacement and source texts.<br /><br />All search texts must be given in VBScript regular expression format (regexp).<br />Matching characters: .=any char, \d=&#91;0-9&#93;, \D=non-digit, \w=&#91;A-Za-z0-9_&#93;,<br />\W=non-alphanumeric, \s=&#91; \t\r\n&#93;, \S=non-space. Anchors: ^=begin of line,<br />$=end of line, \b=begin/end of word. Quantifiers (repeats previous match):<br />*=zero or more times, +=one or more times, ?=zero or one time. Use parentheses<br />to delimit these constructs and create &quot;subexpressions&quot;. To search for these<br />special characters, place a back-slash before each one of them: \*+?^$.&#91;&#93;{}()|<br /><br />The /A (alternation) switch allows to define several alternatives separated by<br />pipe in rSearch/sReplace: &quot;a|b|c&quot; /A &quot;x|y|z&quot; replace a with x, b with y, etc.;<br />in this case the alternatives can only be case-sensitive literal strings. If /J<br />switch is added, the alternatives in rSearch are always regular expressions and<br />in sReplace are JScript expressions, and they must be separated by double<br />pipes: &quot;red|green|blue||Peter|Paul|Mary&quot; /A &quot;'a color'||'a name'&quot; /J<br /><br /><br />The operation performed and the output displayed varies depending on the mix<br />of parameters and switches given, that can be divided in three general cases.<br /><br />FINDREPL&nbsp; &#91;/V&#93; &#91;rSearch&#93; &#91;/E:rEndBlk&#93; &#91;/O:s:e&#93; &#91;/B:rBlock&#93;&nbsp; &#91;&#91;/R&#93; sReplace&#93; <br /><br /><br />A) Find-only operation: when sReplace parameter is not given.<br /><br />rSearch&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Show matching lines.<br />rSearch /V&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Show non-matching lines.<br />rSearch /O:s:e&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Add S and E to each matching line (block).<br />rSearch /E:rEndBlk&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;From rSearch line(s) to rEndBlk line(s).<br />rSearch /E:rEndBlk /O:s:e&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Add S to rSearch line and E to rEndBlk line.<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;The last three cases define a &quot;block&quot;.<br />rSearch block /B:rBlock&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Search rBlock in the previous block.<br /><br />When rSearch/rEndBlk includes subexpressions, the /$ switch may be added in<br />order to print only saved submatched substrings instead of complete lines.<br /><br /><br />B) Find-Replace operation: when sReplace parameter is added to previous ones.<br /><br />rSearch sReplace&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Show all file lines after replacements.<br />rSearch sReplace /R&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Show only replaced lines.<br />rSearch block sReplace&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Replaces text in blocks only.<br />rSearch block /B:rBlock sReplace&nbsp; &nbsp;Replaces only text matched by rBlock.<br /><br />When rSearch/rBlock includes subexpressions, the replacement text may<br />include $0, $1, ... in order to retrieve saved submatched substrings.<br /><br /><br />C) Numbered-block operation: when rSearch parameter is null (requires /O).<br /><br />/O:s:e&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Show block of lines, from line S to line E.<br />/O:s:e /B:rBlock&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Search rBlock in the previous block.<br />&quot;&quot; /O:s:e /B:rBlock sReplace&nbsp; &nbsp; &nbsp; &nbsp;Replaces only text matched by rBlock.<br /><br />In this case if S or E is negative, it specifies counting lines from the end of<br />file. If E is not given, it defaults to the last line of the file (same as -1).<br /><br /><br />The total number of matchings/replacements is returned in ERRORLEVEL.<br /><br /><br />&lt;/usage&gt;<br /><br />:showUsage<br />&lt; &quot;%~F0&quot; CScript //nologo //E:JScript &quot;%~F0&quot; &quot;^&lt;usage&gt;&quot; /E:&quot;^&lt;/usage&gt;&quot; /O:+1:-1<br />echo -^&gt; For further help, type: %0 /help<br />goto :EOF<br /><br />&lt;help&gt;<br /><br />A web site may be opened in order to get further help on the following topics:<br /><br />&nbsp; &nbsp;1- FindRepl.bat documentation:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Detailed description of FindRepl features with multiple examples.<br /><br />&nbsp; &nbsp;2- FindRepl.bat version 2 documentation:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Additional descriptions on /J, /L, /G switches and || alternatives.<br /><br />&nbsp; &nbsp;3- Regular Expressions documentation:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Describe the features that may be used in rSearch, rEndBlk and rBlock.<br /><br />&nbsp; &nbsp;4- Alternation and Subexpressions documentation:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Describe how use | to separate values in rSearch with /A switch<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;and features of subexpressions for /$ switch and $0..$n in sReplace.<br /><br />&nbsp; &nbsp;5- JScript expressions documentation (/J switch):<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Describe the operators that may be used in JScript expressions.<br /><br />&nbsp; &nbsp;6- Data types and functions for JScript expressions.<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Describe additional operations available in JScript&#058;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- String Object: functions to manipulate strings.<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Math Object: arithmetic functions.<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Date Object: functions for date calculations.<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;See also Topic 2- Section 3. on predefined functions.<br /><br />&nbsp; &nbsp;7- FileSystemObject objects documentation:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Describe the properties that may be used in Property functions<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;and the rest of File/Folder/Drive predefined functions.<br /><br />&nbsp; &nbsp;8- Special folders documentation:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Describe the values used in specialFolders predefined function.<br /><br />&nbsp; &nbsp;9- Windows Management Instrumentation FAQ:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;General description about the features and capabilities (classes and<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;properties) that may be used in wmiCollection predefined function.<br /><br />&lt;/help&gt;<br /><br />:showHelp<br />setlocal EnableDelayedExpansion<br />set n=1<br />set &quot;choices=&quot;<br />for %%a in (&quot;http://www.dostips.com/forum/viewtopic.php\Qf=3&amp;t=4697&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;http://www.dostips.com/forum/viewtopic.php\Qf=3&amp;t=4697&amp;p=38121#p38121&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;http://msdn.microsoft.com/en-us/library/6wzad2b2(v=vs.84).aspx&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;http://msdn.microsoft.com/en-us/library/kstkz771(v=vs.84).aspx&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;http://msdn.microsoft.com/en-us/library/ce57k8d5(v=vs.84).aspx&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;http://msdn.microsoft.com/en-us/library/htbw4ywd(v=vs.84).aspx&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;http://msdn.microsoft.com/en-us/library/bkx696eh(v=vs.84).aspx&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;http://msdn.microsoft.com/en-us/library/0ea7b5xe(v=vs.84).aspx&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;http://technet.microsoft.com/en-us/library/ee692772.aspx&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;) do (<br />&nbsp; &nbsp;set &quot;choices=!choices!!n!&quot;<br />&nbsp; &nbsp;set &quot;option&#91;!n!&#93;=%%~a&quot;<br />&nbsp; &nbsp;set /A n+=1<br />)<br />&lt; &quot;%~F0&quot; CScript //nologo //E:JScript &quot;%~F0&quot; &quot;^&lt;help&gt;&quot; /E:&quot;^&lt;/help&gt;&quot; /O:+1:-1<br /><br />:getOption<br />echo/<br />choice /C %choices%0 /N /M &quot;Select one of previous topics, or press 0 to end:&quot;<br />if errorlevel %n% goto :EOF<br />set &quot;choice=%errorlevel%&quot;<br />explorer &quot;!option&#91;%choice%&#93;:\Q=?!&quot;<br />echo&nbsp; - Help on topic %choice% started...<br />goto getOption<br /><br /><br />End of Batch section<br /><br /><br />@end<br /><br /><br />// JScript section<br /><br /><br />// FINDREPL &#91;/I&#93; &#91;/V&#93; &#91;/N&#93; rSearch &#91;/E:rEndBlk&#93; &#91;/O:s:e&#93; &#91;/B:rBlock&#93; &#91;/$:1:2...&#93;<br />//&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &#91;&#91;/R&#93; &#91;/A&#93; sReplace&#93; &#91;/Q:c&#93; &#91;/S:source&#93;<br />//&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &#91;/J&#91;:n&#93; &#91;/L:jEnd&#93;&#93; &#91;/G:file&#93;<br /><br />var options = WScript.Arguments.Named,<br />&nbsp; &nbsp; args&nbsp; &nbsp; = WScript.Arguments.Unnamed,<br />&nbsp; &nbsp; env&nbsp; &nbsp; &nbsp;= WScript.CreateObject(&quot;WScript.Shell&quot;).Environment(&quot;Process&quot;),<br />&nbsp; &nbsp; fso&nbsp; &nbsp; &nbsp;= new ActiveXObject(&quot;Scripting.FileSystemObject&quot;), file,<br /><br />&nbsp; &nbsp; ignoreCase&nbsp; &nbsp;= options.Exists(&quot;I&quot;)?&quot;i&quot;:&quot;&quot;,<br />&nbsp; &nbsp; notMatched&nbsp; &nbsp;= options.Exists(&quot;V&quot;),<br />&nbsp; &nbsp; showNumber&nbsp; &nbsp;= options.Exists(&quot;N&quot;),<br />&nbsp; &nbsp; search&nbsp; &nbsp; &nbsp; &nbsp;= &quot;&quot;,<br />&nbsp; &nbsp; endBlk&nbsp; &nbsp; &nbsp; &nbsp;= undefined,<br />&nbsp; &nbsp; offset&nbsp; &nbsp; &nbsp; &nbsp;= undefined,<br />&nbsp; &nbsp; block&nbsp; &nbsp; &nbsp; &nbsp; = undefined,<br />&nbsp; &nbsp; submatches&nbsp; &nbsp;= undefined,<br />&nbsp; &nbsp; justReplaced = options.Exists(&quot;R&quot;),<br />&nbsp; &nbsp; alternation&nbsp; = options.Exists(&quot;A&quot;),<br />&nbsp; &nbsp; replace&nbsp; &nbsp; &nbsp; = undefined,<br />&nbsp; &nbsp; quote&nbsp; &nbsp; &nbsp; &nbsp; = options.Item(&quot;Q&quot;),<br />&nbsp; &nbsp; inputLines,<br />&nbsp; &nbsp; Jexpr&nbsp; &nbsp; &nbsp; &nbsp; = options.Exists(&quot;J&quot;),<br /><br />&nbsp; &nbsp; lineNumber = 0, range = new Array(),<br />&nbsp; &nbsp; procLines = false, procBlocks = false,<br />&nbsp; &nbsp; nextMatch, result&nbsp; = 0,<br /><br />&nbsp; &nbsp; match = function ( line, regex ) { return line.search(regex) &gt;= 0; },<br /><br />&nbsp; &nbsp; parseInts = <br />&nbsp; &nbsp; &nbsp; &nbsp;function ( strs ) { <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var Ints = new Array();<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for ( var i = 0; i &lt; strs.length; ++i ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Ints&#91;i&#93; = parseInt(strs&#91;i&#93;); <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return Ints;<br />&nbsp; &nbsp; &nbsp; &nbsp;},<br /><br />&nbsp; &nbsp; getRegExp =<br />&nbsp; &nbsp; &nbsp; &nbsp;function ( param, justLoad ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var result = param;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( result.substr(0,1) == &quot;=&quot; ) result = env(result.substr(1));<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( quote != undefined ) result = result.replace(eval(&quot;/&quot;+quote+&quot;/g&quot;),&quot;\\x22&quot;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( ! justLoad ) result = new RegExp(result,&quot;gm&quot;+ignoreCase);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return result;<br />&nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; ; // end var<br /><br /><br />// PREDEFINED VARIABLES AND FUNCTIONS<br /><br />if ( Jexpr) {<br />&nbsp; &nbsp;JexprN = options.Item(&quot;J&quot;) ? parseInt(options.Item(&quot;J&quot;)) : 10;<br />&nbsp; &nbsp;var SUM = new Array(JexprN+1), N = new Array(JexprN+1), PROD = new Array(JexprN+1),<br />&nbsp; &nbsp; &nbsp; &nbsp;MAX = new Array(JexprN+1), MIN = new Array(JexprN+1), n = 0;<br />&nbsp; &nbsp;for ( var i = 1; i &lt;= JexprN; i++ ) {<br />&nbsp; &nbsp; &nbsp; SUM&#91;i&#93; = 0; N&#91;i&#93; = 0; PROD&#91;i&#93; = 1;<br />&nbsp; &nbsp; &nbsp; MAX&#91;i&#93; = Number.NEGATIVE_INFINITY; MIN&#91;i&#93; = Number.POSITIVE_INFINITY;<br />&nbsp; &nbsp;}<br />}<br /><br />// Range functions<br /><br />function choose(arg,i){return(arg&#91;i&#93;);}<br />function hlookup(arg,lim,a,b) {<br />&nbsp; &nbsp;var ind=a;<br />&nbsp; &nbsp;for ( var i=a; i&lt;=b; i++ ) if ( arg&#91;i&#93;&gt;arg&#91;ind&#93; &amp;&amp; arg&#91;i&#93;&lt;=lim ) ind=i;<br />&nbsp; &nbsp;return(ind);<br />}<br />function sum(arg,a,b) {<br />&nbsp; &nbsp;var val = 0, n = 0, v;<br />&nbsp; &nbsp;for ( var i=a; i&lt;=b; i++ ) {<br />&nbsp; &nbsp; &nbsp; if ( ! isNaN(v=parseFloat(arg&#91;i&#93;)) ) { val+=v; SUM&#91;i&#93;+=v; N&#91;i&#93;++; n++; }<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;return(val);<br />}<br />function prod(arg,a,b) {<br />&nbsp; &nbsp;var val = 1, n = 0, v;<br />&nbsp; &nbsp;for ( var i=a; i&lt;=b; i++ ) {<br />&nbsp; &nbsp; &nbsp; if ( ! isNaN(v=parseFloat(arg&#91;i&#93;)) ) { val*=v; PROD&#91;i&#93;*=v; n++; }<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;return(val);<br />}<br />function max(arg,a,b) { <br />&nbsp; &nbsp;var val=Number.NEGATIVE_INFINITY, v;<br />&nbsp; &nbsp;for ( var i=a; i&lt;=b; i++ ) {<br />&nbsp; &nbsp; &nbsp; if ( ! isNaN(v=parseFloat(arg&#91;i&#93;)) ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( v&gt;val ) val=v;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( v&gt;MAX&#91;i&#93; ) MAX&#91;i&#93;=v;<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;return(val);<br />}<br />function min(arg,a,b) {<br />&nbsp; &nbsp;var val=Number.POSITIVE_INFINITY, v;<br />&nbsp; &nbsp;for ( var i=a; i&lt;=b; i++ ) {<br />&nbsp; &nbsp; &nbsp; if ( ! isNaN(v=parseFloat(arg&#91;i&#93;)) ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( v&lt;val ) val=v;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( v&lt;MIN&#91;i&#93; ) MIN&#91;i&#93;=v;<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;return(val);<br />}<br /><br />// Date functions<br /><br />file = fso.CreateTextFile(&quot;FindRepl.tmp&quot;, true);<br />file.WriteLine( (new Date(&quot;12/31/2000&quot;)).getVarDate() );&nbsp; // give proper credit, please...<br />file.Close();<br />file = fso.OpenTextFile(&quot;FindRepl.tmp&quot;, 1);<br />var date1st = file.Read(2);<br />file.Close();<br />file = fso.GetFile(&quot;FindRepl.tmp&quot;);<br />file.Delete();<br /><br />function toDate(s) {&nbsp; // Convert a string or a number (of milliseconds) to Date<br />&nbsp; &nbsp;try {<br />&nbsp; &nbsp; &nbsp; var d = s.split(&quot;/&quot;);<br />&nbsp; &nbsp; &nbsp; if ( date1st == &quot;31&quot; ) { var aux = d&#91;0&#93;; d&#91;0&#93; = d&#91;1&#93;; d&#91;1&#93; = aux; }&nbsp; // DD/MM/YYYY<br />&nbsp; &nbsp; &nbsp; if ( date1st == &quot;20&quot; ) { aux = d&#91;0&#93;; d&#91;0&#93; = d&#91;1&#93;; d&#91;1&#93; = d&#91;2&#93;; d&#91;2&#93; = aux; }&nbsp; // YYYY/MM/DD<br />&nbsp; &nbsp; &nbsp; d = new Date(d&#91;0&#93;+&quot;/&quot;+d&#91;1&#93;+&quot;/&quot;+d&#91;2&#93;);<br />&nbsp; &nbsp;} catch(e) {<br />&nbsp; &nbsp; &nbsp; var d = new Date();<br />&nbsp; &nbsp; &nbsp; d.setTime(s);<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;return(d);<br />}<br />function showDate(d,fmt) {&nbsp; // Show a Date or a number (of milliseconds) with Date formats<br />&nbsp; &nbsp;var d2 = d, s = &quot;Unknown date format&quot;;<br />&nbsp; &nbsp;if ( ! Date.prototype.isPrototypeOf(d2) ) d2 = toDate(d2);<br />&nbsp; &nbsp;if ( fmt == 0 || fmt == undefined ) {<br />&nbsp; &nbsp; &nbsp; s = d2.toDateString().split(&quot; &quot;);<br />&nbsp; &nbsp; &nbsp; s = s&#91;1&#93;+&quot;/&quot;+s&#91;2&#93;+&quot;/&quot;+s&#91;3&#93;;<br />&nbsp; &nbsp;} else if ( fmt == 1 ) {<br />&nbsp; &nbsp; &nbsp; s = d2.toDateString();<br />&nbsp; &nbsp;} else if ( fmt == 2 ) {<br />&nbsp; &nbsp; &nbsp; s = d2.toString();<br />&nbsp; &nbsp;} else if ( fmt == 3 ) {<br />&nbsp; &nbsp; &nbsp; s = d2.toString().split(&quot; &quot;);<br />&nbsp; &nbsp; &nbsp; s = s&#91;3&#93;;<br />&nbsp; &nbsp;} else if ( fmt == 4 ) {<br />&nbsp; &nbsp; &nbsp; s = d2.toLocaleString().split(&quot; &quot;);<br />&nbsp; &nbsp; &nbsp; s = s&#91;s.length-3&#93;+&quot; &quot;+s&#91;s.length-2&#93;+&quot; &quot;+s&#91;s.length-1&#93;;<br />&nbsp; &nbsp;} else if ( fmt == 5 || fmt == 6 ) {<br />&nbsp; &nbsp; &nbsp; d2.setTime(d2.getTime()+d2.getTimezoneOffset()*60000);<br />&nbsp; &nbsp; &nbsp; s = d2.toString().split(&quot; &quot;);<br />&nbsp; &nbsp; &nbsp; s = s&#91;3&#93;+((fmt==6)?&quot;.&quot;+d2.getTime().toString().slice(-3):&quot;&quot;);<br />&nbsp; &nbsp;} else if ( fmt == 11 ) {<br />&nbsp; &nbsp; &nbsp; s = d2.toLocaleDateString();<br />&nbsp; &nbsp;} else if ( fmt == 12 ) {<br />&nbsp; &nbsp; &nbsp; s = d2.toLocaleString();<br />&nbsp; &nbsp;} else {<br />&nbsp; &nbsp; &nbsp; var D = (100+d2.getDate()).toString().substr(1), <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; M = (101+d2.getMonth()).toString().substr(1),<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Y = d2.getFullYear();<br />&nbsp; &nbsp; &nbsp; if ( fmt == 7 ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;s = D+&quot;-&quot;+M+&quot;-&quot;+Y;<br />&nbsp; &nbsp; &nbsp; } else if ( fmt == 8 ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;s = Y+&quot;-&quot;+M+&quot;-&quot;+D;<br />&nbsp; &nbsp; &nbsp; } else {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var t = (d2.toString().split(&quot; &quot;))&#91;3&#93;.split(&quot;:&quot;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( fmt == 9 ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; s = Y+&quot;-&quot;+M+&quot;-&quot;+D+&quot;@&quot;+t.join(&quot;.&quot;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;} else if ( fmt == 10 ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; s = Y+M+D+t.join(&quot;&quot;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;return(s);<br />}<br /><br />var millisecsPerDay = 1000 * 60 * 60 * 24,<br />&nbsp; &nbsp; startTime = new Date(),<br />&nbsp; &nbsp; daysNow = Math.floor(startTime.getTime()/millisecsPerDay);<br />function dateDiff(d1,d2) {<br />&nbsp; &nbsp;return( Math.floor((Date.prototype.isPrototypeOf(d1)?d1.getTime():d1)/millisecsPerDay) - <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Math.floor((Date.prototype.isPrototypeOf(d2)?d2.getTime():d2)/millisecsPerDay) );<br />}<br />function days(d){return( daysNow - Math.floor((Date.prototype.isPrototypeOf(d)?d.getTime():d)/millisecsPerDay) );}<br />function dateAdd(d,n) {<br />&nbsp; &nbsp;var newD = new Date();<br />&nbsp; &nbsp;newD.setTime( (Date.prototype.isPrototypeOf(d)?d.getTime():d) + n*millisecsPerDay );<br />&nbsp; &nbsp;return(newD);<br />}<br /><br />// File, Folder and Drive functions<br /><br />function fileExist(name) {<br />&nbsp; &nbsp;return(fso.FileExists(name));<br />}<br /><br />// === Start of new section added in FindRepl V2.2<br />function fileCopy(name,destination) {<br />&nbsp; &nbsp;fso.CopyFile(name,destination);<br />&nbsp; &nbsp;return('File(s) &quot;'+name+'&quot; copied');<br />}<br />function fileMove(name,destination) {<br />&nbsp; &nbsp;fso.MoveFile(name,destination);<br />&nbsp; &nbsp;return('File(s) &quot;'+name+'&quot; moved');<br />}<br />function fileDelete(name) {<br />&nbsp; &nbsp;fso.DeleteFile(name);<br />&nbsp; &nbsp;return('File(s) &quot;'+name+'&quot; deleted');<br />}<br /><br />var A = &quot;Attributes&quot;, TC = &quot;DateCreated&quot;, TA = &quot;DateLastAccessed&quot;, TW = &quot;DateLastModified&quot;,<br />&nbsp; &nbsp; D = &quot;Drive&quot;, NX = &quot;Name&quot;, N = &quot;NameOnly&quot;, P = &quot;ParentFolder&quot;, F = &quot;Path&quot;, SN = &quot;ShortName&quot;,<br />&nbsp; &nbsp; SF = &quot;ShortPath&quot;, Z = &quot;Size&quot;, X = &quot;Extension&quot;, T = &quot;Type&quot;;<br />function fileProperty(fileName,property) {<br />&nbsp; &nbsp;var p,x;<br />&nbsp; &nbsp;if ( property == &quot;Extension&quot; ) {<br />&nbsp; &nbsp; &nbsp; p = fso.GetExtensionName(fileName);<br />&nbsp; &nbsp;} else if ( property == &quot;NameOnly&quot; ) {<br />&nbsp; &nbsp; &nbsp; p = fso.GetFile(fileName).Name;<br />&nbsp; &nbsp; &nbsp; if ( x=fso.GetExtensionName(fileName) ) p = p.slice(0,-(x.length+1));<br />&nbsp; &nbsp;} else {<br />&nbsp; &nbsp; &nbsp; p = eval(&quot;fso.GetFile(fileName).&quot;+property);<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;return(p);<br />}<br /><br />function folderExist(name) {<br />&nbsp; &nbsp;return(fso.FolderExists(name));<br />}<br /><br />function fileRename(fileName,newName) {<br />&nbsp; &nbsp;var file = fso.GetFile(fileName);<br />&nbsp; &nbsp;if ( fileName.toUpperCase() == newName.toUpperCase() ) file.Name = &quot;_&nbsp; .&nbsp; _&quot;;<br />&nbsp; &nbsp;file.Name = newName;<br />&nbsp; &nbsp;return('File &quot;'+fileName+'&quot; renamed to &quot;'+newName+'&quot;');<br />}<br />function folderRename(folderName,newName) {<br />&nbsp; &nbsp;var folder = fso.GetFolder(fileName);<br />&nbsp; &nbsp;if ( folderName.toUpperCase() == newName.toUpperCase() ) folder.Name = &quot;_&nbsp; .&nbsp; _&quot;;<br />&nbsp; &nbsp;folder.Name = newName;<br />&nbsp; &nbsp;return('Folder &quot;'+folderName+'&quot; renamed to &quot;'+newName+'&quot;');<br />}<br /><br />function Copy(name,destination) {<br />&nbsp; &nbsp;fso.GetFile(name).Copy(destination);<br />&nbsp; &nbsp;return('File/Folder &quot;'+name+'&quot; copied');<br />}<br />function Move(name,destination) {<br />&nbsp; &nbsp;fso.GetFile(name).Move(destination);<br />&nbsp; &nbsp;return('File/Folder &quot;'+name+'&quot; moved');<br />}<br />function Delete(name) {<br />&nbsp; &nbsp;fso.GetFile(name).Delete();<br />&nbsp; &nbsp;return('File/Folder &quot;'+name+'&quot; deleted');<br />}<br /><br />function folderCopy(name,destination) {<br />&nbsp; &nbsp;fso.CopyFolder(name,destination);<br />&nbsp; &nbsp;return('Folder(s) &quot;'+name+'&quot; copied');<br />}<br />function folderMove(name,destination) {<br />&nbsp; &nbsp;fso.MoveFolder(name,destination);<br />&nbsp; &nbsp;return('Folder(s) &quot;'+name+'&quot; moved');<br />}<br />function folderDelete(name) {<br />&nbsp; &nbsp;fso.DeleteFolder(name);<br />&nbsp; &nbsp;return('Folder(s) &quot;'+name+'&quot; deleted');<br />}<br /><br />function driveProperty(drivePath,property) {<br />&nbsp; &nbsp;return( eval(&quot;fso.GetDrive(fso.GetDriveName(drivePath)).&quot;+property) );<br />}<br /><br />function folderProperty(folderName,property) {<br />&nbsp; &nbsp;var p,x;<br />&nbsp; &nbsp;if ( property == &quot;Extension&quot; ) {<br />&nbsp; &nbsp; &nbsp; p = fso.GetExtensionName(folderName);<br />&nbsp; &nbsp;} else if ( property == &quot;NameOnly&quot; ) {<br />&nbsp; &nbsp; &nbsp; p = fso.GetFolder(folderName).Name;<br />&nbsp; &nbsp; &nbsp; if ( x=fso.GetExtensionName(fileName) ) p = p.slice(0,-(x.length+1));<br />&nbsp; &nbsp;} else {<br />&nbsp; &nbsp; &nbsp; p = eval(&quot;fso.GetFolder(folderName).&quot;+property);<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;return(p);<br />}<br /><br />// Data generating functions<br /><br />function drivesCollection ( propList ) {<br />&nbsp; &nbsp;var e = new Enumerator(fso.Drives), drives = &quot;&quot;;<br />&nbsp; &nbsp;if ( arguments.length ) {<br />&nbsp; &nbsp; &nbsp; for ( ; !e.atEnd(); e.moveNext() ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var drive = e.item();<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( var i = 0; i &lt; arguments.length; i++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var a = arguments&#91;i&#93;;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; drives += (i?&quot;,&quot;:&quot;&quot;)+'&quot;'+(((a==&quot;DriveLetter&quot;||a==&quot;DriveType&quot;||a==&quot;Path&quot;)||drive.IsReady)?<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; eval(&quot;drive.&quot;+arguments&#91;i&#93;):&quot;Not ready&quot;)+'&quot;';<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;drives += &quot;\r\n&quot;;<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;} else {<br />&nbsp; &nbsp; &nbsp; for ( ; !e.atEnd(); e.moveNext() ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;drives += '&quot;'+e.item().Path+'&quot;\r\n';<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;return(drives);<br />}<br /><br />function filesCollection ( pathOrCol, propList ) {<br />&nbsp; &nbsp;var files = &quot;&quot;, fc;<br />&nbsp; &nbsp;if ( arguments.length ) {<br />&nbsp; &nbsp; &nbsp; try {&nbsp; // if ( pathOrCol is path ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;fc = fso.GetFolder(pathOrCol).Files;<br />&nbsp; &nbsp; &nbsp; } catch (e) {&nbsp; // } else {&nbsp; // pathOrCol is filesCol<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;fc = pathOrCol;<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; for ( fc = new Enumerator(fc); !fc.atEnd(); fc.moveNext() ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var file = fc.item();<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( var i = 1; i &lt; arguments.length; i++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; files += (i&gt;1?&quot;,&quot;:&quot;&quot;)+'&quot;'+eval(&quot;file.&quot;+arguments&#91;i&#93;)+'&quot;';<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;files += &quot;\r\n&quot;;<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;} else {<br />&nbsp; &nbsp; &nbsp; for ( fc = new Enumerator(fso.GetFolder(&quot;.&quot;).Files); !fc.atEnd(); fc.moveNext() ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;files += '&quot;'+fc.item().Name+'&quot;\r\n';<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;return(files);<br />}<br /><br />function foldersCollection ( pathOrCol, propList ) {<br />&nbsp; &nbsp;var folders = &quot;&quot;, fc;<br />&nbsp; &nbsp;if ( arguments.length ) {<br />&nbsp; &nbsp; &nbsp; try {&nbsp; // if ( pathOrCol is path ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;fc = fso.GetFolder(pathOrCol).SubFolders;<br />&nbsp; &nbsp; &nbsp; } catch (e) {&nbsp; // } else {&nbsp; // pathOrCol is foldersCol<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;fc = pathOrCol;<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; for ( fc = new Enumerator(fc); !fc.atEnd(); fc.moveNext() ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var folder = fc.item();<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( var i = 1; i &lt; arguments.length; i++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( arguments&#91;i&#93;.indexOf(&quot;.SubFolders&quot;) &gt;= 0 ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( folder.SubFolders &amp;&amp; eval(arguments&#91;i&#93;) ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; arguments&#91;0&#93; = folder.SubFolders;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; folders += (folders.slice(-2)!=&quot;\r\n&quot;?&quot;\r\n&quot;:&quot;&quot;) + foldersCollection.apply(undefined,arguments);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( i+1 &lt; arguments.length ) eval(arguments&#91;i+1&#93;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;i = arguments.length;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else if ( arguments&#91;i&#93;.indexOf(&quot;.Files&quot;) &gt;= 0 ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;folders += (folders.slice(-2)!=&quot;\r\n&quot;?&quot;\r\n&quot;:&quot;&quot;) + eval(arguments&#91;i&#93;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;folders += (i&gt;1?&quot;,&quot;:&quot;&quot;)+'&quot;'+eval(&quot;folder.&quot;+arguments&#91;i&#93;)+'&quot;';<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( folders.slice(-2) != &quot;\r\n&quot; ) folders += &quot;\r\n&quot;;<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;} else {<br />&nbsp; &nbsp; &nbsp; for ( fc = new Enumerator(fso.GetFolder(&quot;.&quot;).SubFolders); !fc.atEnd(); fc.moveNext() ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;folders += '&quot;'+fc.item().Name+'&quot;\r\n';<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;return(folders);<br />}<br /><br />function specialFolders ( specialFolder, propList ) {<br />&nbsp; &nbsp;var WshShell = WScript.CreateObject(&quot;WScript.Shell&quot;), special = &quot;&quot;, fc;<br />&nbsp; &nbsp;if ( arguments.length ) {<br />&nbsp; &nbsp; &nbsp; var fc = specialFolder.split(&quot;.&quot;), folder = WshShell.SpecialFolders(fc&#91;0&#93;);<br />&nbsp; &nbsp; &nbsp; for ( fc = new Enumerator(eval(&quot;fso.GetFolder(folder).&quot;+fc&#91;1&#93;)); !fc.atEnd(); fc.moveNext() ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var s = fc.item();<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( var i = 1; i &lt; arguments.length; i++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; special += (i&gt;1?&quot;,&quot;:&quot;&quot;)+'&quot;'+eval(&quot;s.&quot;+arguments&#91;i&#93;)+'&quot;';<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;special += &quot;\r\n&quot;;<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;} else {<br />&nbsp; &nbsp; &nbsp; for ( fc = new Enumerator(WshShell.SpecialFolders); !fc.atEnd(); fc.moveNext() ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;special += fc.item()+&quot;\r\n&quot;;<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;return(special);<br />}<br /><br />function wmiCollection ( className, propList ) {<br />&nbsp; &nbsp;// http://msdn.microsoft.com/en-us/library/aa393741(v=vs.85).aspx<br />&nbsp; &nbsp;var wmi = &quot;&quot;, colItems;<br />&nbsp; &nbsp;if ( arguments.length &gt; 1 ) {<br />&nbsp; &nbsp; &nbsp; // http://msdn.microsoft.com/en-us/library/windows/desktop/aa394606(v=vs.85).aspx<br />&nbsp; &nbsp; &nbsp; colItems = GetObject(&quot;WinMgmts:&quot;).ExecQuery(&quot;Select * from &quot; + className);<br />&nbsp; &nbsp; &nbsp; for ( var e = new Enumerator(colItems); ! e.atEnd(); e.moveNext() ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var s = e.item();<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( var i = 1; i &lt; arguments.length; i++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; wmi += (i&gt;1?&quot;,&quot;:&quot;&quot;)+'&quot;'+eval(&quot;s.&quot;+arguments&#91;i&#93;)+'&quot;';<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;wmi += &quot;\r\n&quot;;<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;} else if ( arguments.length == 1 ) {<br />&nbsp; &nbsp; &nbsp; // Method suggested by: http://msdn.microsoft.com/en-us/library/aa392315(v=vs.85).aspx<br />&nbsp; &nbsp; &nbsp; //&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; https://gallery.technet.microsoft.com/f0666124-3b67-4254-8ff1-3b75ae15776d<br />&nbsp; &nbsp; &nbsp; colItems = GetObject(&quot;WinMgmts:&quot;).Get(className).Properties_;<br />&nbsp; &nbsp; &nbsp; for ( var e = new Enumerator(colItems); ! e.atEnd(); e.moveNext() ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;wmi += e.item().Name+&quot;\r\n&quot;;<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;} else {<br />&nbsp; &nbsp; &nbsp; // https://gallery.technet.microsoft.com/scriptcenter/5649568b-074e-4f5d-be52-e8b7d8fe4517<br />&nbsp; &nbsp; &nbsp; colItems = GetObject(&quot;WinMgmts:&quot;);&nbsp; // imply (&quot;WinMgmts:\root\cimv2&quot;)<br />&nbsp; &nbsp; &nbsp; for ( var e = new Enumerator(colItems.SubclassesOf()); ! e.atEnd(); e.moveNext() ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;wmi += e.item().Path_.Class+&quot;\r\n&quot;;<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;return(wmi);<br />}<br /><br />// === End of new section added in FindRepl V2.2<br />// Other functions<br /><br />function prompt(s){WScript.Stderr.Write(s); return(keyb.ReadLine());}<br />function FOR($,init,test,inc,body) {<br />&nbsp; &nbsp;var For=&quot;&quot;; <br />&nbsp; &nbsp;for ( eval(init); eval(test); eval(inc) ) For+=eval(body);<br />&nbsp; &nbsp;return(For);<br />}<br />var arguments=&quot;&quot;;<br /><br /><br />// PROCESS PARAMETERS<br /><br />if ( file=options.Item(&quot;G&quot;) ) {<br />&nbsp; &nbsp;file = fso.OpenTextFile(file, 1);<br />&nbsp; &nbsp;search = &quot;&quot;;<br />&nbsp; &nbsp;if ( alternation ) replace = &quot;&quot;;<br />&nbsp; &nbsp;var sepIn = Jexpr?/(\\\\|\\\||&#91;^\|&#93;|&#91;^\|&#93;&#91;^\|&#93;)+/g:/(\\\\|\\\||&#91;^\|&#93;)+/g, sepOut = &quot;&quot;;<br />&nbsp; &nbsp;while ( ! file.AtEndOfStream ) {<br />&nbsp; &nbsp; &nbsp; if ( block=file.ReadLine() ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( block.substr(0,4) == &quot;var &quot; &amp;&amp; Jexpr ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; eval ( block );<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;} else if ( block.substr(0,2) != &quot;//&quot; ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( block.slice(0,1)+block.slice(-1) == '&quot;&quot;' ) block = block.slice(1,-1);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; block = block.match(sepIn);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; search += sepOut+block&#91;0&#93;;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( alternation ) replace += sepOut+(block&#91;1&#93;?block&#91;1&#93;:&quot;&quot;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; sepOut = Jexpr?&quot;||&quot;:&quot;|&quot;;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;file.Close();<br />&nbsp; &nbsp;if ( quote != undefined ) search = search.replace(eval(&quot;/&quot;+quote+&quot;/g&quot;),&quot;\\x22&quot;);<br />} else {&nbsp; // No option /G given<br />&nbsp; &nbsp;if ( args.length &gt; 0 ) {<br />&nbsp; &nbsp; &nbsp; search = getRegExp(args.Item(0),true);<br />&nbsp; &nbsp;}<br />&nbsp; &nbsp;if ( args.length &gt; 1 ) {<br />&nbsp; &nbsp; &nbsp; replace = args.Item(1);<br />&nbsp; &nbsp; &nbsp; if ( replace.substr(0,1) == &quot;=&quot; ) replace = env(replace.substr(1));<br />&nbsp; &nbsp;}<br />}<br />if ( replace ) {<br />&nbsp; &nbsp;if ( quote != undefined ) replace = replace.replace(eval(&quot;/&quot;+quote+&quot;/g&quot;),&quot;\\x22&quot;);<br />}<br /><br />if ( ! WScript.Arguments.length ) WScript.Quit(-1);<br /><br />if ( options.Exists(&quot;E&quot;) ) {<br />&nbsp; &nbsp;endBlk = getRegExp(options.Item(&quot;E&quot;));<br />&nbsp; &nbsp;procBlocks = true;<br />}<br />if ( options.Exists(&quot;O&quot;) ) {<br />&nbsp; &nbsp;offset = parseInts(options.Item(&quot;O&quot;).split(&quot;:&quot;));<br />&nbsp; &nbsp;procBlocks = true;<br />}<br />block = undefined;<br />if ( options.Exists(&quot;B&quot;) ) {<br />&nbsp; &nbsp;block = getRegExp(options.Item(&quot;B&quot;),true);<br />}<br />if ( options.Exists(&quot;$&quot;) ) submatches = parseInts(options.Item(&quot;$&quot;).split(&quot;:&quot;));<br />var removeCRLF = false;<br /><br /><br />if ( replace != undefined ) {<br />&nbsp; &nbsp;removeCRLF = (block == &quot;\\r\\n&quot;) &amp;&amp; (replace == &quot;&quot;);<br /><br />&nbsp; &nbsp;if ( alternation ) {&nbsp; // Enable alternation replacements from &quot;Se|ar|ch&quot; to &quot;Re|pla|ce&quot;<br />&nbsp; &nbsp; &nbsp; if ( ! Jexpr ) {&nbsp; // Original version<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var searchA = search.match(/(\\\\|\\\||&#91;^\|&#93;)+/g),<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replaceA = replace.match(/(\\\\|\\\||&#91;^\|&#93;)+/g),<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;repl = new Array();<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( var i = 0; i &lt; searchA.length; i++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; repl&#91;eval('&quot;'+searchA&#91;i&#93;+'&quot;')&#93; = replaceA?replaceA&#91;i&#93;?eval('&quot;'+replaceA&#91;i&#93;+'&quot;'):&quot;&quot;:&quot;&quot;;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replace = function($0,$1,$2) { return repl&#91;$0&#93;; };<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;searchA.length = 0;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( replaceA ) replaceA.length = 0;<br /><br />&nbsp; &nbsp; &nbsp; } else {&nbsp; // Version 2: Search alternation have regular expressions:&nbsp; &quot;regexp1||regexp2||regexp3&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Replace alternation have JScript expressions: &quot;'Re'||'pla'||'ce'&quot;<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var searchA = search.match(/(\\\\|\\\||&#91;^\|&#93;|&#91;^\|&#93;&#91;^\|&#93;)+/g), // divide search &quot;regexp1||regexp2&quot; in parts<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;repl = replace.match(/(\\\\|\\\||&#91;^\|&#93;|&#91;^\|&#93;&#91;^\|&#93;)+/g);&nbsp; &nbsp;// the same for &quot;replace1||replace2&quot;<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;search = &quot;&quot;;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replace = &quot;$0,&quot;;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// &quot;function($0,&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( var i = 0; i &lt; searchA.length; i++ ) {&nbsp; &nbsp;// process each regexpI<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; search += (i?'|':'')+'('+searchA&#91;i&#93;+')';&nbsp; &nbsp; // re-assemble search regexp as &quot;(regexp1)|(regexp2)&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var subexprs = searchA&#91;i&#93;.match(/&#91;^\\&#93;?\(/g);// count subexpressions in this regexpI<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; subexprs = subexprs?subexprs.length:0;&nbsp; &nbsp; &nbsp; // zero if no one<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for ( var j = 0; j &lt;= subexprs; j++ ) {&nbsp; &nbsp; &nbsp;// insert each subexpression<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; replace += '$'+(i+1)+'$'+j+',';&nbsp; &nbsp; &nbsp; &nbsp;// 'function($0,' + &quot;$i$0,$i$j,...&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; repl&#91;i&#93; = repl&#91;i&#93;.replace(/\$(\d{1,2})/g,&quot;$$&quot;+(i+1)+&quot;$$$1&quot;);&nbsp; &nbsp; &nbsp; &nbsp; // change &quot;$n&quot; by &quot;$i$n&quot; in replaceI<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;replace += &quot;$offset,$string&quot;;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // 'function($0, $i$0,$i$1,$i$2, ...' + &quot;$offset, $string)&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;eval (&quot;replace=function(&quot;+replace+&quot;){for (var i=1; !eval('$'+i+'$0'); i++);return(eval(repl&#91;i-1&#93;));};&quot;);<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Jexpr = false;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// the replace function already includes the &quot;eval&quot; part<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;searchA = undefined;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( subexprs ) subexprs = undefined;<br /><br />&nbsp; &nbsp; &nbsp; }<br /><br />&nbsp; &nbsp;} else {&nbsp; // No alternation<br /><br />&nbsp; &nbsp; &nbsp; var evalReplace = &quot;&quot;;<br />&nbsp; &nbsp; &nbsp; if ( Jexpr) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( var i = 0; i &lt;= JexprN; i++ ) evalReplace += (i?',':'')+'$'+i;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;eval ( &quot;evalReplace = function(&quot;+evalReplace+&quot;) { return(eval(replace)); };&quot; );<br />&nbsp; &nbsp; &nbsp; }<br /><br />&nbsp; &nbsp;}<br /><br />} else {&nbsp; // replace == undefined: Find-only operation (to do: adjust values of /$ switch)<br /><br />&nbsp; &nbsp;if ( Jexpr ) {&nbsp; // Find a &quot;second-level&quot; alternation<br />&nbsp; &nbsp; &nbsp; var searchA = search.split(&quot;||&quot;);&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// divide search &quot;regexp1||regexp2&quot; in parts<br />&nbsp; &nbsp; &nbsp; search = &quot;&quot;;<br />&nbsp; &nbsp; &nbsp; for ( var i = 0; i &lt; searchA.length; i++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;search += (i?'|':'')+'('+searchA&#91;i&#93;+')';&nbsp; &nbsp; &nbsp; &nbsp;// re-assemble search regexp as &quot;(regexp1)|(regexp2)&quot;<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; searchA = undefined;<br />&nbsp; &nbsp;}<br /><br />}<br /><br />if ( block=options.Item(&quot;VAR&quot;) ) eval ( &quot;var &quot;+block+&quot;;&quot; );<br />if ( search != &quot;&quot; ) search = new RegExp(search, &quot;gm&quot;+ignoreCase);<br />if ( block&nbsp; != undefined ) block&nbsp; = new RegExp(block , &quot;gm&quot;+ignoreCase);<br />var keyb = fso.OpenTextFile(&quot;CONIN$&quot;, 1);<br /><br /><br />// PROCESS INPUT FILE<br /><br /><br />// FINDREPL &#91;/I&#93; &#91;/V&#93; &#91;/N&#93; rSearch &#91;/E:rEndBlk&#93; &#91;/O:s:e&#93; &#91;/B:rBlock&#93; &#91;/$:s1...&#93;<br />//&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &#91;&#91;/R&#93; &#91;/A&#93; sReplace&#93; &#91;/Q:c&#93; &#91;/S:sSource&#93;<br /><br />//&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; In Search and Replace operations:<br />//&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; /V or /N switches implies line processing<br />//&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; /E or /O switches implies block (and line) processing<br />//&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; If Search operation (with no previous switches) have NOT /$ switch:<br />//&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; implies line processing (otherwise is file processing)<br /><br />var severalLines = false;<br />if ( options.Exists(&quot;S&quot;) ) {&nbsp; // Process Source string instead of file<br />&nbsp; &nbsp;var source = options.Item(&quot;S&quot;);<br />&nbsp; &nbsp;if ( source.substr(0,1) == &quot;=&quot; ) source = env(source.substr(1));<br />&nbsp; &nbsp;if ( ! Jexpr ) {<br />&nbsp; &nbsp; &nbsp; inputLines = new Array(); lastLine = 1;<br />&nbsp; &nbsp; &nbsp; inputLines&#91;0&#93; = source;<br />&nbsp; &nbsp; &nbsp; procLines = true;<br />&nbsp; &nbsp;} else {<br />&nbsp; &nbsp; &nbsp; inputLines = eval(source);<br />&nbsp; &nbsp; &nbsp; severalLines = true;<br />&nbsp; &nbsp;}<br />} else {&nbsp; // Process Stdin file<br />&nbsp; &nbsp;inputLines = WScript.StdIn.ReadAll();<br />&nbsp; &nbsp;severalLines = true;<br />}<br /><br />if ( severalLines ) {<br /><br />&nbsp; &nbsp;if ( notMatched || showNumber || procBlocks ) procLines = true;<br />&nbsp; &nbsp;if ( replace==undefined &amp;&amp; submatches==undefined ) procLines = true;<br /><br />&nbsp; &nbsp;if ( procLines ) {&nbsp; // Separate file contents in lines<br />&nbsp; &nbsp; &nbsp; var lastByte = inputLines.slice(-1);<br />&nbsp; &nbsp; &nbsp; inputLines = inputLines.replace(/(&#91;^\r\n&#93;*)\r?\n/g,&quot;$1\n&quot;).match(/^.*$/gm);<br />&nbsp; &nbsp; &nbsp; lastLine = inputLines.length - ((lastByte == &quot;\n&quot;)?1:0);<br />&nbsp; &nbsp;}<br /><br />&nbsp; &nbsp;if ( procBlocks ) {&nbsp; // Create blocks of lines<br />&nbsp; &nbsp; &nbsp; if ( search != &quot;&quot; ) {&nbsp; // Blocks based on Search lines:<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( offset == undefined ) offset = new Array(0,0);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( var i = 1; i &lt;= lastLine; i++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( match(inputLines&#91;i-1&#93;,search) ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( endBlk != undefined ) {&nbsp; // 1- from Search line to EndBlk line &#91;+offsets&#93;.<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for ( var j=i+1; j&lt;=lastLine &amp;&amp; !match(inputLines&#91;j-1&#93;,endBlk); j++ );<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( j &lt;= lastLine ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var s = i+offset&#91;0&#93;, e = j+offset&#91;1&#93;;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Insert additional code here to cancel overlapped blocks<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;range.push(s&gt;0?s:1, e&gt;0?e:1);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; i = j;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;} else {&nbsp; // 2- surrounding Search lines with offsets.<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; s = i+offset&#91;0&#93;, e = i+offset&#91;1&#93;;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; range.push(s&gt;0?s:1, e&gt;0?e:1);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; } else {&nbsp; // Offset with no Search: block is range of lines<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( offset.length &lt; 2 ) offset&#91;1&#93; = lastLine;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;s = offset&#91;0&#93;&lt;0 ? offset&#91;0&#93;+lastLine+1 : offset&#91;0&#93;;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;e = offset&#91;1&#93;&lt;0 ? offset&#91;1&#93;+lastLine+1 : offset&#91;1&#93;;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;range.push(s&gt;0?s:1, e&gt;0?e:1);<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; if ( range.length == 0 ) WScript.Quit(0);<br />&nbsp; &nbsp; &nbsp; range.push(0xFFFFFFFF,0xFFFFFFFF);<br />&nbsp; &nbsp;}<br /><br />}<br />// endif severalLines<br /><br />if ( replace == undefined ) {&nbsp; // Search operations<br />&nbsp; &nbsp;if ( procLines ) {&nbsp; // Search on lines<br />&nbsp; &nbsp; &nbsp; if ( procBlocks ) {&nbsp; // Process previously created blocks<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( var r=0, lineNumber=1; lineNumber &lt;= lastLine; lineNumber++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( (range&#91;r&#93;&lt;=lineNumber &amp;&amp; lineNumber&lt;=range&#91;r+1&#93;) != notMatched ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( submatches != undefined ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( showNumber ) WScript.Stdout.Write(lineNumber+&quot;:&quot;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; while ( (nextMatch = block.exec(inputLines&#91;lineNumber-1&#93;)) != null ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( var s = 0; s &lt; submatches.length; s++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; WScript.Stdout.Write(&quot; &quot; + (quote!=undefined?quote:'&quot;') + <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;nextMatch&#91;submatches&#91;s&#93;&#93; + <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(quote!=undefined?quote:'&quot;'));<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;result++;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; WScript.Stdout.WriteLine();<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;} else {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( block == undefined&nbsp; ||&nbsp; match(inputLines&#91;lineNumber-1&#93;,block) ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( showNumber ) WScript.Stdout.Write(lineNumber+&quot;:&quot;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;WScript.Stdout.WriteLine(inputLines&#91;lineNumber-1&#93;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;result++;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( lineNumber &gt;= range&#91;r+1&#93; ) r += 2;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; } else {&nbsp; // Process all lines for Search<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( lineNumber = 1; lineNumber &lt;= lastLine; lineNumber++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( match(inputLines&#91;lineNumber-1&#93;,search) != notMatched ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( showNumber ) WScript.Stdout.Write(lineNumber+&quot;:&quot;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( submatches != undefined ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; search.lastIndex = 0;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; while ( (nextMatch = search.exec(inputLines&#91;lineNumber-1&#93;)) != null ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( var s = 0; s &lt; submatches.length; s++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; WScript.Stdout.Write(&quot; &quot; + (quote!=undefined?quote:'&quot;') +<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;nextMatch&#91;submatches&#91;s&#93;&#93; +<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(quote!=undefined?quote:'&quot;'));<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;result++;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; WScript.Stdout.WriteLine();<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;} else {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; WScript.Stdout.WriteLine(inputLines&#91;lineNumber-1&#93;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; result++;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; }<br /><br />&nbsp; &nbsp;} else {&nbsp; // Search on entire file and show submatched substrings<br />&nbsp; &nbsp; &nbsp; if ( submatches != undefined ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;while ( (nextMatch = search.exec(inputLines)) != null ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for ( var s = 0; s &lt; submatches.length; s++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;WScript.Stdout.Write(&quot; &quot; + (quote!=undefined?quote:'&quot;') +<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; nextMatch&#91;submatches&#91;s&#93;&#93; +<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (quote!=undefined?quote:'&quot;'));<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; result++;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; WScript.Stdout.WriteLine();<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp;}<br /><br />} else {&nbsp; // Replace operations<br /><br />&nbsp; &nbsp;if ( procLines ) {&nbsp; // Replace on lines<br />&nbsp; &nbsp; &nbsp; if ( procBlocks ) {&nbsp; // Process previously created blocks<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( block == undefined ) block = search;&nbsp; // Replace rSearch or rBlock (the last one)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var CRLFremoved = false;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( var r=0, lineNumber=1; lineNumber &lt;= lastLine; lineNumber++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( range&#91;r&#93;&lt;=lineNumber &amp;&amp; lineNumber&lt;=range&#91;r+1&#93; ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( removeCRLF ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; WScript.Stdout.Write(inputLines&#91;lineNumber-1&#93;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; CRLFremoved = true;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; result++;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;} else {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( match(inputLines&#91;lineNumber-1&#93;,block) ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( CRLFremoved ) { WScript.Stdout.WriteLine(); CRLFremoved = false; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;WScript.Stdout.WriteLine(inputLines&#91;lineNumber-1&#93;.replace(block,Jexpr?evalReplace:replace));<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;result++;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( CRLFremoved ) { WScript.Stdout.WriteLine(); CRLFremoved = false; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( ! justReplaced ) WScript.Stdout.WriteLine(inputLines&#91;lineNumber-1&#93;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( CRLFremoved ) { WScript.Stdout.WriteLine(); CRLFremoved = false; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( ! justReplaced ) WScript.Stdout.WriteLine(inputLines&#91;lineNumber-1&#93;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( lineNumber &gt;= range&#91;r+1&#93; ) r += 2;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( CRLFremoved ) { WScript.Stdout.WriteLine(); CRLFremoved = false; }<br />&nbsp; &nbsp; &nbsp; } else {&nbsp; // Process all lines for Replace<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for ( lineNumber = 1; lineNumber &lt;= lastLine; lineNumber++ ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( match(inputLines&#91;lineNumber-1&#93;,search) ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;WScript.Stdout.WriteLine(inputLines&#91;lineNumber-1&#93;.replace(search,Jexpr?evalReplace:replace));<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;result++;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if ( ! justReplaced ) WScript.Stdout.WriteLine(inputLines&#91;lineNumber-1&#93;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />&nbsp; &nbsp; &nbsp; }<br /><br />&nbsp; &nbsp;} else {&nbsp; // Replace on entire file<br />&nbsp; &nbsp; &nbsp; WScript.Stdout.Write(inputLines.replace(search,Jexpr?evalReplace:replace));<br />&nbsp; &nbsp;}<br /><br />}<br /><br />if ( Jexpr &amp;&amp; (lastLine=options.Item(&quot;L&quot;)) ) {<br />&nbsp; &nbsp;if ( lastLine.substr(0,1) == '=' ) lastLine = env(lastLine.substr(1));<br />&nbsp; &nbsp;if ( quote != undefined ) lastLine = lastLine.replace(eval(&quot;/&quot;+quote+&quot;/g&quot;),&quot;\\x22&quot;);<br />&nbsp; &nbsp;WScript.Stdout.WriteLine( eval(lastLine) );<br />}<br /><br />WScript.Quit(result);<br /></code></pre></div><br /><strong class="text-strong">FIND STRINGS</strong><br /><br /><strong class="text-strong">1. Basic find string usage</strong><br /><br />Although it may seems complex, the usage of FindRepl.bat is straightforward. All optional switches may be included in any order, like in most standard &quot;DOS&quot; commands. The program processes lines read from Stdin and have two base parameters, a Search part and a Replace part: <strong class="text-strong">&lt; theFile.txt FindRepl &quot;Search&quot; &quot;Replace&quot;</strong>. If the Replace part is not given, then FindRepl.bat behaves like FINDSTR command.<br /><br />- Simple find:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl &quot;any string&quot;</code></pre></div><br />- Enumerate/Count all lines, even if the file have Unix-type end-of-line delimiters (&lt;LF&gt; only) or the last line doesn't have the end-of-line delimiter, or both:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl /N<br />echo Number of lines: %errorlevel%</code></pre></div><br />- Eliminate all lines with &quot;XYZ&quot; text:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl /V &quot;XYZ&quot;</code></pre></div><br /><br /><strong class="text-strong">2. Finding blocks of lines (/E and /O switches)</strong><br /><br />Besides individual lines, FindRepl.bat program may also output blocks of lines that may be defined in several ways; the simplest one is via a numbered range of lines defined in /O switch (without Search part): <strong class="text-strong">FindRepl /O:s:e</strong>.<br /><br />- Show from line 12 to line 34:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl /O:12:34</code></pre></div><br />- Show the first 15 lines (head):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl /O:1:15</code></pre></div><br />- Show the last 20 lines (tail):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl /O:-20</code></pre></div><br />- Show both the first 15 lines and the last 20 lines (with line numbers):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl /V /O:16:-21 /N</code></pre></div><br /><br />If Search part and /O switch are given, the numbers in /O switch (with optional signs) are added to the number of each matching line: <strong class="text-strong">FindRepl &quot;Search&quot; /O:s:e</strong>.<br /><br />- Search for a certain string and show a block of 3 lines in each match: 1 line before and 1 line after the matching line (http:<em class="text-italics">//</em>www.dostips.com/forum/viewtopic.php?f=3&amp;t=3801):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl &quot;the string&quot; /O:-1:+1</code></pre></div><br /><br />A block may also be defined via an <em class="text-italics">ending matching line</em> placed in /E switch (instead of /O): <strong class="text-strong">FindRepl &quot;Start&quot; /E:&quot;End&quot;</strong>; the block is comprised of all lines surrounded by the Start string and the <em class="text-italics">next occurrence</em> of the End string.<br /><br />- Eliminate a block of lines surrounded by certain delimiting lines (http:<em class="text-italics">//</em>stackoverflow.com/questions/17126655/how-to-remove-lines-or-text-in-given-lines-from-file-in-batch):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl /V &quot;start remove&quot; /E:&quot;end remove&quot;</code></pre></div><br /><br />Both /E and /O switches may be combined: <strong class="text-strong">FindRepl &quot;Start&quot; /E:&quot;End&quot; /O:s:e</strong> so S number is added to Start line and E number is added to End line.<br /><br />- Show a block of lines surrounded by delimiting lines, but not including them:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl &quot;start show&quot; /E:&quot;end show&quot; /O:+1:-1</code></pre></div>For example, the built-in help screen that appear when FindRepl.bat is executed with /? parameter is obtained via a command equivalent to this one:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; &quot;FindRepl.bat&quot; FindRepl &quot;^&lt;usage&gt;&quot; /E:&quot;^&lt;/usage&gt;&quot; /O:+1:-1</code></pre></div><br /><br /><strong class="text-strong">3. Basic usage of regular expressions</strong><br /><br />The Search string is not plain text, but a regular expression (&quot;regexp&quot;). In its most basic form, a regexp just includes the literal string to search: &quot;Search this&quot;.<br /><br />Several features may be included in a regexp, most of them selected via a backslash character: \. You may use a backslash followed by another character to specify binary bytes; for example, to specify a &lt;TAB&gt; character you may use \t or \cI (Ctrl-I) or \x09 (Ascii hexa-code 9). For a &lt;LF&gt; (newline) character you may use \n or \cJ or \x0A, and use \r or \cM or \x0D for &lt;CR&gt; (return).<br /><br />Certain combinations of \ and the next character allows to specify sets of common characters. For example, use \d for any digit (equivalent to [0-9]), \D for nondigit characters (equivalent to [^0-9]), \w for alphanumeric characters and underscore ([A-Za-z0-9_]), \W for the rest of special characters, \s for separators (space, tab, return, new-line) and \S for non-separators. A dot alone match any character except a newline; to search for a dot, precede it with backslash.<br /><br />You may anchor the beginning of line with ^ or the end of line with $, or use \b to anchor the beginning or end of a word. An asterisk repeat the previous matched character zero or more times, so &quot;\d*&quot; match an optional number. A plus sign repeat previous match one or more times (&quot;\d+&quot; match a required number), and a question mark repeat zero or one time (&quot;\d?&quot; match an optional digit).<br /><br />For a complete description of this topic, see: http:<em class="text-italics">//</em>msdn.microsoft.com/en-us/library/1400241x(v=vs.84).aspx Please note that you always must escape with backslash the following special characters in order to search for themselves: <strong class="text-strong">\*+?^$.[]{}()|</strong><br /><br />- Show lines that include a dot followed by a &lt;TAB&gt;:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl &quot;\.\t&quot;</code></pre></div><br /><br />All text parameters usually are strings enclosed in quotes or a single word with no quotes if it does not contain special Batch characters. Note that you can not include a quote in a regexp, so in this case you may use another character and place it in /Q switch. Although you may use the \x22 hexadecimal value to insert a quote in any text, the /Q:c method is much clearer. The colons in all switches are mandatory.<br /><br />- Show lines that include this text: He said: &quot;Here I am&quot; and gone<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl &quot;He said: 'Here I am' and gone&quot; /Q:'</code></pre></div><br /><br /><strong class="text-strong">4. Storing search strings in Batch variables</strong><br /><br />If the first character of any text parameter is an equal-sign, then it represent the name of a Batch variable that contains the text that will be processed; if you need to insert an equal-sign in the first character of a literal string for any reason, just escape it with backslash. The /S switch allows to process a given text instead of the Stdin file.<br /><br />- Check if &quot;C:\Certain\Path&quot; already exists in system PATH variable (http:<em class="text-italics">//</em>stackoverflow.com/questions/17086292/how-to-insert-a-new-path-into-system-path-variable-if-it-is-not-already-there):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;C:\Certain\Path&quot; /S:=PATH &gt; NUL<br />if %errorlevel% gtr 0 echo The given path exists in system PATH</code></pre></div><br /><br /><strong class="text-strong">5. Search an extra string in a block of lines (/B switch)</strong><br /><br />When blocks of lines are defined, their resulting lines may be searched again using an extra regexp defined in the /B:rBlock switch. In this case, if the /V switch is also given it is applied just to the first rSearch.<br /><br />- Search for value of &quot;Name&quot; field inside &quot;Category X&quot; tag of an XML file, assuming that all values are placed in separated lines:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.xml FindRepl &quot;&lt;Category X&gt;&quot; /E:&quot;&lt;/Category X&gt;&quot; /B:&quot;Name&quot;</code></pre></div><br /><br /><strong class="text-strong">6. Defining and using subexpressions (/$ switch)</strong><br /><br />A regular expression may be comprised of several <em class="text-italics">subexpressions</em> enclosed in parentheses. Usually the search of such regexp display matching lines, but if the /$ switch is included just the individual <em class="text-italics">submatched subexpressions</em> are displayed. The /$ switch specify the desired subexpressions via a series of numbers separated by colon (a zero will show the whole matched expression); each subexpression is shown enclosed in quotes or in the character given in /Q switch. For a complete description of this point, see: http:<em class="text-italics">//</em>msdn.microsoft.com/en-us/library/kstkz771(v=vs.84).aspx<br /><br />- Search for the line next to &quot;BEGIN DSJOB&quot; and extract the value enclosed in quotes after &quot;Identifier&quot; (http:<em class="text-italics">//</em>www.dostips.com/forum/viewtopic.php?f=3&amp;t=4679):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl &quot;BEGIN DSJOB&quot; /O:+1:+1 /B:&quot;Identifier '(&#91;^'&#93;*)'&quot; /Q:' /$:1</code></pre></div><br />- Search for lines that contain a keyword, get the line that is located 3 lines below and copy the characters 5 to 12 of those lines (http:<em class="text-italics">//</em>stackoverflow.com/questions/27013999/using-a-batch-program-to-search-for-a-keyword-and-copy-offset-content-to-a-file): <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F %a in ('^&lt; input.txt FindRepl &quot;keyword&quot; /O:+3:+3 /B:&quot;.{4}(.{8})&quot; /$:1') do @echo %~a</code></pre></div><br /><br /><strong class="text-strong">7. A large example</strong><br /><br />The next example use &quot;(\w+)&quot; regexp to match words separated by special characters and &quot;(\w+)@(\w+)\.(\w+)&quot; regexp to match email addresses comprised of an user name, an at sign, a server name, a dot, and a domain name.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt; &lt; theFile.txt FindRepl /N<br />1:Line with an email address: joedoe@unknown.org<br />2:Please send mail to george@contoso.com and someone@example.com. Thanks!<br />3:Line number 3 with no email address<br /><br />C:\&gt; echo Number of lines: %errorlevel%<br />Number of lines: 3<br /><br />C:\&gt; set email=(\w+)@(\w+)\.(\w+)<br /><br />C:\&gt; &lt; theFile.txt FindRepl /N =email<br />1:Line with an email address: joedoe@unknown.org<br />2:Please send mail to george@contoso.com and someone@example.com. Thanks!<br /><br />C:\&gt; echo Lines with email addresses: %errorlevel%<br />Lines with email addresses: 2<br /><br />C:\&gt; rem Extract email addresses:<br /><br />C:\&gt; &lt; theFile.txt FindRepl /N =email /$:0<br />1: &quot;joedoe@unknown.org&quot;<br />2: &quot;george@contoso.com&quot; &quot;someone@example.com&quot;<br /><br />C:\&gt; echo Number of email addresses: %errorlevel%<br />Number of email addresses: 3<br /><br />C:\&gt; rem Separate email parts in domain, server, and user order:<br /><br />C:\&gt; &lt; theFile.txt FindRepl /N =email /$:3:2:1<br />1: &quot;org&quot; &quot;unknown&quot; &quot;joedoe&quot;<br />2: &quot;com&quot; &quot;contoso&quot; &quot;george&quot; &quot;com&quot; &quot;example&quot; &quot;someone&quot;<br /><br />C:\&gt; rem Separate words:<br /><br />C:\&gt; &lt; theFile.txt FindRepl &quot;(\w+)&quot; /$:1<br />&nbsp;&quot;Line&quot; &quot;with&quot; &quot;an&quot; &quot;email&quot; &quot;address&quot; &quot;joedoe&quot; &quot;unknown&quot; &quot;org&quot;<br />&nbsp;&quot;Please&quot; &quot;send&quot; &quot;mail&quot; &quot;to&quot; &quot;george&quot; &quot;contoso&quot; &quot;com&quot; &quot;and&quot; &quot;someone&quot; &quot;example&quot; &quot;com&quot; &quot;Thanks&quot;<br />&nbsp;&quot;Line&quot; &quot;number&quot; &quot;3&quot; &quot;with&quot; &quot;no&quot; &quot;email&quot; &quot;address&quot;<br /><br />C:\&gt; echo Number of words: %errorlevel%<br />Number of words: 27<br /><br />C:\&gt; rem Find/count capital letters:<br /><br />C:\&gt; &lt; theFile.txt FindRepl &quot;&#91;A-Z&#93;&quot; /$:0<br />&nbsp;&quot;L&quot;<br />&nbsp;&quot;P&quot; &quot;T&quot;<br />&nbsp;&quot;L&quot;<br /><br />C:\&gt; echo %errorlevel%<br />4<br /><br />C:\&gt; rem Count letters:<br /><br />C:\&gt; &lt; theFile.txt FindRepl /I &quot;&#91;A-Z&#93;&quot; /$:0 &gt; NUL<br /><br />C:\&gt; echo %errorlevel%<br />124<br /></code></pre></div><br /><br /><strong class="text-strong">FIND AND REPLACE STRINGS</strong><br /><br /><strong class="text-strong">1. Basic find and replace string usage</strong><br /><br />If the Replace part is given, then FindRepl.bat replaces the matched Search text with the Replace part. Note that &quot;the matched Search text&quot; is the same text previously described in Search part above, including blocks and /B:rBlock regexp. You may even replace text in a numbered block of lines; to do that, put &quot;&quot; in the Search text, use /O:s:e to select the block of lines and place the current Search text in /B: switch. The only switches that don't works in a Replace operation are /N and /$, but you may use a $ match variable in the Replace text in order to retrieve the saved submatched substrings as described at this site: http:<em class="text-italics">//</em>msdn.microsoft.com/en-us/library/t0kbytzc(v=vs.84).aspx<br /><br />- Eliminate all &quot;XYZ&quot; words:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl.bat &quot;\bXYZ\b&quot; &quot;&quot;</code></pre></div><br />- Replace all &quot;ACSD&quot; strings with &quot;XYZ&quot; (http:<em class="text-italics">//</em>www.dostips.com/forum/viewtopic.php?f=3&amp;t=3282):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl &quot;ACSD&quot; &quot;XYZ&quot;</code></pre></div><br />- Search for a specific word and replace the next 4 characters (http:<em class="text-italics">//</em>stackoverflow.com/questions/17085650/find-a-string-and-replace-specific-letters-in-batch-file):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl &quot;word ....&quot; &quot;word NEWC&quot;</code></pre></div><br />- Replace text in the line number 3 of the file only (http:<em class="text-italics">//</em>www.dostips.com/forum/viewtopic.php?f=3&amp;t=4697&amp;p=34923#p34923):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; file.txt FindRepl &quot;&quot; /O:3:3 /B:&quot;VALUETOCHANGE&quot; &quot;Given Value&quot;</code></pre></div><br /><br />In the Replace text you may insert the usual escaped characters: \t (TAB), \n (LF), \r (CR), etc., but you must use a double dollar sign ($$) in order to insert a literal $ character; the rest of characters are processed literally because the Replace text is <em class="text-italics">not</em> a regular expression. Also, because Batch-JScript interface problems, you can not insert a quote in the replace text even if it is stored in a Batch variable, but you may use the /Q switch to solve this problem. To do that, choose a character that you will insert in the Search and Replace parts in place of quotes and put the same character in /Q:c switch.<br /><br />- Change from 1 up to 8 spaces by a &lt;TAB&gt;:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile FindRepl &quot; {1,8}&quot; &quot;\t&quot;</code></pre></div><br />- Change the data value of a certain tag in a XML file (http:<em class="text-italics">//</em>stackoverflow.com/questions/17054275/changing-tag-data-in-an-xml-file-using-windows-batch-file):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.xml FindRepl &quot;(&lt;TagName&gt;).*(&lt;/TagName&gt;)&quot; &quot;$1NewValue$2&quot;</code></pre></div><br /><br /><strong class="text-strong">2. Replacing line delimiters</strong><br /><br />If the /B:rBlock text is &quot;\r\n&quot; (&lt;CR&gt;&lt;LF&gt; or end of line delimiter) and the sReplace string is &quot;&quot; (empty), then output lines are shown joined together in a long string without line separators. When the entire file is processed for Replace (no /V nor /N switches and no blocks are given), then the end of line delimiting characters (&quot;\r\n&quot; = &lt;CR&gt;&lt;LF&gt;) may be searched and replaced in any way you wish. For example:<br /><br />- Change &lt;LF&gt; Unix line delimiters to &lt;CR&gt;&lt;LF&gt; Windows ones:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; unixFile.txt FindRepl &quot;\n&quot; &quot;\r\n&quot; &gt; windowsFile.txt</code></pre></div><br />- Change &lt;CR&gt;&lt;LF&gt; Windows line delimiters to &lt;LF&gt; Linux ones:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; windowsFile.txt FindRepl &quot;\r\n&quot; &quot;\n&quot; &gt; unixFile.txt</code></pre></div><br /><br />If the entire file is processed for Replace this way, the value returned in ERRORLEVEL is zero.<br /><br />If the entire file is processed for Search (no /V nor /N nor blocks) and the /$ switch is given, then the end of line delimiters may be searched, but just the results of /$ switch will be displayed.<br /><br /><br /><strong class="text-strong">3. Find and replace multiple strings (/A switch)</strong><br /><br />Finally, support for fast replacement of multiple strings in just one pass of the file has been added. This feature is achieved via the /A switch and a series of <em class="text-italics">alternative</em> values separated by pipe character and placed in both Search and Replace text in the form of an &quot;alternation&quot;, as described at this site: http:<em class="text-italics">//</em>msdn.microsoft.com/en-us/library/kstkz771(v=vs.84).aspx<br /><br />- Replace certain names (three of them) by three different ones (http:<em class="text-italics">//</em>www.dostips.com/forum/viewtopic.php?f=3&amp;t=3848):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl &quot;Bob Jones|Mary|Tom Riley&quot; /A &quot;Fred Thomas|Jane|Doug Smith&quot;</code></pre></div><br /><br />- Translate day-of-the-week names from Spanish to English:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;spanish=lunes|martes|miércoles|jueves|viernes|sábado|domingo&quot;<br />set &quot;english=Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday&quot;<br />&lt; theFile.txt FindRepl =spanish /A =english<br /></code></pre></div><br /><br />Please note that this multi-string replacement can only be achieved with case sensitive literal strings. If a search alternative match different input texts (i.e. if it is a regular expression), the result will be wrong; for example: <strong class="text-strong">FindRepl /I &quot;One|Two|Three&quot; /A &quot;Uno|Dos|Tres&quot;</strong>. Previous example will replace &quot;One&quot; word by &quot;Uno&quot;, but any other word that may be matched as result of the /I switch will be deleted, like &quot;one&quot;, &quot;onE&quot;, etc. You may use <strong class="text-strong">FindRepl &quot;One|one|Two|two&quot; /A &quot;Uno|uno|Dos|dos&quot;</strong> as a provisional fix, but the next version of the program will solve this problem.<br /><br />The next example load a series of values from a replacements file with &quot;old:new&quot; format, and process a data file to replace all the strings. The multi-string replacement selection method is based on a direct access to an array element, so its speed is not affected by the number of elements. The only limit is the 8KB total size of the Batch variables that store the sets of replacements.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br />set search=<br />set replace=<br />for /F &quot;tokens=1,2 delims=:&quot; %%a in (replacements.txt) do (<br />&nbsp; &nbsp;set &quot;search=!search!|%%a&quot;<br />&nbsp; &nbsp;set &quot;replace=!replace!|%%b&quot;<br />)<br />set &quot;search=!search:~1!&quot;<br />set &quot;replace=!replace:~1!&quot;<br />&lt; theFile FindRepl =search /A =replace<br /></code></pre></div><br />You may also use an alternation to just Search a file for a long list of words.<br /><br /><br />FindRepl.bat program have not any kind of error detection; if you provide wrong parameters, the CScript run-time support will issue an error message. Although error detection code could be easily added, this point will increase the size of the (already large) JScript program.<br /><br />I encourage you to review the sites given in previous links about the Windows Script Host Regular Expression capabilities. A domain of this topic is the key to fully exploit the capabilities of this and other similar utilities.<br /><br />You are invited to use FindRepl.bat program and report any problem or bug you may find. Be aware that the processing of very large files depends on the available memory, so if the file is huge, then the program may take too long to complete. I tested FindRepl.bat with a 10.5 MB size file in my very old and limited Windows XP computer and get the right results after a couple minutes.<br /><br /><br />Antonio</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a> on 15 Dec 2014 22:02, edited 16 times in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p27025" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27025">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27025">
+
+						<h3 ><a href="#p27025">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5f82.html?mode=quote&amp;f=3&amp;p=27025" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic487c.html?p=27025#p27025" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopic487c.html?p=27025#p27025" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>26 Jun 2013 21:20
+			</p>
+			
+			
+			
+			<div class="content">How about an option to have your search strings in a file like the /G option of FINDSTR?<br /><br />On a side note: I have been meaning for years to figure out a better way to split a file based on the search strings in a FILE without having to use a  FOR loop or use two separate FINDSTR commands.<br /><br />Input<br />Inputfile.txt<br />Searchstrings.txt<br /><br />Output<br />Match.txt (lines that match the search strings text file)<br />NoMatch.txt (doesn't match the search strings.)<br /><br />Years ago I used a for loop to read the file in and then used FINDSTR and then checked the errorlevel.  But this was extremely slow and clunky.<br /><br />Always wondered if there was a better or faster way to do it.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p27028" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27028">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27028">
+
+						<h3 ><a href="#p27028">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting3166.html?mode=quote&amp;f=3&amp;p=27028" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic3f5f.html?p=27028#p27028" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopic3f5f.html?p=27028#p27028" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>26 Jun 2013 21:59
+			</p>
+			
+			
+			
+			<div class="content">That's impressive Aacini - it looks like a very powerful tool - and I only got 2/3 of the way through the great documentation before I ran out of steam.  I'll come back to finish later.<br /><br />Just two typos so far - this is missing findrepl.bat<br /><br /><span style="color: #0040FF">&lt; theFile.xml &quot;&lt;Category X&gt;&quot; /E:&quot;&lt;/Category X&gt;&quot; /B:&quot;Name&quot;</span><br /><br />and I think where you write <span style="color: #0040FF">arroba</span> in English it is commonly known as an 'at sign'<br /><br />One more point - the http links need to have spaces at the start and end, I think, otherwise they are plain text and not links.<br /><br />Cheers</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p27037" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27037">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27037">
+
+						<h3 ><a href="#p27037">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingd016.html?mode=quote&amp;f=3&amp;p=27037" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1be4.html?p=27037#p27037" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopic1be4.html?p=27037#p27037" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>27 Jun 2013 08:52
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Squashman wrote:</cite>How about an option to have your search strings in a file like the /G option of FINDSTR?<br /></div></blockquote>@Squashman,<br /><br />I didn't included this option because it would add even more code and resources (like FileSystemObject) to the already large program. A JScript program is compiled every time it is used and FindRepl is intended to be used frequently with small files (/G switch is not one of the most used options). Besides, the loading of search strings from a file may be done easily in Batch. If /G option would be included and the strings would be used on several files, the strings file would be loaded again with each file (unless the program be modified to also process files by itself via wild-cards). If the strings file is processed apart, you may use the created strings variable in several FindRepl executions.<br /><br />For example, your program could be written this way:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br />rem FINDSTRINGS.BAT inputFile stringsFile<br />set search=<br />for /F &quot;delims=&quot; %%a in (%2) do set &quot;search=!search!|%%a&quot;<br />set &quot;search=!search:~1!&quot;<br />&lt; %1 call FindRepl =search &gt; Match.txt<br />&lt; %1 call FindRepl =search /V &gt; NoMatch.txt<br /></code></pre></div><br /><br /><br /><blockquote><div><cite>foxidrive wrote:</cite>One more point - the http links need to have spaces at the start and end, I think, otherwise they are plain text and not links.</div></blockquote>@foxidrive,<br /><br />Thanks a lot for reporting the typos foxi, I fixed them...<br /><br />In this forum the number of links in each post are limited to just 2, so in order to include more we need to disguise they in a way that the site engine don't detect them. The trick (that I borrowed from someone else, don't remember who) is to enclose the double slashes between italic tags. Of course, you need to copy the link and paste it in the navigator bar in order to use it...<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p27038" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27038">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27038">
+
+						<h3 ><a href="#p27038">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8a14.html?mode=quote&amp;f=3&amp;p=27038" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice40f.html?p=27038#p27038" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopice40f.html?p=27038#p27038" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>27 Jun 2013 09:17
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite>For example, your program could be written this way:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; %1 call FindRepl =search &gt; Match.txt<br />&lt; %1 call FindRepl =search /V &gt; NoMatch.txt<br /></code></pre></div><br />Antonio</div></blockquote><br />Trying to avoid running it twice. I work with very large files.  I guess I will have to get back into programming again.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p27042" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27042">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistb405.html?mode=viewprofile&amp;u=4696" class="username">Endoro</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search644b.html?author_id=4696&amp;sr=posts">244</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 27 Mar 2013 01:29</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Bozen</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27042">
+
+						<h3 ><a href="#p27042">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8274.html?mode=quote&amp;f=3&amp;p=27042" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic00aa.html?p=27042#p27042" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopic00aa.html?p=27042#p27042" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistb405.html?mode=viewprofile&amp;u=4696" class="username">Endoro</a></strong> &raquo; </span>27 Jun 2013 12:11
+			</p>
+			
+			
+			
+			<div class="content">I miss a &quot;/g:file&quot; option in sed every day (or every other day).<br />I manage myself with unpleasant constructions such as <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>sed -r &quot;s#(.*)#/\1/d#&quot; fileB | sed -f - fileA</code></pre></div><br /><br />It would be nice to have something better   <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p27048" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27048">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistfff4.html?mode=viewprofile&amp;u=3621" class="username">brinda</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6a76.html?author_id=3621&amp;sr=posts">78</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 25 Apr 2012 23:51</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27048">
+
+						<h3 ><a href="#p27048">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinge03e.html?mode=quote&amp;f=3&amp;p=27048" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic82f2.html?p=27048#p27048" onclick="prompt('Message #7',this.href); return false;">#7</a></span> 
+									<a class="unread" href="viewtopic82f2.html?p=27048#p27048" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistfff4.html?mode=viewprofile&amp;u=3621" class="username">brinda</a></strong> &raquo; </span>27 Jun 2013 19:02
+			</p>
+			
+			
+			
+			<div class="content">Antonio,<br /><br />thanks for providing this. Something to replace grep in batch +  it has replace functions as well.<br /><br />Now for reading the manual <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><br />thank you.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p27052" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27052">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27052">
+
+						<h3 ><a href="#p27052">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingb87f.html?mode=quote&amp;f=3&amp;p=27052" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic950d.html?p=27052#p27052" onclick="prompt('Message #8',this.href); return false;">#8</a></span> 
+									<a class="unread" href="viewtopic950d.html?p=27052#p27052" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>27 Jun 2013 21:06
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite><blockquote><div><cite>foxidrive wrote:</cite>One more point - the http links need to have spaces at the start and end, I think, otherwise they are plain text and not links.</div></blockquote>@foxidrive,<br /><br />In this forum the number of links in each post are limited to just 2, so in order to include more we need to disguise they in a way that the site engine don't detect them. The trick (that I borrowed from someone else, don't remember who) is to enclose the double slashes between italic tags. Of course, you need to copy the link and paste it in the navigator bar in order to use it...<br /><br />Antonio</div></blockquote><br /><br />I hadn't realised there was limit - I see. ta.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p27060" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27060">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27060">
+
+						<h3 ><a href="#p27060">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingbcf3.html?mode=quote&amp;f=3&amp;p=27060" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic0eaf.html?p=27060#p27060" onclick="prompt('Message #9',this.href); return false;">#9</a></span> 
+									<a class="unread" href="viewtopic0eaf.html?p=27060#p27060" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>28 Jun 2013 09:11
+			</p>
+			
+			
+			
+			<div class="content">@Squashman,<br /><br />I wrote a small program that fulfills your specific needs:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (@CodeSection == @Batch) @then<br /><br />@echo off<br />if &quot;%~2&quot; neq &quot;&quot; if &quot;%~1&quot; neq &quot;/?&quot; goto begin<br />&nbsp; &nbsp;echo Load strings from a file and search them in another file<br />&nbsp; &nbsp;echo/<br />&nbsp; &nbsp;echo FINDSTRINGS &#91;I&#93; &#91;/N1&#93; &#91;/N2&#93; dataFile stringsFile<br />&nbsp; &nbsp;echo/<br />&nbsp; &nbsp;echo&nbsp; &nbsp;/I&nbsp; &nbsp; &nbsp; &nbsp; Specifies that the search is not to be case-sensitive.<br />&nbsp; &nbsp;echo&nbsp; &nbsp;/N1 /N2&nbsp; &nbsp;Prints line numbers before lines that matches/not matches.<br />&nbsp; &nbsp;echo/<br />&nbsp; &nbsp;echo Matching lines are printed in Stdout and non-matching lines in Stderr.<br />&nbsp; &nbsp;goto :EOF<br />:begin<br />&nbsp; &nbsp;CScript //nologo //E:JScript &quot;%~F0&quot; %*<br />&nbsp; &nbsp;exit /B %errorlevel%<br /><br />@end<br /><br />// JScript section<br /><br />var options = WScript.Arguments.Named,<br />&nbsp; &nbsp; args&nbsp; &nbsp; = WScript.Arguments.Unnamed,<br />&nbsp; &nbsp; ignoreCase&nbsp; = options.Exists(&quot;I&quot;)?&quot;i&quot;:&quot;&quot;,<br />&nbsp; &nbsp; showNumber1 = options.Exists(&quot;N1&quot;),<br />&nbsp; &nbsp; showNumber2 = options.Exists(&quot;N2&quot;);<br /><br />if ( args.Length &lt; 2 ) WScript.Quit(1);<br /><br />var fso = new ActiveXObject(&quot;Scripting.FileSystemObject&quot;),<br />&nbsp; &nbsp; file = fso.OpenTextFile(args.Item(1), 1),&nbsp; // stringsFile, ForReading<br />&nbsp; &nbsp; search = file.ReadLine().replace(/(&#91;&#93;&#91;*+?^$.{}()|/\\&#93;)/g,&quot;\\$1&quot;);<br />while ( ! file.AtEndOfStream ) {<br />&nbsp; &nbsp;search += &quot;|&quot; + file.ReadLine().replace(/(&#91;&#93;&#91;*+?^$.{}()|/\\&#93;)/g,&quot;\\$1&quot;);<br />}<br />file.Close();<br />search = new RegExp(search,&quot;g&quot;+ignoreCase);<br />file = fso.OpenTextFile(args.Item(0), 1);&nbsp; // dataFile, ForReading<br />while ( ! file.AtEndOfStream ) {<br />&nbsp; &nbsp;var line = file.ReadLine();<br />&nbsp; &nbsp;if ( line.search(search) &gt;= 0 ) {<br />&nbsp; &nbsp; &nbsp; if ( showNumber1 ) WScript.Stdout.Write((file.Line-1)+&quot;:&quot;);<br />&nbsp; &nbsp; &nbsp; WScript.Stdout.WriteLine(line);<br />&nbsp; &nbsp;} else {<br />&nbsp; &nbsp; &nbsp; if ( showNumber2 ) WScript.Stderr.Write((file.Line-1)+&quot;:&quot;);<br />&nbsp; &nbsp; &nbsp; WScript.Stderr.WriteLine(line);<br />&nbsp; &nbsp;}<br />}<br />file.Close();<br />WScript.Quit(0);<br /></code></pre></div><br />For example:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FINDSTRINGS Inputfile.txt Searchstrings.txt &gt; Match.txt 2&gt; NoMatch.txt<br /></code></pre></div><br /><br />Enjoy! <img class="smilies" src="images/smilies/icon_mrgreen.gif" alt=":mrgreen:" title="Mr. Green" /> <br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p27062" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27062">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27062">
+
+						<h3 ><a href="#p27062">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingb64f.html?mode=quote&amp;f=3&amp;p=27062" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicfb84.html?p=27062#p27062" onclick="prompt('Message #10',this.href); return false;">#10</a></span> 
+									<a class="unread" href="viewtopicfb84.html?p=27062#p27062" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>28 Jun 2013 17:37
+			</p>
+			
+			
+			
+			<div class="content">Very nice work Antonio. You have implemented many features on my wish list for a find utility, and added others I hadn't even thought of.<br /><br />I'm not convinced that combining a search utility with a replace utility is the best option. I'm guessing that it might be easier to provide two specialized utilities that are cumulatively more powerful then a single combined utility. I'm thinking easier both from a coding standpoint, and from a documentation and usability standpoint. But that really is a guess - I haven't studied your code or done any design work.<br /><br />One feature I miss in your utility is the lost ability to read one line at a time. It is not uncommon to have a chain of pipes, and your use of ReadAll() serializes that step in the chain. The next pipe can't begin until your process is complete. ReadAll() also is less then ideal for really large files. I wonder what it would take to restructure things to read and process one line at a time whenever possible.<br /><br />One feature I particularly like is your option to only print modified lines when doing a replace. I borrowed that idea and added it to my REPL.BAT utility.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p27081" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27081">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistfff4.html?mode=viewprofile&amp;u=3621" class="username">brinda</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6a76.html?author_id=3621&amp;sr=posts">78</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 25 Apr 2012 23:51</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27081">
+
+						<h3 ><a href="#p27081">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8212.html?mode=quote&amp;f=3&amp;p=27081" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6797.html?p=27081#p27081" onclick="prompt('Message #11',this.href); return false;">#11</a></span> 
+									<a class="unread" href="viewtopic6797.html?p=27081#p27081" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistfff4.html?mode=viewprofile&amp;u=3621" class="username">brinda</a></strong> &raquo; </span>30 Jun 2013 23:47
+			</p>
+			
+			
+			
+			<div class="content">Antonio,<br /><br />this is great. No need to get permission on using downloaded exe from web to use for potential virus etc.<br /><br />was using grep from <a href="http://unxutils.sourceforge.net/" class="postlink">http://unxutils.sourceforge.net/</a>. Very little knowledge on regex<br /><br />sample on grep + repl<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%g IN (*%%f_LN*) do (<br />&nbsp; &nbsp; ..\grep -B 7 -P &quot;Check Voltage is&quot; &quot;%%g&quot; |findstr /v /c:&quot;Check Voltage is&quot; | ..\repl &quot;\r|\n&quot; &quot;&quot; M &gt;&gt; ..\test.htm<br />)</code></pre></div><br /><br />replace by findrepl<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%g IN (*%%f_LN*) do (<br />&lt; &quot;%%g&quot; ..\findrepl&nbsp; &quot;Check Voltage is&quot; /O:-7:0 |findstr /v /c:&quot;Check Voltage is&quot; | ..\findrepl &quot;\r\n&quot; &quot;&quot; &gt;&gt; ..\test.htm<br />)</code></pre></div><br /><br />Not only that, Could not notice any noticable difference when running through 58 files with each less than 1MB size in WIN2000 SP4. <br /><br />Thanks again for this.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p27082" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27082">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27082">
+
+						<h3 ><a href="#p27082">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0895.html?mode=quote&amp;f=3&amp;p=27082" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicce97.html?p=27082#p27082" onclick="prompt('Message #12',this.href); return false;">#12</a></span> 
+									<a class="unread" href="viewtopicce97.html?p=27082#p27082" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>01 Jul 2013 05:35
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>brinda wrote:</cite>No need to get permission on using downloaded exe from web to use for potential virus etc.</div></blockquote><br /> <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" />  <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" />  <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p27084" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27084">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistfff4.html?mode=viewprofile&amp;u=3621" class="username">brinda</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6a76.html?author_id=3621&amp;sr=posts">78</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 25 Apr 2012 23:51</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27084">
+
+						<h3 ><a href="#p27084">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting97b4.html?mode=quote&amp;f=3&amp;p=27084" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic2f66.html?p=27084#p27084" onclick="prompt('Message #13',this.href); return false;">#13</a></span> 
+									<a class="unread" href="viewtopic2f66.html?p=27084#p27084" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistfff4.html?mode=viewprofile&amp;u=3621" class="username">brinda</a></strong> &raquo; </span>01 Jul 2013 06:15
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Squashman wrote:</cite><blockquote><div><cite>brinda wrote:</cite>No need to get permission on using downloaded exe from web to use for potential virus etc.</div></blockquote><br /> <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" />  <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" />  <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" /></div></blockquote><br /><br />squashman,<br /><br />at my work place. They do not allow grep.exe or anything to be downloaded for fear of virus etc eventhough an anti-virus is there - policy. A lot of proof is needed before the downloaded program gets approved + even than there is always the check that if anything goes wrong while using this - the fault lies with the user who downloaded. sorry, left the word out. <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p27087" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27087">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27087">
+
+						<h3 ><a href="#p27087">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting3efd.html?mode=quote&amp;f=3&amp;p=27087" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7228.html?p=27087#p27087" onclick="prompt('Message #14',this.href); return false;">#14</a></span> 
+									<a class="unread" href="viewtopic7228.html?p=27087#p27087" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>01 Jul 2013 09:56
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>brinda wrote:</cite><blockquote><div><cite>Squashman wrote:</cite><blockquote><div><cite>brinda wrote:</cite>No need to get permission on using downloaded exe from web to use for potential virus etc.</div></blockquote><br /> <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" />  <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" />  <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" /></div></blockquote><br /><br />squashman,<br /><br />at my work place. They do not allow grep.exe or anything to be downloaded for fear of virus etc eventhough an anti-virus is there - policy. A lot of proof is needed before the downloaded program gets approved + even than there is always the check that if anything goes wrong while using this - the fault lies with the user who downloaded. sorry, left the word out. <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div></blockquote><br />Then your English is a bit broken.  You basically said you did not need permission to download executable files from the web.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p27103" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile27103">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content27103">
+
+						<h3 ><a href="#p27103">Re: New regex utility to search and replace strings in files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting147b.html?mode=quote&amp;f=3&amp;p=27103" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic081e.html?p=27103#p27103" onclick="prompt('Message #15',this.href); return false;">#15</a></span> 
+									<a class="unread" href="viewtopic081e.html?p=27103#p27103" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>02 Jul 2013 04:51
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>brinda wrote:</cite>replace by findrepl<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%g IN (*%%f_LN*) do (<br />&lt; &quot;%%g&quot; ..\findrepl&nbsp; &quot;Check Voltage is&quot; /O:-7:0 |findstr /v /c:&quot;Check Voltage is&quot; | ..\findrepl &quot;\r\n&quot; &quot;&quot; &gt;&gt; ..\test.htm<br />)</code></pre></div><br /></div></blockquote><br />@brinda,<br /><br />If I correctly understood your code, you get first a block of 8 lines that ends at &quot;Check Voltage is&quot; line (with first FindRepl), and then eliminate the bottom line (with findstr /v). In this case the findstr is not necessary; just get the appropriate block of lines directly with FindRepl (from -7 to -1):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%g IN (*%%f_LN*) do (<br />&lt; &quot;%%g&quot; ..\findrepl&nbsp; &quot;Check Voltage is&quot; /O:-7:-1 | ..\findrepl &quot;\r\n&quot; &quot;&quot; &gt;&gt; ..\test.htm<br />)</code></pre></div><br /><br />I slightly modified FindRepl.bat program so it may also eliminate the end-of-line delimiters when the /B:rBlock is &quot;\r\n&quot; and the sReplace string is &quot;&quot;. If you use the modified version of this program (just copy it again from above), you may solve your problem this way:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%g IN (*%%f_LN*) do (<br />&lt; &quot;%%g&quot; ..\findrepl&nbsp; &quot;Check Voltage is&quot; /O:-7:-1 /B:&quot;\r\n&quot; &quot;&quot; &gt;&gt; ..\test.htm<br />)</code></pre></div><br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting6172.html?mode=reply&amp;f=3&amp;t=4697" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic794c.html?f=3&amp;t=4697&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4697">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			135 posts
+							<ul>
+	<li class="dropdown-container dropdown-button-control dropdown-page-jump page-jump">
+		<a class="button button-icon-only dropdown-trigger" href="#" title="Click to jump to page…" role="button"><i class="icon fa-level-down fa-rotate-270" aria-hidden="true"></i><span class="sr-only">Page <strong>1</strong> of <strong>9</strong></span></a>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+				<li>Jump to page:</li>
+				<li class="page-jump-form">
+					<input type="number" name="page-number" min="1" max="999999" title="Enter the page number you wish to go to" class="inputbox tiny" data-per-page="15" data-base-url=".&#x2F;viewtopic.php&#x3F;f&#x3D;3&amp;amp&#x3B;t&#x3D;4697" data-start-name="start" />
+					<input class="button2" value="Go" type="button" />
+				</li>
+			</ul>
+		</div>
+	</li>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopicb35e.html?f=3&amp;t=4697&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopiccabf.html?f=3&amp;t=4697&amp;start=30" role="button">3</a></li>
+				<li><a class="button" href="viewtopic31ec.html?f=3&amp;t=4697&amp;start=45" role="button">4</a></li>
+				<li><a class="button" href="viewtopic507f.html?f=3&amp;t=4697&amp;start=60" role="button">5</a></li>
+			<li class="ellipsis" role="separator"><span>…</span></li>
+				<li><a class="button" href="viewtopicc178.html?f=3&amp;t=4697&amp;start=120" role="button">9</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopicb35e.html?f=3&amp;t=4697&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cronc6bf.gif?cron_type=cron.task.text_reparser.user_signature" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=27042 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:35 GMT -->
+</html>

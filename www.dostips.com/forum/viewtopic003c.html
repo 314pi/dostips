@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7153&start=90&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:30:36 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Cmdgfx - draw 3d and graphic primitives (polygons,circles etc) in cmd window - Page 7</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Cmdgfx - draw 3d and graphic primitives (polygons,circles etc) in cmd window</h2>
+		<p><a href="viewtopic9d55.html?f=3&amp;t=7153">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7153</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>7</strong> of <strong>7</strong></div>
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>29 Mar 2018 14:12</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content"><strong class="text-strong">Moved from elsewhere:</strong><br>
+<br>
+Coincidentally, I had just made a bouncing ball script using the "opposite" of "pure batch" - javascript for logic and cmdgfx for rendering. Here is a screenshot with 50 balls, with a shadow for each ball, running at 76 FPS:<br>
+<br>
+<img src="https://uc1468689bc30ef83959eca0e3a5.dl.dropboxusercontent.com/cd/0/inline/ATa2zj7LyzvwWTo9MFEawJd5xJf88_m8ojFfVf-_hdUPuBRIKNyG422O0kZMxquJ7RyrlA3WYKX3xqj28PRv_997Dern29jq4tt5wUg3AUVWMvIRAsDm8F46_Ne77IDlGVROfOfuCHQYyXpopEaLuuaPvYpscPOEA9FXSONILK3QLJUsyGMrpVRQIqcoXGgVO1Y/file" class="postimage" alt="Image"><br>
+<br>
+Archive is here: <a href="http://www.mediafire.com/file/ihbnkm2wyw7yrzs/bounce.zip" class="postlink">http://www.mediafire.com/file/ihbnkm2wy ... bounce.zip</a><br>
+<br>
+By the way, this is an interesting way to test the speed of your machine (CPU). Press Cursor left to remove 10 balls, and cursor right to add 10 balls. Then observe the top left text within paranthesis. As long as it is 76 or more, you are still running at full frame rate.<br>
+<br>
+On my Win7 machine, I can do 340 balls before FPS starts going down. At 500 balls (maximum) it's down to 46 FPS.<br>
+<br>
+And code:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (true == false) @end /*
+@echo off
+if defined __ goto :START
+set __=.
+cmdgfx_input.exe knW13x | call %0 %* | cmdgfx_gdi "" Sf0:0,0,320,220,240,100G16,16
+set __=
+cmdwiz showcursor 1 &amp; goto :eof
+
+:START
+cmdwiz setfont 6 &amp; cls &amp; mode 120,50 &amp; cmdwiz showcursor 0
+cscript //nologo //e:javascript "%~dpnx0" %*
+::cmdwiz getch &amp; rem Enable this line to see jscript parse errors
+mode 80,50
+echo "cmdgfx: quit"
+title input:Q
+exit /b 0 */
+
+var maxBalls=500, nofShownBalls=50, w=240, h=100
+var ballsX=[], ballsY=[], ballsSX=[], ballsI=[], ballsYC=[], ballsYH=[], ballsSXcale=[], ballsCol=[]
+var bI = ["ball4-t.gxy"], bIw = [13,11,9], bIh = [10,8,6]
+
+var multiCol=1, shadow=1, extraFlag=""
+var showHelp=1, helpMsg="text 7 0 0 SPACE\\-ENTER\\-\\g11\\g10\\-p\\-h 1,98", skip=["rem "," "]
+
+for (i = 0; i &lt; maxBalls; i++) {
+	ballsX.push(Math.floor(Math.random() * w))
+	ballsY.push(Math.floor(Math.random() * h))
+	ballsSX.push(Math.random() * 1.8 + 0.1)
+	ballsYC.push(Math.random() * Math.PI + Math.PI);
+	ballsYH.push(Math.floor(Math.random() * 50) + 45);
+	ballsI.push(Math.floor(Math.random() * bI.length))
+	ballsSXcale.push(Math.floor(Math.random() * bIw.length))
+	ballsCol.push(Math.floor(Math.random() * 6))
+}
+
+WScript.Echo("\"cmdgfx: fbox 1 0 X &amp; image ball4-t.gxy 0 0 0 -1 260,0 &amp; image ball4-t.gxy 0 0 0 -1 282,2 0 0 11,8 &amp; image ball4-t.gxy 0 0 0 -1 303,4 0 0 9,6" + "\" ")
+WScript.Echo("\"cmdgfx: block 0 260,0,60,10 260,10 -1 0 0 c4??=91??,?4??=?1??,c???=9???,?c??=?9??" + "\" ")
+WScript.Echo("\"cmdgfx: block 0 260,0,60,10 260,20 -1 0 0 c4??=a2??,?4??=?2??,c???=a???,?c??=?a??" + "\" ")
+WScript.Echo("\"cmdgfx: block 0 260,0,60,10 260,30 -1 0 0 c4??=d5??,?4??=?5??,c???=d???,?c??=?d??" + "\" ")
+WScript.Echo("\"cmdgfx: block 0 260,0,60,10 260,40 -1 0 0 c4??=e6??,?4??=?6??,c???=e???,?c??=?e??" + "\" ")
+WScript.Echo("\"cmdgfx: block 0 260,0,60,10 260,50 -1 0 0 c4??=78??,?4??=?8??,c???=7???,?c??=?7??" + "\" ")
+WScript.Echo("\"cmdgfx: block 0 260,0,60,10 260,60 -1 0 0 c4??=b3??,?4??=?3??,c???=b???,?c??=?b??" + "\" ")
+
+while(true) {
+	outString="fbox 1 0 b1 0,0," + w + "," + h + " &amp; fbox 1 0 b0 0," + (h-8) + "," + w + ",8"
+	for (i = 0; i &lt; nofShownBalls; i++) {
+		ballsX[i] = (ballsX[i] + ballsSX[i]);
+		if (ballsX[i] &gt; w || ballsX[i] &lt; 0) ballsSX[i] = -ballsSX[i];
+		ballsY[i] = Math.floor(Math.sin(ballsYC[i]) * ballsYH[i]) + 95;
+		ballsYC[i] += 0.025; if (ballsYC[i] &gt; Math.PI*2) { ballsYC[i] = Math.PI; } // ballsYH[i]*=0.7;
+		outString += "&amp; block 0 " + (260 + ballsSXcale[i]*20) + "," + (ballsCol[i] * 10 * multiCol) + ",13,10 " + Math.floor(ballsX[i]-bIw[ballsI[i]]/2) + "," + Math.floor(ballsY[i]-bIh[ballsI[i]]/2) + " 58"
+	}
+	if (shadow==1) outString += " &amp; block 0 0,0," + w + "," + h + " 0," + h + " -1 0 0 10b1=1058" + " &amp; block 0 0,0," + w + "," + h + " 8,-2 -1 0 0 10b?=10b1,????=10b0" + " &amp; block 0 0," + h + "," + w + "," + h + " 0,0 58" ;
+	WScript.Echo("\"cmdgfx:" + outString + " &amp; " + skip[showHelp] + helpMsg + " &amp; text a 0 0 " + nofShownBalls + ":_[FRAMECOUNT] 1,1" + "\" " + extraFlag)
+	extraFlag=""
+
+	var input = WScript.StdIn.ReadLine()
+	var ti = input.split(" ")
+	if (ti[3] == "1")
+	{
+		var key=ti[5]
+		if (key == "27") break
+		if (key == "32") multiCol = 1 - multiCol
+		if (key == "13") shadow = 1 - shadow
+		if (key == "104") showHelp = 1 - showHelp
+		if (key == "331") { nofShownBalls-=10; if (nofShownBalls &lt;= 0) nofShownBalls = 1; extraFlag="C" }
+		if (key == "333") { nofShownBalls+=10; if (nofShownBalls &gt; maxBalls) nofShownBalls = maxBalls; extraFlag="C" }
+		if (key == "112") WScript.Echo("\"cmdgfx: \" K")
+	}
+}
+</code></pre></div>
+
+If speed is the aim, I'd strongly recommend a Javascript / batch hybrid. We are talking magntitudes of 10-100 times faster than Batch. Still not as fast as compiled C of course, but still...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>29 Mar 2018 14:22</strong></div>
+				<div class="author">by <strong>IcarusLives</strong></div>
+				<div class="content">I am absolutely in love with your graphics and animations! Excellent work, my friend!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>06 Jun 2018 20:43</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content"><strong class="text-strong">Repo and archive was updated</strong>. Most importantly, this version brings added speed to the GDI version, especially for when running fullscreen or with large windows.<br>
+<br>
+For example, on my Win10 machine, the fullscreen example script <strong class="text-strong">servH-zoom-maximized-custom-palette.bat</strong> can now run at 80 FPS (previously 33) on my 1920x1080 desktop.<br>
+<br>
+<em class="text-italics">( On a technical note, I found that CreateDIBSection and manipulating the bitmap directly was much faster than calling CreateBitmap every frame)</em><br>
+<br>
+<strong class="text-strong">Full list of changes:</strong><br>
+<br>
+1. Cmdgfx_gdi.exe output speed improved<br>
+2. Performance for textures with transparency ('3d/tpoly' operations) was improved (see e.g. servH-sphere-texture.bat)<br>
+3. 'fbox' operation now accepts three params only to clear entire buffer<br>
+4. 'Image' and 'text' operation: possible to precede text color with '\' to mean that '\' codes should not be treated specially at all (=plaintext)<br>
+5. Forcing foreground or background color now supported for 'text' operation also (by preceding color with a '-' character)<br>
+6. 'G' flag minimum now 16,16 (plus bug fix)<br>
+7. Bug fix: starting cmdgfx with 'fc' font no longer captures a screenshot<br>
+8. When reading gxy files, tab(9) is now written as space if encountered plain (not if written as \g09)<br>
+9. The 'image', 'tpoly', and '3d' operations now has a workaround to support spaces in filenames. All spaces must be replaced with a '~' character when provided to these operations<br>
+ <br>
+As for the <strong class="text-strong">scripts</strong>, all remaining dependencies on BG.exe was finally removed completely. The window manager BWin (<a href="viewtopic4cd1.html?f=3&amp;t=8484" class="postlink">viewtopic.php?f=3&amp;t=8484</a>) was added to the archive, as well as the scripts <em class="text-italics">'server-objsplit.bat'</em> (image below), and<em class="text-italics"> 'server-bounce-js.bat' </em>(image above)<br>
+<br>
+<img src="https://ucd294642b0cb6695a9a87fac891.dl.dropboxusercontent.com/cd/0/inline/ATa431K1wUpaoJ_7TXP7ugDuiqeJLan-zedIHhY-vXzy1-Tu9DRXPCEV4ejUmopqdsR_UfWC4wGvobldKmtMFPHQthSmpDrdrEbNAbCV7mSkCVgDetBXnzxZYIwL6rvn3MMnXZG4ce4VNpg7vuNK1kU_l4f1oxg9TLWHm3aHbjq-sklPhNOUVcKgoTMg9ZXKQsM/file" class="postimage" alt="Image"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw 3d and graphic primitives (polygons,circles etc) in cmd window</h3>
+				<div class="date">Posted: <strong>21 Aug 2018 18:37</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content"><strong class="text-strong">Repo and archive was updated.</strong> <br>
+<br>
+This is a minor release, but it still has a fairly large number of changes:<br>
+<br>
+1. cmdgfx_input: Added 'R' flag to report on the dimensions of the current window, since in Win10 any cmd window can be resized with the mouse. When 'R' is enabled, event data sent by cmdgfx_input has the following extra data added: <em class="text-italics">RESIZE_EVENT 0 W 220 H 75</em>. If RESIZE_EVENT was 1, then the window was just resized and we can respond to this from within our script. The window manager BWin (included in the archive) now uses this functionality, as well as new example script 'server-checkerbox-resizeable.bat'. Another more lazy way of dealing with resizing of console windows is to disable this functionality for the current window: use <em class="text-italics">cmdwiz setwindowstyle clear standard 0x00040000L</em><br>
+<br>
+2. Added a window title for all server script examples and games (not sure why I didn't earlier). Also, for pixel font examples, I added a list of available keys in the title<br>
+<br>
+3. New flag 'U' for cmdgfx_gdi to draw not into console window but anywhere on desktop! This can be used for example to force fullscreen even on Windows 7. Beware though, it really draws on top of everything else. (Note that "cmdwiz fullscreen" operation is now using official 100% fullscreen API, but it does not work on Windows 7)<br>
+4. New flag 'I' to to enable using title bar for cmdgfx (same as cmdgfx_input can do), to avoid file writes to 'servercmd.dat'. Title must be set as <em class="text-italics">output: "operations" flags</em>. Use <em class="text-italics">output: "" flags</em> to only set flags. (Former 'I' flag is now 'J')<br>
+5. New flag 'Ln,n' to affect light calculations for 3d operation in mode 1, draw option 0 (used in 'server-lsystem-js-3d.bat')<br>
+6. New flag 'd' for error messages, to write out the actual full erroneous operation in case of an error<br>
+<br>
+7. Bug fix: If a material was set in an obj file and a face with two points was encountered, nothing was drawn. Now draws a line like it should (ignoring the bitmap)<br>
+8. Bug fix: Draw single vertex face in mode 1(z-sourced light) as bitmap if material set (as in mode 0,5,6). Still not drawn for mode 2-4 (not possible in mode 2, not logical in mode 3-4)</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>7</strong> of <strong>7</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7153&start=90&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:30:38 GMT -->
+</html>

@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=56865 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:01:39 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>JREN.BAT v2.8 - Rename files/folders using regular expressions - Page 3 - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopicd17c.html?t=6081&amp;start=30">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic0809.html?f=3&amp;t=6081&amp;start=30">JREN.BAT v2.8 - Rename files/folders using regular expressions</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="postingb188.html?mode=reply&amp;f=3&amp;t=6081" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicd410.html?f=3&amp;t=6081&amp;start=30&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="6081" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			50 posts
+							<ul>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopice449.html?f=3&amp;t=6081&amp;start=15" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopic7124.html?f=3&amp;t=6081" role="button">1</a></li>
+				<li><a class="button" href="viewtopice449.html?f=3&amp;t=6081&amp;start=15" role="button">2</a></li>
+			<li class="active"><span>3</span></li>
+				<li><a class="button" href="viewtopiccac4.html?f=3&amp;t=6081&amp;start=45" role="button">4</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopiccac4.html?f=3&amp;t=6081&amp;start=45" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p54473" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54473">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist1581.html?mode=viewprofile&amp;u=8901" class="username">kurokirasama</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche0f7.html?author_id=8901&amp;sr=posts">3</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 19 Sep 2017 18:03</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54473">
+
+						<h3 class="first"><a href="#p54473">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingc06f.html?mode=quote&amp;f=3&amp;p=54473" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4e05.html?p=54473#p54473" onclick="prompt('Message #31',this.href); return false;">#31</a></span> 
+									<a class="unread" href="viewtopic4e05.html?p=54473#p54473" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist1581.html?mode=viewprofile&amp;u=8901" class="username">kurokirasama</a></strong> &raquo; </span>23 Oct 2017 19:42
+			</p>
+			
+			
+			
+			<div class="content">Hello,<br /><br />is there a way to remove japanese characters from filenames using jren?<br /><br />Regards,</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54486" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54486">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54486">
+
+						<h3 ><a href="#p54486">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingbf61.html?mode=quote&amp;f=3&amp;p=54486" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic475a.html?p=54486#p54486" onclick="prompt('Message #32',this.href); return false;">#32</a></span> 
+									<a class="unread" href="viewtopic475a.html?p=54486#p54486" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>24 Oct 2017 11:02
+			</p>
+			
+			
+			
+			<div class="content">This should be possible, but I haven't tested.<br /><br />JREN works internally using JSCRIPT, which in turn uses Unicode. So you simply need to know the various Unicode code point ranges that correspond to Japanese characters, and then transform that into a regex square bracket character set expression. I'm pretty sure this list is incomplete, but it should get you started:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jren &quot;&#91;\u4E00-\u9FbF\u3040-\u309F\u30A0-\u30FF&#93;&quot; &quot;&quot;<br /></code></pre></div><br /><br />Perhaps you could simply remove all characters that are not ASCII, which would be much simpler to specify<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jren &quot;&#91;^\u0000-\u007F&#93;&quot; &quot;&quot;<br /></code></pre></div>or<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jren &quot;&#91;^\x00-\x7F&#93;&quot; &quot;&quot;<br /></code></pre></div><br /><br />Of course, nothing will work if the names consist of only Japanese characters, or it you end up with duplicate names when you remove the Japanese characters.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54487" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54487">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist1581.html?mode=viewprofile&amp;u=8901" class="username">kurokirasama</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche0f7.html?author_id=8901&amp;sr=posts">3</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 19 Sep 2017 18:03</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54487">
+
+						<h3 ><a href="#p54487">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingdde3.html?mode=quote&amp;f=3&amp;p=54487" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopiceda8.html?p=54487#p54487" onclick="prompt('Message #33',this.href); return false;">#33</a></span> 
+									<a class="unread" href="viewtopiceda8.html?p=54487#p54487" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist1581.html?mode=viewprofile&amp;u=8901" class="username">kurokirasama</a></strong> &raquo; </span>24 Oct 2017 12:37
+			</p>
+			
+			
+			
+			<div class="content">Thanks a lot. Is there any difference between the last 2 command?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54488" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54488">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54488">
+
+						<h3 ><a href="#p54488">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7ab6.html?mode=quote&amp;f=3&amp;p=54488" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicc3f2.html?p=54488#p54488" onclick="prompt('Message #34',this.href); return false;">#34</a></span> 
+									<a class="unread" href="viewtopicc3f2.html?p=54488#p54488" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>24 Oct 2017 12:49
+			</p>
+			
+			
+			
+			<div class="content">The end result of the last 2 commands should be the same.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p55132" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile55132">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist1581.html?mode=viewprofile&amp;u=8901" class="username">kurokirasama</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche0f7.html?author_id=8901&amp;sr=posts">3</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 19 Sep 2017 18:03</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content55132">
+
+						<h3 ><a href="#p55132">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0006.html?mode=quote&amp;f=3&amp;p=55132" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic519d.html?p=55132#p55132" onclick="prompt('Message #35',this.href); return false;">#35</a></span> 
+									<a class="unread" href="viewtopic519d.html?p=55132#p55132" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist1581.html?mode=viewprofile&amp;u=8901" class="username">kurokirasama</a></strong> &raquo; </span>20 Dec 2017 06:16
+			</p>
+			
+			
+			
+			<div class="content">Hello again,<br>
+<br>
+I have videos files with filenames:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Series.Name.S01E01.andalotofstuff.mkv
+Series.Name.S01E02.andalotofstuff.mkv
+Series.Name.S02E01.andalotofstuff.mkv
+etc</code></pre></div>.<br>
+<br>
+where "andalotofstuff" is not necessarily the same in each file, and can include ".", "-", "[" and "]".<br>
+<br>
+I also have subtitles files with filenames:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Series Name 1x01 - Episode Name andotherstuff.srt
+Series Name 1x02 - Episode Name andotherstuff.srt
+Series Name 2x01 - Episode Name andotherstuff.srt
+etc.</code></pre></div>
+
+where "andotherstuff" is not necessarily the same in each file, and can include "(" and ")".<br>
+<br>
+What i want is to rename "srt" files with the corresponding "mkv".<br>
+<br>
+Some real examples are:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Marvels.Agents.of.S.H.I.E.L.D.S05E04.720p.HDTV.x264-AVS[eztv].mkv
+Marvel's Agents of S.H.I.E.L.D. 5x04 - A Life Earned (Español (Latinoamérica)).srt
+  
+The.Shannara.Chronicles.S02E08.720p.HDTV.x264-AVS[eztv].mkv
+The Shannara Chronicles 2x08 - Amberle (Español (España)).srt
+    
+The.Shannara.Chronicles.S02E10.720p.HDTV.x264-KILLERS[eztv].mkv
+The Shannara Chronicles 2x10 - Blood (English).srt</code></pre></div>
+
+Note that not necessarily all video files has a corresponding subtitle file.<br>
+<br>
+So, is there a way to do this with JREN? It doesn't mater if the solution has many steps.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p56778" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile56778">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf467.html?mode=viewprofile&amp;u=9214" class="username">zorro101</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search076f.html?author_id=9214&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 17 May 2018 05:48</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content56778">
+
+						<h3 ><a href="#p56778">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingd13c.html?mode=quote&amp;f=3&amp;p=56778" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6770.html?p=56778#p56778" onclick="prompt('Message #36',this.href); return false;">#36</a></span> 
+									<a class="unread" href="viewtopic6770.html?p=56778#p56778" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf467.html?mode=viewprofile&amp;u=9214" class="username">zorro101</a></strong> &raquo; </span>17 May 2018 05:52
+			</p>
+			
+			
+			
+			<div class="content">hi<br>
+i have 3000 file like this:<br>
+20170419171730.m2ts<br>
+20170419171730.m2ts.modd<br>
+20170419171730.m2ts.moff<br>
+<br>
+i need to rename 2017* to 2018*<br>
+there is a way?<br>
+<br>
+thanks<br>
+best regards<br>
+zorro</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p56780" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile56780">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content56780">
+
+						<h3 ><a href="#p56780">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingfb0a.html?mode=quote&amp;f=3&amp;p=56780" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic43d7.html?p=56780#p56780" onclick="prompt('Message #37',this.href); return false;">#37</a></span> 
+									<a class="unread" href="viewtopic43d7.html?p=56780#p56780" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>17 May 2018 07:26
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite><a href="memberlistf467.html?mode=viewprofile&amp;u=9214">zorro101</a> wrote: <a href="viewtopic6770.html?p=56778#p56778" data-post-id="56778" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">17 May 2018 05:52</div></cite>
+hi<br>
+i have 3000 file like this:<br>
+20170419171730.m2ts<br>
+20170419171730.m2ts.modd<br>
+20170419171730.m2ts.moff<br>
+<br>
+i need to rename 2017* to 2018*<br>
+there is a way?<br>
+<br>
+thanks<br>
+best regards<br>
+zorro
+</div></blockquote>
+You could certainly do this with JREN but it is easy enough to do with a normal batch file.  Just create a substring of the file name to remove the first 4 characters.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p56781" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile56781">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content56781">
+
+						<h3 ><a href="#p56781">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingbc9c.html?mode=quote&amp;f=3&amp;p=56781" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic398f.html?p=56781#p56781" onclick="prompt('Message #38',this.href); return false;">#38</a></span> 
+									<a class="unread" href="viewtopic398f.html?p=56781#p56781" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>17 May 2018 08:44
+			</p>
+			
+			
+			
+			<div class="content">A simple REN command works here:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\Antonio\Documents\ASMB\Test
+&gt;dir /B
+20170419171730.m2ts
+20170419171730.m2ts.modd
+20170419171730.m2ts.moff
+
+C:\Users\Antonio\Documents\ASMB\Test
+&gt;ren 2017* 2018*
+
+C:\Users\Antonio\Documents\ASMB\Test
+&gt;dir /B
+20180419171730.m2ts
+20180419171730.m2ts.modd
+20180419171730.m2ts.moff
+</code></pre></div>
+Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p56782" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile56782">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content56782">
+
+						<h3 ><a href="#p56782">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2f5e.html?mode=quote&amp;f=3&amp;p=56782" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic28a2.html?p=56782#p56782" onclick="prompt('Message #39',this.href); return false;">#39</a></span> 
+									<a class="unread" href="viewtopic28a2.html?p=56782#p56782" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>17 May 2018 09:19
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopic398f.html?p=56781#p56781" data-post-id="56781" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">17 May 2018 08:44</div></cite>
+A simple REN command works here:
+</div></blockquote>
+I always forget the RENAME command can do that.  I have broken my golden rule of K.I.S.S.!</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p56789" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile56789">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf467.html?mode=viewprofile&amp;u=9214" class="username">zorro101</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search076f.html?author_id=9214&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 17 May 2018 05:48</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content56789">
+
+						<h3 ><a href="#p56789">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7125.html?mode=quote&amp;f=3&amp;p=56789" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopica78b.html?p=56789#p56789" onclick="prompt('Message #40',this.href); return false;">#40</a></span> 
+									<a class="unread" href="viewtopica78b.html?p=56789#p56789" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf467.html?mode=viewprofile&amp;u=9214" class="username">zorro101</a></strong> &raquo; </span>18 May 2018 00:28
+			</p>
+			
+			
+			
+			<div class="content">sorry, but ren not work for me<br>
+I had already tried, but convert only the single extension files (.m2ts)<br>
+all other file are ignored (invisible - if i make dir the double extension file not show)<br>
+i used windows 7 pc<br>
+<br>
+please can you help me?<br>
+thanks<br>
+best regards</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p56862" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile56862">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf467.html?mode=viewprofile&amp;u=9214" class="username">zorro101</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search076f.html?author_id=9214&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 17 May 2018 05:48</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content56862">
+
+						<h3 ><a href="#p56862">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting931a.html?mode=quote&amp;f=3&amp;p=56862" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5b8f.html?p=56862#p56862" onclick="prompt('Message #41',this.href); return false;">#41</a></span> 
+									<a class="unread" href="viewtopic5b8f.html?p=56862#p56862" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf467.html?mode=viewprofile&amp;u=9214" class="username">zorro101</a></strong> &raquo; </span>22 May 2018 06:01
+			</p>
+			
+			
+			
+			<div class="content"><img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p56864" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile56864">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content56864">
+
+						<h3 ><a href="#p56864">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2178.html?mode=quote&amp;f=3&amp;p=56864" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6a87.html?p=56864#p56864" onclick="prompt('Message #42',this.href); return false;">#42</a></span> 
+									<a class="unread" href="viewtopic6a87.html?p=56864#p56864" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>22 May 2018 07:18
+			</p>
+			
+			
+			
+			<div class="content">Did you saw <a href="viewtopic5b8f.html?p=56862#p56781" class="postlink">my reply above</a>? It is an example of the files and the command I used, copied directly from the screen. Such an example proves that my REN command correctly works, at least on my computer...<br>
+<br>
+I suggest you to do <em class="text-italics">exactly the same</em>: create a few files, use <em class="text-italics">the same REN command</em> I used and then copy the screen contents and post it here (surrounded by [ code ] tags). Otherwise we have not idea of what are the files nor the command you used...  <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"> <br>
+<br>
+Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p56865" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile56865">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf467.html?mode=viewprofile&amp;u=9214" class="username">zorro101</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search076f.html?author_id=9214&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 17 May 2018 05:48</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content56865">
+
+						<h3 ><a href="#p56865">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting86f6.html?mode=quote&amp;f=3&amp;p=56865" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4af1.html?p=56865#p56865" onclick="prompt('Message #43',this.href); return false;">#43</a></span> 
+									<a class="unread" href="viewtopic4af1.html?p=56865#p56865" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf467.html?mode=viewprofile&amp;u=9214" class="username">zorro101</a></strong> &raquo; </span>22 May 2018 08:40
+			</p>
+			
+			
+			
+			<div class="content">thanks for reply<br>
+<br>
+I managed to do only the printscreen
+<div class="inline-attachment">
+			
+		
+				<dl class="file">
+			<dt class="attach-image"><img src="download/file0284.jpg?id=366" class="postimage" alt="ren.jpg" onclick="viewableArea(this);" /></dt>
+						<dd>ren.jpg (89.77 KiB) Viewed 1001 times</dd>
+		</dl>
+		
+		
+		
+			</div>
+thanks again</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57077" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57077">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf467.html?mode=viewprofile&amp;u=9214" class="username">zorro101</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search076f.html?author_id=9214&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 17 May 2018 05:48</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57077">
+
+						<h3 ><a href="#p57077">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingfbe6.html?mode=quote&amp;f=3&amp;p=57077" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic2cfe.html?p=57077#p57077" onclick="prompt('Message #44',this.href); return false;">#44</a></span> 
+									<a class="unread" href="viewtopic2cfe.html?p=57077#p57077" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf467.html?mode=viewprofile&amp;u=9214" class="username">zorro101</a></strong> &raquo; </span>05 Jun 2018 00:45
+			</p>
+			
+			
+			
+			<div class="content"><img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"> <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"> <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57085" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57085">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist0354.html?mode=viewprofile&amp;u=9161" class="username">sst</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6fff.html?author_id=9161&amp;sr=posts">64</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Apr 2018 23:45</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57085">
+
+						<h3 ><a href="#p57085">Re: JREN.BAT - Rename files/folders using regular expressions</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinga42b.html?mode=quote&amp;f=3&amp;p=57085" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic89f5.html?p=57085#p57085" onclick="prompt('Message #45',this.href); return false;">#45</a></span> 
+									<a class="unread" href="viewtopic89f5.html?p=57085#p57085" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist0354.html?mode=viewprofile&amp;u=9161" class="username">sst</a></strong> &raquo; </span>06 Jun 2018 04:41
+			</p>
+			
+			
+			
+			<div class="content">@zorro101<br>
+Your .modd and .moff files have hidden or system attributes set. Most probably only hidden attribute as it seems from your screenshot.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>attrib -h *.m2ts.*
+ren 2017* 2018*
+</code></pre></div>
+If you want to restore the attributes after the rename operation, then before running the above code, first run
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>attrib *.m2ts.*
+</code></pre></div>
+and take a note of the attributes, then after you've done with rename, do one of the following as appropriate
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>attrib +h *.m2ts.*
+attrib +s *.m2ts.*
+attrib +h +s *.m2ts.*
+</code></pre></div>
+
+you can use /S switch with attrib to apply the attributes to all matching files in the current folder as well as subfolders in one shot, like:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>attrib -h -s *.m2ts.* /S
+</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="postingb188.html?mode=reply&amp;f=3&amp;t=6081" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicd410.html?f=3&amp;t=6081&amp;start=30&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6081&amp;start=30">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			50 posts
+							<ul>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopice449.html?f=3&amp;t=6081&amp;start=15" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopic7124.html?f=3&amp;t=6081" role="button">1</a></li>
+				<li><a class="button" href="viewtopice449.html?f=3&amp;t=6081&amp;start=15" role="button">2</a></li>
+			<li class="active"><span>3</span></li>
+				<li><a class="button" href="viewtopiccac4.html?f=3&amp;t=6081&amp;start=45" role="button">4</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopiccac4.html?f=3&amp;t=6081&amp;start=45" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5495.gif?cron_type=cron.task.text_reparser.poll_title" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=56865 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:01:39 GMT -->
+</html>

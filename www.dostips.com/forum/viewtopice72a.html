@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8630&p=57181 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:31:30 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>convert file with 15 minute stock market data to hourly and daily - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopicc81d-2.html?t=8630">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopicc08a.html?f=3&amp;t=8630">convert file with 15 minute stock market data to hourly and daily</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting52f5.html?mode=reply&amp;f=3&amp;t=8630" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic30fa-2.html?f=3&amp;t=8630&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="8630" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			5 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p57179" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57179">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc025.html?mode=viewprofile&amp;u=9269" class="username">purpleglow</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1bfd.html?author_id=9269&amp;sr=posts">3</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 17 Jun 2018 16:33</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57179">
+
+						<h3 class="first"><a href="#p57179">convert file with 15 minute stock market data to hourly and daily</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0fe0.html?mode=quote&amp;f=3&amp;p=57179" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic310d.html?p=57179#p57179" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopic310d.html?p=57179#p57179" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc025.html?mode=viewprofile&amp;u=9269" class="username">purpleglow</a></strong> &raquo; </span>17 Jun 2018 17:10
+			</p>
+			
+			
+			
+			<div class="content">Hi!<br>
+<br>
+I have a text file with 15 minute stock market data.  I'd like a simple batch file to convert this into both hourly and daily data and write it to a text file.<br>
+<br>
+1. Each line is data for 15 minutes.<br>
+2. The data is strings separated by commas.<br>
+3. The first string is the date. (for example, the date on the first line is september 1st 2017)<br>
+4. The second string is the time (for example, the time on the first line is 9:30 AM)<br>
+5. The 3rd is the price of the security at the open of this 15 minute interval.<br>
+6. The 4th is the highest price of the interval.<br>
+7. The 5th is the lowest price of the interval.<br>
+8. The 6th is the closing price of the interval.<br>
+9. The 7th and last is the trading volume for the interval.<br>
+<br>
+Here is some sample data:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>2017.09.01,09:30,247.93,248.08,247.85,247.98,375774
+2017.09.01,09:45,247.99,248.12,247.69,247.85,248224
+2017.09.01,10:00,247.85,247.93,247.68,247.89,357934
+2017.09.01,10:15,247.89,247.94,247.79,247.94,197296
+2017.09.01,10:30,247.93,248.03,247.85,247.87,142138
+2017.09.01,10:45,247.86,248.17,247.86,248.13,186712
+2017.09.01,11:00,248.12,248.19,248.06,248.19,221545
+2017.09.01,11:15,248.19,248.19,247.91,247.92,225323
+2017.09.01,11:30,247.92,247.96,247.85,247.94,172936
+2017.09.01,11:45,247.95,248.11,247.93,248.09,93343
+2017.09.01,12:00,248.10,248.13,248.05,248.13,112756
+2017.09.01,12:15,248.14,248.21,248.12,248.17,93685
+2017.09.01,12:30,248.16,248.21,248.13,248.18,60979
+2017.09.01,12:45,248.19,248.32,248.19,248.28,98539
+2017.09.01,13:00,248.28,248.32,248.22,248.29,44581
+2017.09.01,13:15,248.30,248.30,248.17,248.23,89534
+2017.09.01,13:30,248.23,248.48,248.21,248.21,102550
+2017.09.01,13:45,248.22,248.22,248.13,248.17,75672
+2017.09.01,14:00,248.17,248.25,248.13,248.14,57446
+2017.09.01,14:15,248.15,248.17,248.10,248.12,62497
+2017.09.01,14:30,248.13,248.17,248.09,248.17,68727
+2017.09.01,14:45,248.17,248.20,248.14,248.16,106971
+2017.09.01,15:00,248.16,248.20,248.11,248.14,73498
+2017.09.01,15:15,248.14,248.23,248.14,248.20,112317
+2017.09.01,15:30,248.20,248.20,248.07,248.09,171255
+2017.09.01,15:45,248.10,248.16,247.87,247.88,953060
+2017.09.05,09:30,247.24,247.51,246.94,247.05,376549
+2017.09.05,09:45,247.07,247.38,247.00,247.37,271207
+2017.09.05,10:00,247.38,247.47,247.17,247.34,311357
+2017.09.05,10:15,247.34,247.47,247.07,247.12,211352
+2017.09.05,10:30,247.12,247.14,246.69,246.74,385340
+2017.09.05,10:45,246.75,246.86,246.61,246.83,252970
+2017.09.05,11:00,246.83,246.88,246.64,246.80,222284
+2017.09.05,11:15,246.81,246.83,246.47,246.62,193791
+2017.09.05,11:30,246.61,246.85,246.58,246.78,185288
+2017.09.05,11:45,246.78,246.82,246.64,246.76,88213
+2017.09.05,12:00,246.75,246.75,245.75,245.81,601313
+2017.09.05,12:15,245.81,246.07,245.71,245.73,416209
+2017.09.05,12:30,245.73,245.74,245.29,245.58,434979
+2017.09.05,12:45,245.59,245.60,245.30,245.54,327573
+2017.09.05,13:00,245.56,245.56,244.95,245.04,545889
+2017.09.05,13:15,245.03,245.59,244.99,245.41,375058
+2017.09.05,13:30,245.41,245.68,245.18,245.56,357450
+2017.09.05,13:45,245.56,245.77,245.47,245.75,140992
+2017.09.05,14:00,245.74,245.98,245.69,245.77,254931
+2017.09.05,14:15,245.77,246.15,245.61,246.06,258095
+2017.09.05,14:30,246.06,246.12,245.86,245.95,357772
+2017.09.05,14:45,245.95,246.01,245.71,245.82,269652
+2017.09.05,15:00,245.82,246.00,245.58,245.86,255123
+2017.09.05,15:15,245.86,246.11,245.75,246.09,290512
+2017.09.05,15:30,246.09,246.24,245.80,245.90,352441
+2017.09.05,15:45,245.90,246.18,245.81,246.09,840628
+2017.09.06,09:30,246.85,246.99,246.62,246.72,346852
+2017.09.06,09:45,246.72,246.84,246.60,246.78,347391
+2017.09.06,10:00,246.76,247.08,246.75,246.84,326253
+2017.09.06,10:15,246.82,246.88,246.53,246.64,308840
+2017.09.06,10:30,246.65,246.77,246.51,246.59,288759
+2017.09.06,10:45,246.59,246.72,246.24,246.69,488003
+2017.09.06,11:00,246.68,246.75,246.23,246.28,214781
+2017.09.06,11:15,246.26,246.54,246.26,246.50,126161
+2017.09.06,11:30,246.49,246.61,246.39,246.53,126611
+2017.09.06,11:45,246.53,246.61,246.42,246.59,90696
+2017.09.06,12:00,246.59,246.61,246.43,246.59,97533
+2017.09.06,12:15,246.59,246.75,246.53,246.70,163039
+2017.09.06,12:30,246.70,246.72,246.57,246.69,77694
+2017.09.06,12:45,246.67,246.86,246.66,246.81,166389
+2017.09.06,13:00,246.83,247.03,246.81,246.97,197451
+2017.09.06,13:15,246.96,247.01,246.85,246.88,127802
+2017.09.06,13:30,246.88,246.99,246.88,246.93,133083
+2017.09.06,13:45,246.95,246.97,246.83,246.87,44317
+2017.09.06,14:00,246.87,247.10,246.86,247.02,89563
+2017.09.06,14:15,247.02,247.19,246.99,247.10,119502
+2017.09.06,14:30,247.08,247.14,247.02,247.02,112057
+2017.09.06,14:45,247.03,247.12,246.96,247.07,186626
+2017.09.06,15:00,247.08,247.18,247.00,247.12,125642
+2017.09.06,15:15,247.12,247.28,247.11,247.25,196488
+2017.09.06,15:30,247.24,247.25,247.03,247.05,338538
+2017.09.06,15:45,247.05,247.11,246.80,246.91,807924
+</code></pre></div>
+
+for a conversion from 15 minute to daily I had an idea of something like:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+currentdate = 0
+xhigh = 0
+xlow = 0
+xclose = 0
+xvolume = 0
+for /F "delims=," %%G in (SPY15.txt) do (
+set date = %%G
+:: time is ignored for 15 minute to daily conversion
+set time = %%H
+set open = %%I
+set high = %%J
+set low = %%K
+set close = %%L
+set volume = %%M
+if currentdate = 0 then currentdate = date
+if currentdate != date then
+    :: data for the day has been processed so output 1 line of processed data to the output file
+    currentdate = date
+else
+    :: process data
+    :: open never needs to be processed because it is always the first open for the given date
+    if high greater than xhigh then xhigh = high
+    if low is lower than xlow then xlow = low
+    :: close never needs to be processed because it is always the last close for the given date
+    :: add up the volumes for the day
+end
+)
+</code></pre></div>
+
+15 minute to hourly is a little more complex because you must break down the time variable.  The correct breakdown for NORMAL hourly data is:<br>
+<br>
+1st hour: 9:30, 9:45, 10:00, 10:15<br>
+2nd hour: 10:30, 10:45, 11:00, 11:15<br>
+3rd hour: 11:30, 11:45, 12:00, 12:15<br>
+4th hour: 12:30, 12:45 13:00, 13:15<br>
+5th hour: 13:30, 13:45, 14:00, 14:15<br>
+6th hour: 14:30, 14:45, 15:00, 15:15<br>
+7th hour: 15:30, 15:45<br>
+<br>
+So you have 4 data points for each hour except the last one which has just 2 data points BUT only for normal days.<br>
+<br>
+Once in a while, the market will be open for a half day, so there can be gaps.  If the market closes at noon, the last data point will be 11:45 for that day.<br>
+<br>
+Thanks in advance.</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a> on 17 Jun 2018 17:27, edited 1 time in total.
+					<br /><strong>Reason:</strong> <em>use code formatting</em>				</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57181" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57181">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc1e4.html?mode=viewprofile&amp;u=5414" class="username">pieh-ejdsch</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search5a70.html?author_id=5414&amp;sr=posts">172</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 04 Mar 2014 11:14</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57181">
+
+						<h3 ><a href="#p57181">Re: convert file with 15 minute stock market data to hourly and daily</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting4da3.html?mode=quote&amp;f=3&amp;p=57181" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicbd63.html?p=57181#p57181" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopicbd63.html?p=57181#p57181" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc1e4.html?mode=viewprofile&amp;u=5414" class="username">pieh-ejdsch</a></strong> &raquo; </span>18 Jun 2018 02:23
+			</p>
+			
+			
+			
+			<div class="content">Hello purpleglow,<br>
+<br>
+is this an Example?
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedExpansion
+set prompt=$g$s
+for /f "delims==" %%i in ('2^&gt;nul set day[') do set "%%i="
+set "day-=" 
+for /f "usebackQtokens=1-5*delims=,.:" %%a in ("%userprofile%\desktop\.txt") do (
+ set /a "hour =(1%%d%%e -10830) /100"
+ for /f "tokens=1-6*delims=," %%f in ("%%a%%b%%c,!hour!,%%f") do (
+  if defined day- if !day-! NEQ %%f ( set day[!day-!
+   for /f "usebackQdelims==" %%i in (`set day[!day-!`) do set "%%i="
+  )
+  set day-=%%f
+  if NOT defined day[%%f]---open   ( set day[%%f]---open=%%h
+   set day[%%f]--low--=%%j
+  )
+  if NOT defined day[%%f]%%g--open ( set day[%%f]%%g--open=%%h
+   set day[%%f]%%g-low--=%%j
+  )
+  if !day[%%f]--hight! lss %%i      set day[%%f]--hight=%%i
+  if !day[%%f]%%g-hight! lss %%i    set day[%%f]%%g-hight=%%i
+  if !day[%%f]--low--! gtr %%j      set day[%%f]--low--=%%j
+  if !day[%%f]%%g-low--! gtr %%j    set day[%%f]%%g-low--=%%j
+  set day[%%f]--close=%%j
+  set day[%%f]%%g-close=%%k
+  set volume=
+  
+))
+set day[!day-!
+for /f "delims==" %%i in ('2^&gt;nul set day[') do set %%i=
+pause
+exit /b</code></pre></div>
+
+Phil</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57186" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57186">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc025.html?mode=viewprofile&amp;u=9269" class="username">purpleglow</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1bfd.html?author_id=9269&amp;sr=posts">3</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 17 Jun 2018 16:33</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57186">
+
+						<h3 ><a href="#p57186">Re: convert file with 15 minute stock market data to hourly and daily</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7401.html?mode=quote&amp;f=3&amp;p=57186" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopiccca7.html?p=57186#p57186" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopiccca7.html?p=57186#p57186" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc025.html?mode=viewprofile&amp;u=9269" class="username">purpleglow</a></strong> &raquo; </span>18 Jun 2018 13:42
+			</p>
+			
+			
+			
+			<div class="content">Well for example, the output for the 15 minute to daily conversion would be:<br>
+<br>
+2017.09.01,09:30,247.93,248.30,247.68,247.88,(sum of all volumes from september 1st)<br>
+2017.09.05,09:30,247.24,247.51,244.95,246.09,(sum of all volumes from september 5th)<br>
+2017.09.06.09:30,246.85,247.28,246.23,246.91,(sum of all volumes from september 6th)<br>
+<br>
+Each line is:<br>
+<br>
+date,time,first number in column 3, biggest number in column 4, smallest number in column 5, last number in column 6, add up all the volumes found in column 7</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57187" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57187">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57187">
+
+						<h3 ><a href="#p57187">Re: convert file with 15 minute stock market data to hourly and daily</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingac80.html?mode=quote&amp;f=3&amp;p=57187" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4561.html?p=57187#p57187" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopic4561.html?p=57187#p57187" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>18 Jun 2018 13:56
+			</p>
+			
+			
+			
+			<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+set "dayDate="
+set "hour=0"
+(for /F "tokens=1-7 delims=," %%a in (input.txt) do (
+
+   rem Get row elements
+   set "theDate=%%a"
+   set "theTime=%%b"
+   set "open=%%c"
+   set "highest=%%d" &amp; set "highest=!highest:.=!"
+   set "lowest=%%e"  &amp; set "lowest=!lowest:.=!"
+   set "closing=%%f"
+   set "volume=%%g"
+
+   rem Output day results when the day change, and reset they
+   if "!dayDate!" neq "!theDate!" (
+      if defined dayDate echo !dayDate!,!dayTime!,!dayOpen!,!dayHighest:~0,-2!.!dayHighest:~-2!,!dayLowest:~0,-2!.!dayLowest:~-2!,!dayClosing!,!dayVolume!
+      set "dayDate=!theDate!"
+      set "dayTime=!theTime!"
+      set "dayOpen=!open!"
+      set "dayHighest=!highest!"
+      set "dayLowest=!lowest!"
+      set "dayClosing=!closing!"
+      set "dayVolume=0"
+      if !hour! gtr 0 (
+         echo !hourDate!,!hourTime!,!hourOpen!,!hourHighest:~0,-2!.!hourHighest:~-2!,!hourLowest:~0,-2!.!hourLowest:~-2!,!closing!,!hourVolume! &gt;&amp;2
+         set "hour=0"
+      )
+   )
+
+   rem Process data
+   if !highest! gtr !dayHighest! set "dayHighest=!highest!"
+   if !lowest! lss !daylowest! set "daylowest=!lowest!"
+   if !highest! gtr !hourHighest! set "hourHighest=!highest!"
+   if !lowest! lss !hourlowest! set "hourlowest=!lowest!"
+   set "dayClosing=!closing!"
+   set /A dayVolume+=volume, hourVolume+=volume
+
+   rem Output hour results every 4 lines, and reset they
+   set /A "hour=(hour+1)%%4"
+   if !hour! equ 1 (
+      set "hourDate=!theDate!"
+      set "hourTime=!theTime!"
+      set "hourOpen=!open!"
+      set "hourHighest=!highest!"
+      set "hourLowest=!lowest!"
+      set "hourVolume=!volume!"
+   ) else if !hour! equ 0 (
+      echo !hourDate!,!hourTime!,!hourOpen!,!hourHighest:~0,-2!.!hourHighest:~-2!,!hourLowest:~0,-2!.!hourLowest:~-2!,!closing!,!hourVolume! &gt;&amp;2
+   )
+)) &gt; daily.txt  2&gt; hourly.txt
+
+echo !dayDate!,!dayTime!,!dayOpen!,!dayHighest:~0,-2!.!dayHighest:~-2!,!dayLowest:~0,-2!.!dayLowest:~-2!,!dayClosing!,!dayVolume! &gt;&gt; daily.txt
+if %hour% gtr 0 echo !hourDate!,!hourTime!,!hourOpen!,!hourHighest:~0,-2!.!hourHighest:~-2!,!hourLowest:~0,-2!.!hourLowest:~-2!,!closing!,!hourVolume! &gt;&gt; hourly.txt
+</code></pre></div>
+
+<strong class="text-strong">hourly.txt:</strong><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>2017.09.01,09:30,247.93,248.12,247.68,247.94,1179228 
+2017.09.01,10:30,247.93,248.19,247.85,247.92,775718 
+2017.09.01,11:30,247.92,248.21,247.85,248.17,472720 
+2017.09.01,12:30,248.16,248.32,248.13,248.23,293633 
+2017.09.01,13:30,248.23,248.48,248.10,248.12,298165 
+2017.09.01,14:30,248.13,248.23,248.09,248.20,361513 
+2017.09.01,15:30,248.20,248.20,247.87,247.05,1124315 
+2017.09.05,09:30,247.24,247.51,246.94,247.12,1170465 
+2017.09.05,10:30,247.12,247.14,246.47,246.62,1054385 
+2017.09.05,11:30,246.61,246.85,245.71,245.73,1291023 
+2017.09.05,12:30,245.73,245.74,244.95,245.41,1683499 
+2017.09.05,13:30,245.41,246.15,245.18,246.06,1011468 
+2017.09.05,14:30,246.06,246.12,245.58,246.09,1173059 
+2017.09.05,15:30,246.09,246.24,245.80,246.72,1193069 
+2017.09.06,09:30,246.85,247.08,246.53,246.64,1329336 
+2017.09.06,10:30,246.65,246.77,246.23,246.50,1117704 
+2017.09.06,11:30,246.49,246.75,246.39,246.70,477879 
+2017.09.06,12:30,246.70,247.03,246.57,246.88,569336 
+2017.09.06,13:30,246.88,247.19,246.83,247.10,386465 
+2017.09.06,14:30,247.08,247.28,246.96,247.25,620813 
+2017.09.06,15:30,247.24,247.25,246.80,246.91,1146462 
+</code></pre></div>
+
+<strong class="text-strong">daily.txt:</strong><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>2017.09.01,09:30,247.93,248.48,247.68,247.88,4505292
+2017.09.05,09:30,247.24,247.51,244.95,246.09,8576968
+2017.09.06,09:30,246.85,247.28,246.23,246.91,5647995 
+</code></pre></div>
+
+Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57191" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57191">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc025.html?mode=viewprofile&amp;u=9269" class="username">purpleglow</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1bfd.html?author_id=9269&amp;sr=posts">3</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 17 Jun 2018 16:33</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57191">
+
+						<h3 ><a href="#p57191">Re: convert file with 15 minute stock market data to hourly and daily</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingec6d.html?mode=quote&amp;f=3&amp;p=57191" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicc58f.html?p=57191#p57191" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopicc58f.html?p=57191#p57191" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc025.html?mode=viewprofile&amp;u=9269" class="username">purpleglow</a></strong> &raquo; </span>18 Jun 2018 16:56
+			</p>
+			
+			
+			
+			<div class="content">That's perfect!  Amazing!  I added a credit to you Aacini in the batch file as well as a link to this thread.  <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting52f5.html?mode=reply&amp;f=3&amp;t=8630" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic30fa-2.html?f=3&amp;t=8630&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8630">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			5 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5495.gif?cron_type=cron.task.text_reparser.poll_title" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8630&p=57181 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:31:30 GMT -->
+</html>

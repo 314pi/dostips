@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8561&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:18:23 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Random number generation problem</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Random number generation problem</h2>
+		<p><a href="viewtopic38a4.html?f=3&amp;t=8561">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8561</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Random number generation problem</h3>
+				<div class="date">Posted: <strong>16 May 2018 11:28</strong></div>
+				<div class="author">by <strong>gotouser</strong></div>
+				<div class="content">Hello,<br>
+I wrote a script that would call a random batch file out of 154 files in total. I wanted to have some files to have a higher chance of being called than others, so I wrote this:<br>
+<br>
+<br>
+:randomization<br>
+cls<br>
+set /a randoma=%random% %% 10+1<br>
+if %randoma%==1 goto random1<br>
+if %randoma%==2 goto random1<br>
+if %randoma%==3 goto random1<br>
+if %randoma%==4 goto random1<br>
+if %randoma%==5 goto random1<br>
+if %randoma%==6 goto random2<br>
+if %randoma%==7 goto random2<br>
+if %randoma%==8 goto random2<br>
+if %randoma%==9 goto random2<br>
+if %randoma%==10 goto random3<br>
+<br>
+:random1<br>
+set /a randomx=%random% %% 99 + 1<br>
+call %randomx%.bat<br>
+goto randomization<br>
+<br>
+:random2<br>
+set /a randomy=%random% %% 137 + 100<br>
+call %randomy%.bat<br>
+goto randomization<br>
+<br>
+:random3<br>
+set /a randomz=%random% %% 154 + 138<br>
+call %randomz%.bat<br>
+goto randomization<br>
+<br>
+<br>
+This works most of the time, but sometimes I get an error message saying that "the command (insert number that is higher than 154).bat does not exist" (for example "the command 198.bat does not exist). Does anyone know why this happens and/or how to fix it?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number generation problem</h3>
+				<div class="date">Posted: <strong>16 May 2018 15:16</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content"><blockquote class="uncited"><div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set /a randomz=%random% %% 154 + 138</code></pre></div>
+</div></blockquote>
+means "pick a random number between 0 and 153 and then add 138 to it." If the random number is 153, the result will be 291. In order to avoid going past the upper number, you need to first subtract the number you're adding on from the amount you're increasing it by. Since the largest number is 154, you need to generate a random number between 0 and 16.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set /a randomz=%random% %% 16 + 138</code></pre></div>
+
+The code in :random2 should also be updated accordingly.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Random number generation problem</h3>
+				<div class="date">Posted: <strong>17 May 2018 09:28</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">This can be short
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:randomization
+cls
+Set /a RadomA =%random% %%10 +1
+Rem 1 - 100
+Set /a randomBat =%random% %%99 +1
+rem 101 - 137
+if %randomA% gtr 5 set /a randomBat = %random% %%(137 -100 -1) +101
+rem 138 - 154
+if %randomA% gtr 9 set /a randomBat =%random% %%(154 -137 -1) +138
+call %randomBat%.bat
+Goto :randomization
+</code></pre></div>
+
+Phil</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8561&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:18:23 GMT -->
+</html>

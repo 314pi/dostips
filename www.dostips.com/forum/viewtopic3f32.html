@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8643&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:54:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; LABEL Being Processed without GOTO or CALL</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>LABEL Being Processed without GOTO or CALL</h2>
+		<p><a href="viewtopicad6c.html?f=3&amp;t=8643">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8643</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>LABEL Being Processed without GOTO or CALL</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 17:50</strong></div>
+				<div class="author">by <strong>aecnrn</strong></div>
+				<div class="content">I have small batch that will try to map a migration folder on remote computers. My :ERRORMAPDRIVE label is being processed even it was not called or told to goto. I tested with 1 valid IP, it was successfully mapped, but the batch somehow still process the label making my error log is inaccurate.<br>
+<br>
+Can someone tell me what is wrong with my code? The label is not supposed to be processed as a normal batch unless I specify goto in the first if statement, correct?<br>
+<br>
+Update:
+<blockquote class="uncited"><div> <br>
+Full batch uploaded, basically i want the batch to:<br>
+<br>
+1. Map E:\Migration on a remote machine, if there's no migration in E:\, try mapping D:\Migration.<br>
+2. Check if files exist<br>
+3. Direct file check messages to Log.txt and error messages to Error.txt<br>
+<br>
+Problem: <br>
+1. When both map drive attempt fails, batch continues to check if files exist<br>
+2. When goto is used, the batch logs the error message in error.txt even when the first map drive is successful.
+</div></blockquote>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>REM Start Loop to read IPs
+:START
+for /F "tokens=1" %%B in (.\IPList.txt) do call :MAPDRIVE %%B
+REM End Loop to read IPs
+
+REM Start Complete Task
+echo.
+REM net use %Drive% /del 2&gt;nul
+echo File Check Complete!!
+echo %date:~-10%%time:~0,8%:*** FileCheck Complete!! &gt;&gt; Logs.txt
+goto :eof
+REM End Complete Task
+
+REM Start Delete if Exist
+:MAPDRIVE
+if exist %drive% (
+	echo.
+	echo %drive% drive exist on this computer, deleting %drive% drive
+	echo. 
+	net use %drive% /del
+)
+REM End Delete if Exist
+
+REM Start On Screen Display Message
+echo *** Mapping %RDriveE%: drive on remote machine %1 ***
+echo %date:~-10%%time:~0,8%:*** Mapping %RDriveE% drive on remote machine %1 *** &gt;&gt; Logs.txt
+REM End On Screen Display Message
+
+REM Start MAP Network Drive
+net use L: \\%1\%RDriveE%$\%MG% /u:%1\%username% %pwd% &gt;nul 2&gt;&amp;1
+	if errorlevel 1 (
+	GOTO RETRY
+	) else (
+	echo Successfully Mapped Drive %RDriveE%: On %1
+)
+
+:RETRY	
+echo.
+echo %MG% folder doesn't exist in drive %RDriveE%: of the remote machine
+echo Finding %MG% folder in the drive %RDdriveD%: instead...
+echo.
+net use L: \\%1\%RDdriveD%$\%MG% /u:%1\%username% %pwd% &gt;nul 2&gt;&amp;1
+		if errorlevel 1 (
+		GOTO ERRORMAPDRIVE
+		) Else (
+		echo Successfully Mapped Drive %RDdriveD% On %1
+)
+
+REM End of Map Network Drive
+
+REM For Loop
+echo *** Checking files on %1 ***
+echo *** Checking files on %1 *** &gt;&gt; Logs.txt
+echo.
+echo. &gt;&gt; Logs.txt
+
+REM Start Check Migration Folder
+for %%A in ("%gho%" "%GSha%" "%PrepPCI%" "%FileCopy%") Do (
+	timeout /t 1 &gt;nul
+    if exist "%Drive%\%%~A" (
+        echo %%~A exists in the %MG% Folder
+		echo %date:~-10%%time:~0,8%:%%~A exists in the %MG% Folder &gt;&gt; Logs.txt
+    ) else (
+        echo %%~A does not exists in the %MG% Folder 
+		echo %date:~-10%%time:~0,8%:%%~A does not exists in the %MG% Folder &gt;&gt; Logs.txt
+    )
+)
+REM End Check Migration Folder
+
+REM Start Check PCI Folder
+for %%A in ("%IM%" "%ES%" "%PAS%") Do (
+	timeout /t 1 &gt;nul
+    if exist "%Drive%\%PCI%\%%~A" (
+        echo %%~A exists in the %PCI% Folder
+		echo %date:~-10%%time:~0,8%:%%~A exists in the %PCI% Folder &gt;&gt; Logs.txt
+    ) else (
+        echo %%~A does not exists in the %PCI% Folder 
+		echo %date:~-10%%time:~0,8%:%%~A does not exists in the %PCI% Folder &gt;&gt; Logs.txt
+    )
+)
+REM End Check PCI Folder
+
+REM Start Check POST Folder
+for %%A in ("%NLM%" "%RSS%" "%Clean%" "%PCIS%" "%ESET%") Do (
+	timeout /t 1 &gt;nul
+    if exist "%Drive%\%POS%\%%~A" (
+        echo %%~A exists in the %POS% Folder
+		echo %date:~-10%%time:~0,8%:%%~A exists in the %POS% Folder &gt;&gt; Logs.txt
+    ) else (
+        echo %%~A does not exists in the %POS% Folder 
+		echo %date:~-10%%time:~0,8%:%%~A does not exists in the %POS% Folder &gt;&gt; Logs.txt
+    )
+)
+REM End Check POST Folder
+
+REM Start Check PRE Folder
+for %%A in ("%DualServer%" "%Proxy%" "%SHA2%") Do (
+	timeout /t 1 &gt;nul
+    if exist "%Drive%\%PRE%\%%~A" (
+        echo %%~A exists in the %PRE% Folder
+		echo %date:~-10%%time:~0,8%:%%~A exists in the %PRE% Folder &gt;&gt; Logs.txt
+    ) else (
+        echo %%~A does not exists in the %PRE% Folder 
+		echo %date:~-10%%time:~0,8%:%%~A does not exists in the %PRE% Folder &gt;&gt; Logs.txt
+    )
+)
+REM End Check PRE Folder
+
+REM Start ERRORMAPDRIVE
+:ERRORMAPDRIVE
+echo Error mapping drive on %1
+echo %date:~-10% %time:~0,8%:Error mapping drive on %1! Possible firewall issue. Check station status in RSS and deploy firewall fix. &gt;&gt; Error.txt
+REM End ERRORMAPDRIVE</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: LABEL Being Processed without GOTO or CALL</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 18:24</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Batch files execute all lines, top to bottom unless you use code to tell it not to execute anymore. So either use a goto :eof or exit to stop the batch file.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: LABEL Being Processed without GOTO or CALL</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 19:35</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Actually you probably want EXIT /B (terminate the batch file without killing the command process) instead of EXIT (kills the entire command process and closes the console window).<br>
+<br>
+EXIT /B is functionally identical to GOTO :EOF</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: LABEL Being Processed without GOTO or CALL</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 21:34</strong></div>
+				<div class="author">by <strong>aecnrn</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic1630-2.html?p=57262#p57262" data-post-id="57262" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 Jun 2018 19:35</div></cite>
+Actually you probably want EXIT /B (terminate the batch file without killing the command process) instead of EXIT (kills the entire command process and closes the console window).<br>
+<br>
+EXIT /B is functionally identical to GOTO :EOF
+</div></blockquote>
+
+Won't that kill the loop though? Say if EXIT /B is specified at the end of the line, the batch will not process the next IP in the text file, right?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: LABEL Being Processed without GOTO or CALL</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 22:55</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">You need to put an EXIT /B or GOTO :EOF before the label :ERRORMAPDRIVE.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: LABEL Being Processed without GOTO or CALL</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 23:09</strong></div>
+				<div class="author">by <strong>aecnrn</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopicd561.html?p=57264#p57264" data-post-id="57264" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 Jun 2018 22:55</div></cite>
+You need to put an EXIT /B or GOTO :EOF before the label :ERRORMAPDRIVE.
+</div></blockquote>
+
+That works perfectly. Thank you Squashman and Dbenham!</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8643&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:54:03 GMT -->
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8809&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:13:26 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; How to Use FC (File Compare) from the Windows Command Prompt</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>How to Use FC (File Compare) from the Windows Command Prompt</h2>
+		<p><a href="viewtopic840b.html?f=3&amp;t=8809">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8809</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>How to Use FC (File Compare) from the Windows Command Prompt</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 03:19</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">So I have 2 windows server 2003 enterprise images.<br>
+<br>
+-One is windows server 2003 enterprise R2 SP1 VLK.<br>
+ This is a problem, many of my old programs cannot to be installed correctly if installed after SP1 is installed.<br>
+ I don't need R2 but could not find a way to disable R2 inside unattended.sif<br>
+<br>
+-The other is windows server 2003 enterprise retail.<br>
+ This is good but not a VLK i don't want having to activate windows after installation or integrating service packs.<br>
+<br>
+So I used the FC command ( probably incorrectly ) to compare these two folders.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FC "folder1\*" "folder2\*"
+</code></pre></div>
+
+I just want it to tell me which files exist in folder1 that are missing in folder2.<br>
+I want to make this comparison because i want to see if i can turn a SP1 or SP2 distro into an SP0 by deleting and or moving files from one image to another.<br>
+<br>
+I've been thinking about changing the retail distro into a VLK edition but i think my chance of success is slim. This is probably coded inside setup.exe which will probably detect tampering with source files if done incorrectly.<br>
+<br>
+The command has been running for days now i fear it's comparing the contents of all files rather than just telling which files exist in folder1 that are missing in folder2.<br>
+<br>
+Can I get FC to do what I want or will I have to compare them in a different way ?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to Use FC (File Compare) from the Windows Command Prompt</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 04:41</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">I downloaded winMerge, it just compared both folder trees in only a few minutes.<br>
+<br>
+It tells me which files exist in one folder but not in the other, which files are identical and which are not.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to Use FC (File Compare) from the Windows Command Prompt</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 04:47</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453">Ed Dyreen</a> wrote: <a href="viewtopic2830.html?p=57874#p57874" data-post-id="57874" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Aug 2018 03:19</div></cite>
+i fear it's comparing the contents of all files rather than just telling which files exist in folder1 that are missing in folder2.
+</div></blockquote>
+Yes, FC just compares the file contents nothing more.<br>
+You mean something like this? Honestly I get confused as I'm sure you know this.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %A in (folder1\*) do @if not exist "folder2\%~nxA" echo %~nxA
+</code></pre></div>
+
+<br>
+
+<blockquote><div><cite><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453">Ed Dyreen</a> wrote: <a href="viewtopic2830.html?p=57874#p57874" data-post-id="57874" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Aug 2018 03:19</div></cite>
+I just want it to tell me which files exist in folder1 that are missing in folder2.<br>
+I want to make this comparison because i want to see if i can turn a SP1 or SP2 distro into an SP0 by deleting and or moving files from one image to another.
+</div></blockquote>
+
+It's not as simple as that, Actually it's impossible to convert a higher SP to a lower one. It is not about some additional files that can be removed to get the lower SP, but almost all files are different and they are digitally signed by catalog files. It is almost like of you want to convert Windows 7 to Windows XP. If you have the license the only option you have is find a SP0 original image.<br>
+<br>
+BTW did you try the compatibility option to install your apps on SP1 or SP2 ?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to Use FC (File Compare) from the Windows Command Prompt</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 07:51</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopic6313.html?p=57877#p57877" data-post-id="57877" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Aug 2018 04:47</div></cite>
+<blockquote><div><cite><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453">Ed Dyreen</a> wrote: <a href="viewtopic2830.html?p=57874#p57874" data-post-id="57874" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Aug 2018 03:19</div></cite>
+i fear it's comparing the contents of all files rather than just telling which files exist in folder1 that are missing in folder2.
+</div></blockquote>
+Yes, FC just compares the file contents nothing more.<br>
+You mean something like this? Honestly I get confused as I'm sure you know this.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %A in (folder1\*) do @if not exist "folder2\%~nxA" echo %~nxA
+</code></pre></div>
+</div></blockquote>
+I was looking for a program that could do it faster and "better". I am satisfied with winMerge.<br>
+
+<blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopic6313.html?p=57877#p57877" data-post-id="57877" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Aug 2018 04:47</div></cite>
+<blockquote><div><cite><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453">Ed Dyreen</a> wrote: <a href="viewtopic2830.html?p=57874#p57874" data-post-id="57874" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Aug 2018 03:19</div></cite>
+I just want it to tell me which files exist in folder1 that are missing in folder2.<br>
+I want to make this comparison because i want to see if i can turn a SP1 or SP2 distro into an SP0 by deleting and or moving files from one image to another.
+</div></blockquote>
+
+It's not as simple as that, Actually it's impossible to convert a higher SP to a lower one. It is not about some additional files that can be removed to get the lower SP, but almost all files are different and they are digitally signed by catalog files. It is almost like of you want to convert Windows 7 to Windows XP. If you have the license the only option you have is find a SP0 original image.<br>
+<br>
+BTW did you try the compatibility option to install your apps on SP1 or SP2 ?
+</div></blockquote>
+I have all SP0 files, they reside on a retail distro. Then the problem is figuring out exactly where windows decides what type of distro it is and replacing those files from another image. but then if this is a different service pack it will not work.<br>
+<br>
+"find a SP0 original image". that is the problem, windows server 2003 enterprise VLK SP0 seems hard to find these days. either they are retail or they are vlk but slipstreamed.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to Use FC (File Compare) from the Windows Command Prompt</h3>
+				<div class="date">Posted: <strong>23 Sep 2018 15:05</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">I now have Windows Server 2003 Enterprise MSDN RTM Corporate Edition x86 SP0 en.<br>
+and Windows Server 2003 Enterprise Edition VLK x86 SP0 en.<br>
+<br>
+I want to share some interesting facts that I figured out wayback but forgot about.<br>
+The document talks about XP but this also applies to windows server 2003 series.
+<blockquote><div><cite>Windows OEM, RTM or VLK wrote:</cite>
+Note: This step can be used to check or verify the channel version of a Windows XP CD or image too. And it does not convert CD or image to royalty OEM Windows XP, which requires some OEM files to be existed.<br>
+<br>
+Copy all content of Windows XP CD to hard disk drive, or extract Windows XP disc image to a folder. <br>
+Open the file \i386\setupp.ini in any text editor such as Notepad. <br>
+Inside the setupp.ini, there is a “Pid” parameter with [Pid] header. The Pid variable consists of 2 parts. The first 5 digits is Microsoft product code (MPC) which determines the version of Windows XP that will be installed, the last 3 digits is channel ID that determines which CD-keys or product keys that the installation wizard will accept. Some example of standard combination for Pid for various editions of Windows XP: <br>
+Windows XP RTM<br>
+Retail: 51882335 (Retail edition accepting Retail CD keys)<br>
+Volume License: 51883270 (Volume License edition accepting Volume License keys or VLK)<br>
+OEM: 82503OEM (OEM edition accepting OEM keys or COA keys)<br>
+<br>
+Windows XP SP2<br>
+<br>
+Retail: 55274335<br>
+Volume License: 55274270<br>
+OEM: 55277OEM<br>
+<br>
+Windows XP SP3<br>
+<br>
+Retail: 76487335<br>
+Volume License: 76487270<br>
+OEM: 76487OEM<br>
+<br>
+The first 5 digits of Pid is normally stayed the same for same version of Windows XP (i.e. RTM, SP1, SP2 or SP3). Thus, only the last 3 digits of Pid needs to be modified according to example above. Generally, channel ID for retail is 335, OEM is OEM, and volume licensing is 270. <br>
+Use nLite or other disc imaging program to re-create or re-burn the modified Windows XP installation disc media or image. <br>
+Note: Newer Windows XP discs may check whether the CD’s volume label matches the type of CD too. In this case, the wrong volume label may still render the disc unworkable. Here’s a brief list of known English version of Windows XP CD volume labels.<br>
+<br>
+XP Home and Professional Combo 			= WXPHFPP_EN<br>
+<br>
+XP Home Retail 					= WXHFPP_EN<br>
+XP Home Retail with SP1 			= XRMHFPP_EN<br>
+XP Home Retail with SP1a 			= X1AHFPP_EN<br>
+XP Home Retail with SP2 			= VRMHFPP_EN<br>
+XP Home Upgrade 				= WXHCCP_EN<br>
+XP Home Upgrade with SP1 			= XRMHCCP_EN<br>
+XP Home Upgrade with SP1a	 		= X1AHCCP_EN<br>
+XP Home Upgrade with SP2 			= VRMHCCP_EN<br>
+XP Home OEM 					= WXHOEM_EN<br>
+XP Home OEM with SP1 				= XRMHOEM_EN<br>
+XP Home OEM with SP1a 				= X1AHOEM_EN<br>
+XP Home OEM with SP2 				= VRMHOEM_EN<br>
+XP Home Volume 					= WXHVOL_EN<br>
+XP Home Volume with SP1 			= XRMHVOL_EN<br>
+XP Home Volume with SP1a 			= X1AHVOL_EN<br>
+XP Home Volume with SP2 			= VRMHVOL_EN<br>
+<br>
+XP Professional Retail 				= WXPFPP_EN<br>
+XP Professional Retail with SP1 		= XRMPFPP_EN<br>
+XP Professional Retail with SP1a	 	= X1APFPP_EN<br>
+XP Professional Retail with SP2 		= VRMPFPP_EN<br>
+XP Professional Upgrade 			= WXPCCP_EN<br>
+XP Professional Upgrade with SP1 		= XRMPCCP_EN<br>
+XP Professional Upgrade with SP1a	 	= X1APCCP_EN<br>
+XP Professional Upgrade with SP2 		= VRMPCCP_EN<br>
+XP Professional OEM 				= WXPOEM_EN<br>
+XP Professional OEM with SP1 			= XRMPOEM_EN<br>
+XP Professional OEM with SP1a 			= X1APOEM_EN<br>
+XP Professional OEM with SP2 			= VRMPOEM_EN<br>
+XP Professional Volume 				= WXPVOL_EN<br>
+XP Professional Volume with SP1 		= XRMPVOL_EN<br>
+XP Professional Volume with SP1a 		= X1APVOL_EN<br>
+XP Professional Volume with SP2 		= VRMPVOL_EN<br>
+XP Professional Tablet PC with SP1 Disc1 	= XRMPFPP_EN<br>
+XP Professional Tablet PC with SP1a Disc1 	= X1APFPP_EN<br>
+XP Professional Tablet PC with SP2 Disc1 	= VRMPFPP_EN<br>
+XP Professional MSDN 				= WXPFPP_EN<br>
+XP Professional MSDN with SP1 			= XRMPFPP_EN<br>
+XP Professional MSDN with SP1a 			= X1APFPP_EN<br>
+XP Professional MSDN with SP2 			= VRMPFPP_EN<br>
+XP Professional Evaluation 			= WXPEVL_EN
+</div></blockquote></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8809&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:13:26 GMT -->
+</html>

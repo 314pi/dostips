@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=3202 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:14:00 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Creating .EXE auxiliary programs in Batch files - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopicf92a.html?t=3202">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic3b4a.html?f=3&amp;t=3202">Creating .EXE auxiliary programs in Batch files</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting2fb2.html?mode=reply&amp;f=3&amp;t=3202" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicd65f-2.html?f=3&amp;t=3202&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="3202" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			4 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p15211" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile15211">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content15211">
+
+						<h3 class="first"><a href="#p15211">Creating .EXE auxiliary programs in Batch files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingfa70.html?mode=quote&amp;f=3&amp;p=15211" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb5ba.html?p=15211#p15211" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopicb5ba.html?p=15211#p15211" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>14 Apr 2012 21:40
+			</p>
+			
+			
+			
+			<div class="content"><strong class="text-strong">NOTE</strong>: If you want to convert a filename.exe.hex file to filename.exe, just copy both <strong class="text-strong">HexToBin.bat</strong> and <strong class="text-strong">HexChar.vbs</strong> files below, and type: hextobin filename.exe.hex<br />__________________________________________________________________________________<br /><br />I used to write small programs in assembly language as aid for Batch files. I prefer the .COM format because it is the most compact form of executable files and they can be directly inserted in a Batch file as a string of ASCII characters; I have posted several of them in this forum. However, .COM format files can not be used in 64-bits versions of Windows, so these programs have a somewhat limited use.<br /><br />Although an assembly program may also generate an .EXE file, this format have some disadvantages for this purpose. .EXE files are longer than .COM ones and include control characters that can not be easily changed like in a .COM file. To distribute an .EXE program in a Batch file, a different method to create it is needed. I devised a method to convert the .EXE into an ASCII representation via Hexadecimal digits (that I borrowed from this post: w w w . dostips.com/forum/viewtopic.php?f=3&amp;t=3089&amp;p=14361#p14361), and then convert back the Hex digits into the .EXE. First conversion can be achieved via a Batch file, but the problem here is the opposite conversion that can NOT be directly done with original CMD Batch commands (as far as I know).<br /><br />This problem may be solved via a VBS script like this one: w w w . dostips.com/forum/viewtopic.php?f=3&amp;t=3143&amp;p=14704#p14704, but it is a little cumbersome to use Batch for one part of the conversion and VBS for the other one because the complete solution can be written in VBS. On the other hand, VBS script facility is not installed in every machine, so this solution would have a limited use again. Another possible solution is achieve the Hex-to-Exe conversion via an auxiliary assembly program that would be faster and much convenient, but the problem here is the classical chicken-and-egg dilemma: How to create an .EXE auxiliary file if we have not an .EXE auxiliary file designed to create such files? The only solution I devised is this one (any additional suggestion is welcome): use a VBS script to create the first .EXE auxiliary Hex-to-Exe program, so any posterior auxiliary program will be created using that file. If you have not VBS scripting installed in your machine, you need to run the Batch file below in another machine with VBS support and then copy the HexChar.exe resulting file to your computer.<br /><br />This is <strong class="text-strong">HexToBin.bat</strong>:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />REM Convert a *.ext.hex file created by BINTOHEX.BAT to binary *.ext<br />REM Antonio Perez Ayala - Apr/14/2012<br /><br />if &quot;%~1&quot; == &quot;&quot; echo HEXTOBIN File&amp;echo/&amp;echo Convert a *.ext.hex file created by BINTOHEX.BAT to *.ext binary&amp;goto :EOF<br />set &quot;inFile=%~1&quot;<br />if not exist &quot;%inFile%&quot; echo File not found: %1&amp; goto :EOF<br />set &quot;outFile=%~N1&quot;<br />if exist HexChar.exe (<br />&nbsp; &nbsp;HexChar.exe &lt; &quot;%inFile%&quot; &gt; &quot;%outFile%&quot;<br />) else (<br />&nbsp; &nbsp;Cscript /B /E:VBS HexChar.vbs &lt; &quot;%inFile%&quot; &gt; &quot;%outFile%&quot;<br />)<br />echo %outFile% file created<br /></code></pre></div><br />This is <strong class="text-strong">HexChar.vbs</strong>:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Rem Hex digits to Ascii Characters conversion<br />Rem Antonio Perez Ayala - Apr/14/2012<br /><br />Dim line,index,count<br />line = WScript.StdIn.ReadLine()<br />While line &lt;&gt; &quot;&quot;<br />&nbsp; &nbsp;index = 1<br />&nbsp; &nbsp;While index &lt; len(line)<br />&nbsp; &nbsp; &nbsp; If Mid(line,index,1) = &quot;&#91;&quot; Then<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;index = index+1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;count = 0<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;While Mid(line,index+count,1) &lt;&gt; &quot;&#93;&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; count = count+1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;WEnd<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;For i=1 To Int(Mid(line,index,count))<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; WScript.StdOut.Write Chr(0)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Next<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;index = index+count+1<br />&nbsp; &nbsp; &nbsp; Else<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;WScript.StdOut.Write Chr(CByte(&quot;&amp;H&quot;&amp;Mid(line,index,2)))<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;index = index+2<br />&nbsp; &nbsp; &nbsp; End If<br />&nbsp; &nbsp;WEnd<br />&nbsp; &nbsp;line = WScript.StdIn.ReadLine()<br />WEnd<br /></code></pre></div><br />This is <strong class="text-strong">HexChar.exe.hex</strong>:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>4D5A27000300010020&#91;3&#93;FFFF&#91;3&#93;01&#91;4&#93;19003E&#91;3&#93;0100FB306A72&#91;28&#93;010019&#91;847&#93;B810008ED8FC33F6E857003C5B752033C9BB0A00E8<br />4B003C5D740A250F0091F7E303C8EBEF32D2B402CD21E2FAEBD92C303C0976082C073C0F76022C20C0E0048AD0E81D002C30<br />3C0976082C073C0F76022C2002D0B40280FA097502B406CD21EBA6AC0AC07521535152BB&#91;2&#93;B9800033D2B43FCD2172190BC0<br />74155A595B8BF0C6040033F6EBDA3C3072D63C6677D2C332C0B44CCD21<br /></code></pre></div><br />This way, to create the HexChar.exe file execute this line:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>hextobin hexchar.exe.hex</code></pre></div><br />Note that HexToBin.bat file test if HexChar.exe file not exist to use HexChar.vbs instead; you may eliminate the IF in this file after creating HexChar.exe to make it faster.<br /><br />HexToBin.bat file is currently used to create these auxiliary programs:<br /><br />- <a href="viewtopicdf23.html?f=3&amp;t=2745&amp;p=12604#p12604" class="postlink">ColorMsg</a>: Show a message in the screen in any color.<br /><br />As soon as possible I will write .exe.hex versions to also create these auxiliary programs (more coming soon):<br /><br />- w w w . dostips.com/forum/viewtopic.php?f=3&amp;t=2800 - TypeOfHandle: Detect redirection and EOF in standard handles.<br />- w w w . dostips.com/forum/viewtopic.php?f=3&amp;t=2823 - SetFilePointer: Read/write redirected input/output files in any order; this program allows to develop a basic Relational Data Base: w w w . dostips.com/forum/viewtopic.php?f=3&amp;t=3126<br /><br />Just to complete this topic, below is the <strong class="text-strong">BinToHex.bat</strong> file you must use in case you want to encode your own files; note that this method works with any type of file and is very efficient with large groups of zeros (like those in .EXE files). You need to have admin credentials to run this file (because the FSUTIL command):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off <br /><br />REM Convert any file to HEX representation in ASCII<br />REM Antonio Perez Ayala - Apr/14/2012<br /><br />if &quot;%~1&quot; == &quot;&quot; echo BINTOHEX File&amp;echo/&amp;echo Convert any File to ASCII Hex code&amp;goto :EOF<br />setlocal EnableDelayedExpansion<br />set &quot;inFile=%~1&quot;<br />if not exist &quot;%infile%&quot; echo File not found: %1&amp; goto :EOF<br />set &quot;outFile=%~1.hex&quot;<br />set &quot;tempFile=%temp%\#.tmp&quot;<br />del &quot;%tempFile%&quot; 2&gt;NUL<br />fsutil file createnew &quot;%tempFile%&quot; %~Z1 &gt;NUL || echo Error in creating temporary file&amp;&amp; goto :EOF<br />set /A a=0, d=0<br />(<br />&nbsp; &nbsp;for /F &quot;skip=1 tokens=1,2 delims=: &quot; %%b in ('fc /B &quot;%inFile%&quot; &quot;%tempFile%&quot;') do (<br />&nbsp; &nbsp; &nbsp; set /A b=0x%%b<br />&nbsp; &nbsp; &nbsp; if !a! neq !b! (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A c=b-a, d+=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if !c! equ 1 (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=00&quot; &lt;NUL<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=&#91;!c!&#93;&quot; &lt;NUL<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; set /P &quot;=%%c&quot; &lt;NUL <br />&nbsp; &nbsp; &nbsp; set /A a=b+1, d+=1<br />&nbsp; &nbsp; &nbsp; if !d! geq 50 set d=0&amp; echo/<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;if !a! neq %~Z1 (<br />&nbsp; &nbsp; &nbsp; set /A c=%~Z1-a<br />&nbsp; &nbsp; &nbsp; set /P &quot;=&#91;!c!&#93;&quot; &lt;NUL<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;echo/<br />) &gt; &quot;%outfile%&quot;<br />echo %outfile% file created<br />del &quot;%tempFile%&quot;<br /></code></pre></div><br /><br />Antonio</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a> on 15 Jun 2012 20:21, edited 1 time in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p15217" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile15217">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content15217">
+
+						<h3 ><a href="#p15217">Re: Creating .EXE auxiliary programs in Batch files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7156.html?mode=quote&amp;f=3&amp;p=15217" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicf47c.html?p=15217#p15217" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopicf47c.html?p=15217#p15217" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>15 Apr 2012 02:25
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite>the complete solution can be written in VBS. On the other hand, VBS script facility is not installed in every machine, so this solution would have a limited use again.</div></blockquote><br /><br />WSH is a standard part of every machine from XP onwards I think, and it is an optional install from Win9x, so it's probably fair in this age to use a VBS solution.<br /><br />Some businesses may lock down WSH but then those machines are crippled even further.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21600" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21600">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search0d5e.html?author_id=2453&amp;sr=posts">1497</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 16 May 2011 08:21</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Flanders(Belgium)</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact Ed Dyreen">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact Ed Dyreen</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://ed-dyreen.ddns.net/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21600">
+
+						<h3 ><a href="#p21600">Re: Creating .EXE auxiliary programs in Batch files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting015e.html?mode=quote&amp;f=3&amp;p=21600" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7ceb-2.html?p=21600#p21600" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopic7ceb-2.html?p=21600#p21600" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a></strong> &raquo; </span>03 Nov 2012 19:15
+			</p>
+			
+			
+			
+			<div class="content">'<br />Hey tooSimple <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><br />I had to reWrite both 'HexToBin.CMD' and 'HexChar.VBS' to get it working on XP <img class="smilies" src="images/smilies/icon_surprised.gif" alt=":o" title="Surprised" /> <br /><br />HexToBin.CMD: on XP the active directory is !userProfile! when using drag'n drop hence absolute paths are required.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;title %~n0<br />:: ------------------------------------------------------------------------------------------------------------<br />:: hexToBin&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-<br />:: ------------------------------------------------------------------------------------------------------------<br />:: (<br />::&nbsp; &nbsp;Converts from .HEX to .COM<br />::<br />::&nbsp; &nbsp;Drag'n drop file to convert.<br />::<br />::&nbsp; &nbsp;supported platforms: x86 ( winXP and up )<br />::&nbsp; &nbsp;dependencies&nbsp; &nbsp; &nbsp; &nbsp;: hexChar.VBS<br />::&nbsp; &nbsp;last updated&nbsp; &nbsp; &nbsp; &nbsp;: 2012^11^02<br />::&nbsp; &nbsp;programmer&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: Antonio Perez Ayala - 2012^04^14<br />::&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;tooComplex &nbsp; &nbsp; - 2012^11^02<br />:: )<br />:: ------------------------------------------------------------------------------------------------------------<br /><br />:: ------------------------------------------------------------------------------------------------------------<br />:§init ( paramRAW )<br />:: ------------------------------------------------------------------------------------------------------------<br />:: last updated&nbsp; &nbsp; &nbsp; &nbsp;: 2012^11^02<br />::<br />setlocal enableExtensions disableDelayedExpansion %=&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;special chars are supported in disableDelayed&nbsp; &nbsp;=%<br />:: (<br />&nbsp; &nbsp;set /a $err = 0<br />&nbsp; &nbsp;::<br />&nbsp; &nbsp;(set $=%*)<br />&nbsp; &nbsp;::<br />&nbsp; &nbsp;if not defined $ (<br /><br />&nbsp; &nbsp;&nbsp; &nbsp;echo. &amp;&lt;nul set /p &quot;= hexToBin.CMD&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;echo. &amp;&lt;nul set /p &quot;= &quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;echo. &amp;&lt;nul set /p &quot;=&nbsp; Converts from .HEX to .COM&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;echo. &amp;&lt;nul set /p &quot;= &quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;echo. &amp;&lt;nul set /p &quot;=&nbsp; Drag'n drop file to convert.&quot;<br /><br />&nbsp; &nbsp;) else &nbsp; &nbsp;call :§main &quot;%$%&quot; ^!<br />::<br />endlocal &amp;ping /n 4 0.0.0.0 &gt;nul 2&gt;&amp;1 &amp;exit %$err%<br />:: ------------------------------------------------------------------------------------------------------------<br />:skip ()<br />::<br />goto :skip &quot;()&quot;<br />pause<br />exit<br />:: ------------------------------------------------------------------------------------------------------------<br />:§main ( #$iFile )<br />:: ------------------------------------------------------------------------------------------------------------<br />:: last updated&nbsp; &nbsp; &nbsp; &nbsp;: 2012^11^02<br />:: language dependant : no<br />:: supported languages: N/A<br />::<br />setlocal enableDelayedExpansion<br />:: (<br />&nbsp; &nbsp;set &quot;$hexChar.fileName=%~dp0hexChar&quot;<br />&nbsp; &nbsp;set&nbsp; &nbsp; &nbsp; &nbsp;&quot;$iFile=%~f1&quot;<br />&nbsp; &nbsp;set&nbsp; &nbsp; &nbsp; &nbsp;&quot;$oFile=%~dpn1.COM&quot;<br /><br />&nbsp; &nbsp;del /f /q &quot;%$oFile%&quot; 2&gt;nul &amp;if exist &quot;!$hexChar.fileName!.EXE&quot; (<br />&nbsp; &nbsp;&nbsp; &nbsp;::<br />&nbsp; &nbsp;&nbsp; &nbsp;&quot;!$hexChar.fileName!.EXE&quot; &lt; &quot;%$iFile%&quot; &gt; &quot;%$oFile%&quot;<br /><br />&nbsp; &nbsp;) else (<br /><br />&nbsp; &nbsp;&nbsp; &nbsp;echo.<br />&nbsp; &nbsp;&nbsp; &nbsp;echo. ^&lt; '!$iFile!'<br />&nbsp; &nbsp;&nbsp; &nbsp;echo.&nbsp; cScript.EXE //noLogo /e:VBS '!$hexChar.fileName!.VBS'<br />&nbsp; &nbsp;&nbsp; &nbsp;::<br />&nbsp; &nbsp;&nbsp; &nbsp;&lt; &quot;!$iFile!&quot; (<br /><br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;cScript.EXE //noLogo /e:VBS &quot;!$hexChar.fileName!.VBS&quot; ||(<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;::<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;set /a $err = !errorLevel!<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;)<br /><br />&nbsp; &nbsp;&nbsp; &nbsp;) &gt; &quot;!$oFile!&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;::<br />&nbsp; &nbsp;&nbsp; &nbsp;echo. ^&gt; '!$oFile!' &#91;error:!$err!&#93;<br />&nbsp; &nbsp;&nbsp; &nbsp;::<br />&nbsp; &nbsp;&nbsp; &nbsp;if !$err! neq&nbsp; 0 ( pause )<br />&nbsp; &nbsp;)<br />:: )<br />endlocal &amp;exit /b %$err%<br />:: ------------------------------------------------------------------------------------------------------------<br />:skip ()<br />::<br />goto :skip &quot;()&quot;<br />pause<br />exit<br /></code></pre></div>HexChar.VBS: I prefer to handle non-fatal errors 'end of stream' where you suppress them for simplicity's sake ( just a matter of taste ) <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>' Converts from .HEX to .COM<br />' Antonio Perez Ayala - 2012^04^14<br />' tooComplex&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - 2012^11^02<br /><br />' init ()<br />'(<br />&nbsp; &nbsp;Dim line, index, count<br />')<br /><br />' main ()<br />'(<br />&nbsp; &nbsp;On Error Resume Next<br />&nbsp; &nbsp;'<br />&nbsp; &nbsp;While 1<br />&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;line = WScript.StdIn.ReadLine()<br />&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;If Err.Number = 0 Then<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;index = 1<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;While index &lt; len( line )<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;If Mid( line, index, 1 ) = &quot;&#91;&quot; Then<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;index = index + 1<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;count = 0<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;While Mid( line, index + count, 1 ) &lt;&gt; &quot;&#93;&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;count = count + 1<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;WEnd<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;For i=1 To Int( Mid( line, index, count ) )<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;WScript.StdOut.Write Chr(0)<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;Next<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;index = index + count + 1<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;Else<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;WScript.StdOut.Write Chr( CByte( &quot;&amp;H&quot; &amp;Mid( line, index, 2 ) ) )<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;index = index + 2<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;End If<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;WEnd<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;Else<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;WScript.Quit<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;'<br />&nbsp; &nbsp;&nbsp; &nbsp;End If<br />&nbsp; &nbsp;'<br />&nbsp; &nbsp;WEnd<br />')<br /></code></pre></div>later <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p22892" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile22892">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistcb12.html?mode=viewprofile&amp;u=1621" class="username">carlos</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchda66.html?author_id=1621&amp;sr=posts">472</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 20 Aug 2010 13:57</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Chile</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact carlos">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact carlos</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="https://web.archive.org/web/20180902091521/http://consolesoft.com/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content22892">
+
+						<h3 ><a href="#p22892">Re: Creating .EXE auxiliary programs in Batch files</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5651.html?mode=quote&amp;f=3&amp;p=22892" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1436-2.html?p=22892#p22892" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopic1436-2.html?p=22892#p22892" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistcb12.html?mode=viewprofile&amp;u=1621" class="username">carlos</a></strong> &raquo; </span>19 Dec 2012 18:42
+			</p>
+			
+			
+			
+			<div class="content">Aacini I read this post. And I found in bintohex.cmd a little bug. If the file to convert have only NUL characters the .hex output file is wrong. This is my fix:<br /><br /><strong class="text-strong">BinToHex.bat</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />REM Convert any file to HEX representation in ASCII<br />REM Antonio Perez Ayala - Apr/14/2012<br />REM Carlos - Dec/19/2012 (Fixed for convert files with only NUL characters)<br /><br />if &quot;%~1&quot; == &quot;&quot; echo BINTOHEX File&amp;echo/&amp;echo Convert any File to ASCII Hex code&amp;goto :EOF<br />setlocal EnableDelayedExpansion<br />set &quot;inFile=%~1&quot;<br />if not exist &quot;%infile%&quot; echo File not found: %1&amp; goto :EOF<br />set &quot;outFile=%~1.hex&quot;<br />set &quot;tempFile1=%temp%\#.tmp&quot;<br />set &quot;tempFile2=%temp%\##.tmp&quot;<br />del &quot;%tempFile1%&quot; &quot;%tempFile2%&quot; 2&gt;NUL<br />fsutil file createnew &quot;%tempFile1%&quot; %~Z1 &gt;NUL || echo Error in creating temporary file&amp;&amp; goto :EOF<br />fc /B &quot;%inFile%&quot; &quot;%tempFile1%&quot; &gt; &quot;%tempFile2%&quot;<br />if errorlevel 1 (<br />(<br />&nbsp; &nbsp;set /A a=0, d=0<br />&nbsp; &nbsp;for /F &quot;skip=1 tokens=1,2 delims=: &quot; %%b in ('type &quot;%tempFile2%&quot;') do (<br />&nbsp; &nbsp; &nbsp; set /A b=0x%%b<br />&nbsp; &nbsp; &nbsp; if !a! neq !b! (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A c=b-a, d+=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if !c! equ 1 (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=00&quot; &lt;NUL<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /P &quot;=&#91;!c!&#93;&quot; &lt;NUL<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; set /P &quot;=%%c&quot; &lt;NUL<br />&nbsp; &nbsp; &nbsp; set /A a=b+1, d+=1<br />&nbsp; &nbsp; &nbsp; if !d! geq 50 set d=0&amp; echo/<br />&nbsp; &nbsp;)<br /><br />&nbsp; &nbsp;if !a! neq %~Z1 (<br />&nbsp; &nbsp; &nbsp; set /A c=%~Z1-a<br />&nbsp; &nbsp; &nbsp; set /P &quot;=&#91;!c!&#93;&quot; &lt;NUL<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;echo/<br />) &gt; &quot;%outfile%&quot;<br />) else (<br />set /P &quot;=&#91;%~Z1&#93;&quot; &lt;NUL &gt;&quot;%outfile%&quot;<br />)<br />echo %outfile% file created<br />del &quot;%tempFile1%&quot; &quot;%tempFile2%&quot;<br /></code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting2fb2.html?mode=reply&amp;f=3&amp;t=3202" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicd65f-2.html?f=3&amp;t=3202&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=3202">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			4 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5089.gif?cron_type=cron.task.text_reparser.post_text" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=3202 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:14:08 GMT -->
+</html>

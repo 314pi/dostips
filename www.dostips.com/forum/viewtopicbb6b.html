@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8582&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:15:52 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Going back to one of my old batch files... wanting to add to it - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Going back to one of my old batch files... wanting to add to it</h2>
+		<p><a href="viewtopic082e.html?f=3&amp;t=8582">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8582</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>01 Jun 2018 06:29</strong></div>
+				<div class="author">by <strong>1033Forest</strong></div>
+				<div class="content">I think the Windows 7 (AnsiSys with my modifications) version of this script is done for now. The only thing left to do is to make black characters appear on other colored backgrounds (black backgrounds do work though). Will continue work on the Windows 10 one once I get a new Windows 10 machine or something.<br>
+<br>
+Also just wondering even though fullscreen doesn't work in Windows 7, it does in safe mode with it appearing like a fullscreen MS-DOS prompt. Does it work the same way in Windows 10's safemode or does it display with the scrollbar?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>03 Jun 2018 05:52</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">My win10 version uses the same dos shell window (with scrollbars), no matter if running in safe mode or not, maximized or not.<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>04 Sep 2018 19:00</strong></div>
+				<div class="author">by <strong>1033Forest</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915">penpen</a> wrote: <a href="viewtopicf674.html?p=57011#p57011" data-post-id="57011" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 May 2018 03:35</div></cite>
+I hope this "Retro awesomness.bat" is what you are looking for:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableExtensions disableDelayedExpansion
+:: set active, utf-7 and utf8 codepages
+set /A "utf7Cp=65000, utf8Cp=65001"
+set "cp="
+for /f "delims=." %%a in ('2^&gt;nul chcp') do for %%b in (%%a) do set "cp=%%b"
+if not defined cp for /f "tokens=2" %%a in ('2^&gt;nul chcp') do set "cp=%%~a"
+&gt;nul chcp %utf8Cp%
+
+:: define filenames
+set "utf7DataFile=data.utf-7.txt"
+set "dataFile=data.dat"
+
+:: create chinese chcp seperator char
+set "data="
+
+setlocal enableDelayedExpansion
+
+:: create glyph data using only characters in { '+', '-', '/', '0'-'9', 'A'-'Z', 'a'-'z' }
+&gt;nul chcp %utf8Cp%
+rem &gt;"%dataFile%" cmd /a /c^&lt;nul set /p "=+/v8-"
+rem &gt;nul chcp %utf7Cp%
+set "data="
+rem &lt;"%dataFile%" set /p "data="
+rem &gt;nul chcp %utf8Cp%
+set "data=!data!+AF8mOiY7JmUmZiZjJmAgIiXYJcsl2SZCJkAmaiZrJjwluiXEIZUgPAC2AKclrCGoIZEhkyGSIZAiHyGUJbIlvA- +ACEAIgAjAC"
+set "data=!data!QAJQAm-'()+ACo-+-,-./0123456789:+ADsAPAA9AD4-?+AEA-ABCDEFGHIJKLMNOPQRSTUVWXYZ+AFsAXABdAF4AXwBg-abcde"
+set "data=!data!fghijklmnopqrstuvwxyz+AHsAfAB9AH4jAgDHAPwA6QDiAOQA4ADlAOcA6gDrAOgA7wDuAOwAxADFAMkA5gDGAPQA9gDyAPsA+Q"
+set "data=!data!D/ANYA3ACiAKMApSCnAZI-+AOEA7QDzAPoA8QDRAKoAugC/IxAArAC9ALwAoQCrALslkSWSJZMlAiUkJWElYiVWJVUlYyVRJVclX"
+set "data=!data!SVcJVslECUUJTQlLCUcJQAlPCVeJV8lWiVUJWklZiVgJVAlbCVnJWglZCVlJVklWCVSJVMlayVqJRglDCWIJYQljCWQJYADsQDfA"
+set "data=!data!5MDwAOjA8MAtQPEA6YDmAOpA7QiHgPGA7UiKQ-+ImEAsSJlImQjICMhAPciSACwIhkAtyIaIH8AsiWg-+AKA-"
+::  index       0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+::              0         1         2         3         4         5         6         7         8         9         
+cmd /d /a /e:on /v:on /c"&gt;"^!dataFile^!" echo(^!data^!"
+set "data="
+
+:: read data from file
+&gt;nul chcp %utf7Cp%
+set "data="
+&lt;"%dataFile%" set /p "data="
+&gt;nul chcp %utf8Cp%
+
+::initialize
+set "Characters=!data:~1,31!!data:~33,222!"
+set "Colors=123456789abcdef"
+call :strlen "Characters"  "TotalCharAmount"
+call :strlen     "Colors" "TotalColorAmount"
+for /F %%a in ('echo prompt $E^| cmd') do set "ESC=%%a"
+mode con cols=80 lines=25
+title Retro awesomness.
+
+:loop
+set /a "c=!random! %% !TotalCharAmount!, i=!random! %% %TotalColorAmount%, j=!random! %% %TotalColorAmount%, x=(!random! %% 80) + 1, y=(!random! %% 25) + 1"
+set /a "color=0x!Colors:~%i%,1!, bgcolor=0x!Colors:~%j%,1!"
+&lt;nul set /p "=%ESC%[%y%;%x%f%ESC%[38;5;%color%;48;5;%bgcolor%m!Characters:~%i%,1!%ESC%[0m"
+goto :loop
+goto :eof
+
+
+:strlen
+:: %~1	environment variable that holds the string to test
+:: %~2	environment variable to store the string length to
+	setlocal enableExtensions enableDelayedExpansion
+	if not defined %~1 (
+		set "%~2=-1"
+	) else (
+		set "len=0"
+		for /l %%a in (12,-1,0) do (
+			set /a "len|=(1&lt;&lt;%%~a)"
+			for %%b in (!len!) do if "!%~1:~%%~b,1!" == "" set /a "len^=(1&lt;&lt;%%~a)"
+		)
+	)
+	endlocal &amp; set /a "%~2=%len%+1"
+	goto :eof
+</code></pre></div>
+
+Sidenotes:<br>
+You need to disable "Legacy console mode" else the vt100 ANSI escape sequences won't work.<br>
+<br>
+When you are using raster fonts then the glyphs used should be system dependent.<br>
+So giving CP1252 characters and saying "their CP437 equivalents" is of not much use,<br>
+because CP437 isn't used if you are using raster fonts (so i hope the glyphs i used are ok).<br>
+<br>
+I used these characters (as these are the defaults used by my system for raster fonts):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>_☺☻♥♦♣♠•◘○◙♂♀♪♫☼
+►◄↕‼¶§▬↨↑↓→←∟↔▲▼
+ !"#$%&amp;'()*+,-./
+0123456789:;&lt;=&gt;?
+@ABCDEFGHIJKLMNO
+PQRSTUVWXYZ[\]^_
+`abcdefghijklmno
+pqrstuvwxyz{|}~⌂
+ÇüéâäàåçêëèïîìÄÅ
+ÉæÆôöòûùÿÖÜ¢£¥₧ƒ
+áíóúñÑªº¿⌐¬½¼¡«»
+░▒▓│┤╡╢╖╕╣║╗╝╜╛┐
+└┴┬├─┼╞╟╚╔╩╦╠═╬╧
+╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀
+αßΓπΣσµτΦΘΩδ∞φε∩
+≡±≥≤⌠⌡÷≈°∙·√ⁿ²■ </code></pre></div>
+Just for comparison - the following ones are used by CP 437 if  not using raster fonts:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code> ☺☻♥♦♣♠•◘○◙♂♀♪♫☼
+►◄↕‼¶§▬↨↑↓→←∟↔▲▼
+ !"#$%&amp;'()*+,-./
+0123456789:;&lt;=&gt;?
+@ABCDEFGHIJKLMNO
+PQRSTUVWXYZ[\]^_
+`abcdefghijklmno
+pqrstuvwxyz{|}~⌂
+ÇüéâäàåçêëèïîìÄÅ
+ÉæÆôöòûùÿÖÜø£Ø×ƒ
+áíóúñÑªº¿®¬½¼¡«»
+░▒▓│┤ÁÂÀ©╣║╗╝¢¥┐
+└┴┬├─┼ãÃ╚╔╩╦╠═╬¤
+ðÐÊËÈıÍÎÏ┘┌█▄¦Ì▀
+ÓßÔÒõÕµþÞÚÛÙýÝ¯´
+­±‗¾¶§÷¸°¨·¹³²■ </code></pre></div>
+</div></blockquote>
+
+I decided to go back to this thread and try this one out since I got a Windows 10 laptop. The colors work, but only characters 1-15 appear with a few blank spaces. What's wrong with this code?<br>
+<br>
+Also, the line set "Characters=!data:~1,31!!data:~33,222!", it's 254, not 222 in order to display every character.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Going back to one of my old batch files... wanting to add to it</h3>
+				<div class="date">Posted: <strong>11 Sep 2018 11:38</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist0139.html?mode=viewprofile&amp;u=9235">1033Forest</a> wrote: <a href="viewtopicc22c.html?p=57933#p57933" data-post-id="57933" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Sep 2018 19:00</div></cite>I decided to go back to this thread and try this one out since I got a Windows 10 laptop. The colors work, but only characters 1-15 appear with a few blank spaces. What's wrong with this code?</div></blockquote>
+This line is wrong (i silently corrected the error in the later "AnsiSys-version", probably just forgot to mention):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;nul set /p "=%ESC%[%y%;%x%f%ESC%[38;5;%color%;48;5;%bgcolor%m!Characters:~%i%,1!%ESC%[0m"
+</code></pre></div>
+The corrected line is the following (using the right environment variable for the character (c instead of i):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;nul set /p "=%ESC%[%y%;%x%f%ESC%[38;5;%color%;48;5;%bgcolor%m!Characters:~%c%,1!%ESC%[0m"
+</code></pre></div>
+
+<blockquote><div><cite><a href="memberlist0139.html?mode=viewprofile&amp;u=9235">1033Forest</a> wrote: <a href="viewtopicc22c.html?p=57933#p57933" data-post-id="57933" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Sep 2018 19:00</div></cite>Also, the line set "Characters=!data:~1,31!!data:~33,222!", it's 254, not 222 in order to display every character.</div></blockquote>In this line the 222 is the correct value:<br>
+The batch substring command "!data:~33,222!" copies 222 characters starting at index 33 to the final set statement,<br>
+so it copies the characters from index 33 to 254 (=222+33-1).<br>
+<br>
+The environment variable data contains 256 characters with:<br>
+- A breaking whitespace (ASCII: 0x20) (at index 0) instead of the NUL character,<br>
+- the breaking whitespace (at index 32)<br>
+- the non breaking whitespace (ASCII: 0xFF) (at index 255).<br>
+Those characters are sort of "empty" (because they don't display anything except the background), so if i remember right you didn't want to display.<br>
+<br>
+<br>
+Later (for the AnsiSys-version) i also removed some other non displayable characters, because:<br>
+- The BEL character (at index 7) annoyingly beeps,<br>
+- the TAB character (at index 9) uses more than only 1 character (all blank),<br>
+- the SUB character (at index 26) could terminate interpreting escape sequences,<br>
+- the ESC character (at index 27) could be misinterpreted as an escape sequence.<br>
+Except the BEL (and probably the SUB character, but that is untested) you should avoid these characters for both versions (reasons given above).<br>
+<br>
+So you better should use the following line instead:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set "Characters=!data:~1,6!!data:~8,1!!data:~10,16!!data:~28,4!!data:~33,222!"
+</code></pre></div>
+
+Edit: I have change these lines in code you quoted.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8582&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:15:52 GMT -->
+</html>

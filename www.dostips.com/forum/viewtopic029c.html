@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8844&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:11:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Batch file to move certain file to other disk creating links to original files</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Batch file to move certain file to other disk creating links to original files</h2>
+		<p><a href="viewtopic3db0.html?f=3&amp;t=8844">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8844</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Batch file to move certain file to other disk creating links to original files</h3>
+				<div class="date">Posted: <strong>28 Sep 2018 06:51</strong></div>
+				<div class="author">by <strong>DOSuser2018</strong></div>
+				<div class="content">Hi to all,<br>
+I would like to create a .bat file that moves certain files (based on their extension) from a folder (with subfolders) to another disk preserving original tree structure while creating a .lnk in the original location to the moved files.<br>
+<br>
+For example the .bat would behave like this:<br>
+<br>
+File extension: mkv<br>
+Source path: d:\movies<br>
+Destination path e:\movies<br>
+<br>
+The batch scans folder and subfolders and moves all the .mkv files to the new path, while creating a .lnk in the original source folder for each file that has been moved.<br>
+<br>
+I found some code that I adapted to my purpose:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+cls
+
+setlocal enabledelayedexpansion
+
+set SOURCE_DIR=K:\source
+set DEST_DIR=K:\dest
+
+set FILENAMES_TO_COPY=*.txt
+
+
+for /R "%SOURCE_DIR%" %%F IN (%FILENAMES_TO_COPY%) do (
+    if exist "%%F" (
+
+	echo source: %%F
+
+        set FILE_DIR=%%~dpF
+        set FILE_INTERMEDIATE_DIR=!FILE_DIR:%SOURCE_DIR%=!
+	set FILE_NAME_EXT=%%~nxF
+
+	set FILE_DIR
+	set FILE_INTERMEDIATE_DIR
+	set FILE_NAME_EXT
+
+        xcopy /S /I /Y /V "%%F" "%DEST_DIR%!FILE_INTERMEDIATE_DIR!"
+
+	echo destination "%DEST_DIR%!FILE_INTERMEDIATE_DIR%FILE_NAME_EXT!"
+
+pause
+
+    )
+)</code></pre></div>
+
+In this first attempt, I just copy the files, and it works.<br>
+<br>
+I want to check the destination (which I'll use as parameter for mklink) but the last echo<br>
+<br>
+echo destination "%DEST_DIR%!FILE_INTERMEDIATE_DIR%FILE_NAME_EXT!"<br>
+<br>
+This one gives me<br>
+destination "K:\dest"<br>
+<br>
+I also tried <br>
+<br>
+echo destination "%DEST_DIR%!FILE_INTERMEDIATE_DIR!FILE_NAME_EXT!"<br>
+This one give me<br>
+destination "K:\dest\FILE_NAME_EXT"<br>
+<br>
+Not what I would like to have, ie the full destination path\filename.extension<br>
+I guess I'm just missing something trivial... <br>
+<br>
+Any ideas would be highly appreciated.<br>
+<br>
+Thank you very much,<br>
+<br>
+Matt</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch file to move certain file to other disk creating links to original files</h3>
+				<div class="date">Posted: <strong>01 Oct 2018 10:00</strong></div>
+				<div class="author">by <strong>kwsiebert</strong></div>
+				<div class="content">You have an unpaired % in the echo statement, which should be an ! to begin with, like so:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo destination "%DEST_DIR%!FILE_INTERMEDIATE_DIR!!FILE_NAME_EXT!"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch file to move certain file to other disk creating links to original files</h3>
+				<div class="date">Posted: <strong>01 Oct 2018 11:28</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">Yeah, they asked <a href="https://stackoverflow.com/questions/52576359/why-does-concatenating-environment-variables-containing-path-and-file-name-not-w" class="postlink">https://stackoverflow.com/questions/525 ... name-not-w</a> a few days after they didn't get a response here and got an answer there instead.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8844&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:11:15 GMT -->
+</html>

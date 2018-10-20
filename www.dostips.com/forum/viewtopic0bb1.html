@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8555&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:14:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Move User to new computer</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Move User to new computer</h2>
+		<p><a href="viewtopica4fa.html?f=3&amp;t=8555">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8555</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Move User to new computer</h3>
+				<div class="date">Posted: <strong>09 May 2018 09:43</strong></div>
+				<div class="author">by <strong>DaGimp</strong></div>
+				<div class="content">This is batch file I’ve written to backup a user’s files from an old computer and place them on a new computer. <br>
+<br>
+Requirements<br>
+1.	Access to new and old computer while logged in as user. <br>
+2.	User will need a home directory (U Drive). <br>
+3.	U drive will need enough free space to copy all of the users files including Outlook PST files. <br>
+<br>
+Steps. <br>
+1.	Extract batch files to local drive. <br>
+2.	At the source computer (old computer) while logged in as the user run backup.bat<br>
+3.	At the destination computer (new computer) while logged in as the user run restore.bat . <br>
+<br>
+This will copy files under 99megs from common locations such as my documents and standard locations for favorites/bookmarks. When restore.bat is run the files will be copied back to the same location on the new computer. <br>
+<br>
+The process does not delete any files at any time, its safe run multiple times on the same computer. If the backup process is run twice and a file has been modified the newer file will be copied over the older file. <br>
+<br>
+<br>
+***********************************************************************Backup.bat*******************************************************************
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+color 0B
+::======================================================================
+::######################################################################
+:: Warn user to close applications
+::======================================================================
+::######################################################################
+ECHO.
+ECHO !!! Please take a moment to CLOSE ALL OPEN APPLICATIONS !!!
+ECHO.
+ECHO !!! Please keep Outlook, Internet explorer, Chrome Closed !!!
+EChO.
+EChO !!! Until Backup and Restore is completed !!! 
+EChO.
+ECHO !!! Failing to do so, will result in a force closure of the application(s) !!!
+ECHO.
+ECHO !!! Must be logged on and run as user !!!
+PAUSE
+CLS
+
+Taskkill /IM Outlook.exe /F
+Taskkill /IM iexplore.exe /F
+Taskkill /IM Chrome.exe /F
+Taskkill /IM Onenote.exe /F
+Taskkill /IM Onenotem.exe /F
+Taskkill /IM Microsoft.StickyNotes.exe /F
+Taskkill /IM Taskkill StickyNot.exe /F
+
+CLS
+ECHO.
+EChO
+::======================================================================
+::######################################################################
+:: Begin script by checking which mapped drive exists.
+::======================================================================
+::######################################################################
+
+IF EXIST u:\NUL GOTO :BACKUP_TO_u
+GOTO :NODRIVE
+
+
+EChO
+::======================================================================
+::######################################################################
+:: The script will perform the backup to the u drive.
+::======================================================================
+::######################################################################
+:BACKUP_TO_u
+ECHO Exporting User Files, Favorites for IE and Google Chrome, Outlook Signatures, and Network Registry keys...
+:: Create the backup directory
+IF NOT EXIST u:\move_backup MKDIR u:\move_backup
+
+
+GOTO :WINDOWS_7_u
+
+:WINDOWS_7_u
+
+Robocopy /s /r:1 /w:1  "%userprofile%\AppData\Local\Microsoft\Outlook" "u:\Outlook\Local_Archive_Backup" *.pst
+ECHO Done Copying Outlook PST from Local Outlook folder...
+Robocopy /s /r:1 /w:1  "%userprofile%\Documents\Outlook files" "u:\Outlook\Local_Archive_Backup\Outlook Files" *.pst 
+ECHO Done Copying Outlook PST from Documents Outlook folder...
+Robocopy /MAX:99000000 /MIR /FFT /R:3 /W:10 /Z /NP /NDL "%userprofile%\AppData\Roaming\Microsoft\Signatures" "u:\move_backup\Signatures" *.* /e
+ECHO Done Copying Signatures...
+Robocopy /MAX:99000000 /MIR /FFT /R:3 /W:10 /Z /NP /NDL "%userprofile%\AppData\Roaming\Microsoft\Sticky Notes" "u:\move_backup\Sticky Notes" *.* /e
+ECHO Done Copying StickyNotes...
+Robocopy /MAX:99000000 /MIR /FFT /R:3 /W:10 /Z /NP /NDL "%userprofile%\Desktop" "u:\move_backup\Desktop" *.* /e
+ECHO Done Copying Desktop...
+Robocopy /MAX:99000000 /MIR /FFT /R:3 /W:10 /Z /NP /NDL "%userprofile%\Favorites" "u:\move_backup\Favorites" *.* /e
+ECHO Done Copying Favorites...
+Robocopy /MAX:99000000 /MIR /FFT /R:3 /W:10 /Z /NP /NDL "%userprofile%\AppData\Local\Microsoft\OneNote" "u:\move_backup\OneNoteLocal" *.* /e
+ECHO Done Copying OneNoteLocal...
+Robocopy /MAX:99000000 /MIR /FFT /R:3 /W:10 /Z /NP /NDL "%userprofile%\AppData\Roaming\Microsoft\OneNote" "u:\move_backup\OneNoteRoaming" *.* /e
+ECHO Done Copying OneNoteRoaming...
+Robocopy /MAX:99000000 /MIR /FFT /R:0 /W:10 /Z /NP /NDL "%userprofile%\Documents" "u:\move_backup\Documents"
+ECHO Done Copying Documents...
+Robocopy /MAX:99000000 /MIR /FFT /R:3 /W:10 /Z /NP /NDL "%userprofile%\Pictures" "u:\move_backup\Pictures" *.* /e
+ECHO Done Copying Pictures...
+Robocopy /MAX:990000000 /MIR /FFT /R:3 /W:10 /Z /NP /NDL "%userprofile%\Downloads" "u:\move_backup\Downloads" *.* /e
+ECHO Done Copying Downloads...
+xcopy /MAX:990000000 /Y /I /C "%userprofile%\AppData\Local\Google\Chrome\User Data\Default\Bookmarks*" "u:\move_backup\Google_chrome\"
+ECHO Done Copying Google Chrome favorites...
+ECHO Saving Printers
+@echo off
+del /F /Q U:\move_backup\printers.txt
+SETLOCAL ENABLEDELAYEDEXPANSION
+for /f "tokens=2 delims==" %%a in ('wmic printer get name /value') do (
+    set printer=%%a
+    if defined printer (
+      if "!printer:~0,2!"=="\\" (
+        echo !printer! &gt;&gt; "U:\move_backup\printers.txt"
+      )
+    )
+)
+ENDLOCAL
+echo on
+
+:COMPLETE_U
+ECHO File backup Complete!
+
+:Registry_U
+:: regedit does not allow direct exporting to mapped drives.  Export to temp directory in c:\ and copy, then remove the temp folder
+ECHO.
+ECHO Exporting Network Drive Mapping...
+IF NOT EXIST c:\move_backup_temp\Registry MKDIR c:\move_backup_temp\Registry
+regedit /e "c:\move_backup_temp\Registry\network.reg" "HKEY_CURRENT_USER\Network"
+xcopy /H /E /Y /I /C /Q "c:\move_backup_temp\Registry\*.*" "u:\move_backup\Registry"
+RMDIR /S /Q c:\move_backup_temp\Registry
+RMDIR /S /Q c:\move_backup_temp
+ECHO Complete!
+ECHO User registry settings copied to u:\move_backup!
+mshta "javascript:var sh=new ActiveXObject( 'WScript.Shell' ); sh.Popup( 'Hello %USERNAME%, Your backup is completed! Please click OK to finish.', 0, 'Backup Script Instructions!', 64 );close()"
+REM EXIT
+
+
+:NODRIVE
+
+ECHO Please ensure U drive is mapped.
+PAUSE
+REM EXIT</code></pre></div>
+
+********************************************************************************restore.bat***********************************************************************************************************
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+cls
+color 0B
+
+::##############################################################################
+::==============================================================================
+:: Warn user to close applications
+::==============================================================================
+::##############################################################################
+ECHO.
+ECHO !!! Please keep Outlook, Internet explorer, Chrome Closed !!!
+EChO.
+EChO !!! Until Backup and Restore is completed !!! 
+EChO.
+ECHO !!! Failing to do so will cause the operation to fail !!!
+ECHO.
+ECHO !!! Must be logged on and run as user !!!
+ECHO.
+ECHO !!! It is not recommended to use this utility over VPN !!!
+PAUSE
+
+Taskkill /IM Outlook.exe /F
+Taskkill /IM iexplore.exe /F
+Taskkill /IM Chrome.exe /F
+Taskkill /IM Onenote.exe /F
+Taskkill /IM Onenotem.exe /F
+Taskkill /IM Microsoft.StickyNotes.exe /F
+
+IF EXIST "C:\Program Files (x86)\Google\Chrome\Application\Chrome.exe" (GOTO :START_CHROME) 
+) ELSE (
+(GOTO :START_RESTORE)
+)
+
+:START_CHROME
+start chrome "google.com"
+
+:START_RESTORE
+ECHO.
+ECHO
+::##############################################################################
+::==============================================================================
+:: Begin script by checking which mapped drive exists.
+::==============================================================================
+::##############################################################################
+IF EXIST u:\NUL GOTO :RESTORE_FROM_U
+GOTO :NODRIVE
+
+::######################################################################################
+::======================================================================================
+:: The script will perform the restore from the U drive.
+::======================================================================================
+::######################################################################################
+
+:RESTORE_FROM_U
+ECHO Exporting User Files, Favorites for IE and Google Chrome, Outlook Signatures, and Network Registry keys...
+
+IF EXIST "u:\move_backup\Signatures" (
+	Robocopy /MIR /FFT /R:3 /W:10 /Z /NP "u:\move_backup\Signatures" "%userprofile%\AppData\Roaming\Microsoft\Signatures" *.* /e
+	ECHO Done Copying Signatures...
+	)
+IF EXIST "u:\move_backup\StickyNotes" (
+	Robocopy /MIR /FFT /R:3 /W:10 /Z /NP "u:\move_backup\StickyNotes" "%userprofile%\AppData\Roaming\Microsoft\Sticky Notes" *.* /e
+	ECHO Done Copying StickyNotes...
+	)
+IF EXIST "u:\move_backup\Desktop" (
+	Robocopy /MIR /FFT /R:3 /W:10 /Z /NP "u:\move_backup\Desktop" "%userprofile%\Desktop" *.* /e
+	ECHO Done Copying Desktop... 
+	)
+IF EXIST "u:\move_backup\Favorites" (
+	Robocopy /MIR /FFT /R:3 /W:10 /Z /NP "u:\move_backup\Favorites" "%userprofile%\Favorites" *.* /e
+	ECHO Done Copying Favorites...
+	)
+IF EXIST "u:\move_backup\Documents" (
+	Robocopy /MIR /FFT /R:0 /W:10 /Z /NP "u:\move_backup\Documents" "%userprofile%\Documents" *.* /e
+	ECHO Done Copying Documents...
+	)
+IF EXIST "u:\move_backup\OneNoteLocal" (
+	Robocopy /MIR /FFT /R:3 /W:10 /Z /NP "u:\move_backup\OneNoteLocal" "%userprofile%\AppData\Local\Microsoft\OneNote" *.* /e
+	ECHO Done Copying OneNote...
+	)
+IF EXIST Robocopy "u:\move_backup\Pictures" (
+	Robocopy /MIR /FFT /R:3 /W:10 /Z /NP "u:\move_backup\Pictures" "%userprofile%\Pictures" *.* /e
+	EChO Done Copying Pictures...
+	)
+IF EXIST "u:\move_backup\Downloads" (
+	Robocopy /MIR /FFT /R:3 /W:10 /Z /NP "u:\move_backup\Downloads" "%userprofile%\Downloads" *.* /e
+	ECHO Done Copying Downloads..
+	)
+IF EXIST U:\move_backup\printers.txt (
+	ECHO Installing Printers
+	for /f "delims=" %%i in (U:\move_backup\printers.txt) do (
+		echo added printer %%i
+		rundll32 printui.dll,PrintUIEntry /in /n%%i
+		)
+	)
+Echo. 
+ECHO !!! Script is now closing google chrome !!!
+ECHO.
+Taskkill /IM Chrome.exe /F
+
+IF EXIST "%userprofile%\AppData\Local\Google\Chrome\User Data\Default" (GOTO :START_GOOGLE_BOOKMARKS) 
+) ELSE (
+(GOTO :COMPLETE_U)
+)
+
+:START_GOOGLE_BOOKMARKS
+xcopy /Y /I /C "u:\move_backup\Google_chrome\Bookmarks*" "%userprofile%\AppData\Local\Google\Chrome\User Data\Default" 
+ECHO Done Copying Google Chrome favorites...
+
+
+:COMPLETE_U
+ECHO File restore Complete!
+
+
+:REGISTRY_U
+:: regedit does not allow direct importing from mapped drives.  Import to temp directory in c:\ and copy, then remove the temp folder
+ECHO.
+ECHO Importing Network Drive settings...
+IF NOT EXIST c:\move_backup_temp\ MKDIR c:\move_backup_temp\
+xcopy /H /E /Y /I /C /Q "u:\move_backup\Registry\*.*" "c:\move_backup_temp\" 
+regedit /s "c:\move_backup_temp\network.reg" 
+RMDIR /S /Q c:\move_backup_temp\
+ECHO Complete!
+ECHO User registry settings have been restored!
+mshta "javascript:var sh=new ActiveXObject( 'WScript.Shell' ); sh.Popup( 'Hello %USERNAME%, Your file restoration is completed! Please click OK to finish.', 0, 'Restore Script Instructions!', 64 );close()"
+PAUSE
+EXIT
+
+
+:NODRIVE
+ECHO No Network Drive Found. Please ensure u is mapped.
+PAUSE
+EXIT</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8555&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:14:41 GMT -->
+</html>

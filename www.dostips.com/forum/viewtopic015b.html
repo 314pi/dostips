@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1725&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:05:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Enhanced toHex function</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Enhanced toHex function</h2>
+		<p><a href="viewtopic0700.html?f=3&amp;t=1725">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1725</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Enhanced toHex function</h3>
+				<div class="date">Posted: <strong>27 Mar 2011 22:57</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">This proposed replacement for toHex has the following improvements:<br /><br />1) Added support for negative numbers (the wonders of two's complement math)<br />2) Eliminated leading zeros from output (personal preference)<br />3) The new Hex map lookup strategy is simpler and slightly faster<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:toHex dec hex -- convert a decimal number to hexadecimal<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-- dec &#91;in&#93;&nbsp; &nbsp; &nbsp; - decimal number to convert<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-- hex &#91;out,opt&#93; - variable to store the converted hexadecimal number in<br />setlocal enabledelayedexpansion<br />set /a dec=%~1<br />if %dec% lss 0 (set neg=*-1-1) else if defined neg set neg=<br />set /a dec=dec%neg%<br />if defined hex set hex=<br />set &quot;map=0123456789ABCDEF&quot;<br />for /l %%n in (1,1,8) do (<br />&nbsp; if not !dec!%neg%==0 (<br />&nbsp; &nbsp; set /a d=dec%%16%neg%,dec/=16<br />&nbsp; &nbsp; for /l %%d in (!d!,1,!d!) do set &quot;hex=!map:~%%d,1!!hex!&quot;<br />&nbsp; )<br />)<br />if not defined hex set hex=0<br />(endlocal &amp; rem return values<br />&nbsp; if &quot;%~2&quot; neq &quot;&quot; (set %~2=%hex%) else echo:%hex%<br />)<br />exit /b<br /></code></pre></div><br /><br />A simple way to test the function is to call :toHex with a number in hex format as in<br /><br />call :toHex 0xFFFFFFFF<br /><br />The output should always match the input.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Enhanced toHex function</h3>
+				<div class="date">Posted: <strong>30 Mar 2011 20:43</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">dbenham,<br /><br />Very good!<br />Inspired by your post the :toHex function has been made more efficient and now handles negative numbers.  I preferred the leading zeros option and so the new implementation is a bit different than you suggested.  Many thanks for your input!<br /><a href="../DtCodeCmdLib.html#Function.toHex" class="postlink">http://www.dostips.com/DtCodeCmdLib.php#Function.toHex</a><br /><br /> <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Enhanced toHex function</h3>
+				<div class="date">Posted: <strong>30 Mar 2011 22:19</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Oooh! <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> I like the bit manipulation in the final version!<br /><br />Very clean and efficient.<br /><br />I think in my own version I will add a leading /S option to the parameter list. If passed then I'll shift the arguments and activate the code to strip leading zeros.<br /><br />Dave</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Enhanced toHex function</h3>
+				<div class="date">Posted: <strong>31 Mar 2011 07:56</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content">Am curious, how many digits of decimal numbers have you tested? Most modern language already support big decimals. This routine can only be used as a toy, not for production.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1725&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:05:49 GMT -->
+</html>

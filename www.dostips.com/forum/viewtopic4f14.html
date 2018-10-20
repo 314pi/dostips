@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8611&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:32 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Batch Text Game?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Batch Text Game?</h2>
+		<p><a href="viewtopiccabe.html?f=3&amp;t=8611">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8611</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Batch Text Game?</h3>
+				<div class="date">Posted: <strong>08 Jun 2018 19:31</strong></div>
+				<div class="author">by <strong>MalkavianNights</strong></div>
+				<div class="content">Hello, I'm just starting out in the world of programming and batch scripting and the like. I know, it's 2018, where have I been??<br>
+<br>
+So, I'm attempting to write a basic puzzle game, just to get it all down pat before I expand and try to make a "full size" game. There are a few concepts that I thought would be doable with my current knowledge, but alas, are not. The first is writing multiple words for an answer, example<br>
+<br>
+set /p answer= You see a glowstick, what do you do?<br>
+if %answer%==Pick Up Glowstick goto ObservationDeck_NoStick<br>
+<br>
+however typing in Pick Up Glowstick, causes the game to crash. Any clues as to what I am doing wrong?<br>
+<br>
+The other main issue I am having is creating an Inventory to store the items and hopefully remove them from the scene. It's a two fold question I guess. How do I set up the inventory and is there a way to remove the item from the "scene" or do I stick to the current method of making a new scene that simply doesn't include it. Example<br>
+<br>
+echo The observation desk is empty.<br>
+echo You see a glowstick on a bench<br>
+set /p answer= What would you like to do?<br>
+if %answer%==Pick up glowstick *inventory part here(?)*<br>
+goto ObservationDesk_NoGlowstick<br>
+<br>
+<br>
+If this has already been covered somewhere, my search skills are lacking and I apologize. Also, thank you in advance!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch Text Game?</h3>
+				<div class="date">Posted: <strong>08 Jun 2018 21:20</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">The comparison has to know where to stop so it knows what command to run.  Spaces are a delimiter of a command so it thinks the next word after the space is the command it has to run.<br>
+<br>
+Let's take this for example.  Let say you want to check if there answer was equal to GOTO GOTO.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code> if %answer%==goto goto goto label</code></pre></div>
+How would it know which goto is the actual GOTO command and not the string it is comparing.<br>
+<br>
+So when comparing strings you always quote as a best practice.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if "%answer%"=="goto goto" goto label</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch Text Game?</h3>
+				<div class="date">Posted: <strong>09 Jun 2018 11:33</strong></div>
+				<div class="author">by <strong>MalkavianNights</strong></div>
+				<div class="content">It adds up, thank you!</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8611&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:32 GMT -->
+</html>

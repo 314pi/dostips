@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1552&p=6016 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:10:30 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Alert if files found in a folder are older than X hours - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic62e7-2.html?t=1552">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic0447.html?f=3&amp;t=1552">Alert if files found in a folder are older than X hours</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="postingd61d.html?mode=reply&amp;f=3&amp;t=1552" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicc039-3.html?f=3&amp;t=1552&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="1552" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			10 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p5994" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5994">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd5f5.html?mode=viewprofile&amp;u=1905" class="username">JohnDoe</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search8972.html?author_id=1905&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 03 Jan 2011 22:41</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5994">
+
+						<h3 class="first"><a href="#p5994">Alert if files found in a folder are older than X hours</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8828.html?mode=quote&amp;f=3&amp;p=5994" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic09ac-2.html?p=5994#p5994" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopic09ac-2.html?p=5994#p5994" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd5f5.html?mode=viewprofile&amp;u=1905" class="username">JohnDoe</a></strong> &raquo; </span>03 Jan 2011 22:54
+			</p>
+			
+			
+			
+			<div class="content">I really liked tips for date and time but I wanted to know if its possible to write a script that can be run to monitor a folder and to generate an alert if files found in the folder are older than X amount of hours rather than amount of days in one of the examples given.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p6002" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile6002">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search661c.html?author_id=1265&amp;sr=posts">3386</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 22 Jan 2010 18:01</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content6002">
+
+						<h3 ><a href="#p6002">Re: Alert if files found in a folder are older than X hours</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0e67-2.html?mode=quote&amp;f=3&amp;p=6002" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb127.html?p=6002#p6002" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopicb127.html?p=6002#p6002" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a></strong> &raquo; </span>04 Jan 2011 19:00
+			</p>
+			
+			
+			
+			<div class="content">Working with DateTime values is terrible in batch. There are no native functions for calculating.<br />The main problem is that you will find difficult sequences and separators. Ex:<br /><em class="text-italics">04.01.2010<br />Tue 01/04/2010<br />2010-01-04</em><br />etc.<br />I always try to equalize it by reading the &quot;international&quot; settings in the registry (but without guarantee).<br />If you would like defining a maximum age of hours then you should use minutes for the comparision. The reason why is that batch doesn't know floating point values. 1.9999 is 1 inside a batch environment.<br /><br />How ever. Try something like that:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal<br /><br />REM folder to be checked<br />set &quot;Folder=C:\path\to\your\folder&quot;<br /><br />REM accepted maximum age in minutes<br />set &quot;MaxAge=60&quot;<br /><br />REM try to change the working directory<br />pushd &quot;%Folder%&quot; ||goto :eof<br /><br />REM read international registry settings<br />call :GetInternationalSettings DateOrder DateSeparator TimeSeparator<br /><br />REM get the current number of elapsed minutes since Jan. 1st 1970, 00:00<br />call :GetNumberOfMinutes %DateOrder% &quot;%DateSeparator%&quot; &quot;%TimeSeparator%&quot; &quot;%date%&quot; &quot;%time%&quot; CurrentMinutes<br /><br />REM check all files<br />for /f &quot;delims=&quot; %%a in ('dir /a-d /b') do (<br />&nbsp; set &quot;filename=%%a&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;<br />&nbsp; setlocal enabledelayedexpansion<br />&nbsp; call :GetNumberOfMinutes %DateOrder% &quot;%DateSeparator%&quot; &quot;%TimeSeparator%&quot; %%~ta FileMinutes<br />&nbsp; set /a age = CurrentMinutes - FileMinutes<br />&nbsp; if !age! gtr %MaxAge% (<br />&nbsp; &nbsp; set /a age /= 60<br />&nbsp; &nbsp; echo !filename:~,40! -^&gt; older than !age! hours<br />&nbsp; )<br />&nbsp; endlocal<br />)<br /><br />popd<br /><br />pause<br />goto :eof<br /><br />:GetInternationalSettings<br />setlocal<br />for /f &quot;tokens=3&quot; %%a in ('reg query &quot;HKCU\Control Panel\International&quot; /v iDate') do set &quot;iDate=%%a&quot;<br />for /f &quot;tokens=3&quot; %%a in ('reg query &quot;HKCU\Control Panel\International&quot; /v sDate') do set &quot;sDate=%%a&quot;<br />for /f &quot;tokens=3&quot; %%a in ('reg query &quot;HKCU\Control Panel\International&quot; /v sTime') do set &quot;sTime=%%a&quot;<br />endlocal &amp;set &quot;%~1=%iDate%&quot; &amp;set &quot;%~2=%sDate%&quot; &amp;set &quot;%~3=%sTime%&quot;<br />goto :eof<br /><br /><br />:GetNumberOfMinutes<br />setlocal<br />set &quot;iDate=%~1&quot; &amp;set &quot;sDate=%~2&quot; &amp;set &quot;sTime=%~3&quot; &amp;set &quot;strDate=%~4&quot; &amp;set &quot;strTime=%~5&quot;<br />for /f &quot;tokens=2&quot; %%i in (&quot;%strDate%&quot;) do set &quot;strDate=%%i&quot;<br />for /f &quot;tokens=1-4 delims=%sDate%&quot; %%a in (&quot;%strDate%&quot;) do (<br />&nbsp; if %iDate%==0 set /a mm=100%%a %% 100,dd=100%%b %% 100,yy=10000%%c %% 10000<br />&nbsp; if %iDate%==1 set /a dd=100%%a %% 100,mm=100%%b %% 100,yy=10000%%c %% 10000<br />&nbsp; if %iDate%==2 set /a yy=10000%%a %% 10000,mm=100%%b %% 100,dd=100%%c %% 100<br />)<br />for /f &quot;tokens=1,2 delims=%sTime% &quot; %%a in (&quot;%strTime%&quot;) do set /a hh=100%%a %% 100, nn=100%%b %% 100<br />set /a z=(14-mm)/12,y=yy+4800-z,x=mm+12*z-3,d=153*x+2,d=d/5+dd+y*365+y/4-y/100+y/400-2472633, n=d*1440+hh*60+nn<br />endlocal &amp;set &quot;%~6=%n%&quot;<br />goto :eof<br /><br /></code></pre></div><br />Regards<br />aGerman</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p6005" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile6005">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd5f5.html?mode=viewprofile&amp;u=1905" class="username">JohnDoe</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search8972.html?author_id=1905&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 03 Jan 2011 22:41</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content6005">
+
+						<h3 ><a href="#p6005">Re: Alert if files found in a folder are older than X hours</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting504d.html?mode=quote&amp;f=3&amp;p=6005" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicd830.html?p=6005#p6005" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopicd830.html?p=6005#p6005" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd5f5.html?mode=viewprofile&amp;u=1905" class="username">JohnDoe</a></strong> &raquo; </span>05 Jan 2011 01:18
+			</p>
+			
+			
+			
+			<div class="content">Not sure what happen to my last reply but here it is again<br /><br />Thank you for looking at this agerman (after getting a copy of reg.exe from winxp on to this win2k machine the following error came up)<br /><br /><br /><blockquote class="uncited"><div>C:\Alert&gt;monitor2<br />Invalid number.  Numeric constants are either decimal (17),<br />hexadecimal (0x11), or octal (021).<br />STEST.XML                                -&gt; older than 17559704 hours</div></blockquote><br /><br />I think this is where it broke due to get a A in the time stamp<br /><br /><blockquote class="uncited"><div>C:\Alert\Monitor&gt;(<br />set &quot;filename=STEST.XML                                        &quot;  <br /> setlocal enabledelayedexpansion  <br /> call :GetNumberOfMinutes 0 &quot;/&quot; &quot;:&quot; 10/24/07 10:43<span style="color: #FF0000">a</span> FileMinutes  <br /> set /a age = CurrentMinutes - FileMinutes  <br /> if !age! GTR 60 (<br />set /a age /= 60  <br /> echo !filename:~,40! -&gt; older than !age! hours <br />)  <br /> endlocal<br />) </div></blockquote><br /><br /><br />As this gives us<br /><br /><blockquote class="uncited"><div>set /a hh=10010 % 100, nn=10043<span style="color: #FF0000">a</span> % 100 </div></blockquote><br /><br />and this is the cause of the above error<br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Alert&gt;REM @echo off &amp;setlocal <br /><br />C:\Alert&gt;REM folder to be checked <br /><br />C:\Alert&gt;set &quot;Folder=C:\Alert\Monitor\&quot; <br /><br />C:\Alert&gt;REM accepted maximum age in minutes <br /><br />C:\Alert&gt;set &quot;MaxAge=60&quot; <br /><br />C:\Alert&gt;REM try to change the working directory <br /><br />C:\Alert&gt;pushd &quot;C:\Alert\Monitor\&quot;&nbsp; &nbsp;|| goto :eof <br /><br />C:\Alert\Monitor&gt;REM read international registry settings <br /><br />C:\Alert\Monitor&gt;call :GetInternationalSettings DateOrder DateSeparator TimeSeparator <br /><br />C:\Alert\Monitor&gt;setlocal<br /><br />C:\Alert\Monitor&gt;for /F &quot;tokens=3&quot; %a in ('reg query &quot;HKCU\Control Panel\International&quot; /v iDate') do set &quot;iDate=%a&quot; <br /><br />C:\Alert\Monitor&gt;set &quot;iDate=VERSION&quot; <br /><br />C:\Alert\Monitor&gt;set &quot;iDate=0&quot; <br /><br />C:\Alert\Monitor&gt;for /F &quot;tokens=3&quot; %a in ('reg query &quot;HKCU\Control Panel\International&quot; /v sDate') do set &quot;sDate=%a&quot; <br /><br />C:\Alert\Monitor&gt;set &quot;sDate=VERSION&quot; <br /><br />C:\Alert\Monitor&gt;set &quot;sDate=/&quot; <br /><br />C:\Alert\Monitor&gt;for /F &quot;tokens=3&quot; %a in ('reg query &quot;HKCU\Control Panel\International&quot; /v sTime') do set &quot;sTime=%a&quot; <br /><br />C:\Alert\Monitor&gt;set &quot;sTime=VERSION&quot; <br /><br />C:\Alert\Monitor&gt;set &quot;sTime=:&quot; <br /><br />C:\Alert\Monitor&gt;endlocal&nbsp; &nbsp;&amp; set &quot;DateOrder=0&quot;&nbsp; &nbsp;&amp; set &quot;DateSeparator=/&quot;&nbsp; &nbsp;&amp; set &quot;TimeSeparator=:&quot; <br /><br />C:\Alert\Monitor&gt;goto :eof <br /><br />C:\Alert\Monitor&gt;REM get the current number of elapsed minutes since Jan. 1st 1970, 00:00 <br /><br />C:\Alert\Monitor&gt;call :GetNumberOfMinutes 0 &quot;/&quot; &quot;:&quot; &quot;Wed 01/05/2011&quot; &quot;18:09:21.94&quot; CurrentMinutes <br /><br />C:\Alert\Monitor&gt;setlocal<br /><br />C:\Alert\Monitor&gt;set &quot;iDate=0&quot;&nbsp; &nbsp;&amp; set &quot;sDate=/&quot;&nbsp; &nbsp;&amp; set &quot;sTime=:&quot;&nbsp; &nbsp;&amp; set &quot;strDate=Wed 01/05/2011&quot;&nbsp; &nbsp;&amp; set &quot;strTime=18:09:21.94&quot; <br /><br />C:\Alert\Monitor&gt;for /F &quot;tokens=2&quot; %i in (&quot;Wed 01/05/2011&quot;) do set &quot;strDate=%i&quot; <br /><br />C:\Alert\Monitor&gt;set &quot;strDate=01/05/2011&quot; <br /><br />C:\Alert\Monitor&gt;for /F &quot;tokens=1-4 delims=/&quot; %a in (&quot;01/05/2011&quot;) do (<br />if 0 == 0 set /a mm=100%a % 100,dd=100%b % 100,yy=10000%c % 10000&nbsp; <br />&nbsp;if 0 == 1 set /a dd=100%a % 100,mm=100%b % 100,yy=10000%c % 10000&nbsp; <br />&nbsp;if 0 == 2 set /a yy=10000%a % 10000,mm=100%b % 100,dd=100%c % 100 <br />) <br /><br />C:\Alert\Monitor&gt;(<br />if 0 == 0 set /a mm=10001 % 100,dd=10005 % 100,yy=100002011 % 10000&nbsp; <br />&nbsp;if 0 == 1 set /a dd=10001 % 100,mm=10005 % 100,yy=100002011 % 10000&nbsp; <br />&nbsp;if 0 == 2 set /a yy=1000001 % 10000,mm=10005 % 100,dd=1002011 % 100 <br />) <br /><br />C:\Alert\Monitor&gt;for /F &quot;tokens=1,2 delims=: &quot; %a in (&quot;18:09:21.94&quot;) do set /a hh=100%a % 100, nn=100%b % 100 <br /><br />C:\Alert\Monitor&gt;set /a hh=10018 % 100, nn=10009 % 100 <br /><br />C:\Alert\Monitor&gt;set /a z=(14-mm)/12,y=yy+4800-z,x=mm+12*z-3,d=153*x+2,d=d/5+dd+y*365+y/4-y/100+y/400-2472633, n=d*1440+hh*60+nn <br /><br />C:\Alert\Monitor&gt;endlocal&nbsp; &nbsp;&amp; set &quot;CurrentMinutes=21570849&quot; <br /><br />C:\Alert\Monitor&gt;goto :eof <br /><br />C:\Alert\Monitor&gt;REM check all files <br /><br />C:\Alert\Monitor&gt;for /F &quot;delims=&quot; %a in ('dir /a-d /b') do (<br />set &quot;filename=%a&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;&nbsp; <br />&nbsp;setlocal enabledelayedexpansion&nbsp; <br />&nbsp;call :GetNumberOfMinutes 0 &quot;/&quot; &quot;:&quot; %~ta FileMinutes&nbsp; <br />&nbsp;set /a age = CurrentMinutes - FileMinutes&nbsp; <br />&nbsp;if !age! GTR 60 (<br />set /a age /= 60&nbsp; <br />&nbsp;echo !filename:~,40! -&gt; older than !age! hours <br />)&nbsp; <br />&nbsp;endlocal<br />) <br /><br />C:\Alert\Monitor&gt;(<br />set &quot;filename=STEST.XML&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;&nbsp; <br />&nbsp;setlocal enabledelayedexpansion&nbsp; <br />&nbsp;call :GetNumberOfMinutes 0 &quot;/&quot; &quot;:&quot; 10/24/07 10:43a FileMinutes&nbsp; <br />&nbsp;set /a age = CurrentMinutes - FileMinutes&nbsp; <br />&nbsp;if !age! GTR 60 (<br />set /a age /= 60&nbsp; <br />&nbsp;echo !filename:~,40! -&gt; older than !age! hours <br />)&nbsp; <br />&nbsp;endlocal<br />) <br /><br />C:\Alert\Monitor&gt;setlocal<br /><br />C:\Alert\Monitor&gt;set &quot;iDate=0&quot;&nbsp; &nbsp;&amp; set &quot;sDate=/&quot;&nbsp; &nbsp;&amp; set &quot;sTime=:&quot;&nbsp; &nbsp;&amp; set &quot;strDate=10/24/07&quot;&nbsp; &nbsp;&amp; set &quot;strTime=10:43a&quot; <br /><br />C:\Alert\Monitor&gt;for /F &quot;tokens=2&quot; %i in (&quot;10/24/07&quot;) do set &quot;strDate=%i&quot; <br /><br />C:\Alert\Monitor&gt;for /F &quot;tokens=1-4 delims=/&quot; %a in (&quot;10/24/07&quot;) do (<br />if 0 == 0 set /a mm=100%a % 100,dd=100%b % 100,yy=10000%c % 10000&nbsp; <br />&nbsp;if 0 == 1 set /a dd=100%a % 100,mm=100%b % 100,yy=10000%c % 10000&nbsp; <br />&nbsp;if 0 == 2 set /a yy=10000%a % 10000,mm=100%b % 100,dd=100%c % 100 <br />) <br /><br />C:\Alert\Monitor&gt;(<br />if 0 == 0 set /a mm=10010 % 100,dd=10024 % 100,yy=1000007 % 10000&nbsp; <br />&nbsp;if 0 == 1 set /a dd=10010 % 100,mm=10024 % 100,yy=1000007 % 10000&nbsp; <br />&nbsp;if 0 == 2 set /a yy=1000010 % 10000,mm=10024 % 100,dd=10007 % 100 <br />) <br /><br />C:\Alert\Monitor&gt;for /F &quot;tokens=1,2 delims=: &quot; %a in (&quot;10:43a&quot;) do set /a hh=100%a % 100, nn=100%b % 100 <br /><br />C:\Alert\Monitor&gt;set /a hh=10010 % 100, nn=10043a % 100 <br /><br />C:\Alert\Monitor&gt;set /a z=(14-mm)/12,y=yy+4800-z,x=mm+12*z-3,d=153*x+2,d=d/5+dd+y*365+y/4-y/100+y/400-2472633, n=d*1440+hh*60+nn <br /><br />C:\Alert\Monitor&gt;endlocal&nbsp; &nbsp;&amp; set &quot;FileMinutes=-1032011400&quot; <br /><br />C:\Alert\Monitor&gt;goto :eof <br />STEST.XML&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -&gt; older than 17559704 hours<br /><br />C:\Alert\Monitor&gt;popd<br /><br />C:\Alert&gt;pause<br />Press any key to continue . . . <br /><br />C:\Alert&gt;goto :eof </code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p6006" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile6006">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search661c.html?author_id=1265&amp;sr=posts">3386</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 22 Jan 2010 18:01</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content6006">
+
+						<h3 ><a href="#p6006">Re: Alert if files found in a folder are older than X hours</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingdcad.html?mode=quote&amp;f=3&amp;p=6006" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic43d5-2.html?p=6006#p6006" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopic43d5-2.html?p=6006#p6006" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a></strong> &raquo; </span>05 Jan 2011 05:16
+			</p>
+			
+			
+			
+			<div class="content">I see. While the time in variable %time% comes in 24h format, the time of the FOR loop comes in 12h format and the &quot;a&quot; is for &quot;a.m.&quot;.<br />Could you confirm?<br /><br />Regards<br />aGerman<br /><br />Edit:<br />Try if this works right.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal<br /><br />REM folder to be checked<br />set &quot;Folder=C:\Alert\Monitor&quot;<br /><br />REM accepted maximum age in minutes<br />set &quot;MaxAge=60&quot;<br /><br />pushd &quot;%Folder%&quot; ||goto :eof<br />call :GetInternationalSettings DateOrder DateSeparator TimeSeparator<br />call :GetNumberOfMinutes %DateOrder% &quot;%DateSeparator%&quot; &quot;%TimeSeparator%&quot; &quot;%date%&quot; &quot;%time%&quot; CurrentMinutes<br />for /f &quot;delims=&quot; %%a in ('dir /a-d /b') do (<br />&nbsp; set &quot;filename=%%a&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &quot;<br />&nbsp; setlocal enabledelayedexpansion<br />&nbsp; call :GetNumberOfMinutes %DateOrder% &quot;%DateSeparator%&quot; &quot;%TimeSeparator%&quot; %%~ta FileMinutes<br />&nbsp; set /a age=CurrentMinutes - FileMinutes<br />&nbsp; if !age! gtr %MaxAge% (<br />&nbsp; &nbsp; set /a age/=60<br />&nbsp; &nbsp; echo !filename:~,40! -^&gt; older than !age! hours<br />&nbsp; )<br />&nbsp; endlocal<br />)<br />popd<br />pause<br />goto :eof<br /><br />:GetInternationalSettings<br />setlocal<br />for /f &quot;tokens=3&quot; %%a in ('reg query &quot;HKCU\Control Panel\International&quot; /v iDate') do set &quot;iDate=%%a&quot;<br />for /f &quot;tokens=3&quot; %%a in ('reg query &quot;HKCU\Control Panel\International&quot; /v sDate') do set &quot;sDate=%%a&quot;<br />for /f &quot;tokens=3&quot; %%a in ('reg query &quot;HKCU\Control Panel\International&quot; /v sTime') do set &quot;sTime=%%a&quot;<br />endlocal &amp;set &quot;%~1=%iDate%&quot; &amp;set &quot;%~2=%sDate%&quot; &amp;set &quot;%~3=%sTime%&quot;<br />goto :eof<br /><br />:GetNumberOfMinutes<br />setlocal<br />set &quot;iDate=%~1&quot; &amp;set &quot;sDate=%~2&quot; &amp;set &quot;sTime=%~3&quot; &amp;set &quot;strDate=%~4&quot; &amp;set &quot;strTime=%~5&quot;<br />for /f &quot;tokens=2&quot; %%i in (&quot;%strDate%&quot;) do set &quot;strDate=%%i&quot;<br />for /f &quot;tokens=1-4 delims=%sDate%&quot; %%a in (&quot;%strDate%&quot;) do (<br />&nbsp; if %iDate%==0 set /a mm=100%%a %% 100,dd=100%%b %% 100,yy=10000%%c %% 10000<br />&nbsp; if %iDate%==1 set /a dd=100%%a %% 100,mm=100%%b %% 100,yy=10000%%c %% 10000<br />&nbsp; if %iDate%==2 set /a yy=10000%%a %% 10000,mm=100%%b %% 100,dd=100%%c %% 100<br />)<br />for /f &quot;tokens=1,2 delims=%sTime% &quot; %%a in (&quot;%strTime%&quot;) do (set /a hh=100%%a %% 100 &amp;set &quot;nn=%%b&quot;)<br />if &quot;%nn:~-1%&quot; equ &quot;p&quot; if &quot;%hh%&quot; neq &quot;12&quot; set /a hh+=12<br />if &quot;%nn:~-1%&quot; equ &quot;a&quot; if &quot;%hh%&quot; equ &quot;12&quot; set /a hh=0<br />for /f &quot;delims=ap&quot; %%a in (&quot;%nn%&quot;) do set /a nn=100%%a %% 100<br />set /a z=(14-mm)/12,y=yy+4800-z,x=mm+12*z-3,d=153*x+2,d=d/5+dd+y*365+y/4-y/100+y/400-2472633,n=d*1440+hh*60+nn<br />endlocal &amp;set &quot;%~6=%n%&quot;<br />goto :eof<br /><br /></code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p6015" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile6015">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd5f5.html?mode=viewprofile&amp;u=1905" class="username">JohnDoe</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search8972.html?author_id=1905&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 03 Jan 2011 22:41</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content6015">
+
+						<h3 ><a href="#p6015">Re: Alert if files found in a folder are older than X hours</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting4fb5.html?mode=quote&amp;f=3&amp;p=6015" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic2e52-2.html?p=6015#p6015" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopic2e52-2.html?p=6015#p6015" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd5f5.html?mode=viewprofile&amp;u=1905" class="username">JohnDoe</a></strong> &raquo; </span>05 Jan 2011 19:59
+			</p>
+			
+			
+			
+			<div class="content">Thanks for the help aGerman, yes its funny that the files have a or p on them. I think this is a feature of windows 2000 on windows 7 it shows as either AM or PM<br /><br />The code runs but not sure as expected<br /><br />Here is the file listing<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp;Directory of C:\Alert\Monitor<br /><br />01/06/2011&nbsp; 12:41p&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;0 file1.txt<br />10/24/2007&nbsp; 10:43a&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;514 file2.txt<br /></code></pre></div><br /><br />And the result from the batch file<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Alert&gt;monitortest.bat<br />file1.txt&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -&gt; older than 17531640 hours<br />file2.txt&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -&gt; older than 17559722 hours<br />Press any key to continue . . .</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p6016" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile6016">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistde6b.html?mode=viewprofile&amp;u=8" class="username">ghostmachine4</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchfe6a.html?author_id=8&amp;sr=posts">319</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 May 2006 01:13</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content6016">
+
+						<h3 ><a href="#p6016">Re: Alert if files found in a folder are older than X hours</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf38c.html?mode=quote&amp;f=3&amp;p=6016" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1ed0-2.html?p=6016#p6016" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopic1ed0-2.html?p=6016#p6016" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistde6b.html?mode=viewprofile&amp;u=8" class="username">ghostmachine4</a></strong> &raquo; </span>05 Jan 2011 21:04
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>JohnDoe wrote:</cite>I really liked tips for date and time but I wanted to know if its possible to write a script that can be run to monitor a folder and to generate an alert if files found in the folder are older than X amount of hours rather than amount of days in one of the examples given.</div></blockquote><br />download <a href="http://gnuwin32.sourceforge.net/packages/findutils.htm" class="postlink">findutils for windows</a>, then use this one liner to find files older than 1 hr ago<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>c:\test&gt; gnu_find.exe c:\directory -type f&nbsp; -mmin +60 <br /></code></pre></div><br /><br />if there are output displayed, then you can do the alert.<br />Its certainly easier than to maintain a whole bunch of inefficient DOS batch commands that mess around with registry. Alternatively, if you can't download stuff, using vbscript is still better than batch, since it can do Date maths pretty easily.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p6021" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile6021">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search661c.html?author_id=1265&amp;sr=posts">3386</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 22 Jan 2010 18:01</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content6021">
+
+						<h3 ><a href="#p6021">Re: Alert if files found in a folder are older than X hours</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingafdf.html?mode=quote&amp;f=3&amp;p=6021" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicbfff.html?p=6021#p6021" onclick="prompt('Message #7',this.href); return false;">#7</a></span> 
+									<a class="unread" href="viewtopicbfff.html?p=6021#p6021" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a></strong> &raquo; </span>06 Jan 2011 11:43
+			</p>
+			
+			
+			
+			<div class="content">I'm at my wits end. It's like I wrote in my first post: &quot;Working with DateTime values is terrible in batch.&quot;<br />I agree with ghostmachine4.<br /><br />Regards<br />aGerman</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p6026" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile6026">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd5f5.html?mode=viewprofile&amp;u=1905" class="username">JohnDoe</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search8972.html?author_id=1905&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 03 Jan 2011 22:41</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content6026">
+
+						<h3 ><a href="#p6026">Re: Alert if files found in a folder are older than X hours</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingb653.html?mode=quote&amp;f=3&amp;p=6026" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicafe2-3.html?p=6026#p6026" onclick="prompt('Message #8',this.href); return false;">#8</a></span> 
+									<a class="unread" href="viewtopicafe2-3.html?p=6026#p6026" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd5f5.html?mode=viewprofile&amp;u=1905" class="username">JohnDoe</a></strong> &raquo; </span>06 Jan 2011 13:55
+			</p>
+			
+			
+			
+			<div class="content">aGerman i completely agree about times in windows there always seems to be not set standard of how time stamps are shown.<br /><br />ghostmachine4 thanks for the link I will download and have a play with it.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p6085" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile6085">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd5f5.html?mode=viewprofile&amp;u=1905" class="username">JohnDoe</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search8972.html?author_id=1905&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 03 Jan 2011 22:41</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content6085">
+
+						<h3 ><a href="#p6085">Re: Alert if files found in a folder are older than X hours</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinga09e-2.html?mode=quote&amp;f=3&amp;p=6085" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7b68.html?p=6085#p6085" onclick="prompt('Message #9',this.href); return false;">#9</a></span> 
+									<a class="unread" href="viewtopic7b68.html?p=6085#p6085" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd5f5.html?mode=viewprofile&amp;u=1905" class="username">JohnDoe</a></strong> &raquo; </span>11 Jan 2011 23:07
+			</p>
+			
+			
+			
+			<div class="content">Well this is what I have so far please let me know what you think.<br /><br />I could not get any error levels from the gnu find so I had to pump the output to findstr<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal<br />gnu_find C:\Alert\Monitor -type f -mmin +60 | findstr &quot;txt&quot; &gt;nul &amp;&amp; goto foundfiles<br />echo. All is good go back to sleep<br />goto exit<br /><br />:foundfiles<br />echo. Alert ! Alert! we found files <br />:exit<br /></code></pre></div><br /><br />ghostmachine4 Is there any way with gnu_find to find files with a certain extension, as well as not to search sub folders ?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p6097" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile6097">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd5f5.html?mode=viewprofile&amp;u=1905" class="username">JohnDoe</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search8972.html?author_id=1905&amp;sr=posts">6</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 03 Jan 2011 22:41</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content6097">
+
+						<h3 ><a href="#p6097">Re: Alert if files found in a folder are older than X hours</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingacca.html?mode=quote&amp;f=3&amp;p=6097" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicdf71.html?p=6097#p6097" onclick="prompt('Message #10',this.href); return false;">#10</a></span> 
+									<a class="unread" href="viewtopicdf71.html?p=6097#p6097" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd5f5.html?mode=viewprofile&amp;u=1905" class="username">JohnDoe</a></strong> &raquo; </span>12 Jan 2011 22:07
+			</p>
+			
+			
+			
+			<div class="content">Ok here is the near final code. <br /><br />We have an application that picks up files from a certain folder, every now and again a file will come in corrupt as such it will block the application and it will not pickup any of the other files.<br /><br />I hope to have created this workaround script to check for files in the folder and if they are older than a hour then it will move and rename the oldest file in hope of finding the corrupt file and alert the helpdesk.<br /><br />Please let me know what you think I am sure there might be some better ways of doing some of these things<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal<br />cls<br /><br />REM folder to be checked<br />set &quot;CheckFolder=C:\Alert\Monitor&quot;<br />set &quot;MoveFolder=C:\Alert\bad&quot;<br />set &quot;MaxAge=60&quot;<br /><br />REM Find and check for any files that might be suck in the inbound message folder.<br />gnu_find %CheckFolder% -maxdepth 1 -type f -name *TCLMD* -mmin +%MaxAge% | findstr &quot;.mq&quot; &gt;nul &amp;&amp; goto FindOldest<br />echo.&amp;echo.&amp;echo.<br />echo.&nbsp; &nbsp; &nbsp; &nbsp;No Files found over %MaxAge% minutes so we can go back to sleep<br />wait 5<br />goto Exit<br /><br />:FindOldest<br />Rem Find the oldest file as this file might be a corrupt message and the reason for the router failing to pickup these messages.<br />for /f &quot;tokens=*&quot; %%D in ('dir %CheckFolder%\*.MQ /A-D /B /O-D') do set OldestMsg=%%D<br /><br />echo.&amp;echo.&amp;echo.<br />echo&nbsp; &nbsp; &nbsp; &nbsp;The oldest message found in %CheckFolder% is %OldestMsg%<br />echo.<br /><br />Rem Generate a random number based on the date so we can use it to rename the file.<br />for /f &quot;tokens=2-8 delims=/:. &quot; %%A in (&quot;%date%:%time: =0%&quot;) do set &quot;UNIQUE=%%C%%A%%B%%D%%E%%F%%G&quot;<br /><br />Rem Lets rename and move the file so it is not picked up again and allow the router to move on and we hope pickup the other messages.<br /><br />echo.&amp;echo.&amp;echo.<br />echo&nbsp; &nbsp; &nbsp; &nbsp;Moving %CheckFolder%\%OldestMsg% to&nbsp; %MoveFolder%\%UNIQUE%.badsms<br />&nbsp; &nbsp; &nbsp; move &quot;%CheckFolder%\%OldestMsg%&quot; %MoveFolder%\%UNIQUE%.badsms&nbsp; &nbsp;<br />echo.<br />goto :SendAlert<br /><br /><br />Rem We had better let the Helpdesk know.<br />:SendAlert<br />ECHO.<br />ECHO Sending an Alert to let the Helpdesk know<br />ECHO.<br /><br />set AlertTime=%Time:~0,5% %Date:~4,6%%Date:~-2%<br /><br />sendemail -s 127.0.0.1:25 -o message-header=&quot;X-Priority: 1&quot; -f&nbsp; italert@domain.com -t helpdesk@domain.com -u &quot;There Appears to be a stuck message on %computername%&quot; at %Time:~0,5% -m &quot;Warning a message on %computername% was blocking the inbound router. It generated this alarm at %AlertTime% &quot;\n&quot;&quot;\n&quot; A copy of the offending message has been attached to this message. Please take a look at the file most messages fail due to a Alpha from field or a funny character in the body of the message. &quot;\n&quot;&quot;\n&quot; If you want to try and process the message again copy '%MoveFolder%\%UNIQUE%.badsms' into %Foldercheck%&quot; -a &quot;%MoveFolder%\%UNIQUE%.badsms&quot;<br /><br />echo.<br />echo Alert Sent we are all done Time to Zzzzzzzzz.<br /><br />Rem Clean up environment space<br /><br />set &quot;CheckFolder=&quot;<br />set &quot;MoveFolder=&quot;<br />set &quot;MaxAge=&quot;<br />set &quot;OldestMsg=&quot;<br />set &quot;UNIQUE=&quot;<br />set &quot;AlertTime=&quot;<br />wait 5<br />goto Exit<br /><br /><br /></code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="postingd61d.html?mode=reply&amp;f=3&amp;t=1552" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicc039-3.html?f=3&amp;t=1552&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1552">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			10 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron68e3.gif?cron_type=cron.task.text_reparser.pm_text" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1552&p=6016 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:10:30 GMT -->
+</html>

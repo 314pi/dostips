@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5819&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Dos Batch Math Library</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Dos Batch Math Library</h2>
+		<p><a href="viewtopic8d84.html?f=3&amp;t=5819">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5819</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>4</strong></div>
+					<div class="post">
+				<h3>Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>08 Aug 2014 03:00</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">Hi to all,<br /><br />on the main site lack the mathematical functions.<br /><br />Since many user here, and elsewhere on the web, they have developed a lot, you can now reap the fruits of their sowing and planting new seeds.<br /><br />I hope for the cooperation of all to make a point of reference.<br /><br />I have not tried on StackOverflow/Stack... nor groups discussion or sites, for example, in German (or Russian or other) because they do not know the German nor the Russian enough. So if someone speaking German or Russian or else can do a search and also bring only the link where they talk about mathematical functions I will take the responsibility to keep this thread neat.<br /><br />I had thought to create functions that could go well for both <strong class="text-strong">32bit integers</strong>, <strong class="text-strong">64bit integer</strong> (2*32), a <strong class="text-strong">fixed point</strong> math as simple as that defined by Antonio Acini, the <strong class="text-strong">float point</strong> defined by Penpen, I thought I'd define a <strong class="text-strong">new mathematical fixed point</strong> such as the one defined in the console games (for example see Nintendo DS).<br /><br />I also decided to make versions that take advantage of the concept of <strong class="text-strong">macro</strong>.<br /><br /><br /><strong class="text-strong">List functions to implement:</strong><br /><br /><ul><li>Abs(x)</li><li>Sign(x)</li><li>Ceil(x)</li><li>Floor(x)</li><li>Cos(x)</li><li>Sin(x)</li><li>Tan(x)</li><li>Pow(x,y)</li><li>Log(x)</li><li>Ln(x)</li><li>Round(x)</li><li>Sqrt(x)</li><li>Hypot(x,y)</li><li>Min(x,y)</li><li>Max(x,y)</li><li>Cmp(x,y)</li></ul><br /><br />Reference:<br /><a href="viewtopic401e.html?f=3&amp;t=4925" class="postlink">(nearly) ieee 754 floating point single precisition</a> by penpen<br /><a href="viewtopic210e.html?f=3&amp;t=6744" class="postlink">Definition and use of arithmetic &quot;functions&quot; in Batch files</a> by Antonio Acini aka Aacini<br /><br /><br />Thanks to all<br />Francesco Poscetti aka einstein1969</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>08 Aug 2014 03:13</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">Example of implementations of <strong class="text-strong">abs(x)</strong>:<br /><br />Suppose that the <strong class="text-strong">x</strong> is <strong class="text-strong">32bit signed INTEGER</strong>.<br /><br /><ol style="list-style-type: decimal"><li><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Set /a X=-56789<br />if %X% lss 0 set /a X=-X<br /></code></pre></div><br /></li><li><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set /a &quot;x=-56789,&nbsp; x=(x&gt;&gt;31|1)*x&quot;<br /></code></pre></div></li></ol>...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>08 Aug 2014 03:15</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content"><ul><li><strong class="text-strong">Abs(x)</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;Abs(x)=(((x)&gt;&gt;31|1)*(x))&quot;<br />set /A &quot;x=-32, abs=%Abs(x)%&quot;<br />rem or<br />set /A Abs=%Abs(x):x=-32%<br /></code></pre></div></li><li><strong class="text-strong">Sign(x)</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;Sign(x)=(x)&gt;&gt;31 | -(x)&gt;&gt;31 &amp; 1&quot; <br />:: or <br />set &quot;Sign(x)=(x)&gt;&gt;31 | -(-(x)&gt;&gt;31)&quot;<br />::<br />set /A &quot;x=-32, S=%Sign(x)%&quot;<br />set /A &quot;S=%Sign(x):x=-32%&quot;<br /></code></pre></div></li><li>Ceil(x)</li><li>Floor(x)</li><li>Cos(x)</li><li>Sin(x)</li><li>Tan(x)</li><li>Pow(x,y)</li><li>Log(x)</li><li>Ln(x)</li><li>Round(x)</li><li><strong class="text-strong">Sqrt(N)</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Rem Without exception on negative input<br />set &quot;Sqrt(N)=( M=(N), x=M/(11*1024)+40, x=(M/x+x)&gt;&gt;1, x=(M/x+x)&gt;&gt;1, x=(M/x+x)&gt;&gt;1, x=(M/x+x)&gt;&gt;1, x=(M/x+x)&gt;&gt;1, x+=(M-x*x)&gt;&gt;31 )&quot;<br />set /A &quot;N=36, sqrt=%Sqrt(N)%&quot;<br />rem or<br />set /A &quot;Sqrt=%Sqrt(N):N=36%&quot;<br /><br />Rem With exception on negative input<br />set &quot;Sqrt(N)=( M=(N), x=M/(11*1024)+40, x=(M/x+x)&gt;&gt;1, x=(M/x+x)&gt;&gt;1, x=(M/x+x)&gt;&gt;1, x=(M/x+x)&gt;&gt;1, x=(M/x+x)&gt;&gt;1, x+=((M-x*x)&gt;&gt;31)/(1+((N)&gt;&gt;31)) )&quot;<br />set /A &quot;Sqrt=%Sqrt(N):N=-32%&quot;<br /></code></pre></div></li><li>Hypot(x,y)</li><li>Min(x,y)</li><li>Max(x,y)</li><li><strong class="text-strong">Cmp(x,y)</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;Cmp(x,y)=(x-y)&gt;&gt;31|((y-x)&gt;&gt;31&amp;1)&quot;<br />set /A &quot;x=3, y=5, C=%Cmp(x,y)%&quot;<br /></code></pre></div></li></ul></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>08 Aug 2014 03:31</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">example of implementation of <strong class="text-strong">sqrt(x)</strong>:<br /><br />input <strong class="text-strong">32 bit integer</strong> output <strong class="text-strong">32bit integer</strong><br /><br />by Antonio Acini:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />set /A number=%1<br />set /A iter1=number/2+1<br /><br />rem The maximum number of iterations to calculate sqrt of a 32 bits integer number is 20<br />set &quot;sqrt=&quot;<br />for /L %%i in (1,1,20) do if not defined sqrt (<br />&nbsp; &nbsp;set /A &quot;iter2=number/iter1, iter1=(iter1+iter2)/2&quot;<br />&nbsp; &nbsp;if !iter2! geq !iter1! set /A &quot;sqrt=(iter1+iter2)/2&quot;<br />)<br />echo Sqrt(%number%) = %sqrt%<br /></code></pre></div><br /><em class="text-italics">modified the first set to set /A</em> (sugg. by dbenham)<br /><em class="text-italics">modified the first iter1 adding + 1</em></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>09 Aug 2014 14:28</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">For SQRT.BAT, modify initial assignment to use SET /A<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set /a number=%1<br /></code></pre></div><br />Then you can enter hex notation for a number, or compute the integral approximation of the square root of a mathematical expression. It is also a good way to test the result.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\test&gt;sqrt 23456*23456<br />Sqrt(550183936) = 23456<br /><br />C:\test&gt;<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>09 Aug 2014 19:40</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">Thanks Dave.<br /><br />For completeness. In the algos there is (X+Y)/2. It's the average.<br /><br />This is a <strong class="text-strong">average without overflow</strong>:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; set /a &quot;M=(X&amp;Y)+(X^Y)/2&quot;<br /></code></pre></div><br /><br />In the sqrt algos is not necessary, I think, but for other calculations:<br /><br />examples:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;set /a &quot;m=(2100000001+2000000001)/2&quot;<br />-97483647<br /></code></pre></div><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;set /a &quot;m=(2100000001&amp;2000000001)+(2100000001^2000000001)/2&quot;<br />2050000001<br /></code></pre></div><br /><br />Francesco Poscetti</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>09 Aug 2014 20:00</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">@einstein1969:<br /><br />This is very interesting! Could you explain why the &quot;(X&amp;Y)+(X^Y)/2&quot; give correct results with large numbers, but &quot;(X+Y)/2&quot; does not, perhaps?<br /><br />In assembler, when you want to multiply two numbers followed by a division (for example: X*Y/Z, common operation to change scale) you may multiply X*Y, that give a result of double the size of X and Y, and then directly divide this double-size partial result by Z. If the scaling is correct, the final result is correct even if the partial result of X*Y would produce an overflow in the base size of X and Y.<br /><br />Is there any way to apply your trick above to an X*Y/Z operation in a SET /A command?<br /><br />Antonio<br /><br /><strong class="text-strong">EDIT</strong>: PS - You may find some interesting stuff on mathematical functions in my <a href="viewtopic5d59.html?f=3&amp;t=2704" class="postlink">SET/A macro</a> post.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>09 Aug 2014 21:46</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">I have added a <strong class="text-strong">decimal part</strong> (5 digit) at the Aacini's square root, using the standard algorithm of square root. (rif . <a href="http://engineeringtraining.tpub.com/14069/css/14069_25.htm" class="postlink">Arithmetic Extraction of Square Roots</a>)<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />set /A number=%1<br />set /A iter1=number/2<br /><br />rem The maximum number of iterations to calculate sqrt of a 32 bits integer number is 20<br />set &quot;sqrt=&quot;<br />for /L %%i in (1,1,20) do if not defined sqrt (<br />&nbsp; &nbsp;set /A &quot;iter2=number/iter1, iter1=(iter1+iter2)/2&quot;<br />&nbsp; &nbsp;if !iter2! geq !iter1! set /A &quot;sqrt=(iter1+iter2)/2&quot;<br />)<br />rem echo Sqrt(%number%) = %sqrt%<br /><br />rem decimal part<br />set count=0<br />set /a sqr=sqrt*sqrt<br /><br />if !sqr! gtr !number! set /a sqrt-=1, sqr=sqrt*sqrt<br /><br />set digit=%sqrt%.<br /><br />:dec<br />(&nbsp; &nbsp;set /a count+=1<br />&nbsp; &nbsp;if !count! GTR 5 goto next<br />&nbsp; &nbsp;set /a number=(number-sqr^)*100, div=sqrt*2<br />&nbsp; &nbsp;for /l %%i in (9,-1,0) do (<br />&nbsp; &nbsp;&nbsp; &nbsp;set /a sqr=!div!%%i*%%i<br />&nbsp; &nbsp;&nbsp; &nbsp;if !sqr! leq !number! (<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;set sqrt=!sqrt!%%i<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;goto dec<br />&nbsp; &nbsp;&nbsp; &nbsp;)<br />&nbsp; &nbsp;)<br />)&nbsp; &nbsp;<br />:next&nbsp; &nbsp;<br />&nbsp; &nbsp;set sqrt=%sqrt:~-5%<br />&nbsp; &nbsp;if %number% neq 0 set digit=%digit%%sqrt%<br />&nbsp; &nbsp;echo Square Root of %1 is %digit%<br /><br /><br />exit /b 0<br /></code></pre></div><br />EDIT:<em class="text-italics">Above code has errors</em><br /><br />examples<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;sqrt.bat 2<br />Sqrt(2) = 1<br />Square Root of 2 is 1.41421</code></pre></div><br /><br />EDIT: look at <a href="viewtopic45d3.html?p=36222#p36222" class="postlink">SQRT.BAT</a> for enhanced version by dbenham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>09 Aug 2014 22:02</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Impressive. But SQRT 3 original code gives 2, and decimal version gives 2.2.<br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>09 Aug 2014 22:54</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>Impressive. But SQRT 2 original code gives 2, and decimal version gives 2.2.<br /><br />Dave Benham</div></blockquote><br /><br /> <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" /> <br /><br />What? what do you mean?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>10 Aug 2014 03:38</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><img class="smilies" src="images/smilies/icon_redface.gif" alt=":oops:" title="Embarassed" /> Stoopid typos <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br /><br />That was supposed to be a 3. I edited my post.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>10 Aug 2014 03:58</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">I can't understand why... I have added a &quot;stupid&quot; workaround and seem work.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if !sqr! gtr !number! set /a sqrt-=1, sqr=sqrt*sqrt<br /></code></pre></div><br /><br />update the previus post.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>10 Aug 2014 04:13</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content"><blockquote><div><cite>Aacini wrote:</cite>@einstein1969:<br /><br />This is very interesting! Could you explain why the &quot;(X&amp;Y)+(X^Y)/2&quot; give correct results with large numbers, but &quot;(X+Y)/2&quot; does not, perhaps?<br /><br />In assembler, when you want to multiply two numbers followed by a division (for example: X*Y/Z, common operation to change scale) you may multiply X*Y, that give a result of double the size of X and Y, and then directly divide this double-size partial result by Z. If the scaling is correct, the final result is correct even if the partial result of X*Y would produce an overflow in the base size of X and Y.<br /><br />Is there any way to apply your trick above to an X*Y/Z operation in a SET /A command?<br /><br />Antonio<br /><br /><strong class="text-strong">EDIT</strong>: PS - You may find some interesting stuff on mathematical functions in my <a href="viewtopic5d59.html?f=3&amp;t=2704" class="postlink">SET/A macro</a> post.</div></blockquote><br /><br />Thanks Antonio for the link. I see a lot of stuff! If possibile I integrate but your work is very advanced!  <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" /> <br /><br />For the question. The + go in overflow. The &amp; and ^ no. This proprierty is discoverer by <a href="http://books.google.it/books?id=VicPJYM0I5QC&amp;pg=PA19&amp;lpg=PA19&amp;dq=average+overflow+Dietz&amp;source=bl&amp;ots=2n_UPUwt2u&amp;sig=Bc5Z97QXPNx113ZkRnyg3ll7ltM&amp;hl=it&amp;sa=X&amp;ei=kkTnU5OgM-aaygPWnoGoDg&amp;ved=0CC4Q6AEwAQ#v=onepage&amp;q=average%20overflow%20Dietz&amp;f=false" class="postlink">Dietz</a>.<br /><br />For the MUL i think that this is not applicable. You can use KARATSUBA. I'll post an example soon.<br /><br />Francesco</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>10 Aug 2014 19:23</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Your code sometimes raises errors, and the last digit is not rounded properly, and sometimes is just plain wrong.<br /><br />I refined your SQRT function to compute an accurately rounded value with as much precision as possible without resorting to numbers that exceed signed 32 bit values. I also eliminated any backward GOTO for improved performance. The function properly handles negative, 0, and 1 values.<br /><br />I thought I could add 5 and divide by 10 to get a properly rounded number, but the last digit was sometimes off by 1. Via some spot checking at both extremes (small numbers and big numbers), I determined that adding 50 and dividing by 100 seems to give a reliably accurate rounded value.<br /><br />I tested 10001 small inputs from 0 to 1000, as well as 1000 large inputs from 2147483647 to 2146483647, incrementing by 1000.<br /><br />I have not looked at Aacini's linked code to see if there are better ways to do this.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />:SQRT&nbsp; InExpr&nbsp; &#91;OutVar&#93;<br />::<br />:: Compute the square root of expression InExpr<br />:: and store the result in variable OutVar.<br />:: Write the result to stdout if OutVar not specified.<br />::<br />:: InExpr may be a valid SET /A mathematical expression.<br />::<br />:: The number is rounded accurately, and the number of<br />:: digits varies depending on the value of InExpr.<br />::<br />:: If the result is exact, then it will not have any<br />:: decimal digits.<br />::<br />setlocal EnableDelayedExpansion<br /><br />:: Initialize and handle special cases<br />set /A &quot;number=%~1, iter1=number/2+1&quot; || exit /b<br />if !number! lss 0 &gt;&amp;2 echo ERROR: Imaginary number&amp;exit /b 1<br />if !number! leq 1 set /a sqrt=number&amp;goto return<br /><br />:: Compute integral portion<br />set &quot;sqrt=&quot;<br />for /L %%i in (1,1,20) do if not defined sqrt (<br />&nbsp; set /A &quot;iter2=number/iter1, iter1=(iter1+iter2)/2&quot;<br />&nbsp; if !iter2! geq !iter1! set /A &quot;sqrt=(iter1+iter2)/2, sqr=sqrt*sqrt, count=0&quot;<br />)<br />if !sqr! equ !number! goto return<br /><br />:: Compute decimal portion<br />for /l %%N in (-1 1 6) do (<br />&nbsp; set /a &quot;number=(number-sqr)*100, div=sqrt*2&quot;<br />&nbsp; if !number! lss 0 goto finish<br />&nbsp; set &quot;next=&quot;<br />&nbsp; for /l %%i in (9,-1,0) do if not defined next (<br />&nbsp; &nbsp; set /a sqr=!div!%%i*%%i 2&gt;nul || goto finish<br />&nbsp; &nbsp; if !sqr! geq 0 if !sqr! leq !number! set &quot;next=%%i&quot;<br />&nbsp; )<br />&nbsp; set &quot;sqrt=!sqrt!!next!&quot;<br />&nbsp; set &quot;count=%%N&quot;<br />)<br />:finish<br />set /a sqrt=(sqrt+50)/100<br />set sqrt=!sqrt:~0,-%count%!.!sqrt:~-%count%!<br /><br />:return<br />endlocal &amp; if &quot;%~2&quot; equ &quot;&quot; (echo %sqrt%) else set &quot;%~2=%sqrt%&quot;<br />exit /b 0<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dos Batch Math Library</h3>
+				<div class="date">Posted: <strong>11 Aug 2014 00:58</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">I have found the error in the previus method. I think this method uses <a href="http://en.wikipedia.org/wiki/Integer_square_root" class="postlink">this algos</a>.<br /><br />The first term is <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>iter1=number/2+1</code></pre></div> and not <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>iter1=number/2</code></pre></div>. I have probed e seem work without my previous &quot;stupid&quot; patch.<br /><br />@Dave<br />You can correct previus post?<br /><br />PS: Very good work!</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>4</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5819&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:40 GMT -->
+</html>

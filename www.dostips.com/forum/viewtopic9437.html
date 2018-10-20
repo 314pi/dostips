@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=57164 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:12 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Reading a delimited file - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic08e3.html?t=8623">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic18f8.html?f=3&amp;t=8623">Reading a delimited file</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="postingdea5.html?mode=reply&amp;f=3&amp;t=8623" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicb0c0.html?f=3&amp;t=8623&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="8623" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			6 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p57152" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57152">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberliste633.html?mode=viewprofile&amp;u=9263" class="username">pp8771</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchacc7.html?author_id=9263&amp;sr=posts">15</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Jun 2018 06:54</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57152">
+
+						<h3 class="first"><a href="#p57152">Reading a delimited file</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingbf11.html?mode=quote&amp;f=3&amp;p=57152" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicbb7e.html?p=57152#p57152" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopicbb7e.html?p=57152#p57152" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberliste633.html?mode=viewprofile&amp;u=9263" class="username">pp8771</a></strong> &raquo; </span>13 Jun 2018 01:32
+			</p>
+			
+			
+			
+			<div class="content">I have a very unusual batch requirement.<br>
+I have file with a header and number of rows which are considered as data in the subsequent rows.<br>
+Number of header columns can vary and can be determined from the number of delimters. if there are three delimiters in a row - i will have four columns in the file. <br>
+The data rows(subsequent rows after the header) are not constant it can vary 2 to end of file<br>
+<br>
+Sample file
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>COMPID|COMPNAME|ADDRESS|YEAROFESTABLISTMENT
+100|XYC|AWER RD|12072018
+120|BNM|PQTY RD|12082018</code></pre></div>
+
+<br>
+<br>
+<br>
+Required Output will be header rows followed by subsequent rows.In the end of each row i will mention also the folder name(F1) and file name (u1.dat).<br>
+There are multiple files in each such folders.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>COMPID,COMPNAME,ADDRESS,YEAROFESTABLISTMENT##"100","XYC","AWER RD","12072018"##F1.u1
+COMPID,COMPNAME,ADDRESS,YEAROFESTABLISTMENT##"120","BNM","PQTY RD","12082018"##F1.u1</code></pre></div>
+
+Please how we can we transalate the requirement using batch to an above output.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57156" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57156">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57156">
+
+						<h3 ><a href="#p57156">Re: Reading a delimited file</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf530.html?mode=quote&amp;f=3&amp;p=57156" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic643d.html?p=57156#p57156" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopic643d.html?p=57156#p57156" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>13 Jun 2018 12:09
+			</p>
+			
+			
+			
+			<div class="content">You really haven't specified enough details.  Really need to know what the folder structure is and are you expecting each file to have its own output file or are you combining all the files into one.<br>
+<br>
+Regardless of that, here is the base code to do one file. Hopefully you can figure out the rest.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>    @echo off
+    setlocal enabledelayedexpansion
+    
+    set "filename=u1.dat"
+    set "folder=F1"
+    
+    REM Get header row
+    set /p "header="&lt;"%filename%"
+    set "header=%header:|=,%"
+    
+    REM get base file name witout exention
+    FOR %%G IN ("%filename%") do set "basename=%%~nG"
+    
+    REM Read file
+    FOR /F "skip=1 usebackq delims=" %%G IN ("%filename%") DO (
+    	set "line=%%~G"
+    	set line="!line:|=","!"
+    	echo %header%##!line!##%folder%.%basename%
+    )
+pause</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57158" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57158">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberliste633.html?mode=viewprofile&amp;u=9263" class="username">pp8771</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchacc7.html?author_id=9263&amp;sr=posts">15</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Jun 2018 06:54</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57158">
+
+						<h3 ><a href="#p57158">Re: Reading a delimited file</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2dae.html?mode=quote&amp;f=3&amp;p=57158" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopica7b2.html?p=57158#p57158" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopica7b2.html?p=57158#p57158" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberliste633.html?mode=viewprofile&amp;u=9263" class="username">pp8771</a></strong> &raquo; </span>13 Jun 2018 23:03
+			</p>
+			
+			
+			
+			<div class="content">Thanks for the response.<br>
+trrying to answer your question:<br>
+I am not concatenating the all the file contents into one file but will write to different file by appending file name folder name and line no.<br>
+Let say I have parent folder (A1). Under the parent folder A1 it has different subfolder A12,A13, A14 and A15. I want to read this folder name and file name and content of each filename under each folders. Could be some folders do not contain any file then I should not process that folders.<br>
+<br>
+It is in continuation of the requirement.<br>
+I am using this code and listing the folders and files inside the folders by  a looping the folders but encountering few issues while reading  files and printing few name.<br>
+Sample input file is provide below.<br>
+<br>
+Also i need to print the line numbers along with the rows.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+ setlocal enabledelayedexpansion
+ set WORKING_DIRECTORY=%cd%
+pushD %WORKING_DIRECTORY%
+for /f "usebackq tokens=*" %%a in (`dir /b/s/a:d MigrationPoc`) do (
+ echo:%%~nxa
+  set "vfolder=%%~nxa"
+ echo  folder name %vfolder%  ; 
+ for /f "usebackq tokens=*" %%a in (`dir /a-d /b %%a` ) do  (
+  echo:%%~na
+  set vfilename=%%~na
+  set /p "header="&lt;"%vfilename%"
+  set "header=%header:|=,%"
+ FOR /F "skip=1 usebackq delims=" %%G IN ("%vfilename%") DO (
+    	set "line=%%~G"
+    	set line="!line:|=","!"
+    	REM# also i need to print the line number starting from 2
+    	echo %header%##!line!##%vfolder%.%vfilename%
+ )
+ )
+ )
+ pause
+popD</code></pre></div>
+
+<br>
+output:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>F1-----&gt;Folder name appearing properly
+ folder name   ; ----&gt; Folder name is not appearing
+u1 ----&gt; File name
+The system cannot find the path specified.  ---&gt;Output is not coming but the file is present in the path
+sample output:
+COMPID,COMPNAME,ADDRESS,YEAROFESTABLISTMENT##"100","XYC","AWER RD","12072018"##F1.u1##&lt;line no&gt; 2
+COMPID,COMPNAME,ADDRESS,YEAROFESTABLISTMENT##"120","BNM","PQTY RD","12082018"##F1.u1##&lt;line no&gt; 3
+The system cannot find the file .
+b1
+The system cannot find the path specified.
+The system cannot find the file .
+c1
+The system cannot find the path specified.
+The system cannot find the file .
+d1
+The system cannot find the path specified.
+The system cannot find the file .
+Sch_B
+ folder name   ;
+File Not Found ----&gt;If there is not file  inside a folder then file not found should not be print.It should be skipped.
+Sch_C
+ folder name   ;
+File Not Found
+Sch_D
+ folder name   ;
+a1
+The system cannot find the path specified.
+The system cannot find the file .
+b1
+The system cannot find the path specified.
+The system cannot find the file .
+c1
+The system cannot find the path specified.
+The system cannot find the file .
+d1
+The system cannot find the path specified.
+The system cannot find the file .</code></pre></div>
+
+Sample input file u1:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>COMPID|COMPNAME|ADDRESS|YEAROFESTABLISTMENT
+100|XYC|AWER RD|12072018
+120|BNM|PQTY RD|12082018</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57163" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57163">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57163">
+
+						<h3 ><a href="#p57163">Re: Reading a delimited file</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8971.html?mode=quote&amp;f=3&amp;p=57163" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice8d3.html?p=57163#p57163" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopice8d3.html?p=57163#p57163" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>14 Jun 2018 15:19
+			</p>
+			
+			
+			
+			<div class="content">Well you certainly can't read the file if you are stripping the extension from the file name before you try to use that variable to read the file.<br>
+<br>
+Also note my use of delayed expansion variables.  There is a reason I am using exclamation points inside a code block.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57164" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57164">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberliste633.html?mode=viewprofile&amp;u=9263" class="username">pp8771</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchacc7.html?author_id=9263&amp;sr=posts">15</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Jun 2018 06:54</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57164">
+
+						<h3 ><a href="#p57164">Re: Reading a delimited file</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7546.html?mode=quote&amp;f=3&amp;p=57164" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9437.html?p=57164#p57164" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopic9437.html?p=57164#p57164" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberliste633.html?mode=viewprofile&amp;u=9263" class="username">pp8771</a></strong> &raquo; </span>14 Jun 2018 18:54
+			</p>
+			
+			
+			
+			<div class="content">In that case i will store two things in two variables. One after stripping and one with extension.Thanks for the  advise.<br>
+I have rewritten it.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+ setlocal enabledelayedexpansion
+ set WORKING_DIRECTORY=%cd%
+pushD %WORKING_DIRECTORY%
+REM echo %WORKING_DIRECTORY%
+for /f "usebackq tokens=*" %%a in (`dir /b/s/a:d MigrationPoc`) do (
+ echo:%%~nxa
+  set "vfolder=%%~nxa"
+ for /f "usebackq tokens=*" %%a in (`dir /a-d /b %%a` ) do  (
+  echo %%a
+  echo:%%~na
+  set vfilenamewithext=%%a
+  set vfilename=%%~na
+  set /p "header="&lt;"!vfilenamewithext!"
+  set "header=%header:|=,%"
+ FOR /F "skip=1 usebackq delims=" %%G IN ("!vfilenamewithext!") DO (
+    	set "line=%%~G"
+    	set line="!line:|=","!"
+    	echo %header%##!line!##!vfolder!.!vfilename!
+ )
+ )
+ )
+ pause
+popD</code></pre></div>
+
+But issue with reading the file still persists and I cannot able to print the line number along with file contents.<br>
+<br>
+My output is:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>F1
+u1.sql
+u11
+The system cannot find the file specified.
+The system cannot find the file u1.sql.
+b1.sql
+b1
+The system cannot find the file specified.
+The system cannot find the file b1.sql.
+c1.sql
+c1
+The system cannot find the file specified.
+The system cannot find the file c1.sql.
+d1.sql
+d1
+The system cannot find the file specified.
+The system cannot find the file d1.sql.
+Sch_B
+File Not Found
+Sch_C
+File Not Found
+Sch_D
+a1.sql
+a1
+The system cannot find the file specified.
+The system cannot find the file a1.sql.
+b1.sql
+b1
+The system cannot find the file specified.
+The system cannot find the file b1.sql.
+c1.sql
+c1
+The system cannot find the file specified.
+The system cannot find the file c1.sql.
+d1.sql
+d1
+The system cannot find the file specified.
+The system cannot find the file d1.sql.</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57168" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57168">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberliste633.html?mode=viewprofile&amp;u=9263" class="username">pp8771</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchacc7.html?author_id=9263&amp;sr=posts">15</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Jun 2018 06:54</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57168">
+
+						<h3 ><a href="#p57168">Re: Reading a delimited file</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinge84d.html?mode=quote&amp;f=3&amp;p=57168" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicd59a.html?p=57168#p57168" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopicd59a.html?p=57168#p57168" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberliste633.html?mode=viewprofile&amp;u=9263" class="username">pp8771</a></strong> &raquo; </span>15 Jun 2018 17:24
+			</p>
+			
+			
+			
+			<div class="content">really struggling to read file and print in the above format. Any kind of assistance from experts is really appreciated.<br>
+Thanks for the earlier assistance .<br>
+<br>
+<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+ setlocal enabledelayedexpansion
+ set WORKING_DIRECTORY=%cd%
+pushD %WORKING_DIRECTORY%
+REM echo %WORKING_DIRECTORY%
+for /f "usebackq tokens=*" %%a in (`dir /b/s/a:d MigrationPoc`) do (
+ echo:%%~nxa
+  set "vfolder=%%~nxa"
+  set vemptyfolder=
+  dir /b "%%a" | findstr "^" &gt;nul || set "vemptyfolder=%%~nxa"
+  if !vemptyfolder! NEQ !vfolder! (
+ for /f "usebackq tokens=*" %%a in (`dir /a-d /b %%a` ) do  (
+  echo %%a
+  echo:%%~na
+  set vfilenamewithext=%%a
+  set vfilename=%%~na
+  set /p "header="&lt;"MigrationPoc\!vfolder!\!vfilenamewithext!"
+  set "header=%header:|=,%"
+  
+ FOR /F "skip=1 usebackq delims=" %%G IN ("MigrationPoc\!vfolder!\!vfilenamewithext!") DO (
+    	set "line=%%~G"
+    	set line="!line:|=","!"
+    	echo %header%##!line!##!vfolder!.!vfilename!
+		)
+ )
+ )
+ )
+ pause
+popD</code></pre></div>
+
+<strong class="text-strong">Header is not printing</strong>. 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Sch_A
+a1.sql
+a1
+##"100","XYC","AWER RD","12072018"##Sch_A.a1
+##"120","BNM","PQTY RD","12082018"##Sch_A.a1
+##"100","XYC","AWER RD","12072018"##Sch_A.a1
+##"120","BNM","PQTY RD","12082018"##Sch_A.a1
+b1.sql
+b1
+##"100","XYC","AWER RD","12072018"##Sch_A.b1
+##"120","BNM","PQTY RD","12082018"##Sch_A.b1
+c1.sql
+c1
+d1.sql
+d1
+Sch_B
+Sch_C
+Sch_D
+a1.sql
+a1
+b1.sql
+b1
+c1.sql
+c1
+d1.sql
+d1
+Press any key to continue . . .</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="postingdea5.html?mode=reply&amp;f=3&amp;t=8623" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicb0c0.html?f=3&amp;t=8623&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8623">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			6 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5495.gif?cron_type=cron.task.text_reparser.poll_title" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=57164 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:13 GMT -->
+</html>

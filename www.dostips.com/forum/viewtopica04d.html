@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8495&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:24:58 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; ANSI.SYS on Windows 7 PC Ineffective - Recommentation?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>ANSI.SYS on Windows 7 PC Ineffective - Recommentation?</h2>
+		<p><a href="viewtopic24ec.html?f=3&amp;t=8495">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8495</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>ANSI.SYS on Windows 7 PC Ineffective - Recommentation?</h3>
+				<div class="date">Posted: <strong>13 Apr 2018 12:00</strong></div>
+				<div class="author">by <strong>Jer</strong></div>
+				<div class="content">My 2 Windows 7 PCs have ANSI.SYS and I added DEVICE = C:\WINDOWS\SYSTEM32\ANSI.SYS<br>
+to the config.sys file for both, re-booted, with no success in displaying color in the CMD console<br>
+window.<br>
+I suppose it is common knowledge that Windows 7 does not support ansi.sys, but my<br>
+question (probably unanserable) is, why is the ansi.sys file there?  What genius <br>
+decided to include a non-supported file in the Windows 7 system32 folder? <img class="smilies" src="images/smilies/icon_rolleyes.gif" width="15" height="15" alt=":roll:" title="Rolling Eyes"> <br>
+<br>
+What do you recommend?  I am working with escape sequences as a color "add-on"<br>
+for my pure batch borders &amp; boxes project. I want to see the colors with Windows 7 as<br>
+I do on the Windows 10 PC.<br>
+Thanks.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+
+for /F %%a in ('echo prompt $E^| cmd') do set "ESC=%%a"
+
+set "reset=%ESC%[0m"
+set "Red=%ESC%[31m"
+set "Green=%ESC%[32m"
+
+echo %Red% red %Green% green %reset%
+exit /b</code></pre></div>
+Windows 7 result ("e" represents a left-pointing arrow on the display):
+<blockquote class="uncited"><div>e[31m red e[32m green e[0m</div></blockquote></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ANSI.SYS on Windows 7 PC Ineffective - Recommentation?</h3>
+				<div class="date">Posted: <strong>13 Apr 2018 12:41</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I think the file is still there for historical or downward-compatibility reasons. I'm afraid you don't have any chance to use it on Win7. Also on Win10 it works only with the new console window. If you use the so called "Legacy Console" (wich is the old console window used before Win10) it also won't work.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ANSI.SYS on Windows 7 PC Ineffective - Recommentation?</h3>
+				<div class="date">Posted: <strong>14 Apr 2018 16:46</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">Windows NT,2K and later don't use autoexec.bat nor config.sys but autoexec.nt and config.nt. If you add the following line to the config.nt file it works for command.com but not cmd.exe however I remember to once have read a 3th party ansi.sys exist that claimed to work on cmd.exe.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>DEVICE=C:\WINDOWS\SYSTEM32\ANSI.SYS
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ANSI.SYS on Windows 7 PC Ineffective - Recommentation?</h3>
+				<div class="date">Posted: <strong>15 Apr 2018 04:58</strong></div>
+				<div class="author">by <strong>elzooilogico</strong></div>
+				<div class="content">you may try <a href="https://github.com/adoxa/ansicon/releases" class="postlink">ansicon</a> developed by Jason Hood</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ANSI.SYS on Windows 7 PC Ineffective - Recommentation?</h3>
+				<div class="date">Posted: <strong>22 Apr 2018 21:39</strong></div>
+				<div class="author">by <strong>Jer</strong></div>
+				<div class="content">Thank you all for the comments and suggestions.<br>
+I installed ansicon on my Windows 7 laptop, and it allows me<br>
+to get any of the 256 colors from batch scripts that assign ansi codes.<br>
+This is a relief knowing that a "future" shared batch script would<br>
+include a batch-only coloring add-on that would be unappreciated by<br>
+those who only had a Windows 7 O/S. <br>
+<br>
+To make ansicon work, per instructions, I copied the x86 folder<br>
+to a folder in the path, and typed on the command-line ansicon -i<br>
+<br>
+It continues to work after several boot-ups.<br>
+<br>
+This is a step in a bigger challenge, to be able to take an existing file<br>
+of bordered information or bordered other ascii characters, and colorize<br>
+(with different selected colors) borders, specific lines and specific columns.<br>
+Editing a line with text of one color and multiple vertical columns of<br>
+another color involves multiple edits of the same line, and the escape codes<br>
+added to a text string prevent further edits after the initial edit causes the<br>
+line to grow with the added codes.  With time and persistence and <br>
+ideas  <img class="smilies" src="images/smilies/icon_idea.gif" width="15" height="15" alt=":idea:" title="Idea"> in the middle of the night, maybe this can be done. <br>
+Jerry</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ANSI.SYS on Windows 7 PC Ineffective - Recommentation?</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 00:20</strong></div>
+				<div class="author">by <strong>pjanov</strong></div>
+				<div class="content">Windows NT,2K and later don't use autoexec.bat nor config.sys but autoexec.nt and config.nt.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ANSI.SYS on Windows 7 PC Ineffective - Recommentation?</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 10:08</strong></div>
+				<div class="author">by <strong>Jer</strong></div>
+				<div class="content">pjanov, I don't know if your reply was meant as a solution.<br>
+I tried adding DEVICE=C:\WINDOWS\SYSTEM32\ANSI.SYS<br>
+in the file config.nt and it did not resolve the issue on<br>
+my Windows 7 laptop for displaying colors from ansi sequence<br>
+codes, such as:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+For /F %%a In ('echo prompt $E^| cmd') Do Set "ESC=%%a"
+Set "reset=%ESC%[0m"
+echo %ESC%[38;5;1;48;5;11m colors %reset%
+</code></pre></div>
+The solution I used  on the Win 7 laptop is third-party ansicon, although<br>
+my primary PC O/S is Windows 10.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: ANSI.SYS on Windows 7 PC Ineffective - Recommentation?</h3>
+				<div class="date">Posted: <strong>02 May 2018 21:28</strong></div>
+				<div class="author">by <strong>Jer</strong></div>
+				<div class="content">My apology because I spoke too soon about ansicon, a third-party application<br>
+to use ansi sequence codes in a batch script on a Windows 7 PC.<br>
+When I tested it, I saw colors in the console window   <img class="smilies" src="images/smilies/icon_redface.gif" width="15" height="15" alt=":oops:" title="Embarassed">  but there were<br>
+only 16 colors, not the 256 colors displayed on my Win 10 64bit PC.<br>
+<br>
+The documentation readme.txt says ansicon supports 256 color palette,<br>
+but I don't know if "support" means you should be able to display any<br>
+of the 256 colors, or that the closest of the 16 colors is selected with<br>
+the entry of higher number color codes.<br>
+<br>
+I will continue with my project, colorize a file from a borders &amp; box tool, with the 256 colors,<br>
+on the Win 10 PC, and now 2.7 million colors thanks to the post from einstein1969 showing RGB notation.<br>
+<br>
+It would be helpful to know if anyone has experience with using ansi sequences in batch scripts<br>
+under Windows 7 32bit O/S, and how they made it work, to display any of the 256 colors or more.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8495&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:24:58 GMT -->
+</html>

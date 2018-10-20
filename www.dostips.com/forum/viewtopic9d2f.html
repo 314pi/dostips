@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8566&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:07:13 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; difficult starting cmd prompt with execution of two commands</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>difficult starting cmd prompt with execution of two commands</h2>
+		<p><a href="viewtopice2df.html?f=3&amp;t=8566">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8566</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>difficult starting cmd prompt with execution of two commands</h3>
+				<div class="date">Posted: <strong>20 May 2018 07:21</strong></div>
+				<div class="author">by <strong>taripo</strong></div>
+				<div class="content">I am having difficulty starting cmd prompt with execution of two commands<br>
+<br>
+<br>
+<br>
+this works fine (though is just for one command)<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;start cmd /k echo abc</code></pre></div>
+
+<br>
+but this, with two commands,  fails.. it closes immediately.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;start cmd /k (echo abc &amp; echo def)
+</code></pre></div>
+I tried adding a pause to get a better grasp of what was happening, but then I got another error<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;start cmd /k (echo abc &amp; echo def &amp; pause)
+def
+'pause)' is not recognized as an internal or external command,operable program or batch file.
+
+C:\&gt;start cmd /k ((echo abc) &amp; (echo def) &amp; (pause))
+) was unexpected at this time.
+
+C:\&gt;
+</code></pre></div>
+
+So I can't really see what's going on and how to do it</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: difficult starting cmd prompt with execution of two commands</h3>
+				<div class="date">Posted: <strong>20 May 2018 07:52</strong></div>
+				<div class="author">by <strong>elzooilogico</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>start "" cmd /k "bla &amp; bla &amp; bla"</code></pre></div> or <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>start "" cmd "/k "bla &amp;bla &amp; bla""</code></pre></div>cyquotation makes quite a difference. first quotes are window title</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: difficult starting cmd prompt with execution of two commands</h3>
+				<div class="date">Posted: <strong>20 May 2018 08:48</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">You know that <strong class="text-strong">&amp;</strong> is command splitter but forgot that this line
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>start cmd /k (echo abc &amp; echo def)</code></pre></div> will be parsed and splitted in to two separate commands before the second cmd instance have a chance to grab it as command line.<br>
+your line will basically will be converted to this before execution
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>start cmd /k (echo abc
+echo def)</code></pre></div>
+
+The first line starts a new instance of cmd passing <strong class="text-strong">(echo abc</strong> as the command to execute but it's syntax is invalid because of the unbalanced parentheses, the new cmd instance will not complain about it but it will be terminated immediately then the second line <strong class="text-strong">echo def)</strong> will be executed which will output <strong class="text-strong">def)</strong><br>
+<br>
+For this to work you have two options:<br>
+1. Put the the part that is intended to be passed to the second cmd instance in quotes
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>start cmd /k "(echo abc &amp; echo def)"</code></pre></div>
+2. Or escape the special characters to prevent them to be parsed by parent cmd
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>start cmd /k ^(echo abc ^&amp; echo def^)</code></pre></div>
+
+But in your particular test case there is no need to use parentheses at all so it can be simplified like this
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>start cmd /k "echo abc &amp; echo def"
+start cmd /k echo abc ^&amp; echo def</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: difficult starting cmd prompt with execution of two commands</h3>
+				<div class="date">Posted: <strong>24 May 2018 16:47</strong></div>
+				<div class="author">by <strong>taripo</strong></div>
+				<div class="content">@sst, thanks, you're spot on, I hadn't realised that the round brackets / parentheses , when occurring in a parameter, don't group things!  (is that right?) <br>
+You solved it though.  I like both those solutions, the quotes one, and the escaping the ampersand one.<br>
+<br>
+you explained that very well with how the parameters are broken down.. I tested it and indeed<br>
+<br>
+(w.c and w2.c referenced at bottom of post)<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;w cmd /k echo abc &amp; echo def
+argv[0] = w
+argv[1] = cmd
+argv[2] = /k
+argv[3] = echo
+argv[4] = abc
+def
+
+C:\&gt;w cmd /k echo (abc &amp; echo def)
+argv[0] = w
+argv[1] = cmd
+argv[2] = /k
+argv[3] = echo
+argv[4] = (abc
+def)
+
+C:\&gt;
+
+C:\&gt;w cmd /k echo abc ^&amp; echo def
+argv[0] = w
+argv[1] = cmd
+argv[2] = /k
+argv[3] = echo
+argv[4] = abc
+argv[5] = &amp;
+argv[6] = echo
+argv[7] = def
+
+</code></pre></div>
+
+So I see the importance of the quotes there.. or the escaping the ampersand<br>
+<br>
+Funnily enough this doesn't work<br>
+<br>
+C:\&gt;start cmd /k echo abc "&amp;" echo def<br>
+<br>
+even though  the argsv come out the same<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;w cmd /k echo abc "&amp;" echo def
+argv[0] = w
+argv[1] = cmd
+argv[2] = /k
+argv[3] = echo
+argv[4] = abc
+argv[5] = &amp;
+argv[6] = echo
+argv[7] = def</code></pre></div>
+
+Though the command line is different for them,  <br>
+<br>
+C:\&gt;w2 start cmd /k echo abc "&amp;" echo def<br>
+w2  start cmd /k echo abc "&amp;" echo def<br>
+<br>
+C:\&gt;w2 start cmd /k echo abc ^&amp; echo def<br>
+w2  start cmd /k echo abc &amp; echo def<br>
+C:\&gt;<br>
+<br>
+<br>
+<br>
+so maybe start uses some kind of mixture of first getting the command line then splitting into arguments<br>
+<br>
+@elz , well spotted re quotes around the echo, though  I think the start "" is a bit of a red herring here.. it's not necessary.  It is necessary when the path to the executable contains a space.  e.g.  C:\&gt;start c:\crp\zzzza.bat   works, but  C:\&gt;start "c:\crp\bab zab\fafa.bat"  fails and requires C:\&gt;start "" "c:\crp\bab zab\fafa.bat"  So there are cases when you need the "" but not here.<br>
+<br>
+@sst could solution and explanation.<br>
+<br>
+Thanks guys<br>
+<br>
+* w.c and w2.c  <a href="https://pastebin.com/raw/KTWihmPB" class="postlink">https://pastebin.com/raw/KTWihmPB</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: difficult starting cmd prompt with execution of two commands</h3>
+				<div class="date">Posted: <strong>26 May 2018 18:58</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist1bd9.html?mode=viewprofile&amp;u=2617">taripo</a> wrote: <a href="viewtopic94fa.html?p=56933#p56933" data-post-id="56933" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">24 May 2018 16:47</div></cite>
+Funnily enough this doesn't work<br>
+<br>
+C:\&gt;start cmd /k echo abc "&amp;" echo def<br>
+<br>
+even though  the argsv come out the same<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;w cmd /k echo abc "&amp;" echo def
+argv[0] = w
+argv[1] = cmd
+argv[2] = /k
+argv[3] = echo
+argv[4] = abc
+argv[5] = &amp;
+argv[6] = echo
+argv[7] = def</code></pre></div>
+
+Though the command line is different for them,  <br>
+<br>
+C:\&gt;w2 start cmd /k echo abc "&amp;" echo def<br>
+w2  start cmd /k echo abc "&amp;" echo def<br>
+<br>
+C:\&gt;w2 start cmd /k echo abc ^&amp; echo def<br>
+w2  start cmd /k echo abc &amp; echo def<br>
+C:\&gt;
+</div></blockquote>
+<blockquote><div><cite><a href="memberlist1bd9.html?mode=viewprofile&amp;u=2617">taripo</a> wrote: <a href="viewtopic94fa.html?p=56933#p56933" data-post-id="56933" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">24 May 2018 16:47</div></cite>
+so maybe start uses some kind of mixture of first getting the command line then splitting into arguments
+</div></blockquote>
+
+start does not touch command line of the target command and will pass it as is.<br>
+<br>
+That is the effect of C-Runtime's command line processor in your <strong class="text-strong">w</strong> program which will split it in to separate argv elements and unquotes each of them, cmd on the other hand, accesses raw command line and uses it's own parser for processing it rather than using argv.<br>
+<br>
+And everything that comes after <strong class="text-strong">/K</strong> or <strong class="text-strong">/C</strong> will be parsed and processed as if it was typed at cmd's command prompt. Except when certain conditions are met, cmd will always unquote this part first then continues with rest of the processing. (To see when and how cmd will keep quotes after <strong class="text-strong">/K</strong> or <strong class="text-strong">/C</strong> refer to <strong class="text-strong">cmd /?</strong>)<br>
+<br>
+So with the following:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;start cmd /k echo abc "&amp;" echo def</code></pre></div>
+the second cmd will see this as the command to execute:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo abc "&amp;" echo def</code></pre></div>
+which will output:
+<blockquote class="uncited"><div>abc "&amp;" echo def</div></blockquote>
+
+And with this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;start cmd /k "echo abc &amp; echo def"</code></pre></div>
+The second cmd will see this as the command to execute:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>"echo abc &amp; echo def"</code></pre></div>
+Unquotes it:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo abc &amp; echo def</code></pre></div>
+Then executes which will output:
+<blockquote class="uncited"><div>
+abc<br>
+def
+</div></blockquote></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8566&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:07:13 GMT -->
+</html>

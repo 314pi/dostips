@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8574&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:14 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Get arguments without temporary file - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Get arguments without temporary file</h2>
+		<p><a href="viewtopic3c05.html?f=3&amp;t=8574">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8574</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>23 May 2018 10:49</strong></div>
+				<div class="author">by <strong>Jan Antonin</strong></div>
+				<div class="content">Here my three ideas which I didnt follow yet and which may or may not be usefull.<br>
+<br>
+1) if I need to run again my script this way <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmd /S /D /c""%~f0" "argument inside"</code></pre></div> it is a problem because cmd deletes the first and th last double-quotation mark and that is a problem because of argument and also because of a path of my script (even a space is problem and even an ampersand &amp; can be used inside a path (percent sign too, it is a bigger problem)<br>
+<br>
+Because of that and because cmd command will run as a part of piping I had to  use a cripled version like
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmd /S /D /c"%%Q%%%~f0" "argument inside""</code></pre></div>
+it is also good that inside remains inside<br>
+<br>
+<br>
+2) piping <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ver|find /V ""</code></pre></div>means that is used this calling <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmd /S /D /c</code></pre></div> if it were possible to change it somehow to <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmd /U /S /D /c</code></pre></div> we would get one char after another<br>
+<br>
+3) to find a way how to use the fact that being in a pipe means being at command line mode and it means this <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set aa=bb
+set bb=cc
+set cc=dd
+
+
+echo %%%%aa%%%%</code></pre></div> means different things depending of being in a pipe or not</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>23 May 2018 13:21</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39bc.html?mode=viewprofile&amp;u=9220">Jan Antonin</a> wrote: <a href="viewtopic1569.html?p=56906#p56906" data-post-id="56906" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">23 May 2018 10:49</div></cite>
+Here my three ideas which I didnt follow yet and which may or may not be usefull.<br>
+<br>
+1) if I need to run again my script this way <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmd /S /D /c""%~f0" "argument inside"</code></pre></div> it is a problem because cmd deletes the first and th last double-quotation mark and that is a problem because of argument and also because of a path of my script (even a space is problem and even an ampersand &amp; can be used inside a path (percent sign too, it is a bigger problem)<br>
+<br>
+Because of that and because cmd command will run as a part of piping I had to  use a cripled version like
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmd /S /D /c"%%Q%%%~f0" "argument inside""</code></pre></div>
+it is also good that inside remains inside
+</div></blockquote>
+Why not run your script this way ?
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+cmd /S /D /C ^" "tst.cmd" /arg: "ampersand EQU /S behavior" /optionalArg ^"
+cmd    /D /C ^" "tst.cmd" /arg: "&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp; EQU /S behavior" /optionalArg ^"
+
+pause
+exit
+</code></pre></div><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+echo.
+echo.inside
+echo.*=%*_
+
+exit /b
+</code></pre></div><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>inside
+*=/arg: "ampersand EQU /S behavior" /optionalArg_
+
+inside
+*=/arg: "&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp; EQU /S behavior" /optionalArg_
+Druk op een toets om door te gaan. . .
+</code></pre></div>
+<blockquote><div><cite><a href="memberlist39bc.html?mode=viewprofile&amp;u=9220">Jan Antonin</a> wrote: <a href="viewtopic1569.html?p=56906#p56906" data-post-id="56906" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">23 May 2018 10:49</div></cite>
+2) piping <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ver|find /V ""</code></pre></div>means that is used this calling <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmd /S /D /c</code></pre></div> if it were possible to change it somehow to <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmd /U /S /D /c</code></pre></div> we would get one char after another<br>
+<br>
+3) to find a way how to use the fact that being in a pipe means being at command line mode and it means this <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set aa=bb
+set bb=cc
+set cc=dd
+
+
+echo %%%%aaa%%%%</code></pre></div> means different things depending of being in a pipe or not
+</div></blockquote>
+There are ways to detect whether the input was piped thus you could adjust to that <a href="viewtopic6fd6.html?f=3&amp;t=2371" class="postlink">How to detect if input comes from pipe or redirected file</a>.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>23 May 2018 19:02</strong></div>
+				<div class="author">by <strong>Jan Antonin</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453">Ed Dyreen</a> wrote: <a href="viewtopicc9c5.html?p=56909#p56909" data-post-id="56909" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">23 May 2018 13:21</div></cite>
+<br>
+Why not run your script this way ?
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+cmd /S /D /C ^" "tst.cmd" /arg: "ampersand EQU /S behavior" /optionalArg ^"
+cmd    /D /C ^" "tst.cmd" /arg: "&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp; EQU /S behavior" /optionalArg ^"
+
+pause
+exit
+</code></pre></div></div></blockquote>Because (as I said) a name of your script may be t&amp;st.cmd  or other toxic symbol and in a path too or blah blah ...<br>
+I like thinking of general solutions and then using them without thinking instead of every time has to think whether it will work or not.<br>
+And try carrets in an argument instead of ampersands.<br>
+Unimportant.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>23 May 2018 20:14</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39bc.html?mode=viewprofile&amp;u=9220">Jan Antonin</a> wrote: <a href="viewtopic1fbe.html?p=56914#p56914" data-post-id="56914" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">23 May 2018 19:02</div></cite>
+Because (as I said) a name of your script may be t&amp;st.cmd  or other toxic symbol and in a path too or blah blah ...
+</div></blockquote>As long as you are dealing with characters inside the codepage it works.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmd /S /D /C ^" "t&amp;st.cmd" ^"
+cmd /S /D /C ^" "t^st.cmd" ^"
+</code></pre></div>
+<blockquote><div><cite><a href="memberlist39bc.html?mode=viewprofile&amp;u=9220">Jan Antonin</a> wrote: <a href="viewtopic1fbe.html?p=56914#p56914" data-post-id="56914" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">23 May 2018 19:02</div></cite>
+And try carrets in an argument instead of ampersands.
+</div></blockquote>
+Unquoted carrets get retracted by cmd before they are passed to your batch file and quoted carrets get doubled by call.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+cmd /S /D /C ^" "t^st.cmd" "^^" ^^^^^^^^ ^"
+call            t^^st.cmd "^^" ^^^^^^^^
+pause
+exit
+</code></pre></div><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>inside
+*="^^" ^_
+
+inside
+*="^^^^" ^^_
+Druk op een toets om door te gaan. . .
+</code></pre></div>The rules are generic and really not that hard to remember but they do differ per command and so the problem is not on the receiving part but in the very nature of the commands used to get there. This is why jeb is using<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmd /c tst.cmd %%var%%
+</code></pre></div>to reduce the carret effect and eliminate the quote effect but then you'll also need to parse it jeb's way because %* won't work with most special chars.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmd /c tst.cmd ^^^&amp;^^^|^^^^^^^"
+</code></pre></div>works equally well and
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmd /c tst.cmd ^^^^^^^&amp;^^^^^^^|^^^^^^^^^^^^^^^"
+</code></pre></div>works with %*
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>inside
+*=&amp;|^"_
+Druk op een toets om door te gaan. . .
+</code></pre></div>
+There are some things to say for reducing the carret effect and eliminating the quote effect but jeb's technique requires a function call and involves doskey and findstr although<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F "delims=" %%L in ('doskey /macros ^|findstr /R "^return="') do (
+    set "cmdLine=%%L"
+)
+setlocal EnableDelayedExpansion
+set "args=!cmdline:*###,=!"
+</code></pre></div>can be replaced with the faster<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F delims^=^ eol^= %%r in ( 'doskey /macros' ) do set "%%r"
+setlocal EnableDelayedExpansion
+set "args=!return:*###,=!"
+</code></pre></div>variant. The other two are notoriously slow.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>24 May 2018 13:46</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">I optimized the code a bit for macronisation, remove labels, findstr.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+echo.
+set "var=getParams.cmd "^^" ^^_^&amp;^|^&lt;^&gt;%%#""
+set "var"
+
+call %%var%%
+set args
+setlocal enableDelayedExpansion
+cmd /c !var!
+set args
+endlocal
+
+echo.
+set "var=getParams.cmd "^^" ^^^!^&amp;^|^&lt;^&gt;%%#""
+set "var"
+
+call %%var%%
+set args
+setlocal enableDelayedExpansion
+cmd /c !var!
+set args
+endlocal
+
+pause
+exit
+</code></pre></div><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;(set LF=^
+%=empty=%
+)
+
+for /F "tokens=3 delims=:" %%? in (
+
+	"%~0"
+
+) do	if %%? EQU getParams (
+
+	setlocal enableDelayedExpansion
+	:: (
+		rem echo.!cmdcmdline!
+		set "line=!cmdcmdline!"
+		set "line=!line:"=""!"
+		set "line=!line:$=$$!"
+		doskey return=!line!
+	:: )
+	endlocal &amp;exit 0
+
+)
+
+setlocal disableDelayedExpansion
+:: (
+	&gt; nul break | (
+
+		"%~d0\:getParams:\..\%~pnx0" &amp;REM %%LF%% ) &amp;REM ###,%*,# %%LF%%
+	)
+
+	for /F delims^=^ eol^= %%r in (
+
+		'doskey /macros'
+
+	) do 	set "%%r"
+
+	setlocal enableDelayedExpansion
+	:: (
+		set "args=!return:*###,=!"
+		set "args=!args:""="!"
+		set "args=!args:$$=$!"
+		set "args=!args:~0,-10!"
+		doskey return=
+
+		rem echo args: --- !args! ---
+	:: )
+:: )
+for /F delims^=^ eol^= %%r in (
+
+	"!args!"
+
+) do	endlocal &amp;endlocal &amp;set "args=%%r"
+
+exit /B
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>
+var=getParams.cmd "^" ^^_^&amp;^|^&lt;^&gt;%#"
+args="^" ^_&amp;|&lt;&gt;%#"
+args="^" ^_&amp;|&lt;&gt;%#"
+
+var=getParams.cmd "^" ^^^!^&amp;^|^&lt;^&gt;%#"
+args="^" ^!&amp;|&lt;&gt;%#"
+args="^" ^!&amp;|&lt;&gt;%#"
+Druk op een toets om door te gaan. . .
+</code></pre></div>When I wrote the return code I was expecting that returning to delayed state would give different results than notDelayedState, but it didn't so I left it like that.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>24 May 2018 19:46</strong></div>
+				<div class="author">by <strong>Jan Antonin</strong></div>
+				<div class="content">here is a final version of my script<br>
+i really think it is bulletproof<br>
+I wont even have a look here at least a couple of weeks, I need not seeing cmd prompt for a while<br>
+@jeb, @Aacini, @dbenham: thanks, it brought to my mind happy memories from my university years. Lambda calculus, algoritm theory, godels theorems, (and girls), ...<br>
+I am sad that names like Alonzo Church, S. C. Kleene, Martin Lob, Leon Henkin are not almost known and families of that great guys have a little if even something from the whole many billions dollar IT business today. It is really sad. Without them Mark Zuckerberg sticks some photos into a paper book now.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo on
+@setlocal ENABLEextensions
+@setlocal DISABLEdelayedexpansion
+@prompt -$G$S
+@rem I just like this prompt, it plays no rule at all
+@cd "%~dp0."
+rem %cmdcmdline%
+rem %*#
+@echo(
+@echo(
+@set LfPromptSP=^
+
+prompt 
+@rem previous three lines cannot be deleted nor changed. One space character follows a word 'prompt' at the end
+@(
+echo "%%cmdcmdline:"=""%%"
+rem %*#%%LfPromptSP%% prompt 
+)|find /V /N ""
+@echo(
+@echo(
+@echo the end
+@pause
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>25 May 2018 02:32</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">@JanAntonin<br>
+<br>
+I'm missing the part where the arguments are transfered to a variable.<br>
+<br>
+@Ed Dyreen
+<blockquote><div><cite><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453">Ed Dyreen</a> wrote: <a href="viewtopic2992.html?p=56931#p56931" data-post-id="56931" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">24 May 2018 13:46</div></cite>
+I optimized the code a bit for macronisation, remove labels, findstr.
+</div></blockquote>
+That looks quite good, BUT to remove the findstr after 'doskey /macros' isn't a good idea, as it sets any amount of variables, for each defined macro, and it can even collide with predefined variables like CD/path ...
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>doskey cd=echo the new dir will be $1 $T cd $1</code></pre></div>
+
+To remove the :getParams label works, but I like to use the pattern
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F "tokens=3 delims=:" %%F in ("%~0") do goto %%F
+</code></pre></div>
+To use it anywhere in my batch to make self-calls in sub cmd instances to different labels.<br>
+<br>
+I suppose the doubling of the dollar signs is superflous, I'm expecting problems from doskey, but I tested it now and I can't find any problems.<br>
+Only the doubling of the quotes seems to be necessary, as doskey doesn't set a macro with an odd number of quotes<br>
+<br>
+One thing I'm still unsatisfied with is the macro (re)definition of "return", it's possible to override an existing macro.<br>
+It would be better to take another name or even better to store the macro definition and restore it later<br>
+<br>
+A revised version
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+for /F "tokens=3 delims=:" %%F in ("%~0") do goto %%F
+
+REM Here the arguments will be fetched
+setlocal DisableDelayedExpansion
+for /F "delims=" %%L in ('doskey /macros ^|findstr /R "^return="') do (
+    set "pushMacro=%%L"
+)
+
+(set LF=^
+%=empty=%
+)
+
+&gt; nul break | (%~d0\:GetParams:\..\%~pnx0
+REM %%LF%% )
+REM ###,%*,# %%LF%%
+)
+
+for /F "delims=" %%L in ('doskey /macros ^|findstr /R "^return="') do (
+    set "cmdLine=%%L"
+)
+setlocal EnableDelayedExpansion
+doskey !pushMacro!
+set "args=!cmdLine:*###,=!"
+set "args=!args:""="!"
+set "args=!args:~0,-10!"
+
+REM Now the content of %* is in args
+:Main 
+echo args: --- !args! ---
+exit /b
+
+REM This will be called in a cmd.exe subprocess
+:GetParams
+setlocal EnableDelayedExpansion
+set "line=!cmdcmdline!"
+set "line=!line:"=""!"
+doskey return=!line!
+exit</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>25 May 2018 10:25</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopicc920.html?p=56937#p56937" data-post-id="56937" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">25 May 2018 02:32</div></cite>
+<blockquote><div><cite><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453">Ed Dyreen</a> wrote: <a href="viewtopic2992.html?p=56931#p56931" data-post-id="56931" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">24 May 2018 13:46</div></cite>
+I optimized the code a bit for macronisation, remove labels, findstr.
+</div></blockquote>
+That looks quite good, BUT to remove the findstr after 'doskey /macros' isn't a good idea, as it sets any amount of variables, for each defined macro, and it can even collide with predefined variables like CD/path ...
+</div></blockquote>I know, I said A BIT. <img class="smilies" src="images/smilies/icon_razz.gif" width="15" height="15" alt=":P" title="Razz"><br>
+<br>
+I could have written doskey /m:macroName, but I have not decided yet on what macroName should be.<br>
+<br>
+I can't implement it into my library like this because I use doskey variables to let scripts share memory asynchronously. I have doskit load, start a secondary process and then write the variable names of variables that could not be loaded from disk cache because it's missing or the macro definition changed and is out of sync to a doskey variable. When this happens unitTest is also enabled for that function, so I don't even need to enable debug when I change a macro definition. It must pass the selfTest only then selfTesting is no longer done. But no intervention is required script continues unless assertFails.<br>
+<br>
+Then the secondary process detects this variable, builds the cache async, and removes it from the list. When doskit is loaded it signals the secondary process no more variables are needed and that it is safe for the child process to stop monitoring for update jobs and terminate itself if the list is completely processed.  This all happens through doskey variables, in the background in low priority transparent to the calling script.<br>
+<br>
+What I mean is I use disk cache loading, which is infinitely faster than defining macro's in delayed expansion ( which has the benefit that I can reuse previously defined macro's in the new macro definition easily unlike defining them notDelayed ) and then pushing them over endlocal. The cache is written twice, one version to be loaded in disDelayed and the other to be loaded in delayed, making it insensitive to the caller's delayedState.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /R "%$doskit.fullPath%\lib\notDelayed\kernel\" %%§ in ("*.CMD") do call "%%~§"
+</code></pre></div>The 'Inter Script Global Variable' characteristic of doskey variables lends itself beautifully for inter-script communication and memory sharing.<br>
+<br>
+Disk caching allows for "path" based classification. It helps reducing cohesion while maintaining high abstraction.
+<blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopicc920.html?p=56937#p56937" data-post-id="56937" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">25 May 2018 02:32</div></cite>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>doskey cd=echo the new dir will be $1 $T cd $1</code></pre></div>
+To remove the :getParams label works, but I like to use the pattern
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F "tokens=3 delims=:" %%F in ("%~0") do goto %%F
+</code></pre></div>
+To use it anywhere in my batch to make self-calls in sub cmd instances to different labels.<br>
+<br>
+I suppose the doubling of the dollar signs is superflous, I'm expecting problems from doskey, but I tested it now and I can't find any problems.<br>
+Only the doubling of the quotes seems to be necessary, as doskey doesn't set a macro with an odd number of quotes<br>
+<br>
+One thing I'm still unsatisfied with is the macro (re)definition of "return", it's possible to override an existing macro.<br>
+It would be better to take another name or even better to store the macro definition and restore it later
+</div></blockquote>
+In doskit I encode all variables that need to be stored in doskey memory. I can't exactly see in my code what characters exactly should be encoded because I use a function for that that basically encodes all characters that could become a problem. It's been a long time but I remember that quotes and linefeeds obviously are a problem. I really don't remember all those low level dos coding details <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>25 May 2018 16:46</strong></div>
+				<div class="author">by <strong>Jan Antonin</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopicc920.html?p=56937#p56937" data-post-id="56937" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">25 May 2018 02:32</div></cite>
+@JanAntonin<br>
+<br>
+I'm missing the part where the arguments are transfered to a variable.
+</div></blockquote>I am not sure whether I can understand the question. I cannot see any trap in doing this.<br>
+I am not able now to write a method not depending on the path and name (but I would appriciate it).<br>
+Problems are with deleted DQM (double quotation mark) after cmd command.<br>
+An universal method has to count that a name of a script or its path can contain anything allowed for NTFS. Percent signs, carrets and others.<br>
+I definitely wont code the method now.<br>
+@Ed Dyreen thanks for your effort, but it doesnt work. It is not a good example if you hard type the path. It has to be supposed that the script can be anywhere and we have information about its location inside %0 (or rather %~f0). Anything other is useless.<br>
+And I would need the method not only for a cmd command but for a start command and a left side and a right side of a pipe too.<br>
+The goal is this: we have a variable ourScript (which contains full path to the script not the script itself) and a variable ourData with data for this script (data are really inside the variable).<br>
+We would like to be able to launch the script %ourScript% for %ourData% by cmd and start with no loss or danger that something different is launched.<br>
+Something like <br>
+cmd /S /D /c""%ourScript%" "%ourData%""<br>
+start "title" "%ourScript%" "%ourData%"<br>
+%leftScript% %leftData% | %rightScript% %rightData%<br>
+ - how it is for sure in many alternative universes where a density of idiots is much smaller than in our universe<br>
+<br>
+and here is my really final version of the script (I dont claim that the work is done, I claim that I am done)
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@prompt -$G$S
+@rem I just like this prompt, it plays no rule at all
+@rem following is hard coded
+@goto :jump
+------------------------------------------------------------------------------------------
+It would be prettier not using this hard coding. But I have realised that it is very very time consuming (in the meaning of my time not a performance). Because of that I will suppose this:
+1) we are in a directory
+c:\HH\zZ\
+name.ext of this script is:
+getArgumentsWithoutTemporaryFile_.cmd
+measuring will be saved into a file:
+params.txt
+2) there is no metachars in the path - I mean percent signs, spaces and other nasty creatures
+3) a command:
+@(
+echo "%%cmdcmdline:"=""%%"
+)|find /V ""
+results to:
+"C:\WINDOWS\system32\cmd.exe /S /D /c"" ( echo ""%cmdcmdline:""=""""%"" )"""
+what is 76 chars long  -  without a tail &gt;)"""&lt; and plus a new tail &gt;&amp; rem &lt; one gets 76-4+6=78 chars
+4) a string &gt;###%LfPromptSP% prompt )"""&lt; is 28 chars long
+------------------------------------------------------------------------------------------
+:jump
+@rem it will be marked where "the original script" begins - I mean the script in the case of no complications of reading an input
+@set /A runNumber=runNumber+0
+@set /A runNumber=runNumber+1
+@goto :thisIsRunNumber%runNumber%
+@echo problem
+@pause
+exit
+:thisIsRunNumber1
+@setlocal ENABLEextensions
+@setlocal DISABLEdelayedexpansion
+@goto :JebsMethodForOriginalInput
+:weAreBackFromMeasuringOriginaInput
+@set LfPromptSP=^
+
+prompt 
+@rem previous three lines cannot be deleted nor changed. One space character follows a word 'prompt' at the end
+@(
+echo "%%cmdcmdline:"=""%%"
+rem %1###%%LfPromptSP%% prompt 
+)|cmd /S /D /c"c:\HH\zZ\getArgumentsWithoutTemporaryFile_.cmd"
+@goto :EOF
+:thisIsRunNumber2
+@set /P inputA=
+@set inputB="%inputA:~78,-28%"
+@goto :JebsMethodForInputB
+:weAreBackFromMeasuringInputInVariableInputB
+@start "" c:\HH\zZ\getArgumentsWithoutTemporaryFile_.cmd %inputB%
+@goto :EOF
+:thisIsRunNumber3
+rem the original script begins here
+@echo "Hello World"
+
+
+exit
+@goto :EOF
+***********************************************************************************************************
+***********************************************************************************************************
+:JebsMethodForOriginalInput
+prompt X
+(
+  @echo on
+  for %%b in (2) DO (
+    REM original parametres plus double quotation marks on both ends are: "%*"$
+)
+  @echo off
+)&gt;&gt;c:\HH\zZ\params.txt
+@prompt -$G$S
+@goto :weAreBackFromMeasuringOriginaInput
+:JebsMethodForInputB
+prompt X
+(
+  @echo on
+  for %%b in (2) DO (
+    REM          parametres                            in a variable are: %inputB:""="%$
+)
+  @echo off
+)&gt;&gt;c:\HH\zZ\params.txt
+@prompt -$G$S
+@goto :weAreBackFromMeasuringInputInVariableInputB
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>25 May 2018 23:00</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopicc920.html?p=56937#p56937" data-post-id="56937" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">25 May 2018 02:32</div></cite>
+One thing I'm still unsatisfied with is the macro (re)definition of "return", it's possible to override an existing macro.<br>
+It would be better to take another name or even better to store the macro definition and restore it later
+</div></blockquote>
+Why not use /EXENAME switch.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set "MyDosKeyNameSpace=SomeUniqueString"
+doskey /exename:%MyDosKeyNameSpace% return=!line!
+
+for /F "delims=" %%L in ('doskey /macros:%MyDosKeyNameSpace%') do (
+    set "cmdLine=%%L"
+)
+</code></pre></div>
+
+BTW, this is the shortest example of an arg which will fail all of the proposed codes:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>^%LF%%LF%)
+</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8574&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:14 GMT -->
+</html>

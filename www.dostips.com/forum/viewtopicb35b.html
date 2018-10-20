@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:59:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>JREPL.BAT v7.14 - regex text processor now with Unicode and XRegExp support</h2>
+		<p><a href="viewtopicb16d.html?f=3&amp;t=6044">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6044</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>27</strong></div>
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>17 Nov 2014 21:32</strong></div>
+				<div class="author">by <strong>brinda</strong></div>
+				<div class="content">thanks dave.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>18 Nov 2014 10:21</strong></div>
+				<div class="author">by <strong>mcnd</strong></div>
+				<div class="content"><blockquote><div><cite>brinda wrote:</cite>dave,<br /><br />Would it be possible to use Jrepl to remove duplicate lines (case sensitive) and  leaving the lines in original order stripping blank lines as well.<br /><br /></div></blockquote><br /><br />More or less ...<br /><br />Code edited to simplify the process<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;&quot; &quot;&quot; /N 10 /f &quot;inputFile&quot; ^<br />&nbsp; &nbsp; | sort /+11 ^<br />&nbsp; &nbsp; | jrepl &quot;.*?:(.*)$&quot;&nbsp; &quot;x=p;p=$1;($1==x?false:$src);&quot; /jmatch /jbeg &quot;var p='',x&quot; ^<br />&nbsp; &nbsp; | sort ^<br />&nbsp; &nbsp; | jrepl &quot;^.*?:&quot; &quot;&quot; &gt; &quot;outputFile&quot;<br /></code></pre></div><br /><br />Number the lines, sort on the data (past the line numbers), remove duplicates, sort on line numbers, remove line numbers</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>18 Nov 2014 21:51</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Version 2 is here with two major new features <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" />  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><br />Below is a brief summary with examples. See the help for more details.<br /><br /><strong class="text-strong">/C  (count lines)</strong><br /><br />The /C option counts the number of lines in the input and stores the value in a global cnt variable. This can be useful with the /J and /JMATCH options. If input is piped or redirected data, then a temporary file is written and deleted when done.<br /><br />This TAIL.BAT example demonstrates one possible use of /C.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::tail.bat&nbsp; count&nbsp; &#91;/F inFile&#93; &#91;/O outFile|-&#93; &#91;/N minWidth&#93;<br />@echo off<br />jrepl &quot;^.*&quot; &quot;ln&gt;cnt-%1?$0:false&quot; /jmatch /c %2 %3 %4 %5 %6 %7<br /></code></pre></div>sample usage:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\test&gt;dir | tail 2<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 13 File(s)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;21,805 bytes<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 26 Dir(s)&nbsp; 906,455,531,520 bytes free<br /></code></pre></div><br /><br /><strong class="text-strong">/T (translate similar to unix tr or sed y commands)</strong>  <em class="text-italics">As requested by foxidrive - good idea!</em><br /><br />This one is potentially huge. Expressions can break at each character, or at a user specified delimiter. Pretty much all the options can be used along with /T as needed: /L /X /J /JMATCH, etc.<br />I will be somewhat surprised if there is not a bug somewhere given the number of permutations possible. Please report if you find a problem.<br /><br />And now for a few examples:<br /><br />ROT13.BAT<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::ROT13.bat &#91;/F inFile&#93; &#91;/O outFile|-&#93; &#91;/N minWidth&#93;<br />@echo off<br />jrepl &quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&quot; &quot;nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM&quot; /t &quot;&quot; %*<br /></code></pre></div>sample usage:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\test&gt;echo Hello world!|rot13<br />Uryyb jbeyq!<br /><br />C:\test&gt;echo Hello world!|rot13|rot13<br />Hello world!<br /></code></pre></div><br /><br />InitCaps.bat<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::InitCaps.bat &#91;/F inFile&#93; &#91;/O outFile|-&#93; &#91;/N minWidth&#93;<br />@echo off<br />jrepl &quot;\b&#91;a-z&#93; \B&#91;A-Z&#93;*&quot; &quot;$0.toUpperCase() $0.toLowerCase()&quot; /j /t &quot; &quot; %*<br /></code></pre></div>sample usage:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\test&gt;echo goodbye CrUeL WORLD!|initcaps<br />Goodbye Cruel World!<br /></code></pre></div><br /><br />Silly demonstration of captured subexpressions with /T (keeping track of reference numbers can get tricky):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\test&gt;echo Z-A a+z|jrepl &quot;(.)\+(.) (.)-(.)&quot; &quot;$&amp;:$2$3 $&amp;:$6$5&quot; /T &quot; &quot;<br />Z-A:AZ a+z:az<br /></code></pre></div>Note that each expression is translated into a captured submatch, so the reference numbers of the explicit captures must be adjusted accordingly.<br /><br />---------------------------------------<br /><br /><strong class="text-strong">So here is the code for version <span style="color: #0000FF">2.2</span></strong><br /><div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file8803.php?id=7">JREPL2.2.zip</a></dt>
+						<dd>(7.29 KiB) Downloaded 102 times</dd>
+		</dl>
+		
+		
+			</div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>19 Nov 2014 06:58</strong></div>
+				<div class="author">by <strong>brinda</strong></div>
+				<div class="content">dave,<br /><br />the tail is good. can please help to show for head as well?<br /><br /><br />would like to know if below is doable with Jrepl.<br /><br />text when copy paste from pdf or OCR scanned produce a lot of tabs spaces etc. To remove this we used the link below MS word macro <br /><a href="http://www.mobileread.com/forums/showthread.php?t=8793" class="postlink">http://www.mobileread.com/forums/showthread.php?t=8793</a><br /><br />it does not work at times on certain space so if jrepl could do this than it would be great. Plus we do not need MS words to format the text anymore.<br /><br />sample test code below do not know on how to enter diacritic character<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>this&nbsp; is 1 paragraph .this&nbsp; is 1 paragraph. this&nbsp; is 1 paragraph .<br /><br />this&nbsp; is 2 paragraph&nbsp; &nbsp; &nbsp;.&nbsp; &nbsp; <br />this &lt;tab&gt;&nbsp; &nbsp; &nbsp;&nbsp; is 2 paragraph , this&nbsp; is 2, paragraph .<br />this&nbsp; &nbsp;is 2 paragraph .<br /><br />this is 3 paragraph ,this is 3 paragraph, this is 3 paragraph<br /></code></pre></div><br /><br />snippet of original. Tab is denoted as &lt;tab&gt;<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>very truthful,&nbsp; &nbsp; and was very fond of serving brahmanas. He was indifferent to his family life, knowing that eve¬rything is temporary except d¬ie holy nam¬e of the Lord. In this way, he spent his days &lt;tab&gt; happily.&nbsp; &nbsp; <br /><br />Bha¬ndu Moh¬anty we¬nt to some villages to beg alms, but the peo¬ple had no food even for th¬emselves—how could they give alms to Bandhu Mohanty? He returned to his ho¬use without any food , all the while medit¬ating on the Lord . His wife told him that the children were very hungry. <br /><br />They could not tolerate their hunger pa¬ngs any lo¬nger. She asked , &quot; Don 't' you have some relative who can help us during this difficult time? Let us leave this pl¬ace and go to some other place where your rela¬tives are staying.&quot; Bandhu Mohanty replied, &quot;I have no relatives to he¬lp me, but I do have a friend. But He liv¬es far from here. He is the best am¬ong all the peo¬ple. There is no one equal to him. He liv¬es in Sri Kshetra Puri dham<br /><br /></code></pre></div><br /><br />so far the one below works but i need to try a few times for desired affect<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;\t&quot; &quot;&nbsp; &quot; /x /l /f draw.txt /o -<br />jrepl &quot;&nbsp; &quot; &quot; &quot; /l /f draw.txt /o -<br />jrepl &quot;&nbsp; &quot; &quot; &quot; /l /f draw.txt /o -<br />jrepl &quot;&nbsp; &quot; &quot; &quot; /l /f draw.txt /o -<br />jrepl &quot; .&quot; &quot;.&quot; /l /f draw.txt /o -<br />jrepl &quot; ,&quot; &quot;,&quot; /l /f draw.txt /o -<br /></code></pre></div><br /><br />here are the rules<br /><br />a) for the symbols ,?!. is found, they should follow a word(no space). A space should be there after ,?!. before the next word<br /><br />b) &quot;(open quote) should have a space before and &quot;(close quote) a space after<br /><br />c) Capitalization of first character after ?!.<br /><br />d) paragraph begins is determined by 2 times ENTER and end after with 2 times enter as well. <br /><br />e) A tab is needed at the beginning of a paragraph with first letter capitalize.<br /><br />f) If there is ENTER in between this paragraph, strip the enter<br /><br />g) Any other tab or extra spaces should be strip. Only a single space before and after a word.<br /><br />thanks,<br />brinda</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>19 Nov 2014 07:41</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Brinda,<br />You could use the MORE command to get rid of TABS.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>19 Nov 2014 19:40</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Head is a trivial variation on tail, only simpler because the /C is not needed.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::head.bat&nbsp; count&nbsp; &#91;/F inFile&#93; &#91;/O outFile|-&#93; &#91;/N minWidth&#93;<br />@echo off<br />jrepl &quot;^.*&quot; &quot;ln&lt;=%1?$0:false&quot; /jmatch %2 %3 %4 %5 %6 %7<br /></code></pre></div><br /><br />Regarding your complex problem - I think this is what you are looking for.<br /><br />I refined the spacing and capitalization rules for when quotes interact with the beginning and/or end of a sentence or paragraph. (quote before/after punctuation or tab) I also preserve decimal points within numbers (no spacing added).<br /><br />Rather than create monster command lines, I build the command incrementally using environment variables. It also helps with documentation.<br /><br />It took me a total of 5 JREPL calls. It seems to me it could be done in 4 calls (perhaps less), but this is the best I could do.<br /><strong class="text-strong"><em class="text-italics"><span style="color: #0000BF">bug fix and simplification</span></em></strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal<br />set &quot;input=old.txt&quot;<br />set &quot;output=new.txt&quot;<br /><br />&gt;&quot;%output%&quot; (<br />&nbsp; echo(<br />&nbsp; echo(<br />&nbsp; type &quot;%input%&quot;<br />)<br /><br />:: ----------------------------------------------<br />set &quot;paraS=(?:&#91; \f\r\t\v&#93;*\n){2}\s*&quot; 1<br />set &quot;paraR=quote=false; '\n\n\t'&quot;<br /><br />set &quot;quoteS=\q&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2<br />set &quot;quoteR=(quote=!quote)?' '+$0+'{':$0+'} '&quot;<br /><br />set &quot;whiteSpaceS=\s+&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3<br />set &quot;whiteSpaceR=' '&quot;<br /><br />set &quot;find=%paraS%@%quoteS%@%whiteSpaceS%&quot;<br />set &quot;repl=%paraR%@%quoteR%@%whiteSpaceR%&quot;<br /><br />call jrepl find repl /v /m /x /j /t @ /jbeg &quot;var quote=false;&quot; /f &quot;%output%&quot; /o -<br /><br />:: ----------------------------------------------<br />set &quot;decimalS=\d&#91;.,&#93;\d&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1<br />set &quot;decimalR=$&amp;&quot;<br /><br />set &quot;endS=\s*(&#91;.!?,;&#93;+)\s*&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2,3<br />set &quot;endR=$3 &quot;<br /><br />set &quot;find=%decimalS%@%endS%&quot;<br />set &quot;repl=%decimalR%@%endR%&quot;<br /><br />call jrepl find repl /v /t @ /f &quot;%output%&quot; /o -<br /><br />:: ----------------------------------------------<br />set &quot;begQuoteS=(\t| )? *(\q){ *&quot;&nbsp; &nbsp; &nbsp; 1,2,3<br />set &quot;begQuoteR=($2?$2:'')+$3&quot;<br /><br />set &quot;endQuoteS= *(\q)} *(&#91;.!?&#93;)?&quot;&nbsp; &nbsp; 4,5,6<br />set &quot;endQuoteR=$5+($6?$6:' ')&quot;<br /><br />set &quot;spaceS= +&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 7<br />set &quot;spaceR=' '&quot;<br /><br />set &quot;find=%begQuoteS%@%endQuoteS%@%spaceS%&quot;<br />set &quot;repl=%begQuoteR%@%endQuoteR%@%spaceR%&quot;<br /><br />call jrepl find repl /v /x /j /t @ /f &quot;%output%&quot; /o -<br /><br />:: ----------------------------------------------<br />set &quot;upperS=(&#91;\t.!?&#93;(?:\q ?| \q?)?)(\S)&quot; 1,2,3<br />set &quot;upperR=$2+$3.toUpperCase()&quot;<br /><br />set &quot;trimS= +$&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 4<br />set &quot;trimR=''&quot;<br /><br />set &quot;find=%upperS%@%trimS%&quot;<br />set &quot;repl=%upperR%@%trimR%&quot;<br /><br />call jrepl find repl /v /m /x /j /t @ /f &quot;%output%&quot; /o -<br /><br />:: ----------------------------------------------<br />set &quot;emptyBottomS=(?:\r\n\t?)+(?!.)&quot;&nbsp; &nbsp; &nbsp;1<br />set &quot;emptyBottomR=''&quot;<br /><br />set &quot;emptyTopS=^&#91;^\t&#93;+&quot;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2<br />set &quot;emptyTopR=ln++==0?'':$0&quot;<br /><br />set &quot;find=%emptyBottomS%@%emptyTopS%&quot;<br />set &quot;repl=%emptyBottomR%@%emptyTopR%&quot;<br /><br />call jrepl find repl /v /m /j /t @ /f &quot;%output%&quot; /o -<br /><br />type &quot;%output%&quot;<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>19 Nov 2014 23:16</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite><strong class="text-strong">/C  (count lines)</strong><br /><br />The /C option counts the number of lines in the input and stores the value in a global cnt variable. This can be useful with the /J and /JMATCH options. If input is piped or redirected data, then a temporary file is written and deleted when done.<br /></div></blockquote><br />So in theory could you string together two JREPL commands to count the number of occurrences of a character in a line or string?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>20 Nov 2014 06:51</strong></div>
+				<div class="author">by <strong>brinda</strong></div>
+				<div class="content">squashman,<br /><br />did not know about MORE command on tabs.<br /><br /> /Tn     Expand tabs to n spaces (default <img class="smilies" src="images/smilies/icon_cool.gif" alt="8)" title="Cool" /><br /><br /> Thanks for letting me know. I could use this on small scripts.<br /><br />Dave,<br /><br />thank you for the tail variation(head). I could now have jrepl as a centrepoint for multiple command usage.<br /><br />Could not thank you enough for Word replacement script. Works beautifully on windows 2000. In fact it works so well that even the error on old documents are found and adjusted. <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><br />Thank you so much for taking the time on doing this.<br /><br />brinda</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>20 Nov 2014 15:40</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><blockquote><div><cite>Squashman wrote:</cite><blockquote><div><cite>dbenham wrote:</cite><strong class="text-strong">/C  (count lines)</strong><br /><br />The /C option counts the number of lines in the input and stores the value in a global cnt variable. This can be useful with the /J and /JMATCH options. If input is piped or redirected data, then a temporary file is written and deleted when done.<br /></div></blockquote><br />So in theory could you string together two JREPL commands to count the number of occurrences of a character in a line or string?</div></blockquote><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt; echo count the number of occurrences of a character in a line or string? |<br />FindRepl &quot;o&quot; /$:0<br />&nbsp;&quot;o&quot;<br />&nbsp;&quot;o&quot;<br />&nbsp;&quot;o&quot;<br />&nbsp;&quot;o&quot;<br />&nbsp;&quot;o&quot;<br /><br />C:\&gt; echo %errorlevel%<br />5<br /><br />C:\&gt; (echo count the number of occurrences of a character in a line or string? &amp;<br />&nbsp;echo Or even in the whole file!) | FindRepl &quot;o&quot; /$:0 &gt; nul<br /><br />C:\&gt; echo %errorlevel%<br />6<br /><br />C:\&gt; (echo count the number of occurrences of a character in a line or string? &amp;<br />&nbsp;echo Or even in the whole file!) | FindRepl /I &quot;o&quot; /$:0 &gt; nul<br /><br />C:\&gt; echo %errorlevel%<br />7<br /></code></pre></div><br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>20 Nov 2014 15:55</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Thanks Antonio!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>20 Nov 2014 16:03</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I've fixed a significant bug regarding /T option: It failed to work properly if a match was an empty string.<br /><br />original bugged line 555 from version 2.0<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; _g.replFunc+=',$off,$src){for (var i=1;i&lt;arguments.length-2;i++) if (arguments&#91;i&#93;) ';<br /></code></pre></div><br />Fixed line became<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; _g.replFunc+=',$off,$src){for (var i=1;i&lt;arguments.length-2;i++)if (arguments&#91;i&#93;!==undefined) ';<br /></code></pre></div><br />I've updated the code in the prior posts to 2.1.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>20 Nov 2014 17:24</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite>Squashman wrote:</cite><blockquote><div><cite>dbenham wrote:</cite><strong class="text-strong">/C  (count lines)</strong><br /><br />The /C option counts the number of lines in the input and stores the value in a global cnt variable. This can be useful with the /J and /JMATCH options. If input is piped or redirected data, then a temporary file is written and deleted when done.<br /></div></blockquote><br />So in theory could you string together two JREPL commands to count the number of occurrences of a character in a line or string?</div></blockquote><br />I don't know what you had in mind with the /C option. But a minimal amount of JScript code can easily provide the anser:<br /><br /><strong class="text-strong">Count the number of vowels in file test.txt</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;&#91;aeiou&#93;&quot; ^<br />&nbsp; &nbsp; &nbsp; &quot;vowel++;false&quot; ^<br />&nbsp; &nbsp; &nbsp; /jbeg &quot;vowel=0;&quot; ^<br />&nbsp; &nbsp; &nbsp; /jend &quot;output.WriteLine(vowel);&quot; ^<br />&nbsp; &nbsp; &nbsp; /i /jmatch /f &quot;old.txt&quot;<br /></code></pre></div><br />/I - makes the search case insensitive<br />/JMATCH - discards content that does not match<br />/JBEG - declare and initialize a variable to hold the count   (global by default since VAR keyword not used)<br />replace code - increment the count, return false to surpress match output<br />/JEND - print out the result.<br /><br /><br /><strong class="text-strong">Prefix each line with the number of vowels in the line:</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;^$ ^ &#91;aeiou&#93; $&quot; ^<br />&nbsp; &nbsp; &nbsp; &quot;'0:'+$src vowel=0;false vowel++;false vowel+':'+$src&quot; ^<br />&nbsp; &nbsp; &nbsp; /i /jmatch /t &quot; &quot; /f test.bat<br /></code></pre></div><br />Explanation:<br />/I and /JMATCH are used as before<br />/T &quot; &quot; treats search and replace as an array of expressions. The searches are executed from left to right. Once a match is found, all subsequent searches are ignored until the search position is incremented<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>index| search&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | replace<br />-----+-------------------------+--------------------------------------------------<br />&nbsp; 1&nbsp; | match empty line&nbsp; &nbsp; &nbsp; &nbsp; | print constant result<br />&nbsp; 2&nbsp; | match beginning of line | reset count to 0, return false to suppress output<br />&nbsp; 3&nbsp; | match vowel&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| increment count, return false to suppress output<br />&nbsp; 4&nbsp; | match end of line&nbsp; &nbsp; &nbsp; &nbsp;| print the count, followed by the source line<br /></code></pre></div><br />If I &quot;cheat&quot; and re-purpose the $OFF variable, I can easily fix the width of the vowel count. The $OFF variable normally contains the offset of the match within the source line. It is also used by the /OFF option to display the offset with a fixed (minimum actually) width. I simply assign the vowel count at the end of the line to $OFF and add the /OFF option. I must first accumulate the count in a separate variable because $OFF is reset on each match.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;^$ ^ &#91;aeiou&#93; $&quot; ^<br />&nbsp; &nbsp; &nbsp; &quot;'0:'+$src vowel=0;false vowel++;false $off=vowel;$src&quot; ^<br />&nbsp; &nbsp; &nbsp; /i /jmatch /t &quot; &quot; /f test.bat /off 3<br /></code></pre></div><br /><br /><br /><strong class="text-strong">One other point especially for you Squashman</strong> - JREPL can be used with massive files as long as you do not use the /M option, and each line must be less than 2GB. But the total file size can be as big as you can stand to wait for. <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /><br /><br />VBS and JScript strings are limited to 2GB, which is where the restrictions come from. The /M option must load the entire file into a single string.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>21 Nov 2014 21:43</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Previous version 2 posts were updated to v2.2 to fix a bug when both /T and /L options were used.<br /><br />original bugged lined 488:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; &nbsp; cnt, test;<br /></code></pre></div><br />fixed line:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; &nbsp; cnt=0, test;<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>23 Nov 2014 18:32</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><strong class="text-strong">New features for version 3</strong> <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br /><br />1) /JBEGLN and /JENDLN options allow you to specify JScript code to execute at the beginning and end of a line. The code can modify the line if you want.<br /><br /><br />2) New global variables:<br /><br />skip - If set to true, then skip the match phase of each line until set back to false. Very handy for restricting actions to a limited number of lines.<br /><br />quit - If set to true, then do not read any more lines of input. This is an efficient way to terminate early once you get the result you are looking for.<br /><br /><br />3) New global method:<br /><br />lpad(val, pad) - used to left pad strings (typically numbers).<br /><br /><br />4) Exception handling has been modified to identify when user code is the source of a run time error. It reports which code is the source of the problem.<br /><br /><br /><strong class="text-strong">Examples:</strong><br /><br />Much improved head.bat - it will terminate immediately once the desired number of lines have been printed. Great for huge files.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::head.bat&nbsp; count&nbsp; &#91;/F inFile&#93; &#91;/O outFile|-&#93; &#91;/N minWidth&#93;<br />@echo off<br />jrepl &quot;^&quot; &quot;&quot; /jbeg &quot;quit=(%1&lt;=0)&quot; /jbegln &quot;quit=(ln&gt;=%1)&quot; %2 %3 %4 %5 %6 %7<br />exit /b<br /></code></pre></div><br /><br />Improved tail.bat - it doesn't waste time matching skipped lines. Again an improvement for huge files, but not as significant as the new head.bat:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::tail.bat&nbsp; count&nbsp; &#91;/F inFile&#93; &#91;/O outFile|-&#93; &#91;/N minWidth&#93;<br />@echo off<br />jrepl &quot;^.*&quot; &quot;$0&quot; /jbegln &quot;skip=(ln&lt;=cnt-(%1));&quot; /jmatch /c %2 %3 %4 %5 %6 %7<br /></code></pre></div><br /><br />Improved count of vowels per line - (the vowel count is prepended to each line). The logic is much simpler with JBEGLN/JENDLN then it was with the /T option.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;&#91;aeiou&#93;&quot; &quot;vowel++;$0&quot; /j /jbegln &quot;vowel=0&quot; /jendln &quot;$txt=lpad(vowel,'000')+':'+$txt;&quot; /f input.txt<br /></code></pre></div><br /><br /><strong class="text-strong">JREPL.BAT v3.0</strong><br /><div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/filec3c9.php?id=8">JREPL3.0.zip</a></dt>
+						<dd>(8.13 KiB) Downloaded 160 times</dd>
+		</dl>
+		
+		
+			</div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREPL.BAT - regex text processor - successor to REPL.BAT</h3>
+				<div class="date">Posted: <strong>25 Nov 2014 20:13</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><strong class="text-strong">Version 3.1 Changes</strong><br /><br />1) Exception handler now reports when there is a problem with the Search regular expression. Some users were not recognizing the error message as being related to the regex.<br /><br />2) Added the /JLIB option that lets you load (include) JScript code from one or more files. Multiple files are delimited by forward slashes (/). The code is executed prior to any /JBEG code. It is useful for accessing a library of functions that can be used by any of the other /Jxxxx options.<br /><br />3) Fixed a bug with the /X option - the extended ASCII escape sequences were not being decoded properly.<br /><br /><span style="color: #0000BF"><strong class="text-strong">Version 3.2 Changes<br /><br />4) Bug fix for /T without /JMATCH - Fixed dynamic repl function: was missing a set of {}<br /><br />5) Added GOTO at top to improve startup performance</strong></span><br /><br /><span style="color: #BF0000"><strong class="text-strong">Version 3.3 Changes<br /><br />6) Bug fix for when /JMATCH is combined with /M or /S</strong></span><br /><br /><strong class="text-strong">JREPL v3.<span style="color: #0000BF">3</span></strong><br /><div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file5255.php?id=9">JREPL3.3.zip</a></dt>
+						<dd>(8.5 KiB) Downloaded 95 times</dd>
+		</dl>
+		
+		
+			</div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>27</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6044&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:59:15 GMT -->
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7570&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:19:48 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; CONVERTCP.exe - Convert text from one code page to another</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>CONVERTCP.exe - Convert text from one code page to another</h2>
+		<p><a href="viewtopic75ba.html?f=3&amp;t=7570">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7570</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>5</strong></div>
+					<div class="post">
+				<h3>CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>24 Nov 2016 17:44</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">This command line utility is a codepage converter. It supports charsets such as single-byte code pages, UTF-8, UTF-16 LE/BE, UTF-32 LE/BE, and EBCDIC. It's designed to process big files also. It shall work on Windows XP onwards (tested on XP, Windows 7, Windows 8.1, and Windows 10). It's a free and open source tool.<br>
+<br>
+A few days ago miskox asked me to rewrite an old 16 bit tool that he uses in order to make it run on 64 bit Windows also. The tool converts text from one single-byte code page to another. I bet the native English speakers of you are wondering what such a tool is even good for. The answer is that the CMD console and Windows applications use different code pages where non-ASCII characters have different code points. Thus, characters like Ü, É, Š, and the like show up as different/wrong characters.<br>
+<br>
+Steffen<br>
+<br>
+<br>
+June, 14th 2018 updated to version 5.1.<br>
+<a href="https://sourceforge.net/projects/convertcp/" class="postlink"><strong class="text-strong">The download of CONVERTCP is available on SourceForge.</strong></a> (right click and open in a new tab)<br>
+<br>
+<br>
+<br>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br>
+Usage of convertcp.exe
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>CONVERTCP v.5.1. Converts a stream of characters to another code page.
+
+Usage:
+CONVERTCP CP_In CP_Out [/i "infile.txt"] [/o "outfile.txt"] [/f] [/b|/a]
+CONVERTCP /?|/l
+
+CP_In     Code Page Identifier of the input stream
+CP_Out    Code Page Identifier of the output stream
+ To get a list of supported Code Page Identifiers use option /l
+ Alternatively you can use 0 for the ANSI Code Page
+  and 1 for the OEM Code Page of your system default settings.
+ MIME types are supported, too.
+
+/i        Introduces the source file
+/o        Introduces the destination file
+           (the content of an existing file will be truncated
+           unless option /a was passed)
+ Redirections to or from CONVERTCP can be used instead of /i and /o
+
+/f        Flush the stream buffer before CONVERTCP terminates
+           in case the new file shall be accessed immediately
+/b        Add the Byte Order Mark to the output stream
+           (will be ignored if CP_Out was not one of
+           65001, 1200, 1201, 12000, or 12001)
+/a        Append the output stream to the destination file
+           (always use the same CP_Out)
+ Do not combine options /b and /a
+
+/?        Display this help message
+/l        Display a list of supported Code Page Identifiers
+           installed on this computer
+
+infile    Path of a text file whose content shall be converted
+outfile   Path of a text file where the converted stream
+           shall be written
+</code></pre></div>
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br>
+<br>
+Additional information:<br>
+<br>
+To get a list of Code Page Identifiers along with a short description either use option <strong class="text-strong"><em class="text-italics">/l</em></strong> or see<br>
+<a href="https://msdn.microsoft.com/en-us/library/dd317756.aspx" class="postlink">https://msdn.microsoft.com/en-us/library/dd317756.aspx</a><br>
+Furthermore I uploaded a table with aliases (such as MIME names, IATA numbers, names used on different operating systems or programming languages, etc.) to look up the related code page IDs<br>
+<a href="https://sourceforge.net/projects/convertcp/files/Code Page Aliases/" class="postlink">https://sourceforge.net/projects/conver ... 20Aliases/</a><br>
+You can also pass the aliases directly rather than Code Page Identifiers (e.g. UTF-8 instead of 65001).<br>
+<br>
+The support of code pages is restricted ...<br>
+a) by the shared characters of both used code pages. If a read character has no equivalent the implementations of the used API functions decide if they<br>
+- either convert to the approximated ASCII character (e.g. Š to S)<br>
+- or replace it with a default character (usually a question mark)<br>
+b) by the maximum number of bytes used to represent a character. The table outputted using option /l indicates in the second column whether or not a code page can be used by CONVERTCP for input streams greater than 511MB (while all listed code pages can be used for output streams independing of their size).<br>
+<br>
+The utility was written in C/WinAPI. Besides of the exe files (which are 32 bit and 64 bit MinGW/GCC release builds) the source code is included in the project. The program flow chart is for those who try to understand how the program works (even though it's simplified and incomplete). All files under <a href="https://opensource.org/licenses/MIT" class="postlink">MIT license</a> (<a href="https://tldrlegal.com/license/mit-license#summary" class="postlink">brief</a>).<br>
+<br>
+CONVERTCP doesn't need any installation but if you frequently use it for your daily work you may copy it to the Windows command utilities:<br>
+On 32 bit Windows<ul><li>Copy the 32 bit convertcp.exe out of the x86 subfolder to the System32 directory (usually C:\Windows\System32).</li></ul>
+On 64 bit Windows<ul><li>Copy the 64 bit convertcp.exe out of the x64 subfolder to the System32 directory (usually C:\Windows\System32).</li><li>Copy the 32 bit convertcp.exe out of the x86 subfolder to the SysWOW64 directory (usually C:\Windows\SysWOW64).</li></ul>This way you can use CONVERTCP without having the executable in the same folder along with your script.<br>
+<br>
+About Byte Order Marks (BOMs):<br>
+CONVERTCP provides the opportunity to add a BOM to UTF-8, UTF-16 and UTF-32 encoded output streams. A BOM has to be always the first byte sequence in a file. The reading program may use it to recognize unicode encoded file contents. See <a href="https://en.wikipedia.org/wiki/Byte_order_mark" class="postlink">https://en.wikipedia.org/wiki/Byte_order_mark</a>. Some rules of thumb when to add or omit BOMs:<ul><li>Add the BOM to text files that are intended to be read in text editors on Windows.</li><li>Omit the BOM in markup text (such as HTML or XML) where the encoding is specified in the markup or where it defaults to be recognized as UTF-8.</li><li>Omit the BOM for files that are intended to be shared with other operating systems like Unix or Linux.</li><li>Never use a BOM for text that you append to an existing file.</li></ul>
+
+<br>
+Feedback is always welcome.<br>
+<br>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br>
+<br>
+Examples<br>
+<br>
+Convert the output of a command and save it in a text file.<br>
+(The output of FINDSTR /? will be converted from the default OEM code page to UTF-16 LE with BOM prepended. The converted stream will be saved in "commands.txt".)
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr /? | convertcp 1 1200 /b /o "commands.txt"</code></pre></div>
+
+Convert the content of a text file and save it to another text file.<br>
+(The content of "commands.txt" will be converted from UTF-16 LE to the default ANSI code page and saved in "commands2.txt")
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>convertcp 1200 0 /i "commands.txt" /o "commands2.txt"</code></pre></div>
+
+Convert the content of a text file and output it to the console window.<br>
+(The content of "commands2.txt" will be converted from the default ANSI code page to the default OEM code page and displayed.)
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>convertcp 0 1 /i "commands2.txt"</code></pre></div>
+
+Append to an existing file.<br>
+(The output of FIND /? will be converted from the default OEM code page to UTF-16 LE. The converted stream will be appended to "commands.txt".)
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>find /? | convertcp 1 1200 /a /o "commands.txt"</code></pre></div>
+
+Create a file with a Byte Order Mark only.<br>
+(NUL is redirected to CONVERTCP. Thus, the input stream is empty. The input code page ID is meaningless. Because the output code page ID is for UTF-8 and option /b was passed only the UTF-8 BOM will be written to the file. This might be useful if you want to append text to the file in multiple steps afterwards.)
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;nul convertcp 0 65001 /b /o "bom.txt"</code></pre></div>
+
+List the installed code pages.<br>
+(Process the outputted list of CONVERTCP /L in a FOR /F loop in order to write the values comma-separated)
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f "skip=3 tokens=1,3,4*" %%i in ('convertcp /l') do echo "%%i","%%j","%%l"</code></pre></div>
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br>
+<br>
+Known issues:
+<ul><li>Redirection of large text to MORE (convertcp ... | more) may fail because CONVERTCP is deadlock-protected.</li>
+<li><span style="font-size: 85%; line-height: normal">Output of large text to the console window may fail.</span> (<strong class="text-strong">solved with v3.1</strong>)</li>
+<li><span style="font-size: 85%; line-height: normal">Redirection of large text using &gt; or &gt;&gt; may fail. Use option /o.</span> (<strong class="text-strong">solved with v3.1</strong>)</li></ul>
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br>
+<br>
+Release notes:<br>
+2018/06/14 - v5.1.0/1.0 file size optimization<br>
+2018/05/12 - v5.0.0/1.0 added support for MIME names<br>
+2018/04/29 - v4.3.0/1.0 bugfix for memory leak of conversion to UTF-32 without threading<br>
+2018/04/27 - v4.2.0/1.0 removed option /n, code pages are assessed for an automatic decision if threading will be applied<br>
+2018/04/26 - v4.1.0/1.0 bugfix for wrong maximum of options<br>
+2018/04/26 - v4.0.0/1.0 added option /n for "no threading" to overcome the 1 MB limit of certain code pages<br>
+2018/04/20 - v3.1.0/1.0 thread-waiting moved<br>
+2018/04/20 - v3.0.0/1.0 added option /f to force the flushing of the file buffer before CONVERTCP terminates<br>
+2018/04/18 - v2.2.0/1.0 bugfix for unexpected output<br>
+2018/04/11 - v2.1.0/1.0 <span style="font-size: 85%; line-height: normal">bugfix for unexpected output caused by still buffered stream content </span>(finally fixed in v2.2)<br>
+2018/02/01 - v2.0.0/1.0 UTF-32 LE/BE support added, bugfix for reading UTF-16 BE<br>
+2017/12/30 - v1.5.0/1.0 bugfix for file names with leading dash<br>
+2017/05/27 - v1.4.4.0/1 added option /l to print a list of installed code pages<br>
+2017/02/02 - v1.4.3.0/1 added option /a for appending to an existing file<br>
+2017/01/29 - v1.4.2.0/1 reduced the size of the binary files by half (kudos to carlos)<br>
+2017/01/23 - v1.4.1.0/1 minor performance improvement<br>
+2016/12/28 - v1.4.0.0/1 UTF-16 BE support added, options /i and /o added<br>
+2016/12/09 - v1.3.2.0/1 fixed bug in conversion from UTF-8<br>
+2016/12/08 - v1.3.1.0/1 ambiguous code fixed, minor optimizations, source code tidied<br>
+2016/12/05 - v1.3.0.0/1 UTF-16 LE support added<br>
+2016/12/03 - v1.2.0.0/1 UTF-8 support added, fixed misleading error message if the input stream has a size of exact multiples of 4 MB<br>
+2016/11/28 - v1.1.4.0/1 minor optimizations, source code tidied, 64bit utility added<br>
+2016/11/25 - v1.1.3.0 fixed possible deadlock caused by unsignaled threads<br>
+2016/11/24 - v1.1.2.0 fixed possible memory leak if reallocations fail<br>
+2016/11/24 - v1.1.1.0 moved to C, multithreaded conversion added<br>
+unpublished - first versions using C++ vector containers, without multithreading</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>25 Nov 2016 01:23</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I'm a bit confused as to how this works, and/or how useful it could be.  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> <br /><br />So the low order ASCII code values remain the same, but the high order values vary from code page to code page. I can see how some code pages may share some characters in common, but their high order code values might be different. So your utility can do the necessary translation for characters in common. But what happens to the other characters that are not shared?<br /><br />And are there frequently enough high order characters in common to make the utility worth while?<br /><br />I should think there would be a number of code pages with no non-ASCII overlap at all, so I can't see how the utility could be useful in those cases.<br /><br />At first I wondered how the utility works - how could it know all the correct mappings? But I looked at the source and see that it converts the text to UTF-16, and then converts back to a different single byte character set. I suppose it is the same underlying routines that cmd.exe uses to convert extended ASCII text to and from UTF-16.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>25 Nov 2016 03:03</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I absolutely understand your concerns Dave and I know it's pretty difficult to see the benefit as long as you don't have to deal with languages that permanently uses characters other than the default ASCII. E.g. see the output of PAUSE /? on my pc:<br /><blockquote class="uncited"><div>Hält die Ausführung einer Batchdatei an und zeigt folgende Meldung an:<br />   Drücken Sie eine beliebige Taste . . .</div></blockquote><br />I agree that you can't convert between codepages like 1251 and 1252 because there is no overlap in the extended ASCII range. The default OEM code page and the default ANSI code page on the same system will certainly share most of the characters. That's the reason why you can pass 1 and 0 instead of the code page IDs.<br />If a character has no equivalent the implementation of the used API functions decide if it<br />- either converts to the base character (e.g. Š to S)<br />- or replaces it with a question mark<br />Of course one can use a combination of TYPE, CMD /U, and CHCP to convert text to UTF-16 and back to another code page. As mentioned above I wrote the utility on behalf of miskox who already converted files with hundreds of MB of text. It seems to be useful for at least some people <img class="smilies" src="images/smilies/icon_lol.gif" alt=":lol:" title="Laughing" /> <br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>25 Nov 2016 13:20</strong></div>
+				<div class="author">by <strong>miskox</strong></div>
+				<div class="content">Again I must say Thank you! to aGerman for providing this program.<br /><br />As he mentioned I had very old MS-DOS 16-bit exe which does not work on x64. I received a source code from the author (written in Turbo Pascal). aGerman said that it is easier to write a program from scratch then to try and relink it.<br /><br />Back in the old days we in former Yugoslavia had 3 (yes, three!) different ways of displaying our characters that are special to our alphabet: ČŠŽ and also ĆĐ in Croatia, Serbia...<br /><br />See this translation table:<br /><br /><img src="../../www.brickshelf.com/gallery/miskox/tmp/ascii7-cp852-cp1250.png" class="postimage" alt="Image" /><br /><br />First I had to use character [ to display letter Š - fonts were patched to support this. After that 852 (OEM) and 1250 (ANSI) were introduced.<br /><br />If I have a a.txt file with this letter Š (first letter is DEC 230, second character is DEC 138)<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>1250 852<br />Š&nbsp; &nbsp; &nbsp; &nbsp;Ő<br /></code></pre></div><br /><br />And I do<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type a.txt</code></pre></div><br /><br />I see letter Š on the right as it should be, but letter Š on the left is not displayed correcty. If you edit this file with NOTEPAD letter on the left is correct but not letter on the right.<br /><br />If I have a .txt file with CP1250 character (for example Š)  in it and try to find a letter (also Š) in command prompt window I will not succeed because these characters have different values in a code page table.<br /><br />Saso</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>28 Nov 2016 01:11</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">New release with additional 64bit utility.<br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>01 Dec 2016 10:43</strong></div>
+				<div class="author">by <strong>jfl</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>I'm a bit confused as to how this works, and/or how useful it could be.  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> </div></blockquote><br />+1 on aGerman answer:<br />As soon as you start working with non-English documents, you'll quickly encounter some with illegible characters. This is due to them being in the wrong encoding for your version of Windows.<br />And regularly facing that same problem, I've also developed long ago my own encoding converting tool: It's called conv.exe, and available in my system tools library at <a href="https://github.com/JFLarvoire/SysToolsLib/releases" class="postlink">https://github.com/JFLarvoire/SysToolsLib/releases</a>.<br /><br />Steffen, Saso,<br />Mine also has options for converting to and from UTF8, which is the most common encoding error I encounter nowadays.<br />You might also be interested by the 1clip.exe and 2clip.exe and 12.bat tools, allowing to use command-line tools (yours or mine) to convert data directly inside GUI apps.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>01 Dec 2016 12:57</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Thanks jfl<br /><br />I already thought about adding UTF-8 support. The conversion to UTF-8 is quite simple. Actually it does already work except that the BOM is not prepended. Although that can be fixed easily.<br />However converting vice versa is much more complicated. The input stream will be read in chunks of 1 MB in order to be able to process big files * . The conversion will fail if the chunk ends in between a multibyte sequence of a UTF-8 stream. Currently I don't have any good idea how to solve that issue.<br /><br />Steffen<br /><br /><span style="font-size: 85%; line-height: normal">* That's where your conv.exe utility doesn't seem to work anymore. I tested with a file of only 256 MB where it ends up with a deadlock.</span></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>03 Dec 2016 19:23</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I found a way to handle UTF-8. Pass 65001 as code page ID.<br />The UTF-8 Byte Order Mark will be prepended to the output stream if you pass <strong class="text-strong">/b</strong> as third argument. <br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>05 Dec 2016 06:11</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I changed the I/O from C to WinAPI in order to have UTF-16 little endian supported also. Pass 1200 as code page ID.<br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>06 Dec 2016 03:19</strong></div>
+				<div class="author">by <strong>miskox</strong></div>
+				<div class="content">Thank you, Steffen! New release almost daily. Great!<br /><br />Saso</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>06 Dec 2016 06:05</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I try to work on it as long as it's fresh. I don't expect to get bug reports because the utility will not be found and used that often. Thus, finding uncertain code and optimizations keep being my own task. It would take me an hour to understand my own code after half a year not looking at it if I don't do it now.<br /><br />I think in a few days I will upload one last minor release for the moment. After adding UTF-16 support there is no need to change the code that much. I'll try to find some ambiguous or uncertain code, do some minor optimizations, remove redundant code etc. Then I'll leave it as it is unless somebody finds a bug or has a request to add another feature ...<br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>08 Dec 2016 05:27</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">As already announced ...<br />Corrected ambiguous code for BOM removement<br />Outsourced BOM removement into a function in order to remove redundant code<br />Removed unnecessary memory reallocations<br />Replaced multiplications/divisions by two with faster bitwise shifting<br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>08 Dec 2016 08:18</strong></div>
+				<div class="author">by <strong>miskox</strong></div>
+				<div class="content"><blockquote><div><cite>aGerman wrote:</cite>...Then I'll leave it as it is unless somebody finds a bug or has a request to add another feature ...<br /></div></blockquote><br /><br />Maybe just an idea (probably not neeeded at the moment):<br /><br />Add a support for custom code page(s).<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>convertcp.exe my_private_CP1 my_private_CP2 &lt;file_in.txt &gt;file_out.txt</code></pre></div><br /><br />and there you have a translation table between these two private tables:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>0x00 from CP1 translates into 0x12 in CP2<br />0x01 ---&gt; 0x11<br />.<br />.<br />.<br /></code></pre></div><br /><br />Thanks for everything.<br />Saso</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>08 Dec 2016 14:11</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Saso<br /><br />What you suggest is rather something like low-level cryptography and actually not the purpose of this utility. It doesn't make much sense to convert 0x00 to whatever byte in a plain text file. All single-byte code pages have the same code points in the ASCII range (until 0x7F).<br />If you want to have your own translation, then it should begin with 0x80 and end with 0xFF for the bytes read. Each of them having an associated other byte. Thus, you would need only one table (instead of two) with 128 pairs of values. I'm not sure if that was what you meant.<br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CONVERTCP.exe - Convert text from one code page to another</h3>
+				<div class="date">Posted: <strong>09 Dec 2016 01:44</strong></div>
+				<div class="author">by <strong>miskox</strong></div>
+				<div class="content">@aGerman:<br /><br />A translation from EBCDIC to ASCII was my initial thought that I had to use in the past. I did not check if current WinAPI can do this. So if this is not supperted by API then we can call it a 'custom' translation table.<br /><br />As I said: this was just an idea - the question is if it is really needed.<br /><br />Thanks.<br /><br />Saso</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>5</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7570&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:19:48 GMT -->
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8654&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:53:46 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Help with findstr</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Help with findstr</h2>
+		<p><a href="viewtopic292e.html?f=3&amp;t=8654">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8654</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Help with findstr</h3>
+				<div class="date">Posted: <strong>01 Jul 2018 21:48</strong></div>
+				<div class="author">by <strong>J'aitreschaud</strong></div>
+				<div class="content">Bonjour everyone.<br>
+I'm having a problem with findstr right now. I have some text like this:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:::. Path is
+:::. Your name is
+:::. Folder is</code></pre></div>
+
+And I use this to output the text.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F "tokens=* delims=:." %%H in (findstr /bl :::. "%~f0"') do @echo %%H</code></pre></div>
+
+It works fine. At the top, I also have this code:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>SET PATH=%~dp0Files
+IF not exist "%PATH%" (
+    MKDIR %PATH%&amp;CALL :MAKEFILES
+)</code></pre></div>
+
+For some reason, when I run it alone, the findstr command works fine. But when I add the above block of code, I get "The system cannot find the file findstr" and its wracking my brain why it doesn't work. When I take out the above code, however, it works perfectly fine. Any help is greatly appreciated  <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Help with findstr</h3>
+				<div class="date">Posted: <strong>01 Jul 2018 22:46</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">Hello J'aitreschaud and welcome to this forum.<br>
+If the findstr statement is working out of loop, then you probably just missed one character within the for loop (untested):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F "tokens=* delims=:." %%H in ('findstr /bl :::. "%~f0"') do @echo %%H</code></pre></div>
+
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Help with findstr</h3>
+				<div class="date">Posted: <strong>02 Jul 2018 06:24</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">You are overwriting the system PATH variable.  When you did that, it can no longer execute the FINDSTR command because the location of the FINDSTR command is searched for within the system PATH variable.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Help with findstr</h3>
+				<div class="date">Posted: <strong>02 Jul 2018 10:36</strong></div>
+				<div class="author">by <strong>J'aitreschaud</strong></div>
+				<div class="content">@penpen Thanks <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"><br>
+@Sqaushman Your solution worked! Thank you so much  <img class="smilies" src="images/smilies/icon_mrgreen.gif" width="15" height="15" alt=":mrgreen:" title="Mr. Green"></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8654&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:53:47 GMT -->
+</html>

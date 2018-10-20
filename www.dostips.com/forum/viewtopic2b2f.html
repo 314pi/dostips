@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8727&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:28:23 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Delete lines based upon string or file</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Delete lines based upon string or file</h2>
+		<p><a href="viewtopicf460.html?f=3&amp;t=8727">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8727</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Delete lines based upon string or file</h3>
+				<div class="date">Posted: <strong>19 Jul 2018 13:18</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">Hi <br>
+I have a file which need to delete some lines based upon some strings<br>
+This file is called 829501.txt
+<ul>
+<li>\T501-08815-0103\Application_Signing\Signed_Schemes\QA_Infra-SL_0102_Signed_T3\<br>
+ <br>
+     .500006011000.S3S <br>
+     .500007011000.S3S <br>
+     .500008011000.S3S <br>
+     .500009011000.S3S <br>
+     .500010011000.S3S <br>
+     .500011011000.S3S <br>
+     .500012011000.S3S <br>
+     .500014011000.S3S <br>
+     .500015011800.S3S <br>
+     .500016011000.S3S <br>
+     .500028011201.S3S <br>
+     .500072010400.S3S <br>
+     .500129010200.S3S <br>
+     .500134010100.S3S <br>
+     .500142010100.S3S <br>
+     .500144010100.S3S</li> 
+</ul>
+
+I have another file removal.txt<br>
+
+<ul>
+<li>50001101,<br>
+50007201,</li>
+</ul>
+
+I have the below code to remove <br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr /v "50001101 50007201" 829501.txt &gt;updated.txt
+</code></pre></div>
+
+after run, I got the correct result as below
+<ul>
+<li>\T501-08815-0103\Application_Signing\Signed_Schemes\QA_Infra-SL_0102_Signed_T3\<br>
+ <br>
+     .500006011000.S3S <br>
+     .500007011000.S3S <br>
+     .500008011000.S3S <br>
+     .500009011000.S3S <br>
+     .500010011000.S3S <br>
+     .500012011000.S3S <br>
+     .500014011000.S3S <br>
+     .500015011800.S3S <br>
+     .500016011000.S3S <br>
+     .500028011201.S3S <br>
+     .500129010200.S3S <br>
+     .500134010100.S3S <br>
+     .500142010100.S3S <br>
+     .500144010100.S3S</li> 
+</ul>
+
+I am looking for two ways to improve the code<br>
+1) improve the code via using file removal.txt inside the code?
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr /v "50001101 50007201" 829501.txt &gt;updated.txt 
+</code></pre></div>
+2) or process file removal.txt as a one line string, in this case such as  50001101 50007201<br>
+   so later I can use as a variable for the findstr command
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set sch=50001101 50007201
+findstr /v "%sch%" 829501.txt &gt;updated.txt
+</code></pre></div> <br>
+<br>
+Maybe you have better solution than mine...<br>
+<br>
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Delete lines based upon string or file</h3>
+				<div class="date">Posted: <strong>19 Jul 2018 13:55</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">if you use the file, without a concluding comma at the end of the line, you can also filter it with
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr /v /g:filterFile inputfile &gt;outfile</code></pre></div>
+
+Phil</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Delete lines based upon string or file</h3>
+				<div class="date">Posted: <strong>19 Jul 2018 14:08</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistc1e4.html?mode=viewprofile&amp;u=5414">pieh-ejdsch</a> wrote: <a href="viewtopic70e6.html?p=57502#p57502" data-post-id="57502" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">19 Jul 2018 13:55</div></cite>
+if you use the file, without a concluding comma at the end of the line, you can also filter it with
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr /v /g:filterFile inputfile &gt;outfile</code></pre></div>
+
+Phil
+</div></blockquote>
+
+Tried your code and exactly as you mentioned only work when the filterFile without a concluding comma at the end of the line...<br>
+<br>
+Now my case is that this filterFile does have a concluding comma at the end of the line..<br>
+<br>
+I need one more step to process the removal of the comma at the end of each line in this filterFile<br>
+looking for a way to do this<br>
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Delete lines based upon string or file</h3>
+				<div class="date">Posted: <strong>19 Jul 2018 15:10</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">I tried another file as temp.txt<br>
+<br>
+500011011000.S3S  <br>
+500072010400.S3S  <br>
+ <br>
+and run the following code not working, any reason?<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr /v /g:temp.txt 829501.txt &gt;updated.txt
+</code></pre></div>
+only the above removal.txt without comma working<br>
+50001101<br>
+50007201<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr /v /g:removal.txt 829501.txt &gt;updated.txt
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Delete lines based upon string or file</h3>
+				<div class="date">Posted: <strong>20 Jul 2018 06:50</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopic994b.html?p=57505#p57505" data-post-id="57505" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">19 Jul 2018 15:10</div></cite>
+I tried another file as temp.txt<br>
+<br>
+500011011000.S3S  <br>
+500072010400.S3S  <br>
+ <br>
+and run the following code not working, any reason?<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr /v /g:temp.txt 829501.txt &gt;updated.txt
+</code></pre></div>
+only the above removal.txt without comma working<br>
+50001101<br>
+50007201<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr /v /g:removal.txt 829501.txt &gt;updated.txt
+</code></pre></div>
+</div></blockquote>
+Works just fine.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\BatchFiles\Goodywp&gt;type 829501.txt
+.500006011000.S3S
+.500007011000.S3S
+.500008011000.S3S
+.500009011000.S3S
+.500010011000.S3S
+.500011011000.S3S
+.500012011000.S3S
+.500014011000.S3S
+.500015011800.S3S
+.500016011000.S3S
+.500028011201.S3S
+.500072010400.S3S
+.500129010200.S3S
+.500134010100.S3S
+.500142010100.S3S
+.500144010100.S3S
+
+C:\BatchFiles\Goodywp&gt;type temp.txt
+500011011000.S3S
+500072010400.S3S
+
+C:\BatchFiles\Goodywp&gt;findstr /v /g:temp.txt 829501.txt
+.500006011000.S3S
+.500007011000.S3S
+.500008011000.S3S
+.500009011000.S3S
+.500010011000.S3S
+.500012011000.S3S
+.500014011000.S3S
+.500015011800.S3S
+.500016011000.S3S
+.500028011201.S3S
+.500129010200.S3S
+.500134010100.S3S
+.500142010100.S3S
+.500144010100.S3S
+
+C:\BatchFiles\Goodywp&gt;</code></pre></div>
+And for the record we have shown you in your previous questions the usage of FINDSTR with the /G option. Not sure why that wasn't one of your first code examples.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Delete lines based upon string or file</h3>
+				<div class="date">Posted: <strong>20 Jul 2018 07:52</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopic1204.html?p=57515#p57515" data-post-id="57515" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jul 2018 06:50</div></cite>
+<blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopic994b.html?p=57505#p57505" data-post-id="57505" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">19 Jul 2018 15:10</div></cite>
+I tried another file as temp.txt<br>
+<br>
+500011011000.S3S  <br>
+500072010400.S3S  <br>
+ <br>
+and run the following code not working, any reason?<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr /v /g:temp.txt 829501.txt &gt;updated.txt
+</code></pre></div>
+only the above removal.txt without comma working<br>
+50001101<br>
+50007201<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr /v /g:removal.txt 829501.txt &gt;updated.txt
+</code></pre></div>
+</div></blockquote>
+Works just fine.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\BatchFiles\Goodywp&gt;type 829501.txt
+.500006011000.S3S
+.500007011000.S3S
+.500008011000.S3S
+.500009011000.S3S
+.500010011000.S3S
+.500011011000.S3S
+.500012011000.S3S
+.500014011000.S3S
+.500015011800.S3S
+.500016011000.S3S
+.500028011201.S3S
+.500072010400.S3S
+.500129010200.S3S
+.500134010100.S3S
+.500142010100.S3S
+.500144010100.S3S
+
+C:\BatchFiles\Goodywp&gt;type temp.txt
+500011011000.S3S
+500072010400.S3S
+
+C:\BatchFiles\Goodywp&gt;findstr /v /g:temp.txt 829501.txt
+.500006011000.S3S
+.500007011000.S3S
+.500008011000.S3S
+.500009011000.S3S
+.500010011000.S3S
+.500012011000.S3S
+.500014011000.S3S
+.500015011800.S3S
+.500016011000.S3S
+.500028011201.S3S
+.500129010200.S3S
+.500134010100.S3S
+.500142010100.S3S
+.500144010100.S3S
+
+C:\BatchFiles\Goodywp&gt;</code></pre></div>
+And for the record we have shown you in your previous questions the usage of FINDSTR with the /G option. Not sure why that wasn't one of your first code examples.
+</div></blockquote>
+
+Thank you for your try out!!! <br>
+I rechecked the temp file and found the reason finally....<br>
+The temp.txt I have,  had two spaces at the end of string, after removal. it back to work..... <img class="smilies" src="images/smilies/icon_redface.gif" width="15" height="15" alt=":oops:" title="Embarassed"><br>
+BTW, is any easy way to make this temp.txt file without spaces at the end?? I tried to trace back the code and only found one place by removing one space. however, the result of this temp.txt still same end up two spaces at the end...<br>
+<br>
+Tried out this one and works pretty well...<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if exist temp_rm.txt (del temp_rm.txt)
+
+&gt; temp_rm.txt  setLocal enableDELAYedeXpansioN
+for /f "tokens=* delims= " %%a in (temp.txt) do (
+call :sub1 %%a
+&gt;&gt; temp_rm.txtecho.!S!
+)
+
+goto :eof
+
+:sub1
+set S=%*
+goto :eof
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Delete lines based upon string or file</h3>
+				<div class="date">Posted: <strong>20 Jul 2018 09:27</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">used a combination with a for / f loop and a normal for loop. in the filter file can end semicolon, comma and space. in between, however, not - as well as no special characters like &amp; () *? &lt;&gt; = | "
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;tempFilterFile (
+  @ for /f "delims=" %%i in ("filterFile") do @ (
+    for %%j in (%%i) do @ echo %%i
+) )
+findstr /v /g:tempFilterFile inFile &gt;outFile
+</code></pre></div>
+Or write the tempFilterFile simply use one for /f loop with <br>
+"delims= ,"<br>
+<br>
+Phil</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Delete lines based upon string or file</h3>
+				<div class="date">Posted: <strong>20 Jul 2018 09:50</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistc1e4.html?mode=viewprofile&amp;u=5414">pieh-ejdsch</a> wrote: <a href="viewtopic0246.html?p=57517#p57517" data-post-id="57517" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jul 2018 09:27</div></cite>
+used a combination with a for / f loop and a normal for loop. in the filter file can end semicolon, comma and space. in between, however, not - as well as no special characters like &amp; () *? &lt;&gt; = | "
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;tempFilterFile (
+  @ for /f "delims=" %%i in ("filterFile") do @ (
+    for %%j in (%%i) do @ echo %%i
+) )
+findstr /v /g:tempFilterFile inFile &gt;outFile
+</code></pre></div>
+Or write the tempFilterFile simply use one for /f loop with <br>
+"delims= ,"<br>
+<br>
+Phil
+</div></blockquote>
+
+Thanks after tried out your code and got the tempFilterFile do not have any list only have filterFile name in it..???</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Delete lines based upon string or file</h3>
+				<div class="date">Posted: <strong>21 Jul 2018 01:03</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">ups my mistake.<br>
+I forgot that filenames should be used in the for /f loop with the usebackQ option.<br>
+<span style="font-size: 50%; line-height: normal">this damn cellphone.</span></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Delete lines based upon string or file</h3>
+				<div class="date">Posted: <strong>23 Aug 2018 08:14</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistc1e4.html?mode=viewprofile&amp;u=5414">pieh-ejdsch</a> wrote: <a href="viewtopiccb77.html?p=57526#p57526" data-post-id="57526" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">21 Jul 2018 01:03</div></cite>
+ups my mistake.<br>
+I forgot that filenames should be used in the for /f loop with the usebackQ option.<br>
+<span style="font-size: 50%; line-height: normal">this damn cellphone.</span>
+</div></blockquote>
+
+I tired the below code as you suggested, please correct me if I am wrong and still not working<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;tempFilterFile (
+  @ for /f "usebackq tokens=*" %%i in ("filterFile") do @ (
+    for %%j in (%%i) do @ echo %%i
+) )
+findstr /v /g:tempFilterFile inFile &gt;outFile
+</code></pre></div>
+
+I got the tempFilterFile which is still showing , at the end of each line. Therefore, it is still not removing the lines...<br>
+<br>
+OK I got the results after modified the code as below:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;TSA_debug_rm.txt (
+  @ for /f "usebackq tokens=1* delims=," %%i in ("TSA_debug_remove.txt") do @ (
+    for %%j in (%%i) do @ echo %%i
+) )
+findstr /v /g:TSA_debug_rm.txt Schemes_to_Sign_for_829501.txt &gt;updateTSA.txt
+
+Thanks a lot!
+</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8727&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:28:23 GMT -->
+</html>

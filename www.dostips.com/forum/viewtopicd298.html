@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8513&start=30&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:23:31 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Alternate method to get TAB, Carriage return and possibly all others - Page 3</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Alternate method to get TAB, Carriage return and possibly all others</h2>
+		<p><a href="viewtopic5bd3.html?f=3&amp;t=8513">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8513</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>3</strong> of <strong>3</strong></div>
+					<div class="post">
+				<h3>Re: Alternate method to get TAB, Carriage return and possibly all others</h3>
+				<div class="date">Posted: <strong>19 Aug 2018 07:47</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">Another variant for getting CR using pipe. both method in separate functions below
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+call :getCR.FullBuffer CR1
+call :getCR.Pipe CR2
+
+setlocal EnableDelayedExpansion
+echo(      World!CR1!Hello&amp;
+echo(      World!CR2!Hello&amp;
+pause
+exit /b
+
+:getCR.FullBuffer
+setlocal DisableDelayedExpansion
+if "%~1"=="" (set "ret=CR") else set "ret=%~1"
+for /F %%Z in ('
+    @"%COMSPEC%" /e:on /v:on /q /d /c
+    set "line= "^^^&amp;
+    (for /L %%Z in (1 1 12^) do set "line=!line!!line!"^)^^^&amp;
+    echo(!line!!line:~0^,-2!^^^&amp;echo(
+') do (
+    (goto)2&gt;nul
+    set "%ret%=%%Z"
+)
+
+
+:getCR.Pipe
+setlocal
+if "%~1"=="" (set "ret=CR") else set "ret=%~1"
+set "CR="
+for /F %%Z in ('
+    set CR^=^^!^&amp;
+    "%COMSPEC%" /u /d /c "echo(&amp;echo(("^|
+    "%COMSPEC%" /e:on /v:on /d /c "set CR= &amp;set /p CR=&amp;echo(%%CR%%CR%%CR%%"
+') do (
+    (goto)2&gt;nul
+    set "%ret%=%%Z"
+)
+endlocal &amp; goto %0
+</code></pre></div>
+
+<strong class="text-strong">Edit</strong><br>
+I forgot about the problem of CMD AutoRun registry settings. with FOR /F CMD will not disable processing of AuroRun commands by passing the /D switch to the child instance, so if any thing there outputs a single character, not only the above functions will fail, but the whole batch code will be in an unpredictable state, and most probably will be terminated, depending on the depth of the call stack and the amount of output lines by the AutoRun command(s).<br>
+<br>
+I don't understand why the folks coding the CMD didn't consider this, they did this for pipes so why not for FOR /F ?  And this can break many batch codes out there, for instance Dave's <a href="viewtopic2192.html?f=3&amp;t=6133&amp;start=30#p38870" class="postlink">getPID routine</a>. Surely the practice of putting something in AutoRun is not common, but peaple do crazy things when they made aware of some feature, without knowing the possible consequences of doing so.<br>
+<br>
+OK, complaining doesn't solve any thing, this is the replacement code, fortunately, for this case the workaround is simple.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:getCR.FullBuffer
+setlocal DisableDelayedExpansion
+if "%~1"=="" (set "ret=CR") else set "ret=%~1"
+for /F %%Z in ('
+    @"%COMSPEC%" /e:on /v:on /q /d /c
+    set "line= "^^^&amp;
+    (for /L %%Z in (1 1 12^) do set "line=!line!!line!"^)^^^&amp;
+    echo(!line!!line:~0^,-2!^^^&amp;echo(
+') do set "CR=%%Z"
+setlocal EnableDelayedExpansion
+for %%Z in ("!CR!") do (
+    (goto)2&gt;nul
+    set "%ret%=%%~Z"
+)
+
+:getCR.Pipe
+setlocal EnableDelayedExpansion
+if "%~1"=="" (set "ret=CR") else set "ret=%~1"
+set "CR="
+for /F %%Z in ('
+    set CR^=^^!^&amp;
+    "%COMSPEC%" /u /d /c "echo(&amp;echo(("^|
+    "%COMSPEC%" /e:on /v:on /d /c "set CR=#&amp;set /p CR=&amp;echo(%%CR%%CR%%CR%%"
+') do set "CR=%%Z"
+if "!CR!"=="#" endlocal &amp; goto %0
+for %%Z in ("!CR!") do (
+    (goto)2&gt;nul
+    set "%ret%=%%~Z"
+)
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Alternate method to get TAB, Carriage return and possibly all others</h3>
+				<div class="date">Posted: <strong>28 Aug 2018 07:15</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Hi sst,<br>
+<br>
+clever way to use the buffer overflow without a temporary file.<br>
+<br>
+I never thought of your pipe solution.<br>
+But still it has a bad taste to use a buffer overflow, I'm not convinced that there aren't some nasty side effects.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+call :CreateCR
+setlocal EnableDelayedExpansion
+echo 12345!CR!#
+exit /b
+
+
+::: CR should  be used only with DelayedExpansion
+:CreateCR
+setlocal EnableDelayedExpansion EnableExtensions
+set "X=."
+for /L %%c in (1,1,13) DO set "X=!X:~0,4093!!X:~0,4093!"
+
+&gt; %temp%\cr.tmp (
+(echo !X!    )
+echo(
+)
+
+for /f "tokens=2 usebackq" %%a in ("%temp%\cr.tmp") do (
+   endlocal
+   set "cr=%%a"
+   rem set x=
+   goto :eof
+)
+goto :eof</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Alternate method to get TAB, Carriage return and possibly all others</h3>
+				<div class="date">Posted: <strong>29 Aug 2018 02:04</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">Hi jeb,<br>
+<br>
+I don't see any buffer overflow, I believe it's just an exhausted buffer, nothing will be written beyond. If we can cause buffer overflow this easy, then the side effects of getting CR this way would be the least our worries.<br>
+<br>
+But to be sure I've traced the relevant parts of cmd code in debugger, and I couldn't find any evidence of buffer overflow being occured. In this particular case the only place that is susceptible to cause overflow is where 'echo ' tries to append CRLF to the passed argument.<br>
+<br>
+Let's see:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo(!line!!line:~0^,-2! ---&gt; '(' + &lt;4096&gt; + &lt;4094&gt; = 8191
+</code></pre></div>
+So far so good.<br>
+<br>
+The rest is self explanatory<br>
+<br>
+pseudo code (Windows 7 CMD):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>int eEcho (struct *s)
+{
+    ret = OnOffCheck(s-&gt;argptr, 0);
+    switch (ret)
+    {
+        case 2:
+            // Print echo on/off message based on current echo state.
+        case 3:
+            cmd_printf("%s\r\n", s-&gt;argptr+1) //skip over the first character then print
+        default:
+            echoState=ret;
+    }
+    return 0;
+}
+
+void cmd_printf(wchar *format, ...)
+{
+    va_list argList;
+    va_start(argList,format); 
+    // Win7 CMD calls StringCchVPrintfW which internally calls vsnwprintf but WinXP CMD directly calls vsnwprintf
+    // format="%s\r\n"
+    StringCchVPrintfW(Dest, 8192, format, argList); // No overflow.
+    len=wcslen(Dest);
+    CmdPutChars(Dest, len);
+    return;
+}
+
+int CmdPutChars(wchar *Buffer, unsigned int CharsToWrite)
+{
+    if ( FileIsConsole(stdout) ) {
+        WriteConsoleW(....);
+        //Error handling
+    } else {
+       MyWriteFile(....);
+       //Error handling
+    }
+    return ret;
+}
+</code></pre></div>
+
+<br>
+Disassembly listings (Win7 CMD 32bit module v6.1.7601.23403)<br>
+eEcho:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>CPU Disasm
+Address   Hex dump          Command                                  Comments
+4A07598D      8BFF          MOV EDI,EDI
+4A07598F  /.  55            PUSH EBP
+4A075990  |.  8BEC          MOV EBP,ESP
+4A075992  |.  56            PUSH ESI
+4A075993  |.  8B75 08       MOV ESI,DWORD PTR SS:[EBP+8]
+4A075996  |.  57            PUSH EDI
+4A075997  |.  33FF          XOR EDI,EDI
+4A075999  |.  57            PUSH EDI                                 ; /Arg2
+4A07599A  |.  FF76 3C       PUSH DWORD PTR DS:[ESI+3C]               ; |Arg1
+4A07599D  |.  E8 30000000   CALL _OnOffCheck@8                       ; \cmd._OnOffCheck@8
+4A0759A2  |.  8BC8          MOV ECX,EAX
+4A0759A4  |.  49            DEC ECX                                  ; Switch (cases 2..3, 3 exits)
+4A0759A5  |.  49            DEC ECX
+4A0759A6  |.- 0F84 15E60000 JZ 4A083FC1
+4A0759AC  |.  49            DEC ECX
+4A0759AD  |.- 0F85 5CFCFFFF JNZ 4A07560F
+4A0759B3  |.  8B46 3C       MOV EAX,DWORD PTR DS:[ESI+3C]            ; Case 3 of switch cmd.4A0759A4
+4A0759B6  |.  40            INC EAX
+4A0759B7  |.  40            INC EAX
+4A0759B8  |.  50            PUSH EAX                                 ; /&lt;%s&gt;
+4A0759B9  |.  68 A846094A   PUSH OFFSET _Fmt17                       ; |Format = "%s\r\n"
+4A0759BE  |.  E8 30FFFFFF   CALL _cmd_printf                         ; \cmd._cmd_printf
+4A0759C3  |&gt;  59            POP ECX
+4A0759C4  |.  59            POP ECX
+4A0759C5  |&gt;  5F            POP EDI                                  ; Default case of switch cmd.4A0759A4
+4A0759C6  |.  33C0          XOR EAX,EAX
+4A0759C8  |.  5E            POP ESI
+4A0759C9  |.  5D            POP EBP
+4A0759CA  \.  C2 0400       RETN 4
+</code></pre></div>
+
+cmd_printf:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>CPU Disasm
+Address   Hex dump          Command                                  Comments
+4A0758F3  /$  8BFF          MOV EDI,EDI                              ; cmd._cmd_printf(guessed Format...)
+4A0758F5  |.  55            PUSH EBP
+4A0758F6  |.  8BEC          MOV EBP,ESP
+4A0758F8  |.  56            PUSH ESI
+4A0758F9  |.  8D45 0C       LEA EAX,[EBP+0C]
+4A0758FC  |.  50            PUSH EAX                                 ; /Arg4
+4A0758FD  |.  FF75 08       PUSH DWORD PTR SS:[EBP+8]                ; |Arg3
+4A075900  |.  BE 40460A4A   MOV ESI,OFFSET _MsgBuf                   ; |
+4A075905  |.  68 00200000   PUSH 2000                                ; |Arg2 = 2000
+4A07590A  |.  56            PUSH ESI                                 ; |Arg1
+4A07590B  |.  E8 80FFFFFF   CALL _StringCchVPrintfW@16               ; \cmd._StringCchVPrintfW@16
+4A075910  |.  8BC6          MOV EAX,ESI
+4A075912  |.  8D48 02       LEA ECX,[EAX+2]
+4A075915  |&gt;  66:8B10       /MOV DX,WORD PTR DS:[EAX]
+4A075918  |.  40            |INC EAX
+4A075919  |.  40            |INC EAX
+4A07591A  |.  66:85D2       |TEST DX,DX
+4A07591D  |.- 75 F6         \JNZ SHORT 4A075915
+4A07591F  |.  2BC1          SUB EAX,ECX
+4A075921  |.  D1F8          SAR EAX,1
+4A075923  |.  50            PUSH EAX                                 ; /Arg2
+4A075924  |.  56            PUSH ESI                                 ; |Arg1
+4A075925  |.  E8 08000000   CALL _CmdPutChars@8                      ; \cmd._CmdPutChars@8
+4A07592A  |.  5E            POP ESI
+4A07592B  |.  5D            POP EBP
+4A07592C  \.  C3            RETN
+</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>3</strong> of <strong>3</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8513&start=30&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:23:31 GMT -->
+</html>

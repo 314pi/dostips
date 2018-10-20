@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6081&start=30&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:01:35 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; JREN.BAT v2.8 - Rename files/folders using regular expressions - Page 3</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>JREN.BAT v2.8 - Rename files/folders using regular expressions</h2>
+		<p><a href="viewtopic7124.html?f=3&amp;t=6081">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6081</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>3</strong> of <strong>4</strong></div>
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>23 Oct 2017 19:42</strong></div>
+				<div class="author">by <strong>kurokirasama</strong></div>
+				<div class="content">Hello,<br /><br />is there a way to remove japanese characters from filenames using jren?<br /><br />Regards,</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>24 Oct 2017 11:02</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">This should be possible, but I haven't tested.<br /><br />JREN works internally using JSCRIPT, which in turn uses Unicode. So you simply need to know the various Unicode code point ranges that correspond to Japanese characters, and then transform that into a regex square bracket character set expression. I'm pretty sure this list is incomplete, but it should get you started:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jren &quot;&#91;\u4E00-\u9FbF\u3040-\u309F\u30A0-\u30FF&#93;&quot; &quot;&quot;<br /></code></pre></div><br /><br />Perhaps you could simply remove all characters that are not ASCII, which would be much simpler to specify<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jren &quot;&#91;^\u0000-\u007F&#93;&quot; &quot;&quot;<br /></code></pre></div>or<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jren &quot;&#91;^\x00-\x7F&#93;&quot; &quot;&quot;<br /></code></pre></div><br /><br />Of course, nothing will work if the names consist of only Japanese characters, or it you end up with duplicate names when you remove the Japanese characters.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>24 Oct 2017 12:37</strong></div>
+				<div class="author">by <strong>kurokirasama</strong></div>
+				<div class="content">Thanks a lot. Is there any difference between the last 2 command?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>24 Oct 2017 12:49</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">The end result of the last 2 commands should be the same.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>20 Dec 2017 06:16</strong></div>
+				<div class="author">by <strong>kurokirasama</strong></div>
+				<div class="content">Hello again,<br>
+<br>
+I have videos files with filenames:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Series.Name.S01E01.andalotofstuff.mkv
+Series.Name.S01E02.andalotofstuff.mkv
+Series.Name.S02E01.andalotofstuff.mkv
+etc</code></pre></div>.<br>
+<br>
+where "andalotofstuff" is not necessarily the same in each file, and can include ".", "-", "[" and "]".<br>
+<br>
+I also have subtitles files with filenames:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Series Name 1x01 - Episode Name andotherstuff.srt
+Series Name 1x02 - Episode Name andotherstuff.srt
+Series Name 2x01 - Episode Name andotherstuff.srt
+etc.</code></pre></div>
+
+where "andotherstuff" is not necessarily the same in each file, and can include "(" and ")".<br>
+<br>
+What i want is to rename "srt" files with the corresponding "mkv".<br>
+<br>
+Some real examples are:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Marvels.Agents.of.S.H.I.E.L.D.S05E04.720p.HDTV.x264-AVS[eztv].mkv
+Marvel's Agents of S.H.I.E.L.D. 5x04 - A Life Earned (Español (Latinoamérica)).srt
+  
+The.Shannara.Chronicles.S02E08.720p.HDTV.x264-AVS[eztv].mkv
+The Shannara Chronicles 2x08 - Amberle (Español (España)).srt
+    
+The.Shannara.Chronicles.S02E10.720p.HDTV.x264-KILLERS[eztv].mkv
+The Shannara Chronicles 2x10 - Blood (English).srt</code></pre></div>
+
+Note that not necessarily all video files has a corresponding subtitle file.<br>
+<br>
+So, is there a way to do this with JREN? It doesn't mater if the solution has many steps.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>17 May 2018 05:52</strong></div>
+				<div class="author">by <strong>zorro101</strong></div>
+				<div class="content">hi<br>
+i have 3000 file like this:<br>
+20170419171730.m2ts<br>
+20170419171730.m2ts.modd<br>
+20170419171730.m2ts.moff<br>
+<br>
+i need to rename 2017* to 2018*<br>
+there is a way?<br>
+<br>
+thanks<br>
+best regards<br>
+zorro</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>17 May 2018 07:26</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf467.html?mode=viewprofile&amp;u=9214">zorro101</a> wrote: <a href="viewtopic6770.html?p=56778#p56778" data-post-id="56778" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">17 May 2018 05:52</div></cite>
+hi<br>
+i have 3000 file like this:<br>
+20170419171730.m2ts<br>
+20170419171730.m2ts.modd<br>
+20170419171730.m2ts.moff<br>
+<br>
+i need to rename 2017* to 2018*<br>
+there is a way?<br>
+<br>
+thanks<br>
+best regards<br>
+zorro
+</div></blockquote>
+You could certainly do this with JREN but it is easy enough to do with a normal batch file.  Just create a substring of the file name to remove the first 4 characters.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>17 May 2018 08:44</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">A simple REN command works here:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\Antonio\Documents\ASMB\Test
+&gt;dir /B
+20170419171730.m2ts
+20170419171730.m2ts.modd
+20170419171730.m2ts.moff
+
+C:\Users\Antonio\Documents\ASMB\Test
+&gt;ren 2017* 2018*
+
+C:\Users\Antonio\Documents\ASMB\Test
+&gt;dir /B
+20180419171730.m2ts
+20180419171730.m2ts.modd
+20180419171730.m2ts.moff
+</code></pre></div>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>17 May 2018 09:19</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopic398f.html?p=56781#p56781" data-post-id="56781" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">17 May 2018 08:44</div></cite>
+A simple REN command works here:
+</div></blockquote>
+I always forget the RENAME command can do that.  I have broken my golden rule of K.I.S.S.!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>18 May 2018 00:28</strong></div>
+				<div class="author">by <strong>zorro101</strong></div>
+				<div class="content">sorry, but ren not work for me<br>
+I had already tried, but convert only the single extension files (.m2ts)<br>
+all other file are ignored (invisible - if i make dir the double extension file not show)<br>
+i used windows 7 pc<br>
+<br>
+please can you help me?<br>
+thanks<br>
+best regards</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>22 May 2018 06:01</strong></div>
+				<div class="author">by <strong>zorro101</strong></div>
+				<div class="content"><img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>22 May 2018 07:18</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">Did you saw <a href="viewtopic5b8f.html?p=56862#p56781" class="postlink">my reply above</a>? It is an example of the files and the command I used, copied directly from the screen. Such an example proves that my REN command correctly works, at least on my computer...<br>
+<br>
+I suggest you to do <em class="text-italics">exactly the same</em>: create a few files, use <em class="text-italics">the same REN command</em> I used and then copy the screen contents and post it here (surrounded by [ code ] tags). Otherwise we have not idea of what are the files nor the command you used...  <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"> <br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>22 May 2018 08:40</strong></div>
+				<div class="author">by <strong>zorro101</strong></div>
+				<div class="content">thanks for reply<br>
+<br>
+I managed to do only the printscreen
+<div class="inline-attachment">
+			
+		
+				<dl class="file">
+			<dt class="attach-image"><img src="download/file0284.jpg?id=366" class="postimage" alt="ren.jpg" onclick="viewableArea(this);" /></dt>
+						<dd>ren.jpg (89.77 KiB) Viewed 989 times</dd>
+		</dl>
+		
+		
+		
+			</div>
+thanks again</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>05 Jun 2018 00:45</strong></div>
+				<div class="author">by <strong>zorro101</strong></div>
+				<div class="content"><img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"> <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"> <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: JREN.BAT - Rename files/folders using regular expressions</h3>
+				<div class="date">Posted: <strong>06 Jun 2018 04:41</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">@zorro101<br>
+Your .modd and .moff files have hidden or system attributes set. Most probably only hidden attribute as it seems from your screenshot.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>attrib -h *.m2ts.*
+ren 2017* 2018*
+</code></pre></div>
+If you want to restore the attributes after the rename operation, then before running the above code, first run
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>attrib *.m2ts.*
+</code></pre></div>
+and take a note of the attributes, then after you've done with rename, do one of the following as appropriate
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>attrib +h *.m2ts.*
+attrib +s *.m2ts.*
+attrib +h +s *.m2ts.*
+</code></pre></div>
+
+you can use /S switch with attrib to apply the attributes to all matching files in the current folder as well as subfolders in one shot, like:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>attrib -h -s *.m2ts.* /S
+</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>3</strong> of <strong>4</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6081&start=30&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:01:35 GMT -->
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5326&start=105&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:19:14 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Create nul and all ascii characters with only batch - Page 8</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Create nul and all ascii characters with only batch</h2>
+		<p><a href="viewtopic91a1.html?f=3&amp;t=5326">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5326</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>8</strong> of <strong>8</strong></div>
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>06 May 2018 08:53</strong></div>
+				<div class="author">by <strong>batmanbatman</strong></div>
+				<div class="content">The program is not work in win10.   copy file /b newfile /a is not work in win10.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>06 May 2018 14:49</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7f12.html?mode=viewprofile&amp;u=9190">batmanbatman</a> wrote: <a href="viewtopicd42d.html?p=56703#p56703" data-post-id="56703" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">06 May 2018 08:53</div></cite>
+The program is not work in win10.   copy file /b newfile /a is not work in win10.
+</div></blockquote>
+
+@batmanbatman please you can provide more details about your windows 10 version, like codepage that you use?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>06 May 2018 14:52</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">On this thread (<a href="viewtopic5bd3.html?f=3&amp;t=8513" class="postlink">viewtopic.php?f=3&amp;t=8513</a>), with sst user we found that the codepage used affect the result of the .chr files. The case is when the user uses a native double byte code page like 932 or 950.<br>
+<br>
+Here, is a patched version.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:: This code creates one single byte. Parameter: &lt;int&gt;0-255
+:: Teamwork of carlos, penpen, aGerman, dbenham, bluesxman, sst
+:: Tested under Win2000, XP, Win7, Win8, Win10
+:: Fixed issue on environments with dbcs codepage
+
+@echo off
+setlocal enableextensions
+set "USAGE=echo:Usage: Supply an integer 0-255&amp; goto :EOF"
+if "%~1" equ "" %USAGE%
+set /a "val=%~1" 2&gt;nul
+if "%~1" neq "%val%" %USAGE%
+if %~1 lss 0    %USAGE%
+if %~1 gtr 255  %USAGE%
+
+for /f "tokens=*" %%a in ('chcp') do for %%b in (%%a) do set "cp=%%~nb"
+set "options=/d compress=off /d reserveperdatablocksize=26"
+set "cmd=cmd /d /c"
+mode con cp select=437 &gt;nul
+if %~1 neq 26  (type nul &gt;%~1.tmp
+makecab %options% /d reserveperfoldersize=%~1 %~1.tmp %~1.chr &gt;nul
+type %~1.chr | (
+(for /l %%N in (1 1 38) do pause)&gt;nul&amp;findstr "^"&gt;%~1.tmp)
+&gt;nul %cmd% copy /y %~1.tmp /a %~1.chr /b
+del %~1.tmp
+) else (%cmd% copy /y nul + nul /a 26.chr /a &gt;nul)
+mode con cp select=%cp% &gt;nul
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>07 May 2018 01:53</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">@batmanbatman<br>
+To make it easier for you to provide the informations that Carlos requests you could run info.bat to be found there:<br>
+<a href="viewtopic2503.html?f=3&amp;t=7420&amp;p=49133#p49133" class="postlink">viewtopic.php?f=3&amp;t=7420&amp;p=49133#p49133</a><br>
+After you run the script an editor window will pop up. Just copy the whole content and paste it to your answer.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>09 May 2018 09:04</strong></div>
+				<div class="author">by <strong>batmanbatman</strong></div>
+				<div class="content">"copy file /a newfile /b" is not work in win10.<br>
+<br>
+"Not work" means:<br>
+1. after create a file by makecab.<br>
+2. The first two byte created by makecab and skip 38 byte is correct.  Eg:  81 1A ....<br>
+3. copy "tempfile" /a  129.chr /b"<br>
+4. 129.chr same of tempfile. (ie. fc 129.chr tempfile  is no different).<br>
+5. If Ascii is not extend ascii,  everything is ok.<br>
+<br>
+My computer: Microsoft Windows [ver 10.0.16299.371]. I try all code page. 437-65001. font =TT</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>16 May 2018 04:04</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">Have you already tested the latest code carlos gave two posts about yours, or does the analysis base on the original version?<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>8</strong> of <strong>8</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5326&start=105&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:19:14 GMT -->
+</html>

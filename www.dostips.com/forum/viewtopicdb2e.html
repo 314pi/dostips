@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4741&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:33:26 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; SNAKE.BAT 4.1 - An arcade style game using pure batch - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>SNAKE.BAT 4.1 - An arcade style game using pure batch</h2>
+		<p><a href="viewtopic6484.html?f=3&amp;t=4741">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4741</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>8</strong></div>
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>13 Jul 2013 17:33</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Thanks miskox and aGerman <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><br />I've updated the code in the initial post.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>13 Jul 2013 18:20</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">That's neat Dave.  I jumped in and run it - picked crawl speed and started playing. <br />Snake is a favourite game of mine...  <br /><br />I struck something odd though. when I reached this score no more food appeared.  I moved round for 30 seconds or so and I couldn't see a + anywhere on the screen.<br /><br />Speed=Crawl<br />Score=6<br /><br />Edit:  I played some more and that didn't reoccur.  <br /><br />This speed is a good one on my I7 3.2 GHz CPU and is comfortable to play.  Here's my current high score. <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br /><br /><!-- m --><a class="postlink" href="../../i39.tinypic.com/b6oj8g.png">http://i39.tinypic.com/b6oj8g.png</a><!-- m --></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>13 Jul 2013 19:55</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Yea, crawl is a good speed for running up a high score. I cracked 100 once, though I have no screen shot to prove it  <img class="smilies" src="images/smilies/icon_twisted.gif" alt=":twisted:" title="Twisted Evil" /> <br /><br />I too ran into disappearing food once, many plays ago. I've been through the code logic repeatedly and simply cannot find the source of that problem. I've played a great many times since without running into the problem. I'd love it if someone could discover the source of the bug, but I'm not very optimistic - it is so intermittent.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>14 Jul 2013 08:20</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">I'm not sure, but i think the error is produced because you do that in the main loop:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; %=== remove the new head location from the empty list ===%<br />&nbsp; &nbsp; &nbsp; for %%X in (&quot;!X!&quot;) do for %%Y in (&quot;!Y!&quot;) do set &quot;empty=!empty:#%%~X %%~Y=!&quot;<br />::&nbsp; &nbsp; ...<br />&nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;score+=1, F=(!random!%%emptyCnt)*6+1, emptyCnt-=1&quot;<br />::&nbsp; &nbsp; ...<br />&nbsp; &nbsp; &nbsp; &nbsp; %=== add the former tail position to the empty list ===%<br />&nbsp; &nbsp; &nbsp; &nbsp; set &quot;empty=!empty!#!TX! !TY!&quot;<br /></code></pre></div>So if F=(!random!%%emptyCnt)*6+1 points to the maximum empty element, there is none because you shortened the list by one while setting the new food.<br />The plot macro then operates on the variables part2 and line, so no other problem occurs as part2 is overwritten the next time plot is used, and line is never used.<br /><br />penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>14 Jul 2013 08:42</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">Nearly forgotten:<br />I downloaded the choice from <!-- m --><a class="postlink" href="http://winsupport.org/utilities/freedos-choice.html">http://winsupport.org/utilities/freedos-choice.html</a><!-- m --> as it was not present on my xp home, and the game then prints:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ERROR: This game requires the CHOICE command, but it is missing.<br />Game aborted. :(<br />usw.<br /></code></pre></div><br />The tests you do to check the existance of choice produces:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Z:\&gt;choice /c:yn /t 0 /d y<br />CHOICE:Incorrect timeout syntax.&nbsp; Expected form Tc,nn or T:c,nn<br /><br />Z:\&gt;choice /c:yn /t:y,-1<br />CHOICE:Incorrect timeout syntax.&nbsp; Expected form Tc,nn or T:c,nn<br /><br /></code></pre></div><br />In the upper case /t 0 and /d are not supported and choice sets an errorlevel of 0, and in the lower case the -1 produces the error and the errorlevel is set to 1.<br /><br />I changed the code to:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>: ...<br />set &quot;choice=&quot;<br />2&gt;nul &gt;nul choice /c:yn /t 0 /d y<br />if errorlevel 1 if not errorlevel 2 (<br />&nbsp; set &quot;choice=choice /cs&quot;<br />)<br /><br />2&gt;nul &gt;nul choice /c:yn /t:y,1<br />if errorlevel 1 if not errorlevel 2 set &quot;choice=choice /s&quot;<br /><br />if not defined choice (<br />: ...<br /></code></pre></div><br />and it works fine.<br /><br />penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>14 Jul 2013 10:08</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">I remember that SNAKE game uses just two control keys: turn right and turn left, and that the turn direction was relative to snake movement. As a matter of fact, this behaviour was one of the most funny details of SNAKE game. I used such control in <a href="viewtopicba56.html?f=3&amp;t=3428&amp;p=17216#p17216" class="postlink">my SNAKE.BAT program</a> (posted more than a year ago, look for it below program #6), that I wrote mainly as an example program on how to use my Window.exe, GetKey.exe, CursorPos.exe and Show.exe <a href="viewtopic9635.html?f=3&amp;t=3428" class="postlink">auxiliary .exe programs</a>.<br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>14 Jul 2013 10:55</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">@penpen - Woohooo <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" />  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><br />You have killed the last known bug. I confirmed that my failure to decrement the emptyCnt prior to picking a random number was the source of the disappearing food. I fixed the code by using:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set /a &quot;score+=1, F=(!random!%%(emptyCnt-=1))*6+1&quot;<br /></code></pre></div><br /><br />Also, thanks for reporting the problem with the downloaded 16 bit CHOICE version. The 32 bit version uses -1 for no wait, but I guess the 16 bit version doesn't have that option. I couldn't test because all I have are 64 bit machines. I've updated the 2nd CHOICE test to wait for 1 second, as you suggested.<br /><br />Now I can dare to hope that there are no more bugs  <img class="smilies" src="images/smilies/icon_lol.gif" alt=":lol:" title="Laughing" /> <br /><br />Thanks again to penpen, miskox, and aGerman for help in squashing the bugs.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>14 Jul 2013 11:03</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">I can't get it to work at all.  Windows 7 32bit.<br />It gets stuck at Press any alpha-numeric key to start...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>14 Jul 2013 11:11</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite>Squashman wrote:</cite>I can't get it to work at all.  Windows 7 32bit.<br />It gets stuck at Press any alpha-numeric key to start...</div></blockquote><br />I may have spoken too soon about no bugs <img class="smilies" src="images/smilies/icon_lol.gif" alt=":lol:" title="Laughing" /> <br /><br />I have seen some intermittent issues where the game and controller get out of synch in some way and I have no control. The rare times that happens, I simply kill the window and start afresh with a new console window.<br /><br />But the program fails entirely as you describe when I attempt to run it at work on a shared network drive. At work, I must run it on a local hard drive.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>14 Jul 2013 11:21</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite>Aacini wrote:</cite>I remember that SNAKE game uses just two control keys: turn right and turn left, and that the turn direction was relative to snake movement. As a matter of fact, this behaviour was one of the most funny details of SNAKE game. I used such control in <a href="viewtopicba56.html?f=3&amp;t=3428&amp;p=17216#p17216" class="postlink">my SNAKE.BAT program</a> (posted more than a year ago, look for it below program #6), that I wrote mainly as an example program on how to use my Window.exe, GetKey.exe, CursorPos.exe and Show.exe <a href="viewtopic9635.html?f=3&amp;t=3428" class="postlink">auxiliary .exe programs</a>.<br /><br />Antonio</div></blockquote><br />I remember scanning that post, but I generally avoid downloaded non-script based CMD extensions. Your utilities sure make development easier, but my goal was to build an arcade came using pure native batch commands.<br /><br />I realize my program does not run on XP without downloading a non-standard CHOICE command, so I haven't met my goal for XP. But that is the best I could do. My SNAKE.BAT should work on any Windows platform from Vista onward, without any non-native extensions.<br /><br />I might create a modified version of my SNAKE.BAT that uses only left and right controls. But I think I'm ready to give it a rest for now.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>15 Jul 2013 15:09</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">dave, thanks for share you game.<br />time ago i wrote some batch games and i remember that there are two syntax for choice.<br />the choice.com and choice.exe that runs in windows 98 and the choice.exe from windows 2003.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>15 Jul 2013 15:31</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Hi Dave,<br /><br />there is an pure batch workaround for the choice command, it even works with XP.<br />It's even better than choice, as it accepts more characters.<br />The only drawback is the missing timeout possibility<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:GetKey<br />set &quot;key=&quot;<br />for /F &quot;usebackq delims=&quot; %%L in (`xcopy /L /w &quot;%~f0&quot; &quot;%~f0&quot; 2^&gt;NUL`) do (<br />&nbsp; if not defined key set &quot;key=%%L&quot;<br />)<br />set &quot;key=%key:~-1%&quot;<br />exit /b<br /></code></pre></div><br /><br />hope it helps<br />jeb</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>15 Jul 2013 15:33</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">I remember this routine for detect choice and the switch for the different sintaxys:<br /><br />for detect:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>SETLOCAL<br />(SET EXISTCHOICE=)<br />SET &quot;FOLDER_TO_SEARCH=.\;%PATH%&quot;<br />FOR %%A IN (CHOICE.EXE) DO (<br />&nbsp; &nbsp;SET &quot;EXISTCHOICE=%%~$FOLDER_TO_SEARCH:A&quot;<br />)<br />IF NOT DEFINED EXISTCHOICE (<br />&nbsp; &nbsp;SET &quot;FOLDER_TO_SEARCH=%PATH%&quot;<br />&nbsp; &nbsp;FOR %%A IN (CHOICE.COM) DO (<br />&nbsp; &nbsp;&nbsp; &nbsp;SET &quot;EXISTCHOICE=%%~$FOLDER_TO_SEARCH:A&quot;<br />&nbsp; &nbsp;)<br />)<br />IF NOT DEFINED EXISTCHOICE (<br />ECHO CHOICE NOT EXIST<br />)<br /></code></pre></div><br /><br />and for switch syntax:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(SET KEYS=WASD)<br />(SET /A SECONDS=2)<br /><br />CHOICE /C 0 /N /D 0 /T 1 &lt;NUL &gt;NUL 2&gt;&amp;1<br />IF NOT ERRORLEVEL 255 (<br />&nbsp; &nbsp;REM CHOICE VERSION 2003 .EXE<br />&nbsp; &nbsp;SET &quot;ACTION1=CHOICE.EXE /C %KEYS% /N /D &quot;<br />&nbsp; &nbsp;SET &quot;ACTION2= /T %SECONDS%&quot;<br />&nbsp; &nbsp;SET &quot;AGAIN=CHOICE.EXE /C %KEYS%YN /N /M &quot;PLAY AGAIN&#91;Y,N&#93;?&quot;&quot;<br />) ELSE (<br />&nbsp; &nbsp;REM CHOICE VERSION 98 .COM AND .EXE<br />&nbsp; &nbsp;SET &quot;ACTION1=CHOICE /C:%KEYS% /N /T:&quot;<br />&nbsp; &nbsp;SET &quot;ACTION2=,%SECONDS%&quot;<br />&nbsp; &nbsp;SET &quot;AGAIN=CHOICE /C:%KEYS%YN /N &quot;PLAY AGAIN&#91;Y,N&#93;?&quot;&quot;<br />)<br /><br />:ACTION<br />%ACTION1%!MOVEMENT!%ACTION2% &gt;NUL 2&gt;&amp;1<br /></code></pre></div><br /><br />the variable movement define the default key pressed, this variable can change every time.<br />you can see the difference, for example for show a message the 98 version only enclose a message in quotes, the 2003 version need the switch /m <br />for time and default keys 2003 version uses /d default /t seconds<br />98 version uses /t:default,seconds<br />and for specify valid keys: 98 version uses /c:keys and 2003 uses: /c keys</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>15 Jul 2013 15:34</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote class="uncited"><div>I realize my program does not run on XP without downloading a non-standard CHOICE command, so I haven't met my goal for XP.<br /></div></blockquote><br /><br />I guess that could be solved. <a href="viewtopic28c5.html?f=3&amp;t=4664" class="postlink">There</a> we fiddled with Carlos' XCOPY solution for a hidden input. That method could be easily changed to achieve a CHOICE behaviour (without timeout of course).<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal<br />&lt;nul set /p &quot;=Yes or No &#91;yn&#93;: &quot;<br />call :choice yn<br />echo Option #%errorlevel% was chosen.<br />pause<br />goto :eof<br /><br /><br />:choice<br />setlocal DisableDelayedExpansion<br />set &quot;n=0&quot; &amp;set &quot;c=&quot; &amp;set &quot;e=&quot; &amp;set &quot;map=%~1&quot;<br />if not defined map endlocal &amp;exit /b 0<br />for /f &quot;delims=&quot; %%i in ('2^&gt;nul xcopy /lw &quot;%~f0&quot; &quot;%~f0&quot;') do if not defined c set &quot;c=%%i&quot;<br />set &quot;c=%c:~-1%&quot;<br />if defined c (<br />&nbsp; for /f delims^=^ eol^= %%i in ('cmd /von /u /c &quot;echo(!map!&quot;^|find /v &quot;&quot;^|findstr .') do (<br />&nbsp; &nbsp; set /a &quot;n += 1&quot; &amp;set &quot;e=%%i&quot;<br />&nbsp; &nbsp; setlocal EnableDelayedExpansion<br />&nbsp; &nbsp; if /i &quot;!e!&quot;==&quot;!c!&quot; (<br />&nbsp; &nbsp; &nbsp; echo(!c!<br />&nbsp; &nbsp; &nbsp; for /f %%j in (&quot;!n!&quot;) do endlocal &amp;endlocal &amp;exit /b %%j<br />&nbsp; &nbsp; )<br />&nbsp; &nbsp; endlocal<br />&nbsp; )<br />)<br />endlocal &amp;goto choice<br /></code></pre></div><br />There is another interresting technique used in that code. FIND interprets the 0x00 character of a unicode string as linebreak. I used that behaviour to separate the allowed keys.<br /><br />Regards<br />aGerman<br /><br />EDIT Seems I'm late <img class="smilies" src="images/smilies/icon_lol.gif" alt=":lol:" title="Laughing" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: SNAKE.BAT - An arcade style game using pure batch</h3>
+				<div class="date">Posted: <strong>17 Jul 2013 12:21</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">why is needed the /L parameter using /X parameter in xcopy?</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>8</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4741&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:33:26 GMT -->
+</html>

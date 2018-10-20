@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5326&start=45&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:19:16 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Create nul and all ascii characters with only batch - Page 4</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Create nul and all ascii characters with only batch</h2>
+		<p><a href="viewtopic91a1.html?f=3&amp;t=5326">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5326</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>4</strong> of <strong>8</strong></div>
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>29 Jan 2014 14:01</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I agree with penpen - awesome work <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br />I also have had little time to contribute. And I had a similar idea for iterating hex notation of byte codes  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br /><br />Here is a version that uses Carlos's new discovery.<br /><br />I think it is fairly optimized for both performance and code length. I didn't bother skipping makecab for 0x1A.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>REM This code creates 256 files containing one single Byte each from 0x00 until 0xFF<br />REM Teamwork of carlos, penpen, aGerman, dbenham<br />REM Tested under Win2000, XP, Win7, Win8<br />@echo off<br />setlocal EnableDelayedExpansion<br />2&gt;nul md &quot;characters&quot;<br />pushd &quot;characters&quot;<br /><br />&gt;&quot;t.tmp&quot; type nul<br />set &quot;hex=0 1 2 3 4 5 6 7 8 9 A B C D E F&quot;<br />for %%A in (%hex%) do for %%B in (%hex%) do (<br />&nbsp; set /a &quot;N=0x%%A%%B&quot;<br />&nbsp; &gt;nul makecab /d compress=off /d reserveperfoldersize=!N! /d reserveperdatablocksize=26 &quot;t.tmp&quot; &quot;%%A%%B.chr&quot;<br />&nbsp; type &quot;%%A%%B.chr&quot; | ((for /l %%N in (1 1 38) do pause)&gt;nul&amp;findstr &quot;^&quot;&gt;&quot;temp.tmp&quot;)<br />&nbsp; &gt;nul copy /y &quot;temp.tmp&quot; /a &quot;%%A%%B.chr&quot; /b<br />)<br />&gt;nul copy /y nul + nul /a &quot;1A.chr&quot; /a<br />del &quot;t.tmp&quot; &quot;temp.tmp&quot;<br />popd<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>29 Jan 2014 14:03</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">I saw that you are trying to create a binary file that contains the characters.<br /><br /> Why are you using the makecab? <br /><br />Should not use what you have developed to create an ad hoc binary file?<br /><br />einstein1969</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>29 Jan 2014 14:26</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">The makecab is needed to create all binary byte values.<br />I'm not sure if i understand your second question, you could create a binary [0xAB, 0xBA] file using:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>copy &quot;characters\AB.chr&quot; /B + &quot;characters\BA.chr&quot; /B &quot;adhoc.binary&quot; /B<br /></code></pre></div>Or you could do something like that (but this won't work for all characters, so you sometimes need the single files):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;table=&quot;<br />set /P &quot;table=&quot; &lt; characters\table.dat<br />set /P&quot;=%table:~0xAB,1%%table:~0xBA,1%&quot; &gt; adhoc.bin &lt; nul<br /></code></pre></div><br />penpen<br /><br />Edit1: Added 1 comment: (but this won't work...).<br />Edit2: corrected a flaw.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>29 Jan 2014 14:27</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">@dbenham. Very nice modification, thanks. I tested ok in Windows xp and 8. Please, you can keep the teamwork header adding your name, description header and the system tested header. All is ok, but it not have the headers.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>29 Jan 2014 14:41</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">@Carlos -Done. I did the development on Win7<br /><br />@einstein1969 - True, most of the characters can be generated using CHARLIB.BAT. But that only works because CHARLIB.BAT has binary values embedded within it. That causes problems when posting to/copying from forum sites due to code page issues. It also can cause problems with things like tabs.<br /><br />The makecab solution is a universal solution that should post well to forum sites, and work on any machine from XP forward without need of any 3rd party tools.<br /><br />The files need only be generated once. Then most of the byte codes can be read into variables for faster access. I've got some ideas on how to incorporate this into CHARLIB.BAT, but I'm waiting for some free time to implement it.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>29 Jan 2014 15:27</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Thumbs up guys <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> That was really a fine step forward.<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>29 Jan 2014 15:49</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">@penpen &amp; dbenham<br />ok. I did not realize. But now it is more clear.<br /><br />@aGerman<br />True! <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>29 Jan 2014 19:34</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I've come  up with yet another variation using MAKECAB  <img class="smilies" src="images/smilies/icon_twisted.gif" alt=":twisted:" title="Twisted Evil" /> <br /><br />SET /P will terminate the input upon reading a NULL byte. <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br />What really blows me away is that SET /P can read both newline (0x0A) and carriage return (0x0D) into a variable if they are followed by 0x00 <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" /> <br /><br />So I just set the MAKECAB ReservePerDataBlockSize directive to 0 instead of 26, and then use SET /P to read the value into a variable instead of using COPY to write it to a file.<br /><br />I reverted back to the earlier method for generating a null byte file.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::This is a demo showing one way to generate all 256 byte codes<br />::using only batch and native external commands.<br />::Authors: carlos, aGerman, penpen, dbenham<br />::Tested on XP, Win7, and Win8<br /><br />@echo Off<br />setlocal enableDelayedExpansion<br /><br />:: Create file null.dat containing a single null byte (0x00).<br />:: A null byte can only be written to a file.<br />:: It cannot be read into a variable<br />cmd /u /c set/p&quot;=a&quot;&lt;nul &gt;bytes.dat<br />copy /y bytes.dat+nul bytes.dat &gt;nul<br />type bytes.dat |(pause&gt;nul&amp;findstr &quot;^&quot; &gt;t1.tmp)<br />copy /y t1.tmp /a null.dat /b &gt;nul<br /><br /><br />:: Load byte codes 0x01 - 0xFF into a variable with a space<br />:: at position 0 to take the place of the null byte.<br />:: Also print out intermediate results.<br />:: Note that the display of the final bytes variable will appear<br />:: to be missing values because of the embedded carriage return<br />type nul &gt;&quot;t.tmp&quot;<br />set &quot;bytes= &quot;<br />for /l %%N in (1 1 255) do (<br />&nbsp; makecab /d compress=off /d reserveperfoldersize=%%N /d reserveperdatablocksize=0 &quot;t.tmp&quot; &quot;t1.tmp&quot; &gt;nul<br />&nbsp; type &quot;t1.tmp&quot; | ((for /l %%N in (1 1 38) do pause)&gt;nul&amp;findstr &quot;^&quot;&gt;&quot;t2.tmp&quot;)<br />&nbsp; &lt;t2.tmp set /p &quot;chr=&quot;<br />&nbsp; set &quot;bytes=!bytes!!chr!&quot;<br />&nbsp; echo&nbsp; &nbsp;char(%%N^)=&#91;!chr!&#93;<br />)<br />del &quot;t.tmp&quot; &quot;t1.tmp&quot; &quot;t2.tmp&quot;<br />echo bytes=!bytes!<br /><br /><br />:: Create file bytes.dat containing all 256 byte codes<br />copy null.dat bytes.dat &gt;nul<br />&lt;nul set /p &quot;=!bytes:~1!&quot; &gt;&gt;bytes.dat<br /></code></pre></div><br />The <a href="viewtopic9e4d.html?p=7407#p7407" class="postlink">hexDump.bat utility</a> is a handy way to examine the resulting files <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br />See the post above the link for examples on how to format the output of hexDump.bat<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>29 Jan 2014 21:17</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">@dave: your demo code works very well. But it is different, not creates the 256 .chr files, it creates the bytes.dat file. I not know if use 00 character + set /p instead the 1a character + copy cutoff will works for create the .chr files separetely.<br />Because this, I prefer the previous code (linked in the first post of this topic).<br />But, if you want optimize more your demo code, you you save two pause&gt;nul using this:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>makecab /d compress=off /d reservepercabinetsize=%%N &quot;t.tmp&quot; &quot;t1.tmp&quot; &gt;nul<br />&nbsp; type &quot;t1.tmp&quot; | ((for /l %%N in (1 1 36) do pause)&gt;nul&amp;findstr &quot;^&quot;&gt;&quot;t2.tmp&quot;)<br /></code></pre></div><br /><br />Edit 1: what is the purpose of bytes.dat ?<br /><br />Edit 2: I test your demo code again, but using cmd /u and with it bytes.dat have 511 bytes.<br /><br />Edit 3: I prefer this version <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>http://www.dostips.com/forum/viewtopic.php?p=32184#p32184</code></pre></div> because it Works well using cmd /a and cmd /u. Please you can add a note of this on it? Also I prefer it, because it not need call to cmd /a or cmd /u, for the purpose of create the .chr files is for me the better code.<br /><br />Edit 4: My prefered version (on the link of edit 3), also Works on Windows 2000. I tested it using cmd /a and cmd /u and the code Works, and also the .chr files have 1 byte correctly (I check this with a c program). Please, you can add that Works on win 2000 to the header?.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>29 Jan 2014 22:24</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite>carlos wrote:</cite>@dave: your demo code works very well. But it is different, not creates the 256 .chr files, it creates the bytes.dat file. ...what is the purpose of bytes.dat ?</div></blockquote>Yes they are different, and they serve slightly different purposes. The earlier versions using 0x1A as a stop byte absolutely are best for creating single byte files with any byte value. But the last version using a 0x00 stop byte is better if you want to generate any given byte code in a variable. <br /><br />The bytes variable is very convenient for extracting any character given the byte value. This was the main purpose of the demo.<br /><br />The bytes.dat is more of an after thought for demo purposes, but not for any specific use. I just wanted a place to collect all the byte values, including 0x00. And it is easy to prove the content is correct using my HexDump.bat. But I don't see the bytes.dat file as having any real value.<br /><br /><br /><blockquote><div><cite>carlos wrote:</cite>My prefered version (on the link of edit 3), also Works on Windows 2000. I tested it using cmd /a and cmd /u and the code Works, and also the .chr files have 1 byte correctly (I check this with a c program). Please, you can add that Works on win 2000 to the header?.</div></blockquote> I don't understand your point, or what you want me to do.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>29 Jan 2014 22:26</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">@Dave: please sorry for my english. This is my request.<br />Add:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>REM Tested under 2000, XP, Win7, Win8 using cmd with /u and /a<br /></code></pre></div><br />or similar.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>29 Jan 2014 22:34</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Ah, got it. I updated your preferred link.<br /><br />Did you test my most recent version on Win8 and/or Win2000?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>29 Jan 2014 22:47</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>Ah, got it. I updated your preferred link.<br /><br />Did you test my most recent version on Win8 and/or Win2000?</div></blockquote><br /><br />When i test your code called demo was on Win8 and Works only using cmd /a, using cmd /u the bytes.dat have 511 bytes</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>31 Jan 2014 10:57</strong></div>
+				<div class="author">by <strong>Sponge Belly</strong></div>
+				<div class="content">Hi Guys, <img class="smilies" src="images/smilies/icon_smile.gif" alt=":-)" title="Smile" /><br /><br />First off, thanks to aGerman for explaining the makecab hack. I wouldn’t have thought of that in a million years! How did Carlos even think of it? I hereby nominate Carlos for promotion to Expert. Any seconds?<br /><br />Next up, Dave Benham wrote:<br /><br /><blockquote class="uncited"><div>What really blows me away is that SET /P can read both newline (0x0A) and carriage return (0x0D) into a variable if they are followed by 0x00.<br /></div></blockquote><br /><br />True, but that’s not the whole story. I did some testing and it turns out that there has to be at least one non-control character after the null character or set /p will fail. Btw, Tab is treated as a control character.<br /><br />Lastly, I’ve come up with yet another variant of CreateNul.cmd:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmd /d /u /c echo(&gt;xnlutf.tmp<br />findstr /v ^&quot;^<br /><br />^&quot; xnlutf.tmp &gt;xnul.chr<br />del xnlutf.tmp<br /></code></pre></div><br /><br />Bye for now!<br /><br /><em class="text-italics">- SB</em></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>31 Jan 2014 12:38</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">nice code sponge belly. It now is the most shorter way of create the nul character. In my personal case, I always avoid use the crlf from multiline for codes to be posted on forums, because in the past when I post some code to alt.msdos.batch.nt it add a space to the end of every line of the code, then the lf was damaged.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>4</strong> of <strong>8</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5326&start=45&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:19:16 GMT -->
+</html>

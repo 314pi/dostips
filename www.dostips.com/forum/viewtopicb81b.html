@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8484&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:27:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; BWin - Mouse GUI with windows - move,scale,maximize,close,tab,animate - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>BWin - Mouse GUI with windows - move,scale,maximize,close,tab,animate</h2>
+		<p><a href="viewtopic4cd1.html?f=3&amp;t=8484">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8484</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Re: Mouse GUI with windows - move,scale,maximize,close,tab,animate</h3>
+				<div class="date">Posted: <strong>19 May 2018 09:07</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Woooh! <strong class="text-strong">Another archive update</strong>.<br>
+<br>
+This one brings <strong class="text-strong">greatly improved speed</strong>, because the whole thing (almost) was converted to Javascript!<br>
+<br>
+The old version is still kept in the Batch folder, while the new fast version is in the JScript folder (run BWin.bat in both cases).<br>
+<br>
+At first it seemed to be only about 4 times faster, but then it turned out that string concatenation of very long strings was slowing Javascript down. When I split the cmdgfx input to several steps per frame (and thus, much shorter strings), speed increased dramatically, and is now 10+ times faster than the batch version!<br>
+<br>
+So, on my Win7 machine, this means I can now have 90-100 windows open before I see any lag. On my WIn10 machine it is 30-40 (depending a lot on if Windows10 decides to run other programs like antimalware checkers in the background  <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused">  ).<br>
+<br>
+With this newfound speed, this script is almost starting to look like a real window manager  <img class="smilies" src="images/smilies/icon_mrgreen.gif" width="15" height="15" alt=":mrgreen:" title="Mr. Green"> . Therefore, the program was renamed to <strong class="text-strong">BWin </strong><img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"><br>
+<br>
+It's also easier to decipher the met files now. For example, the mouse-controlled game.met went from this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set W[]_NAME="Game \80(SPACE to restart)"
+set /a W[]_W=60, W[]_H=30
+set /a W[]_X=28, W[]_Y=31
+set /a W[]_XA=1, W[]_YA=1
+set /a W[]_ACTIVE=1, W[]_CLOSE=1, W[]_SIZE=1, W[]_CLEAR=1, W[]_SCROLL=0, W[]_EXP=6
+set W[]_INIT="set /a DELT[]=1, REPL1_[]=0, BX[]=12, BY[]=2, BDX[]=1, BDY[]=1, SCO[]=0"
+set W[]_UPDATE="set /a XWALL=W[]_W-3, YWALL=W[]_H-5, REPL1=REPL1_[],REPL2=OFF_Y+YWALL+1, BX[]+=BDX[], BY[]+=BDY[] &amp; (if ^!FOCUSWIN^!==[] (if ^!KEY^!==32 set /a SCO[]=0, BX[]=2+^!RANDOM^!%XWALL, BY[]=2, BDX[]=1-^!RANDOM^!%2*2, BDY[]=1) &amp; (if ^!M_X^! gtr 0 set /a LMX[]=M_X) &amp; set /a REPL1_[]=OFF_X+LMX[]-W[]_X-4, REPL1=REPL1_[]) &amp; (if ^!BX[]^! lss 1 set /a BDX[]=1) &amp; (if ^!BX[]^! gtr ^!XWALL^! set /a BDX[]=-1) &amp; (if ^!BY[]^! lss 1 set /a BDY[]=1) &amp; (if ^!BY[]^! == ^!YWALL^! set /a TMPX=OFF_X+BX[]-4, CMPX=REPL1-TMPX &amp; (if ^!CMPX^! lss 0 set /a CMPX=-CMPX) &amp; (if ^!CMPX^! leq 4 set /a BDY[]=-1, SCO[]+=1)) &amp; set /a REPL3=OFF_X+BX[], REPL4=OFF_Y+BY[], SCORE=SCO[]"
+set W[]_CONTENT="fbox a 0 db REPL1,REPL2,8,0 &amp; pixel c 0 @ REPL3,REPL4 &amp; text e 0 0 \n_Score:^!SCORE^! OFF_X,OFF_Y"</code></pre></div>
+
+to this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>w.name="Game \\80(SPACE to restart)"
+w.x=28, w.y=31
+w.width=60, w.height=30
+w.xa=1, w.ya=1
+w.closeable=true, w.resizeable=true, w.scrollable=false
+w.init="w.bx=12, w.by=2, w.bdx=1, w.bdy=1, w.oldMx=-100, w.score=0"
+
+w.update="xWall = w.width-3, yWall = w.height-5;" + 
+	"w.bx += w.bdx, w.by += w.bdy;" +
+	"if (w == focusWin) {" +
+		"if (KEY==32) w.score=0, w.bx = GetRandom(0,xWall), w.by=2, w.bdx = 1-GetRandom(0,1)*2, w.bdy=1;" +
+		"if (M_X &gt; 0) { w.oldMx = OFF_X + M_X - w.x - 4 }" +
+	"}" +
+	"if (w.bx &lt; 1) w.bdx = 1;" +
+	"if (w.bx &gt; xWall) w.bdx = -1;" +
+	"if (w.by &lt; 1) w.bdy = 1;" +
+	"if (w.by == yWall) { cmpx = Math.abs(w.oldMx - (OFF_X+w.bx-4)); if (cmpx &lt;= 4) w.bdy=-1, w.score+=1; }" +
+	"REPL1 = w.oldMx, REPL2 = OFF_Y + yWall + 1, REPL3 = OFF_X+w.bx, REPL4 = OFF_Y+w.by, REPL5 = w.score"
+			
+w.content="fbox a 0 db REPL1,REPL2,8,0 &amp; pixel c 0 @ REPL3,REPL4 &amp; text e 0 0 \\n_Score:REPL5 OFF_X,OFF_Y"
+</code></pre></div>
+
+<br>
+<strong class="text-strong">EDIT:</strong> Classic Snake.met game added (Javascript version only)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: BWin - Mouse GUI with windows - move,scale,maximize,close,tab,animate</h3>
+				<div class="date">Posted: <strong>06 Jun 2018 20:06</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content"><strong class="text-strong">Archive was updated</strong> due to the fact that the <strong class="text-strong">speed of cmdgfx_gdi was improved</strong> (especially for <strong class="text-strong">fullscreen</strong>, try it if fullscreen seemed sluggish before!)<br>
+<br>
+Also, BWin now accepts files with spaces in their names being dropped on BWin.bat either at start or while running.<br>
+<br>
+As mentioned above, a <strong class="text-strong">Snake </strong>game was added to the JScript version (drop snake.met on BWin.bat). Also, the "notepad" met file is now a lot more efficient for the JScript version since it keeps the text in memory until it is manually saved<br>
+<br>
+Here's a screenshot showing about 60 text windows running simultaneously, fullscreen (they cannot all be seen). A game of snake just ended in the upper-left part of the screen.<br>
+<br>
+<img src="https://ucbf1ff22810968695a94c8bb2db.dl.dropboxusercontent.com/cd/0/inline/ATZ8sa-yCbtLjJLe8kTYHqxZnKJzcrMqL6u91iM4Bfs_RnHzTJAIzScubJnbJl9zV7IT4UYVvGmSz0f_3PBNG5l_DrtmmXy2uKQcdLaBes9c6DVmUBBF6hc2uLbVOHYG3gCa0WOYhSFayzw2wG4DERM9HTkO99E6nB-n1CAow83S_oLsxu3Y4nKDm2puxBJKjwI/file" class="postimage" alt="Image"><br>
+<br>
+One more thing: to fully experience this script on Win10, I would strongly suggest to disable "Antimalware Service Executable" if it is running in the background.I have seen it eat more than 50% CPU and seems more of malware software itself than anything else.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: BWin - Mouse GUI with windows - move,scale,maximize,close,tab,animate</h3>
+				<div class="date">Posted: <strong>23 Jul 2018 17:02</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">The archive was updated once more.<br>
+<br>
+This time I added a file explorer (only to the Jscript version). It opens automatically if running BWin.bat without input.<br>
+<br>
+That makes it much easier to browse and open other files inside BWin. The file explorer has no other functions than to browse between folders and open files (using either keys or mouse). Several instances of the explorer can be active at once of course, just open explorer.met from the file explorer.<br>
+<br>
+<img src="https://ucbd22852cb8ee97855302487563.dl.dropboxusercontent.com/cd/0/inline/ATYR99so_SGibaaGl_RgSNHYE86JHPq0QmNYpk-7RUIV4YKnP1XgZEDZLFNxGKKMKW6IKhN_-aETbSpPTx8K3jzOdQI9jNIjaSWe64n8nSKYUK4vv1XelrPOc476qFq8bE3obXauy-ZmIeohrIDhQFlEqPf-8jkQrWOhlfwvsxBH47_wheZ9cKM9PouvRphHtGA/file" class="postimage" alt="Image"><br>
+<br>
+Oh, and also, on Win10, fullscreen is now truly full screen (no bottom task bar visible)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: BWin - Mouse GUI with windows - move,scale,maximize,close,tab,animate</h3>
+				<div class="date">Posted: <strong>24 Aug 2018 19:48</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">And here is a new version of BWin, the difference being that the window will now respond to mouse resizing of the cmd window (utilizing the whole draw area).</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8484&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:27:18 GMT -->
+</html>

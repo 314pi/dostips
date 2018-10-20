@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=39547 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:56 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>FindRepl.bat:New regex utility to search and replace strings - Page 6 - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic7eec.html?t=4697&amp;start=75">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic2000.html?f=3&amp;t=4697&amp;start=75">FindRepl.bat:New regex utility to search and replace strings</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting6172.html?mode=reply&amp;f=3&amp;t=4697" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic3aa2.html?f=3&amp;t=4697&amp;start=75&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="4697" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			135 posts
+							<ul>
+	<li class="dropdown-container dropdown-button-control dropdown-page-jump page-jump">
+		<a class="button button-icon-only dropdown-trigger" href="#" title="Click to jump to page…" role="button"><i class="icon fa-level-down fa-rotate-270" aria-hidden="true"></i><span class="sr-only">Page <strong>6</strong> of <strong>9</strong></span></a>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+				<li>Jump to page:</li>
+				<li class="page-jump-form">
+					<input type="number" name="page-number" min="1" max="999999" title="Enter the page number you wish to go to" class="inputbox tiny" data-per-page="15" data-base-url=".&#x2F;viewtopic.php&#x3F;f&#x3D;3&amp;amp&#x3B;t&#x3D;4697" data-start-name="start" />
+					<input class="button2" value="Go" type="button" />
+				</li>
+			</ul>
+		</div>
+	</li>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic507f.html?f=3&amp;t=4697&amp;start=60" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopica720.html?f=3&amp;t=4697" role="button">1</a></li>
+			<li class="ellipsis" role="separator"><span>…</span></li>
+				<li><a class="button" href="viewtopic31ec.html?f=3&amp;t=4697&amp;start=45" role="button">4</a></li>
+				<li><a class="button" href="viewtopic507f.html?f=3&amp;t=4697&amp;start=60" role="button">5</a></li>
+			<li class="active"><span>6</span></li>
+				<li><a class="button" href="viewtopic6e90.html?f=3&amp;t=4697&amp;start=90" role="button">7</a></li>
+				<li><a class="button" href="viewtopic10f4.html?f=3&amp;t=4697&amp;start=105" role="button">8</a></li>
+				<li><a class="button" href="viewtopicc178.html?f=3&amp;t=4697&amp;start=120" role="button">9</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic6e90.html?f=3&amp;t=4697&amp;start=90" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p39507" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile39507">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content39507">
+
+						<h3 class="first"><a href="#p39507">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0438.html?mode=quote&amp;f=3&amp;p=39507" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic0e56.html?p=39507#p39507" onclick="prompt('Message #76',this.href); return false;">#76</a></span> 
+									<a class="unread" href="viewtopic0e56.html?p=39507#p39507" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>26 Jan 2015 11:11
+			</p>
+			
+			
+			
+			<div class="content">Interesting problem.<br /><br />I imagine FindRepl.bat could handle this well, but I don't really know it well.<br /><br /><a href="viewtopicb16d.html?f=3&amp;t=6044" class="postlink">JREPL.BAT</a> can definitely handle this.<br /><br /><strong class="text-strong">There are some complicating factors to consider.</strong><br /><br />1) Apostraphe should not be removed within contractions or possessives: &quot;can't&quot; should not become &quot;can t&quot;<br /><br />2) Hyphenated words should remain hyphenated: &quot;mother-in-law&quot; should not become &quot;mother in law&quot;<br /><br />3) Words split across multiple lines via hyphen should be collapsed into a single word. The text may be double (or more) spaced as in your example. &quot;book-\n\nkeeper&quot; should become &quot;bookkeeper&quot;.<br /><br />4) All words should be converted to lower case, unless it is a proper noun. But I don't know how to detect proper nouns.<br /><br /><strong class="text-strong">JREPL can solve the problem in 3 steps:</strong><br /><br />1) Use JREPL to remove all unwanted punctuation and white space, and put each word on a speparate line.<br /><br />The /M option is needed because I search across lines. The /I option is used to ignore case. The /X option is used to enable use of \n in replacement expression. I use the /T option to process a list of find/replace pairs. The captured expression numbering is odd because each alternate gets an implicit number.<br /><br />- collapse a hyphenated word accross multiple lines into a single word on one line:<br />&quot;([a-z])-(?:\r?\n)+([a-z])&quot; --&gt; &quot;$2$3&quot;<br /><br />- replace consecutive white space, optionally with punctuation before or after, with a single new line:<br />&quot;[^a-z0-9]*\s+[^a-z0-9]*&quot; --&gt; &quot;\n&quot;<br /><br />- remove leading punctuation from the beginning of the first line:<br />&quot;^[^a-z0-9]+&quot; --&gt; &quot;&quot;<br /><br />- remove trailing punctuation at the end in case last line is missing \n:<br />&quot;[^a-z0-9]+$&quot; --&gt; &quot;\n&quot;<br /><br />2) sort the result with SORT<br /><br />3) Use JREPL to remove duplicates and convert everything to lower case. The /J option allows use of toLowerCase() method in replacement value.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;(&#91;a-z&#93;)-(?:\r?\n)+(&#91;a-z&#93;)/&#91;^a-z0-9&#93;*\s+&#91;^a-z0-9&#93;*/^&#91;^a-z0-9&#93;+/&#91;^a-z0-9&#93;+$&quot; ^<br />&nbsp; &nbsp; &nbsp; &quot;$2$3/\n//\n&quot; /i /m /x /t &quot;/&quot; /f test.txt | ^<br />sort | ^<br />jrepl &quot;(.*\n)\1*&quot; &quot;$1.toLowerCase()&quot; /i /j /m<br /></code></pre></div><br /><strong class="text-strong">The above has the following limitations:</strong><br /><br />1) I cannot detect proper nouns, so they lose their capital letters.<br /><br />2) I cannot detect when a naturally hyphenated word like &quot;mother-in-law&quot; is split across multiple lines. So &quot;mother-\n\nin-law&quot; incorrectly becomes &quot;motherin-law&quot;<br /><br />3) I assume only the 26 English letters are used. Non-English letters in the extended ASCII range are treated as punctuation, and will be stripped if they appear before or after white space.<br /><br />There are probably other issues that I am not aware of - language parsing is complicated.<br /><br /><br /><strong class="text-strong">Here is the test text that I used:</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(&quot;First line, with comma character.&quot;)<br /><br />Second line with punctuation mark!<br /><br />Third line with question mark?<br /><br />Fourth line with two &quot;double quotes&quot;.<br /><br />This 5th line has an ordinal number.<br /><br />Hyphenated words are not a high-minded concept.<br /><br />A word may be split across two sep-<br /><br />arate lines using a hyphen.<br /><br />Contractions mustn't be altered.<br /><br />(&quot;Last line without newline at end.&quot;)<br /></code></pre></div><br /><strong class="text-strong">And here is my result:</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>5th<br />a<br />across<br />altered<br />an<br />are<br />at<br />be<br />character<br />comma<br />concept<br />contractions<br />double<br />end<br />first<br />fourth<br />has<br />high-minded<br />hyphen<br />hyphenated<br />last<br />line<br />lines<br />mark<br />may<br />mustn't<br />newline<br />not<br />number<br />ordinal<br />punctuation<br />question<br />quotes<br />second<br />separate<br />split<br />third<br />this<br />two<br />using<br />with<br />without<br />word<br />words<br /></code></pre></div><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p39510" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile39510">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content39510">
+
+						<h3 ><a href="#p39510">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingac63.html?mode=quote&amp;f=3&amp;p=39510" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4c6d.html?p=39510#p39510" onclick="prompt('Message #77',this.href); return false;">#77</a></span> 
+									<a class="unread" href="viewtopic4c6d.html?p=39510#p39510" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>26 Jan 2015 12:26
+			</p>
+			
+			
+			
+			<div class="content">Hi Bars! The first step is change special characters by spaces:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt; FindRepl &quot;&#91;^a-z\r\n&#93;&quot; &quot; &quot; &lt; test.txt <br />first line&nbsp; with comma character<br /><br />second line with punctuation mark<br /><br />third line with question mark<br /><br />fourth line with two&nbsp; double quote<br /><br />fifth line had dot in the end<br /></code></pre></div><br />The next step would be separate words in individual lines, that may be easily achieved in the same execution of FindRepl, and then eliminate duplicate words that can NOT be done in FindRepl, so an auxiliary Batch code is needed. However, in this case it is simpler that the Batch code directly process the same lines above, that is:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal<br /><br />for /F &quot;delims=&quot; %%a in ('FindRepl &quot;&#91;^a-z\r\n&#93;&quot; &quot; &quot; ^&lt; test.txt') do (<br />&nbsp; &nbsp;for %%b in (%%a) do (<br />&nbsp; &nbsp; &nbsp; if not defined word&#91;%%b&#93; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo %%b<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;word&#91;%%b&#93;=1&quot;<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />)<br /></code></pre></div><br />Output example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>first<br />line<br />with<br />comma<br />character<br />second<br />punctuation<br />mark<br />third<br />question<br />fourth<br />two<br />double<br />quote<br />fifth<br />had<br />dot<br />in<br />the<br />end<br /></code></pre></div><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p39528" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile39528">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7c64.html?author_id=5042&amp;sr=posts">87</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 01 Sep 2013 20:47</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content39528">
+
+						<h3 ><a href="#p39528">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting3e68.html?mode=quote&amp;f=3&amp;p=39528" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic46a8.html?p=39528#p39528" onclick="prompt('Message #78',this.href); return false;">#78</a></span> 
+									<a class="unread" href="viewtopic46a8.html?p=39528#p39528" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a></strong> &raquo; </span>26 Jan 2015 20:04
+			</p>
+			
+			
+			
+			<div class="content">@Dbenham and @ Aacini,<br /><br />thanks you for replying my problems and i will post my  feedback  to all your suggestions when an actual subtitle DVD files i saved will be tested soon.<br /><br />@Dbenham, at first i had a script made before your reply:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f &quot;delims=&quot; %%A in (' type &quot;input.txt&quot; ^| jrepl &quot;(\w+)&quot; &quot;$1&quot; /jmatch ') do (<br />&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; ECHO %%A <br />&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;) &gt;&gt;output.txt<br /></code></pre></div><br /><br />and regarding the word likes you mentions:<br /><br />mother-in-law<br />can't<br />i'm<br /><br />really a problem to me in converting to my native dialect language.<br /><br />---------------------------------------<br /><br />@Aacini,<br /><br />do you have Findrepl scripts that an output.txt can be translated to my native dialect language?<br /><br />for example,<br /><br />output.txt content:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>my<br />username<br />is<br />Bars<br /></code></pre></div><br /><br /><br /> english-cebuano.txt content:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>my , ang akong<br />username , username<br />is , mao ang<br />Bars , Bars<br /></code></pre></div><br /><br />if the every word in the content of output.txt matches the first every first word in the content of  english-cebuano.txt, then , it will automatically replaced &quot;my&quot; in the output.txt with &quot;ang akong&quot; in a english-cebuano.txt (with a &quot;comma&quot; symbol as delimeter).<br /><br />so the translated output.txt content will be (or create a new file named translated.txt) :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ang akong<br />username<br />mao ang<br />Bars<br /></code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p39533" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile39533">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content39533">
+
+						<h3 ><a href="#p39533">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting822d.html?mode=quote&amp;f=3&amp;p=39533" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice367.html?p=39533#p39533" onclick="prompt('Message #79',this.href); return false;">#79</a></span> 
+									<a class="unread" href="viewtopice367.html?p=39533#p39533" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>26 Jan 2015 21:01
+			</p>
+			
+			
+			
+			<div class="content">You may directly use the replacement file in the /G: switch, as described at <a href="viewtopice47f.html?f=3&amp;t=4697&amp;p=38121#p38121" class="postlink">FindRepl documentation</a>:<br /><br /><blockquote><div><cite>FindRepl documentation wrote:</cite>6. Loading alternations from a file (/G switch)<br /><br />The new /G switch allows to place the search/replace alternations in a file. The use of this feature is simple because all previously described facilities works in the same way; the only difference is that the search/replacement alternations are read from a file instead of placed in parameters. <br /><br />In the description of || feature at previous point, the /J switch allows to use regexps/JScript expressions instead of literal strings, and /A switch is used to set a find-replace operation instead of a find-only one. The same 4 combinations of /A and /J switches are used in the same way when /G switch is added, as shown below:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Command:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; File lines have:&nbsp; &nbsp; &nbsp; &nbsp;Operation performed:<br /><br />FindRepl /G:filename.txt&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; literal&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Find literals<br />FindRepl /G:filename.txt&nbsp; /A&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; literalS|literalR&nbsp; &nbsp; &nbsp; Find literalS, replace by literalR<br />FindRepl /G:filename.txt&nbsp; &nbsp; &nbsp; /J&nbsp; &nbsp; &nbsp; &nbsp; regexp&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Find regexps<br />FindRepl /G:filename.txt&nbsp; /A&nbsp; /J&nbsp; &nbsp; &nbsp; &nbsp; regexp||JScript&nbsp; &nbsp; &nbsp; &nbsp; Find regexp, replace by JScript expression<br /></code></pre></div><br />To define search and replace alternations, include the /A switch and separate each search-replace literals pair by a single pipe | character. For example, this search-replace alternation:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;Sun|Mon|Tue|Wed|Thu|Fri|Sat&quot; /A &quot;Dom|Lun|Mar|Mié|Jue|Vie|Sab&quot;<br /></code></pre></div><br />... may be placed in SearchRepl.txt file this way:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Sun|Dom<br />Mon|Lun<br />Tue|Mar<br />Wed|Mié<br />Thu|Jue<br />Fri|Vie<br />Sat|Sab<br /></code></pre></div><br />... and execute FindRepl this way:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl /G:SearchRepl.txt /A<br /></code></pre></div><br /></div></blockquote><br /><br />In your case you just need to change the separator of each pair of strings in the english-cebuano.txt file, from &quot; , &quot;  to &quot;|&quot;, and use it in /G: option. For example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt; type output.txt<br />my<br />username<br />is<br />Bars<br /><br />C:\&gt; type english-cebuano.txt<br />my|ang akong<br />username|username<br />is|mao ang<br />Bars|Bars<br /><br />C:\&gt; FindRepl /G:english-cebuano.txt /A &lt; output.txt<br />ang akong<br />username<br />mao ang<br />Bars<br /></code></pre></div><br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p39536" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile39536">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7c64.html?author_id=5042&amp;sr=posts">87</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 01 Sep 2013 20:47</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content39536">
+
+						<h3 ><a href="#p39536">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting871b.html?mode=quote&amp;f=3&amp;p=39536" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic0fcd.html?p=39536#p39536" onclick="prompt('Message #80',this.href); return false;">#80</a></span> 
+									<a class="unread" href="viewtopic0fcd.html?p=39536#p39536" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a></strong> &raquo; </span>27 Jan 2015 01:49
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite>You may directly use the replacement file in the /G: switch, as described at <a href="viewtopice47f.html?f=3&amp;t=4697&amp;p=38121#p38121" class="postlink">FindRepl documentation</a>:<br /><br /><blockquote><div><cite>FindRepl documentation wrote:</cite>6. Loading alternations from a file (/G switch)<br /><br />The new /G switch allows to place the search/replace alternations in a file. The use of this feature is simple because all previously described facilities works in the same way; the only difference is that the search/replacement alternations are read from a file instead of placed in parameters. <br /><br />In the description of || feature at previous point, the /J switch allows to use regexps/JScript expressions instead of literal strings, and /A switch is used to set a find-replace operation instead of a find-only one. The same 4 combinations of /A and /J switches are used in the same way when /G switch is added, as shown below:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Command:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; File lines have:&nbsp; &nbsp; &nbsp; &nbsp;Operation performed:<br /><br />FindRepl /G:filename.txt&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; literal&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Find literals<br />FindRepl /G:filename.txt&nbsp; /A&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; literalS|literalR&nbsp; &nbsp; &nbsp; Find literalS, replace by literalR<br />FindRepl /G:filename.txt&nbsp; &nbsp; &nbsp; /J&nbsp; &nbsp; &nbsp; &nbsp; regexp&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Find regexps<br />FindRepl /G:filename.txt&nbsp; /A&nbsp; /J&nbsp; &nbsp; &nbsp; &nbsp; regexp||JScript&nbsp; &nbsp; &nbsp; &nbsp; Find regexp, replace by JScript expression<br /></code></pre></div><br />To define search and replace alternations, include the /A switch and separate each search-replace literals pair by a single pipe | character. For example, this search-replace alternation:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;Sun|Mon|Tue|Wed|Thu|Fri|Sat&quot; /A &quot;Dom|Lun|Mar|Mié|Jue|Vie|Sab&quot;<br /></code></pre></div><br />... may be placed in SearchRepl.txt file this way:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Sun|Dom<br />Mon|Lun<br />Tue|Mar<br />Wed|Mié<br />Thu|Jue<br />Fri|Vie<br />Sat|Sab<br /></code></pre></div><br />... and execute FindRepl this way:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl /G:SearchRepl.txt /A<br /></code></pre></div><br /></div></blockquote><br /><br />In your case you just need to change the separator of each pair of strings in the english-cebuano.txt file, from &quot; , &quot;  to &quot;|&quot;, and use it in /G: option. For example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt; type output.txt<br />my<br />username<br />is<br />Bars<br /><br />C:\&gt; type english-cebuano.txt<br />my|ang akong<br />username|username<br />is|mao ang<br />Bars|Bars<br /><br />C:\&gt; FindRepl /G:english-cebuano.txt /A &lt; output.txt<br />ang akong<br />username<br />mao ang<br />Bars<br /></code></pre></div><br /><br />Antonio</div></blockquote><br /><br />@Aacini,<br /><br />thanks for a quick reply. it seems script is very simple to do with a suggested &quot;|&quot; as a delimeter (as a recommended for use in english-cebuano.txt).<br /><br />can you give us another big help below<br /><br />or i will try to use a sentence as my home assignment:<br /><br />from :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>my username is Bars<br /></code></pre></div><br /><br />to:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ang akong username mao ang Bars<br /></code></pre></div><br /><br /><br />if working, then, next is multi-lines:<br /><br />from :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>my username is Bars<br /><br />another username is Aacini<br /><br /></code></pre></div><br /><br />to:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ang akong username mao ang Bars<br /><br />lain nga username mao ang Aacini<br /><br /></code></pre></div><br /><br />above output have two empty line as required.<br /><br />thanks again.<br /><br />Bars</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p39547" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile39547">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content39547">
+
+						<h3 ><a href="#p39547">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting95ed-2.html?mode=quote&amp;f=3&amp;p=39547" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9982.html?p=39547#p39547" onclick="prompt('Message #81',this.href); return false;">#81</a></span> 
+									<a class="unread" href="viewtopic9982.html?p=39547#p39547" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>27 Jan 2015 09:48
+			</p>
+			
+			
+			
+			<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt; type output.txt<br />my username is Bars<br /><br />another username is Aacini<br /><br /><br />C:\&gt; type english-cebuano.txt<br />my|ang akong<br />is|mao ang<br />another|lain nga<br /><br />C:\&gt; FindRepl /G:english-cebuano.txt /A &lt; output.txt<br />ang akong username mao ang Bars<br /><br />lain nga username mao ang Aacini<br /><br /><br />C:\&gt; <br /></code></pre></div><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p39549" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile39549">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content39549">
+
+						<h3 ><a href="#p39549">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7e15.html?mode=quote&amp;f=3&amp;p=39549" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6813.html?p=39549#p39549" onclick="prompt('Message #82',this.href); return false;">#82</a></span> 
+									<a class="unread" href="viewtopic6813.html?p=39549#p39549" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>27 Jan 2015 09:59
+			</p>
+			
+			
+			
+			<div class="content">I suspect that code is dependent on the order of the translation table. I think it would require that larger words be listed before smaller words that may be contained within a larger word.<br /><br />I think this would cause a problem:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>to|xxxx<br />toward|yyyy<br /></code></pre></div><br />but this would be OK<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>toward|yyyy<br />to|xxxx<br /></code></pre></div><br /><br />Dave Benham</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a> on 27 Jan 2015 15:24, edited 1 time in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p39550" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile39550">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content39550">
+
+						<h3 ><a href="#p39550">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingb90b.html?mode=quote&amp;f=3&amp;p=39550" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb032.html?p=39550#p39550" onclick="prompt('Message #83',this.href); return false;">#83</a></span> 
+									<a class="unread" href="viewtopicb032.html?p=39550#p39550" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>27 Jan 2015 13:41
+			</p>
+			
+			
+			
+			<div class="content">You are right, Dave. This point is explained in the documentation:<br /><br /><blockquote><div><cite>FindRepl documentation wrote:</cite>The alternatives are evaluated in left-to-right order and stops at the first one that matchs. This means that if narrow regexps are placed first and wider ones after, the last regexps will get just those data that was not &quot;captured&quot; by anyone of previous regexps. For example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl &quot;\d||\w||.&quot; /A &quot;'Digits'||'Just letters \(not digits\)'||'The rest of characters \(not digits nor letters\)'&quot; /J<br /></code></pre></div></div></blockquote><br />I think I should elaborate on such information with something like this:<br /><br /><blockquote class="uncited"><div>Conversely if the alternatives are literal strings, they must be placed in longer-to-smaller order to avoid that a short word may appear inside a larger one and be wrongly replaced.<br /></div></blockquote><br />... and add a complete description of this point in the first part of the documentation. Thanks for note this!<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p39552" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile39552">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content39552">
+
+						<h3 ><a href="#p39552">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting85b7.html?mode=quote&amp;f=3&amp;p=39552" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicc878.html?p=39552#p39552" onclick="prompt('Message #84',this.href); return false;">#84</a></span> 
+									<a class="unread" href="viewtopicc878.html?p=39552#p39552" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>27 Jan 2015 15:23
+			</p>
+			
+			
+			
+			<div class="content">Have a look at <a href="viewtopice644-2.html?p=39534#p39534" class="postlink">how I solved the problem using JREPL</a>. I build a translation dictionary using environment variables, and then have one regular expression that generically finds words in the source, and the replacement attempts to look up the value using JScript. This avoids the entire ordering issue. I also think it may be more efficient. I suspect you could do something similar.<br /><br />JScript has access to the <a href="https://msdn.microsoft.com/en-us/library/x4k5wbx4(v=vs.84).aspx" class="postlink">Dictionary Object</a> in case you don't want to use environment variables.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p39566" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile39566">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7c64.html?author_id=5042&amp;sr=posts">87</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 01 Sep 2013 20:47</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content39566">
+
+						<h3 ><a href="#p39566">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting582a.html?mode=quote&amp;f=3&amp;p=39566" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic0aa2.html?p=39566#p39566" onclick="prompt('Message #85',this.href); return false;">#85</a></span> 
+									<a class="unread" href="viewtopic0aa2.html?p=39566#p39566" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a></strong> &raquo; </span>27 Jan 2015 23:12
+			</p>
+			
+			
+			
+			<div class="content">@Aacini , a big thanks for your another good scripts -- it works on multi-lines too with one empty line per sentence including .srt format that required timestamp before a sentence like this example:<br /><br /><blockquote class="uncited"><div>1<br />00:00:24,827 --&gt; 00:00:29,827<br />My user-name can't be Bars!<br /><br />2<br />00:00:59,587 --&gt; 00:01:04,587<br />My other user-name is Bars143!<br /><br /></div></blockquote><br /><br />here are my files to works on my assignment:<br /><br />translation source file --&gt; english-cebuano2.txt<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>my|ang akong<br />can't|'ili<br />be|mao ang<br />other|uban<br />is|ay<br /></code></pre></div><br /><br />input subtitle file --&gt; english2.srt<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>1<br />00:00:24,827 --&gt; 00:00:29,827<br />My user-name can't be Bars!<br /><br />2<br />00:00:59,587 --&gt; 00:01:04,587<br />My other user-name is Bars143!<br /></code></pre></div><br /><br />output subtitle file --&gt;cebuano2.srt<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>1<br />00:00:24,827 --&gt; 00:00:29,827<br />My user-name 'ili mao ang Bars!<br /><br />2<br />00:00:59,587 --&gt; 00:01:04,587<br />My uban user-name ay Bars143!<br /><br /></code></pre></div><br /><br /><br />the problem above is &quot;My&quot; which is has a capital &quot;M&quot; but my english-cebuano content is &quot;my|ang akong&quot; lowercase &quot;m&quot; which result in no match.<br /><br />i decided to changed &quot;my|ang akong&quot; to &quot;My|ang akong&quot; as shown below:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>My|ang akong<br />can't|'ili<br />be|mao ang<br />other|uban<br />is|ay<br /></code></pre></div><br /><br />which is a match as the output show after revising lowercase to uppercase,<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>1<br />00:00:24,827 --&gt; 00:00:29,827<br />ang akong user-name 'ili mao ang Bars!<br /><br />2<br />00:00:59,587 --&gt; 00:01:04,587<br />ang akong uban user-name ay Bars143!<br /><br /></code></pre></div><br /><br />@Aacini, do you have script for insesitive case to match &quot;my&quot; with &quot;My&quot; ?<br /><br />here is my edited code based on your scripts added output file at the end of script&#058;<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl /G:english-cebuano2.txt /A &lt; english2.srt &gt;cebuano2.srt<br /></code></pre></div><br />		<br />@Aacini, your scripts seems smaller but need some additional scripts for insesitive case if neccessary?<br /><br />thanks again,<br />		<br />Bars</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p39700" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile39700">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7c64.html?author_id=5042&amp;sr=posts">87</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 01 Sep 2013 20:47</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content39700">
+
+						<h3 ><a href="#p39700">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting6f1c.html?mode=quote&amp;f=3&amp;p=39700" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicd054.html?p=39700#p39700" onclick="prompt('Message #86',this.href); return false;">#86</a></span> 
+									<a class="unread" href="viewtopicd054.html?p=39700#p39700" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a></strong> &raquo; </span>02 Feb 2015 00:03
+			</p>
+			
+			
+			
+			<div class="content">HI, Antonio<br /><br />can you give me an alternative faster script than this i made for two days now:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />setlocal enabledelayedexpansion<br /><br />set &quot;count=1<br />set /a &quot;count+=1&quot;<br /><br />echo.&quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot;&gt;list_of_url.txt<br /><br />for /f &quot;delims=&quot; %%C in (wordlist.txt) do (<br />&nbsp; &nbsp;if !count! lss 30 echo.%%C |FindRepl &quot; \r\n&quot; &quot;+&quot;<br />&nbsp; &nbsp;if !count!==30 echo.%%C |FindRepl &quot; \r\n&quot; &quot;+&quot; &amp;&amp;echo. &amp;&amp;echo.&quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;if !count! geq 31 if !count! lss 60 echo.%%C |FindRepl &quot; \r\n&quot; &quot;+&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;if !count!==60 echo.%%C |FindRepl &quot; \r\n&quot; &quot;+&quot; &amp;&amp;echo. &amp;&amp;echo.&quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot;&amp;&amp; set &quot;count=0&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;set /a &quot;count+=1&quot;<br />&nbsp; &nbsp;) &gt;&gt;list_of_url.txt<br />&nbsp; &nbsp;<br />&nbsp; &nbsp; &lt; list_of_url.txt FindRepl &quot;\x22&quot; &quot;&quot; &gt; list_of_url2.txt &amp;&amp; &lt; list_of_url2.txt FindRepl&nbsp; &quot;m&amp;q=\x0D\x0A&quot; &quot;m&amp;q=&quot; &gt; list_of_url3.txt &amp;&amp; &lt; list_of_url3.txt FindRepl&nbsp; &quot;\+\ &quot; &quot;&quot; /v &gt; list_of_url4.txt<br /><br />echo ended....<br />pause<br /></code></pre></div><br /><br />content of wordlist.txt (cut-off to a 181 lines from original total 58111 lines):<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>aardvark<br />aardwolf<br />aaron<br />aback<br />abacus<br />abaft<br />abalone<br />abandon<br />abandoned<br />abandonment<br />abandons<br />abase<br />abased<br />abasement<br />abash<br />abashed<br />abate<br />abated<br />abatement<br />abates<br />abattoir<br />abattoirs<br />abbe<br />abbess<br />abbey<br />abbeys<br />abbot<br />abbots<br />abbreviate<br />abbreviated<br />abbreviates<br />abbreviating<br />abbreviation<br />abbreviations<br />abdicate<br />abdicated<br />abdicates<br />abdicating<br />abdication<br />abdomen<br />abdomens<br />abdominal<br />abduct<br />abducted<br />abducting<br />abduction<br />abductions<br />abductor<br />abductors<br />abducts<br />abe<br />abeam<br />abel<br />abele<br />aberdeen<br />aberrant<br />aberration<br />aberrations<br />abet<br />abets<br />abetted<br />abetting<br />abeyance<br />abhor<br />abhorred<br />abhorrence<br />abhorrent<br />abhors<br />abide<br />abided<br />abides<br />abiding<br />abidjan<br />abies<br />abilities<br />ability<br />abject<br />abjectly<br />abjure<br />abjured<br />ablate<br />ablates<br />ablating<br />ablation<br />ablative<br />ablaze<br />able<br />ablebodied<br />abler<br />ablest<br />abloom<br />ablution<br />ablutions<br />ably<br />abnegation<br />abnormal<br />abnormalities<br />abnormality<br />abnormally<br />aboard<br />abode<br />abodes<br />abolish<br />abolished<br />abolishes<br />abolishing<br />abolition<br />abolitionist<br />abolitionists<br />abomb<br />abominable<br />abominably<br />abominate<br />abominated<br />abomination<br />abominations<br />aboriginal<br />aborigines<br />abort<br />aborted<br />aborting<br />abortion<br />abortionist<br />abortionists<br />abortions<br />abortive<br />aborts<br />abound<br />abounded<br />abounding<br />abounds<br />about<br />above<br />abraded<br />abraham<br />abrasion<br />abrasions<br />abrasive<br />abrasively<br />abrasiveness<br />abrasives<br />abreast<br />abridge<br />abridged<br />abridgement<br />abridging<br />abroad<br />abrogate<br />abrogated<br />abrogating<br />abrogation<br />abrogations<br />abrupt<br />abruptly<br />abruptness<br />abscess<br />abscesses<br />abscissa<br />abscissae<br />abscissas<br />abscond<br />absconded<br />absconder<br />absconding<br />absconds<br />abseil<br />abseiled<br />abseiler<br />abseiling<br />abseils<br />absence<br />absences<br />absent<br />absented<br />absentee<br />absenteeism<br />absentees<br />absenting<br />absently<br />absentminded<br /><br /></code></pre></div><br /><br />output result of list_of_url.txt:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot;<br />aardvark+aardwolf+aaron+aback+abacus+abaft+abalone+abandon+abandoned+abandonment+abandons+abase+abased+abasement+abash+abashed+abate+abated+abatement+abates+abattoir+abattoirs+abbe+abbess+abbey+abbeys+abbot+abbots+abbreviate+ <br />&quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot;<br />abbreviated+abbreviates+abbreviating+abbreviation+abbreviations+abdicate+abdicated+abdicates+abdicating+abdication+abdomen+abdomens+abdominal+abduct+abducted+abducting+abduction+abductions+abductor+abductors+abducts+abe+abeam+abel+abele+aberdeen+aberrant+aberration+aberrations+abet+ <br />&quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot;<br />abets+abetted+abetting+abeyance+abhor+abhorred+abhorrence+abhorrent+abhors+abide+abided+abides+abiding+abidjan+abies+abilities+ability+abject+abjectly+abjure+abjured+ablate+ablates+ablating+ablation+ablative+ablaze+able+ablebodied+abler+ <br />&quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot;<br />ablest+abloom+ablution+ablutions+ably+abnegation+abnormal+abnormalities+abnormality+abnormally+aboard+abode+abodes+abolish+abolished+abolishes+abolishing+abolition+abolitionist+abolitionists+abomb+abominable+abominably+abominate+abominated+abomination+abominations+aboriginal+aborigines+abort+ <br />&quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot;<br />aborted+aborting+abortion+abortionist+abortionists+abortions+abortive+aborts+abound+abounded+abounding+abounds+about+above+abraded+abraham+abrasion+abrasions+abrasive+abrasively+abrasiveness+abrasives+abreast+abridge+abridged+abridgement+abridging+abroad+abrogate+abrogated+ <br />&quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot;<br />abrogating+abrogation+abrogations+abrupt+abruptly+abruptness+abscess+abscesses+abscissa+abscissae+abscissas+abscond+absconded+absconder+absconding+absconds+abseil+abseiled+abseiler+abseiling+abseils+absence+absences+absent+absented+absentee+absenteeism+absentees+absenting+absently+ <br />&quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot;<br />absentminded+<br /></code></pre></div><br /><br />output result of list_of_url2.txt:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=<br />aardvark+aardwolf+aaron+aback+abacus+abaft+abalone+abandon+abandoned+abandonment+abandons+abase+abased+abasement+abash+abashed+abate+abated+abatement+abates+abattoir+abattoirs+abbe+abbess+abbey+abbeys+abbot+abbots+abbreviate+ <br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=<br />abbreviated+abbreviates+abbreviating+abbreviation+abbreviations+abdicate+abdicated+abdicates+abdicating+abdication+abdomen+abdomens+abdominal+abduct+abducted+abducting+abduction+abductions+abductor+abductors+abducts+abe+abeam+abel+abele+aberdeen+aberrant+aberration+aberrations+abet+ <br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=<br />abets+abetted+abetting+abeyance+abhor+abhorred+abhorrence+abhorrent+abhors+abide+abided+abides+abiding+abidjan+abies+abilities+ability+abject+abjectly+abjure+abjured+ablate+ablates+ablating+ablation+ablative+ablaze+able+ablebodied+abler+ <br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=<br />ablest+abloom+ablution+ablutions+ably+abnegation+abnormal+abnormalities+abnormality+abnormally+aboard+abode+abodes+abolish+abolished+abolishes+abolishing+abolition+abolitionist+abolitionists+abomb+abominable+abominably+abominate+abominated+abomination+abominations+aboriginal+aborigines+abort+ <br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=<br />aborted+aborting+abortion+abortionist+abortionists+abortions+abortive+aborts+abound+abounded+abounding+abounds+about+above+abraded+abraham+abrasion+abrasions+abrasive+abrasively+abrasiveness+abrasives+abreast+abridge+abridged+abridgement+abridging+abroad+abrogate+abrogated+ <br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=<br />abrogating+abrogation+abrogations+abrupt+abruptly+abruptness+abscess+abscesses+abscissa+abscissae+abscissas+abscond+absconded+absconder+absconding+absconds+abseil+abseiled+abseiler+abseiling+abseils+absence+absences+absent+absented+absentee+absenteeism+absentees+absenting+absently+ <br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=<br />absentminded+<br /></code></pre></div><br /><br /><br />output result of list_of_url3.txt:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=aardvark+aardwolf+aaron+aback+abacus+abaft+abalone+abandon+abandoned+abandonment+abandons+abase+abased+abasement+abash+abashed+abate+abated+abatement+abates+abattoir+abattoirs+abbe+abbess+abbey+abbeys+abbot+abbots+abbreviate+ <br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=abbreviated+abbreviates+abbreviating+abbreviation+abbreviations+abdicate+abdicated+abdicates+abdicating+abdication+abdomen+abdomens+abdominal+abduct+abducted+abducting+abduction+abductions+abductor+abductors+abducts+abe+abeam+abel+abele+aberdeen+aberrant+aberration+aberrations+abet+ <br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=abets+abetted+abetting+abeyance+abhor+abhorred+abhorrence+abhorrent+abhors+abide+abided+abides+abiding+abidjan+abies+abilities+ability+abject+abjectly+abjure+abjured+ablate+ablates+ablating+ablation+ablative+ablaze+able+ablebodied+abler+ <br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=ablest+abloom+ablution+ablutions+ably+abnegation+abnormal+abnormalities+abnormality+abnormally+aboard+abode+abodes+abolish+abolished+abolishes+abolishing+abolition+abolitionist+abolitionists+abomb+abominable+abominably+abominate+abominated+abomination+abominations+aboriginal+aborigines+abort+ <br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=aborted+aborting+abortion+abortionist+abortionists+abortions+abortive+aborts+abound+abounded+abounding+abounds+about+above+abraded+abraham+abrasion+abrasions+abrasive+abrasively+abrasiveness+abrasives+abreast+abridge+abridged+abridgement+abridging+abroad+abrogate+abrogated+ <br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=abrogating+abrogation+abrogations+abrupt+abruptly+abruptness+abscess+abscesses+abscissa+abscissae+abscissas+abscond+absconded+absconder+absconding+absconds+abseil+abseiled+abseiler+abseiling+abseils+absence+absences+absent+absented+absentee+absenteeism+absentees+absenting+absently+ <br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=absentminded+<br /></code></pre></div><br /><br /><br />output result of list_of_url4.txt:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=aardvark+aardwolf+aaron+aback+abacus+abaft+abalone+abandon+abandoned+abandonment+abandons+abase+abased+abasement+abash+abashed+abate+abated+abatement+abates+abattoir+abattoirs+abbe+abbess+abbey+abbeys+abbot+abbots+abbreviate<br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=abbreviated+abbreviates+abbreviating+abbreviation+abbreviations+abdicate+abdicated+abdicates+abdicating+abdication+abdomen+abdomens+abdominal+abduct+abducted+abducting+abduction+abductions+abductor+abductors+abducts+abe+abeam+abel+abele+aberdeen+aberrant+aberration+aberrations+abet<br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=abets+abetted+abetting+abeyance+abhor+abhorred+abhorrence+abhorrent+abhors+abide+abided+abides+abiding+abidjan+abies+abilities+ability+abject+abjectly+abjure+abjured+ablate+ablates+ablating+ablation+ablative+ablaze+able+ablebodied+abler<br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=ablest+abloom+ablution+ablutions+ably+abnegation+abnormal+abnormalities+abnormality+abnormally+aboard+abode+abodes+abolish+abolished+abolishes+abolishing+abolition+abolitionist+abolitionists+abomb+abominable+abominably+abominate+abominated+abomination+abominations+aboriginal+aborigines+abort<br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=aborted+aborting+abortion+abortionist+abortionists+abortions+abortive+aborts+abound+abounded+abounding+abounds+about+above+abraded+abraham+abrasion+abrasions+abrasive+abrasively+abrasiveness+abrasives+abreast+abridge+abridged+abridgement+abridging+abroad+abrogate+abrogated<br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=abrogating+abrogation+abrogations+abrupt+abruptly+abruptness+abscess+abscesses+abscissa+abscissae+abscissas+abscond+absconded+absconder+absconding+absconds+abseil+abseiled+abseiler+abseiling+abseils+absence+absences+absent+absented+absentee+absenteeism+absentees+absenting+absently<br />https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=absentminded+<br /><br /></code></pre></div><br /><br />as you read the final output file named list_of_url4.txt, the part of the google translate URL for english to cebuano is:<br /><br /><blockquote class="uncited"><div><!-- m --><a class="postlink" href="https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=">https://translate.google.com/m?hl=en&amp;sl ... prev=_m&amp;q=</a><!-- m --><br /></div></blockquote><br /><br />and the the total 30 words limit allowed by google to translates with &quot;+&quot; between words:<br /><br /><blockquote class="uncited"><div>aardvark+aardwolf+aaron+aback+abacus+abaft+abalone+abandon+abandoned+abandonment+abandons+abase+abased+abasement+abash+abashed+abate+abated+abatement+abates+abattoir+abattoirs+abbe+abbess+abbey+abbeys+abbot+abbots+abbreviate<br /></div></blockquote><br /><br />complete URL to be used for batch download of webpage is in this format:<br /><br /><blockquote class="uncited"><div><!-- m --><a class="postlink" href="https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=aardvark+aardwolf+aaron+aback+abacus+abaft+abalone+abandon+abandoned+abandonment+abandons+abase+abased+abasement+abash+abashed+abate+abated+abatement+abates+abattoir+abattoirs+abbe+abbess+abbey+abbeys+abbot+abbots+abbreviate">https://translate.google.com/m?hl=en&amp;sl ... abbreviate</a><!-- m --><br /></div></blockquote><br /><br />but using my own script is slow and time consuming to produces a list 1938 URLs ( 58111 words divided by 30-words per URL = 1938 URL links).<br /><br />so i needs experts to convert my slow script to faster scripts.<br /><br />a Jreply script i made below equivalent to FindRepl is same slow too :<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />setlocal enabledelayedexpansion<br /><br />md dbenhamTEMP<br /><br />set &quot;count=1&quot;<br /><br />echo.&quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot; &gt;list_of_url.txt<br /><br />for /f &quot;delims=&quot; %%C in (wordlist.txt) do (<br />&nbsp; &nbsp;set /a &quot;count+=1&quot;<br />&nbsp; &nbsp;if !count! lss 30 echo.%%C |jrepl &quot; \r\n&quot; &quot;+&quot; /m<br />&nbsp; &nbsp;if !count!==30 echo.&amp;&amp; echo.&quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot; &amp;&amp; set &quot;count=1&quot;<br />&nbsp; &nbsp;) &gt;&gt;list_of_url.txt<br />&nbsp; &nbsp;<br />&nbsp; &nbsp;jrepl &quot;\q&quot; &quot;&quot; /x /m /f list_of_url.txt /o dbenhamTEMP\list_of_url2.txt &amp;&amp; jrepl &quot; \r\n&quot; &quot;&quot; /x /m /f dbenhamTEMP\list_of_url2.txt /o dbenhamTEMP\list_of_url3.txt &amp;&amp; jrepl &quot;\+\r\n&quot; &quot;\r\n&quot; /x /m /f dbenhamTEMP\list_of_url3.txt /o dbenhamTEMP\list_of_url4.txt <br /><br />echo ended....<br />pause<br /></code></pre></div><br /><br />a big help from experts are always fruitful.<br /><br />maybe your new splitfile.bat be applicable to split a file with 58111 lines into a file 1938 lines of 30=words per line?<br />i thinks you can do that too.<br /><br />thanks for your last helpful responses.<br /><br />Bars</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p39723" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile39723">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content39723">
+
+						<h3 ><a href="#p39723">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting36b0.html?mode=quote&amp;f=3&amp;p=39723" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb8af.html?p=39723#p39723" onclick="prompt('Message #87',this.href); return false;">#87</a></span> 
+									<a class="unread" href="viewtopicb8af.html?p=39723#p39723" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>02 Feb 2015 12:21
+			</p>
+			
+			
+			
+			<div class="content">Excuse me. You will get a better help if you describe your problem in a concise text description. Don't use code segments as base examples. Suppose we know nothing about your problem. Use <em class="text-italics">small</em> segments of data files (4 or 5 lines) as examples.<br /><br /><strong class="text-strong">EDIT</strong>: <em class="text-italics">Code added</em><br /><br />Check if this is what you want:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />set wordsPerUrl=30<br />set urlsPerFile=7<br /><br />del list_of_url*.txt 2&gt; NUL<br />set /A wordCount=0, urlCount=0, fileCount=1001<br />set &quot;url=&quot;<br />echo File: 001<br />for /F %%a in (wordlist.txt) do (<br />&nbsp; &nbsp;set &quot;url=!url!+%%a&quot;<br />&nbsp; &nbsp;set /A wordCount+=1<br />&nbsp; &nbsp;if !wordCount! equ %wordsPerUrl% (<br />&nbsp; &nbsp; &nbsp; set wordCount=0<br />&nbsp; &nbsp; &nbsp; echo &quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot; !url:~1! &gt;&gt; list_of_url!fileCount:~1!.txt<br />&nbsp; &nbsp; &nbsp; set &quot;url=&quot;<br />&nbsp; &nbsp; &nbsp; set /A urlCount+=1<br />&nbsp; &nbsp; &nbsp; if !urlCount! equ %urlsPerFile% set /A urlCount=0, fileCount+=1 &amp; echo File: !fileCount:~1!<br />&nbsp; &nbsp;)<br />)<br />if defined url echo &quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot; !url:~1! &gt;&gt; list_of_url!fileCount:~1!.txt<br /></code></pre></div><br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p39753" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile39753">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7c64.html?author_id=5042&amp;sr=posts">87</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 01 Sep 2013 20:47</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content39753">
+
+						<h3 ><a href="#p39753">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting6c0f.html?mode=quote&amp;f=3&amp;p=39753" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopica132.html?p=39753#p39753" onclick="prompt('Message #88',this.href); return false;">#88</a></span> 
+									<a class="unread" href="viewtopica132.html?p=39753#p39753" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8249.html?mode=viewprofile&amp;u=5042" class="username">bars143</a></strong> &raquo; </span>03 Feb 2015 06:04
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite>Excuse me. You will get a better help if you describe your problem in a concise text description. Don't use code segments as base examples. Suppose we know nothing about your problem. Use <em class="text-italics">small</em> segments of data files (4 or 5 lines) as examples.<br /><br /><strong class="text-strong">EDIT</strong>: <em class="text-italics">Code added</em><br /><br />Check if this is what you want:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />set wordsPerUrl=30<br />set urlsPerFile=7<br /><br />del list_of_url*.txt 2&gt; NUL<br />set /A wordCount=0, urlCount=0, fileCount=1001<br />set &quot;url=&quot;<br />echo File: 001<br />for /F %%a in (wordlist.txt) do (<br />&nbsp; &nbsp;set &quot;url=!url!+%%a&quot;<br />&nbsp; &nbsp;set /A wordCount+=1<br />&nbsp; &nbsp;if !wordCount! equ %wordsPerUrl% (<br />&nbsp; &nbsp; &nbsp; set wordCount=0<br />&nbsp; &nbsp; &nbsp; echo &quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot; !url:~1! &gt;&gt; list_of_url!fileCount:~1!.txt<br />&nbsp; &nbsp; &nbsp; set &quot;url=&quot;<br />&nbsp; &nbsp; &nbsp; set /A urlCount+=1<br />&nbsp; &nbsp; &nbsp; if !urlCount! equ %urlsPerFile% set /A urlCount=0, fileCount+=1 &amp; echo File: !fileCount:~1!<br />&nbsp; &nbsp;)<br />)<br />if defined url echo &quot;https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot; !url:~1! &gt;&gt; list_of_url!fileCount:~1!.txt<br /></code></pre></div><br /><br />Antonio</div></blockquote><br /><br />Thanks, Antonio<br /><br />your script really does not need Findrepl yet it finished my 58111 lines code in just 30 seconds better than 15 minutes of my own combo of splitfile.bat, Findrepl.bat, and merge.bat<br /> <br />but i adjust your batch script to suit my needs to remove surrounding double-quote symbols in URL and output all in just one file:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; @echo off<br />&nbsp; &nbsp; setlocal EnableDelayedExpansion<br />&nbsp; &nbsp;md &quot;%~dp0Aacini&quot;<br />&nbsp; &nbsp;set &quot;xx=%~dp0Aacini&quot;<br /><br />&nbsp; &nbsp; set wordsPerUrl=30<br /><br />&nbsp; &nbsp; del list_of_url*.txt 2&gt; NUL<br />&nbsp; &nbsp; set /A wordCount=0, urlCount=0, fileCount=1001<br />&nbsp; &nbsp; set &quot;url=&quot;<br />&nbsp; &nbsp; echo File: 001<br />&nbsp; &nbsp; for /F %%a in (wordlist.txt) do (<br />&nbsp; &nbsp;&nbsp; &nbsp;set &quot;ww=https://translate.google.com/m?hl=en&amp;sl=auto&amp;tl=ceb&amp;ie=UTF-8&amp;prev=_m&amp;q=&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp;set &quot;url=!url!+%%a&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp;set /A wordCount+=1<br />&nbsp; &nbsp; &nbsp; &nbsp;if !wordCount! equ %wordsPerUrl% (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set wordCount=0<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; echo.!ww!!url:~1! &gt;&gt; !xx!\list_of_url!fileCount:~1!.txt<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set &quot;url=&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /A urlCount+=1<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;echo File: !fileCount:~1!<br />&nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; )<br />&nbsp; &nbsp; if defined url echo.!ww!!url:~1! &gt;&gt; !xx!\list_of_url!fileCount:~1!.txt<br /><br /></code></pre></div><br /><br />its great to have an expert like you Antonio -- to solved my slow script.<br />next time i will accept your suggestion for posting example up to 5 lines as needed. <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /><br /><br />bars,</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p40723" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile40723">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content40723">
+
+						<h3 ><a href="#p40723">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinga557-2.html?mode=quote&amp;f=3&amp;p=40723" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9153.html?p=40723#p40723" onclick="prompt('Message #89',this.href); return false;">#89</a></span> 
+									<a class="unread" href="viewtopic9153.html?p=40723#p40723" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>01 Apr 2015 17:14
+			</p>
+			
+			
+			
+			<div class="content">Antonio, when using the <span style="color: blue">/help</span> switch, the top of the help options scrolls off the screen.<br />I only see from option 3 and I have a larger than normal console window.<br /><br />Does it do that on your screen too?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p40740" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile40740">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content40740">
+
+						<h3 ><a href="#p40740">Re: FindRepl.bat:New regex utility to search and replace str</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9a04.html?mode=quote&amp;f=3&amp;p=40740" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6249.html?p=40740#p40740" onclick="prompt('Message #90',this.href); return false;">#90</a></span> 
+									<a class="unread" href="viewtopic6249.html?p=40740#p40740" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>02 Apr 2015 13:12
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>foxidrive wrote:</cite>Antonio, when using the /help switch, the top of the help options scrolls off the screen.<br />I only see from option 3 and I have a larger than normal console window.<br /><br />Does it do that on your screen too?<br /></div></blockquote><br /><br />I have two machines, a very old Windows XP computer and a recent one with Windows 8.1. In both of them the cmd.exe text window is 43 lines height (that is a standard height since the VGA video card days, besides 25 and 50 lines), so I lost the header line of the /help screen only. If the two blank lines at bottom where replaced by just one, the /help option would fit the screen exactly. Anyway, you may review the top part of the /help screen with the side scroll bar...<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting6172.html?mode=reply&amp;f=3&amp;t=4697" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic3aa2.html?f=3&amp;t=4697&amp;start=75&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4697&amp;start=75">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			135 posts
+							<ul>
+	<li class="dropdown-container dropdown-button-control dropdown-page-jump page-jump">
+		<a class="button button-icon-only dropdown-trigger" href="#" title="Click to jump to page…" role="button"><i class="icon fa-level-down fa-rotate-270" aria-hidden="true"></i><span class="sr-only">Page <strong>6</strong> of <strong>9</strong></span></a>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+				<li>Jump to page:</li>
+				<li class="page-jump-form">
+					<input type="number" name="page-number" min="1" max="999999" title="Enter the page number you wish to go to" class="inputbox tiny" data-per-page="15" data-base-url=".&#x2F;viewtopic.php&#x3F;f&#x3D;3&amp;amp&#x3B;t&#x3D;4697" data-start-name="start" />
+					<input class="button2" value="Go" type="button" />
+				</li>
+			</ul>
+		</div>
+	</li>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic507f.html?f=3&amp;t=4697&amp;start=60" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopica720.html?f=3&amp;t=4697" role="button">1</a></li>
+			<li class="ellipsis" role="separator"><span>…</span></li>
+				<li><a class="button" href="viewtopic31ec.html?f=3&amp;t=4697&amp;start=45" role="button">4</a></li>
+				<li><a class="button" href="viewtopic507f.html?f=3&amp;t=4697&amp;start=60" role="button">5</a></li>
+			<li class="active"><span>6</span></li>
+				<li><a class="button" href="viewtopic6e90.html?f=3&amp;t=4697&amp;start=90" role="button">7</a></li>
+				<li><a class="button" href="viewtopic10f4.html?f=3&amp;t=4697&amp;start=105" role="button">8</a></li>
+				<li><a class="button" href="viewtopicc178.html?f=3&amp;t=4697&amp;start=120" role="button">9</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic6e90.html?f=3&amp;t=4697&amp;start=90" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron68e3.gif?cron_type=cron.task.text_reparser.pm_text" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=39547 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:57 GMT -->
+</html>

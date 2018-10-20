@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8574&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:07 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Get arguments without temporary file</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Get arguments without temporary file</h2>
+		<p><a href="viewtopic3c05.html?f=3&amp;t=8574">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8574</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>22 May 2018 07:17</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Hi,<br>
+<br>
+after the claim of Jan Antonin, I take a closer look at the problem and I found a nearly simple method
+<blockquote><div><cite>Jan Antonin wrote:</cite>My biggest (not from the pragmatic point of view of course) contribution which I am really proud of will be an ultimate method of obtainig all command line arguments of a sript inside from the script of course. With no compromise, without any temp file. And storing these arguments inside a normal named variable like %myVar%, not %1.<br>
+I dont care about the speed (I care but there is no principal difference in a speed - the upper bound of time is polynomial depending on a lenght of an input <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":-)" title="Smile"> )</div></blockquote>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+for /F "tokens=3 delims=:" %%F in ("%~0") do goto %%F
+
+:getParam
+(set LF=^
+%=empty=%
+)
+
+&gt; nul break | (%~d0\:GetParams:\..\%~pnx0
+REM %%LF%% )
+REM ###,%*,# %%LF%%
+)
+
+for /F "delims=" %%L in ('doskey /macros ^|findstr /R "^return="') do (
+    set "cmdLine=%%L"
+)
+set "args=!cmdLine:*###,=!"
+set "args=!args:""="!"
+set "args=!args:$$=$!"
+set "args=!args:~0,-10!"
+doskey return=
+
+echo args: --- !args! ---
+exit /b
+
+:GetParams
+rem echo !cmdcmdline!
+set "line=!cmdcmdline!"
+set "line=!line:"=""!"
+set "line=!line:$=$$!"
+doskey return=!line!
+exit
+</code></pre></div>
+
+This uses a sub context of cmd.exe by using a pipe.<br>
+Former I was aware that you can access the arguments there, but I wasn't able to return the values back to the parent process.<br>
+<br>
+First I played a bit with splitting the cmdcmline into single chars and tranfser each char via the exitcode, but it's slow and it has the disadvantage that each character has to be identified and converted to the ASCII value.<br>
+<br>
+Then I remembered the doskey technic to return values from a child process, that's all.<br>
+<br>
+Many thanks to Jan Antonin, without you I would have already give up <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+I'm still eager awaiting your solution<br>
+<br>
+jeb</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>22 May 2018 10:00</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">Sad to say, that the first argument i tested gave me this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Z:\&gt;test.bat "a!b!c!d!e"
+args: --- "ace" ---
+</code></pre></div>(Because of enabled delayed expansion i wanted to test that first; but anything else i tested worked correct; but i haven't yet tested doublequotes and circumflex accent.)<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>22 May 2018 11:51</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Hi penpen,<br>
+<br>
+really stupid bug. I simply forgot the exclamation marks.<br>
+<br>
+It can be fixed by moveing the setlocal EnabledelayedExpansion behind the "pipe-block".<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+for /F "tokens=3 delims=:" %%F in ("%~0") do goto %%F
+
+:getParam
+setlocal DisableDelayedExpansion
+(set LF=^
+%=empty=%
+)
+
+&gt; nul break | (%~d0\:GetParams:\..\%~pnx0
+REM %%LF%% )
+REM ###,%*,# %%LF%%
+)
+
+for /F "delims=" %%L in ('doskey /macros ^|findstr /R "^return="') do (
+    set "cmdLine=%%L"
+)
+setlocal EnableDelayedExpansion
+set "args=!cmdLine:*###,=!"
+set "args=!args:""="!"
+set "args=!args:$$=$!"
+set "args=!args:~0,-10!"
+doskey return=
+
+echo args: --- !args! ---
+exit /b
+
+:GetParams
+setlocal EnableDelayedExpansion
+rem echo !cmdcmdline!
+set "line=!cmdcmdline!"
+set "line=!line:"=""!"
+set "line=!line:$=$$!"
+doskey return=!line!
+exit</code></pre></div>
+
+I suppose it's stable against any other special characters.<br>
+<br>
+Line feeds and carriage returns doesn't work.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>22 May 2018 12:41</strong></div>
+				<div class="author">by <strong>siberia-man</strong></div>
+				<div class="content">Time ago I was a bit angry on the algorithm parsing command line arguments in batch scripts. I made few attempts to implement something like getopts in Bash or GetOptions from the Perl's modules Getopts::Long or Getopts::Std. Today I decided to make some rough example to parse and count command line arguments and to enable all possible symbols as much as possible. I am not sure that this attempt fits the actual thread but (in my opinion) it very close to the topic of the discussion. Of course, this example requires to be polished so much to make it presentable and usable <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"> <br>
+<br>
+<strong class="text-strong">The only limitation I found is the caret symbol that must be duplicated!</strong><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+set /a "OPTIND=0"
+
+:getopt.1
+if "%~1" == "" if [%1] == [] goto :getopt.2
+
+set /a OPTIND=OPTIND+1
+
+set "OPT.%OPTIND%=%~1"
+shift /1
+
+setlocal enabledelayedexpansion
+echo:=== [!OPT.%OPTIND%!] ===
+endlocal
+
+goto :getopt.1
+:getopt.2
+
+
+for /l %%L in ( 1, 1, %OPTIND% ) do (
+	call echo:=== %%L: [%%OPT.%%L%%] ===
+)
+
+echo:Total: %OPTIND%
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>22 May 2018 12:48</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">I build a small unittest with different more or less complex arguments.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal DisableDelayedExpansion
+set "destBatch=GetParam.bat"
+
+set "arg1=simple text"
+set "arg2=special unquoted &amp;|&lt;&gt;%%!^#"
+set ^"arg3=special quoted "&amp;|&lt;&gt;%%!^#""
+set "arg4=&amp;"^&amp;"
+set "arg5=caret^"caret2^^.."
+set "arg6=^^!"
+
+
+for /L %%n in (1 1 6) do (
+	call :testArgument arg%%n
+)
+
+exit /b
+
+:testArgument
+setlocal EnableDelayedExpansion
+echo(
+set "argTest=!%1!"
+echo Test %1=!argTest!
+set "argTest=!argTest:^=^^!"
+set "argTest=!argTest:&amp;=^&amp;!"
+set "argTest=!argTest:|=^|!"
+set "argTest=!argTest:&lt;=^&lt;!"
+set "argTest=!argTest:&gt;=^&gt;!"
+set ^"argTest=!argTest:"=^"!"
+setlocal DisableDelayedExpansion
+cmd /c %destBatch% %%argTest%%
+endlocal
+endlocal
+exit /b
+</code></pre></div>
+
+@siberia-man: <br>
+The first test works with your code, the others fail  <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=":wink:" title="Wink"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>22 May 2018 14:28</strong></div>
+				<div class="author">by <strong>siberia-man</strong></div>
+				<div class="content">@jeb:<br>
+<br>
+I think you are on the right way. But I can't understand why you parse the options before launching the test script? Why you don't use it simply calling like <strong class="text-strong">GetParam.bat %*</strong>?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>22 May 2018 15:04</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist5152.html?mode=viewprofile&amp;u=5284">siberia-man</a> wrote: <a href="viewtopicf869-2.html?p=56878#p56878" data-post-id="56878" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 May 2018 14:28</div></cite>
+I think you are on the right way. But I can't understand why you parse the options before launching the test script? Why you don't use it simply calling like GetParam.bat %*?
+</div></blockquote>
+The problem for the unittest is the fact, that I don't know a simple way to show the argument that will be used and use that same argument to call a secondary batch file.<br>
+<br>
+Think of the simple test case of a single ampersand, if I want to test it from the command line I have to use<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt; getParam ^&amp;</code></pre></div>
+Without the caret it simply fails.<br>
+With quotes or carets it gets only more annoying.<br>
+<br>
+In the unittest, the arguments are first assigned to a variable (arg1 .. arg6).<br>
+They contain exactly the content that can be echoed with delayed expansion.<br>
+And it's the content the tested batch file (getParam.bat in my case) should fetch from %*.<br>
+<br>
+Simply calling the test batch with CALL will produce really hard problems, as CALL itself doubles carets and gets ugly with the parsing phases.<br>
+So I used cmd /c, there I "only" need to escape all special characters before starting the batch file.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>22 May 2018 18:52</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;ver &amp;cd
+call tst.cmd "a!b!c!d!e"
+pause
+exit
+</code></pre></div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Microsoft Windows XP [versie 5.1.2600]
+W:\ED\VIP\PROJ\DEV\doskit\doskitXPx86 v20180426\Hello world !
+W:\:GetParams:\..\\ED\VIP\PROJ\DEV\doskit\doskitXPx86 wordt niet herkend als een interne
+of externe opdracht, programma of batchbestand.
+args: ---  ---
+Druk op een toets om door te gaan. . .
+</code></pre></div>It doesn't seem to like spaces in current directory. <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"> 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+for /F "tokens=3 delims=:" %%F in ("%~0") do goto %%F
+
+:getParam
+setlocal DisableDelayedExpansion
+(set LF=^
+%=empty=%
+)
+
+&gt; nul break | ("%~d0\:GetParams:\..\%~pnx0"
+REM %%LF%% )
+REM ###,%*,# %%LF%%
+)
+
+for /F "delims=" %%L in ('doskey /macros ^|findstr /R "^return="') do (
+    set "cmdLine=%%L"
+)
+setlocal EnableDelayedExpansion
+set "args=!cmdLine:*###,=!"
+set "args=!args:""="!"
+set "args=!args:$$=$!"
+set "args=!args:~0,-10!"
+doskey return=
+
+echo args: --- !args! ---
+exit /b
+
+:GetParams
+setlocal EnableDelayedExpansion
+rem echo !cmdcmdline!
+set "line=!cmdcmdline!"
+set "line=!line:"=""!"
+set "line=!line:$=$$!"
+doskey return=!line!
+exit
+</code></pre></div>Stupid jeb code, we always needs to fix stupid jeb code <img class="smilies" src="images/smilies/icon_evil.gif" width="15" height="15" alt=":evil:" title="Evil or Very Mad"> 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Microsoft Windows XP [versie 5.1.2600]
+W:\ED\VIP\PROJ\DEV\doskit\doskitXPx86 v20180426\Hello world !
+args: --- "a!b!c!d!e" ---
+Druk op een toets om door te gaan. . .
+</code></pre></div>This does seem to be fast and bulletproof, until now I've been using the much simpler
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(call set $args=%%^*) %= beware that arg * can break code between braces unless called =%
+%= $lf prevents 'input corrupt or incorrectly escaped' exception =%
+(set "$args=%$args%" !)%= retract carrets doubled by call =%
+</code></pre></div>Where the %^* is a leftover from a bugfix for Quick Batch File Compiler that didn't expand %* properly.<br>
+<br>
+I think I will adopt jeb's method <img class="smilies" src="images/smilies/icon_cool.gif" width="15" height="15" alt="8)" title="Cool"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>22 May 2018 23:46</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453">Ed Dyreen</a> wrote: <a href="viewtopic17f5.html?p=56884#p56884" data-post-id="56884" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 May 2018 18:52</div></cite>
+It doesn't seem to like spaces in current directory. <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad">
+</div></blockquote>
+<blockquote><div><cite><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453">Ed Dyreen</a> wrote: <a href="viewtopic17f5.html?p=56884#p56884" data-post-id="56884" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 May 2018 18:52</div></cite>
+Stupid jeb code, we always needs to fix stupid jeb code <img class="smilies" src="images/smilies/icon_evil.gif" width="15" height="15" alt=":evil:" title="Evil or Very Mad">
+</div></blockquote>
+
+Yes, and I'm the first one who criticize such sloppy code <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"> <br>
+<br>
+But beside that bugs I tested with line feeds and it suprises me, as line feeds are converted to ampersands.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ech off
+setlocal EnableDelayedExpansion
+(set LF=^
+%=%
+)
+set ^"arg3=^^^^^"Line1^^^^!LF!!LF!line2"" 
+call GetParam.bat %%arg3%%</code></pre></div>
+
+<blockquote><div><cite>Output wrote:</cite>args: --- "Line1 &amp; line2" ---</div></blockquote>
+
+But the problem with line feeds is that the content after the first line feed will be parsed and has to be valid batch syntax.<br>
+This one fails with:<br>
+ ")" can't be processed ...
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set ^"arg3=^^^^^"Line1^^^^!LF!!LF! ()"" </code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>23 May 2018 03:32</strong></div>
+				<div class="author">by <strong>Jan Antonin</strong></div>
+				<div class="content">I have to admitt that I strongly underestimated a complexity of this task hidden in details.<br>
+It has already taken me too much time so a moment to public even a torso comes.<br>
+I still have a strong feeling I could be able to fill all remainig holes but instead of that I will use a beautiful fuzzy and foggy phrazeology among which at the top of the list and the cutest one is "Without loss of generality let's assume ... " <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":-)" title="Smile"><br>
+The problem is that from one moment it is not fun for me but a nightmare. I dont enjoy thinking about it anymore.<br>
+<br>
+1)<br>
+An assumption that make my solution not general in an ultimate meaning and which I am not able to eliminate:<br>
+<br>
+Arguments (which we are trying to get) must not contain a name of a variable in percent signs which contains "the tricky LF char".<br>
+<br>
+So if an argument is
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>abcdef%LF%ghij</code></pre></div>
+it is a problem<br>
+<br>
+2)<br>
+An assumption is not a problem IMHO:<br>
+given arguments will be obtained in a "canonical" form:<br>
+"#data with every double quotation mark being doubled#"<br>
+e.g. if an argument is 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>asdf^"^y/" ""ki!jk^fgb%jfhf"fg</code></pre></div>
+then a result in a canonical form will be
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>"#asdf^""^y/"" """"ki!jk^fgb%jfhf""fg#"</code></pre></div>
+
+3) other assumtions which are not important and which be mentioned later<br>
+<br>
+the torso of a script follows in the next post</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>23 May 2018 04:24</strong></div>
+				<div class="author">by <strong>Jan Antonin</strong></div>
+				<div class="content">It is a short verion without a "selfpiping" e.g. the result will be only displayed.<br>
+It is for the first argument %1. I am not sure whether using %* instead of %1 does or does not bring other problems.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@setlocal ENABLEEXTENSIONS
+@setlocal DISABLEDELAYEDEXPANSION
+@prompt -$G$S
+@rem I just like this prompt, it plays no rule at all
+
+@set "xFullpathScriptQuotNo_=%~f0"
+@for /F "usebackq tokens=*" %%A in (`attrib "%~dp0."`) do @set "xFullpathDirQuotNo_=%%~fA"
+@set Qu=^"
+@rem will be used for piping in a future improved version
+
+@cd "%xFullpathDirQuotNo_%"
+@set LF=^
+
+
+@rem it is not possible to delete two previous empty lines
+@echo on
+
+rem %1
+rem version A
+@(rem %1#
+%%LF%%echo H"#%%cmdcmdline:"=""%%#"H
+)|find /V /N ""
+
+rem version B
+@set ohce=^
+
+echo "
+@rem it is not possible to delete two previous lines
+
+@(rem %1#
+%%ohce%%%%cmdcmdline:"=""%%"
+)|find /V /N ""
+
+rem version C
+@(
+set anotherVar=H"#%%cmdcmdline:"=""%%H"Z"
+"%%LF%%rem %1#
+%%LF%% set anotherVar
+)|find /V /N ""
+
+pause
+@rem the end
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>23 May 2018 04:38</strong></div>
+				<div class="author">by <strong>Jan Antonin</strong></div>
+				<div class="content">It is only a couple of lines, I would rather never say the time it has taken.<br>
+Because of that I am delayed with all my personal an profesional tasks, it was kind of an obssesion or what.<br>
+<br>
+I may react with a long delays for your posts, if ever, sorry.<br>
+<br>
+Good luck guys dealing with all this "not the best concept of everything" in our lifes and world!!<br>
+<br>
+Jan Antonin</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>23 May 2018 07:01</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Jan, when you say "torso" I think you mean to say "body".</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>23 May 2018 07:35</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">I tested
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal enableDelayedExpansion
+
+(set LF=^
+%=empty=%
+)
+
+set "arg=simple text"
+set arg &amp;call tst.cmd %%arg%%
+
+set "arg=special unquoted &amp;|&lt;&gt;%%!^#"
+set arg &amp;call tst.cmd %%arg%%
+
+set ^"arg=special quoted "&amp;|&lt;&gt;%%!^#""
+set arg &amp;call tst.cmd %%arg%%
+
+set "arg=&amp;"^&amp;"
+set arg &amp;call tst.cmd %%arg%%
+
+set "arg=caret^"caret2^^.."
+set arg &amp;call tst.cmd %%arg%%
+
+set "arg=^^!"
+set arg &amp;call tst.cmd %%arg%%
+
+set ^"arg=^^^^^"Line1^^^^!LF!!LF!line2""
+set arg &amp;call tst.cmd %%arg%%
+
+pause
+exit
+</code></pre></div>only to find that<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>arg=special unquoted &amp;|&lt;&gt;%#
+| niet verwacht op dit moment.
+</code></pre></div>And then I realised jeb's batch wasn't even called because call tst.cmd special unquoted &amp;|&lt;&gt;%%!^# would obviously crash.<br>
+<br>
+And then I wondered why in gods name would one want to be able to retrieve all characters raw ?<br>
+<br>
+Already the receiving batch won't handle CR and LF but on top of that parameters can not just be hand over like or they are meaningless for example: ( call tst.cmd special unquoted &amp;|&lt;&gt;%%!^# ) I simply don't see the benefit of being able to handle corrupt data. I say corrupt because call should be at least like this ( call tst.cmd "special unquoted &amp;|&lt;&gt;%%!^#" ). It is the programmers responsibility to correctly call functions, why would a function need to be able to handle grave misuse ?<br>
+<br>
+If you have Special Data, Why not just pass this data by reference ? What's the point of all this ?<br>
+<br>
+Yes I also have a stringReplace function and yes it will accept arguments byValue to some extend but at least it has some rules, arguments need to be quoted for example and if quoted they are always byVals. I would need to know at least what calls are considered legal and which are not. Because obviously call batch |&amp; will never work.<br>
+<br>
+Enlighten me, thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Get arguments without temporary file</h3>
+				<div class="date">Posted: <strong>23 May 2018 08:03</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453">Ed Dyreen</a> wrote: <a href="viewtopic014d.html?p=56897#p56897" data-post-id="56897" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">23 May 2018 07:35</div></cite>
+If you have Special Data, Why not just pass this data by reference ? What's the point of all this ?<br>
+<br>
+Yes I also have a stringReplace function and yes it will accept arguments byValue to some extend but at least it has some rules, arguments need to be quoted for example and if quoted they are always byVals. I would need to know at least what calls are considered legal and which are not. Because obviously call batch |&amp; will never work.<br>
+<br>
+Enlighten me, thanks
+</div></blockquote>
+
+I agree...  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"><br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8574&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:07 GMT -->
+</html>

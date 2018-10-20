@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1588&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:57:22 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; mailto</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>mailto</h2>
+		<p><a href="viewtopic99cb.html?f=3&amp;t=1588">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1588</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>mailto</h3>
+				<div class="date">Posted: <strong>19 Jan 2011 20:50</strong></div>
+				<div class="author">by <strong>scienceguru1.bat</strong></div>
+				<div class="content">how can i make a batch file that sends an email inculding to, subject, and message at the minimum. any other feilds would also be appreciated.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: mailto</h3>
+				<div class="date">Posted: <strong>20 Jan 2011 12:46</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">There is no native command in batch. 2 days before somebody had a <a href="viewtopiccf6b-2.html?f=3&amp;t=1583" class="postlink">similar question</a>.<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: mailto</h3>
+				<div class="date">Posted: <strong>20 Jan 2011 14:35</strong></div>
+				<div class="author">by <strong>scienceguru1.bat</strong></div>
+				<div class="content">i have tried a few programs with no success <img class="smilies" src="images/smilies/icon_sad.gif" alt=":(" title="Sad" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: mailto</h3>
+				<div class="date">Posted: <strong>21 Jan 2011 09:41</strong></div>
+				<div class="author">by <strong>avery_larry</strong></div>
+				<div class="content">both blat.exe and sendemail.exe are very simple to use.  google them to download.  Post your command and error messages if you still have problems.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: mailto</h3>
+				<div class="date">Posted: <strong>22 Jan 2011 02:11</strong></div>
+				<div class="author">by <strong>amel27</strong></div>
+				<div class="content">try this sample batch SMTPSend function (JS inside):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@set @x=0 /*<br />@echo off<br />::--- start proper batch ---<br /><br />set SMTPsubj=Test Mail<br />set SMTPtext=Mail Text<br /><br />call:SMTPSend &quot;%~f0&quot; smtp.srv.com userFrom@my.com userTo@my.com SMTPsubj SMTPtext<br />EXIT<br /><br />:SMTPSend&nbsp; BatchName, SMTP_Server, MailFrom, MailTo, Subject, MailText<br />&nbsp; SETLOCAL EnableDelayedExpansion<br />&nbsp; if &quot;!%~2!&quot;==&quot;&quot; (set &quot;SMTPserv=%~2&quot;) else set &quot;SMTPserv=!%~2!&quot;<br />&nbsp; if &quot;!%~3!&quot;==&quot;&quot; (set &quot;SMTPfrom=%~3&quot;) else set &quot;SMTPfrom=!%~3!&quot;<br />&nbsp; if &quot;!%~4!&quot;==&quot;&quot; (set &quot;SMTPto=%~4&quot;&nbsp; ) else set &quot;SMTPto=!%~4!&quot;<br />&nbsp; if &quot;!%~5!&quot;==&quot;&quot; (set &quot;SMTPsubj=%~5&quot;) else set &quot;SMTPsubj=!%~5!&quot;<br />&nbsp; if &quot;!%~6!&quot;==&quot;&quot; (set &quot;SMTPtext=%~6&quot;) else set &quot;SMTPtext=!%~6!&quot;<br />&nbsp; cscript //nologo /e:jscript &quot;%~1&quot; &quot;SMTPSend('%SMTPserv%','%SMTPfrom%','%SMTPto%','%SMTPsubj%','%SMTPtext%')&quot;<br />&nbsp; ENDLOCAL<br />GoTo:EOF<br />::---- end proper batch ----<br />*/<br />eval(WScript.Arguments.Item(0));<br />// -------------------------<br />function SMTPSend(Server,From,To,Subj,Text) {<br />&nbsp; var objEmail = WScript.CreateObject(&quot;CDO.Message&quot;);<br /><br />&nbsp; objEmail.From = From;<br />&nbsp; objEmail.To = To;<br />&nbsp; objEmail.Subject = Subj;<br />&nbsp; objEmail.Textbody = Text;<br />//objEmail.BodyPart.CharSet = &quot;utf-8&quot;;<br /><br />&nbsp; with (objEmail.Configuration.Fields) {<br />&nbsp; &nbsp; Item(&quot;http://schemas.microsoft.com/cdo/configuration/sendusing&quot;)=2;<br />&nbsp; &nbsp; Item(&quot;http://schemas.microsoft.com/cdo/configuration/smtpserver&quot;)=Server;<br />&nbsp; &nbsp; Item(&quot;http://schemas.microsoft.com/cdo/configuration/smtpserverport&quot;)=25;<br />//&nbsp; Item(&quot;http://schemas.microsoft.com/cdo/configuration/smtpauthenticate&quot;)=1;<br />//&nbsp; Item(&quot;http://schemas.microsoft.com/cdo/configuration/sendusername&quot;)=&quot;user&quot;;<br />//&nbsp; Item(&quot;http://schemas.microsoft.com/cdo/configuration/sendpassword&quot;)=&quot;pass&quot;;<br />&nbsp; &nbsp; Update();<br />&nbsp; }<br />&nbsp; try {objEmail.Send();}<br />&nbsp; catch(e) {<br />&nbsp; &nbsp; WScript.Echo(&quot;ERR: &quot;+e.number);<br />&nbsp; &nbsp; WScript.Echo(e.message);<br />}}</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: mailto</h3>
+				<div class="date">Posted: <strong>23 Jan 2011 16:25</strong></div>
+				<div class="author">by <strong>scienceguru1.bat</strong></div>
+				<div class="content">SMTP: I just get an error message before the window closes, and I cant copy it because the window immediately closes after the text appears.<br />BLAT/Sendmail: The configs are too confusing, tried a lot.<br /><br />If a made a SENDMAIL ASP form, then could you tell me how to fill it out?</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1588&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:57:22 GMT -->
+</html>

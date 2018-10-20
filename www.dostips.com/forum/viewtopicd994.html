@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8760&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:43:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Reading a hidden password via a FINDSTR bug</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Reading a hidden password via a FINDSTR bug</h2>
+		<p><a href="viewtopicf03f.html?f=3&amp;t=8760">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8760</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Reading a hidden password via a FINDSTR bug</h3>
+				<div class="date">Posted: <strong>31 Jul 2018 22:10</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">I discovered a strange bug in FINDSTR command that happen when this command is used to show characters in color <em class="text-italics">AND</em> the output of such a command is redirected to CON. For details on how use FINDSTR command to show text in color, see <a href="https://stackoverflow.com/questions/4339649/how-to-have-multiple-colors-in-a-windows-batch-file#5344911" class="postlink">this topic</a>.<br>
+<br>
+When the output of this form of FINDSTR command is redirected to CON device, something strange happens after the text is output in the desired color: all the text after it is output <em class="text-italics">as "invisible" characters</em>, although a more precise description is that the text is output as black text over black background. The original text will appear if you use COLOR command to reset the foreground and background colors of the entire screen. However, when the text is "invisible" we could execute a SET /P command, so all characters entered will <em class="text-italics">not</em> appear on the screen.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+
+set /P "=_" &lt; NUL &gt; "Enter password"
+findstr /A:1E /V "^$" "Enter password" NUL &gt; CON
+del "Enter password"
+set /P "password="
+cls
+color
+echo The password read is: "%password%"
+</code></pre></div>
+
+Tested on Windows 8.1<br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a hidden password via a FINDSTR bug</h3>
+				<div class="date">Posted: <strong>01 Aug 2018 01:17</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">Cool <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <br>
+<br>
+Works on windows 10 too.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a hidden password via a FINDSTR bug</h3>
+				<div class="date">Posted: <strong>01 Aug 2018 01:46</strong></div>
+				<div class="author">by <strong>Hackoo</strong></div>
+				<div class="content">A beautiful find !  <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=":wink:" title="Wink"> <br>
+works on my windows 10 too  <img class="smilies" src="images/smilies/icon_lol.gif" width="15" height="15" alt=":lol:" title="Laughing"> <br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+Title Multi-Lines Comments and Reading a hidden password via a FINDSTR bug
+rem.||(
+Today on 01/08/2018 ; I learned two nice codes :
+This is a multiline comments from here ==&gt; https://www.dostips.com/forum/viewtopic.php?p=57621#p57621
+And this comment from Reading a hidden password via a FINDSTR bug ==&gt; https://www.dostips.com/forum/viewtopic.php?p=57620#p57620
+When the output of this form of FINDSTR command is redirected to CON device,
+something strange happens after the text is output in the desired color: all the text after it is output as "invisible" characters,
+although a more precise description is that the text is output as black text over black background.
+The original text will appear if you use COLOR command to reset the foreground and background colors of the entire screen.
+However, when the text is "invisible" we could execute a SET /P command, so all characters entered will not appear on the screen.
+)
+setlocal
+set /P "=_" &lt; NUL &gt; "Enter password"
+findstr /A:0A /V "^$" "Enter password" NUL &gt; CON
+del "Enter password"
+set /P "password="
+cls
+color 1F
+echo The password read is: "%password%"
+pause&gt;nul</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a hidden password via a FINDSTR bug</h3>
+				<div class="date">Posted: <strong>01 Aug 2018 05:24</strong></div>
+				<div class="author">by <strong>elzooilogico</strong></div>
+				<div class="content">Nice find Antonio.  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> Working in WIn 8 Enterprise. But the password is still accesible through the keyboard buffer (just hit the up arrow key). I would suggest clearing the buffer after password read
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+
+set /P "=_" &lt; NUL &gt; "Enter password"
+findstr /A:1E /V "^$" "Enter password" NUL &gt; CON
+del "Enter password"
+set /P "password="
+doskey /listsize=0 &gt;NUL 2&gt;&amp;1 &amp; doskey /listsize=50 &gt;NUL 2&gt;&amp;1 
+cls
+color
+echo The password read is: "%password%"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a hidden password via a FINDSTR bug</h3>
+				<div class="date">Posted: <strong>01 Aug 2018 05:34</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Not working on my Windows 7 Pro machine.   The output is still all black.<br>
+Also tested on 2008, 2012 and 2016 Server, with the same result.  The color never gets reset.  It just stays black.<br>
+<br>
+The only way I have gotten it to work is to force the color back to the default by using <strong class="text-strong">color 07</strong> in the code.  Just using COLOR does not seem to want to reset it back to the default.<br>
+<br>
+<br>
+EDIT: I figured out the problem.  If i open a cmd prompt first and then run the batch file, everything is fine.  If I run the batch file with my mouse then it does not work unless I force the color setting back.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a hidden password via a FINDSTR bug</h3>
+				<div class="date">Posted: <strong>01 Aug 2018 06:12</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Works fine on my Win7 x64 Professional.<br>
+<br>
+I'm astonished at the findstr redirection to CON.<br>
+I didn't expected any color effects for redirected text to CON at all, I expected to see control codes like for
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>CLS &gt; CON</code></pre></div>
+
+I saw this effect before, when I build the findstr color technic, but I always assumed the cmd.exe had crashed, as any output was gone  <img class="smilies" src="images/smilies/icon_rolleyes.gif" width="15" height="15" alt=":roll:" title="Rolling Eyes"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a hidden password via a FINDSTR bug</h3>
+				<div class="date">Posted: <strong>01 Aug 2018 06:35</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopic40ef.html?p=57628#p57628" data-post-id="57628" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">01 Aug 2018 06:12</div></cite>
+Works fine on my Win7 x64 Professional.
+</div></blockquote>
+Strange. Then I don't know what is wrong with my Win7 X64 Professional and my three servers at work.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a hidden password via a FINDSTR bug</h3>
+				<div class="date">Posted: <strong>01 Aug 2018 07:34</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Freaky and fun  <img class="smilies" src="images/smilies/icon_eek.gif" width="15" height="15" alt=":shock:" title="Shocked">  <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"> Nice find <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <br>
+<br>
+On my Win 10 machine I see the same behavior as Squashman if I launch the script (with an added PAUSE) by double clicking in Windows Explorer - The COLOR command does not restore the color, it remains black on black.<br>
+<br>
+The color chosen for the /A option does not matter. The color is set to black on black even if the chosen /A option matches the current screen color.<br>
+<br>
+One other note - the color is only set to black on black if the FINDSTR command outputs at least one filename (or line number, or line offset) with the /A option. If no match is found, then there is no effect. I was hoping the technique could be modified to have the script search itself with a search string that does not match anything, but no luck <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"><br>
+<br>
+Aacini  - Do you want to update your SO answer to my FINDSTR undocumented features question to include the newly discovered behavior? If not then I will try to incorporate the info in my answer.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a hidden password via a FINDSTR bug</h3>
+				<div class="date">Posted: <strong>01 Aug 2018 13:55</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">I wrote a general-use subroutine that allows to read a hidden password using this technique.<br>
+You must call this file <strong class="text-strong">"Enter password.bat"</strong>:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+
+call :Init
+cd "%~P0"
+findstr /B /R /C:"1. .....2" "%~NX0" NUL &gt; CON
+set /P "password="
+cls
+color 07
+endlocal &amp; set "%1=%password%"
+exit /B
+
+:Init
+ver &gt; NUL
+call :End 2&gt; NUL
+if %errorlevel% equ 0 exit /B
+for /F %%a in ('echo prompt $H ^| cmd') do set "BS=%%a"
+(
+   echo :End
+   echo exit /B
+   set /P "=1%BS% %BS%%BS%%BS%%BS%%BS%2   %BS%%BS%%BS%%BS%%BS% " &lt; NUL
+) &gt;&gt; "%~F0"
+exit /B
+</code></pre></div>
+Example of use:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+
+call "%~P0Enter password.bat" pass=
+echo The password read is: "%pass%"
+pause
+</code></pre></div>
+This method works correctly even if the main Batch file is started via a double click in the explorer as long as the "Enter password.bat" subroutine be located in the same subdirectory as the main file.<br>
+<br>
+@Dave: I will modify my answer at S.O. in order to include this new bug.<br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a hidden password via a FINDSTR bug</h3>
+				<div class="date">Posted: <strong>02 Aug 2018 14:15</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">You can also update your answer here:<br>
+<a href="https://stackoverflow.com/a/24792070/388389" class="postlink">https://stackoverflow.com/a/24792070/388389</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Reading a hidden password via a FINDSTR bug</h3>
+				<div class="date">Posted: <strong>18 Aug 2018 20:23</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopicab32.html?p=57630#p57630" data-post-id="57630" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">01 Aug 2018 07:34</div></cite>
+Aacini  - Do you want to update your SO answer to my FINDSTR undocumented features question to include the newly discovered behavior? If not then I will try to incorporate the info in my answer.<br>
+<br>
+Dave Benham
+</div></blockquote>
+
+
+<blockquote><div><cite><a href="memberlistfcd9.html?mode=viewprofile&amp;u=4919">npocmaka_</a> wrote: <a href="viewtopic7665.html?p=57647#p57647" data-post-id="57647" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">02 Aug 2018 14:15</div></cite>
+You can also update your answer here:<br>
+<a href="https://stackoverflow.com/a/24792070/388389" class="postlink">https://stackoverflow.com/a/24792070/388389</a>
+</div></blockquote>
+
+Done. In both places. Thanks...<br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8760&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:43:06 GMT -->
+</html>

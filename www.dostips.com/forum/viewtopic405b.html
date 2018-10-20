@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=187&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:49:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Doing MOD calculations in batch</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Doing MOD calculations in batch</h2>
+		<p><a href="viewtopicf5d0.html?f=3&amp;t=187">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=187</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Doing MOD calculations in batch</h3>
+				<div class="date">Posted: <strong>14 Aug 2007 09:05</strong></div>
+				<div class="author">by <strong>rondinardo</strong></div>
+				<div class="content">I would love to do a modulo in batch ... does anyone know how to write it??<br>
+<br>
+<br>
+<br>
+I figure it's something simlar to ADDITION:<br>
+<br>
+set /a var1=4 + 2<br>
+<br>
+<br>
+So I was thinking of the logical choices:<br>
+<br>
+set /a var2=4 % 2 <br>
+<br>
+   - or - <br>
+<br>
+set /a var2=4 MOD 2 <br>
+<br>
+<br>
+Neither of these work.  What's wrong?  Am I at least close?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>18 Aug 2007 18:12</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">rondinardo,
+<br />
+<br />Since the % sign is also used for variablen substitution you'll need to use two of them to make the commandline parser understand it.  Try:
+<br />
+<br />Set /a a = 13 %% 5
+<br />
+<br />You should get 3.
+<br />DOS IT HELP <img class="smilies" src="images/smilies/icon_wink.gif" alt=";)" title="Wink" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Doing MOD calculations in batch??</h3>
+				<div class="date">Posted: <strong>10 Jul 2018 08:03</strong></div>
+				<div class="author">by <strong>pp8771</strong></div>
+				<div class="content">Set /a  a = 13 %% 5<br>
+giving error missing operand<br>
+<br>
+<br>
+OS Name:                   Microsoft Windows Server 2008 R2 Standard<br>
+OS Version:                6.1.7601 Service Pack 1 Build 7601<br>
+<br>
+<br>
+OS Name:                   Microsoft Windows Server 2008 R2 Standard<br>
+OS Version:                6.1.7601 Service Pack 1 Build 7601</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Doing MOD calculations in batch??</h3>
+				<div class="date">Posted: <strong>10 Jul 2018 09:03</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberliste633.html?mode=viewprofile&amp;u=9263">pp8771</a> wrote: <a href="viewtopic5371.html?p=57425#p57425" data-post-id="57425" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">10 Jul 2018 08:03</div></cite>
+Set /a  a = 13 %% 5
+</div></blockquote>
+I guess you misunderstood the previous comments in this thread.<br>
+<br>
+If you are running from a command prompt you use one percent symbol.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Set /a  a = 13 % 5</code></pre></div>
+If you are running the code in a batch file then use two percent symbols.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Set /a  a = 13 %% 5</code></pre></div>
+
+Look at Dave's explanation <a href="viewtopic959e.html?f=3&amp;t=8657#p57339" class="postlink">here</a>.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Doing MOD calculations in batch??</h3>
+				<div class="date">Posted: <strong>18 Jul 2018 04:44</strong></div>
+				<div class="author">by <strong>pp8771</strong></div>
+				<div class="content">Now working</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Doing MOD calculations in batch??</h3>
+				<div class="date">Posted: <strong>18 Jul 2018 05:57</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">It is working here. This is my test:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Microsoft Windows [Versión 6.3.9600]
+(c) 2013 Microsoft Corporation. Todos los derechos reservados.
+
+C:\Users\Antonio&gt; cd test
+
+C:\Users\Antonio\Test&gt; type test.bat
+@echo off
+
+set /a  a = 13 %% 5
+
+echo Result: %a%
+
+C:\Users\Antonio\Test&gt; test
+Result: 3
+</code></pre></div>
+
+Antonio</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=187&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:49:45 GMT -->
+</html>

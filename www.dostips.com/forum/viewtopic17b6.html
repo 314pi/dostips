@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7420&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:50:24 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Batch script collection (outsourced)</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Batch script collection (outsourced)</h2>
+		<p><a href="viewtopic61c4.html?f=3&amp;t=7420">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7420</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Batch script collection (outsourced)</h3>
+				<div class="date">Posted: <strong>19 Sep 2016 10:56</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">This script belongs to the sticky post "How to get help for a batch script - quickly!". For its purpose and usage see<br>
+<a href="viewtopica98d.html?f=3&amp;t=6108&amp;p=49091#p49091" class="postlink">http://www.dostips.com/forum/viewtopic. ... 091#p49091</a><br>
+<br>
+
+<div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/file3d1c.php?id=356">info.zip</a></dt>
+						<dd>(4.18 KiB) Downloaded 46 times</dd>
+		</dl>
+		
+		
+			</div>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:: INFO.BAT version 1.5
+:: source http://www.dostips.com
+:: Bugs and suggestions can be reported in thread http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7347
+::
+:: Release History:
+::  2018-05-03 v1.5: More reliable OEM codepage determination (https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8533)
+::  2017-01-05 v1.4: Bugfix for trailing backslashes in PATH
+::  2016-09-24 v1.3: RunAs check simplified
+::  2016-09-20 v1.2: Version added to the output
+::  2016-09-19 v1.1: Faulty percent sign in the "dirs" variable corrected
+::  2016-09-10 v1.0: Initial release
+
+@echo off
+set ex_noreg=Disabled
+2&gt;nul set "ex_noreg=Enabled "
+set de_noreg=Disabled
+if "!!"=="" (set de_noreg=Enabled )
+
+setlocal EnableExtensions DisableDelayedExpansion
+cd /d "%~dp0"
+set /p "v="&lt;"%~fs0"
+&gt;"%temp%\info.txt" echo [code^]%v:~2%
+
+:: prepare some variables to shorten lines in the script
+set "International=Control Panel\International"
+set "CurrentVersion=SOFTWARE\Microsoft\Windows NT\CurrentVersion"
+set "CodePage=SYSTEM\CurrentControlSet\Control\Nls\CodePage"
+set "CMDproc=Software\Microsoft\Command Processor"
+set /a "HKCU=80000001, HKLM=80000002, HKU=80000003"
+
+:: try to assign variables for used tools in order to make the script run even if the path or pathext variables are corrupted
+if exist "%__APPDIR__%chcp.com" (set "chcp=%__APPDIR__%chcp.com") else (set "chcp=echo" &amp;&gt;&gt;"%temp%\info.txt" echo chcp.com not found.)
+if exist "%__APPDIR__%find.exe" (set "find=%__APPDIR__%find.exe") else (set "find=echo" &amp;&gt;&gt;"%temp%\info.txt" echo find.exe not found.)
+if exist "%__APPDIR__%findstr.exe" (set "findstr=%__APPDIR__%findstr.exe") else (set "findstr=echo" &amp;&gt;&gt;"%temp%\info.txt" echo findstr.exe not found.)
+if exist "%__APPDIR__%gpresult.exe" (set "gpresult=%__APPDIR__%gpresult.exe") else (set "gpresult=" &amp;&gt;&gt;"%temp%\info.txt" echo gpresult.exe not found.)
+if defined gpresult &gt;nul 2&gt;nul %gpresult% /? || (set "gpresult=" &amp;&gt;&gt;"%temp%\info.txt" echo gpresult.exe not accessible.)
+if exist "%__APPDIR__%net.exe" (set "net=%__APPDIR__%net.exe") else (set "net=echo" &amp;&gt;&gt;"%temp%\info.txt" echo net.exe not found.)
+if exist "%SystemRoot%\notepad.exe" (set "notepad=%SystemRoot%\notepad.exe") else if exist "%__APPDIR__%notepad.exe" (
+  set "notepad=%__APPDIR__%notepad.exe"
+) else (set "notepad=%__APPDIR__%cmd.exe /k type" &amp;&gt;&gt;"%temp%\info.txt" echo notepad.exe not found.)
+if exist "%__APPDIR__%ping.exe" (set "ping=%__APPDIR__%ping.exe") else (set "ping=(for /l %%i in (0 1 10000) do echo %%i&gt;nul)&amp;echo" &amp;&gt;&gt;"%temp%\info.txt" echo ping.exe not found.)
+if exist "%__APPDIR__%reg.exe" (set "reg=%__APPDIR__%reg.exe") else (set "reg=foo?.exe" &amp;&gt;&gt;"%temp%\info.txt" echo reg.exe not found.)
+if exist "%__APPDIR__%whoami.exe" (set "whoami=%__APPDIR__%whoami.exe") else (set "whoami=" &amp;&gt;&gt;"%temp%\info.txt" echo whoami.exe not found.)
+if defined whoami &gt;nul 2&gt;nul %whoami% /? || (set "whoami=" &amp;&gt;&gt;"%temp%\info.txt" echo whoami.exe not acessible.)
+if exist "%__APPDIR__%wbem\WMIC.exe" (set "wmic=%__APPDIR__%wbem\WMIC.exe") else (set "wmic=" &amp;&gt;&gt;"%temp%\info.txt" echo wmic.exe not found.)
+if defined wmic &gt;nul 2&gt;nul %wmic% /? || (set "wmic=" &amp;&gt;&gt;"%temp%\info.txt" echo wmic.exe not accessible.)
+&gt;&gt;"%temp%\info.txt" echo --------------------------------------------------------------------------------
+
+:: shorten WMI StdRegProv command lines
+set "RegHead=set "dat="&amp;for /f "tokens=1* delims==" %%i in ('2^&gt;nul %wmic% /NameSpace:\\root\default Class StdRegProv Call"
+set "RegTail=^|%findstr% /rc:"\^&lt;[su]Value = "') do for %%k in (%%j) do set "dat=%%~k""
+
+
+:: list of directories to check if missing in the path variable
+set dirs="%SystemRoot%","%SystemRoot%\System32","%__APPDIR__%wbem","%__APPDIR__%WindowsPowerShell\v1.0"
+
+:: list of tools to check if missing in the path environment
+set tools=certutil,choice,clip,debug,forfiles,gpresult,icacls,openfiles,powershell,robocopy,timeout,whoami,wmic
+
+:: check reg access
+%reg% query "HKCU\%International%" &gt;nul 2&gt;&amp;1 &amp;&amp; (set "RegUserInternational=1") || (set "RegUserInternational=0")
+%reg% query "HKU\.DEFAULT\%International%" &gt;nul 2&gt;&amp;1 &amp;&amp; (set "RegDefInternational=1") || (set "RegDefInternational=0")
+%reg% query "HKLM\%CurrentVersion%" &gt;nul 2&gt;&amp;1 &amp;&amp; (set "RegSysCurrentVersion=1") || (set "RegSysCurrentVersion=0")
+%reg% query "HKLM\%CodePage%" &gt;nul 2&gt;&amp;1 &amp;&amp; (set "RegSysCodePage=1") || (set "RegSysCodePage=0")
+%reg% query "HKCU\%CMDproc%" &gt;nul 2&gt;&amp;1 &amp;&amp; (set "RegUserCMDproc=1") || (set "RegUserCMDproc=0")
+%reg% query "HKLM\%CMDproc%" &gt;nul 2&gt;&amp;1 &amp;&amp; (set "RegSysCMDproc=1") || (set "RegSysCMDproc=0")
+
+:: check AutoRun settings
+set "AutoRunUser="
+&gt;"%temp%\autorun.tmp~" type nul
+if %RegUserCMDproc%==1 (
+  2&gt;nul %reg% query "HKCU\%CMDproc%" /v AutoRun |&gt;"%temp%\autorun.tmp~" %find% "REG_"
+) else if defined wmic (
+  2&gt;nul %wmic% /NameSpace:\\root\default Class StdRegProv Call GetExpandedStringValue hDefKey="&amp;H%HKCU%" sSubKeyName="%CMDproc%" sValueName="AutoRun" |&gt;"%temp%\autorun.tmp~" %findstr% /rc:"\&lt;[su]Value = "
+)
+&lt;"%temp%\autorun.tmp~" set /p "AutoRunUser="
+set "AutoRunSys="
+&gt;"%temp%\autorun.tmp~" type nul
+if %RegSysCMDproc%==1 (
+  2&gt;nul %reg% query "HKLM\%CMDproc%" /v AutoRun |&gt;"%temp%\autorun.tmp~" %find% "REG_"
+) else if defined wmic (
+  2&gt;nul %wmic% /NameSpace:\\root\default Class StdRegProv Call GetExpandedStringValue hDefKey="&amp;H%HKLM%" sSubKeyName="%CMDproc%" sValueName="AutoRun" |&gt;"%temp%\autorun.tmp~" %findstr% /rc:"\&lt;[su]Value = "
+)
+&lt;"%temp%\autorun.tmp~" set /p "AutoRunSys="
+del "%temp%\autorun.tmp~"
+
+:: check elevation and Admin membership
+set "RunAs="
+%net% session &gt;nul 2&gt;&amp;1 &amp;&amp; (set "RunAs=Yes") || (set "RunAs=No")
+set "LocalAdmin="
+if defined whoami 2&gt;nul %whoami% /groups|&gt;nul %findstr% /i "\&lt;S-1-5-32-544\&gt;" &amp;&amp; set "LocalAdmin=Yes" || set "LocalAdmin=No"
+if not defined LocalAdmin if defined wmic (
+  for /f "tokens=1* delims==" %%i in (
+    '%wmic% path Win32_Group WHERE "LocalAccount='TRUE' AND SID='S-1-5-32-544'" GET Name /value'
+  ) do for /f "delims=" %%k in ("%%j") do (
+    for /f "tokens=1* delims=:" %%l in ('2^&gt;nul %gpresult% /r /scope user ^| %findstr% /n /c:"--------" /c:"%%k"') do (
+      set "check="
+      for /f "delims=- " %%n in ("%%m") do set "check=1"
+      if not defined check (
+        set "n=%%l"
+        set "LocalAdmin=No"
+      ) else for /f %%n in ('set /a n') do if %%n lss %%l set "LocalAdmin=Yes"
+    )
+  )
+) else set "LocalAdmin=Not found"
+
+:: International
+for %%a in ("iDate" "LocaleName") do set "%%~a="
+if %RegUserInternational%==1 (call :RegInternational) else if defined wmic call :WmiInternational
+if not defined iDate set "iDate=0"
+if not defined LocaleName call :MUI
+if "%iDate%"=="0" (set "format=mm/dd/yy") else if "%iDate%"=="1" (set "format=dd/mm/yy") else if "%iDate%"=="2" (set "format=yy/mm/dd")
+
+:: ProductName
+set "ProductName="
+if %RegSysCurrentVersion%==1 (call :RegProductName) else if defined wmic call :WmiProductName
+if not defined ProductName for /f "tokens=1* delims==" %%i in ('2^&gt;nul %wmic% os get Caption /value') do set "ProductName=%%j"
+
+:: Extensions and DelayedExpansion
+for %%a in (es eu ds du) do set "%%a=Disabled"
+if %RegUserCMDproc%==1 (call :RegUserProc) else if defined wmic call :WmiUserProc
+if %RegSysCMDproc%==1 (call :RegSysProc) else if defined wmic call :WmiSysProc
+if not defined eu set "eu=%ex_noreg%"
+if not defined du set "du=%de_noreg%"
+
+:: Code Pages
+set "OEMCP=" &amp;set "ACP="
+if %RegSysCodePage%==1 (call :RegCodePage) else if defined wmic call :WmiCodePage
+if not defined OEMCP for /f "tokens=*" %%i in ('%chcp%') do for %%j in (%%j) do set "OEMCP=%%~nj"
+if not defined ACP (
+  if defined wmic (
+    for /f "tokens=2 delims==" %%i in ('%wmic% os get CodeSet /value') do set /a "ACP=%%i"
+  )
+)
+
+:: checks path
+:: removes random double quotes, adds double quotes, removes trailing slash
+:: http://stackoverflow.com/questions/5471556/pretty-print-windows-path-variable-how-to-split-on-in-cmd-shell/5472168#5472168
+set "p=%path:"=""%"
+set "p=%p:^=^^%"
+set "p=%p:&amp;=^&amp;%"
+set "p=%p:|=^|%"
+set "p=%p:&lt;=^&lt;%"
+set "p=%p:&gt;=^&gt;%"
+set "p=%p:;=^;^;%"
+set p=%p:""="%
+set "p=%p:"=""%"
+set "p=%p:;;="";""%"
+set "p=%p:^;^;=;%"
+set "p=%p:""="%"
+set "p=%p:"=""%"
+set "p=%p:"";""=";"%"
+set "p=%p:"""="%"
+set p="%p%"
+set p=%p:\"="%
+
+:: Check for 64 bit windows.
+set "bit="
+if defined wmic (
+  for /f "tokens=1* delims==" %%i in ('2^&gt;nul %wmic% os GET OSArchitecture /value') do for /f "delims=" %%k in ("%%j") do set "bit=%%k"
+)
+if defined bit (echo "%bit%"|%find% "64" &gt;nul &amp;&amp; set "bit=64" || set "bit=32") else (
+  echo "%PROCESSOR_ARCHITECTURE%"|%find% "86" &gt;nul &amp;&amp; set "bit=32" || (
+    if exist "%SystemRoot%\SysWOW64\" (set "bit=64") else set "bit=32"
+  )
+)
+
+:: RAM space
+set "ram="
+if defined wmic (
+  for /f "tokens=1* delims==" %%i in ('2^&gt;nul %wmic% os GET TotalVisibleMemorySize /value') do for /f "delims=" %%k in ("%%j") do set "ram=%%k"
+)
+
+:: get Windows version and the DIR command format to display
+if "%notepad:~-3%"=="exe" (
+  &gt;nul %chcp% %ACP%
+  for /f "delims=" %%a in ('^&gt;nul %chcp% %ACP% ^&amp;ver') do set "WinVer=%%a"
+  if exist "%SystemDrive%\pagefile.sys" (
+    for /f "delims=" %%a in ('^&gt;nul %chcp% %ACP% ^&amp;dir "%SystemDrive%\pagefile.sys" /a ^|%find% ":"') do set "DirFormat=%%a"
+  ) else for /f "delims=" %%a in ('^&gt;nul %chcp% %ACP% ^&amp;dir "%__APPDIR__%ntoskrnl.exe" /a ^|%find% ":"') do set "DirFormat=%%a"
+  &gt;nul %chcp% %OEMCP%
+) else (
+  for /f "delims=" %%a in ('ver') do set "WinVer=%%a"
+  if exist "%SystemDrive%\pagefile.sys" (
+    for /f "delims=" %%a in ('dir "%SystemDrive%\pagefile.sys" /a ^|%find% ":"') do set "DirFormat=%%a"
+  ) else for /f "delims=" %%a in ('dir "%__APPDIR__%ntoskrnl.exe" /a ^|%find% ":"') do set "DirFormat=%%a"
+)
+
+set "pad=                          "
+:: create the information file and send the information to the clipboard if clip is available
+&gt;&gt;"%temp%\info.txt" (
+  setlocal EnableDelayedExpansion
+  echo Windows version        :  !WinVer!
+  echo Product name           :  !ProductName!, !bit! bit
+  echo Performance indicators :  Processor Cores: !NUMBER_OF_PROCESSORS!      Visible RAM: !ram! kilobytes&amp;echo(
+
+  echo Date/Time format       :  (!format!^)  !date!  !time!
+  echo __APPDIR__             :  !__APPDIR__!
+  echo ComSpec                :  !comspec!
+  echo PathExt                :  !PathExt!
+  echo Extensions             :  system: !es!  user: !eu!
+  echo Delayed expansion      :  system: !ds!  user: !du!
+  echo Locale name            :  !LocaleName!       Code Pages: OEM  !OEMCP!    ANSI !ACP!
+  echo DIR  format            :  !DirFormat!
+  echo Permissions            :  Elevated Admin=!RunAs!, Admin group=!LocalAdmin!
+  if defined AutoRunSys echo System  Autorun found  :  !AutoRunSys!
+  if defined AutoRunUser echo User    AutoRun found  :  !AutoRunUser!
+  endlocal&amp;echo(
+
+  rem report if path elements are missing
+  for %%i in (%dirs%) do (
+    set "found="
+    setlocal EnableDelayedExpansion
+    for %%j in (!p!) do (
+      endlocal
+      if /i "%%~i"==%%j set "found=1"
+      setlocal EnableDelayedExpansion
+    )
+    endlocal
+    if not defined found echo(%pad%Missing from the PATH environment: %%~i
+  )
+
+  rem report if tools are missing
+  for %%i in (%tools%) do for /f "tokens=1,2 delims=?" %%j in ("%%~i.exe?%%~i.com") do if "%%~$PATH:j%%~$PATH:k"=="" (
+    echo(%pad%Missing from the tool collection:  %%i
+  )
+  echo [/code^]
+)
+
+:: load the information into Notepad where it can also be copied to the clipboard
+start "" %notepad% "%temp%\info.txt" &amp; %ping% -n 2 127.0.0.1 &gt;nul &amp; del "%temp%\info.txt"
+
+goto :eof
+
+:: ~~~~~~~~~ Sub Routines ~~~~~~~~~
+:RegInternational
+for /f "tokens=1,2*" %%a in ('%reg% query "HKCU\%International%" /v "iDate" 2^&gt;nul ^| %find% "REG_"') do set "%%~a=%%~c"
+if %RegDefInternational%==1 for /f "tokens=1,2*" %%a in ('%reg% query "HKU\.DEFAULT\%International%" /v "iDate" 2^&gt;nul ^| %find% "REG_"') do if not defined %%~a set "%%~a=%%~c"
+for /f "tokens=1,2*" %%a in ('%reg% query "HKCU\%International%" /v "LocaleName" 2^&gt;nul ^| %find% "REG_"') do set "%%~a=%%~c"
+goto :eof
+
+:WmiInternational
+%RegHead% GetStringValue hDefKey^="&amp;H%HKCU%" sSubKeyName^="%international%" sValueName^="iDate" %RegTail%
+if not defined dat %RegHead% GetStringValue hDefKey^="&amp;H%HKU%" sSubKeyName^=".DEFAULT\%international%" sValueName^="iDate" %RegTail%
+if defined dat (set "iDate=%dat%") else set "iDate=0"
+%RegHead% GetStringValue hDefKey^="&amp;H%HKCU%" sSubKeyName^="%international%" sValueName^="LocaleName" %RegTail%
+if defined dat (set "LocaleName=%dat%") else set "LocaleName="
+goto :eof
+
+:MUI
+for /f "tokens=2 delims=={}" %%i in ('2^&gt;nul %wmic% os get MUILanguages /value') do set "LocaleName=%%i"
+if defined LocaleName (
+  set "LocaleName=%LocaleName:"=%"
+) else (
+  setlocal EnableDelayedExpansion
+  for /f %%i in ('dir /ad /b "%__APPDIR__%??-??"^|%findstr% /x "[a-z][a-z]-[a-z][a-z]"') do (
+    if exist "%__APPDIR__%%%i\ulib.dll.mui" set "LocaleName=!LocaleName!,%%i"
+  )
+  if defined LocaleName (for /f %%j in ("!LocaleName:~1!") do (endlocal &amp;set "LocaleName=%%j")) else endlocal
+)
+goto :eof
+
+:RegProductName
+for /f "tokens=2*" %%a in ('%reg% query "HKLM\%CurrentVersion%"^|%find% /i "ProductName"') do set "ProductName=%%b"
+goto :eof
+
+:WmiProductName
+%RegHead% GetStringValue hDefKey^="&amp;H%HKLM%" sSubKeyName^="%CurrentVersion%" sValueName^="ProductName" %RegTail%
+if defined dat (set "ProductName=%dat%") else set "ProductName="
+goto :eof
+
+:RegUserProc
+%reg% query "HKCU\%CMDproc%" /v "EnableExtensions" 2&gt;nul|%find% "0x1"&gt;nul &amp;&amp; set "eu=Enabled "
+%reg% query "HKCU\%CMDproc%" /v "DelayedExpansion" 2&gt;nul|%find% "0x1"&gt;nul &amp;&amp; set "du=Enabled "
+goto :eof
+
+:WmiUserProc
+%RegHead% GetDWORDValue hDefKey^="&amp;H%HKCU%" sSubKeyName^="%CMDproc%" sValueName^="EnableExtensions" %RegTail%
+if "%dat%"=="1" set "eu=Enabled "
+%RegHead% GetDWORDValue hDefKey^="&amp;H%HKCU%" sSubKeyName^="%CMDproc%" sValueName^="DelayedExpansion" %RegTail%
+if "%dat%"=="1" set "du=Enabled "
+goto :eof
+
+:RegSysProc
+%reg% query "HKLM\%CMDproc%" /v "EnableExtensions" 2&gt;nul|%find% "0x1"&gt;nul &amp;&amp; set "es=Enabled "
+%reg% query "HKLM\%CMDproc%" /v "DelayedExpansion" 2&gt;nul|%find% "0x1"&gt;nul &amp;&amp; set "ds=Enabled "
+goto :eof
+
+:WmiSysProc
+%RegHead% GetDWORDValue hDefKey^="&amp;H%HKLM%" sSubKeyName^="%CMDproc%" sValueName^="EnableExtensions" %RegTail%
+if "%dat%"=="1" set "es=Enabled "
+%RegHead% GetDWORDValue hDefKey^="&amp;H%HKLM%" sSubKeyName^="%CMDproc%" sValueName^="DelayedExpansion" %RegTail%
+if "%dat%"=="1" set "ds=Enabled "
+goto :eof
+
+:RegCodePage
+for /f "tokens=3" %%a in ('%reg% query "HKLM\%CodePage%" /v "OEMCP"') do set /a "OEMCP=%%a"
+for /f "tokens=3" %%a in ('%reg% query "HKLM\%CodePage%" /v "ACP"') do set /a "ACP=%%a"
+goto :eof
+
+:WmiCodePage
+%RegHead% GetStringValue hDefKey^="&amp;H%HKLM%" sSubKeyName^="%CodePage%" sValueName^="OEMCP" %RegTail%
+if defined dat (set "OEMCP=%dat%") else set "OEMCP="
+%RegHead% GetStringValue hDefKey^="&amp;H%HKLM%" sSubKeyName^="%CodePage%" sValueName^="ACP" %RegTail%
+if defined dat (set "ACP=%dat%") else set "ACP="
+goto :eof
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch script collection (outsourced)</h3>
+				<div class="date">Posted: <strong>19 Sep 2016 11:16</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">If batch files or commands don't behave as expected then standard external commands could have been overriden by non-standard files with the same base name within the PATH environment. The following script tests all EXE and COM files within %__APPDIR__% (usually C:\Windows\system32).<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:: TESTOVERRIDE.BAT version 1.0<br />:: source http://www.dostips.com<br />::&nbsp; Thanks to dbenham who provided this script.<br />:: Bugs and suggestions can be reported in thread http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7347<br />::<br />:: Release History:<br />::&nbsp; 2016-09-19 v1.0: Initial release<br /><br />@echo off<br />&gt;&quot;%temp%\overridden.txt&quot; type nul<br />if &quot;%~1&quot; equ &quot;__:TestOverride__&quot; (<br />&nbsp; if not defined pathext set &quot;pathExt=.com;.exe;.bat;.cmd&quot;<br />&nbsp; goto :TestOverride<br />)<br />call :TestOverride<br />exit /b<br />&nbsp;<br />&nbsp;<br />:TestOverride<br />setlocal disableDelayedExpansion<br />if not defined pathext (<br />&nbsp; &quot;%__APPDIR__%cmd.exe&quot; /c &quot;%~f0&quot; __:TestOverride__<br />&nbsp; exit /b<br />)<br />&nbsp;<br />:: Define LF to contain a new line (0x0A) character<br />(set LF=^<br />%= Do not remove or alter this line =%<br />)<br />:: Prepare the list of paths in PATH<br />set &quot;list=.\;%path:&quot;=&quot;&quot;%&quot;<br />set &quot;list=%list:^=^^%&quot;<br />set &quot;list=%list:&amp;=^&amp;%&quot;<br />set &quot;list=%list:|=^|%&quot;<br />set &quot;list=%list:&lt;=^&lt;%&quot;<br />set &quot;list=%list:&gt;=^&gt;%&quot;<br />set &quot;list=%list:;=^;^;%&quot;<br />set list=%list:&quot;&quot;=&quot;%<br />set &quot;list=%list:&quot;=&quot;&quot;Q%&quot;<br />set &quot;list=%list:;;=&quot;S&quot;S%&quot;<br />set &quot;list=%list:^;^;=;%&quot;<br />set &quot;list=%list:&quot;&quot;=&quot;%&quot;<br />setlocal EnableDelayedExpansion<br />set &quot;list=!list:&quot;Q=!&quot;<br />for %%N in (&quot;!LF!&quot;) do set &quot;list=&quot;!list:&quot;S&quot;S=.\&quot;%%~N&quot;!&quot;&quot;<br />setlocal disableDelayedExpansion<br />for /f %%C in ('copy /z &quot;%~dpf0&quot; nul') do (<br />&nbsp; for %%F in (<br />&nbsp; &nbsp; &quot;%__APPDIR__%*.exe&quot;<br />&nbsp; &nbsp; &quot;%__APPDIR__%*.com&quot;<br />&nbsp; ) do (<br />&nbsp; &nbsp; &lt;nul set /p &quot;=.%%C&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; %%C%%F&quot;<br />&nbsp; &nbsp; set &quot;skip=&quot;<br />&nbsp; &nbsp; setlocal enableDelayedExpansion<br />&nbsp; &nbsp; for /f &quot;delims=&quot; %%P in (&quot;!list!&quot;) do if not defined skip (<br />&nbsp; &nbsp; &nbsp; if &quot;!!&quot; equ &quot;&quot; endlocal<br />&nbsp; &nbsp; &nbsp; for %%X in (%pathext%) do if not defined skip (<br />&nbsp; &nbsp; &nbsp; &nbsp; if exist &quot;%%~fP%%~nF%%X&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if /i &quot;%%~fF&quot; neq &quot;%%~dpP%%~nF%%X&quot; &gt;&gt;&quot;%temp%\overridden.txt&quot; echo &quot;%%F&quot; is overridden by &quot;%%~dpP%%~nF%%X&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set &quot;skip=1&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; if /i &quot;%%~dpF&quot; equ &quot;%%~dpP&quot; set &quot;skip=1&quot;<br />&nbsp; &nbsp; )<br />&nbsp; )<br />&nbsp; (echo(%%C&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />)<br />for %%i in (&quot;%temp%\overridden.txt&quot;) do if %%~zi gtr 0 (<br />&nbsp; start &quot;&quot; %__APPDIR__%notepad.exe &quot;%temp%\overridden.txt&quot; &amp; %__APPDIR__%ping.exe -n 2 127.0.0.1 &gt;nul &amp; del &quot;%temp%\overridden.txt&quot;<br />) else (<br />&nbsp; del &quot;%temp%\overridden.txt&quot; &amp; echo No overridden tools found.&amp; pause<br />)<br />exit /b<br /></code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7420&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:50:24 GMT -->
+</html>

@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7519 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:46:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>PIE: new documentation format for batch scripts. Concept and implementation - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopicfedb.html?t=7519">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic7135.html?f=3&amp;t=7519">PIE: new documentation format for batch scripts. Concept and implementation</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting7842.html?mode=reply&amp;f=3&amp;t=7519" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopice930.html?f=3&amp;t=7519&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="7519" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			6 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p49919" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile49919">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5152.html?mode=viewprofile&amp;u=5284" class="username">siberia-man</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7f01.html?author_id=5284&amp;sr=posts">108</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 26 Dec 2013 09:28</dd>		
+		
+											
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact siberia-man">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact siberia-man</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://with-love-from-siberia.blogspot.com/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content49919">
+
+						<h3 class="first"><a href="#p49919">PIE: new documentation format for batch scripts. Concept and implementation</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting122d.html?mode=quote&amp;f=3&amp;p=49919" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7cdb.html?p=49919#p49919" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopic7cdb.html?p=49919#p49919" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5152.html?mode=viewprofile&amp;u=5284" class="username">siberia-man</a></strong> &raquo; </span>30 Oct 2016 13:30
+			</p>
+			
+			
+			
+			<div class="content"><strong class="text-strong">Preamble</strong><br /><br />This idea came when I desibed to develop a script creating some kind of sandbox for the application I am working on my job. It is java application working both win and unix. The main purpose was to settle the application into the filesystem looking like unix FS. The first version was written as HTA and left without supporting for long time. Recently I decided to revive it and rewrite as a command line tool. I did it and invented new approach in formatting documentation for batch scripts. It looks like Perl POD (the Plain Old Documentation) but it allows to display texts, echo variables and execute batch commands on the fly. I decided to call it PIE (the Plain or Primitive, Impressive and Executable documentation format). <br /><br /><strong class="text-strong">Introduction</strong><br /><br />Well known fact: the documenting of batch scripts is a bit pain. <br /><br />The simplest way is echoing some text but it is pain. <br /><br />There are comments (using &quot;rem&quot; and &quot;::&quot;). Comments allow writing of documentation without problems in text echoing. But there is no simple and ready-in-use way to print something dynamically (for exxample, some variables etc). <br /><br />Heredoc is good approach but it is available only through the tricky way (<!-- l --><a class="postlink-local" href="viewtopiccda8.html?f=3&amp;t=6493">viewtopic.php?f=3&amp;t=6493</a><!-- l -->). <br /><br />In this topic I am suggesting PIE, new and simple syntax for writing documentation in batch scripts. <br /><br />As it has been said above PIE stands for Plain, Impressive and Executable documentation format. Its roots come from Perl POD (Plain Old Documentation). But there is less markup and the syntax is more batch scripting oriented. <br /><br /><strong class="text-strong">Description</strong><br /><br />PIE consists of few things <br /><br /><strong class="text-strong">Ordinary text</strong><br />There is any text you are typing. It will be printed as is without any changes. <br /><br /><strong class="text-strong">Substitution</strong><br />Environment variables, like <strong class="text-strong">%PATH%</strong>; replaceable variables in the form as <strong class="text-strong">%[format]name</strong> (those we us in &quot;FOR&quot; command like %a etc). <br /><br /><strong class="text-strong">Command</strong><br />This is the main thing of PIE. Using pie-commands we can extend documentation. Let's look at the source code of the <strong class="text-strong">cmdpie.bat</strong> file implementing the concept of PIE. <br /><br /><strong class="text-strong">Source</strong><br /><br />Source codes can be found by the links: <br />Standalone PIE: <!-- m --><a class="postlink" href="https://github.com/ildar-shaimordanov/cmd.scripts/blob/master/bin/cmdpie.bat">https://github.com/ildar-shaimordanov/c ... cmdpie.bat</a><!-- m --><br />Working example: <!-- m --><a class="postlink" href="https://github.com/ildar-shaimordanov/cmd.scripts/blob/master/bin/fsbox.bat">https://github.com/ildar-shaimordanov/c ... /fsbox.bat</a><!-- m --><br /><br />Welcome for baking, testing scripts and discussion. <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />if not &quot;%~1&quot; == &quot;&quot; goto :pie<br /><br />call :pie BAKE &quot;%~f0&quot;<br />goto :EOF<br /><br />:: ========================================================================<br /><br />::PIE-BEGIN&nbsp; &nbsp;BAKE<br />NAME<br /><br />&nbsp; pie - the Plain, Impressive, Executable documentation format<br /><br /><br />DESCRIPTION<br /><br />&nbsp; Pie is a simple-in-use markup language used for writing documentation <br />&nbsp; for batch scripts in Windows DOS.<br /><br />&nbsp; Pie consists of few basic things: ordinary text, substitutions and <br />&nbsp; commands.<br /><br />Ordinary text<br />&nbsp; The majority of text in the documentation is the ordinary text blocks <br />&nbsp; like this one. You simply write it as is, without any markup.<br /><br />Substitution<br />&nbsp; It is any text surrounded with the percent characters &quot;%&quot; or the <br />&nbsp; replaceable variables in the form &quot;%&#91;format&#93;name&quot;, where &quot;name&quot; is a <br />&nbsp; single letter, &quot;format&quot; is an option expanding the variable. For <br />&nbsp; details, see &quot;FOR /?&quot;. Substitutions are used together with commands.<br /><br />Command<br />&nbsp; A command is the specially formatted string that turns some features. <br />&nbsp; Usually it is beginning or ending of Pie, calling some DOS commands or <br />&nbsp; echoing some text with substitution.<br /><br />&nbsp; All commands start with the double colon &quot;::&quot; followed by an identifier <br />&nbsp; and followed by some parameters separated with whitespaces.<br /><br />There are commands:<br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-BEGIN label&quot;<br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-END &#91;STOP&#93;&quot;<br /><br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-ECHO text&quot;<br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-CALL command&quot;<br /><br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-SETFILE &quot;filename&quot;&quot;<br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-OPENFILE&quot;<br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-CREATEFILE&quot;<br /><br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-COMMENT-BEGIN&quot;<br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-COMMENT-END&quot;<br /><br />The detailed explanation of each pie-command is given below.<br /><br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-BEGIN label&quot;<br />&nbsp; &quot;::PIE-BEGIN&quot; starts Pie itself. The mandatory &quot;label&quot; is used to <br />&nbsp; identify Pie. This allows to have more than one Pie within a single <br />&nbsp; file.<br /><br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-END &#91;STOP&#93;&quot;<br />&nbsp; &quot;::PIE-END&quot; ends the current Pie block. If the argument &quot;STOP&quot; is <br />&nbsp; specified, processing of the rest of input file will not be continued. <br /><br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-ECHO text&quot;<br />&nbsp; &quot;::PIE-ECHO&quot; prints the specified &quot;text&quot;. Any occurance of environment <br />&nbsp; or replaceable variables will be substituted. If the echoed text <br />&nbsp; contains the percent characters &quot;%&quot; they should be double to display.<br /><br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-CALL command&quot;<br />&nbsp; &quot;::PIE-CALL&quot; calls the specified command or commands. Substitution is <br />&nbsp; also available.<br /><br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-SETFILE &quot;filename&quot;&quot;<br />&nbsp; &quot;::PIE-SETFILE&quot; specifies a name of a file to write to. The filename can <br />&nbsp; be relative or absolute file path or can contain environment variables <br />&nbsp; that will be substituted too. The text it is expanded removing leading <br />&nbsp; and trailing quotes &quot;&quot; around the text. This gives ability to indent the <br />&nbsp; echoed text. <br /><br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-OPENFILE&quot;<br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-CREATEFILE&quot;<br />&nbsp; &quot;::PIE-OPENFILE&quot; and &quot;::PIE-CREATEFILE&quot; initialize writing to the file <br />&nbsp; specified by the command &quot;::PIE-SETFILE&quot;. New data are appended to the <br />&nbsp; end of the file. The difference between these commands is that <br />&nbsp; &quot;::PIE-CREATEFILE&quot; truncates the file before the real writing. <br /><br />&nbsp; Setting of the file and its opening are separated to enable additional <br />&nbsp; commands between them (for example, logging of an action before <br />&nbsp; performing it).<br /><br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-COMMENT-BEGIN&quot;<br />::PIE-ECHO&nbsp; &nbsp;&quot;&nbsp; ::PIE-COMMENT-END&quot;<br />&nbsp; &quot;::PIE-COMMENT-BEGIN&quot; starts and &quot;::PIE-COMMENT-END&quot; ends a block of <br />&nbsp; comments. This could be useful, if you need to escape printing of some <br />&nbsp; text but its removing from the file is unwanted.<br /><br />AUTHORS<br /><br />&nbsp; Copyright (C) 2016, Ildar Shaimordanov<br /><br />::PIE-END<br /><br />:: ========================================================================<br /><br />:pie<br />setlocal enabledelayedexpansion<br /><br />set &quot;pie-enabled=&quot;<br />set &quot;pie-filename=&quot;<br />set &quot;pie-openfile=&quot;<br />set &quot;pie-comment=&quot;<br /><br />for /f &quot;delims=&#93; tokens=1,*&quot; %%r in ( '<br />&nbsp; &nbsp;find /n /v &quot;&quot; &quot;%~f2&quot; <br />' ) do for /f &quot;tokens=1,2,*&quot; %%a in (<br />&nbsp; &nbsp;&quot;LINE %%s&quot;<br />) do if not defined pie-enabled (<br />&nbsp; &nbsp;if &quot;%%b %%~c&quot; == &quot;::PIE-BEGIN %~1&quot; set &quot;pie-enabled=1&quot;<br />) else if &quot;%%b&quot; == &quot;::PIE-SETFILE&quot; (<br />&nbsp; &nbsp;call set &quot;pie-filename=%%~c&quot;<br />&nbsp; &nbsp;set &quot;pie-openfile=&quot;<br />) else if &quot;%%b&quot; == &quot;::PIE-OPENFILE&quot; (<br />&nbsp; &nbsp;set &quot;pie-openfile=1&quot;<br />) else if &quot;%%b&quot; == &quot;::PIE-CREATEFILE&quot; (<br />&nbsp; &nbsp;set &quot;pie-openfile=1&quot;<br />&nbsp; &nbsp;if &quot;%%~c&quot; == &quot;NEW&quot; type nul &gt;&quot;!pie-filename!&quot; || exit /b 1<br />) else if &quot;%%b&quot; == &quot;::PIE-COMMENT-BEGIN&quot; (<br />&nbsp; &nbsp;set &quot;pie-comment=1&quot;<br />) else if &quot;%%b&quot; == &quot;::PIE-COMMENT-END&quot; (<br />&nbsp; &nbsp;set &quot;pie-comment=&quot;<br />) else if &quot;%%b&quot; == &quot;::PIE-END&quot; (<br />&nbsp; &nbsp;set &quot;pie-enabled=&quot;<br />&nbsp; &nbsp;set &quot;pie-filename=&quot;<br />&nbsp; &nbsp;set &quot;pie-openfile=&quot;<br />&nbsp; &nbsp;if &quot;%%~c&quot; == &quot;STOP&quot; (<br />&nbsp; &nbsp;&nbsp; &nbsp;endlocal<br />&nbsp; &nbsp;&nbsp; &nbsp;goto :EOF<br />&nbsp; &nbsp;)<br />) else if not defined pie-comment (<br />&nbsp; &nbsp;if defined pie-openfile (<br />&nbsp; &nbsp;&nbsp; &nbsp;&gt;&gt;&quot;!pie-filename!&quot; (<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;setlocal disabledelayedexpansion<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;if &quot;%%b&quot; == &quot;::PIE-ECHO&quot; (<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;call echo:%%~c<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;) else if &quot;%%b&quot; == &quot;::PIE-CALL&quot; (<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;call %%c<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;) else (<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;echo:%%s<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;)<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;endlocal<br />&nbsp; &nbsp;&nbsp; &nbsp;) || exit /b 1<br />&nbsp; &nbsp;) else (<br />&nbsp; &nbsp;&nbsp; &nbsp;(<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;setlocal disabledelayedexpansion<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;if &quot;%%b&quot; == &quot;::PIE-ECHO&quot; (<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;call echo:%%~c<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;) else if &quot;%%b&quot; == &quot;::PIE-CALL&quot; (<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;call %%c<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;) else (<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;echo:%%s<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;)<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;endlocal<br />&nbsp; &nbsp;&nbsp; &nbsp;) || exit /b 1<br />&nbsp; &nbsp;)<br />)<br /><br />endlocal<br />goto :EOF<br /><br />:: ========================================================================<br /><br />:: EOF<br /></code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p49928" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile49928">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search661c.html?author_id=1265&amp;sr=posts">3386</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 22 Jan 2010 18:01</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content49928">
+
+						<h3 ><a href="#p49928">Re: PIE: new documentation format for batch scripts. Concept and implementation</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5008.html?mode=quote&amp;f=3&amp;p=49928" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9bcb.html?p=49928#p49928" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopic9bcb.html?p=49928#p49928" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a></strong> &raquo; </span>31 Oct 2016 08:04
+			</p>
+			
+			
+			
+			<div class="content">I don't understand the syntax <img class="smilies" src="images/smilies/icon_redface.gif" alt=":oops:" title="Embarassed" /><br /><br />I have cmdpie.bat and fsbox.bat in the same directory. I opened a cmd prompt and navigated to the directory.<br />How should the command lines look like in order to access certain phrases of the documentation in fsbox.bat?<br /><br />Steffen</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p49930" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile49930">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5152.html?mode=viewprofile&amp;u=5284" class="username">siberia-man</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7f01.html?author_id=5284&amp;sr=posts">108</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 26 Dec 2013 09:28</dd>		
+		
+											
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact siberia-man">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact siberia-man</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://with-love-from-siberia.blogspot.com/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content49930">
+
+						<h3 ><a href="#p49930">Re: PIE: new documentation format for batch scripts. Concept and implementation</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting60ac.html?mode=quote&amp;f=3&amp;p=49930" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic186b-3.html?p=49930#p49930" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopic186b-3.html?p=49930#p49930" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5152.html?mode=viewprofile&amp;u=5284" class="username">siberia-man</a></strong> &raquo; </span>31 Oct 2016 08:18
+			</p>
+			
+			
+			
+			<div class="content">Shame to me. If you don't understand, i haven't explained it well.<br /><br />cmdpie.bat is documented with PIE. You can run it and compare output with PIE.<br />Let me time to reread what I have written before and I give more explanation.<br /><br />Regarding fsbox.bat.<br />It is formatted with PIE but it is executable part creating new files in a sandbox. In fact, fsbox.bat is the script itself and some portion of another scripts that will be copied on a disk. PIE is a glue between of them. <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmdpie HELP fsbox.bat</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p49931" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile49931">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search661c.html?author_id=1265&amp;sr=posts">3386</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 22 Jan 2010 18:01</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content49931">
+
+						<h3 ><a href="#p49931">Re: PIE: new documentation format for batch scripts. Concept and implementation</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting456e.html?mode=quote&amp;f=3&amp;p=49931" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicda49.html?p=49931#p49931" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopicda49.html?p=49931#p49931" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a></strong> &raquo; </span>31 Oct 2016 08:31
+			</p>
+			
+			
+			
+			<div class="content">Thanks for your explanation.<br />Probably I still miss something. Shouldn't that print the content of the ::PIE-BEGIN	HELP phrase?<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\steffen\Desktop&gt;dir cmdpie.bat fsbox.bat<br />&nbsp;Datenträger in Laufwerk C: ist OS<br />&nbsp;Volumeseriennummer: E643-135D<br /><br />&nbsp;Verzeichnis von C:\Users\steffen\Desktop<br /><br />30.10.2016&nbsp; 21:51&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;5.468 cmdpie.bat<br /><br />&nbsp;Verzeichnis von C:\Users\steffen\Desktop<br /><br />31.10.2016&nbsp; 14:38&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 15.711 fsbox.bat<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2 Datei(en),&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;21.179 Bytes<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;0 Verzeichnis(se),&nbsp; 8.737.202.176 Bytes frei<br /><br />C:\Users\steffen\Desktop&gt;cmdpie help fsbox.bat<br /><br />C:\Users\steffen\Desktop&gt;cmdpie HELP fsbox.bat<br /><br />C:\Users\steffen\Desktop&gt;cmdpie.bat HELP fsbox.bat<br /><br />C:\Users\steffen\Desktop&gt;</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p49932" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile49932">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5152.html?mode=viewprofile&amp;u=5284" class="username">siberia-man</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search7f01.html?author_id=5284&amp;sr=posts">108</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 26 Dec 2013 09:28</dd>		
+		
+											
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact siberia-man">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact siberia-man</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://with-love-from-siberia.blogspot.com/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content49932">
+
+						<h3 ><a href="#p49932">Re: PIE: new documentation format for batch scripts. Concept and implementation</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting6fcb.html?mode=quote&amp;f=3&amp;p=49932" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicc316.html?p=49932#p49932" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopicc316.html?p=49932#p49932" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5152.html?mode=viewprofile&amp;u=5284" class="username">siberia-man</a></strong> &raquo; </span>31 Oct 2016 09:04
+			</p>
+			
+			
+			
+			<div class="content">Definitely, I don't understand something. Each new Windows instance is like a separate operating system. Couple of hours ago the user of the Russian Grey forum has reported that on his PC the results of assoc/ftype commands differ if the arguments are quoted and not. <br /><br />Please check, if you have the latest versions of these scripts. Also try to convert unix line endings (LF) to windows line ending (CRLF). I have downloaded both files and checked with LF and CRLF. In both cases it does work properly. Most probably it is not true in your case because of different Windows.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p49934" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile49934">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search661c.html?author_id=1265&amp;sr=posts">3386</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 22 Jan 2010 18:01</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content49934">
+
+						<h3 ><a href="#p49934">Re: PIE: new documentation format for batch scripts. Concept and implementation</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7407.html?mode=quote&amp;f=3&amp;p=49934" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopica481.html?p=49934#p49934" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopica481.html?p=49934#p49934" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistf667.html?mode=viewprofile&amp;u=1265" style="color: #00AA00;" class="username-coloured">aGerman</a></strong> &raquo; </span>31 Oct 2016 09:44
+			</p>
+			
+			
+			
+			<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\steffen\Desktop&gt;cmdpie HELP fsbox.bat<br />Usage: cmdpie OPTIONS<br /><br />Create sandbox for UNIX like filesystem structure<br /><br />-p PATH&nbsp; &nbsp; &nbsp; &nbsp;set a directory where the sandbox will be installed<br />-d DISK&nbsp; &nbsp; &nbsp; &nbsp;set a virtual drive to which a path will be assigned<br />-n NAME&nbsp; &nbsp; &nbsp; &nbsp;set a name of the sandbox<br />-f DIRS&nbsp; &nbsp; &nbsp; &nbsp;set a list of directories whcih will be created<br /><br />--install&nbsp; &nbsp; &nbsp;start installation<br />--persistent&nbsp; install persistent virtual drive<br />--readonly&nbsp; &nbsp; set read only attribute over all installed files<br /><br />--help&nbsp; &nbsp; &nbsp; &nbsp; display this help and exit<br />--version&nbsp; &nbsp; &nbsp;display version information and exit<br /><br />C:\Users\steffen\Desktop&gt;</code></pre></div><br />Even if there were the correct line endings CRLF before, I again copied the scripts from github. Now it works like a charme  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br />I have no idea what was going wrong before. Thanks again for your support!<br /><br />Steffen</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting7842.html?mode=reply&amp;f=3&amp;t=7519" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopice930.html?f=3&amp;t=7519&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7519">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			6 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5897.gif?cron_type=cron.task.text_reparser.poll_option" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7519 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:46:28 GMT -->
+</html>

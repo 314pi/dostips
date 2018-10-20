@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1570&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:57:46 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Insert keystroke into executed batch command</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Insert keystroke into executed batch command</h2>
+		<p><a href="viewtopicf34a.html?f=3&amp;t=1570">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1570</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Insert keystroke into executed batch command</h3>
+				<div class="date">Posted: <strong>13 Jan 2011 10:44</strong></div>
+				<div class="author">by <strong>rolinger</strong></div>
+				<div class="content">Sorry, couldn't think of a better subject line.<br /><br />I am executing a string of simple calls to xxcopy using a batch file.<br /><br />Each call to xxcopy (3 separate calls) backs up data to an external hard drive, but when xxcopy initiates it splashes a &quot;WARNING&quot; screen that requires &quot;Press any key except &lt;ESC&gt; within 2 minutes to continue.&quot;   Without pressing a key within 2 minutes the xxcopy fails to execute the actual backup commands and there doesn't seem to be any xxcopy switch that will allow me to bypass this stupid warning screen thus making an automated backup .bat file useless.<br /><br />Since there isn't an xxcopy switch to bypass the splash screen, I was hoping there was some way within the .bat file to actually pass a carriage return or key press while the xxcopy was waiting on a key to be pressed.   <br /><br />Since control is owned by xxcopy and the .bat is waiting on control to be returned before executing the next command, I wouldn't think this is possible (unless I was running a scripting language like Expect).  However, I figured if anyone would know or know how to do it they would be on this forum.<br /><br />Thanks.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Insert keystroke into executed batch command</h3>
+				<div class="date">Posted: <strong>14 Jan 2011 04:01</strong></div>
+				<div class="author">by <strong>amel27</strong></div>
+				<div class="content">try this complicated batch file (with JS inside)<br /><br />- not tested, because I can't reproduce your problem in my environment<br />- replace &quot;xxcopy /?&quot; to your xxcopy calls (lead ECHO command required!)<br />- replace &quot;Press any key&quot; to any other key text if need<br />- your own BAT code must be between /* and */ marks<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@set @x=0 /*<br />@echo off<br />(<br />&nbsp; echo xxcopy /?<br />&nbsp; echo xxcopy /?<br />&nbsp; echo xxcopy /?<br />)|cscript //nologo /e:jscript &quot;%~f0&quot; &quot;Press any key&quot;<br /><br />@exit */<br />wss = WScript.CreateObject(&quot;WScript.Shell&quot;);<br />while (!WScript.StdIn.AtEndOfStream) {<br />&nbsp; cmd = WScript.StdIn.ReadLine();<br />&nbsp; foo = wss.Exec(cmd);<br />&nbsp; while (!foo.StdOut.AtEndOfStream) {<br />&nbsp; &nbsp; str = foo.StdOut.ReadLine();<br />&nbsp; &nbsp; WScript.Echo(str);<br />&nbsp; &nbsp; if (str.indexOf(WScript.Arguments.Item(0))&gt;0) {<br />&nbsp; &nbsp; &nbsp; WScript.Sleep(500);<br />&nbsp; &nbsp; &nbsp; wss.SendKeys(&quot;\r&quot;);<br />&nbsp; &nbsp; }<br />&nbsp; }<br />}<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Insert keystroke into executed batch command</h3>
+				<div class="date">Posted: <strong>14 Jan 2011 10:50</strong></div>
+				<div class="author">by <strong>Ocalabob</strong></div>
+				<div class="content">I use Robocopy for such tasks but you may be interested in having a look at the information the link below provides.<br /><br /><!-- m --><a class="postlink" href="http://www.xxcopy.com/xxgroup/m08/msg08387.htm">http://www.xxcopy.com/xxgroup/m08/msg08387.htm</a><!-- m --><br /><br />Best wishes!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Insert keystroke into executed batch command</h3>
+				<div class="date">Posted: <strong>14 Jan 2011 13:57</strong></div>
+				<div class="author">by <strong>rolinger</strong></div>
+				<div class="content">Ocalabob: Thanks for the link.  I thought this warning message was a result of xxcopy thinking the copy to an external harddrive (via a logical mapping, ie: H:\) that xxcopy was seeing this as a network copy and thus spitting out the warning message.  There is explicit documentation within the various versions (free, home, professional) that indicate certain features are restricted or, at a minimum, paused needing user interaction to continue.  Never made sense to me that xxcopy would treat an external harddrive as a network copy.  So thanks for the link, that clears up my perception of the splash screen.  I am going to now try the /WVO switch<br /><br />Amel27: JS inside of a .bat file?  I had no idea that could be JS could be implemented that way.  I literally only thought JS was for browsers.  A very interesting approach, basically using JS as an Expect script, but within a BATCH script.  I am going to toy with it and see what happens, could possibly open up a new world of DOS for me.  Thanks.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Insert keystroke into executed batch command</h3>
+				<div class="date">Posted: <strong>14 Jan 2011 14:19</strong></div>
+				<div class="author">by <strong>rolinger</strong></div>
+				<div class="content">Ocalabob:<br /><br />Found in the current xxcopy command reference:<br /><br />       /WV0  This switch is now obsolete and has no effect.<br />        /WV  This switch is now obsolete and has no effect.<br /><br />I was not able find any replacement switch to ignore window versioning.<br /><br /><img class="smilies" src="images/smilies/icon_sad.gif" alt=":-(" title="Sad" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Insert keystroke into executed batch command</h3>
+				<div class="date">Posted: <strong>14 Jan 2011 14:32</strong></div>
+				<div class="author">by <strong>rolinger</strong></div>
+				<div class="content">Ok...from xxcopy's version updates:<br /><br />2.96.5   2008-01-08    Tested with Windows XP Service Pack 3<br /><br />so I don't get why I am getting the splash warning message, look like I am going to have to try Amel27s suggestion - if in fact JS can be implemented in a batch file.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Insert keystroke into executed batch command</h3>
+				<div class="date">Posted: <strong>17 Jan 2011 11:52</strong></div>
+				<div class="author">by <strong>avery_larry</strong></div>
+				<div class="content">Can't something like this be done:<br /><br />echo.y|xxcopy . . .<br /><br />or <br /><br />xxcopy ...   &lt; echo.y<br /><br />or<br /><br />echo.y&gt;y.txt<br />xxcopy ...  &lt;y.txt<br /><br /><br />or<br /><br />echo.y&gt;y.txt<br />type y.txt|xxcopy ...<br /><br /><br />I thought some variation of those options were typically able to do the &quot;press any key&quot; idea . . .</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Insert keystroke into executed batch command</h3>
+				<div class="date">Posted: <strong>18 Jan 2011 03:15</strong></div>
+				<div class="author">by <strong>amel27</strong></div>
+				<div class="content"><blockquote><div><cite>avery_larry wrote:</cite>echo.y|xxcopy</div></blockquote>It would be too simple, but unfortunately XXCOPY not work with StdInput...  <img class="smilies" src="images/smilies/icon_sad.gif" alt=":(" title="Sad" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Insert keystroke into executed batch command</h3>
+				<div class="date">Posted: <strong>18 Jan 2011 09:43</strong></div>
+				<div class="author">by <strong>rolinger</strong></div>
+				<div class="content">Yeah, the  &quot;echo.y|xxcopy&quot; won't work.<br /><br />The &quot;echo.&quot; simulates a carriage return for DOS apps only.  Since xxcopy is a separate application the batch file passes stdin control to the external application and simply waits for that app to complete and for stdin to be returned to the batch process.<br /><br />The only way to manage this would be to embed the batch commands into JS or VBS scripts which act as a wrapper to the external application.  As a wrapper, the scripts have the ability to simulate user keystrokes that can be passed into the external application or capture output of the application.  And if you are embedding batch commands into JS or VBS...then why even use batch commands at all.<br /><br />Solution: the latest version of xxcopy 3.08.0 has a fix for the problem that was causing the Splash Warning screen.  The reason the Warning screen was popping up at all was because Windows Automatic Updates changes/updates the date stamp of specific files that xxcopy looks for during its OS Compatibility tests.  If the dates of files xxcopy is looking for are newer than what xxcopy expects them to be then it triggers the Splash Warning screen.  Which means in the next one or two Windows Update patches....one of those 'specific' files could be updated again thus causing the xxcopy splash/warning screen to get triggered.  The fix they implemented was simply to update the 'dates' it was comparing against.<br /><br />Frankly, checking dates of files is a pretty poor way of checking OS compatibility and they should simply fix that process altogether.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Insert keystroke into executed batch command</h3>
+				<div class="date">Posted: <strong>19 Jan 2011 10:56</strong></div>
+				<div class="author">by <strong>avery_larry</strong></div>
+				<div class="content">Well -- I shouldn't post what I don't know about, I guess.  I don't know anything about xxcopy.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1570&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:57:46 GMT -->
+</html>

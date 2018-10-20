@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7129&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:19:50 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Gotoxy</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Gotoxy</h2>
+		<p><a href="viewtopiccd0f.html?f=3&amp;t=7129">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7129</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Gotoxy</h3>
+				<div class="date">Posted: <strong>02 May 2016 18:26</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Hi everyone, first post here.<br /><br />Some time ago last year I had a need for a utility to position the cursor and write text in the Windows command prompt. So, instead of properly googling and finding what I needed (I later learned there are several similar programs like bg.exe), I foolishly decided to write my own... Anyway, it grew into a bit more full-featured thing over time, including another utility called cmdwiz, and now has some features that similar programs do not, so I thought I'd share it for some comments.<br /><br />Download at <!-- m --><a class="postlink" href="http://www.mediafire.com/download/8xywdi36hca4dgo/gotoxy.zip">http://www.mediafire.com/download/8xywd ... gotoxy.zip</a><!-- m --><br /><br />Or clone the repo at <!-- m --><a class="postlink" href="https://github.com/misol1/gotoxy">https://github.com/misol1/gotoxy</a><!-- m --><br /><br />There are quite a few batch file examples included, which is good because documentation is severely lacking.<br /><br />Try running l.bat (a file explorer, inspired by List for DOS), or games.bat or fx.bat and go from there.<br /><br /><br />Any suggestions and comments welcome, would be interesting to hear of compability/speed on different machines.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Gotoxy</h3>
+				<div class="date">Posted: <strong>03 May 2016 04:59</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Syntax is (same as you get from executing the exes without arguments):<br /><br />gotoxy.exe<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Usage: gotoxy x(1) y(1) &#91;text|file.gxy&#93; &#91;fgcol(2)&#93; &#91;bgcol(2)&#93; &#91;flags(3)&#93; &#91;wrapxpos&#93;<br /><br />Cols: 0=Black 1=Blue 2=Green 3=Aqua 4=Red 5=Purple 6=Yellow 7=LGray<br />&nbsp; &nbsp; &nbsp; 8=Gray 9=LBlue 10=LGreen 11=LAqua 12=LRed 13=LPurple 14=LYellow 15=White<br /><br />&#91;text&#93; supports control codes:<br />&nbsp; &nbsp; \px;y;: cursor position x y (1)<br />&nbsp; &nbsp; &nbsp; &nbsp;\xx: fgcol and bgcol in hex, eg \A0 (4)<br />&nbsp; &nbsp; &nbsp; &nbsp; \r: restore old color<br />&nbsp; &nbsp; &nbsp; \gxx: ascii character in hex<br />&nbsp; &nbsp;\TxxXXm: set character xx with col XX as transparent with mode m (5)<br />&nbsp; &nbsp; &nbsp; &nbsp; \n: newline<br />&nbsp; &nbsp; &nbsp; \Nxx: fill screen with hex character xx<br />&nbsp; &nbsp; &nbsp; &nbsp; \-: skip character (transparent)<br />&nbsp; &nbsp; &nbsp; &nbsp; \\: print \<br />&nbsp; &nbsp; &nbsp; &nbsp; \G: print existing character at position<br />&nbsp; \I:file;: insert contents of file<br />&nbsp; &nbsp; &nbsp; \wx;: delay x ms<br />&nbsp; &nbsp; &nbsp; \Wx;: delay up to x ms<br />&nbsp; &nbsp; &nbsp; &nbsp; \K: wait for key press; last key value is returned<br />&nbsp; &nbsp; &nbsp; &nbsp; \R: read/refresh buffer for v/V/Z/z/Y/X/\G (faster but not updated)<br />\ox;y;w;h;: copy/write to offscreen buffer, copy back at end or next \o<br />\Ox;y;w;h;: clear/write to offscreen buffer, copy back at end or next \O<br />&nbsp; &nbsp;\\Mx{T}: repeat T x times (only if 'x' flag set). Use \} to produce } for next run<br />\Sx;y;w;h;: set active scroll zone (only if 's' flag set)<br /><br />(1)&nbsp; &nbsp;Use 'k' to keep current. Precede with '+' or '/' to move from current position<br />(2)&nbsp; &nbsp;Use 'u/U' for console fgcol/bgcol, 'v/V' to use existing fgcol/bgcol at current<br />&nbsp; &nbsp; &nbsp; position. 'x/y/z/q' and 'X/Y/Z/Q' to xor/and/or/add with fgcol/bgcol at current<br />&nbsp; &nbsp; &nbsp; position. Precede with '-' to force color and ignore color codes in &#91;text&#93;<br />(3)&nbsp; &nbsp;One or more of: 'r/c/C' to restore/follow/visibly-follow cursor position,<br />&nbsp; &nbsp; &nbsp; 'w/W/z' to wrap/wordwrap/wrap-0 text, 'i' to ignore all control codes,<br />&nbsp; &nbsp; &nbsp; 's' to enable vertical scrolling, 'x' to enable support for expressions,<br />&nbsp; &nbsp; &nbsp; 'n' to ignore newline characters, 'k' to check for key press(es) and return last<br />&nbsp; &nbsp; &nbsp; key value<br />(4)&nbsp; &nbsp;Same as (2) for both values, but '-' to force is not supported. In addition, use<br />&nbsp; &nbsp; &nbsp; 'k' to keep current color, 'H/h' to start/stop forcing current color, '+' for<br />&nbsp; &nbsp; &nbsp; next color, '/' for previous color<br />(5)&nbsp; &nbsp;Use 'k' to ignore color, 'u/U' for console fgcol/bgcol. Mode 0 skips characters<br />&nbsp; &nbsp; &nbsp; (same as \-), mode 1 writes them back (faster if using \R)&nbsp; &nbsp; &nbsp;<br /></code></pre></div><br /><br />gotoxy_extended.exe<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Separate executable due to lower speed. There are currently two extensions:<br /><br />1. Control code \k&#91;:xx..;&#93;: check for key xx, yy etc, don't wait; return keystate(s)<br /><br />2. Correctly prints extended ascii characters as input when written as-is<br /></code></pre></div><br /><br />cmdwiz.exe<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Usage: cmdwiz &#91;getconsoledim setbuffersize getconsolecolor getch getkeystate<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;flushkeys getquickedit setquickedit getmouse getch_or_mouse<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;getch_and_mouse getcharat getcolorat showcursor getcursorpos<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;setcursorpos printf saveblock copyblock moveblock inspectblock<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;playsound delay stringfind stringlen gettime await getexetype cache<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;setwindowtransparency getwindowbounds setwindowpos<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;getdisplaydim getmousecursorpos setmousecursorpos insertbmp<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;savefont setfont gettitle&#93; &#91;params&#93;<br /><br />Use &quot;cmdwiz operation /?&quot; for info on arguments and return values<br /></code></pre></div><br /><br /><br />Simple use of gotoxy:<br /><br />gotoxy 10 5<br />Position cursor at column 10, row 5<br /><br />gotoxy 10 5 &quot;Hello&quot; 10 1<br />Position cursor at column 10, row 5, print &quot;Hello&quot; with text color 10 and background color 1<br /><br />gotoxy 10 5 &quot;\M10{Hello World\g21 \+0}&quot; 7 0 x<br />Print &quot;Hello World!&quot; 10 times in colors 7 and up, 'x' flag to enable expressions<br /><br />gotoxy 0 0 &quot;\N21\p10;5;\f0H\c4ello\n\e6world\g21\n&quot; 10 1<br />Print multicolor &quot;Hello world&quot; at column 10, row 5, in a sea of exclamation marks<br /><br />gotoxy k k watch.gxy 0 0 cs<br />Print gxy file (a gotoxy string saved in a file) from current cursor position, 'c' flag to follow cursor position, 's' flag to scroll at bottom of screen<br /><br />gotoxy k k watch.gxy -9 -1 cs<br />Same as above, force text color 9 and background color 1<br /><br />etc...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Gotoxy</h3>
+				<div class="date">Posted: <strong>03 May 2016 05:04</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">By the way, this is the first time I'm browsing these forums and I must say I'm humbled by what some of you guys can do in the command line with no use of external programs at all! 3d raycasting, that's insane! <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br /><br />Anyway, hope this program is still good for something... it's useful to me, anyway...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Gotoxy</h3>
+				<div class="date">Posted: <strong>03 May 2016 06:06</strong></div>
+				<div class="author">by <strong>SirJosh3917</strong></div>
+				<div class="content">It's amazing what you've done! But one thing...<br />It takes a while for the batch files to load ( roughly 15 secs for huge ones, 5 for little ones ), but after they've loaded, they're fast.<br />But if I were to use gotoxy or cmdwiz, I'd like to know all the things you can use it for, because the examples dont clearly show that. It looks like a bunch of for loops, variables, and gibberish.<br />Code from one of the examples:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal ENABLEDELAYEDEXPANSION<br />mode con lines=50 cols=80<br />cmdwiz showcursor 0<br />cmdwiz quickedit 0<br />color 07<br />cls<br /><br />set CNT=0&amp;for %%a in (00,10,10,10,10,10,80,80,80,80,b0,b0,f0) do set TRAILCOL!CNT!=%%a&amp;set /A CNT+=1<br />set /a TRAIL_LEN=%CNT%<br />set /a TRAIL_LEN_M=%CNT%-1<br />for /L %%a in (0,1,%TRAIL_LEN%) do set TRAILPX%%a=-1&amp;set TRAILPY%%a=-100<br />set TRAIL_I=0<br />set STRING=\kk&nbsp; &nbsp; \gB2\gB0\gDB\gB2\gB0&nbsp; &nbsp; \n&nbsp; \gB0\gB0&nbsp; &nbsp; &nbsp;\gB0\gB0&nbsp; \n \gB0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;\gB0 \n\gB0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;\gB2\n\gB2&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;\gDB\n\gB2&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;\gB1\n \gB0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;\gB0 \n&nbsp; \gB0\gB2&nbsp; &nbsp; &nbsp;\gB2\gB0&nbsp; \n&nbsp; &nbsp; \gB0\gB2\gB2\gDB\gB0&nbsp; &nbsp; \n<br />::set STRING=This string has got a tail...<br />::set STRING=\kk&nbsp; &nbsp;####&nbsp; &nbsp; \n&nbsp; #&nbsp; &nbsp; #&nbsp; \n&nbsp; #&nbsp; &nbsp; #&nbsp; \n&nbsp; &nbsp;####&nbsp; &nbsp;\n<br /><br />set DL=0<br />set DR=0<br />set KEY=0<br />set MX=-1&amp;set MY=-100<br /><br />:LOOP<br />cmdwiz getch_and_mouse 20<br />set MR=%ERRORLEVEL%<br />if %MR%==-1 goto NOINPUT<br />set SI=0<br />set /a KEY=(%MR%^&gt;^&gt;21)<br />set /a MT=%MR% ^&amp; 1 &amp;if !MT! == 0 goto NOINPUT<br />set /a MT=%MR% ^&amp; 2 &amp;if !MT! geq 1 set DL=1<br />set /a MT=%MR% ^&amp; 2 &amp;if !MT! equ 0 set DL=0<br />set /a MT=%MR% ^&amp; 4 &amp;if !MT! geq 1 set DR=1<br />set /a MT=%MR% ^&amp; 4 &amp;if !MT! equ 0 set DR=0<br />set /a MT=%MR% ^&amp; 32 &amp;if !MT! geq 1 goto LOOP<br />set /a MT=%MR% ^&amp; 64 &amp;if !MT! geq 1 goto LOOP<br />set /a MX=(%MR%^&gt;^&gt;7) ^&amp; 127<br />set /a MY=(%MR%^&gt;^&gt;14) ^&amp; 127<br />if %DL% geq 1 rem<br />if %DR% geq 1 rem<br /><br />:NOINPUT<br />set OUT=&quot;\O0;0;80;50;\T20kk&quot;<br />set /a TRAILPX%TRAIL_I%=%MX%-6<br />set /a TRAILPY%TRAIL_I%=%MY%-4<br /><br />set TCNT=%TRAIL_I%<br />set /A TCNT+=1&amp;if !TCNT! geq %TRAIL_LEN% set TCNT=0<br />for /L %%a in (0,1,%TRAIL_LEN_M%) do for %%b in (!TCNT!) do set OUT=&quot;!OUT:~1,-1!\!TRAILCOL%%a!\p!TRAILPX%%b!;!TRAILPY%%b!;%STRING%&quot;&amp;set /A TCNT+=1&amp;if !TCNT! geq %TRAIL_LEN% set TCNT=0<br /><br />gotoxy 0 0 %OUT% 9 0<br /><br />set /a TRAIL_I+=1<br />if %TRAIL_I% geq %TRAIL_LEN% set /a TRAIL_I=0<br /><br />if not %KEY% == 27 goto LOOP<br /><br />setlocal<br />cmdwiz quickedit 1<br />cmdwiz showcursor 1<br /></code></pre></div><br />Can't understand much but the last part.<br />The github provides some help, but if you were to make examples that had easy-to-read code, it'd also help.<br /><br />All in all though, great job!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Gotoxy</h3>
+				<div class="date">Posted: <strong>03 May 2016 08:27</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">Cool! I've been embedding this Powershell code in any scripts that need cursor manipulation:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;pos_cmd=$U=$Host.ui.rawui;$CursorPosition=$U.CursorPosition;&quot;<br />set &quot;pos_cmd=%pos_cmd%$CursorPosition.X=35;$CursorPosition.Y=2;&quot;<br />set &quot;pos_cmd=%pos_cmd%$U.CursorPosition=$CursorPosition;&quot;<br />powershell -command &quot;&amp;{%pos_cmd%}&quot;</code></pre></div><br /><br />but yours seems way more versatile.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Gotoxy</h3>
+				<div class="date">Posted: <strong>03 May 2016 13:02</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">ShadowThief: yeah it's possible to do a lot of things with gotoxy/cmdwiz actually (including bitwise operations mixing colors etc), but of course it has the disadvantage of being an external tool unlike Powershell.<br /><br />SirJosh3917: It takes 5-15 seconds for the batch files to load? That's horrible, what Windows version are you running? They run pretty much instantaneously on my machine (Windows 7)<br /><br />I agree that the documentation is no good/nonexisting... and you also picked one of the more cryptic commands in that example (getch_and_mouse and its siblings), because it returns an int in the errorlevel which has its bits set or not depending on the state of mouse buttons etc. If you're not familiar with operations like bitwise AND and bitwise shifting then it will look very cryptic indeed. On the other hand you could basically just copy/paste the code handling the mouse there and reuse it if you need mouse support for a script. <br /><br />Here is an explanation for that part of the code:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmdwiz getch_and_mouse 20&nbsp; &nbsp;:: check for key and mouse input, wait maximum 20 ms<br />set MR=%ERRORLEVEL%&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; :: result returned in ERRORLEVEL<br />if %MR%==-1 goto NOINPUT&nbsp; &nbsp; :: if result was -1 we got no input (ie. we timed out before that)<br />set /a KEY=(%MR%^&gt;^&gt;21)&nbsp; &nbsp;:: the key pressed (if any) is contained in the upper part of the result, we need to shift down 21 bits to get it<br />set /a MT=%MR% ^&amp; 1 &amp;if !MT! == 0 goto NOINPUT&nbsp; :: if first bit is not set we had no mouse input<br />set /a MT=%MR% ^&amp; 2 &amp;if !MT! geq 1 set DL=1&nbsp; :: if second bit is set, left mouse button was pressed<br />set /a MT=%MR% ^&amp; 2 &amp;if !MT! equ 0 set DL=0&nbsp; :: if not, then it was not pressed :)<br />set /a MT=%MR% ^&amp; 4 &amp;if !MT! geq 1 set DR=1&nbsp; :: if third bit is set, right mouse button was pressed<br />set /a MT=%MR% ^&amp; 4 &amp;if !MT! equ 0 set DR=0<br />:: bit 4 and bit 5 are set if left/right mouse button was double-clicked, not checked here<br />set /a MT=%MR% ^&amp; 32 &amp;if !MT! geq 1 goto LOOP :: bit 6 checks for mouse wheel (up), result is ignored here<br />set /a MT=%MR% ^&amp; 64 &amp;if !MT! geq 1 goto LOOP :: bit 7 checks for mouse wheel (down), result is ignored here<br />set /a MX=(%MR%^&gt;^&gt;7) ^&amp; 255&nbsp; :: the mouse X column are in bits 8-15, shift it down and mask out values above 127<br />set /a MY=(%MR%^&gt;^&gt;15) ^&amp; 127 :: the mouse Y row are in bits 16-22, shift it down and mask out values above 127<br />if %DL% geq 1 rem :: in this example pressing left mouse button does nothing, only the mouse coordinates are used<br />if %DR% geq 1 rem :: right mouse button neither<br /><br />... use MX and MY, and quit script if escape key (27) was pressed<br /></code></pre></div><br /><br />Actually come to think of it, printing to stdio as output from getch_and_mouse would probably be better, and much less cryptic... seems &quot;ugly&quot; to me though somehow (I guess as a C programmer), having to redirect output to a file and then reading that file and parsing it when you can just return an int... But in this case it was probably the wrong choice (also, in this case, max value for MX and MY are 127... so won't work for big screens... though you can use &quot;getch_or_mouse&quot; instead and get values up to 511... There's another example of that in testmouse.bat.<br /><br />But apart from the mouse commands (and getkeystate, which uses a similar return strategy), I don't think most cmdwiz commands are too cryptic. Starting from one of the smaller examples like sprite3.bat or transpscroll.bat it should be possible to get started, if you look at the syntax for gotoxy and cmdwiz above at the same time.<br /><br />Atleast there are no &quot;^don't remove this empty line above!!&quot; lines in my bat files, I'm scratching my head when the batch wizards around here are doing that... magic  <img class="smilies" src="images/smilies/icon_mrgreen.gif" alt=":mrgreen:" title="Mr. Green" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Gotoxy</h3>
+				<div class="date">Posted: <strong>03 May 2016 13:51</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">As for the &quot;gibberish&quot;, I assume you mean this line:<br /><br />set STRING=\kk    \gB2\gB0\gDB\gB2\gB0    \n  \gB0\gB0     \gB0\gB0  \n \gB0         \gB0 \n\gB0           \gB2\n\gB2           \gDB\n\gB2           \gB1\n \gB0         \gB0 \n  \gB0\gB2     \gB2\gB0  \n    \gB0\gB2\gB2\gDB\gB0    \n<br /><br />This is simpy copy/pasted &quot;graphics&quot; from a gxy file which I drew and saved in editor.bat (it's the circle drawn when you move the mouse).<br />So in the prompt you could print this like:<br />gotoxy 0 0 &quot;\kk    \gB2\gB0\gDB\gB2\gB0    \n  \gB0\gB0     \gB0\gB0  \n \gB0         \gB0 \n\gB0           \gB2\n\gB2           \gDB\n\gB2           \gB1\n \gB0         \gB0 \n  \gB0\gB2     \gB2\gB0  \n    \gB0\gB2\gB2\gDB\gB0    \n&quot; 9 0<br /><br />...and see a blue circle<br /><br /><br />And this part is the colors used for the circles, going from dark blue (10), to white (f0)<br /><br />set CNT=0&amp;for %%a in (00,10,10,10,10,10,80,80,80,80,b0,b0,f0) do set TRAILCOL!CNT!=%%a&amp;set /A CNT+=1<br /><br />...and later used in the for loop to print out all the circles:<br /><br />for /L %%a in (0,1,%TRAIL_LEN_M%) do for %%b in (!TCNT!) do set OUT=&quot;!OUT:~1,-1!\!TRAILCOL%%a!\p!TRAILPX%%b!;!TRAILPY%%b!;%STRING%&quot;&amp;set /A TCNT+=1&amp;if !TCNT! geq %TRAIL_LEN% set TCNT=0<br /><br />Basically since gotoxy is an external command it takes time every time it's executed so you want to minimize the number of times you call it to once per frame, so that's why I build up a long string first with all the circles and then print it all at once</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Gotoxy</h3>
+				<div class="date">Posted: <strong>04 May 2016 07:03</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">** Updated link and repo, download again! **<br /><br />After realizing yesterday how cryptic the ERRORLEVEL output from some cmdwiz functions might seem, I decided to add printed output to the following cmdwiz commands:<br /><br />getmouse, getch_or_mouse, getch_and_mouse, getkeystate<br /><br />This means the output should be redirected to &gt;nul if the printed output is not needed (the commands also still return the ERRORLEVEL same as before)<br /><br />I changed the testmouse2.bat example to parse output instead of ERRORLEVEL. It's hopefully easier to understand:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cmdwiz getch_and_mouse 20&gt;mouse_out.txt<br /><br />for /F &quot;tokens=1,3,5,7,9,11,13,15,17,19,21 delims= &quot; %%a in (mouse_out.txt) do set EVENT=%%a&amp;set KEY=%%b&amp;set MOUSE_EVENT=%%c&amp;set NEW_MX=%%d&amp;set NEW_MY=%%e&amp;set LMB=%%f&amp;set RMB=%%g&amp;set LDBL=%%h&amp;set RDBL=%%i&amp;set MWHEEL=%%j<br />if &quot;%EVENT%&quot;==&quot;NO_EVENT&quot; set KEY=0&amp;goto NOINPUT<br />if &quot;%MOUSE_EVENT%&quot;==&quot;0&quot; goto NOINPUT<br />if not &quot;%MWHEEL%&quot;==&quot;0&quot; goto LOOP<br />set MX=%NEW_MX%&amp;set MY=%NEW_MY%<br /></code></pre></div><br /><br />...where output, if there is a mouse event, looks something like &quot;EVENT KEY_EVENT 0 MOUSE_EVENT 1 MOUSE_X 2 MOUSE_Y 3 LEFT_BUTTON 0 RIGHT_BUTTON 0 LEFT_DOUBLE_CLICK 0 RIGHT_DOUBLE_CLICK 0 MOUSE_WHEEL 0&quot;.<br /><br />It also has the added real advantage of not having a limit for the value of Mouse X and Y coordinates.<br /><br />If you want to see this in action, try this from the shell (break with ctrl-c): <br />for /L %a in (1,1,100000) do @cmdwiz getch_and_mouse<br /><br />Or for getkeystate (checks for pressed state of ctrl,alt,shift and escape):<br />for /L %a in (1,1,100000) do @cmdwiz getkeystate ctrl alt shift 27</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Gotoxy</h3>
+				<div class="date">Posted: <strong>06 May 2016 04:43</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">*Links and repo updated again!*<br /><br />I added the following to gotoxy:<br /><br />1. Inlining of files in string<br />2. New transparency mode<br /><br /><strong class="text-strong">Inlining</strong> (any file works, not just gxy files):<br />\I:filename;  (note the semicolon)<br /><br />Example:<br />gotoxy 10 10 &quot;\I:goomba.gxy;&quot;<br /><br />Or why not:<br />gotoxy -16 -13 &quot;\I:circles.gxy;\p10;6;\I:watch.gxy;\p60;5;\M10{\I:hero.gxy;\n}&quot; 1 0 x<br /><br /><br /><strong class="text-strong">New transparency mode:</strong><br />I don't like this one too much as it's kind of implementation specific, but it does increase speed a lot in certain cases.<br /><br />\TxxXXm: set character xx with col XX as transparent with mode m<br /><br />Note the new m option. If m is 0, old mode is used, which skips writing the character if it is the transparent one. In mode 1, the character is instead written back to the screen. Basically this limits the number of calls to the Windows function WriteConsoleOutput (which is veeery slow, actually the main speed hog when trying to do text stuff in cmd line), so it can be faster, but only if the \R code is used (\R creates a copy of the current screen in memory)<br /><br /><br />Starfield2.bat and the new interference3.bat use both these new features.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Gotoxy</h3>
+				<div class="date">Posted: <strong>10 May 2016 15:38</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Apparently Dropbox hates me and shut down downloads due to &quot;heavy traffic&quot; (I'm sure it must have been enormous <img class="smilies" src="images/smilies/icon_rolleyes.gif" alt=":roll:" title="Rolling Eyes" /> ).<br /><br />All files were moved to Mediafire, sorry if anybody tried to get the files earlier and failed.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Gotoxy</h3>
+				<div class="date">Posted: <strong>10 May 2016 16:28</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Read here for the likely reason Dropbox did that:<br /><br /><!-- l --><a class="postlink-local" href="viewtopic99f4.html?f=3&amp;t=7138&amp;view=unread#p46575">viewtopic.php?f=3&amp;t=7138&amp;view=unread#p46575</a><!-- l --></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Gotoxy</h3>
+				<div class="date">Posted: <strong>14 May 2016 11:46</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Archive and repo were updated. See top for links.<br /><br />For changes to listb, see <!-- l --><a class="postlink-local" href="viewtopic247d.html?f=3&amp;t=7147">viewtopic.php?f=3&amp;t=7147</a><!-- l --><br /><br />Key codes are changed for certain keys, following advice from aGerman. See above thread for more info.<br /><br />Cmdwiz was extended with a new operation called &quot;cache&quot;. It takes a path to a text file containing filenames, then simply reads these files without doing nothing. Why? This puts the files in Windows file cache, speeding up later operations with them. Admittedly, it was mostly added for my mov2txt utility (<a href="viewtopic497e.html?f=3&amp;t=7138" class="postlink">http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7138</a>), but could be useful for other file operations too.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Gotoxy</h3>
+				<div class="date">Posted: <strong>16 Jun 2016 16:41</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Archive and repo were updated, minor change only.<br /><br />The getch_and_mouse operation of cmdwiz.exe now uses that extra bit that was freed by making the key codes always smaller than 512. This means the x value of the mouse can now be up to 255 instead of 127. To get the key, right shift by 22, to get mouse x right shift by 7 and AND with 255, to get mouse y right shift by 15 and AND with 127.<br /><br />Also, a classic image fade effect was recently added, you can see it by running fx.bat and starting 'Image'<br /><br /><br />By the way, I recently ran some of my scripts on a friend's computer where it was really slow. Turns out it was the antivirus running in some kind of sandbox mode, slowing down the execution of my external programs gotoxy.exe and cmdwiz.exe horribly. Turning off the antivirus temporarily speeded things up enormously.<br /><br />So just in case these things move like syrup, don't blame me, blame your antivirus (probably) <img class="smilies" src="images/smilies/icon_mrgreen.gif" alt=":mrgreen:" title="Mr. Green" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Gotoxy</h3>
+				<div class="date">Posted: <strong>28 Jun 2016 08:20</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Updated the archive and repo.<br /><br />Added a new flag, 'n', for gotoxy. If set, gotoxy ignores newline characters in input files.<br /><br />I realized this could be handy if creating gxy files with 'echo' on the fly in a bat script, because echo adds newlines whether you want to or not.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Gotoxy</h3>
+				<div class="date">Posted: <strong>05 Jul 2016 20:11</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Another archive update.<br /><br />This time cmdwiz got a new operation called getexetype. This one was stolen with permission from aGerman, and checks what kind of executable a file is (if any). I needed this for the listb explorer.<br /><br />Also, cmdwiz documentation was improved. Return values are now described along with the arguments if typing &quot;cmdwiz operation&quot;, and in the case when an operation doesn't need any arguments to run, it is now possible to write &quot;cmdwiz operation /?&quot; and get the info anyway.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7129&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:19:50 GMT -->
+</html>

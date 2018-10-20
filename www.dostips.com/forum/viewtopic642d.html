@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2168&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:15:10 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; replace a string in a file and then save file with new name</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>replace a string in a file and then save file with new name</h2>
+		<p><a href="viewtopicb735.html?f=3&amp;t=2168">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=2168</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>replace a string in a file and then save file with new name</h3>
+				<div class="date">Posted: <strong>29 Aug 2011 07:33</strong></div>
+				<div class="author">by <strong>goreilly</strong></div>
+				<div class="content">Hello,  I'm a newbee.  Simple question.<br /><br />How do I open a text file, find a particular string,  replace that string with another string, and then save the file with a new name.  <br />So far, I can find the string in a file using the find command,  but then I don't know how to replace the string in that file.<br /><br />Thank you,<br />Gerry <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: replace a string in a file and then save file with new n</h3>
+				<div class="date">Posted: <strong>29 Aug 2011 19:50</strong></div>
+				<div class="author">by <strong>InterociterOperator</strong></div>
+				<div class="content">What if we save the file with a new name and THEN replace a string?  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br /><br />I would cheat and program in Edlin, which has been part of DOS since the beginning.<br /><br />Make a copy of your original file with a copy command and work from it.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>copy Members.txt Names.txt</code></pre></div><br /><br />Now say we want to find &quot;Harry&quot; in our new file called Names.txt, and change it to &quot;Mary&quot; ...<br /><br />If Names.txt contains:<br />Tom<br />Dick<br />Harry<br /><br />and NewName.txt contains<br />Mary<br /><br />..we could do...<br /><br />                        Edlin c:\Names.txt &lt;  c:\EdlinCommands.txt<br /><br />where the EdlinCommands file contains...<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>1sHarry<br />.d<br />.tNewNames.txt<br />e<br /></code></pre></div><br /><br />&quot;1sHarry&quot; means start at the first line in the file and search for the word Harry<br />and &quot;.d&quot; means delete the line that contains &quot;Harry&quot;<br />and &quot;.tNewName.txt&quot; means transfer the contents of &quot;NewName.txt&quot; to this line location (.).<br />&quot;e&quot; means save and end.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: replace a string in a file and then save file with new n</h3>
+				<div class="date">Posted: <strong>29 Aug 2011 21:18</strong></div>
+				<div class="author">by <strong>Ocalabob</strong></div>
+				<div class="content">Greetings Gerry!<br /><br />If SED is an optional then the solution is trivial. Here's a SED<br />routine within a batch file as an example for your consideration.<br /><br />[code]<br />@echo off<br />::Create a test file<br />echo Now is the time for all good men to come to the aid of their Country.&gt;$$$Gerry.txt<br /><br />::Use SED to replace some text.<br />type $$$Gerry.txt |SED &quot;s/men/men and women/g&quot; |SED &quot;s/Country./State./g&quot;&gt;$$$Gerry_final.txt<br />echo Orginal Line is:<br />type $$$Gerry.txt<br />echo.<br />echo Replaced line is:<br />type $$$Gerry_final.txt<br />echo.<br />echo Press The Space Bar to Close this Window.<br />pause&gt;nul<br />::Housekeeping<br />del $$$*.txt<br />[code]<br /><br />Best wishes Gerry!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: replace a string in a file and then save file with new n</h3>
+				<div class="date">Posted: <strong>29 Aug 2011 22:08</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content">[quote=&quot;Ocalabob&quot;]<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::Use SED to replace some text.<br />type $$$Gerry.txt |SED &quot;s/men/men and women/g&quot; |SED &quot;s/Country./State./g&quot;&gt;$$$Gerry_final.txt<br /></code></pre></div><br /><br />No need to use type, since sed takes in a file as argument. And you can combine sed commands together<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>sed &quot;s/men/blah blah/g;s/Country/blah blah ../g&quot; Gerry.txt<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: replace a string in a file and then save file with new n</h3>
+				<div class="date">Posted: <strong>30 Aug 2011 12:09</strong></div>
+				<div class="author">by <strong>goreilly</strong></div>
+				<div class="content">Responders:<br />   Thank you so much.  I downloaded sed and ran the suggested programs, and they did the trick most effectively.<br />Save me a lot of time struggling with dos stuff.<br />Gerry <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" />  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> </div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2168&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:15:10 GMT -->
+</html>

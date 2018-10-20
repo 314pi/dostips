@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7022 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:15:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Calling devcon from a batch - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic5b46.html?t=7022">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopicf809.html?f=3&amp;t=7022">Calling devcon from a batch</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting3720.html?mode=reply&amp;f=3&amp;t=7022" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic5cbb-2.html?f=3&amp;t=7022&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="7022" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			10 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p45815" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile45815">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd2f1.html?mode=viewprofile&amp;u=3102" class="username">sambul35</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search643a.html?author_id=3102&amp;sr=posts">192</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 18 Jan 2012 10:13</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content45815">
+
+						<h3 class="first"><a href="#p45815">Calling devcon from a batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting1a7d.html?mode=quote&amp;f=3&amp;p=45815" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic2420.html?p=45815#p45815" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopic2420.html?p=45815#p45815" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd2f1.html?mode=viewprofile&amp;u=3102" class="username">sambul35</a></strong> &raquo; </span>17 Mar 2016 16:50
+			</p>
+			
+			
+			
+			<div class="content">Its a known issue that accessing some monitors' EDID at Windows PC wakeup, connected via HDMI or DisplayPort, or some DP-to-HDMI or DVI-to-HDMI adapter or Audio Receiver, may be delayed or fail, resulting in no picture or garbled image on-screen. There're a few methods to re-access EDID without PC reboot. One is mentioned <a href="http://www.thehtpc.net/htpc-tips-and-tweaks/solving-your-hdmi-handshake-issues-once-and-for-all/" class="postlink"><strong class="text-strong">here</strong></a>. However, when manually launching the batch below, it exits without querying the monitor (i.e. nothing happens), where devcon is placed in <em class="text-italics">c:\windows\system32</em>. Despite when the same command is run from Win 10 64-bit Cmd Prompt, it queries the monitor as it should (screen blinks, resolution is restored to set). Why is that?<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />ping 127.0.0.1 -w 5000&gt;nul<br />&quot;%~dp0devcon.exe restart =display *ven_1002*&quot;<br /></code></pre></div><br /><br />Also tried <em class="text-italics">devcon restart =display *ven_1002*</em> instead of the above, or giving full path to devcon, but no change.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p45817" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile45817">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista6f7.html?mode=viewprofile&amp;u=8078" class="username">kwsiebert</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchc201.html?author_id=8078&amp;sr=posts">25</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 20 Jan 2016 15:46</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content45817">
+
+						<h3 ><a href="#p45817">Re: Calling devcon from a batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting349e.html?mode=quote&amp;f=3&amp;p=45817" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic3884.html?p=45817#p45817" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopic3884.html?p=45817#p45817" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista6f7.html?mode=viewprofile&amp;u=8078" class="username">kwsiebert</a></strong> &raquo; </span>17 Mar 2016 21:40
+			</p>
+			
+			
+			
+			<div class="content">Are there any error messages when it is directly launched? Place a pause as the final line to see them before it exits. It is also specifically looking for devcon in the same folder that the batch is in, rather than c:\windows\system32, but that should be the same no matter how you launch it.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p45818" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile45818">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd2f1.html?mode=viewprofile&amp;u=3102" class="username">sambul35</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search643a.html?author_id=3102&amp;sr=posts">192</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 18 Jan 2012 10:13</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content45818">
+
+						<h3 ><a href="#p45818">Re: Calling devcon from a batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting19d6.html?mode=quote&amp;f=3&amp;p=45818" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic318b.html?p=45818#p45818" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopic318b.html?p=45818#p45818" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd2f1.html?mode=viewprofile&amp;u=3102" class="username">sambul35</a></strong> &raquo; </span>17 Mar 2016 22:46
+			</p>
+			
+			
+			
+			<div class="content">Added pause, here we go ( I removed GPU details):<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>PCI\VEN_1002&amp;DEV_.....: Restart failed<br />No matching devices found.<br />Press any key to continue . . .</code></pre></div><br /><br />Why does it fail to restart the device from batch, despite restarting it OK from Admin Cmd Prompt without any errors? A <strong class="text-strong"><a href="http://www.filedropper.com/dv" class="postlink">copy</a></strong> of devcon 64 is added to the same folder. If I choose &quot;Run as admin&quot;, the batch window opens and immediately closes without wait, no way to read anything. May be some dll packed in that bin prevents it from running from a batch?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p45853" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile45853">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915" style="color: #00AA00;" class="username-coloured">penpen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1bf7.html?author_id=4915&amp;sr=posts">1612</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Jun 2013 06:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content45853">
+
+						<h3 ><a href="#p45853">Re: Calling devcon from a batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting24a3.html?mode=quote&amp;f=3&amp;p=45853" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice8d0.html?p=45853#p45853" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopice8d0.html?p=45853#p45853" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915" style="color: #00AA00;" class="username-coloured">penpen</a></strong> &raquo; </span>21 Mar 2016 09:43
+			</p>
+			
+			
+			
+			<div class="content">One issue is the use of doublequotes in the third line:<br />It searches for a command or file '%~dp0devcon.exe restart =display *ven_1002*',<br />but you only wanted to start '%~dp0devcon.exe' with some parameters.<br /><br />This should work (closing doublequotes after the file name and not at the end):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&quot;%~dp0devcon.exe&quot; restart =display *ven_1002*</code></pre></div><br /><br />to get the output i would use no &quot;@echo off&quot; and redirect the rest to a file:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;&gt; test.txt (<br />2&gt;&gt;&amp;1 (<br />&nbsp; &nbsp;echo(&quot;%~dp0devcon.exe&quot; restart =display *ven_1002*<br />&nbsp; &nbsp;&quot;%~dp0devcon.exe&quot; restart =display *ven_1002*<br />)<br />)</code></pre></div><br /><br />penpen</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p45865" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile45865">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd2f1.html?mode=viewprofile&amp;u=3102" class="username">sambul35</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search643a.html?author_id=3102&amp;sr=posts">192</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 18 Jan 2012 10:13</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content45865">
+
+						<h3 ><a href="#p45865">Re: Calling devcon from a batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingc1d3-2.html?mode=quote&amp;f=3&amp;p=45865" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9ba0.html?p=45865#p45865" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopic9ba0.html?p=45865#p45865" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd2f1.html?mode=viewprofile&amp;u=3102" class="username">sambul35</a></strong> &raquo; </span>21 Mar 2016 12:54
+			</p>
+			
+			
+			
+			<div class="content">Before trying that, could you explain, what's the purpose of open extra &quot;(&quot;, and why duplicate the same command line?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p45867" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile45867">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915" style="color: #00AA00;" class="username-coloured">penpen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1bf7.html?author_id=4915&amp;sr=posts">1612</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Jun 2013 06:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content45867">
+
+						<h3 ><a href="#p45867">Re: Calling devcon from a batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0a0e.html?mode=quote&amp;f=3&amp;p=45867" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopiccb15.html?p=45867#p45867" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopiccb15.html?p=45867#p45867" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915" style="color: #00AA00;" class="username-coloured">penpen</a></strong> &raquo; </span>21 Mar 2016 15:04
+			</p>
+			
+			
+			
+			<div class="content">The output of the (dos file) handle to the handle to stderr is redirected to stdin, and then<br />the handle to stdin is redirected and appended to the file &quot;test.txt&quot;.<br />The outer parentheses are used to ensure this order of operation,<br />and proper restoration of the file handles:<br />I am in the habit of doing it this way although in this case it should work without the outer parentheses.<br /><br />The inner parentheses are used to process the redirection for both (inner) commands.<br /><br />I use opening parenthesis because of this:<br /><a href="viewtopicbcfb.html?t=1900" class="postlink">http://www.dostips.com/forum/viewtopic.php?t=1900</a><br /><br />There is no duplicated command line.<br />This will echo a the string behind (with Variable %~dp0 replaced by its actual value):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo(&quot;%~dp0devcon.exe&quot; restart =display *ven_1002*</code></pre></div><br />This will execute the file &quot;%~dp0devcon.exe&quot; with the given parameters:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&quot;%~dp0devcon.exe&quot; restart =display *ven_1002*</code></pre></div><br /><br />It could be that the file is empty:<br />In this case &quot;devcon.exe&quot; directly writes the output to the console directly;<br />but this is improbable (bad style), so i hope you are able to see all output and errors of this utility.<br /><br /><br />penpen</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p45903" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile45903">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd2f1.html?mode=viewprofile&amp;u=3102" class="username">sambul35</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search643a.html?author_id=3102&amp;sr=posts">192</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 18 Jan 2012 10:13</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content45903">
+
+						<h3 ><a href="#p45903">Re: Calling devcon from a batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingaf31.html?mode=quote&amp;f=3&amp;p=45903" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicfb0e.html?p=45903#p45903" onclick="prompt('Message #7',this.href); return false;">#7</a></span> 
+									<a class="unread" href="viewtopicfb0e.html?p=45903#p45903" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd2f1.html?mode=viewprofile&amp;u=3102" class="username">sambul35</a></strong> &raquo; </span>25 Mar 2016 13:56
+			</p>
+			
+			
+			
+			<div class="content">Sorry for some delay, I tested the above correction:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&quot;%~dp0devcon.exe&quot; restart =display *ven_1002* &gt;&gt; test.txt (<br />2&gt;&gt;&amp;1 (<br />&nbsp; &nbsp;echo(&quot;%~dp0devcon.exe&quot; restart =display *ven_1002*<br />&nbsp; &nbsp;&quot;%~dp0devcon.exe&quot; restart =display *ven_1002*<br />)<br />)</code></pre></div><br />It does run well when the batch is started from an open Admin Cmd Prompt window, or as Admin by double-click:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>PCI\VEN_1002&amp;DEV_....: Restarted<br />1 device(s) restarted.</code></pre></div><br />However, devcon doesn't do the job when the batch is started as a user, and also can't save <em class="text-italics">test.txt</em> to a system drive, but can to a non-system drive, which is expected:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>PCI\VEN_1002&amp;DEV_....: Restart failed<br />No matching devices found.</code></pre></div><br />Once the monitor loses picture again, I'll check if calling the batch by a keyboard shortcut will actually result in restoring the pic.  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p45913" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile45913">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915" style="color: #00AA00;" class="username-coloured">penpen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1bf7.html?author_id=4915&amp;sr=posts">1612</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Jun 2013 06:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content45913">
+
+						<h3 ><a href="#p45913">Re: Calling devcon from a batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf25a.html?mode=quote&amp;f=3&amp;p=45913" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6d03.html?p=45913#p45913" onclick="prompt('Message #8',this.href); return false;">#8</a></span> 
+									<a class="unread" href="viewtopic6d03.html?p=45913#p45913" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915" style="color: #00AA00;" class="username-coloured">penpen</a></strong> &raquo; </span>25 Mar 2016 18:29
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>sambul35 wrote:</cite><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&quot;%~dp0devcon.exe&quot; restart =display *ven_1002* &gt;&gt; test.txt (<br />2&gt;&gt;&amp;1 (<br />&nbsp; &nbsp;echo(&quot;%~dp0devcon.exe&quot; restart =display *ven_1002*<br />&nbsp; &nbsp;&quot;%~dp0devcon.exe&quot; restart =display *ven_1002*<br />)<br />)</code></pre></div></div></blockquote>You might have misunderstood my post, or done a copy-paste error.<br /><br />The first codeblock was the corrected command only.<br />The second codeblock contains a (complete) batch file, that should save the full output to disk.<br /><br />You shouldn't combine both.<br />Just use the second one (only) to check the output to find possible issues.<br />And if (somewhere in future) all is working fine, then replace the code with the first code.<br /><br /><br />penpen</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p45921" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile45921">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd2f1.html?mode=viewprofile&amp;u=3102" class="username">sambul35</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search643a.html?author_id=3102&amp;sr=posts">192</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 18 Jan 2012 10:13</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content45921">
+
+						<h3 ><a href="#p45921">Re: Calling devcon from a batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9959.html?mode=quote&amp;f=3&amp;p=45921" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6e90-2.html?p=45921#p45921" onclick="prompt('Message #9',this.href); return false;">#9</a></span> 
+									<a class="unread" href="viewtopic6e90-2.html?p=45921#p45921" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd2f1.html?mode=viewprofile&amp;u=3102" class="username">sambul35</a></strong> &raquo; </span>25 Mar 2016 21:00
+			</p>
+			
+			
+			
+			<div class="content">Oooops... Sorry for my mistake - loosing focus in multitasking.  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br /><br />Yet another way to address picture loss by monitor at PC wakeup may be GPU driver restart with <em class="text-italics">Restart64.exe</em> tool supplied with <a href="http://www.monitortests.com/forum/Thread-Custom-Resolution-Utility-CRU?page=1" class="postlink"><strong class="text-strong">CRU</strong></a> package.<br /><br />Its interesting how <em class="text-italics">devcon</em> or driver restart work in this scenario. Windows first sends picture to a default virtual VGA monitor, then a started GPU driver sends it to SIMULATED XGA virtual monitor. Then driver re-scans connected physical monitors, reads Windows Display resolution &amp; scale settings, and (may) re-scale back open desktop windows to fit current Main Display. This process is deficient also in another scenario: when Windows is running in no-sleep mode, and monitor is switched off by its power saving feature or button, Windows re-scales all open desktop windows to SIMULATED monitor resolution. When the real monitor is turned back on and then signal to it from GPU awaken (by moving a mouse to start sending pic to the monitor again), all on-screen windows are often shown rescaled to SIMULATED monitor resolution. This represents a real <a href="http://answers.microsoft.com/en-us/windows/forum/windows_7-hardware/windows-7-movesresizes-windows-on-monitor-power/1653aafb-848b-464a-8c69-1a68fbd106aa?page=18&amp;auth=1" class="postlink"><strong class="text-strong">headache</strong></a> in multi-monitor scenario, which is on top of periodic picture loss at connecting a 4K monitor to GPU via DP-port or DP-to-HDMI adapter. Lets hope, batch approach will work to restore picture, while more thinking is due to make it work to restore all open windows upon monitor re-start to their original size &amp; position to match physical monitor resolution &amp; scale settings.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p46094" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile46094">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd2f1.html?mode=viewprofile&amp;u=3102" class="username">sambul35</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search643a.html?author_id=3102&amp;sr=posts">192</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 18 Jan 2012 10:13</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content46094">
+
+						<h3 ><a href="#p46094">Re: Calling devcon from a batch</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting20b5.html?mode=quote&amp;f=3&amp;p=46094" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice55b.html?p=46094#p46094" onclick="prompt('Message #10',this.href); return false;">#10</a></span> 
+									<a class="unread" href="viewtopice55b.html?p=46094#p46094" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd2f1.html?mode=viewprofile&amp;u=3102" class="username">sambul35</a></strong> &raquo; </span>05 Apr 2016 14:53
+			</p>
+			
+			
+			
+			<div class="content">Just wanted to update, I was unable to restore a lost picture by running the devcon batch. In fact, nothing changed on screen at all, despite the same batch runs well if launched for testing when picture is normal. So I don't know, if devcon was able to produce any partial effect such as restarting GPU or subsequent query of the monitor, however <em class="text-italics">test.txt</em> file says: &quot;1 device(s) (i.e. GPU) restarted&quot;, though it didn't propagate towards monitor recovery and neither resulted in temporary black screen as it usually does.<br /><br />What I noticed though, picture loss often occurs when a wireless mouse is moved back-n-force or to a longer distance when awaking a PC or monitor from sleep. So it appears to be a bug in <em class="text-italics">MS HID Non-User Input Data Filter</em> installed with MS wireless HID-type devices like keyboard, mouse, or combo. AFAIK that driver filters out consecutive fast device movements or vibrations to prevent unintended PC wakeup or signal drop, which may occur when next mouse movement event and corresponding action request is sent before the previous request is fully processed through the entire chain, including reply from monitor. When I very slightly and slowly move a mouse to awaken the monitor or PC, picture drop seldom occurs.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting3720.html?mode=reply&amp;f=3&amp;t=7022" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic5cbb-2.html?f=3&amp;t=7022&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7022">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			10 posts
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron68e3.gif?cron_type=cron.task.text_reparser.pm_text" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7022 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:15:57 GMT -->
+</html>

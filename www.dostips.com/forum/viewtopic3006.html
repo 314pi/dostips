@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8621&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; List directory and files</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>List directory and files</h2>
+		<p><a href="viewtopicc605.html?f=3&amp;t=8621">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8621</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>List directory and files</h3>
+				<div class="date">Posted: <strong>12 Jun 2018 07:02</strong></div>
+				<div class="author">by <strong>pp8771</strong></div>
+				<div class="content">Actually i am listing four directories and four files inside those directory and not able to do it properly.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+set foldername=D:\Prev_Machine\Pranab\Daimler\Xtech\Training\
+for /f "usebackq tokens=*" %%a in (`dir /b/s/a:d %foldername%MigrationPoc`) do (
+ echo:%%~nxa
+ set file1=%foldername%MigrationPoc\%%~nxa
+ echo:%%~nxa
+ echo %file1%
+for /f "usebackq tokens=*" %%a in (`dir /a-d /b %file1%` ) do  (
+echo:%%~na
+)
+ 
+echo:777
+echo:%%~nxa
+)
+cd %foldername%
+pause</code></pre></div>
+
+<br>
+I am getting output as which has problem:<br>
+<br>
+Sch_A<br>
+Sch_A<br>
+<strong class="text-strong">D:\Prev_Machine\Pranab\Daimler\Xtech\Training\MigrationPoc\Sch_D</strong> --it is expected  as D:\Prev_Machine\Pranab\Daimler\Xtech\Training\MigrationPoc\Sch_A<br>
+a1<br>
+b1<br>
+c1<br>
+d1<br>
+777<br>
+Sch_A<br>
+Sch_B<br>
+Sch_B<br>
+<strong class="text-strong">D:\Prev_Machine\Pranab\Daimler\Xtech\Training\MigrationPoc\Sch_D</strong> --it is expected  as D:\Prev_Machine\Pranab\Daimler\Xtech\Training\MigrationPoc\Sch_B<br>
+a1<br>
+b1<br>
+c1<br>
+d1<br>
+777<br>
+Sch_B<br>
+Sch_C<br>
+Sch_C<br>
+<strong class="text-strong">D:\Prev_Machine\Pranab\Daimler\Xtech\Training\MigrationPoc\Sch_D</strong> --it is expected  as D:\Prev_Machine\Pranab\Daimler\Xtech\Training\MigrationPoc\Sch_C<br>
+a1<br>
+b1<br>
+c1<br>
+d1<br>
+777<br>
+Sch_C<br>
+Sch_D<br>
+Sch_D<br>
+D:\Prev_Machine\Pranab\Daimler\Xtech\Training\MigrationPoc\Sch_D<br>
+a1<br>
+b1<br>
+c1<br>
+d1<br>
+777<br>
+Sch_D<br>
+<br>
+Can any one rectify the code.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: List directory and files</h3>
+				<div class="date">Posted: <strong>12 Jun 2018 09:26</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">Hello pp8771,<br>
+you have started this batch twice in a command line prompt. Your batch has no setlocal. <br>
+In the first run it saved the name of the last file into the variable file1. Your second run goes with the content of file1. You may use Enable delayedexpansion in the same codeline.<br>
+But in your situation this will run also
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+pushD D:\Prev_Machine\Pranab\Daimler\Xtech\Training\
+for /f "usebackq tokens=*" %%a in (`dir /b/s/a:d MigrationPoc`) do (
+ echo:%%~nxa
+ for /f "usebackq tokens=*" %%a in (`dir /a-d /b %%a` ) do  (
+  echo:%%~na
+ )
+ 
+ echo:777
+ echo:%%~nxa
+)
+pause
+popD
+</code></pre></div>
+
+Phil</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: List directory and files</h3>
+				<div class="date">Posted: <strong>12 Jun 2018 12:00</strong></div>
+				<div class="author">by <strong>pp8771</strong></div>
+				<div class="content">Thanks Phil</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8621&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:19 GMT -->
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8367&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:15:22 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; List NIC and make selection to choose between static or DHCP</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>List NIC and make selection to choose between static or DHCP</h2>
+		<p><a href="viewtopicdb02.html?f=3&amp;t=8367">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8367</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>List NIC and make selection to choose between static or DHCP</h3>
+				<div class="date">Posted: <strong>30 Jan 2018 06:48</strong></div>
+				<div class="author">by <strong>emos</strong></div>
+				<div class="content">Hello,<br>
+<br>
+I have been searching around the web for some time looking for a batch script that can help me switch between static and dhcp. I came across this script on Stackoverflow that also gives the user an option to choose the Connected NIC that needed to be changed. Really liked this option since some users change the name on there ethernet card for some reason.<br>
+<a href="https://stackoverflow.com/questions/21995360/batch-file-ip-configuration" class="postlink">https://stackoverflow.com/questions/219 ... figuration</a><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+
+set cnt=0
+for /f "tokens=1,4,5*" %%a in (
+  'Netsh Int IPv4 show interfaces^| findstr /i /r /v "dis"^| more +3'
+) do (
+  set /a cnt+=1
+  set "idx.!cnt!=%%a"
+  set "idx.!cnt!.name=%%c %%d"
+)
+
+:Configure
+echo.
+echo Choose which adapter to configure.
+for /l %%a in (1,1,!cnt!) do (
+  if !idx.%%a.configured!==1 (
+    echo !idx.%%a! -  !idx.%%a.name! - Configured
+  ) ELSE (
+    echo !idx.%%a! -  !idx.%%a.name!
+  ) 
+)
+echo.
+set /p "idx=Enter index to configure: "
+
+for %%a in (%idx%) do (
+    echo.
+    echo. 
+    echo ======================
+    echo DHCP or static?
+
+    echo press 1 for DHCP, 2 to configure manually.
+    echo ======================
+    echo.
+    echo. 
+    set /p "choice=Choose option 1 or 2: "
+    if '!choice!'=='1' (
+      echo You chose automatic settings for !idx.%%a.name!
+      echo netsh int ipv4 set address %%a dhcp
+      echo netsh int ipv4 dnsservers %%a dhcp
+      set "idx.%%a.configured=1"
+    ) ELSE (
+      if '!choice!'=='2' (
+        echo Chosen for static settings. 
+        set /p varip=Enter the ip adress: 
+        set /p varsm=Enter the subnetmask: 
+        set /p vargw=Enter the gateway: 
+        set /p vardns1=Enter DNS Server: 
+        echo netsh int ipv4 set address %%a static !varip! !varsm! !vargw! 1
+        echo netsh int ipv4 set dnsservers %%a static !vardns1! primary
+        set "idx.%%a.configured=1"
+      )
+    )
+)
+set /p doagain="Would you like to configure another adapter? (Y/N): 
+if /i '%doagain%'=='Y' (goto :configure) else Echo Configuration complete. </code></pre></div>
+
+The problem im facing is that i need to enter the name of the NIC and cannot use the interface-number(?) to make a selection.<br>
+<br>
+I have been trying to understand the 'for'-loop, but im in way over my head.<br>
+What im looking for is the option to use <strong class="text-strong">!idx.%%a!</strong> as a option to select the <strong class="text-strong">!idx.%%a.name!</strong> (if this even is possible). But <strong class="text-strong">%%a</strong> only holds the information typed in by the user, so if you have a typo the script will not work.<br>
+<br>
+<br>
+Im therfor hopeing there are some cleaver minds here that can help me out? <br>
+<br>
+Thanks.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8367&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:15:22 GMT -->
+</html>

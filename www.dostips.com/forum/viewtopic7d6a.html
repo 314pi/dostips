@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8762&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:45:16 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Extract date from date &amp; time string</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Extract date from date &amp; time string</h2>
+		<p><a href="viewtopic834c.html?f=3&amp;t=8762">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8762</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Extract date from date &amp; time string</h3>
+				<div class="date">Posted: <strong>02 Aug 2018 02:17</strong></div>
+				<div class="author">by <strong>SIMMS7400</strong></div>
+				<div class="content">Hi Folks -<br>
+<br>
+I have a text file that looks like this:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>"Code1"|"Alias1"|"PFR-4115-100"|"Smith, John"|"John.Smith@Emali.com"|10/5/2018 5:41:45|"Complete"
+"Code1"|"Alias1"|"PFR-4115-100"|"Smith, John"|"John.Smith@Emali.com"|4/5/2018 15:41:45|"Complete"</code></pre></div>
+
+I need to extract the date (6th token) and place in a variable. What's the easiest way to go about this? I've tried string manipulation but I'm getting tripped up.<br>
+<br>
+Here is what I have so far - see !DATESTRING! variable:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>SETLOCAL ENABLEDELAYEDEXPANSION
+PUSHD "%LOCALEXPORTPATH%"
+	
+	SET "YEAR=%date:~-4,4%"
+	SET "MONTH=%date:~-10,2%"
+	SET "DAY=%date:~-7,2%"
+	
+	IF "%MONTH%"=="01" SET "MONTH=1"
+	IF "%MONTH%"=="02" SET "MONTH=2"
+	IF "%MONTH%"=="03" SET "MONTH=3"
+	IF "%MONTH%"=="04" SET "MONTH=4"
+	IF "%MONTH%"=="05" SET "MONTH=5"
+	IF "%MONTH%"=="06" SET "MONTH=6"
+	IF "%MONTH%"=="07" SET "MONTH=7"
+	IF "%MONTH%"=="08" SET "MONTH=8"
+	IF "%MONTH%"=="09" SET "MONTH=9"
+	IF "%DAY%"=="01"   SET "DAY=1"
+	IF "%DAY%"=="02"   SET "DAY=2"
+	IF "%DAY%"=="03"   SET "DAY=3"
+	IF "%DAY%"=="04"   SET "DAY=4"
+	IF "%DAY%"=="05"   SET "DAY=5"
+	IF "%DAY%"=="06"   SET "DAY=6"	
+	IF "%DAY%"=="07"   SET "DAY=7"
+	IF "%DAY%"=="08"   SET "DAY=8"	
+	IF "%DAY%"=="09"   SET "DAY=9"
+	
+	SET "SEARCH=%MONTH%/%DAY%/%YEAR%"
+	FOR /F "usebackq tokens=1-7 delims=|" %%A IN ("%MSACCES_EXP%") DO (
+		
+		SET "FLAG="
+		SET "CODE=%%~A"
+		SET "CODEALIAS=%%~B"
+		SET "CODEPARENT=%%~C"
+		SET "NAME=%%~D"
+		SET "EMAIL=%%~E"
+		SET "DATESTRING=%%~F" &amp; SET "DATESTRING=!DATESTRING:~0,10!" &amp; SET "DATESTRING=!DATESTRING: =!"
+		SET "STATUS=%%~G"
+
+		ECHO "%SEARCH%" | FINDSTR "!DATESTRING!" &gt;nul 2&gt;&amp;1 &amp;&amp; SET "FLAG=Y"
+	
+		IF DEFINED FLAG (
+			ECHO "%%A" | FINDSTR /C:"PFP" &gt;nul 2&gt;&amp;1 &amp;&amp; SET "STRING=PFP"
+			ECHO "%%A" | FINDSTR /C:"PFI" &gt;nul 2&gt;&amp;1 &amp;&amp; SET "STRING=PFI"
+			ECHO "%%A" | FINDSTR /C:"PFC" &gt;nul 2&gt;&amp;1 &amp;&amp; SET "STRING=PFC"
+			ECHO "%%A" | FINDSTR /C:"PFR" &gt;nul 2&gt;&amp;1 &amp;&amp; SET "STRING=PFR"
+
+			IF "!STATUS!"=="Complete" CALL :EMAIL 0
+			IF "!STATUS!"=="Rejected" CALL :EMAIL 1
+		)
+	)
+POPD</code></pre></div>
+
+Thanks!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Extract date from date &amp; time string</h3>
+				<div class="date">Posted: <strong>02 Aug 2018 08:53</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">The date and time are separated by a space.  So you can use a FOR /F command just like you are doing now to split up the date and time into two tokens.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8762&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:45:16 GMT -->
+</html>

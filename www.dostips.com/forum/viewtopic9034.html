@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8570&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; BAT to Check shortcut links work and allow quick editting?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>BAT to Check shortcut links work and allow quick editting?</h2>
+		<p><a href="viewtopic1263.html?f=3&amp;t=8570">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8570</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>BAT to Check shortcut links work and allow quick editting?</h3>
+				<div class="date">Posted: <strong>20 May 2018 22:00</strong></div>
+				<div class="author">by <strong>JimmyTheDos</strong></div>
+				<div class="content">Hi guys,<br>
+<br>
+I have a way of creating multiple shortcuts in locations with many different targeted locations.<br>
+My biggest worry is that I change my folder structure, and then some of the shortcuts won't work any more.<br>
+<br>
+Would anyone know if  would be possible to create a BAT that asks for a location:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+cls
+:input
+set /p "input=1. Enter Source directory: "
+if not exist "%input%" echo Invalid source: "%input%" enter valid path &amp;&amp; goto :input</code></pre></div>
+
+<br>
+Finds any shortcuts within that directory and its sub-directories, and prints out the information in a CSV file (or maybe a txt file) with the following:<br>
+Column A: the Source's Directory location of the Shortcut.<br>
+Column B: the Targeted Directory Location the shortcut sends you too.<br>
+Column C: if the shortcut currently works or not.<br>
+<br>
+Which i could edit and then with another BAT goes through the CSV and changes the Target locations to be the ones in the CSV file?<br>
+<br>
+<br>
+Any ideas would be great.<br>
+Thanks,<br>
+Jimmy  <img class="smilies" src="images/smilies/icon_cool.gif" width="15" height="15" alt="8)" title="Cool"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: BAT to Check shortcut links work and allow quick editting?</h3>
+				<div class="date">Posted: <strong>22 May 2018 14:11</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">Shortcuts by definition work best when left on Desktop rather than in random folders.  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy">  If you changed the directory structure, and a certain shortcut no longer works, use <a href="https://www.voidtools.com/" class="postlink">Everything</a> to quickly find the original file or folder. Coding a batch to recursively look for, verify, find current if exist and unique, and change shortcut links on the entire disk sounds quite slow task, unless you show rational for such habit. The code snippet you posted above appears counterproductive as a method to do that, since the task can be fully automated.<br>
+<br>
+If you want to refresh all shortcuts in a folder or disk, some code samples are posted in <a href="https://forums.techguy.org/threads/solved-editing-multiple-shortcut-properties.964550/" class="postlink">Editing multiple shortcut properties</a>, <a href="https://serverfault.com/questions/171775/create-a-windows-shortcut-through-a-batch-file-bat" class="postlink">Create a Windows shortcut through a batch file</a> and such. Try to adapt and let us know if they work for you.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: BAT to Check shortcut links work and allow quick editting?</h3>
+				<div class="date">Posted: <strong>24 May 2018 06:58</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">This algorithm may be used recursively in your <em class="text-italics">RefreshShortcuts.bat</em>, assuming all shortcuts to original files are stored on C:\ drive, and you don't need to change current shortcut locations, but only refresh links to original files referenced in the shortcuts:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>- A. Using FOR-Files commands, find a shortcut file on disk C:\ with *.lnk extension
+- find a text string in it - full path starting with C:\ and ending with any .??? extension
+- check if the file_name.ext referenced in the string still exists at that path
+- if exists - goto A , i.e. find next shortcut *.lnk , else find current path to the 1st file_name.ext on C:\*
+- if the file exists replace the old path with current one in the *.lnk shortcut, else - delete the shortcut *.lnk
+- goto A ... do above checks again for the next shortcut
+- exit when all shortcuts are refreshed</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: BAT to Check shortcut links work and allow quick editting?</h3>
+				<div class="date">Posted: <strong>24 May 2018 08:48</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">Try with <a href="https://github.com/npocmaka/batch.scripts/blob/master/hybrids/jscript/shortcutJS.bat" class="postlink">shortcutjs.bat</a> <br>
+<br>
+May be something like:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for %%a in "tokens=1* delims=:" %%a in ('shortcutjs.bat -examine "some.lnk"^|find /i "Target:"') do (
+    if not exist "%%~fb"  echo target does not exist
+    if not exist "%%~dp" echo target directory does not exist
+    if exist  "%%~fb"  echo looks ok?
+)</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: BAT to Check shortcut links work and allow quick editting?</h3>
+				<div class="date">Posted: <strong>24 May 2018 09:05</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">@ npocmaka<br>
+<br>
+Is it possible to add some description on Github what the shortcutjs.bat does?  <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: BAT to Check shortcut links work and allow quick editting?</h3>
+				<div class="date">Posted: <strong>24 May 2018 13:05</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">ok.<br>
+<br>
+I thought that the help message is descriptive enough.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8570&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:18 GMT -->
+</html>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4697&start=120&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:37 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; FindRepl.bat:New regex utility to search and replace strings - Page 9</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>FindRepl.bat:New regex utility to search and replace strings</h2>
+		<p><a href="viewtopica720.html?f=3&amp;t=4697">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4697</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>9</strong> of <strong>9</strong></div>
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>05 Jul 2018 20:15</strong></div>
+				<div class="author">by <strong>Newbee</strong></div>
+				<div class="content">I have this batch file:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+echo Show both the first 10 lines and the last 10 lines (with line numbers):
+echo(
+&lt; input1.txt FindRepl /V /O:10:-10 /N</code></pre></div>
+
+"input1.txt" file
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Line 1
+Lines 1 extra
+Line 2
+Lines 2 extra
+Line 3
+Lines 3 extra
+Line 4
+Lines 4 extra
+Line 5
+Lines 5 extra
+Line 6
+Lines 6 extra
+Line 7
+Lines 7 extra
+Line 8
+Lines 8 extra
+Line 9
+Lines 9 extra
+Line 10
+Lines 10 extra
+Line 11
+Line 11 extra
+Line 12
+Line 12 extra
+Line 13
+Line 13 extra
+Line 14
+Line 14 extra
+Line 15
+Line 15 extra</code></pre></div>
+
+It just display 9 lines from head and 9 lines from tail only. Here is the output:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>d:\4\FindRepl&gt;ex7
+Show both the first 10 lines and the last 10 lines (with line numbers):
+
+1:Line 1
+2:Lines 1 extra
+3:Line 2
+4:Lines 2 extra
+5:Line 3
+6:Lines 3 extra
+7:Line 4
+8:Lines 4 extra
+9:Line 5
+22:Line 11 extra
+23:Line 12
+24:Line 12 extra
+25:Line 13
+26:Line 13 extra
+27:Line 14
+28:Line 14 extra
+29:Line 15
+30:Line 15 extra
+
+d:\4\FindRepl&gt;</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>05 Jul 2018 22:44</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">Yes. This is the "input1.txt" file with line numbers:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code> 1:Line 1
+ 2:Lines 1 extra
+ 3:Line 2
+ 4:Lines 2 extra
+ 5:Line 3
+ 6:Lines 3 extra
+ 7:Line 4
+ 8:Lines 4 extra
+ 9:Line 5
+10:Lines 5 extra
+11:Line 6
+12:Lines 6 extra
+13:Line 7
+14:Lines 7 extra
+15:Line 8
+16:Lines 8 extra
+17:Line 9
+18:Lines 9 extra
+19:Line 10
+20:Lines 10 extra
+21:Line 11
+22:Line 11 extra
+23:Line 12
+24:Line 12 extra
+25:Line 13
+26:Line 13 extra
+27:Line 14
+28:Line 14 extra
+29:Line 15
+30:Line 15 extra
+</code></pre></div>
+
+The description of <strong class="text-strong">/O:s:e</strong> switch specify: <em class="text-italics">"Show block of lines, from line S to line E... if E is negative, it specifies counting lines from the end of file... the last line of the file is -1"</em>. In this way, the <strong class="text-strong">/O:10:-10</strong> switch means show the block of numbered lines from the line number 10 up to the line number -10, that in this case is the same as line 21. That is to say, the <strong class="text-strong">/O:10:-10</strong> switch <em class="text-italics">alone</em> would show the block of indented lines below:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>   1:Line 1
+   2:Lines 1 extra
+   3:Line 2
+   4:Lines 2 extra
+   5:Line 3
+   6:Lines 3 extra
+   7:Line 4
+   8:Lines 4 extra
+   9:Line 5
+       10:Lines 5 extra
+       11:Line 6
+       12:Lines 6 extra
+       13:Line 7
+       14:Lines 7 extra
+       15:Line 8
+       16:Lines 8 extra
+       17:Line 9
+       18:Lines 9 extra
+       19:Line 10
+       20:Lines 10 extra
+-10    21:Line 11
+-9 22:Line 11 extra
+-8 23:Line 12
+-7 24:Line 12 extra
+-6 25:Line 13
+-5 26:Line 13 extra
+-4 27:Line 14
+-3 28:Line 14 extra
+-2 29:Line 15
+-1 30:Line 15 extra
+</code></pre></div>
+
+The <strong class="text-strong">/V</strong> switch specify: <em class="text-italics">"Show non-matching lines"</em>, that is, show the lines of the file <em class="text-italics">excepting</em> the block of lines from line 10 up to line 21. The result is two block of lines: from line 1 to line 9, and from line 22 to the last line.<br>
+<br>
+In <a href="viewtopica720.html?f=3&amp;t=4697" class="postlink">the first post</a> of this thread there is this example:<br>
+
+<blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopicc116.html?p=27024#p27024" data-post-id="27024" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">26 Jun 2013 21:00</div></cite>
+<br>
+<strong class="text-strong">2. Finding blocks of lines (/E and /O switches)</strong><br>
+<br>
+- Show both the first 15 lines and the last 20 lines (with line numbers):<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; theFile.txt FindRepl /V /O:16:-21 /N</code></pre></div>
+
+</div></blockquote>
+
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>05 Jul 2018 23:51</strong></div>
+				<div class="author">by <strong>Newbee</strong></div>
+				<div class="content">Thanks for the clarification Antonio.<br>
+It's my fault when not apply the example correctly. I've just read this line<br>
+" Show both the first 15 lines and the last 20 lines (with line numbers):" and <br>
+just go ahead to plug in the same values in the example code.<br>
+My apology for that.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>06 Jul 2018 13:51</strong></div>
+				<div class="author">by <strong>Newbee</strong></div>
+				<div class="content">I have this batch file:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+call FindRepl "D:\1" /S:="%PATH%" &gt; NUL
+echo errorlevel = %errorlevel%
+if %errorlevel% gtr 0 echo The given path exists in system PATH</code></pre></div>
+
+My %errorlevel% is always 0, even though that "D:\1" is in my path.<br>
+<br>
+Here is my path:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>"D:\1;D:\2;D:\gcc\bin;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>06 Jul 2018 14:44</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Yes.  Zero means it found it.  Same errorlevel you would get if you were using the FIND and FINDSTR commands.  If it finds the search string, the errorlevel is set to 0.  If it doesn't find the search string the errorlevel is set to 1.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>06 Jul 2018 15:30</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopicc116.html?p=27024#p27024" data-post-id="27024" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">26 Jun 2013 21:00</div></cite>
+<strong class="text-strong">3. Basic usage of regular expressions</strong><br>
+<br>
+The Search string is not plain text, but a regular expression ("regexp"). In its most basic form, a regexp just includes the literal string to search: "Search this".<br>
+<br>
+Several features may be included in a regexp, most of them selected via a backslash character: \. You may use a backslash followed by another character to specify binary bytes; for example, to specify a &lt;TAB&gt; character you may use \t or \cI (Ctrl-I) or \x09 (Ascii hexa-code 9). For a &lt;LF&gt; (newline) character you may use \n or \cJ or \x0A, and use \r or \cM or \x0D for &lt;CR&gt; (return).<br>
+<br>
+Certain combinations of \ and the next character allows to specify sets of common characters. For example, use \d for any digit (equivalent to [0-9]), \D for nondigit characters (equivalent to [^0-9]), \w for alphanumeric characters and underscore ([A-Za-z0-9_]), \W for the rest of special characters, \s for separators (space, tab, return, new-line) and \S for non-separators. A dot alone match any character except a newline; to search for a dot, precede it with backslash.<br>
+<br>
+You may anchor the beginning of line with ^ or the end of line with $, or use \b to anchor the beginning or end of a word. An asterisk repeat the previous matched character zero or more times, so "\d*" match an optional number. A plus sign repeat previous match one or more times ("\d+" match a required number), and a question mark repeat zero or one time ("\d?" match an optional digit).<br>
+<br>
+For a complete description of this topic, see: http:<em class="text-italics">//</em>msdn.microsoft.com/en-us/library/1400241x(v=vs.84).aspx Please note that you always must escape with backslash the following special characters in order to search for themselves: <strong class="text-strong">\*+?^$.[]{}()|</strong>
+</div></blockquote>
+
+Or, in shorter form from the <strong class="text-strong">FindRepl /?</strong> help screen:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>All search texts must be given in VBScript regular expression format (regexp).
+Matching characters: .=any char, \d=[0-9], \D=non-digit, \w=[A-Za-z0-9_],
+\W=non-alphanumeric, \s=[ \t\r\n], \S=non-space. Anchors: ^=begin of line,
+$=end of line, \b=begin/end of word. Quantifiers (repeats previous match):
+*=zero or more times, +=one or more times, ?=zero or one time. Use parentheses
+to delimit these constructs and create "subexpressions". To search for these
+special characters, place a back-slash before each one of them: \*+?^$.[]{}()|
+</code></pre></div>
+
+Also:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>/S:sSource Text to be processed instead of Stdin file.
+
+If the first character of any text is an equal-sign, it specifies the name of
+a Batch variable that contain the text to be processed.
+</code></pre></div>
+
+Use:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call FindRepl "D:\\1" /S:"%PATH%" &gt; NUL
+</code></pre></div>
+or:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call FindRepl "D:\\1" /S:=PATH &gt; NUL
+</code></pre></div>
+
+Please, <em class="text-italics">read the documentation</em>...<br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>06 Jul 2018 15:35</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopic606f.html?p=57360#p57360" data-post-id="57360" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">06 Jul 2018 14:44</div></cite>
+Yes.  Zero means it found it.  Same errorlevel you would get if you were using the FIND and FINDSTR commands.  If it finds the search string, the errorlevel is set to 0.  If it doesn't find the search string the errorlevel is set to 1.
+</div></blockquote>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>The total number of matchings/replacements is returned in ERRORLEVEL.
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>06 Jul 2018 17:05</strong></div>
+				<div class="author">by <strong>Newbee</strong></div>
+				<div class="content">I do this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl "D:\\1" /S:=D:\1;D:\2; &gt;NUL</code></pre></div>
+or this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl "D:\\1" /S:="D:\1;D:\2;" &gt;NUL</code></pre></div>
+The %errorlevel% are always 0, is it right?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>06 Jul 2018 18:09</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\Antonio\Tests&gt; FindRepl "D:\\1" /S:"D:\1;D:\2;" &gt;NUL
+
+C:\Users\Antonio\Tests&gt; echo %errorlevel%
+1
+
+C:\Users\Antonio\Tests&gt; set "VAR=D:\1;D:\2;"
+
+C:\Users\Antonio\Tests&gt; FindRepl "D:\\1" /S:=VAR &gt;NUL
+
+C:\Users\Antonio\Tests&gt; echo %errorlevel%
+1
+</code></pre></div>
+
+The format of <strong class="text-strong">/S</strong> switch is:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>/S:"string"
+
+Or
+
+/S:=Variable
+</code></pre></div>
+
+If you use <strong class="text-strong">FindRepl "D:\\1" /S:=D:\1;D:\2; &gt;NUL</strong> you are searching the string <strong class="text-strong">D:\1</strong> in a <em class="text-italics">variable</em> named <strong class="text-strong">D:\1;D:\2;</strong>.<br>
+<br>
+If you use <strong class="text-strong">FindRepl "D:\\1" /S:="D:\1;D:\2;" &gt;NUL</strong> you are searching the string <strong class="text-strong">D:\1</strong> in a <em class="text-italics">variable</em> named <strong class="text-strong">"D:\1;D:\2;"</strong>.<br>
+<br>
+<br>
+To search in a string, enclose the string in quotes and do not include the equal-sign: <strong class="text-strong">/S:"literal string"</strong> or <strong class="text-strong">/S:"%Variable%"</strong>.<br>
+<br>
+To search in a variable, include the equal sign and the variable name; do not include quotes nor percent-signs: <strong class="text-strong">/S:=Variable</strong>.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>06 Jul 2018 18:20</strong></div>
+				<div class="author">by <strong>thefeduke</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf5c3.html?mode=viewprofile&amp;u=9265">Newbee</a> wrote: <a href="viewtopicbebe.html?p=57363#p57363" data-post-id="57363" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">06 Jul 2018 17:05</div></cite>
+I do this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FindRepl "D:\\1" /S:=D:\1;D:\2; &gt;NUL</code></pre></div>
+. . .<br>
+The %errorlevel% are always 0, is it right?
+</div></blockquote>Walk before running.  Perhaps it would be easier to correlate the errorlevel with the results if you did not suppress them.  Get rid of &gt;NUL and you can see for yourself if there was output.<br>
+<br>
+John A.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>06 Jul 2018 18:26</strong></div>
+				<div class="author">by <strong>Newbee</strong></div>
+				<div class="content">Thanks for the clarification Antonio.<br>
+I do this:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call FindRepl "D:\\1" /S:"%PATH%" &gt; NUL
+echo errorlevel = %errorlevel%
+if %errorlevel% gtr 0 echo The given path exists in system PATH</code></pre></div>
+
+or this:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call FindRepl "D:\\1" /S:=PATH &gt; NUL
+echo errorlevel = %errorlevel%
+if %errorlevel% gtr 0 echo The given path exists in system PATH</code></pre></div>
+
+They now both give %errorlevel% = 1.<br>
+<br>
+This is really cool.  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>18 Jul 2018 10:48</strong></div>
+				<div class="author">by <strong>MrWinelover</strong></div>
+				<div class="content">I need to manipulate a text file so that a part of each line is replaced (or deleted).<br>
+The first part that must replaced (or deleted) is situated between first and second last occurence of the piping character.<br>
+Another part that must replaced (or deleted) is situated between first and last occurence of minus character.<br>
+<br>
+I have already gone through the description of FindRepl.bat but could not immediately find out how to achieve this.<br>
+Is it possible to do this with FindRepl.bat?<br>
+<br>
+The text file itselfs is already generated by manipulating another (log) file with the command findstr to keep only the lines we need.<br>
+Can the replace command be combined by the findstr command?<br>
+<br>
+Example:<br>
+Original strings: <br>
+18/07/2018 06:36:42|HARDWARE|Base|send|ERROR|10.15.149.65 No communication Counter set-global-level1-occured<br>
+18/07/2018 06:42:07|HARDWARE|Base|send|INFO|10.15.149.65 Communication restored Counter reset-global-level1-fixed<br>
+18/07/2018 10:17:03|HARDWARE|Base|send|ERROR|10.15.149.65 No working position Counter set-main board-level2-occured<br>
+18/07/2018 10:24:19|HARDWARE|Base|send|INFO|10.15.149.65 Normal state Counter reset-main board level2-occured<br>
+<br>
+Wanted result after manipulation thru Batch file<br>
+18/07/2018 06:36:42|ERROR|10.15.149.65 No communication Counter set-occured<br>
+18/07/2018 06:42:07|INFO|10.15.149.65 Communication restored Counter reset-fixed<br>
+18/07/2018 10:17:03|ERROR|10.15.149.65 No working position Counter set-occured<br>
+18/07/2018 10:24:19|INFO|10.15.149.65 Normal state Counter reset-occured</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>18 Jul 2018 21:54</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Why not just use plain old FOR /F commands?
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+(FOR /F "TOKENS=1,5,6 DELIMS=|" %%G IN (input.txt) DO (
+	FOR /F "TOKENS=1,4 DELIMS=-" %%J IN ("%%I") DO echo %%G^|%%H^|%%J-%%K)
+)&gt;output.txt</code></pre></div>
+or
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+(FOR /F "TOKENS=1,5,6 DELIMS=|" %%G IN (input.txt) DO (
+	FOR /F "TOKENS=1* DELIMS=-" %%J IN ("%%I") DO (
+		set "last=%%K"
+		set "last=!last:-= !"
+		FOR %%M IN (!last!) DO set "last=%%M"
+		echo %%G^|%%H^|%%J-!last!)
+	)
+)&gt;output.txt</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>19 Jul 2018 02:51</strong></div>
+				<div class="author">by <strong>MrWinelover</strong></div>
+				<div class="content">Thank you for the quick answer, but I would have liked some additional information as I have some knowledge but I am not an expert.<br>
+Due to insufficient knowledge, I have never used this sytax before.<br>
+As far as I can analyze, this only works if the exact positions are known in advance. Correct?<br>
+From where do the %% variables come from?<br>
+How are they determined?<br>
+It is mainly in both examples the piece of code after the second DO that I do not understand<br>
+Can you explain the code a.u.b?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FindRepl.bat:New regex utility to search and replace strings</h3>
+				<div class="date">Posted: <strong>19 Jul 2018 15:23</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">The first code only works if the number of pipes is constant and the number of dashes is constant.<br>
+<br>
+The second code still requires the number of pipes to be constant, but the number of dashes can vary.<br>
+<br>
+A variable like %%G within a batch file is a FOR variable. If used on the command line, then it would be %G instead.<br>
+<br>
+FOR loops can be very confusing for beginners because slight changes in syntax can result in totally different function. Getting the exact behavior you want is often difficult and/or tedious even for experienced users.<br>
+<br>
+A simple FOR iterates strings and or files, depending on whether there are wildcards within the IN() clause.<br>
+<br>
+FOR /F parses one or more tokens from each line that it iterates, with a different %%_ variable for each token. The lines that are iterated can either be the content of a file, the output of a command, or a string literal, depending on the syntax used within the IN() clause.<br>
+<br>
+You should carefully read the help text that you get when you execute FOR /? from the command line and try some experiments on your own.<br>
+<br>
+Both of Squashman's codes could be combined with your FINDSTR and eliminate your intermediate file if you change the outer FOR /F loop as follows:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(FOR /F "TOKENS=1,5,6 DELIMS=|" %%G IN ('findstr "yourSearchHere" input.log') DO (
+</code></pre></div>
+
+However, if the output of FINDSTR is huge, then it is much faster to preserve the two steps and use the temporary intermediate file.<br>
+<br>
+===============================<br>
+<br>
+Aacini's FINDREPL is a sophisticated utility. I'm sure it could easily meet your requirements, but I haven't taken the time to learn how to use FINDREPL.<br>
+<br>
+My <a href="viewtopicb16d.html?f=3&amp;t=6044" class="postlink">JREPL.BAT utility</a> serves a similar purpose, but with totally different syntax.<br>
+<br>
+JREPL can solve your problem with a single, fairly short one liner:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl "\|.*(\|.*?\|) -.*-" "$2 -" /t " " /inc "/XXX/" /a /f original.log /o output.txt
+</code></pre></div>
+
+The first argument represents a pair of regular expression search terms, delimited by a space. The second argument specifies the corresponding replacement terms, again delimited by a space. The /T " " option is what dictates that the arguments are space delimited lists of find/replace terms.<br>
+<br>
+The capture group numbering is a bit tricky because each search term is converted into its own captured group behind the scenes. The explicit captured group in the first term is actually group 2 because the first term is group 1. The second term becomes group 3.<br>
+<br>
+The /INC "/XXX/" option specifies which lines should be included in the FIND/REPLACE operation. The XXX represents a regular expression that you would have to supply to take the place of the FINDSTR that you are currently using.<br>
+<br>
+The /A option causes only lines that have been altered to be output, thus preventing the lines that don't match the /INC regular expression to be excluded from the output.<br>
+<br>
+The /F original.log option specifies your input, and /O output.txt specifies your output.<br>
+<br>
+If you want to continue using FINDSTR to filter the lines, then you only need the following
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call jrepl "\|.*(\|.*?\|) -.*-" "$2 -" /t " " /f input.txt /o output.txt
+</code></pre></div>
+
+If you have additional questions regarding Squashman's code, or my JREPL solution, then I suggest you start a new topic. I don't want to hijack Aacini's FINDREPL topic anymore than I already have.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>9</strong> of <strong>9</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=4697&start=120&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:37 GMT -->
+</html>

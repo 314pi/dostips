@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5048 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:20:57 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Multi-process Advanced Encryption Standard (AES) - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic00c0.html?t=5048">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic3a3f.html?f=3&amp;t=5048">Multi-process Advanced Encryption Standard (AES)</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting0d47.html?mode=reply&amp;f=3&amp;t=5048" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicfb32.html?f=3&amp;t=5048&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="5048" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			52 posts
+							<ul>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopic0f37.html?f=3&amp;t=5048&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopic6a9c.html?f=3&amp;t=5048&amp;start=30" role="button">3</a></li>
+				<li><a class="button" href="viewtopic39b0-2.html?f=3&amp;t=5048&amp;start=45" role="button">4</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic0f37.html?f=3&amp;t=5048&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p29585" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29585">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6f26.html?author_id=4985&amp;sr=posts">104</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 25 Jul 2013 19:00</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29585">
+
+						<h3 class="first"><a href="#p29585">Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8e9d.html?mode=quote&amp;f=3&amp;p=29585" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicfd3b.html?p=29585#p29585" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopicfd3b.html?p=29585#p29585" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a></strong> &raquo; </span>02 Nov 2013 01:08
+			</p>
+			
+			
+			
+			<div class="content">It's been over 2 months since there's been any activity in the original &quot;string encoding&quot; thread (<!-- l --><a class="postlink-local" href="viewtopic635b.html?f=3&amp;t=4579">viewtopic.php?f=3&amp;t=4579</a><!-- l -->), so rather than post this in with all the cluttered proofs of concept I put there, I thought a full working release deserved a thread of it's own.<br /><br />Picking up where I left off in that other thread, my AES batch can now encrypt and decrypt entire files (very slowly <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" />) using as many processes (PIDs) as you have CPU cores for.  It's &quot;thread safe&quot;, even if something were to go wrong the processes kill themselves after a pre-defined blocking period.  The algorithm itself is compliant with FIPS-197 (tested to the examples in the standard document) and the mode of operation is Electronic Codebook (ECB).  I do have to give a <strong class="text-strong">HUGE</strong> thanks to Aacini for his BinToHex and HexToBin scripts (<!-- l --><a class="postlink-local" href="viewtopic43e2.html?f=3&amp;t=4842">viewtopic.php?f=3&amp;t=4842</a><!-- l -->), as I use modified versions of his work to convert to and from the hex codes processed by my AES batch.<br /><br />There are still a couple of bugs to work out, and likely some performance optimizations, but the basic functionality is there so I wanted to post a demo.  Here is what it looks like under normal operation:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>c:\Users\Marc\Desktop\aes&gt;aes<br />AES &lt;inFile&gt; &#91;&lt;inKey&gt;&#93; &#91;&lt;pidMax&gt;&#93;<br />&nbsp;Encrypts or decrypts the input file using the Advanced Encryption Standard<br />&nbsp;algorithm as specified in NIST FIPS-197.&nbsp; Files with extensions other than<br />&nbsp;'.aes' are encrypted to a file of the same name, plus an .aes extension.<br />&nbsp;'.aes' input files are decrypted to a file of the same name with the .aes<br />&nbsp;extension removed.<br />&nbsp; &nbsp;&lt;inFile&gt;:&nbsp; &nbsp;A complete path to the file to be processed or the name of a<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;variable containing the target file's path.<br />&nbsp; &nbsp;&#91;&lt;inKey&gt;&#93;:&nbsp; Either a complete path to a keyfile, a variable containing<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;the path to a keyfile, or a varible containing a 32-, 48- or<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;64-character string of hexadecimal values (ie: a 128-, 192- or<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;256-bit key). If not provided the program will prompt for a key.<br />&nbsp; &nbsp;&#91;&lt;pidMax&gt;&#93;: An integer corresponding to the number of parallel processes<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;to run simultaneously.&nbsp; Defaults to one process per CPU core.<br /><br />c:\Users\Marc\Desktop\aes&gt;aes file.bin aes.key<br />Converting input file to ASCII-coded hexadecimal...<br />...Hexadecimal Conversion Complete (Elapsed Time: 00:00:00.55)<br />Beginning AES Encryption with 4 PIDs...<br />...AES Encryption Complete (Elapsed Time: 00:00:41.83)<br /><br />c:\Users\Marc\Desktop\aes&gt;aes file.bin.aes aes.key<br />Beginning AES Decryption with 4 PIDs...<br />The system cannot find the drive specified.<br />...AES Decryption Complete (Elapsed Time: 00:00:40.42)<br />Restoring binary file from ASCII-coded hexadecimal...<br />...Binary file restoration complete (Elapsed Time: 00:00:00.07)<br /><br />c:\Users\Marc\Desktop\aes&gt;fc /b file.bin file(1).bin<br />Comparing files file.bin and FILE(1).BIN<br />FC: no differences encountered</code></pre></div>You'll notice one pesky bug I haven't been able to get rid of, a warning that &quot;The system cannot find the drive specified.&quot;  I know for a fact it finds it just fine and the output is correct, but I haven't been able to shake that message.<br /><br />In any case, that test file is just barely over 1KB in size, 1041 bytes I believe, so you can see how terribly slow the whole operation is.  On this Q6600 machine, with 4 processes going, it averages about 25 bytes/sec total throughput.  On my X5660 Xeon at work, running 12 processes, the same file takes a little over 20 seconds, something like 48 bytes/sec.  I'll be the first to admit this will never be practical beyond possibly encrypting a text file with a few passwords in it, but I still felt it was a neat application of batch scripting.  I'll post the code below, and any comments or suggestions would be very welcome.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29586" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29586">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6f26.html?author_id=4985&amp;sr=posts">104</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 25 Jul 2013 19:00</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29586">
+
+						<h3 ><a href="#p29586">Re: Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9d71-2.html?mode=quote&amp;f=3&amp;p=29586" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4e4b.html?p=29586#p29586" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopic4e4b.html?p=29586#p29586" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a></strong> &raquo; </span>02 Nov 2013 01:18
+			</p>
+			
+			
+			
+			<div class="content"><span style="font-size: 150%; line-height: normal"><strong class="text-strong">UPDATED CODE POSTED 11/25/13</strong></span><br /><br />OK the code comes in two batch files.  The first one is the control script, providing the user interface and PID management, and is simply called 'aes.bat'.  The second does the [enc/dec]ryption and is called 'aescore.bat'.  I'll post their code separately in this post and the next.<br /><br />So first up for 'aes.bat':<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />set LF=^<br /><br /><br />:: Above 2 blank lines are required - do not remove<br />set ^&quot;\n=^^^%LF%%LF%^%LF%%LF%^^&quot;<br /><br />SETLOCAL ENABLEDELAYEDEXPANSION<br />:: Grab input parameters<br />set &quot;infile=%~1&quot;<br />set &quot;key=%~2&quot;<br />set &quot;keyFile=&quot;<br />set /a numCPU=%~3 2&gt;nul<br /><br />:: Input validation on filename and key (exit with usage statement if necessary)<br />IF NOT EXIST &quot;%inFile%&quot; set &quot;inFile=!%~1!&quot;<br />IF NOT EXIST &quot;%inFile%&quot; GOTO:AES_usage<br />IF DEFINED key (<br />&nbsp; &nbsp;:: Check if a valid path to a keyfile was input directly <br />&nbsp; &nbsp;IF EXIST &quot;%key%&quot; (<br />&nbsp; &nbsp; &nbsp; set keyFile=%key%<br />&nbsp; &nbsp; &nbsp; set key=<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;:: Check if the input was a variable containing a valid path to a keyfile<br />&nbsp; &nbsp;set &quot;key=!%~2!&quot;<br />&nbsp; &nbsp;IF EXIST &quot;%key%&quot; (<br />&nbsp; &nbsp; &nbsp; set keyFile=%key%<br />&nbsp; &nbsp; &nbsp; set key=<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;IF NOT DEFINED keyFile (<br />&nbsp; &nbsp; &nbsp; :: Check if the input was a variable containing a valid key<br />&nbsp; &nbsp; &nbsp; set len=0<br />&nbsp; &nbsp; &nbsp; set &quot;strTest=A!key!&quot;<br />&nbsp; &nbsp; &nbsp; FOR /l %%A IN (12,-1,0) DO (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /a &quot;len|=1&lt;&lt;%%A&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FOR %%B IN (!len!) DO IF &quot;!strTest:~%%B,1!&quot;==&quot;&quot; set /a &quot;len&amp;=~1&lt;&lt;%%A&quot;<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; IF NOT !len!==32 IF NOT !len!==48 IF NOT !len!==64 GOTO:AES_usage<br />&nbsp; &nbsp; &nbsp; set /a keysize=!len!*4<br />&nbsp; &nbsp; &nbsp; echo &quot;%key%&quot; | findstr /R &quot;&#91;ghijklmnopqrstuvwxyzGHIJKLMNOPQRSTUVWXYZ~`!@#$%^&amp;*()-_=+&#91;{\&#93;}\\|',&lt;.&gt;/?&#93;&quot; &gt;nul<br />&nbsp; &nbsp; &nbsp; IF %ERRORLEVEL%==0 GOTO:AES_usage<br />&nbsp; &nbsp;)<br />)<br /><br />:: If we still don't have a key, see if we have a keyfile.&nbsp; Otherwise, prompt user for direct key input.<br />:AES_getKey<br />IF NOT DEFINED key (<br />&nbsp; &nbsp;IF EXIST &quot;%keyfile%&quot; (<br />&nbsp; &nbsp; &nbsp; FOR /F &quot;usebackq&quot; %%a IN (&quot;%keyFile%&quot;) DO set key=%%a<br />&nbsp; &nbsp; &nbsp; set len=0<br />&nbsp; &nbsp; &nbsp; set &quot;strTest=A!key!&quot;<br />&nbsp; &nbsp; &nbsp; FOR /l %%A IN (12,-1,0) DO (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /a &quot;len|=1&lt;&lt;%%A&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FOR %%B IN (!len!) DO IF &quot;!strTest:~%%B,1!&quot;==&quot;&quot; set /a &quot;len&amp;=~1&lt;&lt;%%A&quot;<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; IF NOT !len!==32 IF NOT !len!==48 IF NOT !len!==64 (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo *INVALID KEY FILE*<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;keyFile=&quot; &amp; set &quot;key=&quot; &amp; GOTO:AES_getKey<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; echo &quot;%key%&quot; | findstr /R &quot;&#91;ghijklmnopqrstuvwxyzGHIJKLMNOPQRSTUVWXYZ~`!@#$%^&amp;*()-_=+&#91;{\&#93;}\\|',&lt;.&gt;/?&#93;&quot; &gt;nul<br />&nbsp; &nbsp; &nbsp; IF !ERRORLEVEL!==0 (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo *INVALID KEY FILE*<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;keyFile=&quot; &amp; set &quot;key=&quot; &amp; GOTO:AES_getKey<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; set /a keysize=!len!*4<br />&nbsp; &nbsp;) ELSE (<br />&nbsp; &nbsp; &nbsp; echo Please enter a 128-, 192- or 256-bit key value using hexadecimal notation.<br />&nbsp; &nbsp; &nbsp; echo ^(Type 'quit' to exit.^)<br />&nbsp; &nbsp; &nbsp; set /p key=&quot;key=&quot;<br />&nbsp; &nbsp; &nbsp; IF /I &quot;!key!&quot;==&quot;quit&quot; exit /b<br />&nbsp; &nbsp; &nbsp; set len=0<br />&nbsp; &nbsp; &nbsp; set &quot;strTest=A!key!&quot;<br />&nbsp; &nbsp; &nbsp; FOR /l %%A IN (12,-1,0) DO (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /a &quot;len|=1&lt;&lt;%%A&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FOR %%B IN (!len!) DO IF &quot;!strTest:~%%B,1!&quot;==&quot;&quot; set /a &quot;len&amp;=~1&lt;&lt;%%A&quot;<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; IF NOT !len!==32 IF NOT !len!==48 IF NOT !len!==64 echo *INVALID KEY LENGTH* &amp; set &quot;key=&quot; &amp; GOTO:AES_getKey<br />&nbsp; &nbsp; &nbsp; set /a keysize=!len!*4<br />&nbsp; &nbsp; &nbsp; echo &quot;%key%&quot; | findstr /R &quot;&#91;ghijklmnopqrstuvwxyzGHIJKLMNOPQRSTUVWXYZ~`!@#$%^&amp;*()-_=+&#91;{\&#93;}\\|',&lt;.&gt;/?&#93;&quot; &gt;nul<br />&nbsp; &nbsp; &nbsp; IF !ERRORLEVEL!==0 echo *ILLEGAL CHARACTERS IN KEY* &amp; set &quot;key=&quot; &amp; GOTO:AES_getKey<br />&nbsp; &nbsp;)<br />)<br /><br />:: Configure based on inputs<br />set &quot;extension=%inFile:~-4%&quot;<br />IF &quot;%extension%&quot;==&quot;.aes&quot; (set mode=Dec) ELSE (set mode=Enc)<br />IF &quot;%~3&quot;==&quot;&quot; set numCPU=%NUMBER_OF_PROCESSORS%-1<br />IF %numCPU% LEQ 0 set /a numCPU=1<br />IF %numCPU% GTR %NUMBER_OF_PROCESSORS% set /a numCPU=%NUMBER_OF_PROCESSORS%-1<br /><br />:: Clean up any garbage from previous execution<br />IF EXIST _mutex* del _mutex*<br />IF EXIST _pipe* del _pipe*<br /><br />:: Break the input key into the first set of key words, to be expanded upon by the key scheduler algorithm.<br />set i=0<br />FOR /L %%c IN (0,1,3) DO FOR /L %%b IN (0,1,3) DO (<br />&nbsp; &nbsp;FOR %%a IN (!i!) DO set /a &quot;key&#91;%%b&#93;&#91;%%c&#93;=0x!key:~%%a,2!&quot;<br />&nbsp; &nbsp;set /a i+=2<br />)<br />IF %keysize%==192 (<br />&nbsp; &nbsp;FOR /L %%c IN (4,1,5) DO FOR /L %%b IN (0,1,3) DO (<br />&nbsp; &nbsp; &nbsp; FOR %%a IN (!i!) DO set /a &quot;key&#91;%%b&#93;&#91;%%c&#93;=0x!key:~%%a,2!&quot;<br />&nbsp; &nbsp; &nbsp; set /a i+=2<br />&nbsp; &nbsp;)<br />)<br />IF %keysize%==256 (<br />&nbsp; &nbsp;FOR /L %%c IN (4,1,7) DO FOR /L %%b IN (0,1,3) DO (<br />&nbsp; &nbsp; &nbsp; FOR %%a IN (!i!) DO set /a &quot;key&#91;%%b&#93;&#91;%%c&#93;=0x!key:~%%a,2!&quot;<br />&nbsp; &nbsp; &nbsp; set /a i+=2<br />&nbsp; &nbsp;)<br />)<br /><br />:: Define pre-computed round constants for use in the key scheduler algorithm<br />set i=1<br />FOR %%a IN (01 02 04 08 10 20 40 80 1b 36) DO set /a &quot;RC&#91;!i!&#93;=0x%%a, i+=1&quot;<br /><br />:: Define pre-computed Rijndael S-box values for use in the SubBytes() function and key scheduler algorithm<br />set i=0<br />FOR %%a IN (63 7c 77 7b f2 6b 6f c5 30 01 67 2b fe d7 ab 76<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ca 82 c9 7d fa 59 47 f0 ad d4 a2 af 9c a4 72 c0<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; b7 fd 93 26 36 3f f7 cc 34 a5 e5 f1 71 d8 31 15<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 04 c7 23 c3 18 96 05 9a 07 12 80 e2 eb 27 b2 75<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 09 83 2c 1a 1b 6e 5a a0 52 3b d6 b3 29 e3 2f 84<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 53 d1 00 ed 20 fc b1 5b 6a cb be 39 4a 4c 58 cf<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; d0 ef aa fb 43 4d 33 85 45 f9 02 7f 50 3c 9f a8<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 51 a3 40 8f 92 9d 38 f5 bc b6 da 21 10 ff f3 d2<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; cd 0c 13 ec 5f 97 44 17 c4 a7 7e 3d 64 5d 19 73<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 60 81 4f dc 22 2a 90 88 46 ee b8 14 de 5e 0b db<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; e0 32 3a 0a 49 06 24 5c c2 d3 ac 62 91 95 e4 79<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; e7 c8 37 6d 8d d5 4e a9 6c 56 f4 ea 65 7a ae 08<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ba 78 25 2e 1c a6 b4 c6 e8 dd 74 1f 4b bd 8b 8a<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 70 3e b5 66 48 03 f6 0e 61 35 57 b9 86 c1 1d 9e<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; e1 f8 98 11 69 d9 8e 94 9b 1e 87 e9 ce 55 28 df<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 8c a1 89 0d bf e6 42 68 41 99 2d 0f b0 54 bb 16<br />) DO set /a &quot;S&#91;!i!&#93;=0x%%a, i+=1&quot;<br /><br />:: Key scheduler algorithm<br />:: Generates a set of round keys by expanding the input key into the required number of words.<br />:: The first 4 words of the input key will be used before the cipher rounds begin, and any leftover<br />:: words will be used in the first cipher round.&nbsp; Each cipher round requires its own 4-word round key.<br />:: Input&nbsp; &nbsp; &nbsp; Round 0&nbsp; &nbsp; &nbsp;Cipher&nbsp; &nbsp;Cipher&nbsp; &nbsp; &nbsp;Round 0&nbsp; &nbsp; Additional&nbsp; &nbsp;Words/Key&nbsp; &nbsp;Expansion<br />:: Key Size&nbsp; &nbsp;Need/Have&nbsp; &nbsp;Rounds&nbsp; &nbsp;WordsReq&nbsp; &nbsp;Leftover&nbsp; &nbsp;WordsReq&nbsp; &nbsp; &nbsp;Expansion&nbsp; &nbsp; Rounds Req'd<br />:: 128-bit&nbsp; &nbsp; &nbsp; 4 / 4&nbsp; &nbsp; &nbsp; &nbsp;10&nbsp; &nbsp; &nbsp; &nbsp; 40&nbsp; &nbsp; -&nbsp; &nbsp; 0&nbsp; &nbsp; &nbsp;=&nbsp; &nbsp; 40&nbsp; &nbsp; &nbsp; /&nbsp; &nbsp; &nbsp;4&nbsp; &nbsp; &nbsp;=&nbsp; &nbsp; &nbsp;10<br />:: 192-bit&nbsp; &nbsp; &nbsp; 4 / 6&nbsp; &nbsp; &nbsp; &nbsp;12&nbsp; &nbsp; &nbsp; &nbsp; 48&nbsp; &nbsp; -&nbsp; &nbsp; 2&nbsp; &nbsp; &nbsp;=&nbsp; &nbsp; 46&nbsp; &nbsp; &nbsp; /&nbsp; &nbsp; &nbsp;6&nbsp; &nbsp; &nbsp;=&nbsp; &nbsp; &nbsp;8<br />:: 256-bit&nbsp; &nbsp; &nbsp; 4 / 8&nbsp; &nbsp; &nbsp; &nbsp;14&nbsp; &nbsp; &nbsp; &nbsp; 56&nbsp; &nbsp; -&nbsp; &nbsp; 4&nbsp; &nbsp; &nbsp;=&nbsp; &nbsp; 52&nbsp; &nbsp; &nbsp; /&nbsp; &nbsp; &nbsp;8&nbsp; &nbsp; &nbsp;=&nbsp; &nbsp; &nbsp;7<br />IF %keySize%==128 set /a expStart=4, expEnd=43, numRounds=10<br />IF %keySize%==192 set /a expStart=6, expEnd=51, numRounds=12<br />IF %keySize%==256 set /a expStart=8, expEnd=59, numRounds=14<br /><br />set nextHalfMod=-1<br />FOR /L %%a IN (%expStart%,1,%expEnd%) DO (<br />&nbsp; &nbsp;set /a mod=%%a %% %expStart%<br />&nbsp; &nbsp;:: If this word is a multiple of the input key size, start the generator algorithm<br />&nbsp; &nbsp;IF !mod!==0 (<br />&nbsp; &nbsp; &nbsp; IF %keysize%==256 set /a nextHalfMod=%%a+4<br />&nbsp; &nbsp; &nbsp; set /a lastword=%%a-1<br />&nbsp; &nbsp; &nbsp; FOR %%b IN (!lastword!) DO (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:: First step is a one byte circular left shift of the previous word's values<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /a tempword&#91;0&#93;=!key&#91;1&#93;&#91;%%b&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; tempword&#91;1&#93;=!key&#91;2&#93;&#91;%%b&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; tempword&#91;2&#93;=!key&#91;3&#93;&#91;%%b&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; tempword&#91;3&#93;=!key&#91;0&#93;&#91;%%b&#93;!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:: Next we substitute all bytes per the pre-computed S-box<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FOR /L %%c IN (0,1,3) DO FOR %%d IN (!tempword&#91;%%c&#93;!) DO set /a tempword&#91;%%c&#93;=!S&#91;%%d&#93;!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:: Then we XOR the first byte with this round's pre-computed round constant<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /a expRound=%%a/%expStart%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FOR %%c IN (!expRound!) DO (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a key&#91;0&#93;&#91;%%a&#93;=!tempword&#91;0&#93;!^^^^!RC&#91;%%c&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;key&#91;1&#93;&#91;%%a&#93;=!tempword&#91;1&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;key&#91;2&#93;&#91;%%a&#93;=!tempword&#91;2&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;key&#91;3&#93;&#91;%%a&#93;=!tempword&#91;3&#93;!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; :: Generator algorithm complete.&nbsp; Now we XOR the result with the last word which was a multiple of the input key size<br />&nbsp; &nbsp; &nbsp; set /a last=%%a-%expStart%<br />&nbsp; &nbsp; &nbsp; FOR %%b IN (!last!) DO (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /a key&#91;0&#93;&#91;%%a&#93;=!key&#91;0&#93;&#91;%%b&#93;!^^^^!key&#91;0&#93;&#91;%%a&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; key&#91;1&#93;&#91;%%a&#93;=!key&#91;1&#93;&#91;%%b&#93;!^^^^!key&#91;1&#93;&#91;%%a&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; key&#91;2&#93;&#91;%%a&#93;=!key&#91;2&#93;&#91;%%b&#93;!^^^^!key&#91;2&#93;&#91;%%a&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; key&#91;3&#93;&#91;%%a&#93;=!key&#91;3&#93;&#91;%%b&#93;!^^^^!key&#91;3&#93;&#91;%%a&#93;!<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;IF NOT !mod!==0 (<br />&nbsp; &nbsp; &nbsp; :: For 256-bit keys only, if 4 words ago was a multiple of the key size we perform the S-box%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;substitution last-multiple XOR on this word as well.<br />&nbsp; &nbsp; &nbsp; IF %%a==!nextHalfMod! (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /a lastword=%%a-1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:: Create a temporary copy of the previous word<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FOR %%b IN (!lastword!) DO (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a tempword&#91;0&#93;=!key&#91;0&#93;&#91;%%b&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;tempword&#91;1&#93;=!key&#91;1&#93;&#91;%%b&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;tempword&#91;2&#93;=!key&#91;2&#93;&#91;%%b&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;tempword&#91;3&#93;=!key&#91;3&#93;&#91;%%b&#93;!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FOR /L %%c IN (0,1,3) DO FOR %%d IN (!tempword&#91;%%c&#93;!) DO set /a key&#91;%%c&#93;&#91;%%a&#93;=!S&#91;%%d&#93;!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /a last=%%a-8<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FOR %%b IN (!last!) DO (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a key&#91;0&#93;&#91;%%a&#93;=!key&#91;0&#93;&#91;%%b&#93;!^^^^!key&#91;0&#93;&#91;%%a&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;key&#91;1&#93;&#91;%%a&#93;=!key&#91;1&#93;&#91;%%b&#93;!^^^^!key&#91;1&#93;&#91;%%a&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;key&#91;2&#93;&#91;%%a&#93;=!key&#91;2&#93;&#91;%%b&#93;!^^^^!key&#91;2&#93;&#91;%%a&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;key&#91;3&#93;&#91;%%a&#93;=!key&#91;3&#93;&#91;%%b&#93;!^^^^!key&#91;3&#93;&#91;%%a&#93;!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; :: The rest of the words in each round are simply formed by XOR operations between%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;the immediately previous word and the word in the same position from the previous round.<br />&nbsp; &nbsp; &nbsp; IF NOT %%a==!nextHalfMod! (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /a first=%%a-1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /a second=%%a-%expStart%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FOR %%b IN (!first!) DO FOR %%c IN (!second!) DO (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a key&#91;0&#93;&#91;%%a&#93;=!key&#91;0&#93;&#91;%%b&#93;!^^^^!key&#91;0&#93;&#91;%%c&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;key&#91;1&#93;&#91;%%a&#93;=!key&#91;1&#93;&#91;%%b&#93;!^^^^!key&#91;1&#93;&#91;%%c&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;key&#91;2&#93;&#91;%%a&#93;=!key&#91;2&#93;&#91;%%b&#93;!^^^^!key&#91;2&#93;&#91;%%c&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;key&#91;3&#93;&#91;%%a&#93;=!key&#91;3&#93;&#91;%%b&#93;!^^^^!key&#91;3&#93;&#91;%%c&#93;!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />)<br /><br />::Below begins the encryption routine.&nbsp; If we're in decrypt mode, jump over this section<br />IF %mode%==Dec GOTO AES_startDec<br />:AES_startEnc<br />set time1=0<br />for /f &quot;tokens=1-4 delims=:.&quot; %%A in (&quot;!time: =0!&quot;) do set /a &quot;time1=(((1%%A*60)+1%%B)*60+1%%C)*100+1%%D-36610100&quot;<br />set &quot;outFile=%inFile%.aes&quot;<br />IF EXIST !outFile! del !outFile!<br />set &quot;tempFile=%temp%\#.tmp&quot;<br />del &quot;%tempFile%&quot; 2&gt;NUL<br /><br />:: Define pre-computed multiplication tables for multiplying by 2 and 3 over the Rijndael Galois<br />:: finite field.&nbsp; Required for the MixColumns() function.&nbsp; <br />:: Original algorithm author Antonio Perez Ayala - Nov 12, 2013<br />:: This replaces the original &quot;Peasant's algorithm&quot;-based macro for generating Galois constants.<br />:: Multiplicand:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3<br />FOR /L %%x IN (0,1,255) do (<br />&nbsp; &nbsp;:: bit 0 value:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1<br />&nbsp; &nbsp;set /A &quot;x=%%x,&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;G3&#91;%%x&#93;=x&quot;&nbsp; <br />&nbsp; &nbsp;:: bit 1 value:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1<br />&nbsp; &nbsp;set /A &quot;x&lt;&lt;=1, x^=(x&gt;&gt;8)*0x11B,&nbsp; G2&#91;%%x&#93;=x,G3&#91;%%x&#93;^=x&quot;<br />)<br /><br />:: Encryption routine requires administrative privileges for 'fsutil'<br />:: Validate proper privilege and exit if not running as administrator<br />fsutil &gt;nul 2&gt;&amp;1<br />IF NOT %ERRORLEVEL%==0 echo FATAL ERROR:&nbsp; User does not have administrative rights&amp; exit /b<br />fsutil file createnew &quot;%tempFile%&quot; %~Z1 &gt;NUL<br /><br />:: The binary input file is converted to an ASCII-coded hexadecimal representation in blocks of 128-bits.<br />:: Each block is written into a pipe file in round robin fashion for later processing.<br />:: Each time a new pipe file is created, a child 'aescore' process is started to manage the pipe.<br />set /A i=0, d=0, pid=0<br />set block=<br />echo 1&gt;_mutex1<br />for /F &quot;skip=1 tokens=1,2 delims=: &quot; %%b in ('fc /B &quot;%inFile%&quot; &quot;%tempFile%&quot;') do (<br />&nbsp; &nbsp;set /A b=0x%%b<br />&nbsp; &nbsp;if !i! neq !b! (<br />&nbsp; &nbsp; &nbsp; set /A c=b-i<br />&nbsp; &nbsp; &nbsp; for /L %%i in (!c!,-1,1) do (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;block=!block!00&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /A d+=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if !d! geq 16 (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a d=0, pid+=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a pipe=!pid! %% %numCPU%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; echo !pid!,!block!&gt;&gt;_pipe!pipe!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; IF !pid! LEQ %numCPU% start /B aescore PIPE !pipe! enc outfile<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set block=<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; ) <br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;set &quot;block=!block!%%c&quot;<br />&nbsp; &nbsp;set /A i=b+1, d+=1<br />&nbsp; &nbsp;if !d! geq 16 (<br />&nbsp; &nbsp; &nbsp; set /a d=0, pid+=1<br />&nbsp; &nbsp; &nbsp; set /a pipe=!pid! %% %numCPU%<br />&nbsp; &nbsp; &nbsp; echo !pid!,!block!&gt;&gt;_pipe!pipe!<br />&nbsp; &nbsp; &nbsp; IF !pid! LEQ %numCPU% start /B aescore PIPE !pipe! enc outfile<br />&nbsp; &nbsp; &nbsp; set block=<br />&nbsp; &nbsp;)<br />)<br />if !i! neq %~Z1 (<br />&nbsp; &nbsp;set /A c=%~Z1-i<br />&nbsp; &nbsp;for /L %%i in (!c!,-1,1) do (<br />&nbsp; &nbsp; &nbsp; set &quot;block=!block!00&quot;<br />&nbsp; &nbsp; &nbsp; set /A d+=1<br />&nbsp; &nbsp; &nbsp; if !d! geq 16 (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /a d=0, pid+=1<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /a pipe=!pid! %% %numCPU%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo !pid!,!block!&gt;&gt;_pipe!pipe!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;IF !pid! LEQ %numCPU% start /B aescore PIPE !pipe! enc outfile<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set block=<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />)<br /><br />:: Finished loading all the data into pipes (except any partial last block, see below)<br />:: Now we have to wait until all child processes finish and delete their pipes<br />CALL:waitOnPipesClosed<br /><br />:: If the input data is not an even multiple of 32 bytes there will be a partial block leftover.<br />:: Pad out the block to 32 bytes then encrypt it separately.<br />IF DEFINED block (<br />&nbsp; &nbsp;set len=0<br />&nbsp; &nbsp;set &quot;strTest=A!block!&quot;<br />&nbsp; &nbsp;FOR /l %%A IN (12,-1,0) DO (<br />&nbsp; &nbsp; &nbsp; set /a &quot;len|=1&lt;&lt;%%A&quot;<br />&nbsp; &nbsp; &nbsp; FOR %%B IN (!len!) DO IF &quot;!strTest:~%%B,1!&quot;==&quot;&quot; set /a &quot;len&amp;=~1&lt;&lt;%%A&quot;<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;set /A numToPad=32-!len!, pid+=1<br />&nbsp; &nbsp;FOR /L %%a IN (1,1,!numToPad!) DO set &quot;block=!block!0&quot;<br />&nbsp; &nbsp;echo PAD !numToPad!&gt;&gt;!outfile!<br />&nbsp; &nbsp;start /B aescore enc !block! outfile !pid!<br />&nbsp; &nbsp;set /a pid+=1<br />&nbsp; &nbsp;:WaitEncLastLine<br />&nbsp; &nbsp;IF NOT EXIST _mutex!pid! GOTO:WaitEncLastLine<br />)<br />del &quot;%tempFile%&quot;<br />del _mutex!pid!<br /><br />::Below begins the decryption routine.&nbsp; If we're in encrypt mode, jump over this section<br />IF %mode%==Enc GOTO AES_done<br />:AES_startDec<br />set time1=0<br />for /f &quot;tokens=1-4 delims=:.&quot; %%A in (&quot;!time: =0!&quot;) do set /a &quot;time1=(((1%%A*60)+1%%B)*60+1%%C)*100+1%%D-36610100&quot;<br />set &quot;hexFile=%inFile%.hex&quot;<br />set &quot;outfile=%infile:~0,-4%&quot;)<br />IF EXIST %hexFile% del %hexFile%<br /><br />:: If the output file already exists ie: 'Example.txt', change the output file name to 'Example(1).txt'.<br />:: If that file already exists, delete it.<br />IF EXIST &quot;!outFile!&quot; set &quot;outFile=!outFile:~0,-4!(1)!outFile:~-4!&quot;<br />IF EXIST &quot;!outFile!&quot; del &quot;!outFile!&quot;<br /><br />:: Define pre-computed Inverse Rijndael S-box values for InvSubBytes() function<br />:: To minimize CMD environment size, these overwrite the &quot;normal&quot; S-box values used<br />:: previously in the key scheduler algorithm, that are no longer needed<br />set i=0<br />FOR %%a IN (52 09 6A D5 30 36 A5 38 BF 40 A3 9E 81 F3 D7 FB<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 7C E3 39 82 9B 2F FF 87 34 8E 43 44 C4 DE E9 CB<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 54 7B 94 32 A6 C2 23 3D EE 4C 95 0B 42 FA C3 4E<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 08 2E A1 66 28 D9 24 B2 76 5B A2 49 6D 8B D1 25<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 72 F8 F6 64 86 68 98 16 D4 A4 5C CC 5D 65 B6 92<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 6C 70 48 50 FD ED B9 DA 5E 15 46 57 A7 8D 9D 84<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 90 D8 AB 00 8C BC D3 0A F7 E4 58 05 B8 B3 45 06<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; D0 2C 1E 8F CA 3F 0F 02 C1 AF BD 03 01 13 8A 6B<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3A 91 11 41 4F 67 DC EA 97 F2 CF CE F0 B4 E6 73<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 96 AC 74 22 E7 AD 35 85 E2 F9 37 E8 1C 75 DF 6E<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 47 F1 1A 71 1D 29 C5 89 6F B7 62 0E AA 18 BE 1B<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FC 56 3E 4B C6 D2 79 20 9A DB C0 FE 78 CD 5A F4<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1F DD A8 33 88 07 C7 31 B1 12 10 59 27 80 EC 5F<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 60 51 7F A9 19 B5 4A 0D 2D E5 7A 9F 93 C9 9C EF<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; A0 E0 3B 4D AE 2A F5 B0 C8 EB BB 3C 83 53 99 61<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 17 2B 04 7E BA 77 D6 26 E1 69 14 63 55 21 0C 7D<br />) DO set /a &quot;S&#91;!i!&#93;=0x%%a, i+=1&quot;<br /><br />:: Define pre-computed multiplication tables for multiplying by by 9, 11, 13 and 14 over the<br />:: Rijndael Galois finite field.&nbsp; Required for the InvMixColumns() function.<br />:: Original algorithm author Antonio Perez Ayala - Nov 12, 2013<br />:: This replaces the original &quot;Peasant's algorithm&quot;-based macro for generating Galois constants.<br />:: Multiplicand:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 9&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 11&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 13&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 14<br />FOR /L %%x IN (0,1,255) do (<br />&nbsp; &nbsp;:: bit 0 value:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;0<br />&nbsp; &nbsp;set /A &quot;x=%%x,&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;G9&#91;%%x&#93;=x, G11&#91;%%x&#93;=x, G13&#91;%%x&#93;=x&quot;&nbsp; <br />&nbsp; &nbsp;:: bit 1 value:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1<br />&nbsp; &nbsp;set /A &quot;x&lt;&lt;=1, x^=(x&gt;&gt;8)*0x11B,&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;G11&#91;%%x&#93;^=x,&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; G14&#91;%%x&#93;=x&quot;<br />&nbsp; &nbsp;:: bit 2 value:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1<br />&nbsp; &nbsp;set /A &quot;x&lt;&lt;=1, x^=(x&gt;&gt;8)*0x11B,&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;G13&#91;%%x&#93;^=x,G14&#91;%%x&#93;^=x&quot;<br />&nbsp; &nbsp;:: bit 3 value:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1<br />&nbsp; &nbsp;set /A &quot;x&lt;&lt;=1, x^=(x&gt;&gt;8)*0x11B,&nbsp; G9&#91;%%x&#93;^=x,G11&#91;%%x&#93;^=x,G13&#91;%%x&#93;^=x,G14&#91;%%x&#93;^=x&quot;<br />)<br /><br />:: Each block is written into a pipe file in round robin fashion for later processing.<br />:: Each time a new pipe file is created, a child 'aescore' process is started to manage the pipe.<br />echo 1&gt;_mutex1<br />set pid=1<br />FOR /F &quot;usebackq tokens=1,2 delims= &quot; %%a IN (&quot;%inFile%&quot;) DO (<br />&nbsp; &nbsp;set data=%%a<br />&nbsp; &nbsp;IF NOT !data!==PAD (<br />&nbsp; &nbsp; &nbsp; set /a pipe=!pid! %% %numCPU%<br />&nbsp; &nbsp; &nbsp; echo !pid!,!data!&gt;&gt;_pipe!pipe!<br />&nbsp; &nbsp; &nbsp; IF !pid! LEQ %numCPU% start /B aescore PIPE !pipe! dec hexFile<br />&nbsp; &nbsp; &nbsp; set /a pid+=1<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;IF !data!==PAD (<br />&nbsp; &nbsp; &nbsp; set unPadLastLine=YES<br />&nbsp; &nbsp; &nbsp; set numToUnPad=%%b<br />&nbsp; &nbsp; &nbsp; set /A numGoodChars=32-!numToUnPad!<br />&nbsp; &nbsp;)<br />)<br /><br />:: Finished loading all the data into pipes<br />:: Now we have to wait until all child processes finish and delete their pipes<br />CALL:waitOnPipesClosed<br /><br />:: If the final data block was padded during encryption it needs to be unpadded now<br />:: Generate a temporary file and then copy it back over the original hexfile<br />IF DEFINED unPadLastLine (<br />&nbsp; &nbsp;:: Count the number of lines in the output hexFile<br />&nbsp; &nbsp;FOR /F %%a in ('type &quot;%hexFile%&quot;^|find &quot;&quot; /v /c') do set /a numLines=%%a<br />&nbsp; &nbsp;:: Walk the hexFile, copying everything but the last line to a temp file.%\n%<br />&nbsp; &nbsp; &nbsp; The last line needs to have its padding characters removed.<br />&nbsp; &nbsp;set &quot;tempFile=%hexFile%.tmp&quot;<br />&nbsp; &nbsp;del &quot;!tempFile!&quot; 2&gt;NUL<br />&nbsp; &nbsp;set lineNum=0<br />&nbsp; &nbsp;FOR /F &quot;usebackq&quot; %%a IN (&quot;%hexFile%&quot;) DO (<br />&nbsp; &nbsp; &nbsp; set /a lineNum+=1<br />&nbsp; &nbsp; &nbsp; IF NOT !lineNum!==!numLines! (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo %%a&gt;&gt;&quot;!tempFile!&quot;<br />&nbsp; &nbsp; &nbsp; ) ELSE (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set data=%%a<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FOR %%i IN (!numGoodChars!) DO set data=!data:~0,%%i!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo !data!&gt;&gt;&quot;!tempFile!&quot;<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />)<br />IF EXIST &quot;!tempFile!&quot; (<br />&nbsp; &nbsp;del &quot;%hexFile%&quot; 2&gt;NUL<br />&nbsp; &nbsp;ren &quot;!tempFile!&quot; &quot;%hexFile%&quot; 2&gt;NUL<br />)<br /><br />:: The last step is restoring the original binary data from the hex file<br />:: Writes a temporary VBScript file then executes and deletes the script.<br />echo Dim line,index&gt;Hex2Bin.vbs<br />echo Do While Not WScript.StdIn.AtEndOfStream&gt;&gt;Hex2Bin.vbs<br />echo&nbsp; &nbsp; line = WScript.StdIn.ReadLine^(^)&gt;&gt;Hex2Bin.vbs<br />echo&nbsp; &nbsp; index = ^1&gt;&gt;Hex2Bin.vbs<br />echo&nbsp; &nbsp; While index ^&lt; 32&gt;&gt;Hex2Bin.vbs<br />echo&nbsp; &nbsp; &nbsp; &nbsp;WScript.StdOut.Write Chr^(CByte^(^&quot;^&amp;H^&quot;^&amp;Mid^(line,index,2^)^)^)&gt;&gt;Hex2Bin.vbs<br />echo&nbsp; &nbsp; &nbsp; &nbsp;index = index+2&gt;&gt;Hex2Bin.vbs<br />echo&nbsp; &nbsp; WEnd&gt;&gt;Hex2Bin.vbs<br />echo Loop&gt;&gt;Hex2Bin.vbs<br />Cscript /B /E:VBS Hex2Bin.vbs &lt; &quot;%hexFile%&quot; &gt; &quot;%outFile%&quot;<br />del Hex2Bin.vbs 2&gt;nul<br />del &quot;%hexFile%&quot; 2&gt;nul<br />del _mutex!pid!<br /><br />:AES_done<br />set time2=0<br />for /f &quot;tokens=1-4 delims=:.&quot; %%A in (&quot;!time: =0!&quot;) do set /a &quot;time2=(((1%%A*60)+1%%B)*60+1%%C)*100+1%%D-36610100&quot;<br />set /a &quot;DD=(!time2!)-(!time1!)&quot;<br />if !DD! lss 0 set /a &quot;DD+=24*60*60*100&quot;<br />set /a &quot;HH=DD/360000, DD-=HH*360000, MM=DD/6000, DD-=MM*6000, SS=DD/100, DD-=SS*100&quot;<br />if &quot;!HH:~1!&quot;==&quot;&quot; set &quot;HH=0!HH!&quot;<br />if &quot;!MM:~1!&quot;==&quot;&quot; set &quot;MM=0!MM!&quot;<br />if &quot;!SS:~1!&quot;==&quot;&quot; set &quot;SS=0!SS!&quot;<br />if &quot;!DD:~1!&quot;==&quot;&quot; set &quot;DD=0!DD!&quot;<br />set &quot;result=!HH!:!MM!:!SS!.!DD!&quot;<br />echo Time: !result!<br />exit /b<br /><br />:: Subroutine to print usage information<br />:AES_usage<br />echo AES ^&lt;inFile^&gt; &#91;^&lt;inKey^&gt;&#93; &#91;^&lt;#CPU^&gt;&#93;<br />echo&nbsp; Encrypts or decrypts the input file using the Advanced Encryption Standard<br />echo&nbsp; algorithm as specified in NIST FIPS-197.&nbsp; Files with extensions other than<br />echo&nbsp; '.aes' are encrypted to a file of the same name, plus an .aes extension.<br />echo&nbsp; '.aes' input files are decrypted to a file of the same name with the .aes<br />echo&nbsp; extension removed.<br />echo&nbsp; &nbsp; ^&lt;inFile^&gt;:&nbsp; &nbsp;A complete path to the file to be processed or the name of a<br />echo&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; variable containing the target file's path.<br />echo&nbsp; &nbsp; &#91;^&lt;inKey^&gt;&#93;:&nbsp; Either a complete path to a keyfile, a variable containing<br />echo&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; the path to a keyfile, or a varible containing a 32-, 48- or<br />echo&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 64-character string of hexadecimal values ^(ie: a 128-, 192- or<br />echo&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 256-bit key^). If not provided the program will prompt for a key.<br />echo&nbsp; &nbsp; &#91;^&lt;#CPU^&gt;&#93;:&nbsp; &nbsp;An integer corresponding to the number of CPU cores to<br />echo&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; exercise in parallel.&nbsp; Defaults to all CPU cores.<br />exit /b<br /><br />:: Subroutine to delay while waiting for child processes to finish<br />:waitOnPipesClosed<br />IF EXIST _pipe* GOTO waitOnPipesClosed<br />exit /b</code></pre></div><br /><br />The most notable changes in this version are the removal of all macros, and automatic generation of the Galois lookup tables.  A large amount of effort went into minimizing the size of the CMD environment, as the performance of the child processes slows down with larger environments.  Removing the macros facilitated this goal, as did only defining encryption constants in encryption mode, and decryption in decryption mode, rather than defining all constants always.</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a> on 26 Nov 2013 10:14, edited 4 times in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29587" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29587">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6f26.html?author_id=4985&amp;sr=posts">104</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 25 Jul 2013 19:00</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29587">
+
+						<h3 ><a href="#p29587">Re: Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7cbf.html?mode=quote&amp;f=3&amp;p=29587" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic671c.html?p=29587#p29587" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopic671c.html?p=29587#p29587" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a></strong> &raquo; </span>02 Nov 2013 01:25
+			</p>
+			
+			
+			
+			<div class="content"><span style="font-size: 150%; line-height: normal"><strong class="text-strong">UPDATED CODE POSTED 11/25/13</strong></span><br /><br />Now the code for the real workhorse, aescore.bat:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />SETLOCAL ENABLEDELAYEDEXPANSION<br />:: Check whether we're supposed to operate with a pipe file<br />:: If so, grab the input parameters and start encoding from the pipe<br />set pipeTest=%~1<br />IF &quot;%pipeTest%&quot;==&quot;PIPE&quot; (<br />&nbsp; &nbsp;set pipe=%~2<br />&nbsp; &nbsp;set operation=%~3<br />&nbsp; &nbsp;set &quot;mode=!operation:~0,3!&quot;<br />&nbsp; &nbsp;set &quot;output=!%~4!&quot;<br />&nbsp; &nbsp;CALL:encPipe &lt;_pipe!pipe!<br />&nbsp; &nbsp;:: Once the pipe is empty, delete the pipe file and return to the main program.<br />&nbsp; &nbsp;del &quot;_pipe!pipe!&quot;<br />&nbsp; &nbsp;exit<br />) ELSE GOTO:AES_notPiped<br /><br />:encPipe<br />:: Get input one line at a time from the pipe file<br />:: Each line includes a pid# and data, comma separated <br />set &quot;pipeIn=&quot;<br />set /p pipeIn=<br />:: As long as there's data in the pipe, tokenize it and run the AES algorithm<br />IF DEFINED pipeIn (<br />&nbsp; &nbsp;FOR /F &quot;tokens=1,2 delims=,&quot; %%a in (&quot;!pipeIn!&quot;) do (<br />&nbsp; &nbsp; &nbsp; set pid=%%a<br />&nbsp; &nbsp; &nbsp; set data=%%b<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;CALL:AES_start<br />&nbsp; &nbsp;GOTO:encPipe<br />) ELSE (exit /b)<br /><br />:: Grab input parameters for Legacy (pre-piped) execution mode, which operates on a single 128-bit block<br />:AES_notPiped<br />:: Grab input parameters<br />set operation=%~1<br />set &quot;mode=%operation:~0,3%&quot;<br />set data=%~2<br />set &quot;output=!%~3!&quot;<br />set PID=%~4<br />set /a lastPID=%PID%-1<br />set &quot;pipe=&quot;<br /><br />::Regardless of whether we're running in legacy mode or piped mode, from here down it's all the same<br />:AES_start<br />:: Process input data from left to right as bytes 0 through 15<br />:: Rearrange each into 4 words of 4 bytes each and insert as columns in a state matrix<br />::&nbsp; &nbsp;W0&nbsp; &nbsp;W1&nbsp; &nbsp;W2&nbsp; &nbsp;W3&nbsp; &nbsp; &nbsp; &nbsp; state&#91;r&#93;&#91;c&#93; definitions<br />::&nbsp; -------------------&nbsp; &nbsp; &nbsp; &nbsp;---------------------<br />::&nbsp; &nbsp;B0 | B4 | B8 | B12&nbsp; &nbsp; &nbsp; &nbsp;0,0 | 0,1 | 0,2 | 0,3<br />::&nbsp; &nbsp;B1 | B5 | B9 | B13&nbsp; &nbsp;=&nbsp; &nbsp;1,0 | 1,1 | 1,2 | 1,3 <br />::&nbsp; &nbsp;B2 | B6 | B10| B14&nbsp; &nbsp; &nbsp; &nbsp;2,0 | 2,1 | 2,2 | 2,3<br />::&nbsp; &nbsp;B3 | B7 | B11| B15&nbsp; &nbsp; &nbsp; &nbsp;3,0 | 3,1 | 3,2 | 3,3<br />set position=0<br />FOR /L %%c IN (0,1,3) DO FOR /L %%b IN (0,1,3) DO (<br />&nbsp; &nbsp;FOR %%a IN (!position!) DO set /a &quot;state&#91;%%b&#93;&#91;%%c&#93;=0x!data:~%%a,2!&quot;<br />&nbsp; &nbsp;set /a position=!position!+2<br />)<br /><br />:: The encryption algorithm starts here.&nbsp; If we are in decryption mode, jump over it to<br />:: where the decryption algorithm starts.<br />IF %mode%==dec goto:AES_Decrypt<br /><br />:: Prior to beginning the encryption rounds, perform the AddRoundKey() function using the initial key and state<br />FOR /L %%c IN (0,1,3) DO FOR /L %%b IN (0,1,3) DO set /a state&#91;%%b&#93;&#91;%%c&#93;=!key&#91;%%b&#93;&#91;%%c&#93;!^^^^!state&#91;%%b&#93;&#91;%%c&#93;!<br /><br />:: Begin the actual encryption algorithm on the state matrix<br />:: Each round (variable %%a) 1 through n-1 consists of the following four operations:<br />::&nbsp; - SubBytes()<br />::&nbsp; - ShiftRows()<br />::&nbsp; - MixColumns()<br />::&nbsp; - AddRoundKey()<br />:: The final round consists of all of the above except MixColumns()<br />FOR /L %%a IN (1,1,%numRounds%) DO (<br />&nbsp; &nbsp;:: For efficiency, the SubBytes() and ShiftRows() operations are combined into one step to prevent an additional%\n%<br />&nbsp; &nbsp; &nbsp; traversal of the entire state matrix.&nbsp; Each byte is replaced by the appropriate SubBytes() substitution for the%\n%<br />&nbsp; &nbsp; &nbsp; byte that would have shifted into its place in the ShiftRows() stage.<br />&nbsp; &nbsp;FOR /L %%b IN (0,1,3) DO FOR /L %%c IN (0,1,3) DO (<br />&nbsp; &nbsp; &nbsp; set /A newc=%%c-%%b<br />&nbsp; &nbsp; &nbsp; IF !newc! LSS 0 set /A newc+=4<br />&nbsp; &nbsp; &nbsp; FOR %%d in (!state&#91;%%b&#93;&#91;%%c&#93;!) DO set /a tempstate&#91;%%b&#93;&#91;!newc!&#93;=!S&#91;%%d&#93;!<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;:: Next is MixColumns().&nbsp; Performed in all rounds except the last.&nbsp; This function operates on the tempstate%\n%<br />&nbsp; &nbsp; &nbsp; variable produced in the previous function, and outputs back into the original state variable.&nbsp; The%\n%<br />&nbsp; &nbsp; &nbsp; AddRoundKey() operation is combined into this step to prevent an extra loop over the state matrix.<br />&nbsp; &nbsp;FOR /L %%c IN (0,1,3) DO (<br />&nbsp; &nbsp; &nbsp; set stateTarget=tempstate<br />&nbsp; &nbsp; &nbsp; IF NOT %%a==%numrounds% (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FOR %%d IN (!tempstate&#91;0&#93;&#91;%%c&#93;!) DO FOR %%e IN (!tempstate&#91;1&#93;&#91;%%c&#93;!) DO FOR %%f IN (!tempstate&#91;2&#93;&#91;%%c&#93;!) DO FOR %%g IN (!tempstate&#91;3&#93;&#91;%%c&#93;!) DO (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a state&#91;0&#93;&#91;%%c&#93;=!G2&#91;%%d&#93;!^^^^!G3&#91;%%e&#93;!^^^^!tempstate&#91;2&#93;&#91;%%c&#93;!^^^^!tempstate&#91;3&#93;&#91;%%c&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;state&#91;1&#93;&#91;%%c&#93;=!tempstate&#91;0&#93;&#91;%%c&#93;!^^^^!G2&#91;%%e&#93;!^^^^!G3&#91;%%f&#93;!^^^^!tempstate&#91;3&#93;&#91;%%c&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;state&#91;2&#93;&#91;%%c&#93;=!tempstate&#91;0&#93;&#91;%%c&#93;!^^^^!tempstate&#91;1&#93;&#91;%%c&#93;!^^^^!G2&#91;%%f&#93;!^^^^!G3&#91;%%g&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;state&#91;3&#93;&#91;%%c&#93;=!G3&#91;%%d&#93;!^^^^!tempstate&#91;1&#93;&#91;%%c&#93;!^^^^!tempstate&#91;2&#93;&#91;%%c&#93;!^^^^!G2&#91;%%g&#93;!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set stateTarget=state<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; set /A keyword=%%a*4+%%c<br />&nbsp; &nbsp; &nbsp; FOR %%d IN (!keyword!) DO FOR %%e IN (!stateTarget!) DO FOR /L %%f IN (0,1,3) DO (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /a state&#91;%%f&#93;&#91;%%c&#93;=!key&#91;%%f&#93;&#91;%%d&#93;!^^^^!%%e&#91;%%f&#93;&#91;%%c&#93;!<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />)<br /><br />:: The decryption algorithm starts here.&nbsp; If we are in encryption mode, jump over it to<br />:: where the output starts.<br />IF %mode%==enc goto:AES_Output<br />:AES_Decrypt<br /><br />:: Prior to beginning the decryption rounds, perform the AddRoundKey() function using the final expanded key<br />:: This is the 'Nth' round, so decrement the number of rounds to run accordingly<br />set /a origNumRounds=%numrounds%, firstword=%numrounds%*4<br />FOR /L %%c IN (0,1,3) DO FOR /L %%b IN (0,1,3) DO (<br />&nbsp; &nbsp;set /a keyword=%%c+!firstword!<br />&nbsp; &nbsp;FOR %%d IN (!keyword!) DO set /a state&#91;%%b&#93;&#91;%%c&#93;=!key&#91;%%b&#93;&#91;%%d&#93;!^^^^!state&#91;%%b&#93;&#91;%%c&#93;!<br />)<br />set /a numrounds-=1<br /><br />:: Begin the actual decryption algorithm on the state matrix<br />:: Each round (variable %%a) 9 through 1 consists of the following four operations:<br />::&nbsp; - InvShiftRows()<br />::&nbsp; - InvSubBytes()<br />::&nbsp; - AddRoundKey()<br />::&nbsp; - InvMixColumns()<br />:: Round 0 consists of all of the above except InvMixColumns()<br />FOR /L %%a IN (!numrounds!,-1,0) DO (<br />&nbsp; &nbsp;:: For efficiency, InvShiftRows() and InvSubBytes() operations are combined into one step to prevent an additional%\n%<br />&nbsp; &nbsp; &nbsp; traversal of the entire state matrix.&nbsp; Each byte is replaced by the appropriate InvSubBytes() substitution for the%\n%<br />&nbsp; &nbsp; &nbsp; byte that would have shifted into its place in the InvShiftRows() stage.<br />&nbsp; &nbsp;FOR /L %%b IN (0,1,3) DO FOR /L %%c IN (0,1,3) DO (<br />&nbsp; &nbsp; &nbsp; set /A newc=%%c+%%b<br />&nbsp; &nbsp; &nbsp; IF !newc! GTR 3 set /a newc-=4<br />&nbsp; &nbsp; &nbsp; FOR %%d in (!state&#91;%%b&#93;&#91;%%c&#93;!) DO set /a tempstate&#91;%%b&#93;&#91;!newc!&#93;=!S&#91;%%d&#93;!<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;:: AddRoundKey() is its own inverse.&nbsp; As before this operation has been combined with InvMixColumns() for efficiency%\n%<br />&nbsp; &nbsp; &nbsp; however the order of the two operations is reversed.<br />&nbsp; &nbsp;set /a firstword=%%a*4<br />&nbsp; &nbsp;FOR /L %%c IN (0,1,3) DO (<br />&nbsp; &nbsp; &nbsp; FOR /L %%b IN (0,1,3) DO (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set /a keyword=%%c+!firstword!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FOR %%d IN (!keyword!) DO set /a tempstate2&#91;%%b&#93;&#91;%%c&#93;=!key&#91;%%b&#93;&#91;%%d&#93;!^^^^!tempstate&#91;%%b&#93;&#91;%%c&#93;!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;IF %%a==0 set /a state&#91;%%b&#93;&#91;%%c&#93;=!tempstate2&#91;%%b&#93;&#91;%%c&#93;!<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; IF NOT %%a==0 (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FOR %%d IN (!tempstate2&#91;0&#93;&#91;%%c&#93;!) DO FOR %%e IN (!tempstate2&#91;1&#93;&#91;%%c&#93;!) DO FOR %%f IN (!tempstate2&#91;2&#93;&#91;%%c&#93;!) DO FOR %%g IN (!tempstate2&#91;3&#93;&#91;%%c&#93;!) DO (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a state&#91;0&#93;&#91;%%c&#93;=!G14&#91;%%d&#93;!^^^^!G11&#91;%%e&#93;!^^^^!G13&#91;%%f&#93;!^^^^!G9&#91;%%g&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;state&#91;1&#93;&#91;%%c&#93;=!G9&#91;%%d&#93;!^^^^!G14&#91;%%e&#93;!^^^^!G11&#91;%%f&#93;!^^^^!G13&#91;%%g&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;state&#91;2&#93;&#91;%%c&#93;=!G13&#91;%%d&#93;!^^^^!G9&#91;%%e&#93;!^^^^!G14&#91;%%f&#93;!^^^^!G11&#91;%%g&#93;!, %\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;state&#91;3&#93;&#91;%%c&#93;=!G11&#91;%%d&#93;!^^^^!G13&#91;%%e&#93;!^^^^!G9&#91;%%f&#93;!^^^^!G14&#91;%%g&#93;!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />)<br />:: Restore the round counter before we grab the next block of data from the input pipe.<br />set numRounds=%origNumRounds%<br /><br />:: &#91;En/De&#93;cryption complete.&nbsp; Prepare the output line by converting the state matrix back <br />:: to a single line of hexadecimal.&nbsp; <br />:AES_Output<br />set outline=<br />set map=0123456789ABCDEF<br />FOR /L %%c IN (0,1,3) DO FOR /L %%b IN (0,1,3) DO (<br />&nbsp; &nbsp;set dec=!state&#91;%%b&#93;&#91;%%c&#93;!<br />&nbsp; &nbsp;FOR /L %%i IN (1,1,2) DO (<br />&nbsp; &nbsp; &nbsp; set /a &quot;d=dec&amp;15,dec&gt;&gt;=4&quot;<br />&nbsp; &nbsp; &nbsp; FOR %%j IN (!d!) DO set &quot;hex=!map:~%%j,1!!hex!&quot;<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;set &quot;outline=!outline!!hex!&quot;<br />&nbsp; &nbsp;set hex=<br />)<br /><br /><br />:: Mutual exclusion code. <br />:: This is the critical section where the result block is written to the output file.<br />:: This code block is protected by the mutex/resource file.&nbsp; No PID will be allowed to<br />:: output its result until the resource file is granted to it by the previous PID.&nbsp; After writing its result,&nbsp; <br />:: each PID renames the resource file with the number of the next PID to allow that PID into the critical section.<br />:: If a PID is stalled for too long before being granted the mutex it assumes something is wrong and commits suicide.<br />IF %PID%==1 GOTO:AES_Critical<br />set /a timeout=0, maxTimeout=1000<br />:AES_waitForRelease<br />IF NOT EXIST _mutex%PID% (<br />&nbsp; &nbsp;set /A timeout=!timeout!+1<br />&nbsp; &nbsp;IF !timeout! GTR !maxTimeout! (<br />&nbsp; &nbsp; &nbsp; echo FATAL ERROR:&nbsp; PID %PID% was unable to enter critical section and terminated.<br />&nbsp; &nbsp; &nbsp; exit<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;GOTO:AES_waitForRelease<br />)<br />:AES_Critical<br />echo !outline!&gt;&gt;&quot;!output!&quot;<br />set /a nextpid=!pid!+1<br />ren _mutex!pid! _mutex!nextpid!<br />IF DEFINED pipe (exit /b) ELSE (exit)</code></pre></div><br />The major change here is that the code now supports &quot;legacy&quot; operation mode and &quot;piped&quot; operation mode.  So if you want to call it and pass a single 128-bit block of data (as in older versions of aes.bat) that still works, or you can point it to a pipe file full of 128-bit data chunks and it will process them all.  The new version of AES.bat posted above takes advantage of the new piped input format.  In either case aescore maintains &quot;thread-safety&quot; using a mutex file to guarantee proper output order amongst several child processes.</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a> on 25 Nov 2013 17:12, edited 3 times in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29588" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29588">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6f26.html?author_id=4985&amp;sr=posts">104</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 25 Jul 2013 19:00</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29588">
+
+						<h3 ><a href="#p29588">Re: Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting74cb.html?mode=quote&amp;f=3&amp;p=29588" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1778-2.html?p=29588#p29588" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopic1778-2.html?p=29588#p29588" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a></strong> &raquo; </span>02 Nov 2013 01:29
+			</p>
+			
+			
+			
+			<div class="content"><span style="font-size: 150%; line-height: normal"><strong class="text-strong">UPDATED 11/08/13</strong></span><br />Since there's no more need to put code in this third post, I thought I'd post an update on how much faster the modified code runs.  For the exact same ~1KB test file on my Q6600 the times are down in the 12-14s range now as opposed to the 40+s seen in the first post:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>c:\Users\Marc\Desktop\AES&gt;aes test.bin 128.key<br />Converting input file to ASCII-coded hexadecimal...<br />...Hexadecimal Conversion Complete (Elapsed Time: 00:00:01.10)<br />Beginning AES Encryption with 8 PIDs...<br />...AES Encryption Complete (Elapsed Time: 00:00:12.02)<br /><br />c:\Users\Marc\Desktop\AES&gt;aes test.bin.aes 128.key<br />Beginning AES Decryption with 8 PIDs...<br />The system cannot find the drive specified.<br />...AES Decryption Complete (Elapsed Time: 00:00:14.41)<br />Restoring binary file from ASCII-coded hexadecimal...<br />...Binary file restoration complete (Elapsed Time: 00:00:00.08)</code></pre></div><br /><br /><span style="font-size: 150%; line-height: normal"><strong class="text-strong">UPDATED 11/25/13</strong></span><br />This isn't an apples to apples comparison, but I thought I'd post the speed results of the updated code here, running in 3 pipes on my Xeon machine at work.  It should be relatively analogous to running on the Q6600 at home, enough to make the point anyway:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>c:\BTP\AESmult&gt;aes test.bin 128.key 3<br />Time: 00:00:04.73<br /><br />c:\BTP\AESmult&gt;aes test.bin.aes 128.key 3<br />Time: 00:00:08.02<br /><br />c:\BTP\AESmult&gt;</code></pre></div>Clearly the piped architecture made a significant difference.  The encrypt side saw a much larger speed boost, because it's CMD environment size was cut down to about 25% of the original code by not defining unnecessary values.  The decrypt side was only able to cut out about 1/3 of the environment size, so it's speed boost wasn't quite as substantial, but it's still moving along much quicker.  There's not much that can be done about the decrypt routine needing access to over 1250 lookup table values...<br /><br />On the 12-thread Xeon with 11 pipes running I can encrypt a 10KB file in about 19s and decrypt it in 31s.  So throughput is up to about 540 Bytes/sec encrypting, and 330 Bytes/sec decrypting.  You won't be encrypting .mp3's anytime soon, but if you're willing to wait a minute or so a reasonably sized 50kB document is now a reasonable target file.<br /><br />As I said before I'd really love to hear what you guys think.  And a huge thank you again to Antonio who not only developed the original Bin&lt;=&gt;Hex functions but gave me a number of great suggestions that led to this enhanced version of the code.</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a> on 25 Nov 2013 17:28, edited 2 times in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29693" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29693">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6f26.html?author_id=4985&amp;sr=posts">104</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 25 Jul 2013 19:00</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29693">
+
+						<h3 ><a href="#p29693">Re: Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting6ffe.html?mode=quote&amp;f=3&amp;p=29693" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4b53.html?p=29693#p29693" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopic4b53.html?p=29693#p29693" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a></strong> &raquo; </span>04 Nov 2013 19:07
+			</p>
+			
+			
+			
+			<div class="content">No comments yet, but that's OK, my feelings aren't hurt  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><br />I'm working on some improvements to the code.  So far I tweaked the PID handler to give it finer resolution over starting PIDs.  It used to launch 'maxPID' number of PIDs at once, wait for the last one to finish, and then launch 'maxPID' more.  Like a sliding window that only allowed PIDs in the current window bounds to be launched, and the window moved 'maxPID' units at a time.  Now it uses 'maxPID' (renamed 'pidNum') more like a target value than a max, and after launching that many PIDs it loops, checking the tasklist and counting cmd.exe instances.  As soon as there are less instances than allowed, it starts enough PIDs to get back to 'pidNum', plus a fudge factor, speculating on how many PIDs will finish in the delta time before it gets back into its loop.  It does a pretty good job making sure there are always around maxPID-2 to maxPID+2 PIDs in flight, instead of the original bursty method with gaps in between bursts.<br /><br />I'm also planning a large change in the key expansion algorithm.  I had a revelation that it needs to be moved out of 'aescore' and into the main control program.  This way it only needs to be run one time, and when a new PID gets 'start'ed the CMD environment should copy all the variables (including all derived round keys) into the new PID's environment.  I think I'll bring all of the lookup tables back into the main control program as well so those variables only get set once.  It will be interesting to see what the difference in performance is with the slower CMD environment copy on PID start (due to ~1500 extra variables) vs. the faster PID execution (due to not re-expanding keys and not doing ~1500 &quot;set&quot; operations).  I'm thinking the env. copy and the sets should roughly cancel each other out, but not having to run the expansion algorithm to re-derive everything should be a big savings...</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29697" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29697">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29697">
+
+						<h3 ><a href="#p29697">Re: Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting3b48.html?mode=quote&amp;f=3&amp;p=29697" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic693f.html?p=29697#p29697" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopic693f.html?p=29697#p29697" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>05 Nov 2013 02:33
+			</p>
+			
+			
+			
+			<div class="content">It seems impressive, but it's not my sphere of interest - unless it creates pics of nudie women in ascii. <img class="smilies" src="images/smilies/icon_wink.gif" alt=";)" title="Wink" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29710" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29710">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6f26.html?author_id=4985&amp;sr=posts">104</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 25 Jul 2013 19:00</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29710">
+
+						<h3 ><a href="#p29710">Re: Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting8c70.html?mode=quote&amp;f=3&amp;p=29710" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic402a.html?p=29710#p29710" onclick="prompt('Message #7',this.href); return false;">#7</a></span> 
+									<a class="unread" href="viewtopic402a.html?p=29710#p29710" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a></strong> &raquo; </span>05 Nov 2013 17:26
+			</p>
+			
+			
+			
+			<div class="content">Yes the sphere of interest for this is extremely small by it's very nature, and much more so because the code is so slow it's impractical to use beyond a proof of concept.  Thank you for dropping me a kind comment in any case!  Maybe in v2.0 I'll work in some ASCII pics for you  <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" /> <br /><br />I did implement several changes to the code, most notably moving the key expansion into the controller program.  This cut the execution time of the individual AES PIDs roughly in half.  They finish so rapidly now that the PID handler couldn't keep up to keep enough of them in flight.  After testing various values, I doubled the default PID count to 2x#CPUs to make up for this, and it does a great job keeping the pipe full now.<br /><br />I gutted all extraneous code from aescore as well, input validation, etc.  If it wasn't strictly necessary it's gone.  I also fixed a bug where if the file was an exact even multiple of 32 bytes it would encrypt fine but couldn't be decrypted <img class="smilies" src="images/smilies/icon_redface.gif" alt=":oops:" title="Embarassed" /> .  After all these changes, the algorithm needs 9m21s to [en/de]crypt 166 Bytes of hex data, compared to ~30m from 2 days ago.  Throughput as such is up to a hair over 300 Bytes/sec.  That's still only a partial story of course, as the 166 Bytes of hex data is created from a 66 KB file, and it takes ~1.5m to do that Bin2Hex conversion.  So from start to finish the operation encrypts 66KB in ~11m, netting just over 100 Bytes/sec.<br /><br />That's about all I can squeeze out of it I think.  I might try multithreading the Bin2Hex conversion for some more improvement, and there's one more algorithmic change I want to experiment with to see if I can eek another couple percent, then I'll update the first posts with the improved code and leave this one for the ages.  Thanks again for dropping a line!</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29712" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29712">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29712">
+
+						<h3 ><a href="#p29712">Re: Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingaa43.html?mode=quote&amp;f=3&amp;p=29712" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic2478.html?p=29712#p29712" onclick="prompt('Message #8',this.href); return false;">#8</a></span> 
+									<a class="unread" href="viewtopic2478.html?p=29712#p29712" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>06 Nov 2013 06:40
+			</p>
+			
+			
+			
+			<div class="content">hi , Magialisk<br /><br />I would like to try your code but I'm in trouble.<br /><br />Could you post in order to be clear about what are the files?<br /><br />es.<br /><br />file1.bat:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>code of file1.bat<br /></code></pre></div><br /><br /><br />file2.bat:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>etc..<br /></code></pre></div><br /><br />thanks anyway!<br /><br />EDIT: Ok i have done! It's slow.... the set section is very slow.<br /><br />Einstein1969</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29727" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29727">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6f26.html?author_id=4985&amp;sr=posts">104</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 25 Jul 2013 19:00</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29727">
+
+						<h3 ><a href="#p29727">Re: Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingdd85.html?mode=quote&amp;f=3&amp;p=29727" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9327.html?p=29727#p29727" onclick="prompt('Message #9',this.href); return false;">#9</a></span> 
+									<a class="unread" href="viewtopic9327.html?p=29727#p29727" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a></strong> &raquo; </span>06 Nov 2013 17:30
+			</p>
+			
+			
+			
+			<div class="content">Thank you for giving it a try!  I honestly didn't expect anyone to download and tinker with it, that's why I broke the code into sections instead of one big blob at the expense of making it harder to reassemble.  I figured at best someone might want to read over some of the sections and comment.<br /><br />When you say &quot;the set section is very slow&quot; I'm curious exactly which section you mean?  The lookup table definitions up top?  That's over 2000 'set' operations for the parser to chug through, and unfortunately nothing can be done to speed it along <img class="smilies" src="images/smilies/icon_neutral.gif" alt=":|" title="Neutral" />.  Any tips on speeding up any portion of the code would be very much appreciated though!  A hundredth of a second goes a long way when multiplied out by 5000+ PIDs!  As I mentioned a couple posts up I've since tweaked it to be a little over twice as fast (probably should say &quot;half as slow instead <img class="smilies" src="images/smilies/icon_lol.gif" alt=":lol:" title="Laughing" />) and I'll be updating the posts with that code, probably over the weekend.  <br /><br />Even with the improved code it is still very, very slow, but considering the number of operations being done that was mostly expected.  This is after all supposedly the most secure non-classified encryption algorithm known, and the only &quot;public&quot; algorithm allowed to be used with US Top Secret data.  In other words, I didn't invent it, I can't change how it &quot;works&quot;, but I could potentially implement it in a more or less efficient way...</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29729" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29729">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29729">
+
+						<h3 ><a href="#p29729">Re: Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting4087.html?mode=quote&amp;f=3&amp;p=29729" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1398.html?p=29729#p29729" onclick="prompt('Message #10',this.href); return false;">#10</a></span> 
+									<a class="unread" href="viewtopic1398.html?p=29729#p29729" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>06 Nov 2013 19:57
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Magialisk wrote:</cite>Even with the improved code it is still very, very slow, but considering the number of operations being done that was mostly expected.  This is after all supposedly the most secure non-classified encryption algorithm known, and the only &quot;public&quot; algorithm allowed to be used with US Top Secret data.  In other words, I didn't invent it, I can't change how it &quot;works&quot;, but I could potentially implement it in a more or less efficient way...</div></blockquote><br />Like perhaps use a different language  <img class="smilies" src="images/smilies/icon_twisted.gif" alt=":twisted:" title="Twisted Evil" /> <br /><br />Your project is totally impractical, yet very interesting, and an amazing accomplishment.<br /><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29730" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29730">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6f26.html?author_id=4985&amp;sr=posts">104</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 25 Jul 2013 19:00</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29730">
+
+						<h3 ><a href="#p29730">Re: Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingcede.html?mode=quote&amp;f=3&amp;p=29730" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic87ec-2.html?p=29730#p29730" onclick="prompt('Message #11',this.href); return false;">#11</a></span> 
+									<a class="unread" href="viewtopic87ec-2.html?p=29730#p29730" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a></strong> &raquo; </span>06 Nov 2013 22:15
+			</p>
+			
+			
+			
+			<div class="content">Thanks Dave for the kind word.  I think I've said too many times already that this was never meant as anything more than a proof of concept, so practicality is a distant secondary concern <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> .  This was a somewhat natural conclusion from that &quot;string encoding&quot; thread up through the Vigenere cipher, the Enigma machine and now ultimately AES.  I just like to see what can be done in batch, it's fun for me.<br /><br />In fact the original idea to try this came from a lecture I gave about disk encryption that touched on AES at a high level.  The lecture wasn't too long after I'd finished the Enigma code, and I made a comment that the algorithm was open and that anyone with the smarts/time/whatever could just sit down at home and write a working AES cipher.  It wasn't long after saying that my brain started thinking &quot;I wonder if I could batch it..?&quot; <img class="smilies" src="images/smilies/icon_twisted.gif" alt=":twisted:" title="Twisted Evil" /> That and this gave me a good excuse to dive in and digest how the algorithm works instead of just hand-waving over it all the time.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29731" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29731">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29731">
+
+						<h3 ><a href="#p29731">Re: Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9b34.html?mode=quote&amp;f=3&amp;p=29731" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicd9aa.html?p=29731#p29731" onclick="prompt('Message #12',this.href); return false;">#12</a></span> 
+									<a class="unread" href="viewtopicd9aa.html?p=29731#p29731" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>06 Nov 2013 23:25
+			</p>
+			
+			
+			
+			<div class="content">Excuse me. If the objective is to generate a more efficient Batch code for this application, I certainly will <em class="text-italics">not</em> do that trying to understand (parts of) your code and then modifying it. Doing that will only produce a series of patches that perhaps may interfere with each other and that does not represent the best way to achieve a certain task. I prefer to consult the original specification you used to develop this application and, after review and understand it, propose modifications. However, you have not posted a single reference to AES or FIPS-197 and I am not interested enough in this topic to google for they. In my opinion, you should start this topic with a brief description of what AES/FIPS-197 are, the benefits of their use and a couple links to the reference pages you used to develop this program.<br /><br />Anyway, after a casual review of your code I can do a couple observations about it:<br /><br />Although a macro is much more efficient than a <em class="text-italics">subroutine call</em>, it is slightly less efficient than the original code written in its place, because the macro expansion is an additional task that is not done in the second case. In the same way, a !delayed! expansion is less efficient than a %normal% one, and not needed switches and options just slow down a program. For example, in the code below you should change the two separated &quot;set /A numPIDs=%%i &amp; set /A numPIDs-=2&quot; by just one &quot;set /A numPIDs=%%i-2&quot; and this &quot;IF !numPIDs! GEQ !maxPID! ...&quot; by &quot;IF %numPIDs% GEQ %maxPID% ...&quot;. Finally, any loop assembled via GOTO are certainly the worst case of efficiency, especially if the program is large.<br /><br />In my opinion, the code below waste a great amount of CPU resources:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:: Subroutine to control the spawning of PIDs.&nbsp; <br />:: Checks the task list to see how many cmd.exe instances are running.&nbsp; Subtracts one for itself<br />:: and one for the tasklist command.&nbsp; Loops until there are less than maxPID instances before <br />:: returning to launch another one.<br />:AESctrl_PIDctrl<br />FOR /F %%i IN ('tasklist ^| find &quot;cmd.exe&quot; /C') do set /A numPIDs=%%i<br />set /A numPIDs-=2<br />IF !numPIDs! GEQ !maxPID! GOTO AESctrl_PIDctrl<br />exit /b<br /></code></pre></div><br /><br />Perhaps a ping command inserted in the cycle will free CPU resources in order to be used by the rest of the program. However, as I said before, I don't know how this subroutine is used in the whole program, so I don't know if my conclusion is right. To be sure of that, I would need to understand the whole code first!<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29732" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29732">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6f26.html?author_id=4985&amp;sr=posts">104</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 25 Jul 2013 19:00</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29732">
+
+						<h3 ><a href="#p29732">Re: Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0c37.html?mode=quote&amp;f=3&amp;p=29732" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic9279.html?p=29732#p29732" onclick="prompt('Message #13',this.href); return false;">#13</a></span> 
+									<a class="unread" href="viewtopic9279.html?p=29732#p29732" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a></strong> &raquo; </span>07 Nov 2013 00:29
+			</p>
+			
+			
+			
+			<div class="content">Antonio thank you so much for your feedback, and while I'm at it thank you again for your BinToHex and HexToBin scripts.  I do hope you don't mind that I've modified them for this task! (note in the source I retained your original authorship statements)<br /><br />Allow me to address your primary concern about &quot;what is&quot; AES.  The short version is that the Advanced Encryption Standard is the result of a multi-year, worldwide, open &quot;competition&quot; held by NIST to create a successor to the Data Encryption Standard (DES).  The winner of that competition was an algorithm named Rjindael designed by two Belgian cryptographers.  NIST took the Rijndael algorithm and standardized a version with slightly reduced capabilities in a document called FIPS-197.  This is a Federal Information Processing Standard, one of many that define requirements for protecting the US government's data.  That said, NIST is only sanctioned to define standards for data up to &quot;Sensitive but Unclassified&quot; while the NSA has the charter to define standards for protecting data at the SECRET level and above.  The AES algorithm is interesting because it has been blessed by the NSA for use in protecting up to US TOP SECRET data, the first and to my knowledge only open cryptographic standard to achieve this.  So not only is it the de-facto standard commercially used in everything from hard disks to cell phones it is also the standard militarily, used in the US, EU, NATO, etc.  As far as &quot;symmetric block ciphers&quot; go, this is &quot;the one&quot;.  In addition, with everything going on in the news, allegations of the NSA injecting backdoors or otherwise weakening several cryptographic standards, this is one of the rare few that is both blessed by NSA for it's strength and simultaneously above reproach in terms of their ability to have tampered with it's construction.<br /><br />The standard itself can be downloaded here: <!-- m --><a class="postlink" href="http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf">http://csrc.nist.gov/publications/fips/ ... ps-197.pdf</a><!-- m -->, and it contains everything one would need to write a working cipher, including psuedo-code and example block sequences of the algorithm in action.  No other reference is necessary, though I admit I did plenty of Googling myself in constructing the cipher.  I'd be happy to share more, but I doubt the majority would care to read it.  As Foxidrive pointed out, this topic is of limited interest to the majority.  I happen to work in a realm where NIST/NSA standards are relevant, I've taken a recent interest in cryptography as a study, and I enjoy writing batch scripts, so here we are.  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><br />Moving on, you made two very good points about my inefficiencies in that subroutine.  Combining the two 'set's into one seems so obvious, it's almost embarrassing to have not done that by default.  Also, the delayed vs. normal expansion is a very bad habit I admittedly have.  I get burned very often when my variables in code blocks (even simple 'IF' statements) refuse to work without delayed expansion, so I've gotten in the bad habit of using delayed notation just about everywhere.  It usually doesn't matter because I'm not trying to optimize my script, but in this case it does matter and I appreciate your critique.  I will scrub the batch of all unnecessary delayed expansion before I post the updated code this weekend.<br /><br />Finally, a comment about the GOTO loop and the waste of CPU resources.  While I can't argue with that in principle, I believe that in this situation the GOTO is the best solution.  I'll attempt to explain.  That tight wait loop occurs in the main program which is controlling the dispatching of child processes (PIDs) that do the real work.  It will consume one core on its own because of this unrestrained GOTO loop, but that seemed better than the alternative, especially on high core count machines.  I was originally going to use a 0.1 second ping delay in this instance until a thread from earlier this week brought it to my attention that ping can only create a delay in 500ms intervals.  Each one of my PIDs only runs for approximately 10-12 hundredths of a second, so if I used a ping, by the time it returned I should have completed at least 5 PIDs.  On a quad-core PC, for example, the whole pipeline would be stalled after the 4th PID was finished and I'd have to wait on the ping to timeout before I could launch some more.  My useful computational duty cycle would be cut by more than 20%.  Instead I used the very tight loop below to detect as quickly as possible when a PID has ended so I can get another one in the pipe to replace it.  In the improved version of this routine (not posted yet) I actually fire off additional PIDs based on a speculation of how many more will finish in the time between the subroutine deciding to fire a new PID and the time it takes to actually fire one and get back into the subroutine loop.  I've re-written this PID handler at least a half-dozen different ways, and so far this is the best I've come up with (or technically, the revised as-yet-unposted variant of this is). Previous versions showed a constant sawtooth between 90% and 100% CPU, while this one gives a solid straight line on all 12 cores with only an occasional dip to ~98%.  That doesn't mean it can't be made better, but there are several ways it could be made worse <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><br />Thank you again and I apologize for the overly long reply.  I'm thrilled you've taken even a cursory interest in my project, so please if you have any other questions or suggestions let me know.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29748" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29748">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29748">
+
+						<h3 ><a href="#p29748">Re: Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinga413.html?mode=quote&amp;f=3&amp;p=29748" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice7fd.html?p=29748#p29748" onclick="prompt('Message #14',this.href); return false;">#14</a></span> 
+									<a class="unread" href="viewtopice7fd.html?p=29748#p29748" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>07 Nov 2013 14:44
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>majalisk wrote:</cite>I'm also planning a large change in the key expansion algorithm. I had a revelation that it needs to be moved out of 'aescore' and into the main control program. This way it only needs to be run one time, and when a new PID gets 'start'ed the CMD environment should copy all the variables (including all derived round keys) into the new PID's environment. I think I'll bring all of the lookup tables back into the main control program as well so those variables only get set once. It will be interesting to see what the difference in performance is with the slower CMD environment copy on PID start (due to ~1500 extra variables) vs. the faster PID execution (due to not re-expanding keys and not doing ~1500 &quot;set&quot; operations). I'm thinking the env. copy and the sets should roughly cancel each other out, but not having to run the expansion algorithm to re-derive everything should be a big savings...<br /></div></blockquote><br />I have made some test.<br /><br /><br /><blockquote><div><cite>Aacini wrote:</cite>Although a macro is much more efficient than a subroutine call, it is slightly less efficient than the original code written in its place, because the macro expansion is an additional task that is not done in the second case. In the same way, a !delayed! expansion is less efficient than a %normal% one, and not needed switches and options just slow down a program. For example, in the code below you should change the two separated &quot;set /A numPIDs=%%i &amp; set /A numPIDs-=2&quot; by just one &quot;set /A numPIDs=%%i-2&quot; and this &quot;IF !numPIDs! GEQ !maxPID! ...&quot; by &quot;IF %numPIDs% GEQ %maxPID% ...&quot;. Finally, any loop assembled via GOTO are certainly the worst case of efficiency, especially if the program is large.<br /></div></blockquote><br />This is good speed improvement.<br /><br /><br /><br />There is other optimization that we can try:<br /><br />- Map and lookup<br />- use of type / findstr for faster lookup , etc<br /><br />- For spawn of process: Implemen an architecture more efficiency<br />  Example:<br />- Spawn a process that work in the role of &quot;dispatcher&quot; (the main)<br />- Spawn 'n' processes that do not ending execute (spawn only once)<br />- For each process execute more work if possible and after finish wait for other work to do without respawn.<br /><br />test:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code><br />@echo off &amp; setlocal EnableDelayedExpansion<br /><br />set i=100<br /><br />set t0=%time%<br /><br />:loop<br /><br />set /a RC&#91;1&#93;=0x01 &amp; set /a RC&#91;2&#93;=0x02 &amp; set /a RC&#91;3&#93;=0x04 &amp; set /a RC&#91;4&#93;=0x08 &amp; set /a RC&#91;5&#93;=0x10<br />set /a RC&#91;6&#93;=0x20 &amp; set /a RC&#91;7&#93;=0x40 &amp; set /a RC&#91;8&#93;=0x80 &amp; set /a RC&#91;9&#93;=0x1b &amp; set /a RC&#91;10&#93;=0x36<br /><br />:: Define pre-computed Rijndael S-box values for SubBytes() function and key scheduler algorithm<br />set /a S&#91;0&#93;=0x63 &amp; set /a S&#91;1&#93;=0x7c &amp; set /a S&#91;2&#93;=0x77 &amp; set /a S&#91;3&#93;=0x7b &amp; set /a S&#91;4&#93;=0xf2<br />set /a S&#91;5&#93;=0x6b &amp; set /a S&#91;6&#93;=0x6f &amp; set /a S&#91;7&#93;=0xc5 &amp; set /a S&#91;8&#93;=0x30 &amp; set /a S&#91;9&#93;=0x01<br />set /a S&#91;10&#93;=0x67 &amp; set /a S&#91;11&#93;=0x2b &amp; set /a S&#91;12&#93;=0xfe &amp; set /a S&#91;13&#93;=0xd7 &amp; set /a S&#91;14&#93;=0xab<br />set /a S&#91;15&#93;=0x76 &amp; set /a S&#91;16&#93;=0xca &amp; set /a S&#91;17&#93;=0x82 &amp; set /a S&#91;18&#93;=0xc9 &amp; set /a S&#91;19&#93;=0x7d<br />set /a S&#91;20&#93;=0xfa &amp; set /a S&#91;21&#93;=0x59 &amp; set /a S&#91;22&#93;=0x47 &amp; set /a S&#91;23&#93;=0xf0 &amp; set /a S&#91;24&#93;=0xad<br />set /a S&#91;25&#93;=0xd4 &amp; set /a S&#91;26&#93;=0xa2 &amp; set /a S&#91;27&#93;=0xaf &amp; set /a S&#91;28&#93;=0x9c &amp; set /a S&#91;29&#93;=0xa4<br />set /a S&#91;30&#93;=0x72 &amp; set /a S&#91;31&#93;=0xc0 &amp; set /a S&#91;32&#93;=0xb7 &amp; set /a S&#91;33&#93;=0xfd &amp; set /a S&#91;34&#93;=0x93<br />set /a S&#91;35&#93;=0x26 &amp; set /a S&#91;36&#93;=0x36 &amp; set /a S&#91;37&#93;=0x3f &amp; set /a S&#91;38&#93;=0xf7 &amp; set /a S&#91;39&#93;=0xcc<br />set /a S&#91;40&#93;=0x34 &amp; set /a S&#91;41&#93;=0xa5 &amp; set /a S&#91;42&#93;=0xe5 &amp; set /a S&#91;43&#93;=0xf1 &amp; set /a S&#91;44&#93;=0x71<br />set /a S&#91;45&#93;=0xd8 &amp; set /a S&#91;46&#93;=0x31 &amp; set /a S&#91;47&#93;=0x15 &amp; set /a S&#91;48&#93;=0x04 &amp; set /a S&#91;49&#93;=0xc7<br />set /a S&#91;50&#93;=0x23 &amp; set /a S&#91;51&#93;=0xc3 &amp; set /a S&#91;52&#93;=0x18 &amp; set /a S&#91;53&#93;=0x96 &amp; set /a S&#91;54&#93;=0x05<br />set /a S&#91;55&#93;=0x9a &amp; set /a S&#91;56&#93;=0x07 &amp; set /a S&#91;57&#93;=0x12 &amp; set /a S&#91;58&#93;=0x80 &amp; set /a S&#91;59&#93;=0xe2<br />set /a S&#91;60&#93;=0xeb &amp; set /a S&#91;61&#93;=0x27 &amp; set /a S&#91;62&#93;=0xb2 &amp; set /a S&#91;63&#93;=0x75 &amp; set /a S&#91;64&#93;=0x09<br />set /a S&#91;65&#93;=0x83 &amp; set /a S&#91;66&#93;=0x2c &amp; set /a S&#91;67&#93;=0x1a &amp; set /a S&#91;68&#93;=0x1b &amp; set /a S&#91;69&#93;=0x6e<br />set /a S&#91;70&#93;=0x5a &amp; set /a S&#91;71&#93;=0xa0 &amp; set /a S&#91;72&#93;=0x52 &amp; set /a S&#91;73&#93;=0x3b &amp; set /a S&#91;74&#93;=0xd6<br />set /a S&#91;75&#93;=0xb3 &amp; set /a S&#91;76&#93;=0x29 &amp; set /a S&#91;77&#93;=0xe3 &amp; set /a S&#91;78&#93;=0x2f &amp; set /a S&#91;79&#93;=0x84<br />set /a S&#91;80&#93;=0x53 &amp; set /a S&#91;81&#93;=0xd1 &amp; set /a S&#91;82&#93;=0x00 &amp; set /a S&#91;83&#93;=0xed &amp; set /a S&#91;84&#93;=0x20<br />set /a S&#91;85&#93;=0xfc &amp; set /a S&#91;86&#93;=0xb1 &amp; set /a S&#91;87&#93;=0x5b &amp; set /a S&#91;88&#93;=0x6a &amp; set /a S&#91;89&#93;=0xcb<br />set /a S&#91;90&#93;=0xbe &amp; set /a S&#91;91&#93;=0x39 &amp; set /a S&#91;92&#93;=0x4a &amp; set /a S&#91;93&#93;=0x4c &amp; set /a S&#91;94&#93;=0x58<br />set /a S&#91;95&#93;=0xcf &amp; set /a S&#91;96&#93;=0xd0 &amp; set /a S&#91;97&#93;=0xef &amp; set /a S&#91;98&#93;=0xaa &amp; set /a S&#91;99&#93;=0xfb<br /><br />set /a i=i-1<br />if !i! gtr 0 goto :loop<br /><br />set t1=%time%<br /><br />for /F &quot;tokens=1-8 delims=:.,&quot; %%a in (&quot;!t0: =0!:!t1: =0!&quot;) do set /a &quot;a=(((1%%e-1%%a)*60)+1%%f-1%%b)*6000+1%%g%%h-1%%c%%d, a+=(a&gt;&gt;31) &amp; 8640000&quot;<br /><br />echo Execution time: %a%<br /><br />::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br /><br />set i=100<br /><br />set t0=%time%<br /><br />:loop1<br /><br />call aes_set_1.cmd<br /><br />set /a i=i-1<br />if !i! gtr 0 goto :loop1<br /><br />set t1=%time%<br /><br />for /F &quot;tokens=1-8 delims=:.,&quot; %%a in (&quot;!t0: =0!:!t1: =0!&quot;) do set /a &quot;a=(((1%%e-1%%a)*60)+1%%f-1%%b)*6000+1%%g%%h-1%%c%%d, a+=(a&gt;&gt;31) &amp; 8640000&quot;<br /><br />echo Execution time: %a%<br /><br />goto :next_test<br /><br />rem&nbsp; aes_set_1.cmd:<br /><br />set /a RC&#91;1&#93;=0x01 &amp; set /a RC&#91;2&#93;=0x02 &amp; set /a RC&#91;3&#93;=0x04 &amp; set /a RC&#91;4&#93;=0x08 &amp; set /a RC&#91;5&#93;=0x10<br />set /a RC&#91;6&#93;=0x20 &amp; set /a RC&#91;7&#93;=0x40 &amp; set /a RC&#91;8&#93;=0x80 &amp; set /a RC&#91;9&#93;=0x1b &amp; set /a RC&#91;10&#93;=0x36<br /><br />:: Define pre-computed Rijndael S-box values for SubBytes() function and key scheduler algorithm<br />set /a S&#91;0&#93;=0x63 &amp; set /a S&#91;1&#93;=0x7c &amp; set /a S&#91;2&#93;=0x77 &amp; set /a S&#91;3&#93;=0x7b &amp; set /a S&#91;4&#93;=0xf2<br />set /a S&#91;5&#93;=0x6b &amp; set /a S&#91;6&#93;=0x6f &amp; set /a S&#91;7&#93;=0xc5 &amp; set /a S&#91;8&#93;=0x30 &amp; set /a S&#91;9&#93;=0x01<br />set /a S&#91;10&#93;=0x67 &amp; set /a S&#91;11&#93;=0x2b &amp; set /a S&#91;12&#93;=0xfe &amp; set /a S&#91;13&#93;=0xd7 &amp; set /a S&#91;14&#93;=0xab<br />set /a S&#91;15&#93;=0x76 &amp; set /a S&#91;16&#93;=0xca &amp; set /a S&#91;17&#93;=0x82 &amp; set /a S&#91;18&#93;=0xc9 &amp; set /a S&#91;19&#93;=0x7d<br />set /a S&#91;20&#93;=0xfa &amp; set /a S&#91;21&#93;=0x59 &amp; set /a S&#91;22&#93;=0x47 &amp; set /a S&#91;23&#93;=0xf0 &amp; set /a S&#91;24&#93;=0xad<br />set /a S&#91;25&#93;=0xd4 &amp; set /a S&#91;26&#93;=0xa2 &amp; set /a S&#91;27&#93;=0xaf &amp; set /a S&#91;28&#93;=0x9c &amp; set /a S&#91;29&#93;=0xa4<br />set /a S&#91;30&#93;=0x72 &amp; set /a S&#91;31&#93;=0xc0 &amp; set /a S&#91;32&#93;=0xb7 &amp; set /a S&#91;33&#93;=0xfd &amp; set /a S&#91;34&#93;=0x93<br />set /a S&#91;35&#93;=0x26 &amp; set /a S&#91;36&#93;=0x36 &amp; set /a S&#91;37&#93;=0x3f &amp; set /a S&#91;38&#93;=0xf7 &amp; set /a S&#91;39&#93;=0xcc<br />set /a S&#91;40&#93;=0x34 &amp; set /a S&#91;41&#93;=0xa5 &amp; set /a S&#91;42&#93;=0xe5 &amp; set /a S&#91;43&#93;=0xf1 &amp; set /a S&#91;44&#93;=0x71<br />set /a S&#91;45&#93;=0xd8 &amp; set /a S&#91;46&#93;=0x31 &amp; set /a S&#91;47&#93;=0x15 &amp; set /a S&#91;48&#93;=0x04 &amp; set /a S&#91;49&#93;=0xc7<br />set /a S&#91;50&#93;=0x23 &amp; set /a S&#91;51&#93;=0xc3 &amp; set /a S&#91;52&#93;=0x18 &amp; set /a S&#91;53&#93;=0x96 &amp; set /a S&#91;54&#93;=0x05<br />set /a S&#91;55&#93;=0x9a &amp; set /a S&#91;56&#93;=0x07 &amp; set /a S&#91;57&#93;=0x12 &amp; set /a S&#91;58&#93;=0x80 &amp; set /a S&#91;59&#93;=0xe2<br />set /a S&#91;60&#93;=0xeb &amp; set /a S&#91;61&#93;=0x27 &amp; set /a S&#91;62&#93;=0xb2 &amp; set /a S&#91;63&#93;=0x75 &amp; set /a S&#91;64&#93;=0x09<br />set /a S&#91;65&#93;=0x83 &amp; set /a S&#91;66&#93;=0x2c &amp; set /a S&#91;67&#93;=0x1a &amp; set /a S&#91;68&#93;=0x1b &amp; set /a S&#91;69&#93;=0x6e<br />set /a S&#91;70&#93;=0x5a &amp; set /a S&#91;71&#93;=0xa0 &amp; set /a S&#91;72&#93;=0x52 &amp; set /a S&#91;73&#93;=0x3b &amp; set /a S&#91;74&#93;=0xd6<br />set /a S&#91;75&#93;=0xb3 &amp; set /a S&#91;76&#93;=0x29 &amp; set /a S&#91;77&#93;=0xe3 &amp; set /a S&#91;78&#93;=0x2f &amp; set /a S&#91;79&#93;=0x84<br />set /a S&#91;80&#93;=0x53 &amp; set /a S&#91;81&#93;=0xd1 &amp; set /a S&#91;82&#93;=0x00 &amp; set /a S&#91;83&#93;=0xed &amp; set /a S&#91;84&#93;=0x20<br />set /a S&#91;85&#93;=0xfc &amp; set /a S&#91;86&#93;=0xb1 &amp; set /a S&#91;87&#93;=0x5b &amp; set /a S&#91;88&#93;=0x6a &amp; set /a S&#91;89&#93;=0xcb<br />set /a S&#91;90&#93;=0xbe &amp; set /a S&#91;91&#93;=0x39 &amp; set /a S&#91;92&#93;=0x4a &amp; set /a S&#91;93&#93;=0x4c &amp; set /a S&#91;94&#93;=0x58<br />set /a S&#91;95&#93;=0xcf &amp; set /a S&#91;96&#93;=0xd0 &amp; set /a S&#91;97&#93;=0xef &amp; set /a S&#91;98&#93;=0xaa &amp; set /a S&#91;99&#93;=0xfb<br /><br /><br />::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br />:next_test<br /><br />set t0=%time%<br /><br />For /L %%i in (1,1,100) do (<br /><br />call aes_set_1.cmd<br /><br />)<br /><br />set t1=%time%<br /><br />for /F &quot;tokens=1-8 delims=:.,&quot; %%a in (&quot;!t0: =0!:!t1: =0!&quot;) do set /a &quot;a=(((1%%e-1%%a)*60)+1%%f-1%%b)*6000+1%%g%%h-1%%c%%d, a+=(a&gt;&gt;31) &amp; 8640000&quot;<br /><br />echo Execution time: %a%<br /><br /><br />:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br /><br />set i=100<br /><br />set t0=%time%<br /><br />:loop2<br /><br />(<br />set /a RC&#91;1&#93;=0x01 &amp; set /a RC&#91;2&#93;=0x02 &amp; set /a RC&#91;3&#93;=0x04 &amp; set /a RC&#91;4&#93;=0x08 &amp; set /a RC&#91;5&#93;=0x10<br />set /a RC&#91;6&#93;=0x20 &amp; set /a RC&#91;7&#93;=0x40 &amp; set /a RC&#91;8&#93;=0x80 &amp; set /a RC&#91;9&#93;=0x1b &amp; set /a RC&#91;10&#93;=0x36<br /><br />:: Define pre-computed Rijndael S-box values for SubBytes() function and key scheduler algorithm<br />set /a S&#91;0&#93;=0x63 &amp; set /a S&#91;1&#93;=0x7c &amp; set /a S&#91;2&#93;=0x77 &amp; set /a S&#91;3&#93;=0x7b &amp; set /a S&#91;4&#93;=0xf2<br />set /a S&#91;5&#93;=0x6b &amp; set /a S&#91;6&#93;=0x6f &amp; set /a S&#91;7&#93;=0xc5 &amp; set /a S&#91;8&#93;=0x30 &amp; set /a S&#91;9&#93;=0x01<br />set /a S&#91;10&#93;=0x67 &amp; set /a S&#91;11&#93;=0x2b &amp; set /a S&#91;12&#93;=0xfe &amp; set /a S&#91;13&#93;=0xd7 &amp; set /a S&#91;14&#93;=0xab<br />set /a S&#91;15&#93;=0x76 &amp; set /a S&#91;16&#93;=0xca &amp; set /a S&#91;17&#93;=0x82 &amp; set /a S&#91;18&#93;=0xc9 &amp; set /a S&#91;19&#93;=0x7d<br />set /a S&#91;20&#93;=0xfa &amp; set /a S&#91;21&#93;=0x59 &amp; set /a S&#91;22&#93;=0x47 &amp; set /a S&#91;23&#93;=0xf0 &amp; set /a S&#91;24&#93;=0xad<br />set /a S&#91;25&#93;=0xd4 &amp; set /a S&#91;26&#93;=0xa2 &amp; set /a S&#91;27&#93;=0xaf &amp; set /a S&#91;28&#93;=0x9c &amp; set /a S&#91;29&#93;=0xa4<br />set /a S&#91;30&#93;=0x72 &amp; set /a S&#91;31&#93;=0xc0 &amp; set /a S&#91;32&#93;=0xb7 &amp; set /a S&#91;33&#93;=0xfd &amp; set /a S&#91;34&#93;=0x93<br />set /a S&#91;35&#93;=0x26 &amp; set /a S&#91;36&#93;=0x36 &amp; set /a S&#91;37&#93;=0x3f &amp; set /a S&#91;38&#93;=0xf7 &amp; set /a S&#91;39&#93;=0xcc<br />set /a S&#91;40&#93;=0x34 &amp; set /a S&#91;41&#93;=0xa5 &amp; set /a S&#91;42&#93;=0xe5 &amp; set /a S&#91;43&#93;=0xf1 &amp; set /a S&#91;44&#93;=0x71<br />set /a S&#91;45&#93;=0xd8 &amp; set /a S&#91;46&#93;=0x31 &amp; set /a S&#91;47&#93;=0x15 &amp; set /a S&#91;48&#93;=0x04 &amp; set /a S&#91;49&#93;=0xc7<br />set /a S&#91;50&#93;=0x23 &amp; set /a S&#91;51&#93;=0xc3 &amp; set /a S&#91;52&#93;=0x18 &amp; set /a S&#91;53&#93;=0x96 &amp; set /a S&#91;54&#93;=0x05<br />set /a S&#91;55&#93;=0x9a &amp; set /a S&#91;56&#93;=0x07 &amp; set /a S&#91;57&#93;=0x12 &amp; set /a S&#91;58&#93;=0x80 &amp; set /a S&#91;59&#93;=0xe2<br />set /a S&#91;60&#93;=0xeb &amp; set /a S&#91;61&#93;=0x27 &amp; set /a S&#91;62&#93;=0xb2 &amp; set /a S&#91;63&#93;=0x75 &amp; set /a S&#91;64&#93;=0x09<br />set /a S&#91;65&#93;=0x83 &amp; set /a S&#91;66&#93;=0x2c &amp; set /a S&#91;67&#93;=0x1a &amp; set /a S&#91;68&#93;=0x1b &amp; set /a S&#91;69&#93;=0x6e<br />set /a S&#91;70&#93;=0x5a &amp; set /a S&#91;71&#93;=0xa0 &amp; set /a S&#91;72&#93;=0x52 &amp; set /a S&#91;73&#93;=0x3b &amp; set /a S&#91;74&#93;=0xd6<br />set /a S&#91;75&#93;=0xb3 &amp; set /a S&#91;76&#93;=0x29 &amp; set /a S&#91;77&#93;=0xe3 &amp; set /a S&#91;78&#93;=0x2f &amp; set /a S&#91;79&#93;=0x84<br />set /a S&#91;80&#93;=0x53 &amp; set /a S&#91;81&#93;=0xd1 &amp; set /a S&#91;82&#93;=0x00 &amp; set /a S&#91;83&#93;=0xed &amp; set /a S&#91;84&#93;=0x20<br />set /a S&#91;85&#93;=0xfc &amp; set /a S&#91;86&#93;=0xb1 &amp; set /a S&#91;87&#93;=0x5b &amp; set /a S&#91;88&#93;=0x6a &amp; set /a S&#91;89&#93;=0xcb<br />set /a S&#91;90&#93;=0xbe &amp; set /a S&#91;91&#93;=0x39 &amp; set /a S&#91;92&#93;=0x4a &amp; set /a S&#91;93&#93;=0x4c &amp; set /a S&#91;94&#93;=0x58<br />set /a S&#91;95&#93;=0xcf &amp; set /a S&#91;96&#93;=0xd0 &amp; set /a S&#91;97&#93;=0xef &amp; set /a S&#91;98&#93;=0xaa &amp; set /a S&#91;99&#93;=0xfb<br />)<br /><br />set /a i=i-1<br />if !i! gtr 0 goto :loop2<br /><br />set t1=%time%<br /><br />for /F &quot;tokens=1-8 delims=:.,&quot; %%a in (&quot;!t0: =0!:!t1: =0!&quot;) do set /a &quot;a=(((1%%e-1%%a)*60)+1%%f-1%%b)*6000+1%%g%%h-1%%c%%d, a+=(a&gt;&gt;31) &amp; 8640000&quot;<br /><br />echo Execution time: %a%<br /><br />::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br /><br />set t0=%time%<br /><br />For /L %%i in (1,1,100) do (<br /><br />set /a RC&#91;1&#93;=0x01 &amp; set /a RC&#91;2&#93;=0x02 &amp; set /a RC&#91;3&#93;=0x04 &amp; set /a RC&#91;4&#93;=0x08 &amp; set /a RC&#91;5&#93;=0x10<br />set /a RC&#91;6&#93;=0x20 &amp; set /a RC&#91;7&#93;=0x40 &amp; set /a RC&#91;8&#93;=0x80 &amp; set /a RC&#91;9&#93;=0x1b &amp; set /a RC&#91;10&#93;=0x36<br /><br />:: Define pre-computed Rijndael S-box values for SubBytes() function and key scheduler algorithm<br />set /a S&#91;0&#93;=0x63 &amp; set /a S&#91;1&#93;=0x7c &amp; set /a S&#91;2&#93;=0x77 &amp; set /a S&#91;3&#93;=0x7b &amp; set /a S&#91;4&#93;=0xf2<br />set /a S&#91;5&#93;=0x6b &amp; set /a S&#91;6&#93;=0x6f &amp; set /a S&#91;7&#93;=0xc5 &amp; set /a S&#91;8&#93;=0x30 &amp; set /a S&#91;9&#93;=0x01<br />set /a S&#91;10&#93;=0x67 &amp; set /a S&#91;11&#93;=0x2b &amp; set /a S&#91;12&#93;=0xfe &amp; set /a S&#91;13&#93;=0xd7 &amp; set /a S&#91;14&#93;=0xab<br />set /a S&#91;15&#93;=0x76 &amp; set /a S&#91;16&#93;=0xca &amp; set /a S&#91;17&#93;=0x82 &amp; set /a S&#91;18&#93;=0xc9 &amp; set /a S&#91;19&#93;=0x7d<br />set /a S&#91;20&#93;=0xfa &amp; set /a S&#91;21&#93;=0x59 &amp; set /a S&#91;22&#93;=0x47 &amp; set /a S&#91;23&#93;=0xf0 &amp; set /a S&#91;24&#93;=0xad<br />set /a S&#91;25&#93;=0xd4 &amp; set /a S&#91;26&#93;=0xa2 &amp; set /a S&#91;27&#93;=0xaf &amp; set /a S&#91;28&#93;=0x9c &amp; set /a S&#91;29&#93;=0xa4<br />set /a S&#91;30&#93;=0x72 &amp; set /a S&#91;31&#93;=0xc0 &amp; set /a S&#91;32&#93;=0xb7 &amp; set /a S&#91;33&#93;=0xfd &amp; set /a S&#91;34&#93;=0x93<br />set /a S&#91;35&#93;=0x26 &amp; set /a S&#91;36&#93;=0x36 &amp; set /a S&#91;37&#93;=0x3f &amp; set /a S&#91;38&#93;=0xf7 &amp; set /a S&#91;39&#93;=0xcc<br />set /a S&#91;40&#93;=0x34 &amp; set /a S&#91;41&#93;=0xa5 &amp; set /a S&#91;42&#93;=0xe5 &amp; set /a S&#91;43&#93;=0xf1 &amp; set /a S&#91;44&#93;=0x71<br />set /a S&#91;45&#93;=0xd8 &amp; set /a S&#91;46&#93;=0x31 &amp; set /a S&#91;47&#93;=0x15 &amp; set /a S&#91;48&#93;=0x04 &amp; set /a S&#91;49&#93;=0xc7<br />set /a S&#91;50&#93;=0x23 &amp; set /a S&#91;51&#93;=0xc3 &amp; set /a S&#91;52&#93;=0x18 &amp; set /a S&#91;53&#93;=0x96 &amp; set /a S&#91;54&#93;=0x05<br />set /a S&#91;55&#93;=0x9a &amp; set /a S&#91;56&#93;=0x07 &amp; set /a S&#91;57&#93;=0x12 &amp; set /a S&#91;58&#93;=0x80 &amp; set /a S&#91;59&#93;=0xe2<br />set /a S&#91;60&#93;=0xeb &amp; set /a S&#91;61&#93;=0x27 &amp; set /a S&#91;62&#93;=0xb2 &amp; set /a S&#91;63&#93;=0x75 &amp; set /a S&#91;64&#93;=0x09<br />set /a S&#91;65&#93;=0x83 &amp; set /a S&#91;66&#93;=0x2c &amp; set /a S&#91;67&#93;=0x1a &amp; set /a S&#91;68&#93;=0x1b &amp; set /a S&#91;69&#93;=0x6e<br />set /a S&#91;70&#93;=0x5a &amp; set /a S&#91;71&#93;=0xa0 &amp; set /a S&#91;72&#93;=0x52 &amp; set /a S&#91;73&#93;=0x3b &amp; set /a S&#91;74&#93;=0xd6<br />set /a S&#91;75&#93;=0xb3 &amp; set /a S&#91;76&#93;=0x29 &amp; set /a S&#91;77&#93;=0xe3 &amp; set /a S&#91;78&#93;=0x2f &amp; set /a S&#91;79&#93;=0x84<br />set /a S&#91;80&#93;=0x53 &amp; set /a S&#91;81&#93;=0xd1 &amp; set /a S&#91;82&#93;=0x00 &amp; set /a S&#91;83&#93;=0xed &amp; set /a S&#91;84&#93;=0x20<br />set /a S&#91;85&#93;=0xfc &amp; set /a S&#91;86&#93;=0xb1 &amp; set /a S&#91;87&#93;=0x5b &amp; set /a S&#91;88&#93;=0x6a &amp; set /a S&#91;89&#93;=0xcb<br />set /a S&#91;90&#93;=0xbe &amp; set /a S&#91;91&#93;=0x39 &amp; set /a S&#91;92&#93;=0x4a &amp; set /a S&#91;93&#93;=0x4c &amp; set /a S&#91;94&#93;=0x58<br />set /a S&#91;95&#93;=0xcf &amp; set /a S&#91;96&#93;=0xd0 &amp; set /a S&#91;97&#93;=0xef &amp; set /a S&#91;98&#93;=0xaa &amp; set /a S&#91;99&#93;=0xfb<br /><br /><br />)<br /><br />set t1=%time%<br /><br />for /F &quot;tokens=1-8 delims=:.,&quot; %%a in (&quot;!t0: =0!:!t1: =0!&quot;) do set /a &quot;a=(((1%%e-1%%a)*60)+1%%f-1%%b)*6000+1%%g%%h-1%%c%%d, a+=(a&gt;&gt;31) &amp; 8640000&quot;<br /><br />echo Execution time: %a%<br /><br />:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br /><br /><br />set t0=%time%<br /><br />For /L %%i in (1,1,100) do (<br /><br />set /a RC&#91;1&#93;=0x01, RC&#91;2&#93;=0x02, RC&#91;3&#93;=0x04, RC&#91;4&#93;=0x08, RC&#91;5&#93;=0x10<br />set /a RC&#91;6&#93;=0x20, RC&#91;7&#93;=0x40, RC&#91;8&#93;=0x80, RC&#91;9&#93;=0x1b, RC&#91;10&#93;=0x36<br /><br />:: Define pre-computed Rijndael S-box values for SubBytes() function and key scheduler algorithm<br />set /a S&#91;0&#93;=0x63, S&#91;1&#93;=0x7c, S&#91;2&#93;=0x77, S&#91;3&#93;=0x7b, S&#91;4&#93;=0xf2<br />set /a S&#91;5&#93;=0x6b, S&#91;6&#93;=0x6f, S&#91;7&#93;=0xc5, S&#91;8&#93;=0x30, S&#91;9&#93;=0x01<br />set /a S&#91;10&#93;=0x67, S&#91;11&#93;=0x2b, S&#91;12&#93;=0xfe, S&#91;13&#93;=0xd7, S&#91;14&#93;=0xab<br />set /a S&#91;15&#93;=0x76, S&#91;16&#93;=0xca, S&#91;17&#93;=0x82, S&#91;18&#93;=0xc9, S&#91;19&#93;=0x7d<br />set /a S&#91;20&#93;=0xfa, S&#91;21&#93;=0x59, S&#91;22&#93;=0x47, S&#91;23&#93;=0xf0, S&#91;24&#93;=0xad<br />set /a S&#91;25&#93;=0xd4, S&#91;26&#93;=0xa2, S&#91;27&#93;=0xaf, S&#91;28&#93;=0x9c, S&#91;29&#93;=0xa4<br />set /a S&#91;30&#93;=0x72, S&#91;31&#93;=0xc0, S&#91;32&#93;=0xb7, S&#91;33&#93;=0xfd, S&#91;34&#93;=0x93<br />set /a S&#91;35&#93;=0x26, S&#91;36&#93;=0x36, S&#91;37&#93;=0x3f, S&#91;38&#93;=0xf7, S&#91;39&#93;=0xcc<br />set /a S&#91;40&#93;=0x34, S&#91;41&#93;=0xa5, S&#91;42&#93;=0xe5, S&#91;43&#93;=0xf1, S&#91;44&#93;=0x71<br />set /a S&#91;45&#93;=0xd8, S&#91;46&#93;=0x31, S&#91;47&#93;=0x15, S&#91;48&#93;=0x04, S&#91;49&#93;=0xc7<br />set /a S&#91;50&#93;=0x23, S&#91;51&#93;=0xc3, S&#91;52&#93;=0x18, S&#91;53&#93;=0x96, S&#91;54&#93;=0x05<br />set /a S&#91;55&#93;=0x9a, S&#91;56&#93;=0x07, S&#91;57&#93;=0x12, S&#91;58&#93;=0x80, S&#91;59&#93;=0xe2<br />set /a S&#91;60&#93;=0xeb, S&#91;61&#93;=0x27, S&#91;62&#93;=0xb2, S&#91;63&#93;=0x75, S&#91;64&#93;=0x09<br />set /a S&#91;65&#93;=0x83, S&#91;66&#93;=0x2c, S&#91;67&#93;=0x1a, S&#91;68&#93;=0x1b, S&#91;69&#93;=0x6e<br />set /a S&#91;70&#93;=0x5a, S&#91;71&#93;=0xa0, S&#91;72&#93;=0x52, S&#91;73&#93;=0x3b, S&#91;74&#93;=0xd6<br />set /a S&#91;75&#93;=0xb3, S&#91;76&#93;=0x29, S&#91;77&#93;=0xe3, S&#91;78&#93;=0x2f, S&#91;79&#93;=0x84<br />set /a S&#91;80&#93;=0x53, S&#91;81&#93;=0xd1, S&#91;82&#93;=0x00, S&#91;83&#93;=0xed, S&#91;84&#93;=0x20<br />set /a S&#91;85&#93;=0xfc, S&#91;86&#93;=0xb1, S&#91;87&#93;=0x5b, S&#91;88&#93;=0x6a, S&#91;89&#93;=0xcb<br />set /a S&#91;90&#93;=0xbe, S&#91;91&#93;=0x39, S&#91;92&#93;=0x4a, S&#91;93&#93;=0x4c, S&#91;94&#93;=0x58<br />set /a S&#91;95&#93;=0xcf, S&#91;96&#93;=0xd0, S&#91;97&#93;=0xef, S&#91;98&#93;=0xaa, S&#91;99&#93;=0xfb<br /><br /><br />)<br /><br />set t1=%time%<br /><br />for /F &quot;tokens=1-8 delims=:.,&quot; %%a in (&quot;!t0: =0!:!t1: =0!&quot;) do set /a &quot;a=(((1%%e-1%%a)*60)+1%%f-1%%b)*6000+1%%g%%h-1%%c%%d, a+=(a&gt;&gt;31) &amp; 8640000&quot;<br /><br />echo Execution time: %a%<br /><br />:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br /><br />set t0=%time%<br /><br />For /L %%i in (1,1,100) do (<br /><br />set /a RC&#91;1&#93;=0x01, RC&#91;2&#93;=0x02, RC&#91;3&#93;=0x04, RC&#91;4&#93;=0x08, RC&#91;5&#93;=0x10, RC&#91;6&#93;=0x20, RC&#91;7&#93;=0x40, RC&#91;8&#93;=0x80, RC&#91;9&#93;=0x1b, RC&#91;10&#93;=0x36<br /><br />:: Define pre-computed Rijndael S-box values for SubBytes() function and key scheduler algorithm<br />set /a S&#91;0&#93;=0x63, S&#91;1&#93;=0x7c, S&#91;2&#93;=0x77, S&#91;3&#93;=0x7b, S&#91;4&#93;=0xf2, S&#91;5&#93;=0x6b, S&#91;6&#93;=0x6f, S&#91;7&#93;=0xc5, S&#91;8&#93;=0x30, S&#91;9&#93;=0x01<br />set /a S&#91;10&#93;=0x67, S&#91;11&#93;=0x2b, S&#91;12&#93;=0xfe, S&#91;13&#93;=0xd7, S&#91;14&#93;=0xab, S&#91;15&#93;=0x76, S&#91;16&#93;=0xca, S&#91;17&#93;=0x82, S&#91;18&#93;=0xc9, S&#91;19&#93;=0x7d<br />set /a S&#91;20&#93;=0xfa, S&#91;21&#93;=0x59, S&#91;22&#93;=0x47, S&#91;23&#93;=0xf0, S&#91;24&#93;=0xad, S&#91;25&#93;=0xd4, S&#91;26&#93;=0xa2, S&#91;27&#93;=0xaf, S&#91;28&#93;=0x9c, S&#91;29&#93;=0xa4<br />set /a S&#91;30&#93;=0x72, S&#91;31&#93;=0xc0, S&#91;32&#93;=0xb7, S&#91;33&#93;=0xfd, S&#91;34&#93;=0x93, S&#91;35&#93;=0x26, S&#91;36&#93;=0x36, S&#91;37&#93;=0x3f, S&#91;38&#93;=0xf7, S&#91;39&#93;=0xcc<br />set /a S&#91;40&#93;=0x34, S&#91;41&#93;=0xa5, S&#91;42&#93;=0xe5, S&#91;43&#93;=0xf1, S&#91;44&#93;=0x71, S&#91;45&#93;=0xd8, S&#91;46&#93;=0x31, S&#91;47&#93;=0x15, S&#91;48&#93;=0x04, S&#91;49&#93;=0xc7<br />set /a S&#91;50&#93;=0x23, S&#91;51&#93;=0xc3, S&#91;52&#93;=0x18, S&#91;53&#93;=0x96, S&#91;54&#93;=0x05, S&#91;55&#93;=0x9a, S&#91;56&#93;=0x07, S&#91;57&#93;=0x12, S&#91;58&#93;=0x80, S&#91;59&#93;=0xe2<br />set /a S&#91;60&#93;=0xeb, S&#91;61&#93;=0x27, S&#91;62&#93;=0xb2, S&#91;63&#93;=0x75, S&#91;64&#93;=0x09, S&#91;65&#93;=0x83, S&#91;66&#93;=0x2c, S&#91;67&#93;=0x1a, S&#91;68&#93;=0x1b, S&#91;69&#93;=0x6e<br />set /a S&#91;70&#93;=0x5a, S&#91;71&#93;=0xa0, S&#91;72&#93;=0x52, S&#91;73&#93;=0x3b, S&#91;74&#93;=0xd6, S&#91;75&#93;=0xb3, S&#91;76&#93;=0x29, S&#91;77&#93;=0xe3, S&#91;78&#93;=0x2f, S&#91;79&#93;=0x84<br />set /a S&#91;80&#93;=0x53, S&#91;81&#93;=0xd1, S&#91;82&#93;=0x00, S&#91;83&#93;=0xed, S&#91;84&#93;=0x20, S&#91;85&#93;=0xfc, S&#91;86&#93;=0xb1, S&#91;87&#93;=0x5b, S&#91;88&#93;=0x6a, S&#91;89&#93;=0xcb<br />set /a S&#91;90&#93;=0xbe, S&#91;91&#93;=0x39, S&#91;92&#93;=0x4a, S&#91;93&#93;=0x4c, S&#91;94&#93;=0x58, S&#91;95&#93;=0xcf, S&#91;96&#93;=0xd0, S&#91;97&#93;=0xef, S&#91;98&#93;=0xaa, S&#91;99&#93;=0xfb<br /><br /><br />)<br /><br />set t1=%time%<br /><br />for /F &quot;tokens=1-8 delims=:.,&quot; %%a in (&quot;!t0: =0!:!t1: =0!&quot;) do set /a &quot;a=(((1%%e-1%%a)*60)+1%%f-1%%b)*6000+1%%g%%h-1%%c%%d, a+=(a&gt;&gt;31) &amp; 8640000&quot;<br /><br />echo Execution time: %a%<br /><br />:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br />rem test no spawn ambient<br /><br />for /f &quot;delims==&quot; %%f in ('set s&#91;') do set %%f=<br /><br />echo main thread: echo S&#91;50&#93;:!S&#91;50&#93;!<br /><br />set t0=%time%<br /><br />For /L %%i in (1,1,10) do (start /B /WAIT cmd /c AEScore_set_part.bat)<br /><br />set t1=%time%<br /><br />for /F &quot;tokens=1-8 delims=:.,&quot; %%a in (&quot;!t0: =0!:!t1: =0!&quot;) do set /a &quot;a=(((1%%e-1%%a)*60)+1%%f-1%%b)*6000+1%%g%%h-1%%c%%d, a+=(a&gt;&gt;31) &amp; 8640000&quot;<br /><br />echo Ambient recreation: Execution time: %a%<br /><br /><br />goto :next_test1<br /><br />rem AEScore_set_part.bat:<br /><br />@echo off&nbsp; &amp; setlocal EnableDelayedExpansion<br /><br />For /L %%j in (1,1,100) do (<br /><br />set /a RC&#91;1&#93;=0x01, RC&#91;2&#93;=0x02, RC&#91;3&#93;=0x04, RC&#91;4&#93;=0x08, RC&#91;5&#93;=0x10, RC&#91;6&#93;=0x20, RC&#91;7&#93;=0x40, RC&#91;8&#93;=0x80, RC&#91;9&#93;=0x1b, RC&#91;10&#93;=0x36<br /><br />:: Define pre-computed Rijndael S-box values for SubBytes() function and key scheduler algorithm<br />set /a S&#91;0&#93;=0x63, S&#91;1&#93;=0x7c, S&#91;2&#93;=0x77, S&#91;3&#93;=0x7b, S&#91;4&#93;=0xf2, S&#91;5&#93;=0x6b, S&#91;6&#93;=0x6f, S&#91;7&#93;=0xc5, S&#91;8&#93;=0x30, S&#91;9&#93;=0x01<br />set /a S&#91;10&#93;=0x67, S&#91;11&#93;=0x2b, S&#91;12&#93;=0xfe, S&#91;13&#93;=0xd7, S&#91;14&#93;=0xab, S&#91;15&#93;=0x76, S&#91;16&#93;=0xca, S&#91;17&#93;=0x82, S&#91;18&#93;=0xc9, S&#91;19&#93;=0x7d<br />set /a S&#91;20&#93;=0xfa, S&#91;21&#93;=0x59, S&#91;22&#93;=0x47, S&#91;23&#93;=0xf0, S&#91;24&#93;=0xad, S&#91;25&#93;=0xd4, S&#91;26&#93;=0xa2, S&#91;27&#93;=0xaf, S&#91;28&#93;=0x9c, S&#91;29&#93;=0xa4<br />set /a S&#91;30&#93;=0x72, S&#91;31&#93;=0xc0, S&#91;32&#93;=0xb7, S&#91;33&#93;=0xfd, S&#91;34&#93;=0x93, S&#91;35&#93;=0x26, S&#91;36&#93;=0x36, S&#91;37&#93;=0x3f, S&#91;38&#93;=0xf7, S&#91;39&#93;=0xcc<br />set /a S&#91;40&#93;=0x34, S&#91;41&#93;=0xa5, S&#91;42&#93;=0xe5, S&#91;43&#93;=0xf1, S&#91;44&#93;=0x71, S&#91;45&#93;=0xd8, S&#91;46&#93;=0x31, S&#91;47&#93;=0x15, S&#91;48&#93;=0x04, S&#91;49&#93;=0xc7<br />set /a S&#91;50&#93;=0x23, S&#91;51&#93;=0xc3, S&#91;52&#93;=0x18, S&#91;53&#93;=0x96, S&#91;54&#93;=0x05, S&#91;55&#93;=0x9a, S&#91;56&#93;=0x07, S&#91;57&#93;=0x12, S&#91;58&#93;=0x80, S&#91;59&#93;=0xe2<br />set /a S&#91;60&#93;=0xeb, S&#91;61&#93;=0x27, S&#91;62&#93;=0xb2, S&#91;63&#93;=0x75, S&#91;64&#93;=0x09, S&#91;65&#93;=0x83, S&#91;66&#93;=0x2c, S&#91;67&#93;=0x1a, S&#91;68&#93;=0x1b, S&#91;69&#93;=0x6e<br />set /a S&#91;70&#93;=0x5a, S&#91;71&#93;=0xa0, S&#91;72&#93;=0x52, S&#91;73&#93;=0x3b, S&#91;74&#93;=0xd6, S&#91;75&#93;=0xb3, S&#91;76&#93;=0x29, S&#91;77&#93;=0xe3, S&#91;78&#93;=0x2f, S&#91;79&#93;=0x84<br />set /a S&#91;80&#93;=0x53, S&#91;81&#93;=0xd1, S&#91;82&#93;=0x00, S&#91;83&#93;=0xed, S&#91;84&#93;=0x20, S&#91;85&#93;=0xfc, S&#91;86&#93;=0xb1, S&#91;87&#93;=0x5b, S&#91;88&#93;=0x6a, S&#91;89&#93;=0xcb<br />set /a S&#91;90&#93;=0xbe, S&#91;91&#93;=0x39, S&#91;92&#93;=0x4a, S&#91;93&#93;=0x4c, S&#91;94&#93;=0x58, S&#91;95&#93;=0xcf, S&#91;96&#93;=0xd0, S&#91;97&#93;=0xef, S&#91;98&#93;=0xaa, S&#91;99&#93;=0xfb<br /><br /><br />)<br /><br />rem use of array<br /><br />set lectures=10000<br /><br />For /L %%j in (1,1,%lectures%) do ( echo !S&#91;50&#93;! &gt; nul )<br /><br />set /a &quot;r=(%random% * %random%) %% 10&quot;<br /><br />if !r! lss 2 echo !r! child s&#91;50&#93;:!S&#91;50&#93;!<br /><br /><br />:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br />:next_test1<br /><br />rem test spawn ambient<br /><br />set t0=%time%<br /><br />(<br />set /a RC&#91;1&#93;=0x01, RC&#91;2&#93;=0x02, RC&#91;3&#93;=0x04, RC&#91;4&#93;=0x08, RC&#91;5&#93;=0x10, RC&#91;6&#93;=0x20, RC&#91;7&#93;=0x40, RC&#91;8&#93;=0x80, RC&#91;9&#93;=0x1b, RC&#91;10&#93;=0x36<br /><br />:: Define pre-computed Rijndael S-box values for SubBytes() function and key scheduler algorithm<br />set /a S&#91;0&#93;=0x63, S&#91;1&#93;=0x7c, S&#91;2&#93;=0x77, S&#91;3&#93;=0x7b, S&#91;4&#93;=0xf2, S&#91;5&#93;=0x6b, S&#91;6&#93;=0x6f, S&#91;7&#93;=0xc5, S&#91;8&#93;=0x30, S&#91;9&#93;=0x01<br />set /a S&#91;10&#93;=0x67, S&#91;11&#93;=0x2b, S&#91;12&#93;=0xfe, S&#91;13&#93;=0xd7, S&#91;14&#93;=0xab, S&#91;15&#93;=0x76, S&#91;16&#93;=0xca, S&#91;17&#93;=0x82, S&#91;18&#93;=0xc9, S&#91;19&#93;=0x7d<br />set /a S&#91;20&#93;=0xfa, S&#91;21&#93;=0x59, S&#91;22&#93;=0x47, S&#91;23&#93;=0xf0, S&#91;24&#93;=0xad, S&#91;25&#93;=0xd4, S&#91;26&#93;=0xa2, S&#91;27&#93;=0xaf, S&#91;28&#93;=0x9c, S&#91;29&#93;=0xa4<br />set /a S&#91;30&#93;=0x72, S&#91;31&#93;=0xc0, S&#91;32&#93;=0xb7, S&#91;33&#93;=0xfd, S&#91;34&#93;=0x93, S&#91;35&#93;=0x26, S&#91;36&#93;=0x36, S&#91;37&#93;=0x3f, S&#91;38&#93;=0xf7, S&#91;39&#93;=0xcc<br />set /a S&#91;40&#93;=0x34, S&#91;41&#93;=0xa5, S&#91;42&#93;=0xe5, S&#91;43&#93;=0xf1, S&#91;44&#93;=0x71, S&#91;45&#93;=0xd8, S&#91;46&#93;=0x31, S&#91;47&#93;=0x15, S&#91;48&#93;=0x04, S&#91;49&#93;=0xc7<br />set /a S&#91;50&#93;=0x23, S&#91;51&#93;=0xc3, S&#91;52&#93;=0x18, S&#91;53&#93;=0x96, S&#91;54&#93;=0x05, S&#91;55&#93;=0x9a, S&#91;56&#93;=0x07, S&#91;57&#93;=0x12, S&#91;58&#93;=0x80, S&#91;59&#93;=0xe2<br />set /a S&#91;60&#93;=0xeb, S&#91;61&#93;=0x27, S&#91;62&#93;=0xb2, S&#91;63&#93;=0x75, S&#91;64&#93;=0x09, S&#91;65&#93;=0x83, S&#91;66&#93;=0x2c, S&#91;67&#93;=0x1a, S&#91;68&#93;=0x1b, S&#91;69&#93;=0x6e<br />set /a S&#91;70&#93;=0x5a, S&#91;71&#93;=0xa0, S&#91;72&#93;=0x52, S&#91;73&#93;=0x3b, S&#91;74&#93;=0xd6, S&#91;75&#93;=0xb3, S&#91;76&#93;=0x29, S&#91;77&#93;=0xe3, S&#91;78&#93;=0x2f, S&#91;79&#93;=0x84<br />set /a S&#91;80&#93;=0x53, S&#91;81&#93;=0xd1, S&#91;82&#93;=0x00, S&#91;83&#93;=0xed, S&#91;84&#93;=0x20, S&#91;85&#93;=0xfc, S&#91;86&#93;=0xb1, S&#91;87&#93;=0x5b, S&#91;88&#93;=0x6a, S&#91;89&#93;=0xcb<br />set /a S&#91;90&#93;=0xbe, S&#91;91&#93;=0x39, S&#91;92&#93;=0x4a, S&#91;93&#93;=0x4c, S&#91;94&#93;=0x58, S&#91;95&#93;=0xcf, S&#91;96&#93;=0xd0, S&#91;97&#93;=0xef, S&#91;98&#93;=0xaa, S&#91;99&#93;=0xfb<br />)<br /><br />echo main thread: echo S&#91;50&#93;:!S&#91;50&#93;!<br /><br />For /L %%i in (1,1,10) do (start /B /WAIT cmd /c AEScore_set_part_noset.bat)<br /><br />set t1=%time%<br /><br />for /F &quot;tokens=1-8 delims=:.,&quot; %%a in (&quot;!t0: =0!:!t1: =0!&quot;) do set /a &quot;a=(((1%%e-1%%a)*60)+1%%f-1%%b)*6000+1%%g%%h-1%%c%%d, a+=(a&gt;&gt;31) &amp; 8640000&quot;<br /><br />echo Ambient trasmission: Execution time: %a%<br /><br />goto :next_test2<br /><br />AEScore_set_part_noset.bat:<br /><br />@echo off&nbsp; &amp; setlocal EnableDelayedExpansion<br /><br />set lectures=10000<br /><br />For /L %%j in (1,1,%lectures%) do ( echo !S&#91;50&#93;! &gt; nul )<br /><br />set /a &quot;r=(%random% * %random%) %% 10&quot;<br /><br />if !r! lss 2 echo !r! child s&#91;50&#93;:!S&#91;50&#93;!<br /><br />:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br />:next_test2<br /><br />rem work in progress<br /></code></pre></div><br /><br />result:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Execution time: 123<br />Execution time: 140<br />Execution time: 106<br />Execution time: 98<br />Execution time: 63<br />Execution time: 50<br />Execution time: 47<br />main thread: echo S&#91;50&#93;:<br />child s&#91;50&#93;:35<br />child s&#91;50&#93;:35<br />child s&#91;50&#93;:35<br />child s&#91;50&#93;:35<br />Ambient recreation: Execution time: 1907<br />main thread: echo S&#91;50&#93;:35<br />child s&#91;50&#93;:35<br />child s&#91;50&#93;:35<br />child s&#91;50&#93;:35<br />child s&#91;50&#93;:35<br />Ambient trasmission: Execution time: 1507<br /></code></pre></div><br /><br />Einstein1969</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29750" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29750">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search6f26.html?author_id=4985&amp;sr=posts">104</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 25 Jul 2013 19:00</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29750">
+
+						<h3 ><a href="#p29750">Re: Multi-process Advanced Encryption Standard (AES)</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingfab3.html?mode=quote&amp;f=3&amp;p=29750" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic34cb.html?p=29750#p29750" onclick="prompt('Message #15',this.href); return false;">#15</a></span> 
+									<a class="unread" href="viewtopic34cb.html?p=29750#p29750" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistc2fd.html?mode=viewprofile&amp;u=4985" class="username">Magialisk</a></strong> &raquo; </span>07 Nov 2013 16:16
+			</p>
+			
+			
+			
+			<div class="content">Einstein, thank you very much for that.  I'm going to need to take some time tonight and really digest it, as it looks like you've made some significant gains there.<br /><br />In the meantime, I'll post some of the optimizations I've made myself to the code:<br />First of all I have good news and bad news.  The bad news is that I lied last night.  My PIDs were not running for only 0.10-0.12s each.  I calculated that in my head too quickly and obviously borked the math, probably counting several PIDs as one or something.  It turns out an individual PID, processing 128-bits of data, runs for between 0.71-0.81s with an average time of 75.475ms.  <br /><br />The good news is that Antonio's comment about macros taking longer to run than direct code led me to discover a huge inefficiency in my routine.  I've completely removed the Num2Hex macro from the code and replaced it with direct code.  However, I realized while doing this that I was using Num2Hex to generate an 8-digit hex value and then stripping off 6 leading zeroes.  Obviously a huge waste of time so it now creates the required 2-digit hex value directly instead.<br /><br />Re-testing my PID speed they now run for between 0.61-0.72s with an average time of 64.125ms.  Shaving over a tenth of a second (15%) is a huge difference.  That's what I get for having terribly inefficient code the first time around I guess <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><br />Beyond that &quot;easy&quot; change, I also finally got around to testing an algorithmic change I had been wanting to make.  Instead of running SubBytes() and ShiftRows() as two separate operations, which requires traversing the entire state matrix twice, I re-wrote the algorithm to perform these two steps as one operation.  Each element of the state matrix gets replaced by the SubBytes() output of the byte that <span style="text-decoration: underline">would have later</span> been shifted into its place.  Doing it this way requires using a temporary state matrix to hold intermediate results, however that ended up being advantageous as well.  My MixColumns() function was already using a temporary state matrix, and at the end of that function copying the data back from the temp into the original state.  With the changes above, MixCloumns can operate directly on the temporary matrix created in the first step, and output back into the original state matrix instead of it's own temporary, removing the need for an extra copy operation at the end of the function!<br /><br />All in all this removed one nested-FOR traversal of the state matrix as well as at least 22 'set' operations per round.  Re-timing the code I now see between 0.54-0.61s per PID, with an average of 56.387ms.  That's another 12% savings!  Due to this success I decided to do something similar with the MixColumns() and AddRoundKey() functions, combining them into a single loop.  Re-timing the code it is now down to 0.51-0.54s per PID, with an average of 52.735ms, a further reduction of ~6.5%.<br /><br />At this point I think the aescore (child) code is pretty much tweaked out, and there are few if any significant performance gains left to be had.  Even the variability has decreased greatly, what used to be over a 0.1s spread between worst and best times is down to ~0.03s.  The code is much more tight and efficient, but of course I still welcome any suggestions!   I will look very closely at what you're suggesting Einstein as your code could improve the efficiency of the main controller program.  First I need to port all of my above changes into the decryption portion of aescore, as up to now I've only been tweaking the encryption side.  Once I get that done I'll post the modified aescore code back over the first posts and change focus to the main controller.  Thanks again!</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting0d47.html?mode=reply&amp;f=3&amp;t=5048" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicfb32.html?f=3&amp;t=5048&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5048">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			52 posts
+							<ul>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopic0f37.html?f=3&amp;t=5048&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopic6a9c.html?f=3&amp;t=5048&amp;start=30" role="button">3</a></li>
+				<li><a class="button" href="viewtopic39b0-2.html?f=3&amp;t=5048&amp;start=45" role="button">4</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic0f37.html?f=3&amp;t=5048&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cronc6bf.gif?cron_type=cron.task.text_reparser.user_signature" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5048 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:21:17 GMT -->
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1751&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:05:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; So, I am confused by this sort routine</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>So, I am confused by this sort routine</h2>
+		<p><a href="viewtopicc53d.html?f=3&amp;t=1751">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1751</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>So, I am confused by this sort routine</h3>
+				<div class="date">Posted: <strong>05 Apr 2011 21:01</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content">Source :<a href="../DtCodeBatchFiles.html#Batch.SortTextWithNumbers" class="postlink">Sorting text with numbers - Sorting that handles numbers as numbers not text</a><br /><br />So , the little help text says<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>...<br />test &#91;n&#93;<br /><br />&nbsp; n&nbsp; &nbsp; &nbsp;Specifies the character number, n, to<br />&nbsp; &nbsp; &nbsp; &nbsp; begin each comparison.&nbsp; 3 indicates that<br />&nbsp; &nbsp; &nbsp; &nbsp; each comparison should begin at the 3rd<br />&nbsp; &nbsp; &nbsp; &nbsp; character in each line.&nbsp; Lines with fewer<br />&nbsp; &nbsp; &nbsp; &nbsp; than n characters collate before other lines.<br />&nbsp; &nbsp; &nbsp; &nbsp; By default comparisons start at the first<br />&nbsp; &nbsp; &nbsp; &nbsp; character in each line.<br /></code></pre></div><br /><br />It says &quot;n&quot; specifies the position of character to start sorting. So let's say we have this in a file<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>abc10def3<br />abc900def4<br />abc29def3<br />ab2234defa<br />ab2234defv<br /></code></pre></div><br /><br />without specifying the &quot;n&quot; character, it gives supposedly correct results<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\work&gt;type file | test.bat<br />ab2234defa&nbsp; &lt;== since &quot;2&quot; is at 3rd position<br />ab2234defv&nbsp; &lt;=== since &quot;v&quot; is greater than &quot;a&quot; at the last position<br />abc10def3<br />abc29def3&nbsp; &lt;=== the rest are at 4th position<br />abc900def4<br /></code></pre></div><br /><br />However, when tested with n = 4 for example<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\work&gt;type file | test.bat 4<br />abc10def3<br />abc900def4 &lt;=== why is 900 here ie, greater than &quot;29&quot; below? <br />abc29def3<br />ab2234defa<br />ab2234defv<br /><br /></code></pre></div><br />this gives incorrect results, since starting from 4th position, these should be the correct result<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>abc10def3 &lt;== starting from 4th position &quot;10&quot; is smallest<br />abc29def3 &lt;=== then 29<br />ab2234defa&nbsp; &lt;== then 234<br />ab2234defv&nbsp; &lt;== then 234 and last character &quot;v&quot; is greater than previous &quot;a&quot;<br />abc900def4&nbsp; &lt;== 900 is the highest.<br /></code></pre></div><br /><br />Some one please clear up my confusion.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: So, I am confused by this sort routine</h3>
+				<div class="date">Posted: <strong>05 Apr 2011 21:52</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">&quot;Specifies the character number, n, to begin each comparison.&quot; means that n=4 indicates that each comparison should begin at the 4th character in each line.<br />Adding a space after the 4th character should clarify:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>abc1&nbsp; 0def3&nbsp; &nbsp; &nbsp; &lt;== 0<br />abc9&nbsp; 00def4&nbsp; &nbsp; &nbsp;&lt;== 0 results from 00, 4 is greater than 3 <br />abc2&nbsp; 9def3&nbsp; &nbsp; &nbsp; &lt;== 9<br />ab22&nbsp; 34defa&nbsp; &nbsp; &nbsp;&lt;== 34<br />ab22&nbsp; 34defv&nbsp; &nbsp; &nbsp;&lt;== 34, v is greater that a<br /></code></pre></div><br />Makes sense?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: So, I am confused by this sort routine</h3>
+				<div class="date">Posted: <strong>05 Apr 2011 22:03</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content"><blockquote><div><cite>DosItHelp wrote:</cite>&quot;Specifies the character number, n, to begin each comparison.&quot; means that n=4 indicates that each comparison should begin at the 4th character in each line.<br />Adding a space after the 4th character should clarify:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>abc1&nbsp; 0def3&nbsp; &nbsp; &nbsp; &lt;== 0<br />abc9&nbsp; 00def4&nbsp; &nbsp; &nbsp;&lt;== 0 results from 00, 4 is greater than 3 <br />abc2&nbsp; 9def3&nbsp; &nbsp; &nbsp; &lt;== 9<br />ab22&nbsp; 34defa&nbsp; &nbsp; &nbsp;&lt;== 34<br />ab22&nbsp; 34defv&nbsp; &nbsp; &nbsp;&lt;== 34, v is greater that a<br /></code></pre></div><br />Makes sense?</div></blockquote><br /><br />Well, it makes  sense if the statement says &quot;each comparison should begin after the nth character in each line.&quot; instead of &quot;each comparison should begin at the 4th character in each line.&quot; . With &quot;begin at&quot; , I take it to mean literally starting from the 4th character. In your example, I view it as starting from the 5th character. I really should have specified n=3 if I want it to start at 4th character. thanks for clarifying.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: So, I am confused by this sort routine</h3>
+				<div class="date">Posted: <strong>05 Apr 2011 22:23</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">Ok, I see what you mean.  This has been fixed now, character position starts with 1 now and not with 0.<br />Thanks a lot for pointing this out!</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1751&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:05:49 GMT -->
+</html>

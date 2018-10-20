@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=28&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:44:42 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Need a neater way to make the next directory</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Need a neater way to make the next directory</h2>
+		<p><a href="viewtopic3ae9.html?f=3&amp;t=28">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=28</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Need a neater way to make the next directory</h3>
+				<div class="date">Posted: <strong>01 Oct 2006 20:26</strong></div>
+				<div class="author">by <strong>tph</strong></div>
+				<div class="content">I have a batch file that sends files to a history folder in a very long drawn out fashion using if exist  do that. if that exist do this. line after line.<br />I am looking for a way to determine the last folder created *.001 or *.* then make the next folder *.002 out to 50 folders.<br />I have a name convention for the folders that works well I just need to find a better way for getting from folder *.01 to folder *.050<br /><br />here is a sample of what I do now:<br />:mkhistory<br />::<br />:: Stores last 10 batch uploads in history folder to provide a way to <br />:: recover in the event some data is lost and data from guns has already<br />:: been removed.<br />:: <br />cls<br />if exist %SystemDrive%\WindowsPC\erbt\BAR* goto mkhistory1<br />if not exist %SystemDrive%\WindowsPC\erbt\BAR* goto end<br />:mkhistory1<br />cls<br />if exist %SystemDrive%\WindowsPC\erbt\history\*.**1 goto mkhistory2<br />if /I not exist %SystemDrive%\WindowsPC\erbt\history\*.**1 goto mk1<br />:mk1<br />cls<br />MKDIR %SystemDrive%\WindowsPC\erbt\history\%mm%%dd%%hh%%min%%ss%.001<br />move /y %SystemDrive%\WindowsPC\BAR*.* %SystemDrive%\WindowsPC\erbt\history\%mm%%dd%%hh%%min%%ss%.001\<br />goto end<br /><br />:mkhistory2<br />cls <br />if exist %SystemDrive%\WindowsPC\erbt\history\*.**2 goto mkhistory3<br />if /I not exist %SystemDrive%\WindowsPC\erbt\history\*.**2  goto mk2<br />:mk2<br />cls<br />MKDIR %SystemDrive%\WindowsPC\erbt\history\%mm%%dd%%hh%%min%%ss%.002<br />move /y %SystemDrive%\WindowsPC\BAR*.* %SystemDrive%\WindowsPC\erbt\history\%mm%%dd%%hh%%min%%ss%.002\<br />goto end<br /><br />:mkhistory3<br />cls<br />if exist %SystemDrive%\WindowsPC\erbt\history\*.**3 goto mkhistory4<br />if /I not exist %SystemDrive%\WindowsPC\erbt\history\*.**3  goto mk3<br />:mk3<br />cls<br />MKDIR %SystemDrive%\WindowsPC\erbt\history\%mm%%dd%%hh%%min%%ss%.003<br />move /y %SystemDrive%\WindowsPC\BAR*.* %SystemDrive%\WindowsPC\erbt\history\%mm%%dd%%hh%%min%%ss%.003\<br />goto end<br /><br />:mkhistory4<br />cls<br />if exist %SystemDrive%\WindowsPC\erbt\history\*.**4 goto mkhistory5<br />if /I not exist %SystemDrive%\WindowsPC\erbt\history\*.**4  goto mk4<br />:mk4 <br /><br />on and on and on</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>02 Oct 2006 21:20</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">tph,<br /><br /> <img class="smilies" src="images/smilies/icon_idea.gif" alt=":idea:" title="Idea" /> You can determine the next number to be used like this: <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set folder=%SystemDrive%\WindowsPC\erbt\history<br /><br />set last=000<br />for /f &quot;tokens=*&quot; %%a in &#40;'dir /ad /oe /b &quot;%folder%&quot;'&#41; do set last=%%~xa<br />set /a next=1 + 1%last:~-3%<br />set next=%next:~-3%<br /><br />echo.The next number to be used is: %next%</code></pre></div><br /><br /><img class="smilies" src="images/smilies/icon_arrow.gif" alt=":arrow:" title="Arrow" /> <span style="text-decoration: underline"><strong class="text-strong">Detailed description</strong></span><br /><br /><strong class="text-strong">set last=000</strong><br />Variable for last number used. Initialized with 000 in case there is no historized directory yet.<br /><br /><strong class="text-strong">dir /ad /oe /b</strong><br />List all directories sorted by extension (alphabetic).<br /><br /><strong class="text-strong">for /f ... do set last=%%a</strong><br />Loop through output of dir command and remember the last folder name in 'last' variable.<br /><br /><strong class="text-strong">%last:<span style="color: blue">~-3</span>%</strong><br />Use only the last 3 digits of the folder name. I.e.:<br />...\WindowsPC\erbt\history\1002111735.007 -&gt; 007<br /><br /><strong class="text-strong"><span style="color: blue">1</span>%last:~-3%</strong><br />Put a non 0 digit in front so that 'set /a' command doesn't think it's an octal number.  I.e. 007 is handled as octal number, 1007 decimal.<br /><br /><strong class="text-strong">set /a next=<span style="color: blue">1 +</span> 1%last:~-3%</strong><br />Calculate the next number to be used, i.e. 1008 = 1 + 1007 <br /><br /><strong class="text-strong">set next=%next:~-3%</strong><br />Use last 3 numbers only, this will keep the leading zeros but cut of the extra digit, i.e. 1008 -&gt; 008<br /><br />DOS IT HELP?<br /><br /><span style="font-size: 75%; line-height: normal">Note: To combat nasty spam you will now need to register in order to post to this forum.   Sorry for the inconvenience  <img class="smilies" src="images/smilies/icon_cool.gif" alt="8)" title="Cool" /> <br />Registering is free and easy: <a href="../forum2/profile8319.html?mode=register" class="postlink">http://www.dostips.com/forum2/profile.php?mode=register</a></span></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>What a neater way to make the next directory!</h3>
+				<div class="date">Posted: <strong>03 Oct 2006 18:07</strong></div>
+				<div class="author">by <strong>tph</strong></div>
+				<div class="content">This works great! and is PERFECT... This trimmed 150 lines down to 8 lines<br />YOU ARE A GOD!<br /><br />was getting<br />The next number to be used is: 102<br />had to change....<br />set /a next=1 + 1%last:~-3%  <br />to <br />set /a next=1 + 1%last:~-4%<br />The next number to be used is: 002<br /><br />Thank you soooooo much</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=28&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:44:42 GMT -->
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8725&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:47:55 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Replacement of Operator</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Replacement of Operator</h2>
+		<p><a href="viewtopic9985.html?f=3&amp;t=8725">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8725</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Replacement of Operator</h3>
+				<div class="date">Posted: <strong>18 Jul 2018 04:18</strong></div>
+				<div class="author">by <strong>pp8771</strong></div>
+				<div class="content">The file a1.dat contains
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>COMPID~COMPNAME~ADDRESS~YEAROFESTABLISTMENT</code></pre></div>
+
+I have written a code to replace the operator ~ by "," and append " in the beginning and end of the line.<br>
+So written a small code. 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+set vffname=D:\a1.dat
+REM echo !vffname!
+set "vtilda=~"
+REM remember       vtilda can be % ,
+  
+
+  set vheader=
+  set /p "vheader="&lt;"!vffname!"
+    echo 1 !vheader!
+	set vheader="!vheader!"
+	echo 2 !vheader!
+  REM set vheader="!vheader:|=","!"
+    set   vheader="!vheader:!!vtilda!!=","!"
+  echo  3 !vheader!
+</code></pre></div>
+
+Required Output<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>"COMPID","COMPNAME","ADDRESS","YEAROFESTABLISTMENT"</code></pre></div>
+
+Getting an strange error:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>1 COMPID~COMPNAME~ADDRESS~YEAROFESTABLISTMENT
+2 "COMPID~COMPNAME~ADDRESS~YEAROFESTABLISTMENT"
+ 3 "~"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Replacement of Operator</h3>
+				<div class="date">Posted: <strong>18 Jul 2018 11:56</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">Hello, <br>
+You only make this special replacement by
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:replace
+for /f "tokens=1*delims=~" %%i in ("!vheader!") do (
+  if .%%j neq . (
+    set "vheader=%%i","%%j"
+    goto :replace
+  )
+)
+echo !vheader! 
+</code></pre></div>
+Phil</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Replacement of Operator</h3>
+				<div class="date">Posted: <strong>18 Jul 2018 13:18</strong></div>
+				<div class="author">by <strong>pp8771</strong></div>
+				<div class="content">Delimiter will be a parameter and not an hard code value<br>
+I want to put that in a variable set "vtilda=~"</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Replacement of Operator</h3>
+				<div class="date">Posted: <strong>18 Jul 2018 13:37</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberliste633.html?mode=viewprofile&amp;u=9263">pp8771</a> wrote: <a href="viewtopic2ed8.html?p=57483#p57483" data-post-id="57483" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">18 Jul 2018 13:18</div></cite>
+Delimiter will be a parameter and not an hard code value<br>
+I want to put that in a variable set "vtilda=~"
+</div></blockquote>
+Then why did you name the variable tilda if it is really delimiter?<br>
+<br>
+And what happened when you changed the code so that the delims= option had your variable name after it?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Replacement of Operator</h3>
+				<div class="date">Posted: <strong>18 Jul 2018 14:37</strong></div>
+				<div class="author">by <strong>pp8771</strong></div>
+				<div class="content">Now modified it for a single line
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+set vffname=D:\a1.dat
+REM echo !vffname!
+set "vtilda=^="
+ REM echo    !vtilda!   
+  
+   REM echo: FILE SIZE !vsize!
+  set vheader=
+  REM set vcolumnlist=
+  set /p "vheader="&lt;"!vffname!"
+  setlocal
+    :replace
+for /f "tokens=1*delims=%vtilda%" %%i in ("!vheader!") do (
+  if .%%j neq . (
+    set "vheader=%%i","%%j"
+    goto :replace
+  )
+)
+set vheader="!vheader!"
+echo !vheader!
+endlocal
+	
+	
+	REM echo 1 !vheader!
+	REM set vheader="!vheader!"
+	REM echo 2 !vheader!
+  REM set vheader="!vheader:|=","!"
+  REM set   vheader=!vheader:~=","!
+  REM echo  3 !vheader!
+  pause
+</code></pre></div>
+
+<br>
+But not able to read multiple lines</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Replacement of Operator</h3>
+				<div class="date">Posted: <strong>18 Jul 2018 14:45</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberliste633.html?mode=viewprofile&amp;u=9263">pp8771</a> wrote: <a href="viewtopic80bd.html?p=57485#p57485" data-post-id="57485" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">18 Jul 2018 14:37</div></cite>
+But not able to read multiple lines
+</div></blockquote>
+You never specified that you needed to do that in your original requirements.  If you need to read the entire file then use another FOR /F command to read the file.  Then use a CALL to the function that changes the delimiter.  But personally I would just use <a href="viewtopic6cdd-2.html?t=5702" class="postlink">Dave's ParseCSV.bat</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Replacement of Operator</h3>
+				<div class="date">Posted: <strong>19 Jul 2018 01:30</strong></div>
+				<div class="author">by <strong>pp8771</strong></div>
+				<div class="content">My input file [a1.dat] is<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>COMPID=COMPNAME=ADDRESS=YEAROFESTABLISTMENT
+100=XYC=AWER RD=12072018
+120=BNM=PQTY RD=12082018
+100=XYC=AWER RD=12072018
+120=BNM=PQTY RD=12082018</code></pre></div>
+
+Required output<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>'100','XYC','AWER RD','12072018'
+'120','BNM','PQTY RD','12082018'
+'100','XYC','AWER RD','12072018'
+'120','BNM','PQTY RD','12082018'</code></pre></div>
+
+<br>
+But this code is not working.  Assistance is appreciated.it is going in infinite loop.now some it is working.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+REM setlocal enabledelayedexpansion
+
+GOTO :MAIN	
+
+setlocal
+:replace
+
+echo 2.1 %~1 %~2
+set vdl=%~2
+set vln=%~1
+:replace2
+for /F "tokens=1*delims=%vdl%" %%q in ("%vln%") do (
+echo 2.2  %%q %%r
+ pause
+  if .%%r neq . (
+    set "vln=%%q','%%r"
+	echo 2.3 !vln!
+	
+     goto :replace2
+  )
+   
+)
+
+echo 2.4 !vln!
+set vln='!vln!'
+echo 2.5 !vln!
+set "%~3=%vln%"
+goto :EOF
+	
+:MAIN	
+set vffname=D:\a1.dat
+REM echo !vffname!
+set "vtilda=^="
+ REM echo    !vtilda!   
+  
+   REM echo: FILE SIZE !vsize!
+	REM echo 1 !vheader!
+	REM set vheader="!vheader!"
+	REM echo 2 !vheader!
+  REM set vheader="!vheader:|=","!"
+  REM set   vheader=!vheader:~=","!
+  REM echo  3 !vheader!
+  
+   FOR /F "skip=1 usebackq delims=" %%G IN ("!vffname!") DO (
+        
+    	set "line=%%~G"	
+		
+    	REM set "line='!line:|=','!'"
+		REM echo !line!
+		
+		setlocal
+		call :replace "!line!"  "%vtilda%" fline
+        
+		echo 1.2 !fline!
+   		set iline=!fline!
+		 endlocal
+		
+		)
+  pause
+
+</code></pre></div>
+
+<br>
+But when I am reading the header of the file now things are working fine.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+set vffname=D:\a1.dat
+REM echo !vffname!
+set "vtilda=^="
+ REM echo    !vtilda!   
+  
+   REM echo: FILE SIZE !vsize!
+  set vheader=
+  REM set vcolumnlist=
+  set /p "vheader="&lt;"!vffname!"
+  setlocal
+    :replace
+for /f "tokens=1*delims=%vtilda%" %%i in ("!vheader!") do (
+  if .%%j neq . (
+    set "vheader=%%i","%%j"
+	echo !vheader!
+    goto :replace
+  )
+)
+set vheader="!vheader!"
+echo !vheader!
+endlocal
+	
+	
+	REM echo 1 !vheader!
+	REM set vheader="!vheader!"
+	REM echo 2 !vheader!
+  REM set vheader="!vheader:|=","!"
+  REM set   vheader=!vheader:~=","!
+  REM echo  3 !vheader!
+  pause</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Replacement of Operator</h3>
+				<div class="date">Posted: <strong>20 Jul 2018 05:03</strong></div>
+				<div class="author">by <strong>pp8771</strong></div>
+				<div class="content">Really I am looking for assistance from senior members how to read the delimited files.<br>
+<br>
+The code is working for delimiter ~,|,=, # but not for % . can any one has idea what is wrong with this code.<br>
+<br>
+Assistance is really appreciated.<br>
+<br>
+My file a1.dat is:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>COMPID%COMPNAME%ADDRESS%YEAROFESTABLISTMENT
+100%XYC%AWER RD%12072018
+120%BNM%PQTY RD%12082018
+100%XYC%AWER RD%12072018
+120%BNM%PQTY RD%12082018</code></pre></div>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+REM setlocal enabledelayedexpansion
+
+GOTO :MAIN	
+
+setlocal
+:replace
+
+echo 2.1 %~1 %~2
+set vdl=%~2
+set vln=%~1
+echo 2.1.1 %vln%  delimite   %vdl%
+:replace2
+for /F "tokens=1*delims=%vdl%" %%q in ("%vln%") do (
+echo 2.2  %%q %%r
+  if .%%r neq . (
+    set "vln=%%q','%%r"
+	echo 2.3 !vln!
+	
+     goto :replace2
+  )
+   
+)
+
+echo 2.4 !vln!
+set vln='!vln!'
+echo 2.5 !vln!
+set "%~3=%vln%"
+goto :EOF
+	
+:MAIN	
+set vffname=D:\a1.dat
+REM echo !vffname!
+set "vtilda=%%"
+ REM echo    !vtilda!   
+  
+   REM echo: FILE SIZE !vsize!
+	REM echo 1 !vheader!
+	REM set vheader="!vheader!"
+	REM echo 2 !vheader!
+  REM set vheader="!vheader:|=","!"
+  REM set   vheader=!vheader:~=","!
+  REM echo  3 !vheader!
+  
+   FOR /F "skip=1 usebackq delims=" %%G IN ("!vffname!") DO (
+        
+    	set "line=%%~G"	
+		
+    	REM set "line='!line:|=','!'"
+		REM echo !line!
+		
+		setlocal
+		call :replace "!line!"  "!vtilda!" fline
+        
+		echo 1.2 !fline!
+   		set iline=!fline!
+		 endlocal
+		
+		)
+  pause</code></pre></div>
+
+<br>
+Required output should be :<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>'100','XYC','AWER RD','12072018'
+'120','BNM','PQTY RD','12082018'
+'100','XYC','AWER RD','12072018'
+'120','BNM','PQTY RD','12082018'</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Replacement of Operator</h3>
+				<div class="date">Posted: <strong>20 Jul 2018 06:34</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberliste633.html?mode=viewprofile&amp;u=9263">pp8771</a> wrote: <a href="viewtopic73fb.html?p=57511#p57511" data-post-id="57511" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jul 2018 05:03</div></cite>but not for % . </div></blockquote>
+Well that character should be a huge clue as to why it does not work.  That character is obviously used in batch files for variable expansion so it is a special character. If you need to use a literal % character then you need to double it, whenever you need to use it as a literal to escape the variable expansion usage.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Replacement of Operator</h3>
+				<div class="date">Posted: <strong>20 Jul 2018 06:44</strong></div>
+				<div class="author">by <strong>pp8771</strong></div>
+				<div class="content">By using %% it does not work. I have tried it.   Any other suggestion.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Replacement of Operator</h3>
+				<div class="date">Posted: <strong>22 Jul 2018 15:29</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">In the simplest form possible, if you want to change the delimiter of  your file all you have to do is this.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+set "vffname=input.txt"
+SET "delim=%%"
+
+for /F "tokens=1-4 delims=%delim%" %%G in (%vffname%) do echo '%%~G','%%~H','%%~I','%%~J'
+pause</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8725&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:47:55 GMT -->
+</html>

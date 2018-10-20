@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6369&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:34 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Functional carriage return literal within a batch script!</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Functional carriage return literal within a batch script!</h2>
+		<p><a href="viewtopicd223.html?f=3&amp;t=6369">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6369</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Functional carriage return literal within a batch script!</h3>
+				<div class="date">Posted: <strong>27 Mar 2015 13:02</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Normally the only way to work with carriage return characters within batch is via FOR variables or delayed expansion. This is because the batch parser strips all carriage returns after the normal expansion phase, as documented in phase 1.5 in jeb's StackOverflow post - <!-- m --><a class="postlink" href="http://stackoverflow.com/a/4095133/1012053">http://stackoverflow.com/a/4095133/1012053</a><!-- m --><br /><br />But I was curious to see if I could demonstrate that carriage returns truly are stripped <em class="text-italics">after</em> normal expansion. So I did an experiment.<br /><br />The goal is to define a variable that contains a carriage return, and then use normal expansion to expand the variable with find and replace operation that transforms the carriage return into something else. The find uses a carriage return literal within the script <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br /><br />Embedding a carriage return within a text file can be tricky, so I first wrote the script with the carriage return encoded as \r.<br /><br /><strong class="text-strong">test.bat</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enableDelayedExpansion<br /><br />:: Define CR to contain a single carriage return character (\r).<br />:: This also demonstrates that \r is stripped before FOR variable expansion<br />for /f %%a in ('copy /Z &quot;%~dpf0&quot; nul') do (<br />&nbsp; set &quot;CR=%%a&quot;<br />&nbsp; echo&nbsp; &nbsp; &nbsp;FOR variable%%aOK<br />)<br />&nbsp; <br />:: Normal expansion seems to fail because all carriage returns<br />:: are stripped from the line after expansion<br />echo&nbsp; &nbsp; &nbsp;Normal expansion%CR%FAIL<br /><br />:: Delayed expansion works just fine<br />echo&nbsp; &nbsp; &nbsp;Delayed expansion!CR!OK<br /><br />:: Demonstrate that Normal expansion actually works by replacing \r<br />:: with some other text<br />&nbsp; &nbsp; &nbsp;echo Normal expansion %CR:\r=OK%<br /></code></pre></div><br />I then used my <a href="viewtopicb16d.html?f=3&amp;t=6044" class="postlink">JREPL.BAT utility</a> to transform \r into a carriage return literlal:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl &quot;\\r&quot; &quot;\r&quot; /x /f test.bat /o -<br /></code></pre></div><br />Here is what the final code looks like (note the appearance of the last line):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>D:\test&gt;type test.bat<br />@echo off<br />setlocal enableDelayedExpansion<br /><br />:: Define CR to contain a single carriage return character.<br />:: This also demonstrates that carriage return is stripped before<br />:: FOR variable expansion<br />for /f %%a in ('copy /Z &quot;%~dpf0&quot; nul') do (<br />&nbsp; set &quot;CR=%%a&quot;<br />&nbsp; echo&nbsp; &nbsp; &nbsp;FOR variable%%aOK<br />)<br /><br />:: Normal expansion seems to fail because all carriage returns<br />:: are stripped from the line after expansion<br />echo&nbsp; &nbsp; &nbsp;Normal expansion%CR%FAIL<br /><br />:: Delayed expansion works just fine<br />echo&nbsp; &nbsp; &nbsp;Delayed expansion!CR!OK<br /><br />:: Demonstrate that Normal expansion actually works by replacing the<br />:: carriage return with some other text<br />=OK% echo Normal expansion %CR:<br /></code></pre></div><br />And here is the output:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>D:\test&gt;test<br />OK&nbsp; FOR variable<br />&nbsp; &nbsp; Normal expansionFAIL<br />OK&nbsp; Delayed expansion<br />Normal expansion OK<br /></code></pre></div><br /><br />I don't see how this is really of any use, but I thought it was interesting. It also provides evidence to back up the phase rules developed by jeb. It is pretty amazing how jeb was able to derive all those rules, and we are all the better for it.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Functional carriage return literal within a batch script</h3>
+				<div class="date">Posted: <strong>28 Mar 2015 22:01</strong></div>
+				<div class="author">by <strong>Liviu</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>But I was curious to see if I could demonstrate that carriage returns truly are stripped <em class="text-italics">after</em> normal expansion. So I did an experiment.</div></blockquote><br />Nicely done. Also, obvious as it may be, here is a quick experiment to verify that CRs are stripped <em class="text-italics">before</em> special characters are processed.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp; setlocal disableDelayedExpansion<br /><br />for /f %%a in ('copy /Z &quot;%~dpf0&quot; nul') do set &quot;CR=%%a&quot;<br /><br />:: outputs '&gt;nul |more line continuation'<br />echo ^%CR%&gt;nul ^%CR%%CR%|more line ^%CR%%CR%%CR%<br />continuation<br /></code></pre></div><br />Liviu</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Functional carriage return literal within a batch script</h3>
+				<div class="date">Posted: <strong>29 Mar 2015 07:14</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">And here is a sample that shows that the CR's are stripped after the percent expansion phase, they are not stripped while expanding variables.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal<br />for /f %%a in ('copy /Z &quot;%~dpf0&quot; nul') do (<br />&nbsp; set &quot;CR=%%a&quot;<br />)<br /><br />setlocal EnableDelayedExpansion<br />set &quot;L=.&quot;<br />for /L %%n in (1 1 13) do set &quot;L=!L:~,4000!!L:~,4000!&quot;<br />for %%C in (&quot;!CR!&quot;) do set &quot;L=!L:.=%%~C!&quot;<br /><br />(echo 111 !L!#)<br />(echo 222 %L%#)<br /><br />prompt=#<br />echo on<br />REM # 3333 %CR% ^ *****<br />@echo off<br /><br />echo 444 Fails<br />(echo 4444 %L%%L%#)<br /></code></pre></div><br /><br /><blockquote><div><cite>Output wrote:</cite>#11<br />222 #<br /><br />#REM # 3333  ^ *****<br />444 Fails<br />Die eingegebene Zeile ist zu lang.</div></blockquote><br /><br />Expample &quot;444&quot; shows that the expanded result is too long, this result is only possible when the 16000 CR's are still in a buffer.<br />And Example 333 shows that the CR's are stripped before the special character phase starts.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>carriage return as a single key response</h3>
+				<div class="date">Posted: <strong>25 Mar 2017 03:14</strong></div>
+				<div class="author">by <strong>RaceQuest</strong></div>
+				<div class="content">Is is possible to use pass a &lt;CR&gt; as data to a program used in a batch script. Example: <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>choice.com /n &quot;CR test: &quot; /c:!CR!yn </code></pre></div> where CR contains a carriage return character?<br /><br />I have a replacement utility to choice.com that is functionally equivalent so I would like pressing enter key (carriage return) to trigger a default action as well as having &quot;y&quot; or &quot;n&quot; single key responses. I tested thelinefeed character with:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Choice /n &quot;LF test: &quot; /c:yn^<br /><br /><br /></code></pre></div> In the above example control+J (linefeed) is a single key response but does not look like control+m (carriage return) works. I know parsing does CR stripping so wondering if there is a technique to get into a command argument. I know &quot;set /P&quot; is not useful as I would have to press enter after &quot;y&quot; and &quot;n&quot; as well - where is the fun in that.<br /><br />I found one solution to use a utilty getch.com <a href="http://alt.msdos.batch.narkive.com/On38IrqN/using-the-enter-key-in-the-choice-command" class="postlink">http://alt.msdos.batch.narkive.com/On38IrqN/using-the-enter-key-in-the-choice-command</a><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;nul: set /p=&quot;CR test: &quot;<br />getch.com<br />echo ascii code=%errorlevel%<br />rem test errorlevel for ascii return code here<br /></code></pre></div><br />There is no validation of keys entered like you do using choice.com but that is ok you can always code it in batch.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Functional carriage return literal within a batch script!</h3>
+				<div class="date">Posted: <strong>25 Mar 2017 08:30</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I'm not exactly clear on what your end goal is. But it is definitely possible to have a pure batch script read a string that contains a carriage return (&lt;CR&gt;).<br /><br />Both SET /P and FOR /F treat a line of input nearly the same way. The line is terminated at the first occurrence of a linefeed (&lt;LF&gt;). If the character before the &lt;LF&gt; is a &lt;CR&gt;, then that &lt;CR&gt; is stripped. Any remaining &lt;CR&gt; characters are preserved.<br /><br />If you expand a FOR variable that contains &lt;CR&gt;, then the &lt;CR&gt; character will be preserved.<br /><br />But if you expand an environment value with percents (%VAR%), then all &lt;CR&gt; characters will be stripped. You must use delayed expansion (!VAR!) to successfully expand an environment variable containing &lt;CR&gt;.<br /><br />It is even possible to include &lt;CR&gt; via user keyboard input when using SET /P. However, this technique seems to be dependent on some combination of Windows version, console version (new Win 10 version or legacy), active code page, and current console font.<br /><br />On my Win 10 machine with legacy console using raster font, I can enter a &lt;CR&gt; as part of SET /P input by holding the &lt;Alt&gt; key and pressing &lt;1&gt; and &lt;3&gt; on the numeric keypad, and then releasing &lt;Alt&gt;. The character displayed on the console is a musical eighth note symbol, but the character in the variable is a &lt;CR&gt;. But if I change my font to Consolas, then the value in the variable is the eighth note character. I haven't tested to determine the effect of all possible permutations of code page, font, console version, and Windows version.<br /><br />I have written a :getAnyKey pure batch function that allows input of any byte value from 0x00 to 0xFF via a key press. It even has the ability to specify which characters are accepted as input. The 0x00 value (entered by holding &lt;Ctrl&gt; and pressing &lt;2&gt;) is represented as an empty string - it cannot be included in a variable within batch. There are reports that 0x00 cannot be entered on some machines, but I believe all the other characters can be entered on any &quot;normal&quot; machine. However, there are exotic code pages that do not treat 0x00 - 0xFF as ASCII that might cause the routines to fail.<br /><br />You can find the current version of :getAnyKey, with built in documentation, at <!-- l --><a class="postlink-local" href="viewtopiceee9.html?f=3&amp;t=7396&amp;p=50819#p50819">viewtopic.php?f=3&amp;t=7396&amp;p=50819#p50819</a><!-- l -->.<br /><br />My original post where I introduce the concepts is at <!-- l --><a class="postlink-local" href="viewtopic20ae.html?f=3&amp;t=7396">viewtopic.php?f=3&amp;t=7396</a><!-- l -->.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Functional carriage return literal within a batch script!</h3>
+				<div class="date">Posted: <strong>27 May 2018 20:29</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">I wonder if someone noticed that adding <span style="color: #FF0000">CR|</span> allows to execute commands as if they were typed on separate lines in a batch file, while in fact they're typed on the same line. Its useful when adding commandline to Registry. I couldn't find mentioning it anywhere. Examples:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:: Add command sequence to a Registry key via .REG file
+@="cmd /c\"DisplaySwitch.exe /internal CR| reg add \"HKCU\\Software\\Classes\\DesktopBackground\\Shell\\Change Current Display\" /v \"Icon\" /d \"imageres.dll,-109\" /f\""
+
+:: Add a similar oneliner in .BAT file. Replacing CR| with &amp;, &amp;&amp;, or || causes DisplaySwitch.exe to fail, thus requiring use of caret return in the oneliner, or 2-line code
+DisplaySwitch.exe /internal CR| reg add "HKCU\Software\Classes\DesktopBackground\Shell\Change Current Display" /v "Icon" /d "imageres.dll,-109" /f</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6369&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:34 GMT -->
+</html>

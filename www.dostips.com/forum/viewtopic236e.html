@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8355&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:57:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Discussion about jeb's batch parsing rules on StackOverflow</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Discussion about jeb's batch parsing rules on StackOverflow</h2>
+		<p><a href="viewtopicdf43.html?f=3&amp;t=8355">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8355</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>3</strong></div>
+					<div class="post">
+				<h3>Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>25 Jan 2018 14:43</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">The purpose of this thread is to have a central place to discuss <a href="https://stackoverflow.com/a/4095133/1012053" class="postlink">the batch parsing rules on StackOverflow</a> that jeb initiated.<br>
+<br>
+Of particular interest are discussions about shortcomings or inaccuracies of the current model, along with suggestions for improvements.<br>
+<br>
+I've already made a great many changes to the original posted rules. But there is still room for improvement.<br>
+<br>
+There are already a number of DosTips threads that investigate various aspects of this topic. At some point I may add links to those topics. But I hope future discussion always takes place here.<br>
+<br>
+Currently there are two issues that I am thinking about:<br>
+<br>
+<span style="font-size: 150%; line-height: normal">1) Should phases 3 and 4 be reversed?</span><br>
+<br>
+The echoing of parsed commands (phase 3) occurs at two points: after the initial round of phase 2 (main parser), and then again after each round of phase 4 (FOR variable expansion for each DO iteration).<br>
+<br>
+I think the logic would be much simpler to describe if the order of phases 3 and 4 were reversed. But I am reluctant to renumber the phases for fear of breaking phase references in historical posts.<br>
+<br>
+What do you think jeb <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question"> <br>
+<br>
+<span style="font-size: 150%; line-height: normal">2) I think phase 7 (command execution) needs some refinement</span><br>
+<br>
+I greatly expanded phase 7. But I see a potential problem, and I'm not sure how to correct it.<br>
+<br>
+Sometimes a command can be both an internal command and an external command. For example, creation of an ECHO.BAT file.<br>
+<br>
+Clearly the parser generally selects the internal command over the external command in phase 7.<br>
+<br>
+Assuming ECHO.BAT exists in the current folder, then ECHO OK will print OK (execute the internal command) instead of executing the ECHO.BAT.<br>
+<br>
+The CALL rules in phase 6 already account for the fact that CALL ECHO will call the batch script instead, because phase 6 identifies the batch script before phase 7 has a chance to execute the internal command.<br>
+<br>
+Also supporting the existing rules, if I have TEST.BAT in the current folder, then when I execute ECHO\..\TEST, it simply prints out ..\TEST<br>
+<br>
+But I am disturbed by ECHO\..\TEST.BAT - it executes the batch script instead <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation">  <img class="smilies" src="images/smilies/icon_evil.gif" width="15" height="15" alt=":evil:" title="Evil or Very Mad"> <br>
+<br>
+Also, ECHO.BAT will execute the batch script instead of the internal command.<br>
+<br>
+I'm struggling to find a set of simple rules that can account for the differences.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>25 Jan 2018 15:58</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I just realized - I think  issue 2 can be resolved by a small change to 7.1:<br>
+
+<blockquote><div><cite>proposed change wrote:</cite>
+<ul>
+<li> <strong class="text-strong">7.1 - Execute internal command</strong> - If the command token is quoted or the command token is a path to an existing file (any extension must be included), then 7.1 is skipped. Otherwise, if an internal command can be parsed from the command token, then execute the internal command.
+  <ul>
+    <li> Normally the command token exactly matches the name of an internal command. But it is possible for options and or arguments to be included in the command token. For example `echo(Hello world` is parsed as an ECHO command with arguments `Hello world`. The exact internal command parsing rules vary from command to command.</li>
+  </ul></li>
+</ul>
+</div></blockquote>
+
+Not explicitly stated, but the path need not match an executable file. If the command token matches any existing file, then 7.1 is skipped. Later on 7.3 execution will fail with an error if it is unable to match the command token with a valid executable file.<br>
+<br>
+Can anyone find any exceptions to the above rule?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>26 Jan 2018 01:27</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopice27d.html?p=55484#p55484" data-post-id="55484" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">25 Jan 2018 15:58</div></cite>
+1) Should phases 3 and 4 be reversed?<br>
+<br>
+The echoing of parsed commands (phase 3) occurs at two points: after the initial round of phase 2 (main parser), and then again after each round of phase 4 (FOR variable expansion for each DO iteration).<br>
+<br>
+I think the logic would be much simpler to describe if the order of phases 3 and 4 were reversed. But I am reluctant to renumber the phases for fear of breaking phase references in historical posts.
+</div></blockquote>
+I think it's already in the correct order now.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal
+prompt #
+echo on
+FOR /L %%n in ( 1 1 3) DO (
+  echo %%n
+)</code></pre></div>
+<blockquote><div><cite>Output wrote:</cite>#FOR /L %n in (1 1 2) DO (echo %n )<br>
+<br>
+#(echo 1 )<br>
+1<br>
+<br>
+#(echo 2 )<br>
+2
+</div></blockquote>
+
+For any command, first phase 3 occours (in this case the FOR main line will be echoed) and then the FOR-loop phase starts.<br>
+In each Loop (Phase4) the FOR-variables are expanded, then goto phase 3 and recheck the ECHO state, return to phase4 after all other phases are done.<br>
+I'm not sure if phase4 is still a "phase" as it stands a little bit outside of the normal phase order.<br>
+<br>
+You proposed changes for phase7 looks better than my original text and they are much more extensive. <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>26 Jan 2018 07:29</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><span style="font-size: 200%; line-height: normal">I think you missed my point for issue 1.</span><br>
+<br>
+<span style="font-size: 150%; line-height: normal">With the current phase numbering</span><br>
+<br>
+<strong class="text-strong">A normal command flows as follows:</strong><br>
+<br>
+0 -&gt; 1 -&gt; 2 -&gt; 3 -&gt; skip 4 -&gt; 5 -&gt; usually skip 6 -&gt; 7<br>
+<br>
+Phase 3 only executes if command block in previously executed phase 2 did not start with @<br>
+Phase 3 shows the results of phase 2<br>
+<br>
+<strong class="text-strong">When a FOR command executes in 7, it kicks off the DO commands, starting with phase 4:</strong><br>
+<br>
+3<br>
+^<br>
+4 -&gt; 5 -&gt; usually skip 6 -&gt; 7<br>
+<br>
+Phase 4 must explicitly call phase 3 as a subroutine.<br>
+Phase 3 only executes if command block in <strong class="text-strong">previously executed (not skipped) phase 4</strong>  <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation">  <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused">   did not start with @<br>
+Phase 3 shows the results of phase 4<br>
+Phase 3 then returns to 4 before it flows to  5.<br>
+<br>
+Or, in a linear layout, it flows as<br>
+<strong class="text-strong">4 -&gt; 3 -&gt; skip 4</strong> -&gt; 5 -&gt; usually skip 6 -&gt; 7<br>
+<br>
+<span style="font-size: 150%; line-height: normal">My proposed new phase numbering</span><br>
+<br>
+<strong class="text-strong">A normal command flows as follows:</strong><br>
+0 -&gt; 1 -&gt; 2 -&gt; skip 3 -&gt; 4 -&gt; 5 -&gt; usually skip 6 -&gt; 7<br>
+<br>
+Phase 4 only executes if command block in previously executed phase 2 did not start with @<br>
+Phase 4 shows the results of phase 2<br>
+<br>
+No matter the order, a normal command always skips FOR expansion, so the order does not matter much<br>
+<br>
+<strong class="text-strong">When a FOR command executes in 7, it kicks off the DO commands, starting with phase 3:</strong><br>
+<br>
+3 -&gt; 4 -&gt; 5 - usually skip 6 -&gt; 7<br>
+<br>
+Phase 3 simply flows naturally into phase 4<br>
+Phase 4 only executes if command block in previously executed phase 3 did not start with @ - a sensible order<br>
+Phase 4 shows the results of phase 3<br>
+<br>
+----------------<br>
+<br>
+Does my proposal make sense now? If starting from scratch, I would definitely use the modified numbering. But for historical reasons, I am reluctant.<br>
+<br>
+<span style="font-size: 200%; line-height: normal">Back to Issue 2</span><br>
+<br>
+Well, my proposed rules were too simple.<br>
+<br>
+I've come up with the following revised rules that seem to work for me on Win 7. I'll test soon on Win 10.<br>
+<br>
+<strong class="text-strong">7.1 - Execute internal command</strong> - If the command token is quoted, then skip this step. Otherwise, attempt to parse out an internal command and execute.
+<ul>
+  <li> The following tests are run to determine if an unquoted command token represents an internal command:
+  <ul>
+    <li> If the command token exactly matches an internal command, then execute it.</li>
+    <li> Else break the command token at the first occurrence of + ( / [ or ]<br>
+        If the preceding text is an internal command, then execute it</li>
+    <li> Else break the original command token at the first occurrence of . \ or :<br>
+        If the preceding text is not an internal command, then goto 7.2<br>
+        Else the preceding text may be an internal command. Remember this command.</li>
+    <li> Break the original command token at the first occurrence of + ( / [ or ]<br>
+        If the preceding text is a path to an existing file, then goto 7.2<br>
+        Else execute the remembered command.</li>
+  </ul></li>
+  <li> Just because a command token is parsed as an internal command does not mean that it will execute successfully. Each internal command has its own rules as to what syntax is allowed.</li>
+  <li> ...</li>
+</ul>
+<strong class="text-strong">7.2 - Execute volume change</strong> - Else if the command token does not begin with a quote, is exactly two characters long, and the 2nd character is a colon, then change the volume<br>
+<br>
+<strong class="text-strong">7.3 - Execute external command</strong> - Else try to treat the command as an external command<br>
+<br>
+<strong class="text-strong">7.4 - Ignore a label</strong> - Ignore the command and all its arguments if the command token begins with :<br>
+Rules in 7.2 and 7.3 may prevent a label from reaching this point.<br>
+<br>
+<br>
+I think the above rules for 7.1 are good, <strong class="text-strong"><em class="text-italics"> But they violate a rule that jeb posted at <a href="viewtopic8ec8.html?f=3&amp;t=774#p4554" class="postlink">ECHO. FAILS to give text or blank line - Instead use ECHO/</a></em></strong>
+<blockquote><div><cite>jeb wrote:</cite>
+<strong class="text-strong"><em class="text-italics">These one fails, if files exists like echo*, the * is one of ".[]+'`~"</em></strong>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>echo.
+echo[
+echo]
+echo+
+</code></pre></div>
+</div></blockquote>
+I agree that ECHO. fails if a file named ECHO exists. Note that the trailing . is removed by the OS<br>
+The command fails with an error stating: <strong class="text-strong"><em class="text-italics"><span style="color: #0000BF">'echo.' is not recognized as an internal or external command, operable program or batch file.</span></em></strong><br>
+This result is consistent with my proposed 7.1 rules - it is not recognized as an internal command, and eventually fails to execute as an external command.<br>
+<br>
+But I cannot reproduce this behavior with ECHO[  ECHO]  or ECHO+ on Windows 7. <strong class="text-strong"><em class="text-italics">Update - I have confirmed Win 10 behaves the same as Win 7</em></strong><br>
+If I create a file named ECHO[ and then execute the command ECHO[ then it successfully executes the internal ECHO command and prints a blank line.<br>
+The same is true with ] and +<br>
+If I could reproduce jeb's result, then it would invalidate my rules.<br>
+<br>
+Did jeb get this wrong <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question"> <br>
+Or does the behavior described by jeb only apply to Win XP <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question"> <br>
+Or ...  <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question">  <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"><br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>27 Jan 2018 14:27</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Argh  <img class="smilies" src="images/smilies/icon_evil.gif" width="15" height="15" alt=":evil:" title="Evil or Very Mad"> <br>
+<br>
+I just realized that there are critical differences in batch mode vs. command line (Today I'm testing on Win 10).<br>
+I'm still trying to figure things out, but my proposed rules are definitely not quite right.<br>
+<br>
+I still haven't been able to reproduce failure of ECHO[ if the file ECHO[ exists. Not in batch mode or command line mode. It always echoes a blank line.<br>
+<br>
+But if ECHO[.BAT exists, then ECHO[ in batch mode executes the batch file.<br>
+In command line ECHO[ still echoes a blank line.<br>
+<br>
+I'm beginning to question whether I will ever figure this out. I'm thinking that I won't succeed unless I exactly nail down how phase 2 parses tokens. Currently that is a bit fuzzy.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>28 Jan 2018 07:19</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Don't you think Microsoft would help out with this if you asked them nicely? (unless, of course, reverse engineering is the point)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>29 Jan 2018 14:04</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic29c8.html?p=55497#p55497" data-post-id="55497" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">26 Jan 2018 07:29</div></cite>Did jeb get this wrong <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question"> <br>
+Or does the behavior described by jeb only apply to Win XP <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question"> <br>
+Or ...  <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question">  <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"></div></blockquote>I tested the above with (a virtual machine) WinXP, SP3, x86:<br>
+There the behaviour is as jeb described.<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>29 Jan 2018 22:23</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">@penpen - Thanks for verifying that ECHO[ ECHO] and ECHO+ <strong class="text-strong"><em class="text-italics">do not</em></strong> work properly on XP if a file with that name exists in the current directory.<br>
+<br>
+Now could you (or anyone?) confirm that ECHO[ ECHO] and ECHO+ <strong class="text-strong"><em class="text-italics">do</em></strong> work properly on Win 7, 8, and/or 10 if a file with that name exists in the current directory.<br>
+<br>
+It looks like we have a difference in the parsing rules for XP vs later versions.  <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"> <br>
+<br>
+<br>
+Dave Beham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>30 Jan 2018 02:40</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistfcd5.html?mode=viewprofile&amp;u=4915">penpen</a> wrote: <a href="viewtopic83eb.html?p=55537#p55537" data-post-id="55537" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">29 Jan 2018 14:04</div></cite>
+dbenham wrote: ↑<br>
+    Fri Jan 26, 2018 2:29 pm<br>
+    Did jeb get this wrong <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question"><br>
+    Or does the behavior described by jeb only apply to Win XP <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question"><br>
+    Or ... <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question"> <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"><br>
+<br>
+I tested the above with (a virtual machine) WinXP, SP3, x86:<br>
+There the behaviour is as jeb described.
+</div></blockquote>
+I get different results than penpen.<br>
+<br>
+I retested it with winXP32 and Win7 and get the same results for both.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+call :test "["
+call :test "]"
+call :test "+"
+call :test "."
+exit /b
+
+:test
+call :testExt "%~1" ""
+call :testExt "%~1" ".bat"
+exit /b
+
+:testExt
+call :__testExt "%~1" "%~2"
+if "%OK%" == "0" echo Last test FAILED, for "ECHO%~1" with FILE "ECHO%~1%~2"
+exit /b
+
+:__testExt
+set ok=0
+set "char=%~1"
+set "EXT=%~2"
+del echo* 2&gt; nul
+del echo*.bat 2&gt; nul
+
+echo(
+echo Testing "echo%CHAR%" with existing file "echo%CHAR%%EXT%"
+
+echo ECHO THIS IS %%0 &gt; "echo%CHAR%%EXT%"
+
+(
+    echo%CHAR% #1 in block
+)
+
+for %%A in (1) DO (
+    echo%CHAR% #2 in for block
+)
+
+echo%CHAR% #3 plain
+set ok=1
+exit /B</code></pre></div>
+
+<blockquote class="uncited"><div>
+Testing "echo[" with existing file "echo["<br>
+ #1 in block<br>
+ #2 in for block<br>
+ #3 plain<br>
+<br>
+Testing "echo[" with existing file "echo[.bat"<br>
+ #1 in block<br>
+ #2 in for block<br>
+Das Sprungziel - __testExt wurde nicht gefunden.<br>
+Last test FAILED, for "ECHO[" with FILE "ECHO[.bat"<br>
+<br>
+Testing "echo]" with existing file "echo]"<br>
+ #1 in block<br>
+ #2 in for block<br>
+ #3 plain<br>
+<br>
+Testing "echo]" with existing file "echo].bat"<br>
+ #1 in block<br>
+ #2 in for block<br>
+Das Sprungziel - __testExt wurde nicht gefunden.<br>
+Last test FAILED, for "ECHO]" with FILE "ECHO].bat"<br>
+<br>
+Testing "echo+" with existing file "echo+"<br>
+ #1 in block<br>
+ #2 in for block<br>
+ #3 plain<br>
+<br>
+Testing "echo+" with existing file "echo+.bat"<br>
+ #1 in block<br>
+ #2 in for block<br>
+Das Sprungziel - __testExt wurde nicht gefunden.<br>
+Last test FAILED, for "ECHO+" with FILE "ECHO+.bat"<br>
+<br>
+Testing "echo." with existing file "echo."<br>
+Der Befehl "echo." ist entweder falsch geschrieben ode<br>
+konnte nicht gefunden werden.<br>
+Der Befehl "echo." ist entweder falsch geschrieben ode<br>
+konnte nicht gefunden werden.<br>
+Der Befehl "echo." ist entweder falsch geschrieben ode<br>
+konnte nicht gefunden werden.<br>
+<br>
+Testing "echo." with existing file "echo..bat"<br>
+ #1 in block<br>
+ #2 in for block<br>
+Das Sprungziel - __testExt wurde nicht gefunden.<br>
+Last test FAILED, for "ECHO." with FILE "ECHO..bat"</div></blockquote>
+
+My old statement was not quite correct, it should be:<br>
+ECHO. fails, when a file "ECHO" (without extension) exists in the same directory (but when also a "ECHO.BAT" file exists, that file will be executed instead)<br>
+<br>
+ECHO&lt;?&gt; searches and executes for a file named "ECHO&lt;?&gt;.bat", &lt;?&gt;  is one character of the list ". [ ] +"<br>
+The search for the file only occours when the ECHO&lt;?&gt; is not inside a command block or the command for a FOR or IF command<br>
+This does not apply in command line context (echo. still fails for the point)<br>
+<br>
+jeb<br>
+<br>
+PS: Some more investigations are required  <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <br>
+echo. will fail when both "echo." and "echo.bat" exist, but when "echo..bat" exists, that file will be executed<br>
+&amp; &amp;&amp; || operatores modifies the behaviour, it currently seems to disable the file search function for "echo&lt;?&gt;.bat"</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>30 Jan 2018 05:35</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Thanks jeb. That is a relief that XP is not different than later versions.  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+<br>
+But command concatenation, command blocks, FOR, and IF alter the behavior  <img class="smilies" src="images/smilies/icon_eek.gif" width="15" height="15" alt=":shock:" title="Shocked">  <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <br>
+<br>
+I was about to post a set of phase 7 rules that I thought for sure accounted for all the behavior. But your new discovery blows me away  <img class="smilies" src="images/smilies/icon_evil.gif" width="15" height="15" alt=":evil:" title="Evil or Very Mad"> I never thought to test for that.<br>
+<br>
+I wonder if command blocks, concatenation, FOR and IF simply use command line search rules.<br>
+<br>
+One critical thing I have discovered about phase 2 - A left paren ( functions as a token delimiter when parsing the command token <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"><br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>30 Jan 2018 05:58</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic1872.html?p=55546#p55546" data-post-id="55546" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Jan 2018 05:35</div></cite>
+One critical thing I have discovered about phase 2 - A left paren ( functions as a token delimiter when parsing the command token <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation">
+</div></blockquote>
+Yes, I know and I suppose I wrote something about that fact, as I assume that "echo(" got his special abillities from exactly there.<br>
+<br>
+The next test works with "ECHO[" and the others, but with "ECHO(" it works only for percent expansion, therefore the splitting of "ECHO" and "(" have to be happen in phase2
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+set "myEcho=echo("
+
+%myEcho% #1
+!myEcho! #2
+for /F "delims=" %%A in ("%myEcho%") do (
+  %%A #3
+)
+</code></pre></div>
+
+And another test, that demonstartes that "(" splits the command token in the first test case.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+set "(var= PAREN"
+
+echo!(var!
+echo!^(var!
+</code></pre></div>
+<blockquote><div><cite>Output wrote:</cite>var<br>
+PAREN</div></blockquote>
+
+<blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic1872.html?p=55546#p55546" data-post-id="55546" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Jan 2018 05:35</div></cite>I wonder if command blocks, concatenation, FOR and IF simply use command line search rules</div></blockquote>
+My question is, why the hell is there any difference at all  <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question"> <br>
+I can't believe that this is intentionally, but what type of code would produce such a behaviour?<br>
+<br>
+jeb</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>30 Jan 2018 07:51</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">OK - Here are my proposed rules for how it is determined if a command is an internal command. They account for all the test results I have seen, but I haven't tested all possible permutations.<br>
+<br>
+There are 4 aspects of phase 2 that are critical to understanding my phase 7 rules:
+<ul>
+  <li> ( functions as a token delimiter when parsing the command token</li>
+  <li> Token delimiters preceding the command token are stripped</li>
+  <li> Escaped token delimiters can be included in the command token</li>
+  <li> All token delimiters after the command token are preserved in the argument list for a command when it is passed to phase 7</li>
+</ul>
+
+<strong class="text-strong">7.1 - Execute internal command</strong> - If the command token is quoted, then skip this step. Otherwise, attempt to parse out an internal command and execute
+<ul>
+  <li> The following tests are made to determine if an unquoted command token represents an internal command
+      <ul>
+          <li> If the command token exactly matches an internal command, then execute it.<br>
+          <span style="color: #FFFFFF">.</span></li>
+          <li> Else break the command token before the first occurrence of + / [ ] or standard token delimiter<br>
+              If the preceding text is an internal command, then remember that command
+              <ul>
+                <li> If in command line mode, or if the command is from a parenthesized block, IF command block, FOR command block, or involved with command concatenation, then execute the internal command<br>
+                <span style="color: #FFFFFF">.</span></li>
+                <li> Else (must be a stand-alone command in batch mode) scan the current folder and the PATH for a .COM, .EXE, .BAT, or .CMD file whose base name matches the original command token
+                    <ul>
+                      <li> If the first matching file is a .BAT or .CMD, then goto 7.3.exec and execute that script</li>
+                      <li> Else (match not found or first match is .EXE or .COM) execute the remembered internal command</li>
+                   </ul></li>
+              </ul></li>
+          <li> Else break the command token before the first occurrence of . \ or :<br>
+              If the preceding text is not an internal command, then goto 7.2<br>
+              Else the preceding text may be an internal command. Remember this command.<br>
+          <span style="color: #FFFFFF">.</span></li>
+          <li> Break the command token before the first occurrence of + / [ ] or standard token delimiter<br>
+              If the preceding text is a path to an existing file, then goto 7.2<br>
+              Else execute the remembered command</li>
+      </ul></li>
+  <li> If an internal command is parsed from a larger command token, then the unused portion of the command token is included in the argument list<br>
+  <span style="color: #FFFFFF">.</span></li>
+  <li> Note that ( does not have any special meaning in phase 7 - it is not a standard token delimiter<br>
+  <span style="color: #FFFFFF">.</span></li>
+  <li> Just because a command token is parsed as an internal command does not mean that it will execute successfully. Each internal command has its own rules as to what syntax is allowed</li>
+</ul>
+<strong class="text-strong">7.2 - Execute volume change</strong> - Else if the command token does not begin with a quote, is exactly two characters long, and the 2nd character is a colon, then change the volume
+<ul>
+  <li> Details skipped for now</li>
+</ul>
+<strong class="text-strong">7.3 - Execute external command</strong> - Else try to treat the command as an external command
+<ul>
+  <li> Details about error detection and label detection skipped for now</li>
+  <li> 7.3.exec - Execute the external command.</li>
+</ul>
+<strong class="text-strong">7.4 - Ignore a label</strong> - Ignore the command and all its arguments if the command token begins with :  <br>
+Rules in 7.2 and 7.3 may prevent a label from reaching this point<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>30 Jan 2018 08:25</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I just reread <a href="viewtopic897b.html?f=3&amp;t=774&amp;start=15#p34254" class="postlink">this post</a>, and realized that ( does not function as a command token delimiter for the first command after an unexecuted label within a parenthesized block
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(
+  :UnexecutedLabel
+  echo(1 FAILS &amp; echo(2 OK
+  
+  echo(3 OK
+  
+  :UnexecutedLabel
+  :ExecutedLabel
+  echo(4 OK
+)
+</code></pre></div>
+Also, A parenthesized block cannot follow immediately after an unexecuted label within a parenthesized block.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(
+  :UnexecutedLabel
+  (echo 1 FAILS) &amp; (echo 2 OK)
+
+  (echo 3 OK)
+
+  :UnexecutedLabel
+  :ExecutedLabel
+  (echo 4 OK)
+)
+</code></pre></div>
+It seems likely that the parenthesized block parser implementation is what causes ( to function as a command token delimiter, which I suspect is an unintended side effect.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>30 Jan 2018 09:07</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopic37b7.html?p=55548#p55548" data-post-id="55548" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Jan 2018 05:58</div></cite><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic1872.html?p=55546#p55546" data-post-id="55546" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Jan 2018 05:35</div></cite>I wonder if command blocks, concatenation, FOR and IF simply use command line search rules</div></blockquote>
+My question is, why the hell is there any difference at all  <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question"> <br>
+I can't believe that this is intentionally, but what type of code would produce such a behavior?
+</div></blockquote>
+Well, the extra test deals with discovery of a batch file (not any other type of external file), and this is often needed when using CALL. There is no obvious reason to ever CALL a batch file from the command line. (Yes there are some hacky issues that could make a command line CALL useful, but I doubt such uses were planned for)<br>
+<br>
+So I'm guessing that the odd extra batch test is related to the CALL mechanism, and there are some unintended side effects that control when the test is performed, and when it is not.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Discussion about jeb's batch parsing rules on StackOverflow</h3>
+				<div class="date">Posted: <strong>30 Jan 2018 15:09</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I've incorporated the revised phase 7 rules into the <a href="https://stackoverflow.com/a/4095133/1012053" class="postlink">SO post</a>, along with a number of additional changes.<br>
+<br>
+The last major addition that I want to do is add a new answer to the SO question that collects all rules about labels into one place. Some of the information will be redundant with info in the main answer. But the rules about how GOTO and CALL parse labels will be new. Once I finish this, I will add a reference to label answer within the main answer.<br>
+<br>
+Another possible refinement is to flesh out the rules how external commands are identified (involving current directory, PATH, PATHEXT, and file associations, ...). I'm not yet committed to doing this, but I think it would be really useful.<br>
+<br>
+The last major project I can think of would be to investigate and document the phase 7 option and argument parsing rules for each internal command. But I seriously doubt I will ever undertake this effort.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>3</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8355&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:57:45 GMT -->
+</html>

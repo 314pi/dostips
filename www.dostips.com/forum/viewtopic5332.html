@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8717&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; List of files on HDD</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>List of files on HDD</h2>
+		<p><a href="viewtopicd1ab.html?f=3&amp;t=8717">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8717</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>List of files on HDD</h3>
+				<div class="date">Posted: <strong>14 Jul 2018 22:14</strong></div>
+				<div class="author">by <strong>JohnC</strong></div>
+				<div class="content">Hi,<br>
+Can anyone help in showing me a command line to extract a simple recursive list of all files and extensions but no path.<br>
+<br>
+Ive tried dir /s/b/a-d &gt; j.txt but that still gives me the path as well<br>
+<br>
+thanks<br>
+<br>
+John</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: List of files on HDD</h3>
+				<div class="date">Posted: <strong>15 Jul 2018 05:31</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">If i understand your task right, then the following might help you.<br>
+Command line sample:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@(&gt;"j.txt" (for /f "tokens=*" %a in ('dir /s/b/a-d ') do @echo(%~nxa))
+</code></pre></div>
+Batch file example:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+&gt;"j.txt" (for /f "tokens=*" %%a in ('dir /s/b/a-d ') do @echo(%%~nxa)
+goto :eof
+</code></pre></div>
+
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: List of files on HDD</h3>
+				<div class="date">Posted: <strong>15 Jul 2018 12:29</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content">Using ForFiles, whilst not the most efficient command, is a simple command to use, (Enter <strong class="text-strong">ForFiles /?</strong> at the Command Prompt for usage information).<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>ForFiles /S /C "Cmd /C If @IsDir==FALSE Echo @File"&gt;"j.txt"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: List of files on HDD</h3>
+				<div class="date">Posted: <strong>17 Jul 2018 22:49</strong></div>
+				<div class="author">by <strong>JohnC</strong></div>
+				<div class="content">Thanks for your suggestions. I now have what I was looking for. Apologies for not responding sooner - I was expecting an email notification for replies...cheers John</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: List of files on HDD</h3>
+				<div class="date">Posted: <strong>19 Jul 2018 00:42</strong></div>
+				<div class="author">by <strong>JohnC</strong></div>
+				<div class="content">Sorry, one more request....in the same command line - how do I isolate specific file extensions eg *.jpg *.mov *.mp4 ?   thanks again, John</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: List of files on HDD</h3>
+				<div class="date">Posted: <strong>19 Jul 2018 03:45</strong></div>
+				<div class="author">by <strong>Compo</strong></div>
+				<div class="content">You could use the <strong class="text-strong">Dir</strong> command as provided by penpen:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(For /F "Delims=" %A In ('Dir /B/S/A-D *.jpg *.mov *.mp4') Do @Echo %~nxA)&gt;"j.txt"</code></pre></div>
+
+You could also use the <strong class="text-strong">RoboCopy</strong> command:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(For /F "Delims=" %A In ('RoboCopy . null *.jpg *.mov *.mp4 /S /XJ /L /NS /NC /NDL /NJH /NJS') Do @Echo %~nxA)&gt;"j.txt"</code></pre></div>
+
+Or my usual preference, the <strong class="text-strong">Where</strong> command:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(For /F "Delims=" %A In ('Where /R . *.jpg *.mov *.mp4') Do @Echo %~nxA)&gt;"j.txt"</code></pre></div><em class="text-italics">If, for instance, the search mask is <strong class="text-strong">*.doc *.xls</strong>, this would return only those file types. My experience with the <strong class="text-strong">Dir</strong> and <strong class="text-strong">RoboCopy</strong> options is that they seem to also include those with <strong class="text-strong">*.docm *.docx *.xlsb *.xlsm *.xlsx</strong> etc.</em><br>
+<br>
+Remember also that if used from a batch file to double up the <strong class="text-strong">%</strong> characters:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@(For /F "Delims=" %%A In ('Where /R . *.jpg *.mov *.mp4') Do @Echo %%~nxA)&gt;"j.txt"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: List of files on HDD</h3>
+				<div class="date">Posted: <strong>19 Jul 2018 06:00</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">@Compo,<br>
+I don't like the weirdness of <strong class="text-strong">echo(</strong> and the confusion it causes, I only use it whenever I can't be sure that <strong class="text-strong">"/?"</strong> will not appear in the echo's parameter which in this case can not happen with file names, maybe you feel the same about that; I don't know, but you should at least use <strong class="text-strong">echo,</strong> to protect against <strong class="text-strong">on</strong> and <strong class="text-strong">off</strong> (or whitespace/empty parameter which can't happen is this case).<br>
+<br>
+@JohnC,<br>
+Parsing the output from <strong class="text-strong">DIR</strong> or any other command that lists files, can get slow if the number of files is very large(it has the potential to reach millions), because <strong class="text-strong">FOR</strong> command has to wait for <strong class="text-strong">DIR</strong> to finish its job, then only after that it starts feeding the body of loop with gathered data.<br>
+So another alternative is to use build-in file listing capabilities of <strong class="text-strong">FOR</strong> command. <strong class="text-strong">But The disadvantage is that it can not list hidden files - (<span style="color: #008000">files within hidden directories will be listed</span>)</strong>. That being said you should decide which method fits best to your needs.<br>
+<br>
+Also note that on an NTFS volumes, directory permissions may prevent you from accessing some directories thus not being able to list files in them, no matter which method you use.<br>
+<br>
+These are for using at command prompt, for use in batch files you need to double the percents(%)<br>
+<br>
+List all files (<strong class="text-strong">except hidden files</strong>):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(for /D /R %a in (.) do @for %a in ("%~a\*") do @echo,%~nxa)&gt;"j.txt"
+</code></pre></div>
+
+OR<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(for /R %a in (*) do @if not exist "%~a\" echo,%~nxa)&gt;"j.txt"
+</code></pre></div>
+
+<br>
+Filtered list based on file extension (<strong class="text-strong">except hidden files</strong>):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(for /D /R %a in (.) do @for %a in ("%~a\*.jpg" "%~a\*.mov" "%~a\*.mp4") do @echo,%~nxa)&gt;"j.txt"
+</code></pre></div>
+
+OR<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(for /R %a in (*.jpg *.mov *.mp4) do @if not exist "%~a\" echo,%~nxa)&gt;"j.txt"
+</code></pre></div>
+
+In the first alternative solution the reason for using <strong class="text-strong">(.)</strong> instead of <strong class="text-strong">(*)</strong> is to enable the <strong class="text-strong">FOR</strong> command to see and recurse into the hidden directories as well.<br>
+In the second alternative solution, <strong class="text-strong">if not exist "%~a\"</strong> filters out the directories from listing, so the trailing backslash (\) in <strong class="text-strong">"%~a\"</strong> is crucial.<br>
+<br>
+The above codes list files in current directory and all of its sub directories. Alternatively you can explicitly specify which directory to list:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /D /R "C:\MyFolder\" %a in (.) @for %a in ("%~a\*") ...
+for /R "C:\MyFolder\" %a in (*) do @if not exist "%~a\" ...
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: List of files on HDD</h3>
+				<div class="date">Posted: <strong>19 Jul 2018 17:52</strong></div>
+				<div class="author">by <strong>JohnC</strong></div>
+				<div class="content">Perfect...thank you</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8717&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:18 GMT -->
+</html>

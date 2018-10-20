@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1746&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:05:48 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Does string1 begin with string2 bug or is it just me?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Does string1 begin with string2 bug or is it just me?</h2>
+		<p><a href="viewtopic5bb5.html?f=3&amp;t=1746">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1746</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Does string1 begin with string2 bug or is it just me?</h3>
+				<div class="date">Posted: <strong>05 Apr 2011 08:52</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content">Source: <a href="../DtCodeSnippets.html#Snippets.DoesString1StartWithString2" class="postlink">Does String1 begin with String2</a><br /><br />Code being tested with slight modification ( on WinXP)<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />SETLOCAL ENABLEDELAYEDEXPANSION<br />set string1=&quot;ant&quot;<br />set string2=&quot;testing&quot;<br />set s=@@@%string1%<br />if &quot;%s%&quot;==&quot;!s:@@@%string2%!=&quot; (<br />&nbsp; &nbsp; echo.%string1% doesn`t begin with %string2%<br />) ELSE (<br />&nbsp; &nbsp; echo.%string1% begins with %string2%<br />)<br /></code></pre></div><br /><br />on the command line<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\work&gt;type test.bat<br />@echo off<br />SETLOCAL ENABLEDELAYEDEXPANSION<br />set string1=&quot;ant&quot;<br />set string2=&quot;testing&quot;<br />set s=@@@%string1%<br />if &quot;%s%&quot;==&quot;!s:@@@%string2%!=&quot; (<br />&nbsp; &nbsp; echo.%string1% doesnt begin with %string2%<br />) ELSE (<br />&nbsp; &nbsp; echo.%string1% begins with %string2%<br />)<br /><br />C:\work&gt;test.bat<br />&quot;ant&quot; begins with &quot;testing&quot;<br /></code></pre></div><br /><br />clearly how can &quot;ant&quot; begins with &quot;testing&quot;. Is it me, or is it a bug?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Does string1 begin with string2 bug or is it just me?</h3>
+				<div class="date">Posted: <strong>05 Apr 2011 13:19</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Yes you are right, it's a bug in <a href="../DtCodeSnippets.html#Snippets.DoesString1StartWithString2" class="postlink">http://www.dostips.com/DtCodeSnippets.php#Snippets.DoesString1StartWithString2</a> ( And I always fogot how to use the url-tag ).<br /><br />But I didn't believe that you didn't found the bug  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><br />And of course batch is good for having fun, not for writing readable, good or big programs.<br />I used here my personal definition of fun, there could be persons who didn't share my definition.<br /><br />jeb</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Does string1 begin with string2 bug or is it just me?</h3>
+				<div class="date">Posted: <strong>05 Apr 2011 22:08</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">Fixed - thanks guys!  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /><br /><br />old:<br />if &quot;%s%&quot;==&quot;!s:@@@%string2%<span style="color: #FF0000">!=</span>&quot; (<br />new:<br />if &quot;%s%&quot;==&quot;!s:@@@%string2%<span style="color: #00FF00">=!</span>&quot; (</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Does string1 begin with string2 bug or is it just me?</h3>
+				<div class="date">Posted: <strong>05 Apr 2011 22:23</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content"><blockquote><div><cite>DosItHelp wrote:</cite>Fixed - thanks guys!  :D</div></blockquote><br /><br />ok, did i do something incorrect  this time ?<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\work&gt;type test.bat<br />@echo off<br />SETLOCAL ENABLEDELAYEDEXPANSION<br />set string1=&quot;testing&quot;<br />set string2=&quot;test&quot;<br />set s=@@@%string1%<br />if &quot;%s%&quot;==&quot;!s:@@@%string2%=!&quot; (<br />&nbsp; &nbsp; echo.%string1% doesnt begin with %string2%<br />) ELSE (<br />&nbsp; &nbsp; echo.%string1% begins with %string2%<br />)<br /><br />C:\work&gt;test.bat<br />&quot;testing&quot; doesnt begin with &quot;test&quot;<br /></code></pre></div><br /><br />but &quot;testing&quot; does begin with &quot;test&quot;. I think its just the echo part ?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Does string1 begin with string2 bug or is it just me?</h3>
+				<div class="date">Posted: <strong>05 Apr 2011 22:46</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">The double quotes are trouble.<br />5th character of string1 is not a double quote.<br /><br />this should work:<br />  set string1=&quot;test&quot;ing<br />  set string2=&quot;test&quot;<br /><br />or this:<br />  set &quot;string1=testing&quot;<br />  set &quot;string2=test&quot;<br /><br />or this:<br />  set string1=testing<br />  set string2=test<br /><br />or even this<br />  set &quot;string1=&quot;test&quot;ing&quot;<br />  set &quot;string2=&quot;test&quot;&quot;<br /><br />but unbalanced quotes however will cause trouble in the IF statement:<br />  set &quot;string1=&quot;testing&quot;<br />  set &quot;string2=&quot;test&quot;</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1746&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:05:48 GMT -->
+</html>

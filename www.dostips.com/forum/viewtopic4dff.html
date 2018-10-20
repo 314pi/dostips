@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8551&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:14:42 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Playing with random ZEROs and ONEs</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Playing with random ZEROs and ONEs</h2>
+		<p><a href="viewtopicc674.html?f=3&amp;t=8551">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8551</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Playing with random ZEROs and ONEs</h3>
+				<div class="date">Posted: <strong>08 May 2018 06:25</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">I was curios how much can we go random in batch by combining inaccurate timing which is inherent in human with accuracy and predictability of a computer.<br>
+So I started playing a little with keyboard and timer in batch.<br>
+<br>
+So here it is<br>
+<img src="../../image.ibb.co/msa7m7/bits3.png" class="postimage" alt="Image"><br>
+<br>
+If the above image makes you carious enough then this is the code. Just don't press keys too quickly  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+mode con cols=145 lines=40
+cls
+set "TIME="
+for /F "tokens=1,3 delims=0123456789" %%A in ("%TIME: =0%") do set "time.delims=%%A%%B"
+set "HEX.Digits=0123456789abcdef"
+set "Winner[0]=None"
+set "Winner[1]=Zero"
+set "Winner[2]=One"
+set /a "hex4.val=hex4.bits=one=zero=bits=0"
+title Press any key to get next bit
+for /L %%A in () do (
+    pause&gt;nul
+    rem ping -n 2 127.0.0.1&gt;nul
+    for /F "tokens=4 delims=%time.delims%" %%A in ("!TIME: =0!") do set "centsec=%%A"
+    set /a "bit=!centsec:~1,1!&amp;1, zero+=^!bit, one+=bit, bits+=1"
+    set /a "dif=zero-one, sign=((dif&amp;0x80000000)&gt;&gt;31)&amp;1, dif*=1-2*sign, Winner=(^!^!dif)*(sign+1)"
+    set /a "izr=(zero*100)/bits, fzr=((zero*100)%%bits)*100/bits"
+    set /a "or=10000-100*izr-fzr, ior=or/100, for=or%%100"
+    if /i !fzr! LEQ 9 set "fzr=0!fzr!
+    if /i !for! LEQ 9 set "for=0!for!
+    
+    for %%i in (!Winner!) do set "Winner=!Winner[%%i]!"
+
+    set /a "hex128.bits=(bits-1)%%128"
+    if /i !hex128.bits! EQU 0 (
+        set "hex128=#"
+    ) else if /i !hex4.bits! EQU 0 (
+        set "hex128=#!hex128!"
+    )
+    set /a "hex4.val+=bit&lt;&lt;hex4.bits, hex4.bits=(hex4.bits+1)%%4"
+    for %%i in (!hex4.val!) do set "hex128=!Hex.Digits:~%%i,1!!hex128:~1!"
+    set /a "rnd=hex4.val, hex4.val*=^!^!hex4.bits, hex128.bits+=1"
+
+    set /p "=!bit!"&lt;nul
+    set "title="
+    set "title=!title!Zero: !zero!   One: !one! | Winner: !Winner!   Dif: !dif! | "
+    set "title=!title!bits: !bits! | Ratio  Zero: !izr!.!fzr!%%   One: !ior!.!for!%% | "
+    set "title=!title!Last 128bit Hex(LE-bits): 0x!hex128! !hex128.bits!/128 | "
+    set "title=!title!Press any key to get next bit"
+    title !title!
+    set /a "centsec=!centsec:~0,1!*10+!centsec:~1,1!"
+    set /a "kbd_delay=centsec*rnd"
+    rem for /L %%A in (1,1,!kbd_delay!) do pause&lt;nul&gt;nul
+)
+</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8551&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:14:42 GMT -->
+</html>

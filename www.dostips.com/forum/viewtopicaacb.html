@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=9&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:44:52 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; trying to delete files in one directory older than today</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>trying to delete files in one directory older than today</h2>
+		<p><a href="viewtopic4d4b.html?f=3&amp;t=9">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=9</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>trying to delete files in one directory older than today</h3>
+				<div class="date">Posted: <strong>06 Jun 2006 09:14</strong></div>
+				<div class="author">by <strong>gigglehurts</strong></div>
+				<div class="content">Hi - I'd like to write a batch file for windows that would look in one directory and delete the text files that have a modified date older than today.  I was looking at a related script on this site, but would it apply to the modfied date?<br /><br />Thanks,<br />Stephen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>delete files not from today</h3>
+				<div class="date">Posted: <strong>06 Jun 2006 12:40</strong></div>
+				<div class="author">by <strong>resource58</strong></div>
+				<div class="content">I used this to delete files not from today, where files were of the form FOO20060606-1000.txt. You can change the dir command appropriately<br /><br />for /f %%i in ('dir /b %SRCDIR% ^| findstr /v /b FOO%TODAY%') do (<br />   del /f %SRCDIR%\%%i<br />)<br /><br />Getting %TODAY% from date/t is left as an exercise to the reader. <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br />Alternately, something like this<br /><br />:: %1 n entries to leave<br /><img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" />elFn<br />for /f "skip=%1 delims=:" %%a IN ('DIR /O-D /B %SRCDIR%\*.*') do (<br />	del "%SRCDIR%\%%a"<br />)<br />goto :eof<br /><br />will delete n files sorted by date. Play with the dir command to get what you want. Reading the fileattr is another way. <br /><br /><!-- m --><a class="postlink" href="http://resource58.blogspot.com/">http://resource58.blogspot.com</a><!-- m --></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3></h3>
+				<div class="date">Posted: <strong>07 Jun 2006 19:29</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">Try this:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cd &quot;\yourdirectory\here&quot;<br />for %%a in &#40;*.txt&#41; do echo.%%~ta|findstr /v /b /c:&quot;%date:~4%&quot;&gt;NUL&amp;&amp;del &quot;%%a&quot;</code></pre></div><br /><br /><strong class="text-strong">The FOR loop</strong> - finds all txt files in the directory.<br /><strong class="text-strong">echo.%%~ta</strong> - resolves into file date and file time which will be piped into findstr.<br /><strong class="text-strong">%date:~4%</strong> - resolves into the current date without the day string.<br /><strong class="text-strong">findstr /v /b /c:"..."&gt;NUL</strong> only succeeds when %%~ta doesn't start with todays date.<br /><strong class="text-strong">&gt;NUL</strong> - suppresses any display output <br /><strong class="text-strong">&amp;&amp;</strong> - makes sure that <strong class="text-strong">del "%%a"</strong> only executes when the findstr command succeeded.<br /><br />DOS IT HELP?  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=9&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:44:52 GMT -->
+</html>

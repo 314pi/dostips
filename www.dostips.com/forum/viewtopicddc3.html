@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1986 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:08:07 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>InStr, ReplStr: Case sensitive search and replace routines - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic61b7.html?t=1986">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopicddc3.html?f=3&amp;t=1986">InStr, ReplStr: Case sensitive search and replace routines</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting6e68.html?mode=reply&amp;f=3&amp;t=1986" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic9295.html?f=3&amp;t=1986&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="1986" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			1 post
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p8702" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile8702">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content8702">
+
+						<h3 class="first"><a href="#p8702">InStr, ReplStr: Case sensitive search and replace routines</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf3e7.html?mode=quote&amp;f=3&amp;p=8702" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic56ce.html?p=8702#p8702" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopic56ce.html?p=8702#p8702" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>23 Jun 2011 23:44
+			</p>
+			
+			
+			
+			<div class="content">Windows batch processing has fast and convenient string search and replace using %var:search=replace%. But this has significant limitations:<ul><li> The search is always case Insensitive. There is no native way to perform a case sensitive search and replace.</li><li> There is no good way to replace = * or :</li><li> We can't replace ! if delayed expansion is enabled</li><li> We can't replace % if delayed expansion is disabled</li></ul><br />There is no native way to identify the location of a substring within a string. There are efficient methods posted on this site to do this, but they rely on search and replace and so they have the same limitations as above.<br /><br />I have developed both macro and function libraries to perform both of the above functions. It is far from elegant - it relies on brute force character by character parsing of the string. But the routines are extremely flexible and powerful. There are no limitations to the characters that can be searched and/or replaced. The search is case sensitive by default, or it can be case insensitive. The routines can be called with delayed expansion enabled or disabled.<br /><br />The key routine is InStr - It can find the Nth occurrence of a substring within the target starting from the beginning or the end and return the position. Or it can find all occurrences and return the positions as a space delimited string.<br /><br />Once we have InStr, it is a simple matter to write a ReplStr routine that uses the position information along with standard substring operations to execute the replace functionality. I can envision that InStr could be the basis of many useful functions/macros.<br /><br />The macro version is contained in the macroLib_SearchStr.bat file. It is self documenting. It requires the following libraries that can be found on my <a href="viewtopic88ac.html?f=3&amp;t=1827&amp;start=30" class="postlink">Batch &quot;macros&quot; with arguments - Major Update</a> post.<ul><li>macroLib_Base.bat</li><li>macroLib_Return.bat</li><li>macroLib_String.bat</li><li>callMacro.bat (only needed if you don't want to use the %macro_call% syntax)</li></ul><br />The embedded help is difficult to read within the source code. It is best to load the library (run the batch file) and then use my <strong class="text-strong">margs</strong> and <strong class="text-strong">mhelp</strong> DOSKEY macros to read the help.<br /><br />For those that are uncomfortable with using macros I have also included a pure function implementation at the end of this post. The function version has no dependencies, but it is older and I believe less robust. It is also only partially documented. I can't remember all of the differences between the macros and the older functions.<br /><br /><strong class="text-strong">macroLib_SearchStr.bat</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />:: File = macroLib_SearchStr.bat<br />:: Dependencies: macroLib_Base.bat, macroLib_Return.bat, macroLib_String.bat<br />:: This batch file will fail if called while delayed expansion is enabled.<br />::<br />:: This library defines macros that involve searching for a string within<br />:: a string.<br />::<br />:: The library is designed to be installed in a directory in your PATH.<br />:: Any batch file that requires it can include it by simply placing the<br />:: following line of code at the top before any SETLOCAL:<br />::<br />::&nbsp; &nbsp;IF NOT DEFINED macro\load.MacroLib_SearchStr CALL macroLib_SearchStr<br />::<br />:: In this way the library becomes resident in your command shell environment<br />:: where it is available to any batch file that may need it. The IF condition<br />:: prevents unneccessary reloads of the same library.<br />::<br />::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::<br /><br />:: Conditionally load dependencies (normally residing somewhere in the PATH)<br />if not defined macro\load.macroLib_String call macroLib_String<br /><br />set macro\args.InStr=&nbsp; CaseOption&nbsp; TargetVar&nbsp; SearchVar&nbsp; OccurenceVal&nbsp; &#91;RtnVar&#93;<br />set macro\help.InStr=&nbsp; CaseOption&nbsp; TargetVar&nbsp; SearchVar&nbsp; OccurenceVal&nbsp; &#91;RtnVar&#93;%\n%<br />&nbsp; %\n%<br />&nbsp; Computes the position of the Nth occurrence or all occurrences of a search%\n%<br />&nbsp; string within a target string.%\n%<br />&nbsp; %\n%<br />&nbsp; CaseOption must have one of the following two values:%\n%<br />&nbsp; &nbsp; I (or i) = case insensitive%\n%<br />&nbsp; &nbsp; S (or s) = case sensitive%\n%<br />&nbsp; %\n%<br />&nbsp; The target string is contained within variable TargetVar.%\n%<br />&nbsp; %\n%<br />&nbsp; The search string is contained within variable SearchVar.%\n%<br />&nbsp; %\n%<br />&nbsp; The Nth occurence is specified by the OccurenceVal. OccurenceVal may%\n%<br />&nbsp; be specified using any expression supported by SET /A. A positive%\n%<br />&nbsp; OccurenceVal indicates the search starts from the beginning. A negative%\n%<br />&nbsp; OccurenceVal indicates the search starts from the end. An OccurenceVal%\n%<br />&nbsp; of 0 directs instr to return all matches as a space delimited string%\n%<br />&nbsp; of positions in increasing order.%\n%<br />&nbsp; %\n%<br />&nbsp; The resulting position(s) is always reported relative to the beginning%\n%<br />&nbsp; of the targetStr with 0 being the first character.%\n%<br />&nbsp; %\n%<br />&nbsp; The result is an empty string if an error occurs%\n%<br />&nbsp; %\n%<br />&nbsp; The result is returned in variable RtnVar%\n%<br />&nbsp; or the result is echoed if RtnVar is not specified%\n%<br />&nbsp; %\n%<br />&nbsp; The ERRORLEVEL is set as follows:%\n%<br />&nbsp; &nbsp; 0 - Success%\n%<br />&nbsp; &nbsp; 1 - The Nth occurence of SearchStr was not found%\n%<br />&nbsp; &nbsp; 2 - A required argument was missing or invalid%xLF%<br />%macro_BeginDef%<br />set macro.InStr=do (%\n%<br />&nbsp; setlocal enableDelayedExpansion%\n%<br />&nbsp; set &quot;macro.instr.err=&quot;%\n%<br />&nbsp; if &quot;%%~d&quot;==&quot;&quot; (set macro.instr.err=2) else (%\n%<br />&nbsp; &nbsp; set &quot;macro.instr.targetStr=^!%%~b^!&quot;%\n%<br />&nbsp; &nbsp; set &quot;macro.instr.searchStr=^!%%~c^!&quot;%\n%<br />&nbsp; &nbsp; if not defined macro.instr.targetStr set macro.instr.err=2%\n%<br />&nbsp; &nbsp; if not defined macro.instr.searchStr set macro.instr.err=2%\n%<br />&nbsp; &nbsp; if /i &quot;%%~a&quot; neq &quot;I&quot; if /i &quot;%%~a&quot; neq &quot;S&quot; set macro.instr.err=2%\n%<br />&nbsp; &nbsp; set /a &quot;occ=(%%~d)&quot; 2^^^&gt;nul%\n%<br />&nbsp; &nbsp; if errorlevel 1 set macro.instr.err=2%\n%<br />&nbsp; )%\n%<br />&nbsp; if not defined macro.instr.err (%\n%<br />&nbsp; &nbsp; !macro_call! (&quot;macro.instr.targetStr targetLen&quot;) !macro.StrLen!%\n%<br />&nbsp; &nbsp; !macro_call! (&quot;macro.instr.searchStr searchLen&quot;) !macro.StrLen!%\n%<br />&nbsp; &nbsp; if ^^^!searchLen^^^! gtr ^^^!targetLen^^^! set macro.instr.err=1%\n%<br />&nbsp; )%\n%<br />&nbsp; if not defined macro.instr.err (%\n%<br />&nbsp; &nbsp; if ^^^!occ^^^! geq 0 (%\n%<br />&nbsp; &nbsp; &nbsp; set /a &quot;beg=0, step=1, end=targetLen-searchLen&quot;%\n%<br />&nbsp; &nbsp; ) else (%\n%<br />&nbsp; &nbsp; &nbsp; set /a &quot;beg=targetLen-searchLen, step=-1, end=0&quot;%\n%<br />&nbsp; &nbsp; )%\n%<br />&nbsp; &nbsp; if ^^^!occ^^^! neq 0 (set /a &quot;occStep=step&quot;) else set /a &quot;occStep=0&quot;%\n%<br />&nbsp; &nbsp; set &quot;off=&quot;%\n%<br />&nbsp; &nbsp; set &quot;done=0&quot;%\n%<br />&nbsp; &nbsp; set /a skip=0%\n%<br />&nbsp; &nbsp; for %%l in (^^^!searchLen^^^!) do for /l %%o in (^^^!beg^^^!,^^^!step^^^!,^^^!end^^^!) do if ^^^!done^^^! equ 0 (%\n%<br />&nbsp; &nbsp; &nbsp; if ^^^!skip^^^! equ 0 (%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; set &quot;match=&quot;%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; if /i %%~a==S if &quot;^!macro.instr.targetStr:~%%o,%%l^!&quot;==&quot;^!macro.instr.searchStr^!&quot; set match=1%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; if /i %%~a==I if /i &quot;^!macro.instr.targetStr:~%%o,%%l^!&quot;==&quot;^!macro.instr.searchStr^!&quot; set match=1%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; if defined match (%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a occ-=occStep%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ^^^!occ^^^! equ 0 (%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set &quot;off=^!off^! %%o&quot;%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a done=occStep%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a skip=searchLen-1%\n%<br />&nbsp; &nbsp; &nbsp; &nbsp; )%\n%<br />&nbsp; &nbsp; &nbsp; ) else set /a skip-=1%\n%<br />&nbsp; &nbsp; )%\n%<br />&nbsp; )%\n%<br />&nbsp; if not defined macro.instr.err if not defined off set macro.instr.err=1%\n%<br />&nbsp; if defined macro.instr.err (set rtn=) else (%\n%<br />&nbsp; &nbsp; set &quot;rtn=^!off:~1^!&quot;%\n%<br />&nbsp; &nbsp; set macro.instr.err=0%\n%<br />&nbsp; )%\n%<br />&nbsp; !macro_call! (&quot;^!macro.instr.err^!&quot;) !macro.SetErr!%\n%<br />&nbsp; for /f &quot;delims=&quot; %%v in (&quot;&quot;^^^!rtn^^^!&quot;&quot;) do (%\n%<br />&nbsp; &nbsp; endlocal%\n%<br />&nbsp; &nbsp; if &quot;%%~e&quot; neq &quot;&quot; (set &quot;%%~e=%%~v&quot;) else echo(%%~v%\n%<br />&nbsp; )%\n%<br />)<br />%macro_Call% (&quot;macro.instr&quot;) %macro.EndDef%<br />%macro_EndAnyRtn%<br /><br />set macro\args.ReplStr=&nbsp; CaseOption&nbsp; TargetVar&nbsp; SearchVar&nbsp; ReplaceVar&nbsp; OccurenceVal&nbsp; &#91;RtnVar&#93;<br />set macro\help.ReplStr=&nbsp; CaseOption&nbsp; TargetVar&nbsp; SearchVar&nbsp; ReplaceVar&nbsp; OccurenceVal&nbsp; &#91;RtnVar&#93;%\n%<br />&nbsp; %\n%<br />&nbsp; Replaces the Nth occurrence or all occurrences of a search string found%\n%<br />&nbsp; within a target string with a replacement string.%\n%<br />&nbsp; %\n%<br />&nbsp; The return value may contain any combination of characters supported by DOS%\n%<br />&nbsp; except 0x0A ^&lt;Line Feed^&gt; or 0x0D ^&lt;Carreage Return^&gt;.%\n%<br />&nbsp; %\n%<br />&nbsp; CaseOption must have one of the following two values:%\n%<br />&nbsp; &nbsp; I (or i) = case insensitive search%\n%<br />&nbsp; &nbsp; S (or s) = case sensitive search%\n%<br />&nbsp; %\n%<br />&nbsp; The target string is contained within variable TargetVar.%\n%<br />&nbsp; %\n%<br />&nbsp; The search string is contained within variable SearchVar.%\n%<br />&nbsp; %\n%<br />&nbsp; The replacement string is contained within variable ReplaceVar.%\n%<br />&nbsp; An empty replacement string may be specified by an undefined variable%\n%<br />&nbsp; or by &quot;&quot;.%\n%<br />&nbsp; %\n%<br />&nbsp; The Nth occurence is specified by the OccurenceVal. OccurenceVal may%\n%<br />&nbsp; be specified using any expression supported by SET /A. A positive%\n%<br />&nbsp; OccurenceVal indicates the search starts from the beginning. A negative%\n%<br />&nbsp; OccurenceVal indicates the search starts from the end. An OccurenceVal%\n%<br />&nbsp; of 0 directs ReplStr to replace all occurrences.%\n%<br />&nbsp; %\n%<br />&nbsp; The result is returned in variable RtnVar%\n%<br />&nbsp; or the result is echoed if RtnVar is not specified%\n%<br />&nbsp; %\n%<br />&nbsp; The ERRORLEVEL is set as follows:%\n%<br />&nbsp; &nbsp; 0 - Success%\n%<br />&nbsp; &nbsp; 2 - A required argument was missing or invalid%xLF%<br />%macro_BeginDef%<br />set macro.ReplStr= do (%\n%<br />&nbsp; !macro_InitRtn!%\n%<br />&nbsp; setlocal enableDelayedExpansion%\n%<br />&nbsp; if &quot;%%~e&quot;==&quot;&quot; (set macro.replstr.err=2) else (%\n%<br />&nbsp; &nbsp; set &quot;macro.replstr.str=^!%%~b^!&quot;%\n%<br />&nbsp; &nbsp; !macro_Call! (&quot;%%c macro.replstr.searchLen&quot;) !macro.StrLen!%\n%<br />&nbsp; &nbsp; !macro_Call! (&quot;%%a %%b %%c %%e macro.replstr.found&quot;) !macro.InStr!%\n%<br />&nbsp; &nbsp; set &quot;macro.replStr.err=^!errorlevel^!&quot;%\n%<br />&nbsp; )%\n%<br />&nbsp; if ^^^!macro.replstr.err^^^! lss 2 (%\n%<br />&nbsp; &nbsp; set macro.replstr.err=0%\n%<br />&nbsp; &nbsp; set &quot;repl=^!%%~d^!&quot;%\n%<br />&nbsp; &nbsp; set &quot;rtnVar=%%~f&quot;%\n%<br />&nbsp; &nbsp; set &quot;rtn=&quot;%\n%<br />&nbsp; &nbsp; set beg=0%\n%<br />&nbsp; &nbsp; for %%f in (^^^!macro.replStr.found^^^!) do (%\n%<br />&nbsp; &nbsp; &nbsp; set /a len=%%f-beg%\n%<br />&nbsp; &nbsp; &nbsp; for /f &quot;tokens=1,2&quot; %%a in (&quot;^!beg^! ^!len^!&quot;) do set &quot;rtn=^!rtn^!^!macro.replstr.str:~%%a,%%b^!^!repl^!&quot;%\n%<br />&nbsp; &nbsp; &nbsp; set /a beg=%%f+macro.replstr.searchLen%\n%<br />&nbsp; &nbsp; )%\n%<br />&nbsp; &nbsp; for %%a in (^^^!beg^^^!) do set &quot;rtn=^!rtn^!^!macro.replstr.str:~%%a^!&quot;%\n%<br />&nbsp; ) else (%\n%<br />&nbsp; &nbsp; set &quot;rtn=&quot;%\n%<br />&nbsp; &nbsp; set &quot;rtnVar=&quot;%\n%<br />&nbsp; )%\n%<br />&nbsp; !macro_Call! (&quot;macro.replstr.err 1 rtn ^!rtnVar^!&quot;) !macro.Rtn1!%\n%<br />)<br />%macro_Call% (&quot;macro.ReplStr&quot;) %macro.EndDef%<br />%macro_EndAnyRtn%<br /><br />set macro\args.AnyReplStr=&nbsp; CaseOption&nbsp; TargetVar&nbsp; SearchVar&nbsp; ReplaceVar&nbsp; OccurenceVal&nbsp; &#91;RtnVar&#93;<br />set macro\help.AnyReplStr=&nbsp; CaseOption&nbsp; TargetVar&nbsp; SearchVar&nbsp; ReplaceVar&nbsp; OccurenceVal&nbsp; &#91;RtnVar&#93;%\n%<br />&nbsp; %\n%<br />&nbsp; Replaces the Nth occurrence or all occurrences of a search string found%\n%<br />&nbsp; within a target string with a replacement string.%\n%<br />&nbsp; %\n%<br />&nbsp; The return value may contain any combination of characters supported by DOS%\n%<br />&nbsp; including 0x0A ^&lt;Line Feed^&gt; and 0x0D ^&lt;Carriage Return^&gt;.%\n%<br />&nbsp; %\n%<br />&nbsp; %%macro_EndAnyRtn%% must follow a call to this macro, and it cannot share%\n%<br />&nbsp; a code block with the call.%\n%<br />&nbsp; %\n%<br />&nbsp; CaseOption must have one of the following two values:%\n%<br />&nbsp; &nbsp; I (or i) = case insensitive search%\n%<br />&nbsp; &nbsp; S (or s) = case sensitive search%\n%<br />&nbsp; %\n%<br />&nbsp; The target string is contained within variable TargetVar.%\n%<br />&nbsp; %\n%<br />&nbsp; The search string is contained within variable SearchVar.%\n%<br />&nbsp; %\n%<br />&nbsp; The replacement string is contained within variable ReplaceVar.%\n%<br />&nbsp; An empty replacement string may be specified by an undefined variable%\n%<br />&nbsp; or by &quot;&quot;.%\n%<br />&nbsp; %\n%<br />&nbsp; The Nth occurence is specified by the OccurenceVal. OccurenceVal may%\n%<br />&nbsp; be specified using any expression supported by SET /A. A positive%\n%<br />&nbsp; OccurenceVal indicates the search starts from the beginning. A negative%\n%<br />&nbsp; OccurenceVal indicates the search starts from the end. An OccurenceVal%\n%<br />&nbsp; of 0 directs AnyReplStr to replace all occurrences.%\n%<br />&nbsp; %\n%<br />&nbsp; The result is returned in variable RtnVar%\n%<br />&nbsp; or the result is echoed if RtnVar is not specified%\n%<br />&nbsp; %\n%<br />&nbsp; The ERRORLEVEL is set as follows:%\n%<br />&nbsp; &nbsp; 0 - Success%\n%<br />&nbsp; &nbsp; 2 - A required argument was missing or invalid%xLF%<br />%macro_BeginDef%<br />set macro.AnyReplStr= do (%\n%<br />&nbsp; !macro_InitRtn!%\n%<br />&nbsp; setlocal enableDelayedExpansion%\n%<br />&nbsp; if &quot;%%~e&quot;==&quot;&quot; (set macro.replstr.err=2) else (%\n%<br />&nbsp; &nbsp; set &quot;macro.AnyReplStr.str=^!%%~b^!&quot;%\n%<br />&nbsp; &nbsp; !macro_Call! (&quot;%%c macro.AnyReplStr.searchLen&quot;) !macro.StrLen!%\n%<br />&nbsp; &nbsp; !macro_Call! (&quot;%%a %%b %%c %%e macro.AnyReplStr.found&quot;) !macro.InStr!%\n%<br />&nbsp; &nbsp; set &quot;macro.AnyReplStr.err=^!errorlevel^!&quot;%\n%<br />&nbsp; )%\n%<br />&nbsp; if ^^^!macro.AnyReplStr.err^^^! lss 2 (%\n%<br />&nbsp; &nbsp; set macro.AnyReplStr.err=0%\n%<br />&nbsp; &nbsp; set &quot;repl=^!%%~d^!&quot;%\n%<br />&nbsp; &nbsp; set &quot;rtnVar=%%~f&quot;%\n%<br />&nbsp; &nbsp; set &quot;rtn=&quot;%\n%<br />&nbsp; &nbsp; set beg=0%\n%<br />&nbsp; &nbsp; for %%f in (^^^!macro.AnyReplStr.found^^^!) do (%\n%<br />&nbsp; &nbsp; &nbsp; set /a len=%%f-beg%\n%<br />&nbsp; &nbsp; &nbsp; for /f &quot;tokens=1,2&quot; %%a in (&quot;^!beg^! ^!len^!&quot;) do set &quot;rtn=^!rtn^!^!macro.AnyReplStr.str:~%%a,%%b^!^!repl^!&quot;%\n%<br />&nbsp; &nbsp; &nbsp; set /a beg=%%f+macro.AnyReplStr.searchLen%\n%<br />&nbsp; &nbsp; )%\n%<br />&nbsp; &nbsp; for %%a in (^^^!beg^^^!) do set &quot;rtn=^!rtn^!^!macro.AnyReplStr.str:~%%a^!&quot;%\n%<br />&nbsp; ) else (%\n%<br />&nbsp; &nbsp; set &quot;rtn=&quot;%\n%<br />&nbsp; &nbsp; set &quot;rtnVar=&quot;%\n%<br />&nbsp; )%\n%<br />&nbsp; !macro_Call! (&quot;macro.AnyReplStr.err 1 rtn ^!rtnVar^!&quot;) !macro.AnyRtn1!%\n%<br />)<br />%macro_Call% (&quot;macro.AnyReplStr&quot;) %macro.EndDef%<br />%macro_EndAnyRtn%<br /><br />::----------------------------------------------------<br />:: Mark that this library has been loaded.<br /><br />set macro\load.%~n0=1<br /></code></pre></div><br /><br /><br /><strong class="text-strong">Older function versions of the routines:</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />call :%*<br />exit /b<br /><br />:replStr &#91;/I&#93; TargetVar SearchVar ReplaceVar OccuranceVal &#91;RtnVar&#93;<br />&nbsp; %InitFcnRtn%<br />&nbsp; setlocal enableDelayedExpansion<br />&nbsp; if /i &quot;%~1&quot;==&quot;/I&quot; (<br />&nbsp; &nbsp; set &quot;replStr.opt=/I&quot;<br />&nbsp; &nbsp; shift /1<br />&nbsp; ) else set &quot;replStr.opt=&quot;<br />&nbsp; call :instr %replStr.opt% %1 %2 %4 replStr.found<br />&nbsp; set replStr.err=%errorlevel%<br />&nbsp; if %replStr.err% lss 2 (<br />&nbsp; &nbsp; set replStr.err=0<br />&nbsp; &nbsp; set &quot;replStr.str=!%~1!&quot;<br />&nbsp; &nbsp; call :strLen %2 replStr.searchLen<br />&nbsp; &nbsp; set &quot;repl=!%~3!&quot;<br />&nbsp; &nbsp; set &quot;rtnVar=%~5&quot;<br />&nbsp; &nbsp; set &quot;rtn=&quot;<br />&nbsp; &nbsp; set beg=0<br />&nbsp; &nbsp; for %%f in (!replStr.found!) do (<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;set /a len=%%f-beg<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;for /f &quot;tokens=1,2&quot; %%a in (&quot;!beg! !len!&quot;) do set &quot;rtn=!rtn!!replStr.str:~%%a,%%b!!repl!&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;set /a beg=%%f+replStr.searchLen<br />&nbsp; &nbsp; )<br />&nbsp; &nbsp; for %%a in (!beg!) do set &quot;rtn=!rtn!!replStr.str:~%%a!&quot;<br />&nbsp; ) else (<br />&nbsp; &nbsp; set &quot;rtn=&quot;<br />&nbsp; &nbsp; set &quot;rtnVar=&quot;<br />&nbsp; )<br />&nbsp; ( endlocal<br />&nbsp; &nbsp; if &quot;%~5&quot; neq &quot;&quot; (set &quot;%~5=%rtn%&quot;) else echo(%rtn%<br />&nbsp; &nbsp; exit /b %replStr.err%<br />&nbsp; )<br />exit /b<br /><br />:instr &#91;/I&#93; TargetVar SearchVar OccuranceVal &#91;RtnVar&#93;<br />::<br />:: Computes the position of the Nth occurrance of a search string within<br />:: a target string.<br />::<br />:: The case insensitive /I option directs instr to perform a case<br />:: insensitive search.<br />::<br />:: The target string is contained within variable TargetVar.<br />::<br />:: The search string is contained within variable SearchVar.<br />::<br />:: The Nth occurance is specified by the OccuranceVal. OccuranceVal may<br />:: be specified using any expression supported by SET /A. A positive<br />:: OccuranceVal indicates the search starts from the beginning. A negative<br />:: OccuranceVal indicates the search starts from the end. An OccuranceVal<br />:: of 0 directs instr to return all matches as a space delimited string<br />:: of positions in increasing order.<br />::<br />:: The resulting position(s) is always reported relative to the beginning<br />:: of the targetStr with 0 being the first character.<br />::<br />:: The result is an empty string if an error occurs<br />::<br />:: The result is returned in variable RtnVar<br />:: or the result is echoed if RtnVar is not specified<br />::<br />:: The ERRORLEVEL is set as follows:<br />::&nbsp; &nbsp;0 - Success<br />::&nbsp; &nbsp;1 - The Nth occurance of SearchStr was not found<br />::&nbsp; &nbsp;2 - A required argument was missing or invalid<br />::<br />&nbsp; setlocal enableDelayedExpansion<br />&nbsp; set instr.err=<br />&nbsp; if /i &quot;%~1&quot;==&quot;/I&quot; (<br />&nbsp; &nbsp; set &quot;instr.opt=/I&quot;<br />&nbsp; &nbsp; shift /1<br />&nbsp; ) else set &quot;instr.opt=&quot;<br />&nbsp; if &quot;%~3&quot;==&quot;&quot; set instr.err=2 else (<br />&nbsp; &nbsp; set &quot;instr.targetStr=!%~1!&quot;<br />&nbsp; &nbsp; set &quot;instr.searchStr=!%~2!&quot;<br />&nbsp; &nbsp; if not defined instr.targetStr set instr.err=2<br />&nbsp; &nbsp; if not defined instr.searchStr set instr.err=2<br />&nbsp; &nbsp; set /a occ=(%3) 2&gt;nul<br />&nbsp; &nbsp; if errorlevel 1 set instr.err=2<br />&nbsp; )<br />&nbsp; &nbsp;if not defined instr.err (<br />&nbsp; &nbsp; call :strlen instr.targetStr targetLen<br />&nbsp; &nbsp; call :strlen instr.searchStr searchLen<br />&nbsp; &nbsp; if !searchLen! gtr !targetLen! set instr.err=1<br />&nbsp; )<br />&nbsp; if not defined instr.err (<br />&nbsp; &nbsp; if !occ! geq 0 (<br />&nbsp; &nbsp; &nbsp; set /a &quot;beg=0, step=1, end=targetLen-searchLen&quot;<br />&nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; set /a &quot;beg=targetLen-searchLen, step=-1, end=0&quot;<br />&nbsp; &nbsp; )<br />&nbsp; &nbsp; if !occ! neq 0 (set /a &quot;occStep=step&quot;) else set /a &quot;occStep=0&quot;<br />&nbsp; &nbsp; set &quot;off=&quot;<br />&nbsp; &nbsp; set &quot;done=0&quot;<br />&nbsp; &nbsp; set /a skip=0<br />&nbsp; &nbsp; for %%l in (!searchLen!) do for /l %%o in (!beg!,!step!,!end!) do if !done! equ 0 (<br />&nbsp; &nbsp; &nbsp; if !skip! equ 0 (<br />&nbsp; &nbsp; &nbsp; &nbsp; if %instr.opt% &quot;!instr.targetStr:~%%o,%%l!&quot;==&quot;!instr.searchStr!&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a occ-=occStep<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if !occ! equ 0 (<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; set off=!off! %%o<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; set /a done=occStep<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; set /a skip=searchLen-1<br />&nbsp; &nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; &nbsp; ) else set /a skip-=1<br />&nbsp; &nbsp; )<br />&nbsp; )<br />&nbsp; if not defined instr.err if not defined off set instr.err=1<br />&nbsp; if defined instr.err (set rtn=) else set &quot;rtn=!off:~1!&quot;&amp; set instr.err=0<br />&nbsp; (endlocal &amp; rem -- return values<br />&nbsp; &nbsp; if &quot;%~4&quot; neq &quot;&quot; (set %~4=%rtn%) else (echo:%rtn%)<br />&nbsp; &nbsp; exit /b %instr.err%<br />&nbsp; )<br />exit /b<br /><br />:strLen string len -- returns the length of a string<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-- string &#91;in&#93;&nbsp; - variable name containing the string being measured for length<br />::&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-- len&nbsp; &nbsp; &#91;out&#93; - variable to be used to return the string length<br />:: Many thanks to 'sowgtsoi', but also 'jeb' and 'amel27' dostips forum users helped making this short and efficient<br />:$created 20081122 :$changed 20101116 :$categories StringOperation<br />:$source http://www.dostips.com<br />(&nbsp; &nbsp;SETLOCAL ENABLEDELAYEDEXPANSION<br />&nbsp; &nbsp; set &quot;str=A!%~1!&quot;&amp;rem keep the A up front to ensure we get the length and not the upper bound<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;rem it also avoids trouble in case of empty string<br />&nbsp; &nbsp; set &quot;len=0&quot;<br />&nbsp; &nbsp; for /L %%A in (12,-1,0) do (<br />&nbsp; &nbsp; &nbsp; &nbsp; set /a &quot;len|=1&lt;&lt;%%A&quot;<br />&nbsp; &nbsp; &nbsp; &nbsp; for %%B in (!len!) do if &quot;!str:~%%B,1!&quot;==&quot;&quot; set /a &quot;len&amp;=~1&lt;&lt;%%A&quot;<br />&nbsp; &nbsp; )<br />)<br />( ENDLOCAL &amp; REM RETURN VALUES<br />&nbsp; &nbsp; IF &quot;%~2&quot; NEQ &quot;&quot; SET /a %~2=%len%<br />)<br />EXIT /b<br /></code></pre></div><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting6e68.html?mode=reply&amp;f=3&amp;t=1986" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic9295.html?f=3&amp;t=1986&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+	
+	
+	
+			<div class="pagination">
+			1 post
+							&bull; Page <strong>1</strong> of <strong>1</strong>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron68e3.gif?cron_type=cron.task.text_reparser.pm_text" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1986 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:08:09 GMT -->
+</html>

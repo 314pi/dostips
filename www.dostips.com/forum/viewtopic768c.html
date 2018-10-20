@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8565&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:44 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; How do i return a string from cpp program to caller batch file?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>How do i return a string from cpp program to caller batch file?</h2>
+		<p><a href="viewtopicbffd.html?f=3&amp;t=8565">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8565</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>How do i return a string from cpp program to caller batch file?</h3>
+				<div class="date">Posted: <strong>18 May 2018 14:38</strong></div>
+				<div class="author">by <strong>uglyninja</strong></div>
+				<div class="content">The title is a bit long, it may sound really long and confusing (maybe not for Aaciini  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> ) but,<br>
+<br>
+How do i put the result into variable %result% in the caller batch file from c++ program?<br>
+Is there no other way than saving stdout to a temp file and then reading it with set /p?<br>
+The way i showed above requires two files to function as a user-friendly plugin:<br>
+<br>
+1 - (the file that you call) a bat file that saves the output of (2) to a temp file, saves the result to the %result% variable and deletes the temp file<br>
+2 - the C++ plugin (.exe)<br>
+<br>
+I asked this question on StackOverflow before and they don't seem to find any other way than this one.<br>
+<br>
+The way i showed above is possible because the batch file that you called share environmental variables but the cpp program and caller .bat don't.<br>
+<br>
+Thanks for any help as this topic should be actually discussed.<br>
+<br>
+- uglyninja</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i return a string from cpp program to caller batch file?</h3>
+				<div class="date">Posted: <strong>18 May 2018 17:04</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">You can parse strings written to the StdOut in a FOR /F loop.<br>
+<br>
+In your C++ code you would have something like
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>std::cout &lt;&lt; "whatever string value" &lt;&lt; std::endl;</code></pre></div>
+And in the Batch script
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f "delims=" %%i in ('program.exe') do set "result=%%i"</code></pre></div>
+
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i return a string from cpp program to caller batch file?</h3>
+				<div class="date">Posted: <strong>19 May 2018 01:54</strong></div>
+				<div class="author">by <strong>uglyninja</strong></div>
+				<div class="content">I know that way, so it isn't possible to set result variable without putting it into a for loop?<br>
+This way isn't possible i guess:<br>
+<br>
+just calling the cpp exe<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call test arg1 arg2</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i return a string from cpp program to caller batch file?</h3>
+				<div class="date">Posted: <strong>19 May 2018 02:59</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Child processes inherit environment variables from the parent process. But it doesn't work vice versa. The value of an environment variable that was changed in the child process isn't accessible in the parent process.<br>
+<br>
+I assume your example is about using CALL to run another batch code where it would work. The reason for that is that both the calling and the called script run in the same cmd.exe process which means they share the same environment.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i return a string from cpp program to caller batch file?</h3>
+				<div class="date">Posted: <strong>19 May 2018 08:59</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">It is typically not possible to do it the way you want, because of the reasons that aGerman has pointed out.<br>
+But in a pure technical standpoint view it is possible. First your cpp (or whatever language that is capable of accessing windows API) program needs to inject a thread to it's parent process (which is presumably cmd.exe) and via that injected thread define environment variables in the parent process. This is an advanced topic entirely on it's own which does nothing have to do with batch and is out of scope of this forum.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i return a string from cpp program to caller batch file?</h3>
+				<div class="date">Posted: <strong>21 May 2018 12:54</strong></div>
+				<div class="author">by <strong>jfl</strong></div>
+				<div class="content">Another way would be for the cpp program to generate a temporary batch file with the set commands.<br>
+Then, after invoking the cpp program, the parent batch file would call that temporary batch, then delete it.<br>
+This is useful if you want the cpp program to generate output that is visible by the user.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i return a string from cpp program to caller batch file?</h3>
+				<div class="date">Posted: <strong>21 May 2018 19:46</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8b07.html?mode=viewprofile&amp;u=4311">jfl</a> wrote: <a href="viewtopic35ac.html?p=56843#p56843" data-post-id="56843" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">21 May 2018 12:54</div></cite>
+Another way would be for the cpp program to generate a temporary batch file with the set commands.
+</div></blockquote>
+The OP is already aware of temp file technique, the question was about possibility of a method to do the assignment directly with custom external program, so using a temporary batch file instead of temporary data file doesn't address the question.<br>
+
+<blockquote><div><cite><a href="memberlist9344.html?mode=viewprofile&amp;u=9218">uglyninja</a> wrote: <a href="viewtopic66e4.html?p=56810#p56810" data-post-id="56810" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">19 May 2018 01:54</div></cite>
+just calling the cpp exe<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call test arg1 arg2</code></pre></div>
+</div></blockquote></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i return a string from cpp program to caller batch file?</h3>
+				<div class="date">Posted: <strong>22 May 2018 09:59</strong></div>
+				<div class="author">by <strong>jfl</strong></div>
+				<div class="content">Sorry, I read the question too fast.<br>
+<br>
+If you have a pointer to the injection method you mention, I'm interested: I got several requests in the past for setting shell environment variables!<br>
+And (for old timers) this used to be feasible easily in MS-DOS' command.com.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How do i return a string from cpp program to caller batch file?</h3>
+				<div class="date">Posted: <strong>22 May 2018 11:46</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">@jfl,<br>
+There are numerous resources on the net<br>
+<br>
+for start<br>
+<a href="https://www.endgame.com/blog/technical-blog/ten-process-injection-techniques-technical-survey-common-and-trending-process" class="postlink">https://www.endgame.com/blog/technical- ... ng-process</a><br>
+<a href="https://github.com/secrary/InjectProc" class="postlink">https://github.com/secrary/InjectProc</a><br>
+<a href="http://blogs.microsoft.co.il/pavely/2017/03/14/injecting-a-dll-without-a-remote-thread/" class="postlink">http://blogs.microsoft.co.il/pavely/201 ... te-thread/</a><br>
+<br>
+The task in not trivial and implementing it the right way is tricky, the topic is so vast and advanced that it doesn't worth the effort for such a simple task unless your are really interested in the subject.  There are many factors one have to consider in designing and implementing it, such as dealing 32bit and 64bit processes, direct code injection  or Dll-Injection, how to deliver data to the thread; by inlining data or by communicating with thread,.........  And there is chance of being captured by anti-malware products because of the behavior. But like anything else once it has resolved it becomes easy.<br>
+<br>
+Sorry if it went off-topic.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8565&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:16:44 GMT -->
+</html>

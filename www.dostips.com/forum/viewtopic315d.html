@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7990&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:20:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Best way to obfuscate a Batch File?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Best way to obfuscate a Batch File?</h2>
+		<p><a href="viewtopic3379.html?f=3&amp;t=7990">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7990</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>5</strong></div>
+					<div class="post">
+				<h3>Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>29 Jul 2017 02:20</strong></div>
+				<div class="author">by <strong>PaperTronics</strong></div>
+				<div class="content">Hey Everyone!<br /><br />Today, one of my non-programmer friends asked me if I could make a program which asks for the username and password when the computer starts up. I told him that it was a piece of cake for me... until he added, &quot;I also want it's code to be incomprehensible&quot;. So I figured that I should obfuscate the batch file. But what's the best way to do it? <br /><br />I don't care if the method to obfuscate it takes a lot of time, I just need the batch file to be secure so that other's can't edit the code and figure out the password. <br /><br /><br />Any help is greatly appreciated! <br />PaperTronics</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>29 Jul 2017 04:05</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">First of all thank you for using &quot;obfuscate&quot; instead of &quot;encode&quot; or &quot;encrypt&quot;. <strong class="text-strong">Any attempt to securely use a password in a batch code is doomed to failure!</strong><br />Obfuscated or not - somewhere in your code you will have a line like that:<br /><em class="text-italics">if [input]==[password] ([success]) else [error]</em><br />It doesnt matter if you might have your password obfuscated or if you might have used a hash instead or if you might have read the password from a remote file. All you have to do is to remove the comparison from the batch code.<br /><br />There are already dozens of possibilities using variables to obfuscate batch code. There are those bat2exe thingies that compress the code in a container (but will unpack it to the original code and execute it).<br /><br />That's another funny possibility. It doesn't even obfuscate the code. It only confuses your editor if you try to open the batch file  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />if &quot;%~1&quot;==&quot;&quot; exit /b<br />if /i &quot;%~x1&quot; neq &quot;.bat&quot; if /i &quot;%~x1&quot; neq &quot;.cmd&quot; exit /b<br />for /f %%i in (&quot;certutil.exe&quot;) do if not exist &quot;%%~$path:i&quot; (<br />&nbsp; echo CertUtil.exe not found.<br />&nbsp; pause<br />&nbsp; exit /b<br />)<br />&gt;&quot;temp.~b64&quot; echo(//4mY2xzDQo=<br />certutil.exe -f -decode &quot;temp.~b64&quot; &quot;%~n1___%~x1&quot;<br />del &quot;temp.~b64&quot;<br />copy &quot;%~n1___%~x1&quot; /b + &quot;%~1&quot; /b<br /></code></pre></div><br /><br />Drag/drop your file to it. It creates a new batch file with 3 underscores appended to the name. Try to open it in a text editor. You should see any kind of Chinese characters. <br />If you open it in a HEX editor you'll see how it works - it prepends an FF FE Byte Order Mark (that leads to parse the code as UTF-16 LE in a text editor) + CLS to remove the error message that cmd.exe will throw.<br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>29 Jul 2017 08:12</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">I immediately thought of this: <!-- l --><a class="postlink-local" href="viewtopicbd95-2.html?f=3&amp;t=4876">viewtopic.php?f=3&amp;t=4876</a><!-- l --></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>29 Jul 2017 09:28</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Yeah but I was rather thinking about something like that:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal EnableDelayedExpansion<br />%=sun%set% in the morning% &quot;%tim%e=&quot;&amp; %is not %for %%i%diotic% i%nsura%n%ces% (b%ut% c%oul% d%n't% f%i% g%ure out% h%ow% j%ournalists% %ma%k%e% l%ong% m%anuscripts % n%asty% %up%p%ercase% %e%q%ual% %signs ma%r%k% %seriou%s %=tex%t%ual% v%iolation% %=no%w%here% %are e%x%tra% % o%z%one layers%) %=please% do %not fight% for %%j%ulian's incompetence% i%n batch codi%n%g% (%=this guy f%a%ils% e%very time &amp;% %c o n t %i %n u% o u %s l% y) %=rather%do %=un%set &quot;%elem%e%nts%=!e%nergy%!%%i%n%%%j%ourney trips%&quot;<br /><br />%bab%%e:~15,2%%=o bab%%e:~66,2% ^<br />%don't scar%!%e:~195,1%!%me away%<br />%sh%%e:~132,2%%doesn't let m%%e:~213,1%%se%%e:~170,2%%her smile%<br /></code></pre></div><br />The code defines a variable e in a nested FOR loop and prints its content. Using substrings of e and undefined variables you can obfuscate the code. A human brain will always try to read known words in it.<br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>29 Jul 2017 11:43</strong></div>
+				<div class="author">by <strong>Hackoo</strong></div>
+				<div class="content"><blockquote><div><cite>aGerman wrote:</cite>First of all thank you for using &quot;obfuscate&quot; instead of &quot;encode&quot; or &quot;encrypt&quot;. <strong class="text-strong">Any attempt to securely use a password in a batch code is doomed to failure!</strong><br />Obfuscated or not - somewhere in your code you will have a line like that:<br /><em class="text-italics">if [input]==[password] ([success]) else [error]</em><br />It doesnt matter if you might have your password obfuscated or if you might have used a hash instead or if you might have read the password from a remote file. All you have to do is to remove the comparison from the batch code.<br /><br />There are already dozens of possibilities using variables to obfuscate batch code. There are those bat2exe thingies that compress the code in a container (but will unpack it to the original code and execute it).<br /><br />That's another funny possibility. It doesn't even obfuscate the code. It only confuses your editor if you try to open the batch file  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />if &quot;%~1&quot;==&quot;&quot; exit /b<br />if /i &quot;%~x1&quot; neq &quot;.bat&quot; if /i &quot;%~x1&quot; neq &quot;.cmd&quot; exit /b<br />for /f %%i in (&quot;certutil.exe&quot;) do if not exist &quot;%%~$path:i&quot; (<br />&nbsp; echo CertUtil.exe not found.<br />&nbsp; pause<br />&nbsp; exit /b<br />)<br />&gt;&quot;temp.~b64&quot; echo(//4mY2xzDQo=<br />certutil.exe -f -decode &quot;temp.~b64&quot; &quot;%~n1___%~x1&quot;<br />del &quot;temp.~b64&quot;<br />copy &quot;%~n1___%~x1&quot; /b + &quot;%~1&quot; /b<br /></code></pre></div><br /><br />Drag/drop your file to it. It creates a new batch file with 3 underscores appended to the name. Try to open it in a text editor. You should see any kind of Chinese characters. <br />If you open it in a HEX editor you'll see how it works - it prepends an FF FE Byte Order Mark (that leads to parse the code as UTF-16 LE in a text editor) + CLS to remove the error message that cmd.exe will throw.<br /><br />Steffen</div></blockquote><br />I like this method  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br />I wonder how we can get back the original batch file by programming ?<br />Is there any methods like this one to do for *.vbs or *.hta codes<br />Thank you !</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>29 Jul 2017 13:03</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite>Hackoo wrote:</cite>I like this method  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br />I wonder how we can get back the original batch file by programming ?</div></blockquote>The prepended line in a HEX editor is<br />FF FE 26 63 6C 73 0D 0A<br />As you can see it's 8 characters. Just let PAUSE eat them.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal<br />if &quot;%~1&quot;==&quot;&quot; exit /b<br />if /i &quot;%~x1&quot; neq &quot;.bat&quot; if /i &quot;%~x1&quot; neq &quot;.cmd&quot; exit /b<br />&lt;&quot;%~1&quot; ((for /l %%N in (1 1 8) do pause)&gt;nul&amp;findstr &quot;^&quot;&gt;&quot;%~n1___%~x1&quot;)</code></pre></div>Again drag/drop the changed batch file onto it.<br /><br /><blockquote><div><cite>Hackoo wrote:</cite>Is there any methods like this one to do for *.vbs or *.hta codes<br />Thank you !</div></blockquote>At least not that I know.<br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>29 Jul 2017 16:49</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite>aGerman wrote:</cite><strong class="text-strong">Any attempt to securely use a password in a batch code is doomed to failure!</strong><br />Obfuscated or not - somewhere in your code you will have a line like that:<br /><em class="text-italics">if [input]==[password] ([success]) else [error]</em><br />It doesnt matter if you might have your password obfuscated or if you might have used a hash instead or if you might have read the password from a remote file. All you have to do is to remove the comparison from the batch code.</div></blockquote>I disagree.<br />You could use use the password as a key to decrypt the batch source, append it to the end of the batch file  (after an eof character), and use copy to remove the part after the sub. The appended source must have a label &quot;:access&quot;, so it can be called.<br /><br />So you would get a batch like this (sketched only):<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enableExtensions enableDelayedExpansion<br />call :main<br />goto :eof<br /><br />:access<br />echo(Login or password incorrect.<br />goto :eof<br /><br />:main<br />set /P &quot;login=Login&nbsp; &nbsp;:&quot;<br />set /P &quot;password=Password:&quot;<br /><br />call :computeHash login<br />&gt;&gt;&quot;%~f0&quot; call :decrypt hash password<br />call :access<br />copy /a &quot;%~f0&quot; /a &quot;dummy&quot;<br />copy /a &quot;dummy&quot; /a&nbsp; &quot;%~f0&quot;<br />del &quot;dummy&quot;<br />goto :eof<br /><br />:computeHash<br />:: &quot;%~1&quot; value<br />:: &quot;%~2&quot; hash<br />...<br /><br />:decrypt<br />:: &quot;%~1&quot; database entry<br />:: &quot;%~2&quot; key<br />echo(EOF-character<br />echo(deccrypted database antry<br />goto :eof<br /><br />:: database<br /><br />#hash(login1)<br />:: encrypted batch source using key: password1<br />:: maybe encoded in base64, or similar<br /><br />:: ...<br /><br />#hash(loginN)<br />:: encrypted batch source using key: passwordN<br /><br /></code></pre></div>If someone doesn't know the right password, then the decryption fails, and the :access label above is used, which is useless for an attacker.<br />But you need to add the enrypted batch file per login and password (so it probably grows very quick).<br />You also need some de-/crypt software which accepts strings as keys.<br /><br /><br />penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>29 Jul 2017 18:06</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Don't get me wrong but what would be the benefit to use that kind of batch code? You would need 3rd party tools to do the work for you. Thus, you could just use the command line interface of software like TrueCrypt and you're done  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>30 Jul 2017 01:34</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">Such batch code would contain completely hidden (to third eyes) parts and is securely using a login and password, which is mainly an academic proof, that this is possible.<br />You may need third party tools, but these also could be written completely in batch, so all could be done without installing anything:<br />- <a href="viewtopicdc2e.html?f=3&amp;t=5566" class="postlink">MD5</a><br />- <a href="viewtopic3a3f.html?f=3&amp;t=5048" class="postlink">AES</a>.<br />But you would need to modify &quot;aes.bat&quot; and &quot;aescore.bat&quot;, because you don't want to write the key (== password) to hdd.<br /><br /><br />penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>30 Jul 2017 06:25</strong></div>
+				<div class="author">by <strong>Hackoo</strong></div>
+				<div class="content"><blockquote><div><cite>aGerman wrote:</cite><blockquote><div><cite>Hackoo wrote:</cite>I like this method  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br />I wonder how we can get back the original batch file by programming ?</div></blockquote>The prepended line in a HEX editor is<br />FF FE 26 63 6C 73 0D 0A<br />As you can see it's 8 characters. Just let PAUSE eat them.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal<br />if &quot;%~1&quot;==&quot;&quot; exit /b<br />if /i &quot;%~x1&quot; neq &quot;.bat&quot; if /i &quot;%~x1&quot; neq &quot;.cmd&quot; exit /b<br />&lt;&quot;%~1&quot; ((for /l %%N in (1 1 8) do pause)&gt;nul&amp;findstr &quot;^&quot;&gt;&quot;%~n1___%~x1&quot;)</code></pre></div>Again drag/drop the changed batch file onto it.<br />Steffen</div></blockquote><br />I don't know why it dosen't work on my PC (windows 7 64 bits french version) <br />The console freezes and findstr is still working, but i got nothing ?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>30 Jul 2017 08:54</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I don't have access to a Win7 PC before tomorrow. Meanwhile you could try to replace the last line with<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;&quot;%~1&quot; (set /p &quot;=&quot;&amp;findstr &quot;^&quot;&gt;&quot;%~n1___%~x1&quot;)</code></pre></div>It will discard the first line of the dropped batch code which is the same as discarding character-wise in this case.<br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>30 Jul 2017 13:00</strong></div>
+				<div class="author">by <strong>PaperTronics</strong></div>
+				<div class="content">Hey everyone! <br /><br />Sorry for my late reply, I've been busy these few days. I still haven't checked out any methods yet since I didn't get the time to. As soon as I'm finished with my work I'll test each and every method and tell you guys which one works for me and my friend. <br /><br /><br /><br />PaperTronics</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>31 Jul 2017 06:19</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">@Hackoo<br /><br />Works for me on Win7 x64. Make sure your batch file doesn't have the same name as any of the used commands. If that isn't the case please give a short explanation how to reproduce the failure.<br /><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>31 Jul 2017 09:23</strong></div>
+				<div class="author">by <strong>Hackoo</strong></div>
+				<div class="content"><blockquote><div><cite>aGerman wrote:</cite>@Hackoo<br />Works for me on Win7 x64. Make sure your batch file doesn't have the same name as any of the used commands. If that isn't the case please give a short explanation how to reproduce the failure.<br />Steffen</div></blockquote><br />@Steffen<br />I modified the code like this one and it works now like a charm for me <img class="smilies" src="images/smilies/icon_mrgreen.gif" alt=":mrgreen:" title="Mr. Green" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />if &quot;%~1&quot;==&quot;&quot; exit /b<br />if /i &quot;%~x1&quot; neq &quot;.bat&quot; if /i &quot;%~x1&quot; neq &quot;.cmd&quot; exit /b<br />if exist &quot;%~n1___%~x1&quot; del &quot;%~n1___%~x1&quot;<br />for /f &quot;skip=1 delims=&quot; %%L in ('CMD /U /C Type &quot;%~1&quot;') do (<br />&nbsp; &nbsp;echo %%L<br />&nbsp; &nbsp;echo %%L &gt;&gt;&quot;%~n1___%~x1&quot;<br />)<br />pause&gt;nul</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Best way to obfuscate a Batch File?</h3>
+				<div class="date">Posted: <strong>31 Jul 2017 09:37</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Good to know. Although it doesn't explain why the other techniques failed.<br /><br />Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>5</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7990&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:20:21 GMT -->
+</html>

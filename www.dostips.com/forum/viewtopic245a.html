@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8024&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:04:28 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Extracting substrings from strings</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Extracting substrings from strings</h2>
+		<p><a href="viewtopic9d0f.html?f=3&amp;t=8024">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8024</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Extracting substrings from strings</h3>
+				<div class="date">Posted: <strong>09 Aug 2017 00:23</strong></div>
+				<div class="author">by <strong>plasma33</strong></div>
+				<div class="content">Hello guys,<br /><br />I would like to extract substrings from raw strings, please. Input text file will contain the raw strings (I have around 200,000 lines of that). Ouput text file will only have the extracted substrings. Please see below for more details:<br /><br /><strong class="text-strong">Sample input text file:</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>------------------------------------------------------------<br />------------------------------------------------------------<br />------------------------------------------------------------<br />------------------------------------------------------------<br />------------------------M-I---NI-I--PGANB-------------------<br />----------------------------------GP----------GAGPM-PMMI---Q<br />------------------NR----------------------------ML---M------<br />--CMMIG-----I-H---------------RD------------RDIGNKMFN--GIPIG<br />NBG--A-----GPGPNI--ML----NK-NL------------------------------<br />----------------------NI----MERB---GA--GPND----GAGP---------<br /></code></pre></div><br /><br /><strong class="text-strong">Sample output text file:</strong><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>M<br />I<br />NI<br />I<br />PGANB<br />GP<br />GAGPM<br />PMMI<br />Q<br />NR<br />ML<br />M<br />CMMIG<br />I<br />H<br />RD<br />RDIGNKMFN<br />GIPIGNBG<br />A<br />GPGPNI<br />ML<br />NK<br />NL<br />NI<br />MERB<br />GA<br />GPND<br />GAGP<br /></code></pre></div><br /><br />Please be aware that most of the time some substrings will be continued on to next line. Please see the end of line 8 and the beginning of line 9 in the sample input text file. Line 18 in the sample output text file is the substring that was partially in line 8 and line 9.<br /><br />Thanks, guys.<br /><br />Plasma33</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Extracting substrings from strings</h3>
+				<div class="date">Posted: <strong>09 Aug 2017 04:02</strong></div>
+				<div class="author">by <strong>elzooilogico</strong></div>
+				<div class="content">This should be enhanced (is slow) but does the work.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />SetLocal EnableExtensions EnableDelayedExpansion<br /><br />set &quot;input=input.txt&quot;<br />set &quot;output=output.txt&quot;<br /><br />rem needed to show progress<br />set/a cnt=0 <br />for /F &quot;tokens=1,2 delims=#&quot; %%a in ('&quot;prompt #$H#$E &amp; echo on &amp; for %%b in (1) do rem&quot;') do set &quot;DEL=%%a&quot;<br />for /L %%i in (1,1,39) do set &quot;DEL_LINE=!DEL_LINE!%DEL%%DEL%&quot;<br /><br />&gt;&quot;%output%&quot; (<br />&nbsp; for /F &quot;delims=&quot; %%a in (%input%) do (<br />&nbsp; &nbsp; set/a index=1, cnt+=1<br />&nbsp; &nbsp; <br />&nbsp; &nbsp; rem show progress<br />&nbsp; &nbsp; &lt;NUL set/P=!DEL_LINE!Processing line !cnt!&gt;CON<br />&nbsp; &nbsp; <br />&nbsp; &nbsp; call :split %%a<br /><br />&nbsp; &nbsp; rem if there is a remainder check begin of line&nbsp; &nbsp;<br />&nbsp; &nbsp; if defined last (<br />&nbsp; &nbsp; &nbsp; if &quot;!last!!first!&quot; neq &quot;!last!&quot; (<br />&nbsp; &nbsp; &nbsp; &nbsp; set /a index=2<br />&nbsp; &nbsp; &nbsp; &nbsp; echo !last!!first!<br />&nbsp; &nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; echo !last!<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp; )<br />&nbsp; &nbsp; rem remember last string<br />&nbsp; &nbsp; for %%i in (!i!) do set &quot;last=!x%%i!&quot;<br /><br />&nbsp; &nbsp; rem write data except last string<br />&nbsp; &nbsp; set/a i-=1<br />&nbsp; &nbsp; for /L %%i in (!index!,1,!i!) do if defined x%%i echo !x%%i!<br />&nbsp; )<br />&nbsp; rem if last line ends with a string, write it<br />&nbsp; if defined last echo !last!<br />) &amp; rem &gt;&quot;%output%&quot;<br /><br />EndLocal<br />exit/B<br /><br />rem split string into substrings based on delimiter <br />rem http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6429#p41035<br />:split<br />&nbsp; set &quot;line=%~1&quot;<br />&nbsp; set/a i=1<br />&nbsp; set &quot;x!i!=%line:-=&quot; &amp; set /A i+=1 &amp; set &quot;x!i!=%&quot;<br />&nbsp; set &quot;first=!x1!&quot;<br />exit/B<br /></code></pre></div><span style="color: #4040FF"><span style="font-size: 150%; line-height: normal">EDIT</span></span>, now lets do it faster with a <em class="text-italics">batch and c# hybrid</em>. <br /><span style="color: #4040FF"><span style="font-size: 150%; line-height: normal">NOTE</span></span> The .Net framework must be installed on your system.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>//&gt;nul 2&gt;nul||@goto :batch_code<br />/*<br />:batch_code<br />@echo off<br />setlocal<br />rem place desired exe name<br />set &quot;theExeFile=myParser2.exe&quot;<br /><br />rem input output files. place full path plus filename i.e)<br />rem set &quot;inputFile=C:\Users\Michael\Desktop\input.txt&quot;<br />rem set &quot;outputFile=C:\Users\Michael\Desktop\output.txt&quot;<br />set &quot;inputFile=.\input.txt&quot;<br />set &quot;outputFile=.\output.txt&quot;<br /><br />if not exist &quot;%theExeFile%&quot; call :build_the_exe || exit/B<br /><br />%theExeFile% &quot;%inputFile%&quot; &quot;%outputFile%&quot;<br />if %errorlevel% NEQ 0 echo Error code %errorlevel%<br /><br />endlocal<br />exit /b 0<br /><br /><br /><br />:build_the_exe<br />:: find csc.exe<br />set &quot;frm=%SystemRoot%\Microsoft.NET\Framework\&quot;<br />for /f &quot;tokens=* delims=&quot; %%v in ('dir /b /a:d&nbsp; /o:-n &quot;%SystemRoot%\Microsoft.NET\Framework\v*&quot;') do (<br />&nbsp; &nbsp;set netver=%%v<br />&nbsp; &nbsp;goto :break_loop<br />)<br />:break_loop<br />set &quot;csc=%frm%%netver%\csc.exe&quot;<br />:: csc not found<br />if &quot;%csc%&quot; == &quot;\csc.exe&quot; echo/&amp;echo/Warning: Net Framework Not Found&amp;exit/B 1<br />::csc found<br />call %csc% /nologo /out:&quot;%theExeFile%&quot; &quot;%~dpsfnx0&quot;<br />exit/B 0<br />*/<br /><br /><br />//begin c# code<br />using System;<br />using System.IO;<br />using System.Linq;<br /><br />namespace ElZooilogico<br />{<br />&nbsp; public class Parser<br />&nbsp; {<br />&nbsp; &nbsp; private static void parse(string inputFile, string outputFile)<br />&nbsp; &nbsp; {<br />&nbsp; &nbsp; &nbsp; string&#91;&#93; words;<br />&nbsp; &nbsp; &nbsp; string line, last=String.Empty;<br /><br />&nbsp; &nbsp; &nbsp; int index = 0;<br />&nbsp; &nbsp; &nbsp; long lineNum = 0;<br />&nbsp; &nbsp; &nbsp; long lineCount = File.ReadLines(inputFile).Count();<br /><br />&nbsp; &nbsp; &nbsp; Console.WriteLine(&quot;\nInput file:&nbsp; {0}\nOutput file: {1}\n&quot;, inputFile, outputFile);<br /><br />&nbsp; &nbsp; &nbsp; using ( System.IO.StreamReader input = new System.IO.StreamReader(inputFile) )<br />&nbsp; &nbsp; &nbsp; {<br />&nbsp; &nbsp; &nbsp; &nbsp; using ( System.IO.StreamWriter output = new System.IO.StreamWriter(outputFile) )<br />&nbsp; &nbsp; &nbsp; &nbsp; {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; while((line = input.ReadLine()) != null)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; lineNum++;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Console.Write(&quot;\rProcessing line {0} of {1}, {2}%&quot;, lineNum, lineCount, (lineNum*100)/lineCount);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //words = line.Split(new&#91;&#93; { '-' },StringSplitOptions.RemoveEmptyEntries);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; words = line.Split('-');<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; index = 0;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( last + words&#91;0&#93; != last ) {<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; index = 1;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; output.WriteLine(last + words&#91;0&#93;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( last != String.Empty ) output.WriteLine(last);<br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for (int i = index; i &lt; words.Length - 1; i++)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( words&#91;i&#93; != String.Empty ) output.WriteLine(words&#91;i&#93;);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; last=words&#91;words.Length-1&#93;;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if ( last != String.Empty ) output.WriteLine(last);<br />&nbsp; &nbsp; &nbsp; &nbsp; } // output file is closed here<br />&nbsp; &nbsp; &nbsp; } // input file is closed here<br /><br />&nbsp; &nbsp; &nbsp; Console.WriteLine(&quot;\n\nDone!&quot;);<br />&nbsp; &nbsp; }<br /><br />&nbsp; &nbsp; public static int Main(string&#91;&#93; args)<br />&nbsp; &nbsp; {<br /><br />&nbsp; &nbsp; &nbsp; try {<br />&nbsp; &nbsp; &nbsp; &nbsp; if ( args.Length != 2 )<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return 9;<br />&nbsp; &nbsp; &nbsp; &nbsp; if ( !File.Exists(args&#91;0&#93;) )<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return 1;<br />&nbsp; &nbsp; &nbsp; &nbsp; parse(args&#91;0&#93;, args&#91;1&#93;);<br />&nbsp; &nbsp; &nbsp; } catch (Exception e){ System.Windows.Forms.MessageBox.Show(e.Message); return 3; }<br />&nbsp; &nbsp; &nbsp; return 0;<br />&nbsp; &nbsp; }<br /><br />&nbsp; } // class Parser<br /><br />} // namespace ElZooilogico</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Extracting substrings from strings</h3>
+				<div class="date">Posted: <strong>09 Aug 2017 07:35</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br />set &quot;last=&quot;<br />(<br />for /F &quot;delims=&quot; %%a in (input.txt) do (<br />&nbsp; &nbsp;set &quot;line=%%a&quot;<br />&nbsp; &nbsp;if defined last (<br />&nbsp; &nbsp; &nbsp; set /P &quot;=!last!&quot; &lt; NUL &amp; set &quot;last=&quot;<br />&nbsp; &nbsp; &nbsp; if &quot;!line:~0,1!&quot; equ &quot;-&quot; echo/<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;set &quot;tail=&quot;<br />&nbsp; &nbsp;if &quot;!line:~-1!&quot; neq &quot;-&quot; set &quot;tail=1&quot;<br />&nbsp; &nbsp;set &quot;line=!line:-= !&quot;<br />&nbsp; &nbsp;for %%b in (!line!) do (<br />&nbsp; &nbsp; &nbsp; if defined tail (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if defined last echo !last!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;set &quot;last=%%b&quot;<br />&nbsp; &nbsp; &nbsp; ) else (<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;echo %%b<br />&nbsp; &nbsp; &nbsp; )<br />&nbsp; &nbsp;)<br />)<br />if defined last echo !last!<br />) &gt; output.txt<br /></code></pre></div><br />If this program is too slow, the same method could be translated to JScript...<br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Extracting substrings from strings</h3>
+				<div class="date">Posted: <strong>09 Aug 2017 16:12</strong></div>
+				<div class="author">by <strong>plasma33</strong></div>
+				<div class="content">Hello guys,<br /><br />Codes from both of you work perfectly. @elzooilogico, your hybrid code is amazing. Super fast!!<br /><br />Thanks, guys.<br /><br />Plasma33</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Extracting substrings from strings</h3>
+				<div class="date">Posted: <strong>21 Aug 2017 01:44</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">Aacini's solution shortened:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br />set &quot;last=&quot;<br />(<br />&nbsp; for /F &quot;delims=&quot; %%a in (input.txt) do (<br />&nbsp; &nbsp; set &quot;line=!last!%%a&quot;<br />&nbsp; &nbsp; set &quot;last=&quot;<br />&nbsp; &nbsp; set &quot;line=!line:-= !&quot;<br />&nbsp; &nbsp; for %%b in (!line!) do (<br />&nbsp; &nbsp; &nbsp; if defined last echo !last!<br />&nbsp; &nbsp; &nbsp; set &quot;last=%%b&quot;<br />&nbsp; &nbsp; )<br />&nbsp; )<br />&nbsp; if defined last echo !last!<br />) &gt; output.txt</code></pre></div><br /><br /> <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8024&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:04:28 GMT -->
+</html>

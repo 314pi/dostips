@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8545&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:22:13 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Help with basic Hello.html script</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Help with basic Hello.html script</h2>
+		<p><a href="viewtopicf80f.html?f=3&amp;t=8545">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8545</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Help with basic Hello.html script</h3>
+				<div class="date">Posted: <strong>05 May 2018 19:35</strong></div>
+				<div class="author">by <strong>Phoenizz</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+echo What name do you want to display?
+set /p name=
+echo Your name is %name%!
+echo What color red, green or blue?
+set /p color=
+echo You chose %color%
+echo What font size do you want?
+set /p fontsize =
+echo You chose %fontsize%pt as fontsize
+set "html=^&lt;html^&gt; ^&lt;body^&gt; ^&lt;p^&gt; ^&lt;span style='fontsize:%fontsize%pt'^&gt;Hello^&lt;/span^&gt; ^&lt;span style&gt;='color:%color%'&gt;%name%^&lt;/span&gt;^&lt;/p&gt; ^&lt;/body&gt; ^&lt;/html&gt; makehtml.html 
+echo Hello, %name%  &gt; hello.htm
+pause</code></pre></div>
+
+I'm new to batch files and I have not been able to change the font size or color successfully, so if someone could help me very appreciated.<br>
+<br>
+P.S The aim of the script is to run in two modes interactively and non interactively, so above there's the interactive mode, where the aim is to ask the user for their name, the color they want and font size, after that if the user answered everything correctly a html page would open Saying Hello, "Name". The non interactively mode is supposed to run the same thing after the user enters for example "Hello.bat "David" blue 40 " in the console, which I have not been able to do as well.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Help with basic Hello.html script</h3>
+				<div class="date">Posted: <strong>06 May 2018 04:27</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Batch:<br>
+- every single &lt; and &gt; needs to be escaped in your html text<br>
+- there must not be a space between variable name and equal sign in a SET /P statement<br>
+- you need to redirect the content of your html variable to the file using ECHO and &gt;<br>
+- closing quote missing in your SET statement<br>
+<br>
+HTML (off-topic in this forum):<br>
+- there must not be a &gt; between style and =<br>
+- there is no fontsize property (it's font-size)<br>
+<br>
+Next time please correct those typos by your own.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal
+echo What name do you want to display?
+set /p name=
+echo Your name is %name%!
+echo What color red, green or blue?
+set /p color=
+echo You chose %color%
+echo What font size do you want?
+set /p fontsize=
+echo You chose %fontsize%pt as fontsize
+set "html=^&lt;html^&gt; ^&lt;body^&gt; ^&lt;p^&gt; ^&lt;span style='font-size:%fontsize%pt'^&gt;Hello^&lt;/span^&gt; ^&lt;span style='color:%color%'^&gt;%name%^&lt;/span^&gt;^&lt;/p^&gt; ^&lt;/body^&gt; ^&lt;/html^&gt;"
+&gt;"hello.htm" echo %html%
+pause</code></pre></div>
+
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Help with basic Hello.html script</h3>
+				<div class="date">Posted: <strong>06 May 2018 12:31</strong></div>
+				<div class="author">by <strong>Phoenizz</strong></div>
+				<div class="content">Thanks Steffen, sorry about those Rookie mistakes,just one thing how do I get "Hello" and  "name" to change color and font size,  right now only Hello is changing font size and only the name is changing. I can see why that is, I have been trying to move <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>^&lt;span style='color:%color%'^&gt;</code></pre></div> to the right place, but already tried multiple things and still can't get the result I want. <br>
+<br>
+Thanks for the help</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Help with basic Hello.html script</h3>
+				<div class="date">Posted: <strong>06 May 2018 13:50</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">As I wrote, HTML is off-topic in this forum...<br>
+You have 2 span tags in your source text. Why not only have one with both settings for color and font size?<br>
+<br>
+Hint: Write the HTM file by hand first and see how it behaves.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8545&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:22:13 GMT -->
+</html>

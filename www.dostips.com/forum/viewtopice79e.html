@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=52444 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:49:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>FindRepl.bat:New regex utility to search and replace strings - Page 8 - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic41cd.html?t=4697&amp;start=105">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic10f4.html?f=3&amp;t=4697&amp;start=105">FindRepl.bat:New regex utility to search and replace strings</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting6172.html?mode=reply&amp;f=3&amp;t=4697" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic1647.html?f=3&amp;t=4697&amp;start=105&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="4697" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			135 posts
+							<ul>
+	<li class="dropdown-container dropdown-button-control dropdown-page-jump page-jump">
+		<a class="button button-icon-only dropdown-trigger" href="#" title="Click to jump to page…" role="button"><i class="icon fa-level-down fa-rotate-270" aria-hidden="true"></i><span class="sr-only">Page <strong>8</strong> of <strong>9</strong></span></a>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+				<li>Jump to page:</li>
+				<li class="page-jump-form">
+					<input type="number" name="page-number" min="1" max="999999" title="Enter the page number you wish to go to" class="inputbox tiny" data-per-page="15" data-base-url=".&#x2F;viewtopic.php&#x3F;f&#x3D;3&amp;amp&#x3B;t&#x3D;4697" data-start-name="start" />
+					<input class="button2" value="Go" type="button" />
+				</li>
+			</ul>
+		</div>
+	</li>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic6e90.html?f=3&amp;t=4697&amp;start=90" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopica720.html?f=3&amp;t=4697" role="button">1</a></li>
+			<li class="ellipsis" role="separator"><span>…</span></li>
+				<li><a class="button" href="viewtopic507f.html?f=3&amp;t=4697&amp;start=60" role="button">5</a></li>
+				<li><a class="button" href="viewtopic2000.html?f=3&amp;t=4697&amp;start=75" role="button">6</a></li>
+				<li><a class="button" href="viewtopic6e90.html?f=3&amp;t=4697&amp;start=90" role="button">7</a></li>
+			<li class="active"><span>8</span></li>
+				<li><a class="button" href="viewtopicc178.html?f=3&amp;t=4697&amp;start=120" role="button">9</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopicc178.html?f=3&amp;t=4697&amp;start=120" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p48112" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile48112">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content48112">
+
+						<h3 class="first"><a href="#p48112">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingb0fc.html?mode=quote&amp;f=3&amp;p=48112" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic828e.html?p=48112#p48112" onclick="prompt('Message #106',this.href); return false;">#106</a></span> 
+									<a class="unread" href="viewtopic828e.html?p=48112#p48112" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>26 Jul 2016 21:56
+			</p>
+			
+			
+			
+			<div class="content">rem   - Nov/30/2014: Version 2.1 - Changed /ARG# by /VAR. Replacements on numbered-blocks of lines.<br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>d:\test&gt;for /L %a in (1,1,10) do @call z-more<br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br /><br />ccc<br /><br />ccc<br /><br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br /><br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br /><br />d:\test\findrepl.bat(306, 1) Microsoft JScript runtime error: Input past end of file<br /><br /><br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br /></code></pre></div><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>d:\test&gt;for /L %a in (1,1,10) do @call z<br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(528, 4) Microsoft JScript runtime error: Input past end of file<br /><br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(528, 4) Microsoft JScript runtime error: Input past end of file<br /><br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(528, 4) Microsoft JScript runtime error: Input past end of file<br /><br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(528, 4) Microsoft JScript runtime error: Input past end of file<br /><br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(302, 1) Microsoft JScript runtime error: Permission denied<br /><br />d:\test\findrepl.bat(528, 4) Microsoft JScript runtime error: Input past end of file</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p48113" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile48113">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content48113">
+
+						<h3 ><a href="#p48113">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting1218.html?mode=quote&amp;f=3&amp;p=48113" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic909f.html?p=48113#p48113" onclick="prompt('Message #107',this.href); return false;">#107</a></span> 
+									<a class="unread" href="viewtopic909f.html?p=48113#p48113" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>26 Jul 2016 22:00
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>dbenham wrote:</cite>I can't reproduce your problem - Both work just fine for me after repeated runs ('though I ran the command from the command line, not a script)<br /><br /><br />Dave Benham</div></blockquote><br /><br />Hmmm.  What version of findrepl did you test this with Dave?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p48120" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile48120">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist742a.html?mode=viewprofile&amp;u=6577" class="username">thefeduke</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search454a.html?author_id=6577&amp;sr=posts">211</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 05 Apr 2015 13:06</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> MA South Shore, USA</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content48120">
+
+						<h3 ><a href="#p48120">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2a05.html?mode=quote&amp;f=3&amp;p=48120" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicc626.html?p=48120#p48120" onclick="prompt('Message #108',this.href); return false;">#108</a></span> 
+									<a class="unread" href="viewtopicc626.html?p=48120#p48120" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist742a.html?mode=viewprofile&amp;u=6577" class="username">thefeduke</a></strong> &raquo; </span>27 Jul 2016 04:30
+			</p>
+			
+			
+			
+			<div class="content">More interesting observations for foxi: This time on a 64-bit Win 8.1 based temporary Win 10 system.  At first I got no errors, so I increased the iterations to 44 and got one and then again about four.  I also noticed a significant delay after the last output before returning to prompt.  Anyway, here's a test tweak to z-more.bat: <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />&gt;nul (echo aaa|findrepl1 &quot;aaa&quot; &quot;bbb&quot;|more|findrepl2 &quot;bbb&quot; &quot;ccc&quot;) <br /></code></pre></div>I eliminated viewing the regular output at some risk to timing and satisfied my curiosity by making copies of findrepl.bat with different names. So here is some output: <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\John\scripts&gt;for /L %a in (1,1,99) do @(call z-more &quot;%a&quot; nul)<br />C:\Users\John\scripts\Routines\FindREPL.bat(318, 1) Microsoft JScript runtime error: Permission denie&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;d<br /><br />C:\Users\John\scripts\Routines\FindREPL.bat(318, 1) Microsoft JScript runtime error: Permission denie&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;d<br /><br />C:\Users\John\scripts\Routines\FindREPL.bat(318, 1) Microsoft JScript runtime error: Permission denie&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;d<br /><br /><br />C:\Users\John\scripts&gt;for /L %a in (1,1,99) do @call z-more<br />C:\Users\John\scripts\Routines\FindREPL1.bat(318, 1) Microsoft JScript runtime error: Permission deni&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ed<br /><br /><br />C:\Users\John\scripts&gt;for /L %a in (1,1,99) do @call z-more<br />C:\Users\John\scripts\Routines\FindREPL1.bat(318, 1) Microsoft JScript runtime error: Permission deni&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ed<br /><br />C:\Users\John\scripts\Routines\FindREPL1.bat(318, 1) Microsoft JScript runtime error: Permission deni&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ed<br /><br />The process tried to write to a nonexistent pipe.<br />C:\Users\John\scripts\Routines\FindREPL2.bat(318, 1) Microsoft JScript runtime error: Permission deni&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ed<br /><br />C:\Users\John\scripts\Routines\FindREPL2.bat(318, 1) Microsoft JScript runtime error: Permission deni&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ed<br /><br /><br />C:\Users\John\scripts&gt;2&gt;z-more.txt (for /L %a in (1,1,99) do @call z-more)<br /><br />C:\Users\John\scripts&gt;2&gt;&gt;z-more.txt (for /L %a in (1,1,99) do @call z-more)</code></pre></div>Working with 99 iterations now.  There's a new nonexistent pipe message and I was surprised to see failures on both sides of the MORE pipe. The last two series redirected to a log file and here are the contents: <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\John\scripts\Routines\FindREPL2.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br />============= end run 1<br />C:\Users\John\scripts\Routines\FindREPL2.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br />C:\Users\John\scripts\Routines\FindREPL2.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br />C:\Users\John\scripts\Routines\FindREPL1.bat(318, 1) Microsoft JScript runtime error: Permission denied<br /><br /></code></pre></div>That is as far as I went and I did not play with z.bat.<br />John A.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p48121" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile48121">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content48121">
+
+						<h3 ><a href="#p48121">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingae76.html?mode=quote&amp;f=3&amp;p=48121" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopica778.html?p=48121#p48121" onclick="prompt('Message #109',this.href); return false;">#109</a></span> 
+									<a class="unread" href="viewtopica778.html?p=48121#p48121" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>27 Jul 2016 04:58
+			</p>
+			
+			
+			
+			<div class="content">Thanks John.<br /><br />This creates findrepl v2 and it worked well here.<br />It seems to be related to the version.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />if not exist &quot;findrepl.bat&quot; (<br />echo creating &quot;findrepl.bat&quot;<br />(<br />echo QGlmIChAQ29kZVNlY3Rpb24gPT0gQEJhdGNoKSBAdGhlbg0KDQo6OiBUaGUgZmly<br />echo c3QgbGluZSBhYm92ZSBpcy4uLg0KOjogLSBpbiBCYXRjaDogYSB2YWxpZCBJRiBj<br />echo b21tYW5kIHRoYXQgZG9lcyBub3RoaW5nLg0KOjogLSBpbiBKU2NyaXB0OiBhIGNv<br />echo bmRpdGlvbmFsIGNvbXBpbGF0aW9uIElGIHN0YXRlbWVudCB0aGF0IGlzIGZhbHNl<br />echo LA0KOjogICAgICAgICAgICAgICBzbyB0aGlzIEJhdGNoIHNlY3Rpb24gaXMgb21p<br />echo dHRlZCB1bnRpbCBuZXh0ICJhdC1zaWduIGVuZCIuDQoNCg0KQGVjaG8gb2ZmDQoN<br />echo CnJlbSBGaW5kUmVwbC5iYXQ6IFV0aWxpdHkgdG8gc2VhcmNoIGFuZCBzZWFyY2gv<br />echo cmVwbGFjZSBzdHJpbmdzIGluIGEgZmlsZQ0KcmVtIGh0dHA6Ly93d3cuZG9zdGlw<br />echo cy5jb20vZm9ydW0vdmlld3RvcGljLnBocD9mPTMmdD00Njk3DQpyZW0gQW50b25p<br />echo byBQZXJleiBBeWFsYQ0KDQpyZW0gICAtIEp1bi8yNi8yMDEzOiBmaXJzdCB2ZXJz<br />echo aW9uLg0KcmVtICAgLSBKdWwvMDIvMjAxMzogdXNlIC9RIGluIHN1Ym1hdGNoZWQg<br />echo c3Vic3RyaW5ncywgdXNlIC9WUiBmb3IgL1YgaW4gUmVwbGFjZSwgZWxpbWluYXRl<br />echo ICJcclxuIiBpbiBibG9ja3MuDQpyZW0gICAtIEp1bC8wNy8yMDEzOiBjaGFuZ2Ug<br />echo L1ZSIGJ5IC9SLCBzZWFyY2ggZm9yICJcclxuIiB3aXRoIC8kIGFuZCBubyAvViwg<br />echo L04gbm9yIGJsb2Nrcy4NCg0KcmVtICAgLSBOb3YvMjAvMjAxNDogVmVyc2lvbiAy<br />echo IC0gTmV3IHN3aXRjaGVzOiAvSiwgL0wsIC9HLCAvQVJHIywgYW5kIHx8IHNlcGFy<br />echo YXRlIHJlZ2V4cCdzIGluIC9BbHRlcm5hdGlvbnMuDQoNCmlmICIlfjEiIGVxdSAi<br />echo IiBnb3RvIHNob3dVc2FnZQ0KaWYgIiV+MSIgZXF1ICIvPyIgZ290byBzaG93VXNh<br />echo Z2UNCg0KQ1NjcmlwdCAvL25vbG9nbyAvL0U6SlNjcmlwdCAiJX5GMCIgJSoNCmV4<br />echo aXQgL0IgJWVycm9ybGV2ZWwlDQoNCjx1c2FnZT4NClNlYXJjaGVzIGZvciBzdHJp<br />echo bmdzIGluIFN0ZGluIGZpbGUsIGFuZCBwcmludHMgb3IgcmVwbGFjZXMgdGhlbS4N<br />echo Cg0KRklORFJFUEwgWy9JXSBbL1ZdIFsvTl0gclNlYXJjaCBbL0U6ckVuZEJsa10g<br />echo Wy9POnM6ZV0gWy9COnJCbG9ja10gWy8kOjE6Mi4uLl0NCiAgICAgICAgIFtbL1Jd<br />echo IFsvQV0gc1JlcGxhY2VdIFsvUTpjXSBbL1M6c1NvdXJjZV0NCiAgICAgICAgIFsv<br />echo Sls6bl0gWy9MOmpFbmRdXSBbL0c6ZmlsZV0gWy9BUkcxOnRleHQxIFsvQVJHMjp0<br />echo ZXh0Ml0gLi4uXQ0KDQogIC9JICAgICAgICAgU3BlY2lmaWVzIHRoYXQgdGhlIHNl<br />echo YXJjaCBpcyBub3QgdG8gYmUgY2FzZS1zZW5zaXRpdmUuDQogIC9WICAgICAgICAg<br />echo UHJpbnRzIG9ubHkgbGluZXMgdGhhdCBkbyBub3QgY29udGFpbiBhIG1hdGNoLg0K<br />echo ICAvTiAgICAgICAgIFByaW50cyB0aGUgbGluZSBudW1iZXIgYmVmb3JlIGVhY2gg<br />echo bGluZSB0aGF0IG1hdGNoZXMuDQogIHJTZWFyY2ggICAgVGV4dCB0byBiZSBzZWFy<br />echo Y2hlZCBmb3IsIG9yIFN0YXJ0IHRleHQgZm9yIGEgYmxvY2sgb2YgbGluZXMuDQog<br />echo IC9FOnJFbmRCbGsgVGV4dCB0byBiZSBzZWFyY2hlZCBmb3IgdGhlIEVuZCBvZiBh<br />echo IGJsb2NrIG9mIGxpbmVzLg0KICAvTzpzOmUgICAgIFNwZWNpZmllcyBvZmZzZXRz<br />echo IGZvciBTdGFydGluZyBhbmQgRW5kaW5nIGxpbmVzIG9mIGJsb2Nrcy4NCiAgL0I6<br />echo ckJsb2NrICBUZXh0IHRvIGJlIHNlYXJjaGVkIGFnYWluIGluIHRoZSBibG9ja3Mg<br />echo b2YgbGluZXMuDQogIC8kOjE6Mi4uLiAgU3BlY2lmaWVzIHRvIHByaW50IHNhdmVk<br />echo IHN1Ym1hdGNoZWQgc3Vic3RyaW5ncyBpbnN0ZWFkIG9mIGxpbmVzLg0KICAvUiAg<br />echo ICAgICAgIFByaW50cyBvbmx5IHJlcGxhY2VkIGxpbmVzLCBpbnN0ZWFkIG9mIGFs<br />echo bCBmaWxlIGxpbmVzLg0KICAvQSAgICAgICAgIFNwZWNpZmllcyB0aGF0IHNSZXBs<br />echo YWNlIGhhcyBhbHRlcm5hdGl2ZSB2YWx1ZXMgbWF0Y2hpbmcgclNlYXJjaC4NCiAg<br />echo c1JlcGxhY2UgICBUZXh0IHRoYXQgd2lsbCByZXBsYWNlIHRoZSBtYXRjaGVkIHRl<br />echo eHQuDQogIC9ROmMgICAgICAgU3BlY2lmaWVzIGEgY2hhcmFjdGVyIHRoYXQgaXMg<br />echo dXNlZCBpbiBwbGFjZSBvZiBxdW90YXRpb24gbWFya3MuDQogIC9TOnNTb3VyY2Ug<br />echo VGV4dCB0byBiZSBwcm9jZXNzZWQgaW5zdGVhZCBvZiBTdGRpbiBmaWxlLg0KICAv<br />echo Sls6bl0gICAgIFNwZWNpZnkgdGhhdCByU2VhcmNoL3NSZXBsYWNlIGNvbnRhaW4g<br />echo ZXhwcmVzc2lvbnMgKHJlZ2V4cC9KU2NyaXB0KQ0KICAvTDpqRW5kICAgIEV4ZWN1<br />echo dGUgakVuZCBhcyBhIEpTY3JpcHQgZXhwcmVzc2lvbiBhZnRlciB0aGUgZW5kIG9m<br />echo IGZpbGUuDQogIC9HOmZpbGUgICAgU3BlY2lmaWVzIHRoZSBmaWxlIHRvIGdldCBy<br />echo U2VhcmNoIGFuZCBzUmVwbGFjZSB0ZXh0cyBmcm9tLg0KICAvQVJHMTouLi4gIFNw<br />echo ZWNpZmllcyB0ZXh0cyB0byBpbml0aWFsaXplIEpTY3JpcHQgdmFyaWFibGVzIHdp<br />echo dGggc2FtZSBuYW1lcy4NCg0KQWxsIHNlYXJjaCB0ZXh0cyBtdXN0IGJlIGdpdmVu<br />echo IGluIFZCU2NyaXB0IHJlZ3VsYXIgZXhwcmVzc2lvbiBmb3JtYXQuDQpUaGUgcmVw<br />echo bGFjZW1lbnQgc3RyaW5nIG1heSB1c2UgJCB0byByZXRyaWV2ZSBzYXZlZCBzdWJt<br />echo YXRjaGVkIHN1YnN0cmluZ3MuIElmIC9KDQpzd2l0Y2ggaXMgZ2l2ZW4sIHRoZSBK<br />echo U2NyaXB0IGV4cHJlc3Npb24gaW4gc1JlcGxhY2UgdGV4dCB1c2Ugc3VibWF0Y2hl<br />echo ZCAkMC0kbi4NClVzZSAvQSBzd2l0Y2ggdG8gaW5zZXJ0IGFsdGVybmF0aXZlcyBz<br />echo ZXBhcmF0ZWQgYnkgcGlwZSBpbiByU2VhcmNoL3NSZXBsYWNlOw0KaWYgL0ogc3dp<br />echo dGNoIGlzIGdpdmVuLCB0aGUgYWx0ZXJuYXRpdmVzIGFyZSByZWdleHAncyBzZXBh<br />echo cmF0ZWQgYnkgZG91YmxlLXBpcGUuDQpVc2UgL1E6YyBzd2l0Y2ggdG8gaW5zZXJ0<br />echo IGEgcXVvdGUgaW4gdGhlIHNlYXJjaC9yZXBsYWNlbWVudCB0ZXh0cy4NCklmIGZp<br />echo cnN0IGNoYXJhY3RlciBvZiBhbnkgdGV4dCBpcyBhbiBlcXVhbC1zaWduLCBzcGVj<br />echo aWZ5IGEgQmF0Y2ggdmFyaWFibGUuDQoNClRoZXJlIGFyZSB0aHJlZSB3YXlzIHRv<br />echo IGRlZmluZSBCbG9ja3Mgb2YgbGluZXMgdXNpbmcgclNlYXJjaCB0ZXh0IGFzIGJh<br />echo c2U6DQoNCi9POnM6ZSAgICAgICAgICAgICAgICAgICAgICAgICAgIC9FOnJFbmRC<br />echo bGsgICAgICAgICAgICAgIC9FOnJFbmRCbGsgL086czplDQotLS0tLS0tLS0tLS0t<br />echo LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t<br />echo LS0tLS0tLS0tLS0tLS0tLS0tDQpBZGQgUyBhbmQgRSAod2l0aCBvcHRpb25hbCAg<br />echo ICAgICBGcm9tIHJTZWFyY2ggbGluZSAgICAgICBBZGQgUyB0byByU2VhcmNoIGxp<br />echo bmUNCnNpZ25zKSB0byBtYXRjaGluZyBsaW5lcy4gICAgICAgIHRvIHJFbmRCbGsg<br />echo bGluZS4gICAgICAgIGFuZCBFIHRvIHJFbmRCbGsgbGluZS4NCg0KLi4uIGFuZCBv<br />echo bmUgd2F5IG1vcmUgaWYgclNlYXJjaCBpcyBub3QgZ2l2ZW46ICAgL086czplICAg<br />echo RnJvbSBsaW5lIFMgdG8gbGluZSBFLg0KSWYgUyBvciBFIGlzIG5lZ2F0aXZlLCBz<br />echo cGVjaWZ5IGEgYmFja3dhcmRzIGxpbmUgZnJvbSB0aGUgZW5kIG9mIGZpbGUuDQpJ<br />echo ZiBFIGlzIG5vdCBnaXZlbiwgdGhlbiBpdCBkZWZhdWx0cyB0byB0aGUgbGFzdCBs<br />echo aW5lIG9mIHRoZSBmaWxlIChzYW1lIGFzIC0xKS4NCg0KVGhlIG91dHB1dCB2YXJ5<br />echo IGRlcGVuZGluZyBvbiB0aGUgZ2l2ZW4gcGFyYW1ldGVycyBhbmQgc3dpdGNoZXMg<br />echo dGhpcyB3YXk6DQoNCnJTZWFyY2ggICAgICAgIC9WICAgICAgICAgICAgICAgICBC<br />echo bG9jayAgICAgICAgICAgIC9COnJCbG9jayAgICAgICAgLyQ6MToyLi4uDQotLS0t<br />echo LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t<br />echo LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpNYXRjaGVkICAgICAgICBOb24t<br />echo bWF0Y2hlZCAgICAgICAgQmxvY2tzIG9mICAgICAgICBTZWFyY2ggL0I6ICAgICAg<br />echo IFNhdmVkDQpsaW5lcy4gICAgICAgICBsaW5lcy4gICAgICAgICAgICAgbGluZXMu<br />echo ICAgICAgICAgICBpbiBibG9ja3MgICAgICAgIHN1Ym1hdGNoZXMuDQoNCnNSZXBs<br />echo YWNlICAgICAgIC9SICAgICAgICAgICAgICAgICBCbG9jayAgICAgICAgICAgIC9C<br />echo OnJCbG9jaw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t<br />echo LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KQWxsIGZp<br />echo bGUgICAgICAgT25seSByZXBsYWNlZCAgICAgIFNlYXJjaCAvQjpyQmxvY2sgaW4g<br />echo YmxvY2tzDQpsaW5lcy4gICAgICAgICBmaWxlIGxpbmVzLiAgICAgICAgYW5kIHJl<br />echo cGxhY2VzIG1hdGNoZWQgbGluZXMuDQoNClRoZSB0b3RhbCBudW1iZXIgb2YgbWF0<br />echo Y2hpbmdzL3JlcGxhY2VtZW50cyBpcyByZXR1cm5lZCBpbiBFUlJPUkxFVkVMLg0K<br />echo DQogICAxLSBGaW5kUmVwbC5iYXQgZG9jdW1lbnRhdGlvbjoNCiAgICAgICAgIERl<br />echo dGFpbGVkIGRlc2NyaXB0aW9uIG9mIEZpbmRSZXBsIGZlYXR1cmVzIHdpdGggbXVs<br />echo dGlwbGUgZXhhbXBsZXMuDQogICAyLSBGaW5kUmVwbC5iYXQgdmVyc2lvbiAyIGRv<br />echo Y3VtZW50YXRpb246DQogICAgICAgICBBZGRpdGlvbmFsIGRlc2NyaXB0aW9ucyBv<br />echo biAvSiwgL0wsIC9HIHN3aXRjaGVzIGFuZCB8fCBhbHRlcm5hdGl2ZXMuDQogICAz<br />echo LSBSZWd1bGFyIEV4cHJlc3Npb25zIGRvY3VtZW50YXRpb246DQogICAgICAgICBE<br />echo ZXNjcmliZSB0aGUgZmVhdHVyZXMgdGhhdCBtYXkgYmUgdXNlZCBpbiByU2VhcmNo<br />echo LCByRW5kQmxrIGFuZCByQmxvY2suDQogICA0LSBBbHRlcm5hdGlvbiBhbmQgU3Vi<br />echo ZXhwcmVzc2lvbnMgZG9jdW1lbnRhdGlvbjoNCiAgICAgICAgIERlc2NyaWJlIGhv<br />echo dyB1c2UgfCB0byBzZXBhcmF0ZSB2YWx1ZXMgaW4gclNlYXJjaCB3aXRoIC9BIHN3<br />echo aXRjaA0KICAgICAgICAgYW5kIGZlYXR1cmVzIG9mIChzdWJleHByZXNzaW9ucykg<br />echo Zm9yIC8kIHN3aXRjaCBhbmQgJDAuLiRuIGluIHNSZXBsYWNlLg0KICAgNS0gSlNj<br />echo cmlwdCBleHByZXNzaW9ucyBkb2N1bWVudGF0aW9uICgvSiBzd2l0Y2gpOg0KICAg<br />echo ICAgICAgRGVzY3JpYmUgdGhlIG9wZXJhdG9ycyB0aGF0IG1heSBiZSB1c2VkIGlu<br />echo IEpTY3JpcHQgZXhwcmVzc2lvbnMuDQogICA2LSBEYXRhIHR5cGVzIGFuZCBmdW5j<br />echo dGlvbnMgZm9yIEpTY3JpcHQgZXhwcmVzc2lvbnMNCiAgICAgICAgIERlc2NyaWJl<br />echo IGFkZGl0aW9uYWwgZGF0YSB0eXBlcyBhbmQgZnVuY3Rpb25zIGluIEpTY3JpcHQ6<br />echo DQogICAgICAgICAtIFN0cmluZyBPYmplY3Q6IGZ1bmN0aW9ucyB0byBtYW5pcHVs<br />echo YXRlIHN0cmluZ3MuDQogICAgICAgICAtIE1hdGggT2JqZWN0OiBhcml0aG1ldGlj<br />echo IGZ1bmN0aW9ucy4NCiAgICAgICAgIC0gRGF0ZSBPYmplY3Q6IGZ1bmN0aW9ucyBm<br />echo b3IgZGF0ZSBjYWxjdWxhdGlvbnMuDQogICAgICAgICBTZWUgYWxzbyB0b3BpYyAy<br />echo LSBzZWN0aW9uIDMtIEZpbmRSZXBsLmJhdCBwcmVkZWZpbmVkIGZ1bmN0aW9ucy4N<br />echo CiAgIDAtIEVuZCB0aGlzIGhlbHAgc2NyZWVuLg0KPC91c2FnZT4NCg0KOnNob3dV<br />echo c2FnZQ0Kc2V0bG9jYWwgRW5hYmxlRGVsYXllZEV4cGFuc2lvbg0KDQo8ICIlfkYw<br />echo IiBDU2NyaXB0IC8vbm9sb2dvIC8vRTpKU2NyaXB0ICIlfkYwIiAiXjx1c2FnZT4i<br />echo IC9FOiJePC91c2FnZT4iIC9POisxOi0xDQpzZXQgbj0xDQpzZXQgImNob2ljZXM9<br />echo Ig0KZm9yICUlYSBpbiAoImh0dHA6Ly93d3cuZG9zdGlwcy5jb20vZm9ydW0vdmll<br />echo d3RvcGljLnBocFxRZj0zJnQ9NDY5NyINCiAgICAgICAgICAgICJodHRwOi8vd3d3<br />echo LmRvc3RpcHMuY29tL2ZvcnVtL3ZpZXd0b3BpYy5waHBcUWY9MyZ0PTQ2OTcmcD0z<br />echo ODEyMSNwMzgxMjEiDQogICAgICAgICAgICAiaHR0cDovL21zZG4ubWljcm9zb2Z0<br />echo LmNvbS9lbi11cy9saWJyYXJ5LzZ3emFkMmIyKHY9dnMuODQpLmFzcHgiDQogICAg<br />echo ICAgICAgICAiaHR0cDovL21zZG4ubWljcm9zb2Z0LmNvbS9lbi11cy9saWJyYXJ5<br />echo L2tzdGt6NzcxKHY9dnMuODQpLmFzcHgiDQogICAgICAgICAgICAiaHR0cDovL21z<br />echo ZG4ubWljcm9zb2Z0LmNvbS9lbi11cy9saWJyYXJ5L2NlNTdrOGQ1KHY9dnMuODQp<br />echo LmFzcHgiDQogICAgICAgICAgICAiaHR0cDovL21zZG4ubWljcm9zb2Z0LmNvbS9l<br />echo bi11cy9saWJyYXJ5L2h0Ync0eXdkKHY9dnMuODQpLmFzcHgiKSBkbyAoDQogICBz<br />echo ZXQgImNob2ljZXM9IWNob2ljZXMhIW4hIg0KICAgc2V0ICJvcHRpb25bIW4hXT0l<br />echo JX5hIg0KICAgc2V0IC9BIG4rPTENCikNCg0KOmdldE9wdGlvbg0KZWNoby8NCmNo<br />echo b2ljZSAvQyAlY2hvaWNlcyUwIC9OIC9NICJTZWxlY3Qgb25lIG9mIHByZXZpb3Vz<br />echo IGhlbHAgdG9waWNzOiINCmlmIGVycm9ybGV2ZWwgJW4lIGdvdG8gOkVPRg0Kc2V0<br />echo ICJjaG9pY2U9JWVycm9ybGV2ZWwlIg0KZXhwbG9yZXIgIiFvcHRpb25bJWNob2lj<br />echo ZSVdOlxRPT8hIg0KZWNobyAgLSBIZWxwIG9uIHRvcGljICVjaG9pY2UlIG9wZW5l<br />echo ZC4uLg0KZ290byBnZXRPcHRpb24NCg0KRW5kIG9mIEJhdGNoIHNlY3Rpb24NCg0K<br />echo DQpAZW5kDQoNCg0KLy8gSlNjcmlwdCBzZWN0aW9uDQoNCg0KDQovLyBQQVJTRSBQ<br />echo QVJBTUVURVJTDQoNCg0KLy8gRklORFJFUEwgWy9JXSBbL1ZdIFsvTl0gclNlYXJj<br />echo aCBbL0U6ckVuZEJsa10gWy9POnM6ZV0gWy9COnJCbG9ja10gWy8kOjE6Mi4uLl0N<br />echo Ci8vICAgICAgICAgIFtbL1JdIFsvQV0gc1JlcGxhY2VdIFsvUTpjXSBbL1M6c291<br />echo cmNlXQ0KLy8gICAgICAgICAgWy9KWzpuXSBbL0w6akVuZF1dIFsvRzpmaWxlXQ0K<br />echo DQp2YXIgb3B0aW9ucyA9IFdTY3JpcHQuQXJndW1lbnRzLk5hbWVkLA0KICAgIGFy<br />echo Z3MgICAgPSBXU2NyaXB0LkFyZ3VtZW50cy5Vbm5hbWVkLA0KICAgIGVudiAgICAg<br />echo PSBXU2NyaXB0LkNyZWF0ZU9iamVjdCgiV1NjcmlwdC5TaGVsbCIpLkVudmlyb25t<br />echo ZW50KCJQcm9jZXNzIiksDQogICAgZnNvICAgICA9IG5ldyBBY3RpdmVYT2JqZWN0<br />echo KCJTY3JpcHRpbmcuRmlsZVN5c3RlbU9iamVjdCIpLCBmaWxlLA0KDQogICAgaWdu<br />echo b3JlQ2FzZSAgID0gb3B0aW9ucy5FeGlzdHMoIkkiKT8iaSI6IiIsDQogICAgbm90<br />echo TWF0Y2hlZCAgID0gb3B0aW9ucy5FeGlzdHMoIlYiKSwNCiAgICBzaG93TnVtYmVy<br />echo ICAgPSBvcHRpb25zLkV4aXN0cygiTiIpLA0KICAgIHNlYXJjaCAgICAgICA9IHVu<br />echo ZGVmaW5lZCwNCiAgICBlbmRCbGsgICAgICAgPSB1bmRlZmluZWQsDQogICAgb2Zm<br />echo c2V0ICAgICAgID0gdW5kZWZpbmVkLA0KICAgIGJsb2NrICAgICAgICA9IHVuZGVm<br />echo aW5lZCwNCiAgICBzdWJtYXRjaGVzICAgPSB1bmRlZmluZWQsDQogICAganVzdFJl<br />echo cGxhY2VkID0gb3B0aW9ucy5FeGlzdHMoIlIiKSwNCiAgICBhbHRlcm5hdGlvbiAg<br />echo PSBvcHRpb25zLkV4aXN0cygiQSIpLA0KICAgIHJlcGxhY2UgICAgICA9IHVuZGVm<br />echo aW5lZCwNCiAgICBxdW90ZSAgICAgICAgPSBvcHRpb25zLkl0ZW0oIlEiKSwNCiAg<br />echo ICBKZXhwciAgICAgICAgPSBvcHRpb25zLkV4aXN0cygiSiIpLA0KDQogICAgbGlu<br />echo ZU51bWJlciA9IDAsIHJhbmdlID0gbmV3IEFycmF5KCksDQogICAgcHJvY0xpbmVz<br />echo ID0gZmFsc2UsIHByb2NCbG9ja3MgPSBmYWxzZSwNCiAgICBuZXh0TWF0Y2gsIHJl<br />echo c3VsdCAgPSAwLA0KDQogICAgbWF0Y2ggPSBmdW5jdGlvbiAoIGxpbmUsIHJlZ2V4<br />echo ICkgeyByZXR1cm4gbGluZS5zZWFyY2gocmVnZXgpID49IDA7IH0sDQoNCiAgICBw<br />echo YXJzZUludHMgPQ0KICAgICAgIGZ1bmN0aW9uICggc3RycyApIHsNCiAgICAgICAg<br />echo ICB2YXIgSW50cyA9IG5ldyBBcnJheSgpOw0KICAgICAgICAgIGZvciAoIHZhciBp<br />echo ID0gMDsgaSA8IHN0cnMubGVuZ3RoOyArK2kgKSB7DQogICAgICAgICAgICAgSW50<br />echo c1tpXSA9IHBhcnNlSW50KHN0cnNbaV0pOw0KICAgICAgICAgIH0NCiAgICAgICAg<br />echo ICByZXR1cm4gSW50czsNCiAgICAgICB9LA0KDQogICAgZ2V0UmVnRXhwID0NCiAg<br />echo ICAgICBmdW5jdGlvbiAoIHBhcmFtLCBqdXN0TG9hZCApIHsNCiAgICAgICAgICB2<br />echo YXIgcmVzdWx0ID0gcGFyYW07DQogICAgICAgICAgaWYgKCByZXN1bHQuc3Vic3Ry<br />echo KDAsMSkgPT0gIj0iICkgew0KICAgICAgICAgICAgIHJlc3VsdCA9IGVudihyZXN1<br />echo bHQuc3Vic3RyKDEpKTsNCiAgICAgICAgICB9IGVsc2Ugew0KICAgICAgICAgICAg<br />echo IGlmICggcXVvdGUgIT0gdW5kZWZpbmVkICkgcmVzdWx0ID0gcmVzdWx0LnJlcGxh<br />echo Y2UoZXZhbCgiLyIrcXVvdGUrIi9nIiksJyInKTsNCiAgICAgICAgICB9DQogICAg<br />echo ICAgICAgaWYgKCAhIGp1c3RMb2FkICkgcmVzdWx0ID0gbmV3IFJlZ0V4cChyZXN1<br />echo bHQsImdtIitpZ25vcmVDYXNlKTsNCiAgICAgICAgICByZXR1cm4gcmVzdWx0Ow0K<br />echo ICAgICAgIH0NCiAgICA7IC8vIGVuZCB2YXINCg0KLy8gUHJlZGVmaW5lZCB2YXJp<br />echo YWJsZXMNCg0KZm9yICggdmFyIGkgPSAxOyBibG9jaz1vcHRpb25zLkl0ZW0oIkFS<br />echo RyIraSk7IGkrKyApIHsNCiAgIGlmICggYmxvY2suc3Vic3RyKDAsMSkgPT0gIj0i<br />echo ICkgYmxvY2sgPSBlbnYoYmxvY2suc3Vic3RyKDEpKTsNCiAgIGV2YWwgKCAndmFy<br />echo IEFSRycraSsnPSInK2Jsb2NrKyciOycgKTsNCn0NCnZhciBkYXlzTm93ID0gTWF0<br />echo aC5mbG9vcigobmV3IERhdGUoKSkuZ2V0VGltZSgpLzg2NDAwMDAwKSwgbiA9IDA7<br />echo DQppZiAoIEpleHByKSB7DQogICB2YXIgSmV4cHJOID0gMTA7DQogICBpZiAoIG9w<br />echo dGlvbnMuSXRlbSgiSiIpICkgSmV4cHJOID0gcGFyc2VJbnQob3B0aW9ucy5JdGVt<br />echo KCJKIikpOw0KICAgZm9yICggdmFyIGkgPSAxOyBpIDw9IEpleHByTjsgaSsrICkg<br />echo ZXZhbCggInZhciBTVU0iK2krIj0wLE4iK2krIj0wLFBST0QiK2krIj0xOyIgKTsN<br />echo Cn0NCg0KLy8gUHJlZGVmaW5lZCBmdW5jdGlvbnMNCg0KZnVuY3Rpb24gY2hvb3Nl<br />echo KGFyZyxpKXtyZXR1cm4oYXJnW2ldKTt9Ow0KZnVuY3Rpb24gbWF4KGFyZyxhLGIp<br />echo e3ZhciB2YWw9LU51bWJlci5NQVhfVkFMVUU7IGZvciAoIHZhciBpPWE7IGk8PWI7<br />echo IGkrKyApIGlmICggYXJnW2ldPnZhbCApIHZhbD1hcmdbaV07IHJldHVybih2YWwp<br />echo O307DQpmdW5jdGlvbiBtaW4oYXJnLGEsYil7dmFyIHZhbD0gTnVtYmVyLk1BWF9W<br />echo QUxVRTsgZm9yICggdmFyIGk9YTsgaTw9YjsgaSsrICkgaWYgKCBhcmdbaV08dmFs<br />echo ICkgdmFsPWFyZ1tpXTsgcmV0dXJuKHZhbCk7fTsNCmZ1bmN0aW9uIGhsb29rdXAo<br />echo YXJnLGxpbSxhLGIpe3ZhciBpbmQ9YTsgZm9yICggdmFyIGk9YTsgaTw9YjsgaSsr<br />echo ICkgaWYgKCBhcmdbaV0+YXJnW2luZF0gJiYgYXJnW2ldPD1saW0gKSBpbmQ9aTsg<br />echo cmV0dXJuKGluZCk7fTsNCmZ1bmN0aW9uIHN1bShhcmcsYSxiKXt2YXIgdmFsPTAs<br />echo djsgZm9yICggdmFyIGk9YTsgaTw9YjsgaSsrICkgeyB2YWwrPXY9cGFyc2VGbG9h<br />echo dChhcmdbaV0pOyBldmFsKCJTVU0iK2krIis9djsrK04iK2krIjsiKTsgfSBuPWIt<br />echo YSsxOyByZXR1cm4odmFsKTt9Ow0KZnVuY3Rpb24gcHJvZChhcmcsYSxiKXt2YXIg<br />echo dmFsPTEsdjsgZm9yICggdmFyIGk9YTsgaTw9YjsgaSsrICkgeyB2YWwqPXY9cGFy<br />echo c2VGbG9hdChhcmdbaV0pOyBldmFsKCJQUk9EIitpKyIqPXY7Iik7IH0gbj1iLWEr<br />echo MTsgcmV0dXJuKHZhbCk7fTsNCmZ1bmN0aW9uIGRheXMocyl7cmV0dXJuKGRheXNO<br />echo b3cgLSBNYXRoLmZsb29yKChuZXcgRGF0ZShzKSkuZ2V0VGltZSgpLzg2NDAwMDAw<br />echo KSk7fTsNCmZ1bmN0aW9uIHByb21wdChzKXtXU2NyaXB0LlN0ZGVyci5Xcml0ZSgn<br />echo UmVwbGFjZSAiJytzKyciIGJ5OiAnKTsgcmV0dXJuKGZpbGUuUmVhZExpbmUoKSk7<br />echo fTsNCg0KaWYgKCBmaWxlID0gb3B0aW9ucy5JdGVtKCJHIikgKSB7DQogICBmaWxl<br />echo ID0gZnNvLk9wZW5UZXh0RmlsZShmaWxlLCAxKTsNCiAgIHNlYXJjaCA9ICIiOw0K<br />echo ICAgaWYgKCBhbHRlcm5hdGlvbiApIHJlcGxhY2UgPSAiIjsNCiAgIHZhciBzZXBJ<br />echo biA9IChKZXhwcj8nfHwnOid8JyksIHNlcE91dCA9ICIiOw0KICAgd2hpbGUgKCAh<br />echo IGZpbGUuQXRFbmRPZlN0cmVhbSApIHsNCiAgICAgIGJsb2NrID0gZmlsZS5SZWFk<br />echo TGluZSgpLnNwbGl0KHNlcEluKTsNCiAgICAgIHNlYXJjaCArPSBzZXBPdXQrYmxv<br />echo Y2tbMF07DQogICAgICBpZiAoIGFsdGVybmF0aW9uICkgcmVwbGFjZSArPSBzZXBP<br />echo dXQrYmxvY2tbMV07DQogICAgICBzZXBPdXQgPSBzZXBJbjsNCiAgIH0NCiAgIGJs<br />echo b2NrID0gdW5kZWZpbmVkOw0KICAgZmlsZS5DbG9zZSgpOw0KfSBlbHNlIHsgIC8v<br />echo IE5vIG9wdGlvbiAvRyBnaXZlbg0KICAgaWYgKCBhcmdzLmxlbmd0aCA+IDAgKSB7<br />echo DQogICAgICBzZWFyY2ggPSBnZXRSZWdFeHAoYXJncy5JdGVtKDApLHRydWUpOw0K<br />echo ICAgfQ0KICAgaWYgKCBhcmdzLmxlbmd0aCA+IDEgKSB7DQogICAgICByZXBsYWNl<br />echo ID0gYXJncy5JdGVtKDEpOw0KICAgICAgaWYgKCByZXBsYWNlLnN1YnN0cigwLDEp<br />echo ID09ICI9IiApIHJlcGxhY2UgPSBlbnYocmVwbGFjZS5zdWJzdHIoMSkpOw0KICAg<br />echo fQ0KfQ0KaWYgKCByZXBsYWNlICkgeyAgLy8gQ2hlY2sgdGhpcyEgSXQgbWF5IGNh<br />echo dXNlIHByb2JsZW1zIHdoZW4gY29tYmluZWQgd2l0aCAvQSBhbmQgL0oNCiAgIC8v<br />echo IHJlcGxhY2UgPSBldmFsKCciJyArIHJlcGxhY2UgKyAnIicpOw0KICAgaWYgKCBx<br />echo dW90ZSAhPSB1bmRlZmluZWQgKSByZXBsYWNlID0gcmVwbGFjZS5yZXBsYWNlKGV2<br />echo YWwoIi8iK3F1b3RlKyIvZyIpLCciJyk7DQp9DQoNCg0KaWYgKCBvcHRpb25zLkV4<br />echo aXN0cygiRSIpICkgew0KICAgZW5kQmxrID0gZ2V0UmVnRXhwKG9wdGlvbnMuSXRl<br />echo bSgiRSIpKTsNCiAgIHByb2NCbG9ja3MgPSB0cnVlOw0KfQ0KaWYgKCBvcHRpb25z<br />echo LkV4aXN0cygiTyIpICkgew0KICAgb2Zmc2V0ID0gcGFyc2VJbnRzKG9wdGlvbnMu<br />echo SXRlbSgiTyIpLnNwbGl0KCI6IikpOw0KICAgcHJvY0Jsb2NrcyA9IHRydWU7DQp9<br />echo DQppZiAoIG9wdGlvbnMuRXhpc3RzKCJCIikgKSB7DQogICBibG9jayA9IGdldFJl<br />echo Z0V4cChvcHRpb25zLkl0ZW0oIkIiKSx0cnVlKTsNCn0NCmlmICggb3B0aW9ucy5F<br />echo eGlzdHMoIiQiKSApIHN1Ym1hdGNoZXMgPSBwYXJzZUludHMob3B0aW9ucy5JdGVt<br />echo KCIkIikuc3BsaXQoIjoiKSk7DQp2YXIgcmVtb3ZlQ1JMRiA9IGZhbHNlOw0KDQoN<br />echo CmlmICggcmVwbGFjZSAhPSB1bmRlZmluZWQgKSB7DQogICByZW1vdmVDUkxGID0g<br />echo KGJsb2NrID09ICJcXHJcXG4iKSAmJiAocmVwbGFjZSA9PSAiIik7DQoNCiAgIGlm<br />echo ICggYWx0ZXJuYXRpb24gKSB7ICAvLyBFbmFibGUgYWx0ZXJuYXRpb24gcmVwbGFj<br />echo ZW1lbnRzIGZyb20gIlNlfGFyfGNoIiB0byAiUmV8cGxhfGNlIg0KICAgICAgaWYg<br />echo KCAhIEpleHByICkgeyAgLy8gT3JpZ2luYWwgdmVyc2lvbg0KDQogICAgICAgICB2<br />echo YXIgc2VhcmNoQSA9IHNlYXJjaC5zcGxpdCgifCIpLA0KICAgICAgICAgICAgIHJl<br />echo cGxhY2VBID0gcmVwbGFjZS5zcGxpdCgifCIpLA0KICAgICAgICAgICAgIHJlcGwg<br />echo PSBuZXcgQXJyYXkoKTsNCiAgICAgICAgIGZvciAoIHZhciBpID0gMDsgaSA8IHNl<br />echo YXJjaEEubGVuZ3RoOyBpKysgKSB7DQogICAgICAgICAgICByZXBsW3NlYXJjaEFb<br />echo aV1dID0gcmVwbGFjZUFbaV07DQogICAgICAgICB9DQogICAgICAgICByZXBsYWNl<br />echo ID0gZnVuY3Rpb24oJDAsJDEsJDIpIHsgcmV0dXJuIHJlcGxbJDBdOyB9Ow0KICAg<br />echo ICAgICAgc2VhcmNoQS5sZW5ndGggPSAwOw0KICAgICAgICAgcmVwbGFjZUEubGVu<br />echo Z3RoID0gMDsNCg0KICAgICAgfSBlbHNlIHsgIC8vIFZlcnNpb24gMjogU2VhcmNo<br />echo IGFsdGVybmF0aW9uIGhhdmUgcmVndWxhciBleHByZXNzaW9uczogICJyZWdleHAx<br />echo fHxyZWdleHAyfHxyZWdleHAzIg0KICAgICAgICAgICAgICAgIC8vICAgICAgICAg<br />echo ICAgUmVwbGFjZSBhbHRlcm5hdGlvbiBoYXZlIEpTY3JpcHQgZXhwcmVzc2lvbnM6<br />echo ICInUmUnfHwncGxhJ3x8J2NlJyINCg0KICAgICAgICAgSmV4cHIgPSBmYWxzZTsN<br />echo Cg0KICAgICAgICAgdmFyIHNlYXJjaEEgPSBzZWFyY2guc3BsaXQoInx8IiksICAg<br />echo ICAgLy8gZGl2aWRlIHNlYXJjaCAicmVnZXhwMXx8cmVnZXhwMnx8cmVnZXhwMyIg<br />echo aW4gcGFydHMNCiAgICAgICAgICAgICByZXBsID0gcmVwbGFjZS5zcGxpdCgifHwi<br />echo KTsgICAgICAvLyB0aGUgc2FtZSBmb3IgInJlcGxhY2UxfHxyZXBsYWNlMnx8cmVw<br />echo bGFjZTMiDQogICAgICAgICBzZWFyY2ggPSAiIjsNCiAgICAgICAgIHJlcGxhY2Ug<br />echo PSAiJDAsIjsNCiAgICAgICAgIGZvciAoIHZhciBpID0gMDsgaSA8IHNlYXJjaEEu<br />echo bGVuZ3RoOyBpKysgKSB7ICAgLy8gcHJvY2VzcyBlYWNoIHJlZ2V4cEkNCiAgICAg<br />echo ICAgICAgIHNlYXJjaCArPSAoaT8nfCc6JycpKycoJytzZWFyY2hBW2ldKycpJzsg<br />echo ICAvLyByZS1hc3NlbWJsZSBzZWFyY2ggcmVnZXhwIGFzICIocmVnZXhwMSl8KHJl<br />echo Z2V4cDIpfChyZWd4ZXAzKSINCiAgICAgICAgICAgIHZhciBzdWJleHBycyA9IHNl<br />echo YXJjaEFbaV0ubWF0Y2goL1teXFxdP1woL2cpOy8vIGNvdW50IHN1YmV4cHJlc3Np<br />echo b25zIGluIHRoaXMgcmVnZXhwSQ0KICAgICAgICAgICAgc3ViZXhwcnMgPSBzdWJl<br />echo eHBycz9zdWJleHBycy5sZW5ndGg6MDsgICAvLyB6ZXJvIGlmIG5vIG9uZQ0KICAg<br />echo ICAgICAgICAgZm9yICggdmFyIGogPSAwOyBqIDw9IHN1YmV4cHJzOyBqKysgKSB7<br />echo ICAgLy8gaW5zZXJ0IGVhY2ggc3ViZXhwcmVzc2lvbg0KICAgICAgICAgICAgICAg<br />echo ICAgcmVwbGFjZSArPSAnJCcrKGkrMSkrJyQnK2orJywnOyAgIC8vICdmdW5jdGlv<br />echo bigkMCwnICsgIiRpJDAsJGkkaiwuLi4iDQogICAgICAgICAgICB9DQogICAgICAg<br />echo ICAgICByZXBsW2ldID0gcmVwbFtpXS5yZXBsYWNlKC9cJChcZHsxLDJ9KS9nLCIk<br />echo JCIrKGkrMSkrIiQkJDEiKTsgICAvLyBjaGFuZ2UgIiRuIiBieSAiJGkkbiIgaW4g<br />echo cmVwbGFjZUkNCiAgICAgICAgIH0NCg0KICAgICAgICAgcmVwbGFjZSArPSAiJG9m<br />echo ZnNldCwkc3RyaW5nIjsgICAgICAgICAgICAgLy8gJ2Z1bmN0aW9uKCQwLCAkaSQw<br />echo LCRpJDEsJGkkMiwgLi4uJyArICIkb2Zmc2V0LCAkc3RyaW5nKSINCiAgICAgICAg<br />echo IGV2YWwgKCAicmVwbGFjZSA9IGZ1bmN0aW9uKCIrcmVwbGFjZSsiKSB7IGZvciAo<br />echo dmFyIGk9MTsgIWV2YWwoJyQnK2krJyQwJyk7IGkrKyk7IHJldHVybihldmFsKHJl<br />echo cGxbaS0xXSkpOyB9OyIgKTsNCiAgICAgICAgIHNlYXJjaEEgPSB1bmRlZmluZWQ7<br />echo DQogICAgICAgICBpZiAoIHN1YmV4cHJzICkgc3ViZXhwcnMgPSB1bmRlZmluZWQ7<br />echo DQoNCiAgICAgIH0NCg0KICAgfSBlbHNlIHsgIC8vIE5vIGFsdGVybmF0aW9uDQoN<br />echo CiAgICAgIHZhciBldmFsUmVwbGFjZSA9ICIiOw0KICAgICAgaWYgKCBKZXhwcikg<br />echo ew0KICAgICAgICAgZm9yICggdmFyIGkgPSAwOyBpIDw9IEpleHByTjsgaSsrICkg<br />echo ZXZhbFJlcGxhY2UgKz0gKGk/JywnOicnKSsnJCcraTsNCiAgICAgICAgIGV2YWwg<br />echo KCAiZXZhbFJlcGxhY2UgPSBmdW5jdGlvbigiK2V2YWxSZXBsYWNlKyIpIHsgcmV0<br />echo dXJuKGV2YWwocmVwbGFjZSkpOyB9OyIgKTsNCiAgICAgIH0NCg0KICAgfQ0KDQp9<br />echo IGVsc2UgeyAgLy8gcmVwbGFjZSA9PSB1bmRlZmluZWQ6IEZpbmQtb25seSBvcGVy<br />echo YXRpb24gKHRvIGRvOiBhZGp1c3QgdmFsdWVzIG9mIC8kIHN3aXRjaCkNCg0KICAg<br />echo aWYgKCBKZXhwciApIHsgIC8vIEZpbmQgYSAic2Vjb25kLWxldmVsIiBhbHRlcm5h<br />echo dGlvbg0KICAgICAgdmFyIHNlYXJjaEEgPSBzZWFyY2guc3BsaXQoInx8Iik7ICAg<br />echo ICAgICAgLy8gZGl2aWRlIHNlYXJjaCAicmVnZXhwMXx8cmVnZXhwMnx8cmVnZXhw<br />echo MyIgaW4gcGFydHMNCiAgICAgIHNlYXJjaCA9ICIiOw0KICAgICAgZm9yICggdmFy<br />echo IGkgPSAwOyBpIDwgc2VhcmNoQS5sZW5ndGg7IGkrKyApIHsNCiAgICAgICAgIHNl<br />echo YXJjaCArPSAoaT8nfCc6JycpKycoJytzZWFyY2hBW2ldKycpJzsgICAvLyByZS1h<br />echo c3NlbWJsZSBzZWFyY2ggcmVnZXhwIGFzICIocmVnZXhwMSl8KHJlZ2V4cDIpfChy<br />echo ZWd4ZXAzKSINCiAgICAgIH0NCiAgICAgIHNlYXJjaEEgPSB1bmRlZmluZWQ7DQog<br />echo ICB9DQoNCn0NCg0KaWYgKCBzZWFyY2ggIT0gdW5kZWZpbmVkICkgc2VhcmNoID0g<br />echo bmV3IFJlZ0V4cChzZWFyY2gsICJnbSIraWdub3JlQ2FzZSk7DQppZiAoIGJsb2Nr<br />echo ICAhPSB1bmRlZmluZWQgKSBibG9jayAgPSBuZXcgUmVnRXhwKGJsb2NrICwgImdt<br />echo IitpZ25vcmVDYXNlKTsNCmZpbGUgPSBmc28uT3BlblRleHRGaWxlKCJDT05JTiQi<br />echo LCAxKTsNCg0KDQovLyBQUk9DRVNTIElOUFVUIEZJTEUNCg0KDQovLyBGSU5EUkVQ<br />echo TCBbL0ldIFsvVl0gWy9OXSByU2VhcmNoIFsvRTpyRW5kQmxrXSBbL086czplXSBb<br />echo L0I6ckJsb2NrXSBbLyQ6czEuLi5dDQovLyAgICAgICAgICBbWy9SXSBbL0FdIHNS<br />echo ZXBsYWNlXSBbL1E6Y10gWy9TOnNTb3VyY2VdDQoNCi8vICAgICAgICAgIEluIFNl<br />echo YXJjaCBhbmQgUmVwbGFjZSBvcGVyYXRpb25zOg0KLy8gICAgICAgICAgICAvViBv<br />echo ciAvTiBzd2l0Y2hlcyBpbXBsaWVzIGxpbmUgcHJvY2Vzc2luZw0KLy8gICAgICAg<br />echo ICAgICAvRSBvciAvTyBzd2l0Y2hlcyBpbXBsaWVzIGJsb2NrIChhbmQgbGluZSkg<br />echo cHJvY2Vzc2luZw0KLy8gICAgICAgICAgSWYgU2VhcmNoIG9wZXJhdGlvbiAod2l0<br />echo aCBubyBwcmV2aW91cyBzd2l0Y2hlcykgaGF2ZSBOT1QgLyQgc3dpdGNoOg0KLy8g<br />echo ICAgICAgICAgICBpbXBsaWVzIGxpbmUgcHJvY2Vzc2luZyAob3RoZXJ3aXNlIGlz<br />echo IGZpbGUgcHJvY2Vzc2luZykNCg0KaWYgKCBvcHRpb25zLkV4aXN0cygiUyIpICkg<br />echo eyAgLy8gUHJvY2VzcyBTb3VyY2Ugc3RyaW5nIGluc3RlYWQgb2YgZmlsZQ0KICAg<br />echo dmFyIHNvdXJjZSA9IG9wdGlvbnMuSXRlbSgiUyIpOw0KICAgaWYgKCBzb3VyY2Uu<br />echo c3Vic3RyKDAsMSkgPT0gIj0iICkgc291cmNlID0gZW52KHNvdXJjZS5zdWJzdHIo<br />echo MSkpOw0KICAgdmFyIGZpbGVDb250ZW50cyA9IG5ldyBBcnJheSgpLCBsYXN0TGlu<br />echo ZSA9IDE7DQogICBmaWxlQ29udGVudHNbMF0gPSBzb3VyY2U7DQogICBwcm9jTGlu<br />echo ZXMgPSB0cnVlOw0KfSBlbHNlIHsgIC8vIFByb2Nlc3MgU3RkaW4gZmlsZQ0KDQog<br />echo ICBmaWxlQ29udGVudHMgPSBXU2NyaXB0LlN0ZEluLlJlYWRBbGwoKTsNCg0KICAg<br />echo aWYgKCBub3RNYXRjaGVkIHx8IHNob3dOdW1iZXIgfHwgcHJvY0Jsb2NrcyApIHBy<br />echo b2NMaW5lcyA9IHRydWU7DQogICBpZiAoIHJlcGxhY2U9PXVuZGVmaW5lZCAmJiBz<br />echo dWJtYXRjaGVzPT11bmRlZmluZWQgKSBwcm9jTGluZXMgPSB0cnVlOw0KDQogICBp<br />echo ZiAoIHByb2NMaW5lcyApIHsgIC8vIFNlcGFyYXRlIGZpbGUgY29udGVudHMgaW4g<br />echo bGluZXMNCiAgICAgIHZhciBsYXN0Qnl0ZSA9IGZpbGVDb250ZW50cy5zbGljZSgt<br />echo MSk7DQogICAgICBmaWxlQ29udGVudHMgPSBmaWxlQ29udGVudHMucmVwbGFjZSgv<br />echo KFteXHJcbl0qKVxyP1xuL2csIiQxXG4iKS5tYXRjaCgvXi4qJC9nbSk7DQogICAg<br />echo ICBsYXN0TGluZSA9IGZpbGVDb250ZW50cy5sZW5ndGggLSAoKGxhc3RCeXRlID09<br />echo ICJcbiIpPzE6MCk7DQogICB9DQoNCiAgIGlmICggcHJvY0Jsb2NrcyApIHsgIC8v<br />echo IENyZWF0ZSBibG9ja3Mgb2YgbGluZXMNCiAgICAgIGlmICggc2VhcmNoICE9IHVu<br />echo ZGVmaW5lZCApIHsgIC8vIEJsb2NrcyBiYXNlZCBvbiBTZWFyY2ggbGluZXM6DQog<br />echo ICAgICAgICBpZiAoIG9mZnNldCA9PSB1bmRlZmluZWQgKSBvZmZzZXQgPSBuZXcg<br />echo QXJyYXkoMCwwKTsNCiAgICAgICAgIGZvciAoIHZhciBpID0gMTsgaSA8PSBsYXN0<br />echo TGluZTsgaSsrICkgew0KICAgICAgICAgICAgaWYgKCBtYXRjaChmaWxlQ29udGVu<br />echo dHNbaS0xXSxzZWFyY2gpICkgew0KICAgICAgICAgICAgICAgaWYgKCBlbmRCbGsg<br />echo IT0gdW5kZWZpbmVkICkgeyAgLy8gMS0gZnJvbSBTZWFyY2ggbGluZSB0byBFbmRC<br />echo bGsgbGluZSBbK29mZnNldHNdLg0KICAgICAgICAgICAgICAgICAgZm9yICggdmFy<br />echo IGo9aSsxOyBqPD1sYXN0TGluZSAmJiAhbWF0Y2goZmlsZUNvbnRlbnRzW2otMV0s<br />echo ZW5kQmxrKTsgaisrICk7DQogICAgICAgICAgICAgICAgICBpZiAoIGogPD0gbGFz<br />echo dExpbmUgKSB7DQogICAgICAgICAgICAgICAgICAgICB2YXIgcyA9IGkrb2Zmc2V0<br />echo WzBdLCBlID0gaitvZmZzZXRbMV07DQogICAgICAgICAgICAgICAgICAgICAvLyBJ<br />echo bnNlcnQgYWRkaXRpb25hbCBjb2RlIGhlcmUgdG8gY2FuY2VsIG92ZXJsYXBwZWQg<br />echo YmxvY2tzDQogICAgICAgICAgICAgICAgICAgICByYW5nZS5wdXNoKHM+MD9zOjEs<br />echo IGU+MD9lOjEpOw0KICAgICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgICAg<br />echo ICAgaSA9IGo7DQogICAgICAgICAgICAgICB9IGVsc2UgeyAgLy8gMi0gc3Vycm91<br />echo bmRpbmcgU2VhcmNoIGxpbmVzIHdpdGggb2Zmc2V0cy4NCiAgICAgICAgICAgICAg<br />echo ICAgIHMgPSBpK29mZnNldFswXSwgZSA9IGkrb2Zmc2V0WzFdOw0KICAgICAgICAg<br />echo ICAgICAgICAgcmFuZ2UucHVzaChzPjA/czoxLCBlPjA/ZToxKTsNCiAgICAgICAg<br />echo ICAgICAgIH0NCiAgICAgICAgICAgIH0NCiAgICAgICAgIH0NCiAgICAgIH0gZWxz<br />echo ZSB7ICAvLyBPZmZzZXQgd2l0aCBubyBTZWFyY2g6IGJsb2NrIGlzIHJhbmdlIG9m<br />echo IGxpbmVzDQogICAgICAgICBpZiAoIG9mZnNldC5sZW5ndGggPCAyICkgb2Zmc2V0<br />echo WzFdID0gbGFzdExpbmU7DQogICAgICAgICBzID0gb2Zmc2V0WzBdPDAgPyBvZmZz<br />echo ZXRbMF0rbGFzdExpbmUrMSA6IG9mZnNldFswXTsNCiAgICAgICAgIGUgPSBvZmZz<br />echo ZXRbMV08MCA/IG9mZnNldFsxXStsYXN0TGluZSsxIDogb2Zmc2V0WzFdOw0KICAg<br />echo ICAgICAgcmFuZ2UucHVzaChzPjA/czoxLCBlPjA/ZToxKTsNCiAgICAgIH0NCiAg<br />echo ICAgIGlmICggcmFuZ2UubGVuZ3RoID09IDAgKSBXU2NyaXB0LlF1aXQoMCk7DQog<br />echo ICAgICByYW5nZS5wdXNoKDB4RkZGRkZGRkYsMHhGRkZGRkZGRik7DQogICB9DQoN<br />echo Cn0NCi8vIGVuZGlmIFByb2Nlc3MgU291cmNlIHN0cmluZyBpbnN0ZWFkIG9mIGZp<br />echo bGUNCg0KaWYgKCByZXBsYWNlID09IHVuZGVmaW5lZCApIHsgIC8vIFNlYXJjaCBv<br />echo cGVyYXRpb25zDQogICBpZiAoIHByb2NMaW5lcyApIHsgIC8vIFNlYXJjaCBvbiBs<br />echo aW5lcw0KICAgICAgaWYgKCBwcm9jQmxvY2tzICkgeyAgLy8gUHJvY2VzcyBwcmV2<br />echo aW91c2x5IGNyZWF0ZWQgYmxvY2tzDQogICAgICAgICBmb3IgKCB2YXIgcj0wLCBs<br />echo aW5lTnVtYmVyPTE7IGxpbmVOdW1iZXIgPD0gbGFzdExpbmU7IGxpbmVOdW1iZXIr<br />echo KyApIHsNCiAgICAgICAgICAgIGlmICggKHJhbmdlW3JdPD1saW5lTnVtYmVyICYm<br />echo IGxpbmVOdW1iZXI8PXJhbmdlW3IrMV0pICE9IG5vdE1hdGNoZWQgKSB7DQogICAg<br />echo ICAgICAgICAgICBpZiAoIHN1Ym1hdGNoZXMgIT0gdW5kZWZpbmVkICkgew0KICAg<br />echo ICAgICAgICAgICAgICAgaWYgKCBzaG93TnVtYmVyICkgV1NjcmlwdC5TdGRvdXQu<br />echo V3JpdGUobGluZU51bWJlcisiOiIpOw0KICAgICAgICAgICAgICAgICAgd2hpbGUg<br />echo KCAobmV4dE1hdGNoID0gYmxvY2suZXhlYyhmaWxlQ29udGVudHNbbGluZU51bWJl<br />echo ci0xXSkpICE9IG51bGwgKSB7DQogICAgICAgICAgICAgICAgICAgICBmb3IgKCB2<br />echo YXIgcyA9IDA7IHMgPCBzdWJtYXRjaGVzLmxlbmd0aDsgcysrICkgew0KICAgICAg<br />echo ICAgICAgICAgICAgICAgICAgV1NjcmlwdC5TdGRvdXQuV3JpdGUoIiAiICsgKHF1<br />echo b3RlIT11bmRlZmluZWQ/cXVvdGU6JyInKSArDQogICAgICAgICAgICAgICAgICAg<br />echo ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBuZXh0TWF0Y2hbc3VibWF0<br />echo Y2hlc1tzXV0gKw0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg<br />echo ICAgICAgICAgICAgICAgKHF1b3RlIT11bmRlZmluZWQ/cXVvdGU6JyInKSk7DQog<br />echo ICAgICAgICAgICAgICAgICAgICB9DQogICAgICAgICAgICAgICAgICAgICByZXN1<br />echo bHQrKzsNCiAgICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgICAgICAgIFdT<br />echo Y3JpcHQuU3Rkb3V0LldyaXRlTGluZSgpOw0KICAgICAgICAgICAgICAgfSBlbHNl<br />echo IHsNCiAgICAgICAgICAgICAgICAgIGlmICggYmxvY2sgPT0gdW5kZWZpbmVkICB8<br />echo fCAgbWF0Y2goZmlsZUNvbnRlbnRzW2xpbmVOdW1iZXItMV0sYmxvY2spICkgew0K<br />echo ICAgICAgICAgICAgICAgICAgICAgaWYgKCBzaG93TnVtYmVyICkgV1NjcmlwdC5T<br />echo dGRvdXQuV3JpdGUobGluZU51bWJlcisiOiIpOw0KICAgICAgICAgICAgICAgICAg<br />echo ICAgV1NjcmlwdC5TdGRvdXQuV3JpdGVMaW5lKGZpbGVDb250ZW50c1tsaW5lTnVt<br />echo YmVyLTFdKTsNCiAgICAgICAgICAgICAgICAgICAgIHJlc3VsdCsrOw0KICAgICAg<br />echo ICAgICAgICAgICAgfQ0KICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgfQ0K<br />echo ICAgICAgICAgICAgaWYgKCBsaW5lTnVtYmVyID49IHJhbmdlW3IrMV0gKSByICs9<br />echo IDI7DQogICAgICAgICB9DQogICAgICB9IGVsc2UgeyAgLy8gUHJvY2VzcyBhbGwg<br />echo bGluZXMgZm9yIFNlYXJjaA0KICAgICAgICAgZm9yICggbGluZU51bWJlciA9IDE7<br />echo IGxpbmVOdW1iZXIgPD0gbGFzdExpbmU7IGxpbmVOdW1iZXIrKyApIHsNCiAgICAg<br />echo ICAgICAgIGlmICggbWF0Y2goZmlsZUNvbnRlbnRzW2xpbmVOdW1iZXItMV0sc2Vh<br />echo cmNoKSAhPSBub3RNYXRjaGVkICkgew0KICAgICAgICAgICAgICAgaWYgKCBzaG93<br />echo TnVtYmVyICkgV1NjcmlwdC5TdGRvdXQuV3JpdGUobGluZU51bWJlcisiOiIpOw0K<br />echo ICAgICAgICAgICAgICAgaWYgKCBzdWJtYXRjaGVzICE9IHVuZGVmaW5lZCApIHsN<br />echo CiAgICAgICAgICAgICAgICAgIHNlYXJjaC5sYXN0SW5kZXggPSAwOw0KICAgICAg<br />echo ICAgICAgICAgICAgd2hpbGUgKCAobmV4dE1hdGNoID0gc2VhcmNoLmV4ZWMoZmls<br />echo ZUNvbnRlbnRzW2xpbmVOdW1iZXItMV0pKSAhPSBudWxsICkgew0KICAgICAgICAg<br />echo ICAgICAgICAgICAgZm9yICggdmFyIHMgPSAwOyBzIDwgc3VibWF0Y2hlcy5sZW5n<br />echo dGg7IHMrKyApIHsNCiAgICAgICAgICAgICAgICAgICAgICAgIFdTY3JpcHQuU3Rk<br />echo b3V0LldyaXRlKCIgIiArIChxdW90ZSE9dW5kZWZpbmVkP3F1b3RlOiciJykgKw0K<br />echo ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg<br />echo ICAgbmV4dE1hdGNoW3N1Ym1hdGNoZXNbc11dICsNCiAgICAgICAgICAgICAgICAg<br />echo ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIChxdW90ZSE9dW5kZWZp<br />echo bmVkP3F1b3RlOiciJykpOw0KICAgICAgICAgICAgICAgICAgICAgfQ0KICAgICAg<br />echo ICAgICAgICAgICAgICAgcmVzdWx0Kys7DQogICAgICAgICAgICAgICAgICB9DQog<br />echo ICAgICAgICAgICAgICAgICBXU2NyaXB0LlN0ZG91dC5Xcml0ZUxpbmUoKTsNCiAg<br />echo ICAgICAgICAgICAgIH0gZWxzZSB7DQogICAgICAgICAgICAgICAgICBXU2NyaXB0<br />echo LlN0ZG91dC5Xcml0ZUxpbmUoZmlsZUNvbnRlbnRzW2xpbmVOdW1iZXItMV0pOw0K<br />echo ICAgICAgICAgICAgICAgICAgcmVzdWx0Kys7DQogICAgICAgICAgICAgICB9DQog<br />echo ICAgICAgICAgICB9DQogICAgICAgICB9DQogICAgICB9DQoNCiAgIH0gZWxzZSB7<br />echo ICAvLyBTZWFyY2ggb24gZW50aXJlIGZpbGUgYW5kIHNob3cgc3VibWF0Y2hlZCBz<br />echo dWJzdHJpbmdzDQogICAgICBpZiAoIHN1Ym1hdGNoZXMgIT0gdW5kZWZpbmVkICkg<br />echo ew0KICAgICAgICAgd2hpbGUgKCAobmV4dE1hdGNoID0gc2VhcmNoLmV4ZWMoZmls<br />echo ZUNvbnRlbnRzKSkgIT0gbnVsbCApIHsNCiAgICAgICAgICAgIGZvciAoIHZhciBz<br />echo ID0gMDsgcyA8IHN1Ym1hdGNoZXMubGVuZ3RoOyBzKysgKSB7DQogICAgICAgICAg<br />echo ICAgICBXU2NyaXB0LlN0ZG91dC5Xcml0ZSgiICIgKyAocXVvdGUhPXVuZGVmaW5l<br />echo ZD9xdW90ZTonIicpICsNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg<br />echo ICAgICAgICAgIG5leHRNYXRjaFtzdWJtYXRjaGVzW3NdXSArDQogICAgICAgICAg<br />echo ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAocXVvdGUhPXVuZGVmaW5l<br />echo ZD9xdW90ZTonIicpKTsNCiAgICAgICAgICAgIH0NCiAgICAgICAgICAgIHJlc3Vs<br />echo dCsrOw0KICAgICAgICAgICAgV1NjcmlwdC5TdGRvdXQuV3JpdGVMaW5lKCk7DQog<br />echo ICAgICAgICB9DQogICAgICB9DQogICB9DQoNCn0gZWxzZSB7ICAvLyBSZXBsYWNl<br />echo IG9wZXJhdGlvbnMNCg0KICAgaWYgKCBwcm9jTGluZXMgKSB7ICAvLyBSZXBsYWNl<br />echo IG9uIGxpbmVzDQogICAgICBpZiAoIHByb2NCbG9ja3MgKSB7ICAvLyBQcm9jZXNz<br />echo IHByZXZpb3VzbHkgY3JlYXRlZCBibG9ja3MNCiAgICAgICAgIGlmICggYmxvY2sg<br />echo PT0gdW5kZWZpbmVkICkgYmxvY2sgPSBzZWFyY2g7ICAvLyBSZXBsYWNlIHJTZWFy<br />echo Y2ggb3IgckJsb2NrICh0aGUgbGFzdCBvbmUpDQogICAgICAgICB2YXIgQ1JMRnJl<br />echo bW92ZWQgPSBmYWxzZTsNCiAgICAgICAgIGZvciAoIHZhciByPTAsIGxpbmVOdW1i<br />echo ZXI9MTsgbGluZU51bWJlciA8PSBsYXN0TGluZTsgbGluZU51bWJlcisrICkgew0K<br />echo ICAgICAgICAgICAgaWYgKCByYW5nZVtyXTw9bGluZU51bWJlciAmJiBsaW5lTnVt<br />echo YmVyPD1yYW5nZVtyKzFdICkgew0KICAgICAgICAgICAgICAgaWYgKCByZW1vdmVD<br />echo UkxGICkgew0KICAgICAgICAgICAgICAgICAgV1NjcmlwdC5TdGRvdXQuV3JpdGUo<br />echo ZmlsZUNvbnRlbnRzW2xpbmVOdW1iZXItMV0pOw0KICAgICAgICAgICAgICAgICAg<br />echo Q1JMRnJlbW92ZWQgPSB0cnVlOw0KICAgICAgICAgICAgICAgICAgcmVzdWx0Kys7<br />echo DQogICAgICAgICAgICAgICB9IGVsc2Ugew0KICAgICAgICAgICAgICAgICAgaWYg<br />echo KCBtYXRjaChmaWxlQ29udGVudHNbbGluZU51bWJlci0xXSxibG9jaykgKSB7DQog<br />echo ICAgICAgICAgICAgICAgICAgICBpZiAoIENSTEZyZW1vdmVkICkgeyBXU2NyaXB0<br />echo LlN0ZG91dC5Xcml0ZUxpbmUoKTsgQ1JMRnJlbW92ZWQgPSBmYWxzZTsgfQ0KICAg<br />echo ICAgICAgICAgICAgICAgICAgV1NjcmlwdC5TdGRvdXQuV3JpdGVMaW5lKGZpbGVD<br />echo b250ZW50c1tsaW5lTnVtYmVyLTFdLnJlcGxhY2UoYmxvY2ssSmV4cHI/ZXZhbFJl<br />echo cGxhY2U6cmVwbGFjZSkpOw0KICAgICAgICAgICAgICAgICAgICAgcmVzdWx0Kys7<br />echo DQogICAgICAgICAgICAgICAgICB9IGVsc2Ugew0KICAgICAgICAgICAgICAgICAg<br />echo ICAgaWYgKCBDUkxGcmVtb3ZlZCApIHsgV1NjcmlwdC5TdGRvdXQuV3JpdGVMaW5l<br />echo KCk7IENSTEZyZW1vdmVkID0gZmFsc2U7IH0NCiAgICAgICAgICAgICAgICAgICAg<br />echo IGlmICggISBqdXN0UmVwbGFjZWQgKSBXU2NyaXB0LlN0ZG91dC5Xcml0ZUxpbmUo<br />echo ZmlsZUNvbnRlbnRzW2xpbmVOdW1iZXItMV0pOw0KICAgICAgICAgICAgICAgICAg<br />echo fQ0KICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgfSBlbHNlIHsNCiAgICAg<br />echo ICAgICAgICAgIGlmICggQ1JMRnJlbW92ZWQgKSB7IFdTY3JpcHQuU3Rkb3V0Lldy<br />echo aXRlTGluZSgpOyBDUkxGcmVtb3ZlZCA9IGZhbHNlOyB9DQogICAgICAgICAgICAg<br />echo ICBpZiAoICEganVzdFJlcGxhY2VkICkgV1NjcmlwdC5TdGRvdXQuV3JpdGVMaW5l<br />echo KGZpbGVDb250ZW50c1tsaW5lTnVtYmVyLTFdKTsNCiAgICAgICAgICAgIH0NCiAg<br />echo ICAgICAgICAgIGlmICggbGluZU51bWJlciA+PSByYW5nZVtyKzFdICkgciArPSAy<br />echo Ow0KICAgICAgICAgfQ0KICAgICAgICAgaWYgKCBDUkxGcmVtb3ZlZCApIHsgV1Nj<br />echo cmlwdC5TdGRvdXQuV3JpdGVMaW5lKCk7IENSTEZyZW1vdmVkID0gZmFsc2U7IH0N<br />echo CiAgICAgIH0gZWxzZSB7ICAvLyBQcm9jZXNzIGFsbCBsaW5lcyBmb3IgUmVwbGFj<br />echo ZQ0KICAgICAgICAgZm9yICggbGluZU51bWJlciA9IDE7IGxpbmVOdW1iZXIgPD0g<br />echo bGFzdExpbmU7IGxpbmVOdW1iZXIrKyApIHsNCiAgICAgICAgICAgIGlmICggbWF0<br />echo Y2goZmlsZUNvbnRlbnRzW2xpbmVOdW1iZXItMV0sc2VhcmNoKSApIHsNCiAgICAg<br />echo ICAgICAgICAgIFdTY3JpcHQuU3Rkb3V0LldyaXRlTGluZShmaWxlQ29udGVudHNb<br />echo bGluZU51bWJlci0xXS5yZXBsYWNlKHNlYXJjaCxKZXhwcj9ldmFsUmVwbGFjZTpy<br />echo ZXBsYWNlKSk7DQogICAgICAgICAgICAgICByZXN1bHQrKzsNCiAgICAgICAgICAg<br />echo IH0gZWxzZSB7DQogICAgICAgICAgICAgICBpZiAoICEganVzdFJlcGxhY2VkICkg<br />echo V1NjcmlwdC5TdGRvdXQuV3JpdGVMaW5lKGZpbGVDb250ZW50c1tsaW5lTnVtYmVy<br />echo LTFdKTsNCiAgICAgICAgICAgIH0NCiAgICAgICAgIH0NCiAgICAgIH0NCg0KICAg<br />echo fSBlbHNlIHsgIC8vIFJlcGxhY2Ugb24gZW50aXJlIGZpbGUNCiAgICAgIFdTY3Jp<br />echo cHQuU3Rkb3V0LldyaXRlKGZpbGVDb250ZW50cy5yZXBsYWNlKHNlYXJjaCxKZXhw<br />echo cj9ldmFsUmVwbGFjZTpyZXBsYWNlKSk7DQogICB9DQoNCiAgIGlmICggbGFzdExp<br />echo bmUgPSBvcHRpb25zLkl0ZW0oIkwiKSApIHsNCiAgICAgIGlmICggbGFzdExpbmUu<br />echo c3Vic3RyKDAsMSkgPT0gJz0nICkgbGFzdExpbmUgPSBlbnYobGFzdExpbmUuc3Vi<br />echo c3RyKDEpKTsNCiAgICAgIFdTY3JpcHQuU3Rkb3V0LldyaXRlTGluZSggZXZhbChs<br />echo YXN0TGluZSkgKTsNCiAgIH0NCg0KfQ0KV1NjcmlwdC5RdWl0KHJlc3VsdCk7DQo=<br />)&gt;&quot;decode.tmp&quot;<br />certutil /decode /f &quot;decode.tmp&quot; &quot;findrepl.bat&quot; &gt;nul<br />del &quot;decode.tmp&quot;<br />)<br /></code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p48127" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile48127">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content48127">
+
+						<h3 ><a href="#p48127">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingb0c7.html?mode=quote&amp;f=3&amp;p=48127" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic8fe4.html?p=48127#p48127" onclick="prompt('Message #110',this.href); return false;">#110</a></span> 
+									<a class="unread" href="viewtopic8fe4.html?p=48127#p48127" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>27 Jul 2016 08:57
+			</p>
+			
+			
+			
+			<div class="content">A bug!  <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" />  Arghhhhh!!!   <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> <br /><br />I hate subtle and elusive bugs, that don't always occur under the same conditions! <img class="smilies" src="images/smilies/icon_evil.gif" alt=":evil:" title="Evil or Very Mad" />  I will try to find some time to fix it, but I am very busy right now...<br /><br />Thanks, foxi, for post the last stable version of FindRepl.bat, but I think you would posted it in plain text (it would occupied less lines).<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p49953" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile49953">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistd3ba.html?mode=viewprofile&amp;u=8491" class="username">amosgreg</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search78ed.html?author_id=8491&amp;sr=posts">4</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 01 Nov 2016 07:07</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content49953">
+
+						<h3 ><a href="#p49953">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingc94a.html?mode=quote&amp;f=3&amp;p=49953" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb5a3.html?p=49953#p49953" onclick="prompt('Message #111',this.href); return false;">#111</a></span> 
+									<a class="unread" href="viewtopicb5a3.html?p=49953#p49953" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistd3ba.html?mode=viewprofile&amp;u=8491" class="username">amosgreg</a></strong> &raquo; </span>01 Nov 2016 13:38
+			</p>
+			
+			
+			
+			<div class="content">Ok I am fairly new at scripting and this is stumping me. I posted <a href="viewtopic2318.html?f=3&amp;t=7521" class="postlink">http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7521</a>  a new question then as I was reading threads this afternoon I stumbled across your script.<br /><br />In a nut shell I have 2 data files that I will need to run a search/replace script on and will have a third file containing the search,replace pair of values in. Currently as posted in the linked thread I am parsing these values and want to make a call to loop through this list calling something else to do the search/replace.<br />My issue right now is that I can't get your code to do the replace using your example on the first page.<br /><br />NewTextDocument.txt contains the following data<br />greg amos &lt;new&gt; Man Greg Fred &lt;new&gt; &lt;you&gt;<br /><br />My script looks like this<br />&lt; NewTextDocument.txt FindRepl.bat Greg Amos<br /><br />I have tried &quot;Greg&quot; &quot;Amos&quot; and no &quot;&quot; both do not replace the values.<br />I am stumped at this point.  <br />If I can get this to work, I assume I just need to CALL using this syntax<br /><br />CALL : NewTextDocument.txt FindRepl.bat %%a %%b<br />But when I do this, I receive <br />The system cannot find the batch label specified -<br />which is were I dropped down to try to just execute the stand alone search/replace.<br />The scripts are all located in the same folder at the same level and I am executing the .bat file from the command prompt.<br /><br />Thanks for any help.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p52422" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile52422">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist71c0.html?mode=viewprofile&amp;u=8749" class="username">sosite</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchcf1a.html?author_id=8749&amp;sr=posts">3</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 19 May 2017 02:12</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content52422">
+
+						<h3 ><a href="#p52422">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting097a.html?mode=quote&amp;f=3&amp;p=52422" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicadcd.html?p=52422#p52422" onclick="prompt('Message #112',this.href); return false;">#112</a></span> 
+									<a class="unread" href="viewtopicadcd.html?p=52422#p52422" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist71c0.html?mode=viewprofile&amp;u=8749" class="username">sosite</a></strong> &raquo; </span>19 May 2017 04:12
+			</p>
+			
+			
+			
+			<div class="content">HELLo and thx for you findrepl <img class="smilies" src="images/smilies/icon_wink.gif" alt=";)" title="Wink" /><br /><br />I have one problem: when I want to show &quot;not matched lines&quot; using <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>/V</code></pre></div> and <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>/O:s:e</code></pre></div> params. When we find any occurence of &quot;string&quot; then everythings works as suspected. But when they're no match then I get empty result.<br /><br />Eg test.txt<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>testLine<br />testSth<br />3rd line<br /></code></pre></div><br /><br />And command:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; test.txt findrepl &quot;testLine&quot; /V /O:0:+1</code></pre></div> - works fine returns<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>3rd line<br /></code></pre></div><br /><br />But below:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; test.txt findrepl &quot;testSomethingNonExistent&quot; /V /O:0:+1</code></pre></div> - returns nothing at all.<br /><br />Any suggestions?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p52433" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile52433">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content52433">
+
+						<h3 ><a href="#p52433">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting3278.html?mode=quote&amp;f=3&amp;p=52433" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic2681.html?p=52433#p52433" onclick="prompt('Message #113',this.href); return false;">#113</a></span> 
+									<a class="unread" href="viewtopic2681.html?p=52433#p52433" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>19 May 2017 19:46
+			</p>
+			
+			
+			
+			<div class="content">Ok. Lets review how these FindRepl switches work.<br /><br />/V  Show not matched lines.<br /><br />/O:s:e  Show a range of lines <em class="text-italics">with respect to a matching line</em>, that is, the /Offset switch add S and E to a matching line and form a <em class="text-italics">block of lines</em> with these two offsets.<br /><br />When /V switch is combined with /O it shows all the lines that does not match the block of lines selected by /O switch.<br /><br />However, if there is <em class="text-italics">not</em> a matching line, then /O switch have not a base line to add S and E, and hence the block of lines is not created.<br /><br />If the block of lines is not created, the /V switch have not a block of lines to work with...<br /><br /><br />What exactly you expect that FindRepl do when /V and /O switches are given and there is NOT any matching line? Please, explain your reasons.<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p52441" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile52441">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist71c0.html?mode=viewprofile&amp;u=8749" class="username">sosite</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchcf1a.html?author_id=8749&amp;sr=posts">3</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 19 May 2017 02:12</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content52441">
+
+						<h3 ><a href="#p52441">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting4fb8.html?mode=quote&amp;f=3&amp;p=52441" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicad7f.html?p=52441#p52441" onclick="prompt('Message #114',this.href); return false;">#114</a></span> 
+									<a class="unread" href="viewtopicad7f.html?p=52441#p52441" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist71c0.html?mode=viewprofile&amp;u=8749" class="username">sosite</a></strong> &raquo; </span>20 May 2017 07:01
+			</p>
+			
+			
+			
+			<div class="content">Thx for your answer <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br /><br />I think that proper behavior of /V switch should be &quot;always show not matched lines no matter what&quot;. So in the above example when we use this command<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; test.txt findrepl &quot;testSomethingNonExistent&quot; /V</code></pre></div><br />we get all lines of test.txt.<br /><br />But when \O switch doesn't have anything to operate at then with and without /V we get nothing. So I think that below code:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt; test.txt findrepl &quot;testSomethingNonExistent&quot; /V /O:0:+1</code></pre></div><br />should return the same as withour /O switch - all line of test.txt</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p52442" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile52442">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content52442">
+
+						<h3 ><a href="#p52442">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9396.html?mode=quote&amp;f=3&amp;p=52442" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic179a.html?p=52442#p52442" onclick="prompt('Message #115',this.href); return false;">#115</a></span> 
+									<a class="unread" href="viewtopic179a.html?p=52442#p52442" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>20 May 2017 07:28
+			</p>
+			
+			
+			
+			<div class="content">Well, if this would be the case, then the /O switch would be just ignored!<br /><br />The /O switch is based on a matching line to create a block of lines. What you suggest is a <em class="text-italics">special case</em>: the /V switch return all lines that don't match the /O switch, but if /O switch return nothing, then <em class="text-italics">only in this case</em> consider that the /O switch wouldn't be given and return all lines!  <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" />  <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /><br /><br /> I hate special cases...  <img class="smilies" src="images/smilies/icon_cry.gif" alt=":cry:" title="Crying or Very sad" /> <br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p52443" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile52443">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist71c0.html?mode=viewprofile&amp;u=8749" class="username">sosite</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchcf1a.html?author_id=8749&amp;sr=posts">3</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 19 May 2017 02:12</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content52443">
+
+						<h3 ><a href="#p52443">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting15f3.html?mode=quote&amp;f=3&amp;p=52443" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic0f32.html?p=52443#p52443" onclick="prompt('Message #116',this.href); return false;">#116</a></span> 
+									<a class="unread" href="viewtopic0f32.html?p=52443#p52443" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist71c0.html?mode=viewprofile&amp;u=8749" class="username">sosite</a></strong> &raquo; </span>20 May 2017 08:22
+			</p>
+			
+			
+			
+			<div class="content">@Aacini - Yea, but did you have any suggestions? Or where I can search place to insert this &quot;special case&quot;? I'm not so good in win bash <img class="smilies" src="images/smilies/icon_razz.gif" alt=":P" title="Razz" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p52444" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile52444">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content52444">
+
+						<h3 ><a href="#p52444">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5033.html?mode=quote&amp;f=3&amp;p=52444" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice79e.html?p=52444#p52444" onclick="prompt('Message #117',this.href); return false;">#117</a></span> 
+									<a class="unread" href="viewtopice79e.html?p=52444#p52444" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>20 May 2017 09:02
+			</p>
+			
+			
+			
+			<div class="content">You may get the same result in two steps: first, use both /V and /O switches; if FindRepl returns nothing, then just use the whole file...<br /><br />If you have any doubts on how to complete this procedure, post your current code and briefly explain what you want to achieve.<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p54479" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile54479">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist0d3e.html?mode=viewprofile&amp;u=8959" class="username">mjmathmax</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search3491.html?author_id=8959&amp;sr=posts">1</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Oct 2017 18:23</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content54479">
+
+						<h3 ><a href="#p54479">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting42ef.html?mode=quote&amp;f=3&amp;p=54479" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic05b2.html?p=54479#p54479" onclick="prompt('Message #118',this.href); return false;">#118</a></span> 
+									<a class="unread" href="viewtopic05b2.html?p=54479#p54479" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist0d3e.html?mode=viewprofile&amp;u=8959" class="username">mjmathmax</a></strong> &raquo; </span>23 Oct 2017 23:54
+			</p>
+			
+			
+			
+			<div class="content">Thank you for this great script !<br /><br />There is one feature that i miss and which was mentioned on the first page of this thread but remained without response: the ability to process one line at a time.<br /><br />I have a command which takes quite long to process with a large amount of output. It would be nice to search and replace strings line by line instead of waiting for all the command to complete. Findstr works line by line, but it's a pity that findreplc breaks the pipe by requiering the full output. <br /><br />Is there some options to set up so that Find Repl process one line at a time? Or else, is there some mechanism that can be inserted between the command and FindRepl to break the output on each line?<br /><br />Any advice would be greatly appreciated. Thanks.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57343" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57343">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist742a.html?mode=viewprofile&amp;u=6577" class="username">thefeduke</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search454a.html?author_id=6577&amp;sr=posts">211</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 05 Apr 2015 13:06</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> MA South Shore, USA</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57343">
+
+						<h3 ><a href="#p57343">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting76a0.html?mode=quote&amp;f=3&amp;p=57343" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5ce8.html?p=57343#p57343" onclick="prompt('Message #119',this.href); return false;">#119</a></span> 
+									<a class="unread" href="viewtopic5ce8.html?p=57343#p57343" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist742a.html?mode=viewprofile&amp;u=6577" class="username">thefeduke</a></strong> &raquo; </span>04 Jul 2018 13:00
+			</p>
+			
+			
+			
+			<div class="content">I am having a problem with using the /R switch.  I expected only one record to be displayed, but I get them all. Did I not interpret your instructions correctly?<br>
+<br>
+This input:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Division Schedule
+Week of Play    Schedule Date   Start Time  Note: Click the week of play link (i.e. Week 1, Week 2, etc...) to see the Match-Ups for that week
+Week 1  06/04/2018  07:00 PM    1-2     3-4     5-6     7-8     9-10            
+Week 2  06/11/2018  07:00 PM    10-7    4-9     6-3     8-1     2-5             
+Week 3  06/18/2018  07:00 PM    1-6     4-7     9-2     5-3     8-10            
+Week 4  06/25/2018  07:00 PM    6-10    1-4     3-2     7-5     9-8             
+Week 5  07/02/2018  07:00 PM    7-6     5-4     10-1    3-9     2-8             
+Week 6  07/09/2018  07:00 PM    9-6     4-10    2-7     5-1     8-3             
+Week 7  07/16/2018  07:00 PM    1-9     7-3     10-5    6-2     4-8             
+Week 8  07/23/2018  07:00 PM    3-1     2-10    9-7     8-5     6-4             
+Week 9  07/30/2018  07:00 PM    1-7     8-6     10-3    5-9     4-2             
+Week 10     08/06/2018  07:00 PM    2-1     4-3     6-5     8-7     10-9            
+Week 11     08/13/2018  07:00 PM    7-10    9-4     3-6     1-8     5-2             
+Week 12     08/20/2018  07:00 PM    6-1     7-4     2-9     3-5     10-8            
+Week 13     08/27/2018  07:00 PM    Playoff Week
+The team number listed first is the home team. Playoff weeks may vary.
+
+</code></pre></div>  yields the following: <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Week 1  06/04/2018  07:00 PM    1-2     3-4     5-6     7-8     9-10
+Week 2  06/11/2018  07:00 PM    10-7    4-9     6-3     8-1     2-5
+Week 3  06/18/2018  07:00 PM    1-6     4-7     9-2     5-3     8-10
+Week 4  06/25/2018  07:00 PM    6-10    1-4     3-2     7-5     9-8
+Week 5  07/02/2018  07:00 PM    7-6     5-4     10-1    3-9     2-8
+Week 6  07/09/2018  07:00 PM    9-6     4-10    2-7     5-1     8-3
+Week 7  07/16/2018  07:00 PM    1-9     7-3     10-5    6-2     4-8
+Week 8  07/23/2018  07:00 PM    3-1     2-10    9-7     8-5     6-4
+Week 9  07/30/2018  07:00 PM    1-7     8-6     10-3    5-9     4-2
+Week 10     08/06/2018  07:00 PM    2-1     4-3     6-5     8-7     10-9
+Week 11     08/13/2018  07:00 PM    7-10    9-4     3-6     1-8     5-2
+Week 12     08/20/2018  07:00 PM    6-1     7-4     2-9     3-5     10-8
+Week 13     08/27/2018  07:00 PM    0-0 Playoff Week Teams TBA.Why /R not working?</code></pre></div> when I run this batch script:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off 
+    SetLOCAL EnableDelayedExpansion
+
+    Set "RawWEBfile=APArawDEMO.txt"
+
+    Echo=
+&lt; "%RawWebFile%" (
+    CScript //nologo //E:JScript "%Public%\~Scripts~\Utilities\FindRepl.bat" ^
+    "^Week..*[1]..*\d\d/\d\d\/\d\d\d\d...*07:00.PM..*$" /o:0:-1 /E:"^The" ^
+  | CScript //nologo //E:JScript "%Public%\~Scripts~\Utilities\FindRepl.bat" ^
+    "Playoff Week" /R "0-0 Playoff Week Teams TBA.Why /R not working?"
+) &gt;con
+
+Exit /B 
+</code></pre></div>Where did I go wrong in expecting to see only the record for Week 13?  Each word containing a dash represents an event and I am trying to simulate one for the Week with unknown participants.<br>
+<br>
+John A.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p57350" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile57350">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content57350">
+
+						<h3 ><a href="#p57350">Re: FindRepl.bat:New regex utility to search and replace strings</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting4789.html?mode=quote&amp;f=3&amp;p=57350" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicec9e.html?p=57350#p57350" onclick="prompt('Message #120',this.href); return false;">#120</a></span> 
+									<a class="unread" href="viewtopicec9e.html?p=57350#p57350" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>05 Jul 2018 13:41
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite><a href="memberlist742a.html?mode=viewprofile&amp;u=6577">thefeduke</a> wrote: <a href="viewtopic5ce8.html?p=57343#p57343" data-post-id="57343" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">04 Jul 2018 13:00</div></cite>
+I am having a problem with using the /R switch.  I expected only one record to be displayed, but I get them all. Did I not interpret your instructions correctly?<br>
+<br>
+<br>
+[snip]<br>
+<br>
+<br>
+Where did I go wrong in expecting to see only the record for Week 13?  Each word containing a dash represents an event and I am trying to simulate one for the Week with unknown participants.<br>
+<br>
+John A.
+</div></blockquote>
+
+Hi. I didn't reviewed FindRepl.bat program since more than a year ago... I completed a fast review of the code and I think that the parts related to <strong class="text-strong">justReplaced</strong> variable, that is the responsible of /R switch, are correct; however, your example shows that the /R switch is not working correctly. I must complete more tests...<br>
+<br>
+Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting6172.html?mode=reply&amp;f=3&amp;t=4697" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic1647.html?f=3&amp;t=4697&amp;start=105&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=4697&amp;start=105">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			135 posts
+							<ul>
+	<li class="dropdown-container dropdown-button-control dropdown-page-jump page-jump">
+		<a class="button button-icon-only dropdown-trigger" href="#" title="Click to jump to page…" role="button"><i class="icon fa-level-down fa-rotate-270" aria-hidden="true"></i><span class="sr-only">Page <strong>8</strong> of <strong>9</strong></span></a>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+				<li>Jump to page:</li>
+				<li class="page-jump-form">
+					<input type="number" name="page-number" min="1" max="999999" title="Enter the page number you wish to go to" class="inputbox tiny" data-per-page="15" data-base-url=".&#x2F;viewtopic.php&#x3F;f&#x3D;3&amp;amp&#x3B;t&#x3D;4697" data-start-name="start" />
+					<input class="button2" value="Go" type="button" />
+				</li>
+			</ul>
+		</div>
+	</li>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopic6e90.html?f=3&amp;t=4697&amp;start=90" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopica720.html?f=3&amp;t=4697" role="button">1</a></li>
+			<li class="ellipsis" role="separator"><span>…</span></li>
+				<li><a class="button" href="viewtopic507f.html?f=3&amp;t=4697&amp;start=60" role="button">5</a></li>
+				<li><a class="button" href="viewtopic2000.html?f=3&amp;t=4697&amp;start=75" role="button">6</a></li>
+				<li><a class="button" href="viewtopic6e90.html?f=3&amp;t=4697&amp;start=90" role="button">7</a></li>
+			<li class="active"><span>8</span></li>
+				<li><a class="button" href="viewtopicc178.html?f=3&amp;t=4697&amp;start=120" role="button">9</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopicc178.html?f=3&amp;t=4697&amp;start=120" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron68e3.gif?cron_type=cron.task.text_reparser.pm_text" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=52444 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:49:40 GMT -->
+</html>

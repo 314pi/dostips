@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5181&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:14:08 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; CAN A BATCH FILE CAPABLE TO DO THE BELOW</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>CAN A BATCH FILE CAPABLE TO DO THE BELOW</h2>
+		<p><a href="viewtopica67c.html?f=3&amp;t=5181">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5181</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>CAN A BATCH FILE CAPABLE TO DO THE BELOW</h3>
+				<div class="date">Posted: <strong>18 Dec 2013 23:15</strong></div>
+				<div class="author">by <strong>cmeashok</strong></div>
+				<div class="content">Hi Guyz i am very new to coding and Batch files,<br />was checking few forums on what a batch file can actually do and i am not able to locate  or co relate what i wanted with the posts which i have seen,<br /><br />my requirement is <br />1. i wanted the batch file to look on a folder and find the total number of files that got accumulated for a day, and find is there any file which is less than or equal to 1024bytes(1KB)<br />2 once this is done i wanted a email to send via the SMTP outgoing mail server to a particular email with details.<br /><br />could locate this could be achieved via Java... but due to some constraints looking this on windows DOS batch file...ANy help is appreciated<br /><br />Many thanks<br />Ashok</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CAN A BATCH FILE CAPABLE TO DO THE BELOW</h3>
+				<div class="date">Posted: <strong>18 Dec 2013 23:53</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content">you can use a vbscript<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Set objFSO = CreateObject(&quot;Scripting.FileSystemObject&quot;)<br />Set objFolder = objFSO.GetFolder(&quot;C:\myFolder&quot;)<br /><br /><br />strTo= &quot;recipient@mail.com&quot;<br />strFrom=&quot;sender@mail.com&quot;<br />strSubject=&quot;Subject of mail&quot;<br />strAccountID=&quot;user&quot;<br />strPassword=&quot;pass&quot;<br />strSMTPServer=&quot;smtp.server.com&quot;<br />strSMTPPort=25<br /><br />n=Now<br />For Each myFiles In objFolder.Files<br />&nbsp; &nbsp;'within the last 24 hours<br />&nbsp; &nbsp;If DateDiff(&quot;h&quot;,myFiles.DateLastModified,n) &lt;= 24 Then<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;If &nbsp; &nbsp;myFiles.Size &lt; 1024 Then<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;WScript.Echo myFiles.Size , myFiles.Name<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;SendMail strTo,strFrom,strSubject,strMessage,strAccountID,strPassword,strSMTPServer,strSMTPPort<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;End If <br />&nbsp; &nbsp;End If <br />Next<br /><br />' send email using public mail servers<br />Function SendMail( strFrom, strSendTo, strSubject, strMessage , strUser, strPassword, strSMTP,strSMTPPort )<br /><br />&nbsp; &nbsp;Set oEmail = CreateObject(&quot;CDO.Message&quot;)<br />&nbsp; &nbsp;<br />&nbsp; &nbsp;'configure message<br />&nbsp; &nbsp;With oEmail.Configuration.Fields<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .Item(&quot;http://schemas.microsoft.com/cdo/configuration/sendusing&quot;) = 2 <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .Item(&quot;http://schemas.microsoft.com/cdo/configuration/smtpserver&quot;) = strSMTP<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .item(&quot;http://schemas.microsoft.com/cdo/configuration/smtpauthenticate&quot;) = 1 'basic<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .item(&quot;http://schemas.microsoft.com/cdo/configuration/sendusername&quot;) = strUser<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .item(&quot;http://schemas.microsoft.com/cdo/configuration/sendpassword&quot;) = strPassword<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .item(&quot;http://schemas.microsoft.com/cdo/configuration/smtpserverport&quot;) = strSMTPPort<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .Update<br />&nbsp; &nbsp;End With<br />&nbsp; &nbsp;<br />&nbsp; &nbsp;' build message<br />&nbsp; &nbsp;With oEmail<br />&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;.From = strFrom<br />&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;.To = strSendTo <br />&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;.Subject = strSubject<br />&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;.TextBody = strMessage<br />&nbsp; &nbsp;End With<br />&nbsp; &nbsp;<br />&nbsp; &nbsp;' send message<br />&nbsp; &nbsp;On Error Resume Next<br />&nbsp; &nbsp;oEmail.Send<br />&nbsp; &nbsp;If Err Then<br />&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;WScript.Echo &quot;SendMail Failed:&quot; &amp; Err.Description<br />&nbsp; &nbsp;End If<br />&nbsp; &nbsp;&nbsp; &nbsp;<br />End Function<br /></code></pre></div><br /><br />If you can't seem to send email, can always try using tools such as blat (for emailing)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CAN A BATCH FILE CAPABLE TO DO THE BELOW</h3>
+				<div class="date">Posted: <strong>18 Dec 2013 23:59</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">I like the VBS script for emailing.  You can also include a setting for SSL (and attach a file) which would allow the user to email from Gmail etc.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CAN A BATCH FILE CAPABLE TO DO THE BELOW</h3>
+				<div class="date">Posted: <strong>19 Dec 2013 01:20</strong></div>
+				<div class="author">by <strong>cmeashok</strong></div>
+				<div class="content">Hi ghostmachine4,<br /><br />Really appreciate your response, I am no way related to scripting but on seeing your VB script below it is really understandable thank you very much,<br /><br />my constraint with regards to this the requirement is for a customer end system and any new application cannot be installed over there, I believe we need VB compiler to run your script on that system ! is it the case ?<br /><br />do we have any options of doing it without a any external application installation( so no JDK , VB etc)<br /><br />thanks <br />Ashok</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CAN A BATCH FILE CAPABLE TO DO THE BELOW</h3>
+				<div class="date">Posted: <strong>19 Dec 2013 01:22</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content"><blockquote><div><cite>cmeashok wrote:</cite><br />do we have any options of doing it without a any external application installation( so no JDK , VB etc)<br /><br />thanks <br />Ashok</div></blockquote><br />vbscript (or rather the engine) comes installed with most versions of Windows unless its purposely turned off due to various reasons, eg security reasons. You do not need to download it from somewhere.<br />To run vbscript,  using cscript command<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>c:\&gt; cscript //nologo myscript.vbs<br /></code></pre></div><br /><br />OR you can wait for a DOS/batch solution. I believe the for loop has some parameters/option to indicate file size. As for emailing i am afraid you have to use some external tools for the job.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: CAN A BATCH FILE CAPABLE TO DO THE BELOW</h3>
+				<div class="date">Posted: <strong>19 Dec 2013 23:37</strong></div>
+				<div class="author">by <strong>cmeashok</strong></div>
+				<div class="content">Hi Ghostmachine4.<br /><br />wow yes you are right, i was able to run the VB script on that system, i have just added my details on your orignal script but it seems to thow some errors, would you please check and advice is there is any issues<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Set objFSO = CreateObject(&quot;Scripting.FileSystemObject&quot;)<br />Set objFolder = objFSO.GetFolder(&quot;C:\Documents and Settings\w614838\Desktop&quot;)<br /><br /><br />strTo= &quot;ashok.lakshminarayanan@vodafone.com&quot;<br />strFrom=&quot;ashok.lakshminarayanan@vodafone.com&quot;<br />strSubject=&quot;TEST 1KB FILE&quot;<br />strSMTPServer=&quot;10.251.1.224&quot;<br />strSMTPPort=25<br /><br />n=Now<br />For Each myFiles In objFolder.Files<br />&nbsp; &nbsp;'within the last 24 hours<br />&nbsp; &nbsp;If DateDiff(&quot;h&quot;,myFiles.DateLastModified,n) &lt;= 24 Then<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;If&nbsp; &nbsp; myFiles.Size &lt;= 1024 Then<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; WScript.Echo myFiles.Size , myFiles.Name<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; SendMail strTo,strFrom,strSubject,strMessage,strSMTPServer,strSMTPPort<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;End If<br />&nbsp; &nbsp;End If<br />Next</code></pre></div><br /><br /><br />intially it gives me output like 24New text Document.txt(seems it is because there is new text Document.txt in the location sized 24bytes and it is just locating the 1 file eventhough we have multiple files and when i click the ok button it throws me the below error<br /><br />Script : C:\Documents and Settings\w614838\Desktop\test.VBS<br />Line : 18<br />char : 13<br />Error : Type Mismatch: 'SendMail&quot;<br />Code : 800A000D<br />Source : Microsoft VBScript runtime error<br /><br />manythanks</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5181&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:14:08 GMT -->
+</html>

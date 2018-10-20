@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8642&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Find &gt; Copy/Rename?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Find &gt; Copy/Rename?</h2>
+		<p><a href="viewtopic99d7.html?f=3&amp;t=8642">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8642</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Find &gt; Copy/Rename?</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 15:14</strong></div>
+				<div class="author">by <strong>vandentr</strong></div>
+				<div class="content">Hi Everyone,<br>
+<br>
+I have a main folder that houses subfolders for each CNC job that is created by some CNC software we're using:<br>
+<br>
+<strong class="text-strong">I:\MI-CNC\Backup_IMC\CNC_JOBS</strong><br>
+<br>
+For each CNC job, the software creates a job folder and places a text file (label.txt) in a "Labels" subfolder:<br>
+<br>
+I:\MI-CNC\Backup_IMC\CNC_JOBS\<strong class="text-strong">XA049_ATA_PLASTIC\Labels\label.txt</strong><br>
+<br>
+I'm trying to figure out how to find and copy all of those individual <strong class="text-strong">label.txt</strong> files matching that folder path pattern in each job folder out to a collective "labels" folder, but renaming them to the job folder name.<br>
+<br>
+So, using the job folder shown above, the logical process would be:<br>
+<br>
+1) Find the <strong class="text-strong">label.txt</strong> file in the <strong class="text-strong">I:\MI-CNC\Backup_IMC\CNC_JOBS\XA049_ATA_PLASTIC\Labels</strong> folder<br>
+2) Copy it to <strong class="text-strong">I:\MI-CNC\Labels</strong> with the name <strong class="text-strong">XA049_ATA_PLASTIC.txt</strong>.<br>
+3) Repeat Step 1 on the next Job folder until complete.<br>
+<br>
+The closest code I've come up with so far is this:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+I:
+CD MI-CNC\Backup_IMC\CNC_JOBS
+for /r /d %%F in (labels\label.txt) do @for %%A in ("%%F\..\..") do copy %%F I:\MI-CNC\Labels\%%~nxA.txt
+</code></pre></div>
+
+Is that the best\only way to do it? <br>
+<br>
+Is there a way to force the operation to <em class="text-italics">only</em> use the <strong class="text-strong">CNC_JOB\[job name]\Labels\label.txt</strong> path?<br>
+<br>
+Thanks for any insight!<br>
+TVB</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Find &gt; Copy/Rename?</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 15:47</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberliste5c4.html?mode=viewprofile&amp;u=9283">vandentr</a> wrote: <a href="viewtopic0003.html?p=57258#p57258" data-post-id="57258" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 Jun 2018 15:14</div></cite>
+Is there a way to force the operation to <em class="text-italics">only</em> use the <strong class="text-strong">CNC_JOB\[job name]\Labels\label.txt</strong> path?
+</div></blockquote>
+Are you not already doing that with the CD command?<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+CD /D I:\MI-CNC\Backup_IMC\CNC_JOBS
+
+for /D %%G in (*) do (
+	IF EXIST "%%G\Labels\label.txt" copy "%%G\Labels\label.txt" "I:\MI-CNC\Labels\%%G.txt"
+)</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8642&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:15 GMT -->
+</html>

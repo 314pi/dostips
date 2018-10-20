@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8823&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:14:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Firewall Context Menu</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Firewall Context Menu</h2>
+		<p><a href="viewtopicd6f9.html?f=3&amp;t=8823">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8823</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Firewall Context Menu</h3>
+				<div class="date">Posted: <strong>06 Sep 2018 16:44</strong></div>
+				<div class="author">by <strong>Protek</strong></div>
+				<div class="content"><strong class="text-strong"><span style="font-size: 150%; line-height: normal">Goal</span></strong><br>
+<br>
+ I need to add Block Firewall Context Menu For .exe Files.<br>
+<br>
+<strong class="text-strong"><span style="font-size: 150%; line-height: normal">Code</span></strong><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Reg Add "HKEY_CLASSES_ROOT\exefile\Shell\Firewall\Command" /T Reg_SZ /D "Elevate.exe CMD.exe /Q /C For %%%%A In (\"%%1\") Do Netsh Advfirewall Firewall Add Rule Name=\"%%~nA\" Dir=Out Action=Block Program=\"%%1\""</code></pre></div>
+
+This code works perfectly fine when using it with <span style="text-decoration: underline">filepath-that-doesnt-contain-space</span><br>
+<br>
+If <span style="text-decoration: underline">filepath containing spaces</span> it will simply throw out this error. To debug, I added <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&amp; pause</code></pre></div> to previous code<br>
+<br>
+Output<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>A specified value is not valid.
+
+Usage: add rule name=&lt;string&gt;
+     dir=in|out
+     ..
+Press any key to continue. . .</code></pre></div>
+
+<strong class="text-strong"><em class="text-italics"><span style="text-decoration: underline">Twice</span></em></strong><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>A specified value is not valid.
+
+Usage: add rule name=&lt;string&gt;
+     dir=in|out
+     ..
+Press any key to continue. . .</code></pre></div>
+
+I am not sure why it ran the code twice. One theory I could come up with is that maybe it is trying add the <span style="text-decoration: underline">folder with spaces in path as filename</span> and also<span style="text-decoration: underline"> the filename</span> to <strong class="text-strong">netsh</strong>?<br>
+<br>
+While debugging using <strong class="text-strong">Echo</strong> I found out that it doesn't have <strong class="text-strong">""</strong> inside the <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Netsh Rule Name="" and Program=""</code></pre></div> which i think it requires if the path or filename has spaces in it. I believe the <strong class="text-strong">"Qoutes"</strong> that are missing are causing this issue probably.<br>
+<br>
+I have also tried <em class="text-italics">escaping</em> and adding <em class="text-italics">double quotes</em>. Still doesn't work.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Reg Add "HKEY_CLASSES_ROOT\exefile\Shell\Firewall\Command" /T Reg_SZ /D "Elevate.exe CMD.exe /Q /C For %%%%A In (\"\"%%1\"\") Do Netsh Advfirewall Firewall Add Rule Name=\"\"%%~nA\"\" Dir=Out Action=Block Program=\"\"%%1\"\""</code></pre></div>
+
+Thank you all for your help, if you require more information or clarification please ask.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Firewall Context Menu</h3>
+				<div class="date">Posted: <strong>06 Sep 2018 21:20</strong></div>
+				<div class="author">by <strong>ShadowThief</strong></div>
+				<div class="content">The doctor says to the patient, "What seems to be the trouble?"<br>
+Raising his arm, the patient says, "It hurts when I do this."<br>
+The doctor says, "Don't do that."</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Firewall Context Menu</h3>
+				<div class="date">Posted: <strong>07 Sep 2018 06:21</strong></div>
+				<div class="author">by <strong>Protek</strong></div>
+				<div class="content">Fixed <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>For %%F In ('doctor') Do (
+Echo Says to the patient, "What seems to be the trouble?"
+Echo Raising his arm, the patient says, "It hurts when I do this."
+Echo The doctor says, "Ok lemme help you with"
+)</code></pre></div>
+
+Edit: Answer here: <a href="https://stackoverflow.com/questions/52200176/firewall-context" class="postlink">https://stackoverflow.com/questions/522 ... ll-context</a> (Huge Thanks @michael_heath)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Firewall Context Menu</h3>
+				<div class="date">Posted: <strong>21 Sep 2018 16:05</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">adding values to the registry using reg.exe can be done safely.<br>
+<br>
+1) escape reg.exe's escape character "\" in data<br>
+2) escape double quotes in key and data<br>
+3) add enclosing quotes to key and data<br>
+4) delay special characters<br>
+5) delay special characters in quotes in key and data<br>
+6) add quote if uneven in key and data<br>
+<br>
+Directly accessing reg.exe without a wrapper function is a pain when working with unknown values.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8823&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:14:15 GMT -->
+</html>

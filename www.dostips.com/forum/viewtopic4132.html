@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2914&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:05:59 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Adding a column to a csv file and populating it - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Adding a column to a csv file and populating it</h2>
+		<p><a href="viewtopic5f36.html?f=3&amp;t=2914">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=2914</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>14 May 2012 16:54</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">This case works.  You should be able to figure out the second case - can you?<br /><br /><blockquote class="uncited"><div>6,11253,GIFT SHOP,0.05,05/08/2012,<br />but the columns need to be rearranged like this: <br />6,11253,05/08/2012/GIFT SHOP,0.05,</div></blockquote><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />for /f &quot;tokens=1-5 delims=,&quot; %%a in ('type &quot;file.csv&quot;') do (<br />&gt;&gt;&quot;newfile.csv&quot; echo %%a,%%b,%%e,%%c,%%d,<br />)<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>15 May 2012 16:57</strong></div>
+				<div class="author">by <strong>kfriedley</strong></div>
+				<div class="content">I was able to create a bcp to create a format file and map the fields of the data file to the columns of the table.<br />  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>15 May 2012 17:00</strong></div>
+				<div class="author">by <strong>kfriedley</strong></div>
+				<div class="content">Thanks for your post!!! I'll try that too and see which one works best for me.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>11 Mar 2014 11:17</strong></div>
+				<div class="author">by <strong>ecnerwal72</strong></div>
+				<div class="content">My database schema has 23 columns/fields, however when I export it has a csv file some of the lines in my csv file has less than 23 fields therefore when I import the file, it complains about miss match field counts.<br />With your batch file how can I go about adding a NULL field at the end of the line only for those lines with less than 23 fields?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>04 Jun 2018 09:02</strong></div>
+				<div class="author">by <strong>haishi</strong></div>
+				<div class="content">Though this is an old thread, I would like to know how the first code ...<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+:: %1 is the input filename
+:: %2 is the new column header
+:: %3 is the dummy number to fill every cell in the new column
+
+setlocal
+set "file=%~1"
+set "fileout=newfile.csv"
+
+set /p "var="&lt;"%file%" &gt;nul
+
+&gt;"%fileout%" echo.%var%,%2
+
+for /f "skip=1 delims=" %%a in ('type "%file%"') do (
+&gt;&gt;%fileout% echo.%%a,%3
+)</code></pre></div>
+
+... can be modified, to process all files within a folder or files, that are dropped onto the batch file? It would be sufficient save over the old files or - if that's not possible - create new files in a subfolder. That would be great.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2914&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:05:59 GMT -->
+</html>

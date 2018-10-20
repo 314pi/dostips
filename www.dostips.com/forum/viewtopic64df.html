@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8255&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:51:24 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; How to freely select one column based on another column data? - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>How to freely select one column based on another column data?</h2>
+		<p><a href="viewtopicdfcd.html?f=3&amp;t=8255">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8255</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>28 Jun 2018 16:48</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopicfe80.html?p=57310#p57310" data-post-id="57310" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Jun 2018 15:26</div></cite>
+Tried another input file and works and could be the input file issue....really strange... nothing related to code...
+</div></blockquote>
+I cannot think of any instance where the input file would cause the delims option to fail. The delims option is validated before the file is read and it wouldn't randomly work and not work  like you are describing.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>29 Jun 2018 10:56</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopicd65f.html?p=57301#p57301" data-post-id="57301" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Jun 2018 13:25</div></cite>
+I had some issue for this code. It was OK when the column is not that much. But now after adding more column and getting some weird issue, for some column I got the error back again<br>
+<br>
+Here is my config file<br>
+<br>
+MOCKUP_DL QA_DL US_PROD_DL TD_DL GPC_DL ELAVON_DL DESJAR_DL CA_PROD_DL<br>
+<br>
+. . . . .<br>
+<br>
+my source column is QA_DL then target TD_DL, it works fine but <br>
+when I select source column is QA_DL then target CA_PROD_DL I got an error as <br>
+<br>
+. . . . .<br>
+<br>
+But when I switch two column name between TD_DL and CAN_PROD_DL then try the above code again,<br>
+got the same result that means TD_DL works but CAN_PROD_DL not work and also got that error message after line bb<br>
+<br>
+what is the issue here??? It looks like not making sense to me it is name of head  dependent...  <img class="smilies" src="images/smilies/icon_redface.gif" width="15" height="15" alt=":oops:" title="Embarassed"> <br>
+Thanks
+</div></blockquote>
+
+Are you giving <strong class="text-strong">CA_PROD_DL</strong> or <strong class="text-strong">CAN_PROD_DL</strong>? The second one does not exists in the file...<br>
+<br>
+I suggest you to insert the following line before the last FOR line:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if not defined token echo ERROR: This profname does not exists: "%profname%" &amp; goto :EOF
+</code></pre></div>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>12 Jul 2018 08:34</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopice4a4.html?p=57314#p57314" data-post-id="57314" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">29 Jun 2018 10:56</div></cite>
+<blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopicd65f.html?p=57301#p57301" data-post-id="57301" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Jun 2018 13:25</div></cite>
+I had some issue for this code. It was OK when the column is not that much. But now after adding more column and getting some weird issue, for some column I got the error back again<br>
+<br>
+Here is my config file<br>
+<br>
+MOCKUP_DL QA_DL US_PROD_DL TD_DL GPC_DL ELAVON_DL DESJAR_DL CA_PROD_DL<br>
+<br>
+. . . . .<br>
+<br>
+my source column is QA_DL then target TD_DL, it works fine but <br>
+when I select source column is QA_DL then target CA_PROD_DL I got an error as <br>
+<br>
+. . . . .<br>
+<br>
+But when I switch two column name between TD_DL and CAN_PROD_DL then try the above code again,<br>
+got the same result that means TD_DL works but CAN_PROD_DL not work and also got that error message after line bb<br>
+<br>
+what is the issue here??? It looks like not making sense to me it is name of head  dependent...  <img class="smilies" src="images/smilies/icon_redface.gif" width="15" height="15" alt=":oops:" title="Embarassed"> <br>
+Thanks
+</div></blockquote>
+
+Are you giving <strong class="text-strong">CA_PROD_DL</strong> or <strong class="text-strong">CAN_PROD_DL</strong>? The second one does not exists in the file...<br>
+<br>
+I suggest you to insert the following line before the last FOR line:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>if not defined token echo ERROR: This profname does not exists: "%profname%" &amp; goto :EOF
+</code></pre></div>
+Antonio
+</div></blockquote>
+
+Thanks Antonio. You are so truth and have a sharp eyes....<br>
+Sure I shall add this line to detect if the profname exist or not...<br>
+ <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8255&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:51:24 GMT -->
+</html>

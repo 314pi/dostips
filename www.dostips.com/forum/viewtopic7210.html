@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2914&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:05:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Adding a column to a csv file and populating it</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Adding a column to a csv file and populating it</h2>
+		<p><a href="viewtopic5f36.html?f=3&amp;t=2914">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=2914</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>10 Feb 2012 03:42</strong></div>
+				<div class="author">by <strong>stylishjm</strong></div>
+				<div class="content">Hello, I wish to run a batch file which will add a column at the end (usually &quot;AL&quot;) to a CSV file and populate each row in that column with a static number.<br /><br />For example adding 816 to each row on AL:<br /><img src="http://s89.photobucket.com/user/stylishjm/media/excel.png.html" class="postimage" alt="Image" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>10 Feb 2012 04:26</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Do you mean you want to add a new column header and 816 to the end of each row?<br /><br />If so then try this:  BATCH.BAT file.csv AL 816<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />:: %1 is the input filename<br />:: %2 is the new column header<br />:: %3 is the dummy number to fill every cell in the new column<br /><br />setlocal<br />set &quot;file=%~1&quot;<br />set &quot;fileout=newfile.csv&quot;<br /><br />set /p &quot;var=&quot;&lt;&quot;%file%&quot; &gt;nul<br /><br />&gt;&quot;%fileout%&quot; echo.%var%,%2<br /><br />for /f &quot;skip=1 delims=&quot; %%a in ('type &quot;%file%&quot;') do (<br />&gt;&gt;%fileout% echo.%%a,%3<br />)</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>10 Feb 2012 04:51</strong></div>
+				<div class="author">by <strong>stylishjm</strong></div>
+				<div class="content">Hello, sorry that image is a bit deceiving, its a screen shot off of Excel. Also my description was a bit misleading as well!<br />There is no column header.<br />Just need to insert 816 to each row on the last empty column which will be the same for each CSV file.<br /><br />For example here is a section of the CSV, I just need 816 added to the last empty column:<br /><br />215725,2012-02-02 14:51:16.000,1101,1,NULL ,1,2,TO GO,<span style="color: #BF0000">816</span><br />215726,2012-02-02 14:51:19.000,1104,1,NULL ,1,2,TO GO,<span style="color: #BF0000">816</span>    <br />215727,2012-02-02 14:51:23.000,1108,1,NULL ,1,2,TO GO,<span style="color: #BF0000">816</span><br />215728,2012-02-02 14:51:44.000,1106,1,NULL ,1,2,TO GO,<span style="color: #BF0000">816</span>    <br />215729,2012-02-02 14:51:52.000,1100,0,NULL ,1,2,TO GO,<span style="color: #BF0000">816</span></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>10 Feb 2012 05:55</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">When you say 'last empty column' I assume that no other columns with data appear after the last empty one.  <br /><br />Try this:<br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />for /f &quot;delims=&quot; %%a in ('type &quot;file.csv&quot;') do (<br />&gt;&gt;&quot;fileout.csv&quot; echo.%%a,816<br />)</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>10 Feb 2012 06:58</strong></div>
+				<div class="author">by <strong>stylishjm</strong></div>
+				<div class="content"><blockquote><div><cite>foxidrive wrote:</cite>When you say 'last empty column' I assume that no other columns with data appear after the last empty one.  <br /><br />Try this:<br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />for /f &quot;delims=&quot; %%a in ('type &quot;file.csv&quot;') do (<br />&gt;&gt;&quot;fileout.csv&quot; echo.%%a,816<br />)</code></pre></div></div></blockquote><br /><br />That worked perfectly, thank you very much for your help!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>23 Apr 2012 09:00</strong></div>
+				<div class="author">by <strong>nightster</strong></div>
+				<div class="content">Can that new column of data be inserted as a new 'column 1' or can an existing empty column be populated?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>23 Apr 2012 09:53</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">To add the data to column one just put the 816, before the %%a <br />see below:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />for /f &quot;delims=&quot; %%a in ('type &quot;file.csv&quot;') do (<br />&gt;&gt;&quot;fileout.csv&quot; echo.816,%%a<br />)</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>23 Apr 2012 11:44</strong></div>
+				<div class="author">by <strong>nightster</strong></div>
+				<div class="content">That did it - thanks for your help</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>02 May 2012 16:17</strong></div>
+				<div class="author">by <strong>MostWired</strong></div>
+				<div class="content">this worked for me too.<br />But also wondering how can an existing empty column be populated with data?<br />or how do I add data to column 4?<br />I also need to strip the beginning and ending zeros from a field. example: 0123450, it's always 7 char long with zero at beginning and end.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>02 May 2012 16:48</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><blockquote><div><cite>MostWired wrote:</cite>this worked for me too.<br />But also wondering how can an existing empty column be populated with data?<br />or how do I add data to column 4?<br />I also need to strip the beginning and ending zeros from a field. example: 0123450, it's always 7 char long with zero at beginning and end.</div></blockquote><br /><br />For the first task - is the data purely numerical?<br /><br />For the second task - is it one field or the entire column?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>03 May 2012 09:18</strong></div>
+				<div class="author">by <strong>MostWired</strong></div>
+				<div class="content">Thanks for your reply!!<br /><br />First Task -  Here's what I have:<br />6,0112530,05022012,,GIFT SHOP,0.05<br />I need to get the &quot;system time&quot; to populate 4th column. Is this possible?<br /><br />Second Task - In the second column, I have id numbers that start and end with zeros. I need to remove first and last zero/char. These numbers are NOT static but they are all 7 characters long. <br /><br />Any help you can give would be greatly appreciated!!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>03 May 2012 09:37</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Task 1: insert a column containing system time in position 5<br />drawbacks: empty columns before position 5 are removed.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />del &quot;newfile.csv&quot; 2&gt;nul<br />for /f &quot;tokens=1,2,3,4,* delims=,&quot; %%a in ('type &quot;file.csv&quot;') do (<br />&gt;&gt;&quot;newfile.csv&quot; echo.%%a,%%b,%%c,%%d,%time%,%%e<br />)<br /></code></pre></div><br /><br />Task 2: remove leading and trailing character in column 2<br />Drawbacks: some poison characters can break the batch, such as the ! character.<br />If column 1 is empty it will probably screw this code up.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableExtensions EnableDelayedExpansion<br />del &quot;newfile.csv&quot; 2&gt;nul<br />for /f &quot;tokens=1,2,* delims=,&quot; %%a in ('type &quot;file.csv&quot;') do (<br />set var=%%b<br />set var=!var:~1,-1!<br />&gt;&gt;&quot;newfile.csv&quot; echo.%%a,!var!,%%c<br />)<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>09 May 2012 16:47</strong></div>
+				<div class="author">by <strong>MostWired</strong></div>
+				<div class="content">Thanks for all your help. Now I just have to figure out how to code a batch file to rearrange the columns in my comma delimited file for my import. Any suggestions?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>09 May 2012 18:19</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Give an example and describe what you need.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Adding a column to a csv file and populating it</h3>
+				<div class="date">Posted: <strong>14 May 2012 13:29</strong></div>
+				<div class="author">by <strong>kfriedley</strong></div>
+				<div class="content">I have two comma delimited files that I need to import into two different tables. <br /><br />The first file has rows with columns like this: 6,11253,GIFT SHOP,0.05,05/08/2012,<br />but the columns need to be rearranged like this: 6,11253,05/08/2012/GIFT SHOP,0.05,<br /><br />The second file has rows with columns like this: 1,11253,GIFT SHOP,0.05,05/08/2012,14:14 ,<br />and needs to be like this: 1,11253,05/08/2012,14:14,GIFT SHOP,0.05, <br /><br />There are no columns headers.<br /><br />Any help you can provide is appreciated and many thanks for all your help so far.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2914&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:05:45 GMT -->
+</html>

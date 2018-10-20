@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="en-US">
+
+<!-- Mirrored from www.dostips.com/?t=Batch.FtpBatchDownloadOnlyNewFiles by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 03:48:32 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<META http-equiv=content-type content="text/html; charset=iso-8859-1">
+<META content=TRUE name=MSSmartTagsPreventParsing>
+<META http-equiv=expires content=-1>
+<META http-equiv=pragma content=no-cache>
+<META content=all name=robots>
+<META name=keywords content='dos,functions,vista,xp,command line,batch,examples,substring,variables,copies,date'>
+<link rel=Stylesheet type="text/css" media=all href="_style0b84.css?v=0001">
+<link rel="shortcut icon" href="favicon.ico" >
+<link rel="icon" href="animated_favicon1.gif" type="image/gif" >
+<title>FTP - Download Only New Files</title>
+<!--index.php-->
+</head>
+<body>
+
+<div class="nav">
+        <br>
+    <div class="navi">
+        <a href='index.html'><img src='TitleDostips.jpg' height='80' alt='DosTips.com'></a>
+        <br><span style="font-size: 9px; font-weight: bold;">for Windows10,Windows8,Windows7,VISTA,</span>
+        <br><span style="font-size: 9px; font-weight: bold;">XP,NT,Server 2000,Server 2003,Server 2008</span>
+        <br>
+        <br>
+            <!-- SiteSearch Google -->
+<div class="search">
+<script>
+  (function() {
+    var cx = 'partner-pub-4331089886589220:2001057635';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = '../cse.google.com/cse07b6.html?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:searchbox-only></gcse:searchbox-only>
+</div>
+<!-- SiteSearch Google -->
+        <br>
+            <ul>
+        <li class='nsel'><a href='index.html'>Home</a>&nbsp;
+            <ul>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a>Source Script</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='DtCodeBatchFiles.html'>Batch Files</a>&nbsp;</li>
+                <li class='nsel'><a href='DtCodeFunctions.html'>Functions</a>&nbsp;</li>
+                <li class='nsel'><a href='DtCodeCmdLib.html'>Function Library</a>&nbsp;</li>
+                <li class='nsel'><a href='DtCodeSnippets.html'>Script Snippets</a>&nbsp;</li>
+                <li class='nsel'><a href='DtCodeInterfacing.html'>Interfacing</a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a>Tips and Tricks</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='DtTipsXCopy.html'>Copy Tips</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsMenu.html'>Menu in Batch</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsStringManipulation.html'>String Manipulation</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsStringOperations.html'>String Operations</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsDateTime.html'>Date and Time</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsArithmetic.html'>Arithmetic</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTipsFtpBatchScript.html'>FTP Batch Script</a>&nbsp;</li>
+                <li class='nsel'><a href='DosCommandIndex.html'>Command Index</a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a>Tutorials</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='DtTutoFirstBatch.html'>My First Batch</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTutoFramework.html'>Solid Framework</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTutoFunctions.html'>Functions</a>&nbsp;</li>
+                <li class='nsel'><a href='DtTutoPersistency.html'>Persistency</a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a href='forum/viewforum4d6b.html?f=3'>Forum</a>&nbsp;
+            <ul>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a href='DtGeneGeneral.html'>General</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='DtGeneTermsOfUse.html'>Terms of Use</a>&nbsp;</li>
+                <li class='nsel'><a href='DtGeneEnabler.html'>Enablers</a>&nbsp;</li>
+                <li class='nsel'><a href='DtGeneAboutUs.html'>About Us</a>&nbsp;</li>
+                <li class='nsel'><a href='forum/memberlist8733.html?mode=contactadmin'>Contact Us</a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+        <li class='nsel'><a>Others</a>&nbsp;
+            <ul>
+                <li class='nsel'><a href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=9018663'><marquee width="120" scrollamount="2">Want donate a cup of Cafe? . click . </marquee></a>&nbsp;</li>
+                <li class='nsel'>&nbsp;</li>
+            </ul>
+        </li>
+    </ul>
+    </div>
+</div>
+<H1>FTP - Download Only New Files</H1>
+<span class='shortText'>Ftp script to download only files that don`t exist in local folder, i.e. to avoid overwrite</span><br><br>
+  <table class='posts'>
+    <tr>
+      <td class='title' VALIGN='top'>Description:</td>
+      <td class='text'  VALIGN='top'>This batch connects twice to the FTP server.  First time it retrieves a list of files
+on the FTP server.  This list is being trimmed to contain only files that don`t 
+already exist locally.  The files in the trimmed list are then downloaded during a second 
+connection.
+<p>Note: Since all files are passed into the FTP`s MGET command there might be a limit to the number 
+of files that can be processed at once.</td>
+    </tr>
+    <tr>
+      <td class='title' VALIGN='top'>Script:</td>
+      <td class='text'  VALIGN='top'><span style='float:right;'>Download: <a href='BatchFtpDownloadOnlyNewFiles.bat'>BatchFtpDownloadOnlyNewFiles.bat</a>&nbsp;&nbsp;</span>    <table class='btchscr'><tr>
+      <td class='numbrs' align='right' nowrap='nowrap'><code><a name='1'>1.</a><br><a name='2'>2.</a><br><a name='3'>3.</a><br><a name='4'>4.</a><br><a name='5'>5.</a><br><a name='6'>6.</a><br><a name='7'>7.</a><br><a name='8'>8.</a><br><a name='9'>9.</a><br><a name='10'>10.</a><br><a name='11'>11.</a><br><a name='12'>12.</a><br><a name='13'>13.</a><br><a name='14'>14.</a><br><a name='15'>15.</a><br><a name='16'>16.</a><br><a name='17'>17.</a><br><a name='18'>18.</a><br><a name='19'>19.</a><br><a name='20'>20.</a><br><a name='21'>21.</a><br><a name='22'>22.</a><br><a name='23'>23.</a><br><a name='24'>24.</a><br><a name='25'>25.</a><br><a name='26'>26.</a><br><a name='27'>27.</a><br><a name='28'>28.</a><br><a name='29'>29.</a><br><a name='30'>30.</a><br><a name='31'>31.</a><br><a name='32'>32.</a><br><a name='33'>33.</a><br><a name='34'>34.</a><br><a name='35'>35.</a><br><a name='36'>36.</a><br><a name='37'>37.</a><br><a name='38'>38.</a><br><a name='39'>39.</a><br><a name='40'>40.</a><br><a name='41'>41.</a><br><a name='42'>42.</a><br><a name='43'>43.</a><br><a name='44'>44.</a><br><a name='45'>45.</a><br><a name='46'>46.</a><br><a name='47'>47.</a><br><a name='48'>48.</a><br><a name='49'>49.</a><br><a name='50'>50.</a><br><a name='51'>51.</a><br><a name='52'>52.</a><br><a name='53'>53.</a><br><a name='54'>54.</a><br><a name='55'>55.</a><br><a name='56'>56.</a><br><a name='57'>57.</a><br><a name='58'>58.</a><br><a name='59'>59.</a><br><a name='60'>60.</a><br><a name='61'>61.</a><br><a name='62'>62.</a><br><a name='63'>63.</a><br><a name='64'>64.</a><br><a name='65'>65.</a><br><a name='66'>66.</a><br><a name='67'>67.</a><br><a name='68'>68.</a><br><a name='69'>69.</a><br><a name='70'>70.</a><br></code></td>
+      <td nowrap='nowrap' class='code'><code><span style='color=#000000'>@Echo&nbsp;Off</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'><span class=c_cmmt>REM&nbsp;--&nbsp;Define&nbsp;File&nbsp;Filter,&nbsp;i.e.&nbsp;files&nbsp;with&nbsp;extension&nbsp;.txt</span></span><br>
+<span style='color=#000000'>Set&nbsp;FindStrArgs=/E&nbsp;/C:&quot;.txt&quot;</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'><span class=c_cmmt>REM&nbsp;--&nbsp;Extract&nbsp;Ftp&nbsp;Script&nbsp;to&nbsp;create&nbsp;List&nbsp;of&nbsp;Files</span></span><br>
+<span style='color=#000000'>Set&nbsp;&quot;FtpCommand=ls&quot;</span><br>
+<span style='color=#000000'>Call:extractFileSection&nbsp;&quot;[Ftp&nbsp;Script&nbsp;1]&quot;&nbsp;&quot;-&quot;&gt;&quot;%temp%\<span class=c_pvar>%~n0</span>.ftp&quot;</span><br>
+<span style='color=#000000'><span class=c_cmmt>Rem&nbsp;Notepad&nbsp;&quot;%temp%\<span class=c_pvar>%~n0</span>.ftp&quot;</span></span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'><span class=c_cmmt>REM&nbsp;--&nbsp;Execute&nbsp;Ftp&nbsp;Script,&nbsp;collect&nbsp;File&nbsp;Names</span></span><br>
+<span style='color=#000000'>Set&nbsp;&quot;FileList=&quot;</span><br>
+<span style='color=#000000'>For&nbsp;/F&nbsp;&quot;Delims=&quot;&nbsp;<span class=c_pvar>%%A</span>&nbsp;In&nbsp;('&quot;Ftp&nbsp;-v&nbsp;-i&nbsp;-s:&quot;%temp%\<span class=c_pvar>%~n0</span>.ftp&quot;|Findstr&nbsp;%FindStrArgs%&quot;')&nbsp;Do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;Call&nbsp;Set&nbsp;&quot;FileList=<span class=c_pvar>%%F</span>ileList%%&nbsp;&quot;<span class=c_pvar>%%A</span>&quot;&quot;</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'><span class=c_cmmt>REM&nbsp;--&nbsp;Extract&nbsp;Ftp&nbsp;Script&nbsp;to&nbsp;download&nbsp;files&nbsp;that&nbsp;don't&nbsp;exist&nbsp;in&nbsp;local&nbsp;folder</span></span><br>
+<span style='color=#000000'>Set&nbsp;&quot;FtpCommand=mget&quot;</span><br>
+<span style='color=#000000'>For&nbsp;<span class=c_pvar>%%A</span>&nbsp;In&nbsp;(%FileList%)&nbsp;Do&nbsp;If&nbsp;Not&nbsp;Exist&nbsp;&quot;<span class=c_pvar>%%~A</span>&quot;&nbsp;Call&nbsp;Set&nbsp;&quot;FtpCommand=<span class=c_pvar>%%F</span>tpCommand%%&nbsp;&quot;<span class=c_pvar>%%~A</span>&quot;&quot;</span><br>
+<span style='color=#000000'>Call:extractFileSection&nbsp;&quot;[Ftp&nbsp;Script&nbsp;1]&quot;&nbsp;&quot;-&quot;&gt;&quot;%temp%\<span class=c_pvar>%~n0</span>.ftp&quot;</span><br>
+<span style='color=#000000'><span class=c_cmmt>Rem&nbsp;Notepad&nbsp;&quot;%temp%\<span class=c_pvar>%~n0</span>.ftp&quot;</span></span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>For&nbsp;<span class=c_pvar>%%A</span>&nbsp;In&nbsp;(%FtpCommand%)&nbsp;Do&nbsp;Echo.<span class=c_pvar>%%A</span></span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'><span class=c_cmmt>REM&nbsp;--&nbsp;Execute&nbsp;Ftp&nbsp;Script,&nbsp;download&nbsp;files</span></span><br>
+<span style='color=#000000'>ftp&nbsp;-i&nbsp;-s:&quot;%temp%\<span class=c_pvar>%~n0</span>.ftp&quot;</span><br>
+<span style='color=#000000'>Del&nbsp;&quot;%temp%\<span class=c_pvar>%~n0</span>.ftp&quot;</span><br>
+<span style='color=#000000'>GOTO:EOF</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'><span class=c_labl><a name='extractFileSection'>:extractFileSection</a></span><span class=c_cmmt>&nbsp;StartMark&nbsp;EndMark&nbsp;FileName&nbsp;--&nbsp;extract&nbsp;a&nbsp;section&nbsp;of&nbsp;file&nbsp;that&nbsp;is&nbsp;defined&nbsp;by&nbsp;a&nbsp;start&nbsp;and&nbsp;end&nbsp;mark</span></span><br>
+<span style='color=#000000'><span class=c_cmmt>::&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;[IN]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StartMark&nbsp;-&nbsp;start&nbsp;mark,&nbsp;use&nbsp;'...:S'&nbsp;mark&nbsp;to&nbsp;allow&nbsp;variable&nbsp;substitution</span></span><br>
+<span style='color=#000000'><span class=c_cmmt>::&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;[IN,OPT]&nbsp;EndMark&nbsp;&nbsp;&nbsp;-&nbsp;optional&nbsp;end&nbsp;mark,&nbsp;default&nbsp;is&nbsp;first&nbsp;empty&nbsp;line</span></span><br>
+<span style='color=#000000'><span class=c_cmmt>::&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;[IN,OPT]&nbsp;FileName&nbsp;&nbsp;-&nbsp;optional&nbsp;source&nbsp;file,&nbsp;default&nbsp;is&nbsp;THIS&nbsp;file</span></span><br>
+<span style='color=#000000'>:$created&nbsp;20080219&nbsp;:$changed&nbsp;20100205&nbsp;:$categories&nbsp;ReadFile</span><br>
+<span style='color=#000000'>:$source&nbsp;https://www.dostips.com</span><br>
+<span style='color=#000000'>SETLOCAL&nbsp;Disabledelayedexpansion</span><br>
+<span style='color=#000000'>set&nbsp;&quot;bmk=<span class=c_pvar>%~1</span>&quot;</span><br>
+<span style='color=#000000'>set&nbsp;&quot;emk=<span class=c_pvar>%~2</span>&quot;</span><br>
+<span style='color=#000000'>set&nbsp;&quot;src=<span class=c_pvar>%~3</span>&quot;</span><br>
+<span style='color=#000000'>set&nbsp;&quot;bExtr=&quot;</span><br>
+<span style='color=#000000'>set&nbsp;&quot;bSubs=&quot;</span><br>
+<span style='color=#000000'>if&nbsp;&quot;%src%&quot;==&quot;&quot;&nbsp;set&nbsp;src=<span class=c_pvar>%~f0</span>&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=c_cmmt>rem&nbsp;if&nbsp;no&nbsp;source&nbsp;file&nbsp;then&nbsp;assume&nbsp;THIS&nbsp;file</span></span><br>
+<span style='color=#000000'>for&nbsp;/f&nbsp;&quot;tokens=1,*&nbsp;delims=]&quot;&nbsp;<span class=c_pvar>%%A</span>&nbsp;in&nbsp;('find&nbsp;/n&nbsp;/v&nbsp;&quot;&quot;&nbsp;&quot;%src%&quot;')&nbsp;do&nbsp;(</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;/i&nbsp;&quot;<span class=c_pvar>%%B</span>&quot;==&quot;%emk%&quot;&nbsp;set&nbsp;&quot;bExtr=&quot;&amp;set&nbsp;&quot;bSubs=&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;defined&nbsp;bExtr&nbsp;if&nbsp;defined&nbsp;bSubs&nbsp;(call&nbsp;echo.<span class=c_pvar>%%B</span>)&nbsp;ELSE&nbsp;(echo.<span class=c_pvar>%%B</span>)</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;/i&nbsp;&quot;<span class=c_pvar>%%B</span>&quot;==&quot;%bmk%&quot;&nbsp;&nbsp;&nbsp;set&nbsp;&quot;bExtr=Y&quot;</span><br>
+<span style='color=#000000'>&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;/i&nbsp;&quot;<span class=c_pvar>%%B</span>&quot;==&quot;%bmk%:S&quot;&nbsp;set&nbsp;&quot;bExtr=Y&quot;&amp;set&nbsp;&quot;bSubs=Y&quot;</span><br>
+<span style='color=#000000'>)</span><br>
+<span style='color=#000000'>EXIT&nbsp;/b</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>[Ftp&nbsp;Script&nbsp;1]:S</span><br>
+<span style='color=#000000'>!Title&nbsp;Connecting...</span><br>
+<span style='color=#000000'>open&nbsp;example.com</span><br>
+<span style='color=#000000'>username</span><br>
+<span style='color=#000000'>password</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>!Title&nbsp;Preparing...</span><br>
+<span style='color=#000000'>cd&nbsp;public_html/MyRemoteDirectory</span><br>
+<span style='color=#000000'>lcd&nbsp;c:\MyLocalDirectory</span><br>
+<span style='color=#000000'>binary</span><br>
+<span style='color=#000000'>hash</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>!Title&nbsp;Processing...&nbsp;%FtpCommand%</span><br>
+<span style='color=#000000'>%FtpCommand%</span><br>
+<span style='color=#000000'></span><br>
+<span style='color=#000000'>!Title&nbsp;Disconnecting...</span><br>
+<span style='color=#000000'>disconnect</span><br>
+<span style='color=#000000'>bye</span><br>
+      </code></td>
+    </tr></table>
+</td>
+    </tr>
+  </table>
+<br><div class='bot'>
+<script type="text/javascript">
+    /***********************************************
+    * IFrame SSI script II- Copyright Dynamic Drive DHTML code library (http://www.dynamicdrive.com)
+    * Visit DynamicDrive.com for hundreds of original DHTML scripts
+    * This notice must stay intact for legal use
+    ***********************************************/
+    
+    //Input the IDs of the IFRAMES you wish to dynamically resize to match its content height:
+    //Separate each ID with a comma. Examples: ["myframe1", "myframe2"] or ["myframe"] or [] for none:
+    var iframeids=["myframe"]
+    
+    //Should script hide iframe from browsers that don't support this script (non IE5+/NS6+ browsers. Recommended):
+    var iframehide="yes"
+    
+    var getFFVersion=navigator.userAgent.substring(navigator.userAgent.indexOf("Firefox")).split("index.html")[1]
+    var FFextraHeight=parseFloat(getFFVersion)>=0.1? 16 : 0 //extra height in px to add to iframe in FireFox 1.0+ browsers
+    
+    function resizeCaller() {
+        var dyniframe=new Array()
+        for (i=0; i<iframeids.length; i++){
+            if (document.getElementById)
+                resizeIframe(iframeids[i])
+            //reveal iframe for lower end browsers? (see var above):
+            if ((document.all || document.getElementById) && iframehide=="no"){
+                var tempobj=document.all? document.all[iframeids[i]] : document.getElementById(iframeids[i])
+                tempobj.style.display="block"
+            }
+        }
+    }
+    
+    function resizeIframe(frameid){
+        var currentfr=document.getElementById(frameid)
+        if (currentfr && !window.opera){
+            currentfr.style.display="block"
+            if (currentfr.contentDocument && currentfr.contentDocument.body.offsetHeight) //ns6 syntax
+                currentfr.height = currentfr.contentDocument.body.offsetHeight+FFextraHeight; 
+            else if (currentfr.Document && currentfr.Document.body.scrollHeight) //ie5+ syntax
+                currentfr.height = currentfr.Document.body.scrollHeight;
+            if (currentfr.addEventListener)
+                currentfr.addEventListener("load", readjustIframe, false)
+            else if (currentfr.attachEvent){
+                currentfr.detachEvent("onload", readjustIframe) // Bug fix line
+                currentfr.attachEvent("onload", readjustIframe)
+            }
+        }
+    }
+    
+    function readjustIframe(loadevt) {
+        var crossevt=(window.event)? event : loadevt
+        var iframeroot=(crossevt.currentTarget)? crossevt.currentTarget : crossevt.srcElement
+        if (iframeroot)
+            resizeIframe(iframeroot.id);
+    }
+    
+    function loadintoIframe(iframeid, url){
+        if (document.getElementById)
+        document.getElementById(iframeid).src=url
+    }
+    
+    if (window.addEventListener)
+        window.addEventListener("load", resizeCaller, false)
+    else if (window.attachEvent)
+        window.attachEvent("onload", resizeCaller)
+    else
+        window.onload=resizeCaller
+</script>
+<iframe id="myframe" src="forum/viewforum4d6b.html?f=3"                  marginwidth="0" marginheight="0" frameborder="0" style="overflow:visible; " height=15000 width="100%" scrolling="no" ALLOWTRANSPARENCY="true"></iframe></div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/?t=Batch.FtpBatchDownloadOnlyNewFiles by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 03:48:32 GMT -->
+</html>

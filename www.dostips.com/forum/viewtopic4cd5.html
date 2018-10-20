@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5180&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:14:10 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Batch help to replace 1 line by number in a text file</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Batch help to replace 1 line by number in a text file</h2>
+		<p><a href="viewtopic934e.html?f=3&amp;t=5180">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5180</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>18 Dec 2013 12:00</strong></div>
+				<div class="author">by <strong>val5662</strong></div>
+				<div class="content">Hi Guys.... <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br />Batch file needed to replace one line in original.txt file with different text and make a copy<br /> of it before replacing the line.<br />Example would be if I have a text file like below called original.txt and want to replace the word<br /> orange with chapter 10.000 &lt;----there must be a space between chapter and the number<br />Most important the orange word might be different so I need the batch file to <br />replace line 3 in this case whatever line 3 says.<br /><br />raspberry<br />zebra<br />orange<br />black<br />apple<br /><br />What would be the complete batch text please?<br />Something like ?:<br /><br />@echo off<br />ren original.txt copy-of-original.txt<br />copy copy-of-original.txt  original.txt  &lt;-----dunno if this line is correct<br />replace line 3 in original.txt with chapter 10.000 &lt;--- this is another line I have no idea how to do<br />pause<br /><br />Thanks!<br />Val</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>18 Dec 2013 18:20</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Try this code:<br /><br />It uses a helper batch file called `repl.bat` from - <!-- m --><a class="postlink" href="https://www.dropbox.com/s/qidqwztmetbvklt/repl.bat">https://www.dropbox.com/s/qidqwztmetbvklt/repl.bat</a><!-- m --><br /><br />Place `repl.bat` in the same folder as the batch file or in a folder that is on the path.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />ren &quot;original.txt&quot; &quot;copy-of-original.txt&quot;<br />type &quot;copy-of-original.txt&quot; |repl &quot;^orange.*&quot; &quot;chapter 10.000&quot; &gt;&quot;original.txt&quot;<br /></code></pre></div><br /><br /><br />The <span style="color: #0040FF">^</span> ensures that orange starts at the beginning of the line. <span style="color: #0040FF">.*</span> means include the rest of the line.<br /><br />The replace string is a regular expression so some characters need special treatment but alphanumerics are fine.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>18 Dec 2013 18:59</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Hey Foxidrive,<br />I think he just wants to replace whatever is in line 3.  So basically stream the file out and replace line 3 with whatever he wants.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>18 Dec 2013 19:08</strong></div>
+				<div class="author">by <strong>val5662</strong></div>
+				<div class="content">Yo foxidrive....<br />The code you showed me here didn't work right at all.<br />It made a copy of the original file called copy-of-original.txt<br /> and deleted all the content inside the original.txt so I ended up<br /> with a blank original.txt.....lol...<br />Wanna try again?<br />Please...<br />Thanks!<br />Val</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>18 Dec 2013 19:18</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt; type original.txt<br />raspberry<br />zebra<br />orange<br />black<br />apple<br /><br />C:\&gt; type test.bat<br />@echo off<br />ren original.txt copy-of-original.txt<br />(for /F &quot;tokens=1* delims=:&quot; %%a in ('findstr /N &quot;^&quot; copy-of-original.txt') do (<br />&nbsp; &nbsp;if %%a equ 3 (<br />&nbsp; &nbsp; &nbsp; echo chapter 10.000<br />&nbsp; &nbsp;) else (<br />&nbsp; &nbsp; &nbsp; echo %%b<br />&nbsp; &nbsp;)<br />)) &gt; original.txt<br /><br />C:\&gt; test<br /><br />C:\&gt; type original.txt<br />raspberry<br />zebra<br />chapter 10.000<br />black<br />apple<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>18 Dec 2013 19:29</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><blockquote><div><cite>val5662 wrote:</cite>Yo foxidrive....<br />The code you showed me here didn't work right at all.<br />It made a copy of the original file called copy-of-original.txt<br /> and deleted all the content inside the original.txt so I ended up<br /> with a blank original.txt.....lol...<br />Wanna try again?<br />Please...<br />Thanks!<br />Val</div></blockquote><br /><br />I can't help it if you don't tell us what you really want to do.<br /><br />Using the info in your original.txt that you told us was in there, it works fine.<br />Try it.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>18 Dec 2013 21:38</strong></div>
+				<div class="author">by <strong>val5662</strong></div>
+				<div class="content">Sorry foxidrive.I tried your exact code and same result.Thanks for trying anyway.I appreciate it!<br /><br />Aacinis code worked 100%.<br /><br />@echo off<br />ren original.txt copy-of-original.txt<br />(for /F &quot;tokens=1* delims=:&quot; %%a in ('findstr /N &quot;^&quot; copy-of-original.txt') do (<br />   if %%a equ 3 (<br />      echo chapter 10.000<br />   ) else (<br />      echo %%b<br />   )<br />)) &gt; original.txt<br /><br />Thanks a bunch Aacini!<br />Val</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>18 Dec 2013 22:11</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content">vbscript solution.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Dim objFSO,objFile,line<br />Const ForReading=1, ForWriting=2<br />Set objFSO= CreateObject(&quot;Scripting.FileSystemObject&quot;)<br />Set objFileRead = objFSO.OpenTextFile(&quot;C:\original.txt&quot;, 1)<br />Set objFileWrite = objFSO.CreateTextFile(&quot;C:\copyoriginal.txt&quot;)<br />Do Until objFileRead.AtEndOfLine&nbsp; <br />&nbsp; objFileWrite.WriteLine(line)&nbsp; &nbsp;<br />&nbsp; If objFileRead.Line = 3 Then<br />&nbsp; &nbsp; &nbsp;objFileRead.SkipLine&nbsp; <br />&nbsp; Else<br />&nbsp; &nbsp;&nbsp; line = objFileRead.ReadLine<br />&nbsp; &nbsp;&nbsp; WScript.Echo line&nbsp; &nbsp;&nbsp; <br />&nbsp; End If&nbsp; &nbsp;<br />Loop<br />objFileRead.Close<br />objFileWrite.Close<br /></code></pre></div><br /><br />run as<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>c:\&gt; cscript //nologo myscript.vbs<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>18 Dec 2013 22:42</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><blockquote><div><cite>val5662 wrote:</cite>Sorry foxidrive.I tried your exact code and same result.Thanks for trying anyway.I appreciate it!<br /></div></blockquote><br /><br />Did you fail to read my post, and download the helper batch file?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>18 Dec 2013 23:10</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content"><blockquote><div><cite>foxidrive wrote:</cite>Try this code:<br />It uses a helper batch file called `repl.bat` from - <!-- m --><a class="postlink" href="https://www.dropbox.com/s/qidqwztmetbvklt/repl.bat">https://www.dropbox.com/s/qidqwztmetbvklt/repl.bat</a><!-- m --><br /></div></blockquote><br />wow, jscript. so unconventional.  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>18 Dec 2013 23:48</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><blockquote><div><cite>ghostmachine4 wrote:</cite><blockquote><div><cite>foxidrive wrote:</cite>Try this code:<br />It uses a helper batch file called `repl.bat` from - <!-- m --><a class="postlink" href="https://www.dropbox.com/s/qidqwztmetbvklt/repl.bat">https://www.dropbox.com/s/qidqwztmetbvklt/repl.bat</a><!-- m --><br /></div></blockquote><br />wow, jscript. so unconventional.  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /></div></blockquote><br /><br />You may smile <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br /><br />Both repl.bat and findrepl.bat are native solutions to much of what SED and GREP can do, respectively.  <br /><br />They both employ jscript and give us *robust* solutions, where batch code is long winded and <br />susceptible to many issues: such as poison characters, blank lines, foreign characters, EOL problems etc.<br /><br />I've been into batch files for decades now and battled with code, purely for the fun of it, but when supplying<br />help for other people and when you have no idea what the source material is - these recently developed tools are fantastic.<br /><br />Dave Benham (repl.bat) and Aacini (findrepl.bat) developed them.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>19 Dec 2013 00:06</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content"><blockquote><div><cite>foxidrive wrote:</cite><blockquote><div><cite>ghostmachine4 wrote:</cite><blockquote><div><cite>foxidrive wrote:</cite>Try this code:<br />It uses a helper batch file called `repl.bat` from - <!-- m --><a class="postlink" href="https://www.dropbox.com/s/qidqwztmetbvklt/repl.bat">https://www.dropbox.com/s/qidqwztmetbvklt/repl.bat</a><!-- m --><br /></div></blockquote><br />wow, jscript. so unconventional.  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /></div></blockquote><br /><blockquote class="uncited"><div><br />You may smile <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br /><br />Both repl.bat and findrepl.bat are native solutions to much of what SED and GREP can do, respectively.  <br /></div></blockquote></div></blockquote><br /><br />what i mean by &quot;unconventional&quot; is that usually the people will just think of vbscript first instead of jscript <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> .</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>19 Dec 2013 02:51</strong></div>
+				<div class="author">by <strong>bars143</strong></div>
+				<div class="content"><blockquote><div><cite>foxidrive wrote:</cite><blockquote><div><cite>val5662 wrote:</cite>Sorry foxidrive.I tried your exact code and same result.Thanks for trying anyway.I appreciate it!<br /></div></blockquote><br /><br />Did you fail to read my post, and download the helper batch file?</div></blockquote><br /><br />foxi, your code work in my window 7 32-bit  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>19 Dec 2013 03:06</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><blockquote><div><cite>bars143 wrote:</cite><blockquote><div><cite>val5662 wrote:</cite>Sorry foxidrive.I tried your exact code and same result.Thanks for trying anyway.I appreciate it!<br /></div></blockquote><br /><br />foxi, your code work in my window 7 32-bit  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div></blockquote><br /><br />Thanks.  I think val5662 is a newbie and has to pick up some skills that we take for granted.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch help to replace 1 line by number in a text file</h3>
+				<div class="date">Posted: <strong>19 Dec 2013 03:22</strong></div>
+				<div class="author">by <strong>bars143</strong></div>
+				<div class="content"><blockquote><div><cite>foxidrive wrote:</cite><blockquote><div><cite>bars143 wrote:</cite><blockquote><div><cite>val5662 wrote:</cite>Sorry foxidrive.I tried your exact code and same result.Thanks for trying anyway.I appreciate it!<br /></div></blockquote><br /><br />foxi, your code work in my window 7 32-bit  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div></blockquote><br /><br />Thanks.  I think val5662 is a newbie and has to pick up some skills that we take for granted.</div></blockquote><br /><br />i create new folder containing :<br /><br />1.) your code in batch file<br />2.) repl.bat<br />3.) original.txt  &lt;--- this is the one missed by the author as i tried it to skip this and will result in blank content.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5180&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:14:10 GMT -->
+</html>

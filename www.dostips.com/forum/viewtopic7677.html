@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8655&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:53:36 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Batch script stops forever when calling external exe program?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Batch script stops forever when calling external exe program?</h2>
+		<p><a href="viewtopicd33c.html?f=3&amp;t=8655">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8655</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Batch script stops forever when calling external exe program?</h3>
+				<div class="date">Posted: <strong>02 Jul 2018 03:35</strong></div>
+				<div class="author">by <strong>pstein</strong></div>
+				<div class="content">From within a ODS batch script I call/start an external program similar to<br>
+<br>
+...<br>
+D:\aaa\bbb\ccc\NetTraffic.exe<br>
+Echo after call<br>
+....<br>
+<br>
+Yes, the external program is successfully started but the script does NOT continue to run.<br>
+The Echo statement is never executed.<br>
+Is this normal?<br>
+<br>
+That would mean I always have to call/start external programs by<br>
+<br>
+start "" /B C:\WINDOWS\system32\cmd.exe /c "D:\aaa\bbb\ccc\NetTraffic.exe"<br>
+<br>
+Is this true?<br>
+<br>
+Peter</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch script stops forever when calling external exe program?</h3>
+				<div class="date">Posted: <strong>02 Jul 2018 06:21</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>start "" /B "D:\aaa\bbb\ccc\NetTraffic.exe"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch script stops forever when calling external exe program?</h3>
+				<div class="date">Posted: <strong>03 Jul 2018 18:58</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist86a0.html?mode=viewprofile&amp;u=2854">pstein</a> wrote: <a href="viewtopica3b0.html?p=57323#p57323" data-post-id="57323" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">02 Jul 2018 03:35</div></cite>Yes, the external program is successfully started but the script does NOT continue to run.<br>
+The Echo statement is never executed.<br>
+Is this normal?</div></blockquote>If you call an external executables within a batch file using a statement formed of that executables location, name and some optional parameters, then the executable is part of this batch processing:<br>
+That means that as long as that executable is running the batch file is processing that statement.<br>
+The batch only proceeds after the statement has been processed, which means the external executable finished.<br>
+<br>
+
+<blockquote><div><cite><a href="memberlist86a0.html?mode=viewprofile&amp;u=2854">pstein</a> wrote: <a href="viewtopica3b0.html?p=57323#p57323" data-post-id="57323" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">02 Jul 2018 03:35</div></cite>That would mean I always have to call/start external programs by<br>
+<br>
+start "" /B C:\WINDOWS\system32\cmd.exe /c "D:\aaa\bbb\ccc\NetTraffic.exe"<br>
+<br>
+Is this true?</div></blockquote>According to the above explaination:<br>
+No.<br>
+<br>
+Here is an example (using the external executable "findstr.exe"):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+echo Hello world!
+@echo Test: OK. | findstr "^"
+echo Bye.
+pause</code></pre></div>
+
+Another example (using the external executable "findstr.exe") where the external executable won't finish until you enter a line containing the special key kombination CTRL+Z only:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+echo Hello world!
+findstr "^"
+echo Bye.
+pause</code></pre></div>
+
+penpen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8655&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:53:36 GMT -->
+</html>

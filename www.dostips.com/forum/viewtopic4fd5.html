@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8558&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:20:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Write variable content in file at specific point</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Write variable content in file at specific point</h2>
+		<p><a href="viewtopic606b.html?f=3&amp;t=8558">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8558</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Write variable content in file at specific point</h3>
+				<div class="date">Posted: <strong>11 May 2018 06:25</strong></div>
+				<div class="author">by <strong>kerstinvo</strong></div>
+				<div class="content">Hello team,<br>
+<br>
+I have a batch wiht 1 parameter from user and store the parameter %1 as variable.<br>
+<br>
+then I will write that value in a file, that contains an SQL insert command. The problem is to give that variable value for further processing.<br>
+Parameter:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::parameter usage
+::Changenr. angegeben, dann fortfahren, sonst Usage anzeigen und exit
+if [%1]==[] goto usage
+::Variable für Param 1
+set chnr=%1
+echo "changnr: %chnr%"
+
+::exit ohne DOS-Fenster schließen
+:usage
+@echo Usage: Changenr von cm_prod fünfstellig angeben! Bsp: mergeAPM-file.bat 12345
+exit /B 1</code></pre></div>
+
+<br>
+File zd_zd.txt contains the sql statement: part APMoA Changenr. %chnr%' should be the contain the given changenumber value<br>
+<br>
+--gültig bis Vortag nächste APMoA
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>insert into ZD_ZD(ZDS,ZDAUSFUEHRUNGSDATUM,ZDREGELUPDATE,ZDDATV,ZDDATB,ZDPRODUKT,ZDPRODUKTRELEASE,ZDPRODUKTRELEASEVERSION) 
+values(to_char(sysdate,'YYYYMMDDHH24SS'),sysdate,'APMoA vom '||to_char(sysdate,'DD')||'.'|| to_char(sysdate,'MM')||'.'||to_char(sysdate,'YYYY')||' '||to_char(sysdate,'HH24')||':'||to_char(sysdate,'SS'),to_char(sysdate,'YYYYMMDD'),to_char(sysdate+6,'YYYYMMDD'),'Zentraldateien 1.0',to_char(sysdate,'YYYY'),'APMoA Changenr. %chnr%');</code></pre></div>
+
+also insert the content with sql insert into the Batch skript and referenced the variable with echo "sql statement&gt; &gt;&gt; ZD_ZD-insert.text did not work.<br>
+<br>
+Does anyone have a hint ?<br>
+<br>
+Thanks <br>
+Kerstin</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Write variable content in file at specific point</h3>
+				<div class="date">Posted: <strong>12 May 2018 14:03</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Writing at a certain position isn't possible. You can either append new content at the end or you can write the whole file new.<br>
+Does your SQL script only consist of the two lines that you posted? In that case you might be able to write it using the parameter variable without a temporary file like that:<br>
+<br>
+mergeAPM-file.bat
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal
+if "%~1"=="" (
+  echo Usage: Changenr von cm_prod fuenfstellig angeben! Bsp: CALL "mergeAPM-file.bat" 12345
+  pause
+  exit /b 1
+)
+
+&gt;"zd_zd.txt" (
+  echo insert into ZD_ZD(ZDS,ZDAUSFUEHRUNGSDATUM,ZDREGELUPDATE,ZDDATV,ZDDATB,ZDPRODUKT,ZDPRODUKTRELEASE,ZDPRODUKTRELEASEVERSION^) 
+  echo values(to_char(sysdate,'YYYYMMDDHH24SS'^),sysdate,'APMoA vom '^|^|to_char(sysdate,'DD'^)^|^|'.'^|^| to_char(sysdate,'MM'^)^|^|'.'^|^|to_char(sysdate,'YYYY'^)^|^|' '^|^|to_char(sysdate,'HH24'^)^|^|':'^|^|to_char(sysdate,'SS'^),to_char(sysdate,'YYYYMMDD'^),to_char(sysdate+6,'YYYYMMDD'^),'Zentraldateien 1.0',to_char(sysdate,'YYYY'^),'APMoA Changenr. %~1'^);
+)
+</code></pre></div>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Write variable content in file at specific point</h3>
+				<div class="date">Posted: <strong>14 May 2018 02:44</strong></div>
+				<div class="author">by <strong>kerstinvo</strong></div>
+				<div class="content">Hello Steffen,<br>
+<br>
+thanks for the hint. It is working. <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8558&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:20:19 GMT -->
+</html>

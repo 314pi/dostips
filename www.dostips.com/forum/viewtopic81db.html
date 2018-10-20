@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8588&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:20 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; How to mask a blank inside nested quotes?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>How to mask a blank inside nested quotes?</h2>
+		<p><a href="viewtopiccb22.html?f=3&amp;t=8588">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8588</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>How to mask a blank inside nested quotes?</h3>
+				<div class="date">Posted: <strong>28 May 2018 07:24</strong></div>
+				<div class="author">by <strong>pstein</strong></div>
+				<div class="content">Assume I have the folowing simplified code:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set PROG=D:\tools\graphic tools\v7\
+
+for /R . %%F in (.jpg) do (
+
+  for /F usebackq %%L in (`"%PROG%myprog.exe" ...... %%F`) do set %%L
+
+   ....
+   )</code></pre></div>
+
+At first mind the blank inside the path.<br>
+<br>
+When I run this batch script I got the folowing error:<br>
+<br>
+'D:\tools\graphic' is not recognized as an internal or external command,<br>
+operable program or batch file.<br>
+The filename, directory name, or volume label syntax is incorrect.<br>
+Missing operator.<br>
+<br>
+I though I could always enclose a string inside another string with an opposite quotes<br>
+<br>
+Either<br>
+<br>
+' "......" ....'<br>
+or <br>
+" ' .....' ...."<br>
+<br>
+This seems not to be the case.<br>
+<br>
+How else does that work?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to mask a blank inside nested quotes?</h3>
+				<div class="date">Posted: <strong>28 May 2018 08:28</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">Use this from
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F usebackq %%L in (`^""%PROG%myprog.exe" ...... %%F^"`) do set %%L
+</code></pre></div>
+for /F internally runs <strong class="text-strong">cmd /c  &lt;FOR /F command&gt;</strong> <br>
+cmd will preserve quotes  only when invoked without <strong class="text-strong">/S</strong> switch which is the case, and if there are exactly just two quote characters on the command line which is also the case and the command that surrounded in quotes ("%PROG%myprog.exe") refers to valid and existing executable name otherwise it will remove the quotes.<br>
+The extra escaped quotes are to prevent cmd from removing quotes around your executable name.<br>
+
+<blockquote><div><cite><a href="memberlist86a0.html?mode=viewprofile&amp;u=2854">pstein</a> wrote: <a href="viewtopic0baa.html?p=56973#p56973" data-post-id="56973" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 May 2018 07:24</div></cite>
+'D:\tools\graphic' is not recognized as an internal or external command,<br>
+operable program or batch file.
+</div></blockquote>
+Its the the indication that "%PROG%myprog.exe" does not refer to an existing file.<br>
+<br>
+I would also recommend to put %%F in quotes</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to mask a blank inside nested quotes?</h3>
+				<div class="date">Posted: <strong>28 May 2018 08:32</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">What are those blanks ........ for? Did you try "*.jpg" in FOR /R ? Did you test Echo your resulting variable values? When asking Qs, its better to explain what you try to accomplish with this code, since your code may contradict your goals, while you merely want to mask blanks in it.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to mask a blank inside nested quotes?</h3>
+				<div class="date">Posted: <strong>28 May 2018 23:00</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content">Hi pstein,<br>
+<br>
+as sst said, it's a problem how FOR/F invokes cmd.exe.<br>
+It can be solved with the additional quotes like the sample of sst.<br>
+<br>
+Or you prefix your command with CALL<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F usebackq %%L in (`CALL "%PROG%myprog.exe" ...... %%F`) do set %%L</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to mask a blank inside nested quotes?</h3>
+				<div class="date">Posted: <strong>30 May 2018 03:10</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">Adding to jeb's solution:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F usebackq %%L in (`@"%PROG%myprog.exe" ...... %%F`) do set %%L</code></pre></div>
+
+The trick with CALL and at-sign(@) here is to prevent the first character that comes after /c switch  to be a double quote(") so cmd will not enter command line quote processing phase.<br>
+<br>
+With any of the following 3 solutions
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F usebackq %%L in (`^""%PROG%myprog.exe" ...... %%F^"`) do set %%L
+for /F usebackq %%L in (`CALL "%PROG%myprog.exe" ...... %%F`) do set %%L
+for /F usebackq %%L in (`@"%PROG%myprog.exe" ...... %%F`) do set %%L
+</code></pre></div>
+
+Instead of getting this error:
+<blockquote class="uncited"><div>
+'D:\tools\graphic' is not recognized as an internal or external command,<br>
+operable program or batch file.
+</div></blockquote>
+
+You will get this:
+<blockquote class="uncited"><div>
+'"D:\tools\graphic tools\v7\myprog.exe"' is not recognized as an internal or external command,<br>
+operable program or batch file.
+</div></blockquote></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to mask a blank inside nested quotes?</h3>
+				<div class="date">Posted: <strong>30 May 2018 08:52</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">In for /f loop - You only must create a first command token with no space
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F usebackq %%L in (`if 1 equ 1 "%PROG%myprog.exe" ...... %%F`) do set %%L
+</code></pre></div>
+
+Phil</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to mask a blank inside nested quotes?</h3>
+				<div class="date">Posted: <strong>30 May 2018 10:58</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistc1e4.html?mode=viewprofile&amp;u=5414">pieh-ejdsch</a> wrote: <a href="viewtopic63bc.html?p=56996#p56996" data-post-id="56996" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 May 2018 08:52</div></cite>
+In for /f loop - You only must create a first command token with no space
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F usebackq %%L in (`if 1 equ 1 "%PROG%myprog.exe" ...... %%F`) do set %%L
+</code></pre></div>
+
+Phil
+</div></blockquote>
+
+That's OK for demonstrating the concept but it should noted that using it as a general method will lead to failure if Command Extensions are disabled bye default. It is rare and uncommon but still a possibility.<br>
+and there is no way to force the FOR's cmd instance to start with Enabled Extensions in this situation.<br>
+Using <strong class="text-strong">if 1==1</strong> instead, will need the equal signs to be escaped when putted inside FOR's IN clause: <strong class="text-strong">if 1^=^=1</strong></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to mask a blank inside nested quotes?</h3>
+				<div class="date">Posted: <strong>30 May 2018 16:11</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopicaff3-2.html?p=56997#p56997" data-post-id="56997" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 May 2018 10:58</div></cite>and there is no way to force the FOR's cmd instance to start with Enabled Extensions in this situation.</div></blockquote>You can just activate it from within the batch before using the extensions (works although the docu of "setlocal /?" says something different (at least under my german localization): The help text is wrong.):
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableExtensions disableDelayedExpansion
+for /F usebackq %%L in (`if 1 equ 1 "%PROG%myprog.exe" ...... %%F`) do set %%L
+</code></pre></div>
+
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to mask a blank inside nested quotes?</h3>
+				<div class="date">Posted: <strong>30 May 2018 22:50</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">@penpen<br>
+by saing
+<blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopicaff3-2.html?p=56997#p56997" data-post-id="56997" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 May 2018 10:58</div></cite>
+..... if Command Extensions are disabled bye default. It is rare and uncommon but still a possibility.
+</div></blockquote>
+I mean when Command Extensions are disabled at registry level.<br>
+Of course Command Extensions can be enabled from within batch file with <strong class="text-strong">setlocal</strong> but that would enable Extensions for the instance of cmd that is running the batch file but not for the child cmd that is invoked by <strong class="text-strong">FOR /F</strong><br>
+<br>
+Using <strong class="text-strong">FOR /F</strong> implies that we have already enabled extensions, I got your point about the wrong documentation of setlocal, but that's not my concern, my concern is about <strong class="text-strong">&lt;if 1 equ 1&gt;</strong> command which must be carried by child cmd.<br>
+<br>
+Maybe because I missed <strong class="text-strong">'child'</strong> in my sentence... I should have said:<br>
+<strong class="text-strong">and there is no way to force the FOR's <span style="color: #BF0000">child</span> cmd instance to start with Enabled Extensions in this situation.</strong><br>
+<br>
+One may argue that we can use
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F usebackq %%L in (`cmd /e:on /c if 1 equ 1 "%PROG%myprog.exe" ...... %%F`) do set %%L
+</code></pre></div>
+This will complicate things unnecessarily and we have now two child CMDs, still the first immediate cmd that is invoked bye <strong class="text-strong">FOR /F</strong> is running with disabled extensions<br>
+<br>
+This is in contrary to pipes which it is possible to invoke immediate child CMDs with enabled or disabled Extensions at will.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to mask a blank inside nested quotes?</h3>
+				<div class="date">Posted: <strong>31 May 2018 04:49</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopicf6ae.html?p=57009#p57009" data-post-id="57009" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 May 2018 22:50</div></cite>but not for the child cmd that is invoked by <strong class="text-strong">FOR /F</strong></div></blockquote>I missed that point... .<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to mask a blank inside nested quotes?</h3>
+				<div class="date">Posted: <strong>11 Jun 2018 01:48</strong></div>
+				<div class="author">by <strong>pstein</strong></div>
+				<div class="content">Sorry I have to revert back to this problem.<br>
+At first thank you for the suggestions so far.<br>
+<br>
+But I am still fiddling around with the batch script.<br>
+<br>
+Originally I want to use the well known free cmdline tool ImageMagic available from here (scroll down for Win release):<br>
+<a href="http://www.imagemagick.org/script/download.php" class="postlink">http://www.imagemagick.org/script/download.php</a><br>
+<br>
+With the help of this tool I want to count the number of pictures in a (big) directory which have dimension above a certain (pixel) size.<br>
+<br>
+Therefore I setup the following batch script (see bottom of this posting). I already adjusted the masked internal command as suggested here)<br>
+<br>
+However when I run this batch script in the top node directory of the picture folder tree I am getting always the error:<br>
+<br>
+'D:\todo\IMG v7\magick" identify -ping -format "INC' is not recognized as an internal or external command,<br>
+operable program or batch file.<br>
+The filename, directory name, or volume label syntax is incorrect.<br>
+Missing operator.<br>
+<br>
+When I execute the ImageMagick command from cmdprompt (=not from batch script) for a single picture like<br>
+<br>
+"D:\todo\IMG v7\magick" identify -ping -format "INC=%[fx:w&gt;=400||h&gt;=200?1:0]" D:\todo\dummy.jpg<br>
+<br>
+then everything works.<br>
+<br>
+So the error must be somehow in the batch script statement.<br>
+<br>
+So do I have to mask the double percentage sign near INC as well?<br>
+<br>
+Writing in batch script <br>
+^"INC=%%[fx:w&gt;=400||h&gt;=200?1:0]^"<br>
+let the batch script execution collapse immediately without error message<br>
+<br>
+Writing in batch script:<br>
+^""INC=%%[fx:w&gt;=400||h&gt;=200?1:0]"^"<br>
+yields:<br>
+'D:\todo\IMG v7\magick" identify -ping -format ""INC=%[fx:w&gt;=400||h&gt;=200?1:0]"' is not recognized as an internal or external command,<br>
+operable program or batch file.<br>
+Missing operator.<br>
+<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set IMG7path=D:\todo\IMG v7\
+
+set TOTAL=0
+set COUNT=0
+
+for /R . %%F in (*.jpg) do (
+
+  for /F "usebackq" %%L in (`^"%IMG7path%magick^" identify -ping -format "INC=%%[fx:w&gt;=400||h&gt;=200?1:0]"  %%F`) do set %%L
+
+  set /A TOTAL += 1
+  set /A COUNT += !INC!
+)
+echo TOTAL=%TOTAL%
+echo COUNT=%COUNT%
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to mask a blank inside nested quotes?</h3>
+				<div class="date">Posted: <strong>11 Jun 2018 02:26</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">@pstein<br>
+Your are doing it the wrong way. You should reread my post carefully.<br>
+Do not touch or escape the existing quotes, just add extra escaped quotes in the first and last position of FOR command.<br>
+<br>
+This is what you did:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F "usebackq" %%L in (`^"%IMG7path%magick^" identify -ping -format "INC=%%[fx:w&gt;=400||h&gt;=200?1:0]"  %%F`) do set %%L
+</code></pre></div>
+
+This is what it should be: (Compare it with above carefully to see the difference)
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F "usebackq" %%L in (`^""%IMG7path%magick" identify -ping -format "INC=%%[fx:w&gt;=400||h&gt;=200?1:0]"  %%F^"`) do set %%L
+</code></pre></div>
+
+Also as I said before, you should enclose %%F in quotes too. That is:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F "usebackq" %%L in (`^""%IMG7path%magick" identify -ping -format "INC=%%[fx:w&gt;=400||h&gt;=200?1:0]"  "%%~F"^"`) do set %%L
+</code></pre></div>
+
+<br>
+If extra escaped quoting still confuses you, just prefix your executable with <strong class="text-strong">CALL</strong> as jeb suggested:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F "usebackq" %%L in (`CALL "%IMG7path%magick" identify -ping -format "INC=%%[fx:w&gt;=400||h&gt;=200?1:0]"  "%%~F"`) do set %%L
+</code></pre></div>
+
+But without understanding the mechanisms behind those suggestions you will probably get it trouble again with slightly different scenarios</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8588&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:20 GMT -->
+</html>

@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=20337 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:21:39 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Rules for label names vs GOTO and CALL - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopicf50b.html?t=3803">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopic494f.html?f=3&amp;t=3803">Rules for label names vs GOTO and CALL</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="posting685a.html?mode=reply&amp;f=3&amp;t=3803" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic96c0.html?f=3&amp;t=3803&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="3803" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			54 posts
+							<ul>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopic54db.html?f=3&amp;t=3803&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopic6cfc.html?f=3&amp;t=3803&amp;start=30" role="button">3</a></li>
+				<li><a class="button" href="viewtopic5232.html?f=3&amp;t=3803&amp;start=45" role="button">4</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic54db.html?f=3&amp;t=3803&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p20336" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile20336">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search73f1.html?author_id=417&amp;sr=posts">880</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 30 Aug 2007 08:05</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany, Bochum</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content20336">
+
+						<h3 class="first"><a href="#p20336">Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting46c5.html?mode=quote&amp;f=3&amp;p=20336" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicc402-2.html?p=20336#p20336" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopicc402-2.html?p=20336#p20336" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a></strong> &raquo; </span>25 Sep 2012 06:02
+			</p>
+			
+			
+			
+			<div class="content">Hi,<br /><br />I will try to discover a bit the rules for legal label names and how they work.<br /><br />Normally you choose a name containing numbers and characters.<br />But you could also use any character with different effects.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;amp=^&amp;&quot;<br />set &quot;pipe=^|&quot;<br />set &quot;lt=^&lt;&quot;<br />set &quot;gt=^&gt;&quot;<br />call :%%%%this%%%%&quot;label&quot;^looks:%%lt%%a%%pipe%%bit%%gt%%^^odd<br />exit /b<br /><br />:%this%&quot;label&quot;^looks&lt;quite|a&gt; ^^:+bit&amp;normally<br />echo The function is called via &quot;%0&quot;<br />exit /b<br /></code></pre></div><br /><blockquote><div><cite>Output wrote:</cite>The function is called via &quot;:%this%&quot;label&quot;looks:&lt;a|bit&gt;^odd&quot;<br /></div></blockquote><br />It seems that the label does not fit to the calling name, but both labels and call-names have different rules.<br /><br />A call-name (the destination label behind a CALL) is parsed normally and stored in %0 by the normal argument rules.<br />But the destination label can be shorter than %0, as there exists some STOP characters.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>+:,;=&nbsp; &lt;space&gt;,&lt;TAB&gt; and &lt;LF&gt;</code></pre></div><br />These characters stop the call-name, independent if they are escaped or quoted.<br /><br />There exists some more characters which can be used, but they are a bit more tricky to handle, like<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>|&amp;&lt;&gt;(</code></pre></div><br />They can be used but only with <em class="text-italics">late expansion </em>in the call.<br />Like<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;amp=^&amp;&quot;<br />call :Test%%amp%%yes<br />exit /b<br /><br />:test^&amp;yes<br />echo Called by &quot;%0&quot;<br />exit /b<br /></code></pre></div><br /><br />At this point it's necessary to understand, how the CALL build the name. As each CALL parses a line two times, you need to escape each special character two times.<br />And as you can't escape it directly two times with carets, I used here <em class="text-italics">late percent expansion</em>. <br />You could also use the late expansion only for the caret, like<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;caret=^&quot;<br />call :test%%caret%%^&amp;yes<br />exit /b<br /><br />:test^&amp;yes<br />echo Called by &quot;%0&quot;<br />exit /b<br /></code></pre></div><br /><br />GOTO is similar to CALL, but as it uses only one parse phase, it's easier to create the GOTO-names.<br /><br />Now the label names.<br />They also use STOP characters, but not the same, I only know two  <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:+</code></pre></div><br />So these labels are equivalent<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:one<br />:one:two<br />:one+two<br />:one^<br /><br /></code></pre></div><br />Btw. label names have completly different parser phases, only a bit escaping is done, <br />but the percent expansion nor the remove phase for CR's are executed.<br />A caret escape the next character, even in quotes, but it can't be used as multiline character (for the label name).<br /><br />And a label can be found even if it does not begin with a colon <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br />These labels are all equivalent<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:label<br />=,,;;&nbsp; ,;= :label<br />X =,,;;&nbsp; ,;= :label<br />&lt; :label</code></pre></div><br />The rule is here:<br />&lt;Anyone character or none&gt; followed by any ,;=&lt;space&gt; then the colon and the name.<br /><br />This can sometimes be handy.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />cls<br />call :#;#<br />%:#+~%,=*<br />&gt;=,;=;,,=,;:%%+,=;echo\=%01&gt;&amp;2&amp;call=;:%%%%%%%%;%*<br />echo *%*</code></pre></div><br /><br />hope it helps<br />jeb</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p20337" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile20337">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search0d5e.html?author_id=2453&amp;sr=posts">1497</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 16 May 2011 08:21</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Flanders(Belgium)</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact Ed Dyreen">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact Ed Dyreen</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://ed-dyreen.ddns.net/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content20337">
+
+						<h3 ><a href="#p20337">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting0e7c.html?mode=quote&amp;f=3&amp;p=20337" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1653.html?p=20337#p20337" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopic1653.html?p=20337#p20337" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a></strong> &raquo; </span>25 Sep 2012 08:47
+			</p>
+			
+			
+			
+			<div class="content">'<br />Cats n keyboards <img class="smilies" src="images/smilies/icon_rolleyes.gif" alt=":roll:" title="Rolling Eyes" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />cls<br />call :#;#<br /><br />:#<br />echo.label=%0_<br />echo. args=%*_<br /><br />&gt; :%% echo. &amp;call ;:%%%%%%%%;%*<br />echo.label=%0_<br />echo. args=%*_<br /><br />pause<br />exit<br /></code></pre></div>Nice one, it occupied me 30mins <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> LOL</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p20340" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile20340">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche861.html?author_id=3077&amp;sr=posts">470</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Jan 2012 21:24</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content20340">
+
+						<h3 ><a href="#p20340">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinga6da.html?mode=quote&amp;f=3&amp;p=20340" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic735b.html?p=20340#p20340" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopic735b.html?p=20340#p20340" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a></strong> &raquo; </span>25 Sep 2012 14:51
+			</p>
+			
+			
+			
+			<div class="content">Holy smoke <img class="smilies" src="images/smilies/icon_wink.gif" alt=";-)" title="Wink" /> ...err, I mean, really neat find!<br /><br />Following tried on XP sp3.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />call :tee 1 2 3<br />call ::tee 1 2 3<br />call :::tee 1 2 3<br />call :tee:::::::::::::: 1 2 3<br /><br />if exist &quot;%~dp0logfile.txt&quot; del &quot;%~dp0logfile.txt&quot;<br />call :tee+&quot;%~dp0logfile.txt&quot; 1 2 3<br />call :tee+&quot;%~dp0logfile.txt&quot; 1 2 3 4 5 6 7 8 9 10 11 12 13<br />goto :eof<br /><br />:tee<br />echo %0 ^( %* ^)<br />setlocal &amp; set tee=%0<br />if not %tee::=%==tee (<br />&nbsp; &gt;&gt;%tee:*+=% echo %0 ^( %* ^)<br />)<br />endlocal</code></pre></div>Output.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;calltest<br />:tee ( 1 2 3 )<br />::tee ( 1 2 3 )<br />The system cannot find the batch label specified -<br />:tee:::::::::::::: ( 1 2 3 )<br />:tee+&quot;C:\tmp\logfile.txt&quot; ( 1 2 3 )<br />:tee+&quot;C:\tmp\logfile.txt&quot; ( 1 2 3 4 5 6 7 8 9 10 11 12 13 )<br /><br />C:\tmp&gt;type logfile.txt<br />:tee+&quot;C:\tmp\logfile.txt&quot; ( 1 2 3 )<br />:tee+&quot;C:\tmp\logfile.txt&quot; ( 1 2 3 4 5 6 7 8 9 10 11 12 13 )</code></pre></div><br />One point is that parsing is indeed strange - &quot;call :tee&quot; and &quot;call ::tee&quot; work, but &quot;call :::tee&quot; appears to resolve to an empty label and fails. Trailing : colons don't seem to have any limit.<br /><br />The other point is that it gives a way to pass additional arguments to a call'd label, outside the regular %1, %2 etc list. This might be useful in cases where the called subroutine needs to work on the entire %* line, as opposed to individual arguments. For a quick-and-dirty example, the :tee above takes an optional filename appended to its %0 label, and appends a copy of the standard output to that file. The classical way, this would require significantly more complicated code to (a) identify the filename among other parameters, and (b) shift the rest of the parameters and manually rebuild a &quot;shifted&quot; %*.<br /><br />Liviu</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p20346" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile20346">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search73f1.html?author_id=417&amp;sr=posts">880</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 30 Aug 2007 08:05</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany, Bochum</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content20346">
+
+						<h3 ><a href="#p20346">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinge015.html?mode=quote&amp;f=3&amp;p=20346" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopica548-2.html?p=20346#p20346" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopica548-2.html?p=20346#p20346" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a></strong> &raquo; </span>25 Sep 2012 15:50
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Liviu wrote:</cite>One point is that parsing is indeed strange - &quot;call :tee&quot; and &quot;call ::tee&quot; work, but &quot;call :::tee&quot; appears to resolve to an empty label and fails. </div></blockquote>Interessting, I never thought about to test it  <img class="smilies" src="images/smilies/icon_surprised.gif" alt=":o" title="Surprised" /> <br />But GOTO does only accept one or zero colons in front <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br /><br />And another differenece between CALL and GOTO, a CALL to an undefined label prints an error message and continues.<br />A GOTO prints the same error message, but then it works like a GOTO :EOF, it works like an RETURN.<br /><br /><blockquote><div><cite>Liviu wrote:</cite>Trailing : colons don't seem to have any limit.<br /></div></blockquote>No, as the first colon stops the called label name.<br /><br />I played a bit with some extreme called label names, like embedding a linefeed or carriage return.<br />A carriage return can be a valid label name, but I can only access it via a GOTO, as I'm not able to create a CALL without removing my CR.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion <br />for /f %%a in ('copy /Z &quot;%~dpf0&quot; nul') do set &quot;CR=%%a&quot;<br />goto :1!CR!x<br />echo Never reached<br />:1&lt;CR&gt;x<br />echo It works<br /></code></pre></div><br />I replaced the text &lt;CR&gt; in : 1&lt;CR&gt;x with a good editor to a single CR-character!<br /><br />Or a line feed<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion <br />set lf=^<br /><br /><br />set &quot;xlf=^^!lf!!lf!&quot;<br />call :AAA:^^%%XLF%%%%XLF%%BBB<br />exit /b<br /><br />:AAA<br />echo CALLED by #%0#<br />exit /b<br /></code></pre></div><br /><br /><blockquote><div><cite>Output wrote:</cite>CALLED by #:AAA:<br />BBB#</div></blockquote><br /><br />jeb</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p20351" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile20351">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content20351">
+
+						<h3 ><a href="#p20351">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting1813.html?mode=quote&amp;f=3&amp;p=20351" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic44bc.html?p=20351#p20351" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopic44bc.html?p=20351#p20351" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>25 Sep 2012 19:41
+			</p>
+			
+			
+			
+			<div class="content"><img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" /> Curioser and curioser. Well done jeb (and Liviu)<br /><br />So a line consisting of a path (including drive letter) to a batch (or other executable) can function as both a label and an instantiation of the batch.<br /><br />Assuming my batch script is TEST.BAT residing somewhere on the C: drive<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal<br />pushd &quot;%~dp0&quot;<br /><br />if &quot;%~1&quot;==&quot;stop&quot; (<br />&nbsp; echo stopping<br />&nbsp; exit /b<br />)<br /><br />call :test<br />echo before label<br />C:test stop<br />echo after label<br /></code></pre></div><br />results<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>after label<br />before label<br />stopping<br /></code></pre></div><br /><br />Dave Benham</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p20353" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile20353">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche861.html?author_id=3077&amp;sr=posts">470</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Jan 2012 21:24</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content20353">
+
+						<h3 ><a href="#p20353">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingd2eb.html?mode=quote&amp;f=3&amp;p=20353" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic64c0.html?p=20353#p20353" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopic64c0.html?p=20353#p20353" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a></strong> &raquo; </span>25 Sep 2012 21:47
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>dbenham wrote:</cite>So a line consisting of a path (including drive letter) to a batch (or other executable) can function as both a label and an instantiation of the batch.</div></blockquote><br />Nice!  FWIW the same happens with partially quoted names even when continuations past the closing quote don't match. For example, saving the following as &quot;t e s t.cmd&quot;<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal<br />pushd &quot;%~dp0&quot;<br /><br />if &quot;%~1&quot;==&quot;stop&quot; (<br />&nbsp; echo stopping = %0 ^( %* ^)<br />&nbsp; exit /b<br />)<br /><br />call :&quot;t e s t&quot; 123<br />echo before label = %0 ^( %* ^)<br />C:&quot;t e s t&quot; stop<br />echo after label = %0 ^( %* ^)<br /></code></pre></div>gives<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;&quot;t e s t&quot; 987<br />after label = :&quot;t e s t&quot; ( 123 )<br />before label = &quot;t e s t&quot; ( 987 )<br />stopping = C:&quot;t e s t&quot; ( stop )</code></pre></div><br />Liviu<br /><br />P.S. This is all jeb's doing, none of my fault <img class="smilies" src="images/smilies/icon_wink.gif" alt=";-)" title="Wink" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p20354" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile20354">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchf147.html?author_id=3221&amp;sr=posts">6033</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 10 Feb 2012 02:20</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content20354">
+
+						<h3 ><a href="#p20354">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingfdcf.html?mode=quote&amp;f=3&amp;p=20354" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic3d43.html?p=20354#p20354" onclick="prompt('Message #7',this.href); return false;">#7</a></span> 
+									<a class="unread" href="viewtopic3d43.html?p=20354#p20354" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist5b5d.html?mode=viewprofile&amp;u=3221" style="color: #00AA00;" class="username-coloured">foxidrive</a></strong> &raquo; </span>25 Sep 2012 22:20
+			</p>
+			
+			
+			
+			<div class="content">If anyone actually uses that in a batch file to help someone, I will have to take drastic action.  *polishes Uzi*<br /><br /><br />Bloody crackpot batch users. <img class="smilies" src="images/smilies/icon_wink.gif" alt=";)" title="Wink" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p20355" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile20355">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search73f1.html?author_id=417&amp;sr=posts">880</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 30 Aug 2007 08:05</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany, Bochum</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content20355">
+
+						<h3 ><a href="#p20355">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinga931-2.html?mode=quote&amp;f=3&amp;p=20355" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5678.html?p=20355#p20355" onclick="prompt('Message #8',this.href); return false;">#8</a></span> 
+									<a class="unread" href="viewtopic5678.html?p=20355#p20355" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a></strong> &raquo; </span>26 Sep 2012 02:57
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>foxidrive wrote:</cite>If anyone actually uses that in a batch file to help someone, I will have to take drastic action. *polishes Uzi*<br /></div></blockquote><br />I use it  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call :myFunc<br />echo back again<br /><br />:myFunc ^<br />echo This is function %0 &amp; exit /b<br />echo ERROR: You don't call the function <br />exit /b<br /></code></pre></div><br /><br />Also my batch library uses a simple trick<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>REM 1. Prepare the BatchLibrary for the start command<br />call BatchLib.bat<br /><br />REM 2. Start of the Batchlib, acquisition of the command line parameters, swtich to the temporary LibTest1.BLibTmp.bat<br />&lt;:%BL.Start%<br /></code></pre></div><br /><br /><blockquote><div><cite>BL.Start contains wrote:</cite>BL.Start=:&lt; nul ( setlocal EnableDelayedExpansion &amp; set &quot;bl.cmdcmdline=!cmdcmdline!&quot; &amp; call set &quot;bl.param[0]=%~f0&quot; &amp; FOR /L %n IN (1,1,9) DO ( call set &quot;bl.para<br />m[%n]=%~1&quot; &amp; shift /1 ) )       &amp; &quot;D:\Projekte\EHS\Batch\BatchLib\BatchLib.bat&quot; /INTERN_START &quot;!bl.param[0]!&quot;</div></blockquote><br />Or formatted<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>BL.Start=:&lt; nul ( <br />&nbsp; setlocal EnableDelayedExpansion<br />&nbsp; set &quot;bl.cmdcmdline=!cmdcmdline!&quot; <br />&nbsp; call set &quot;bl.param&#91;0&#93;=%~f0&quot;<br />&nbsp; FOR /L %n IN (1,1,9) DO ( <br />&nbsp; &nbsp; call set &quot;bl.param&#91;%n&#93;=%~1&quot;<br />&nbsp; &nbsp; shift /1 <br />&nbsp; ) <br />)&nbsp; &nbsp; &nbsp;<br />&quot;D:\Projekte\EHS\Batch\BatchLib\BatchLib.bat&quot; /INTERN_START &quot;!bl.param&#91;0&#93;!&quot;</code></pre></div><br /><br />The trick is here that the first time <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;:%BL.Start%</code></pre></div><br />is expanded to an executable statement.<br />And later it can be used as a label  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br /><br />jeb</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p20356" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile20356">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search0d5e.html?author_id=2453&amp;sr=posts">1497</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 16 May 2011 08:21</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Flanders(Belgium)</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact Ed Dyreen">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact Ed Dyreen</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://ed-dyreen.ddns.net/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content20356">
+
+						<h3 ><a href="#p20356">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9cf7.html?mode=quote&amp;f=3&amp;p=20356" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicec06.html?p=20356#p20356" onclick="prompt('Message #9',this.href); return false;">#9</a></span> 
+									<a class="unread" href="viewtopicec06.html?p=20356#p20356" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a></strong> &raquo; </span>26 Sep 2012 05:03
+			</p>
+			
+			
+			
+			<div class="content">'<br />defrag.EXE Jeb: /f /v <img class="smilies" src="images/smilies/icon_mrgreen.gif" alt=":mrgreen:" title="Mr. Green" /> <br /><a href="viewtopicb9e3.html?f=3&amp;t=1011&amp;hilit=cat" class="postlink">Experiment with call and label</a><br /><a href="viewtopic2d26.html?f=3&amp;t=1626&amp;hilit=batchlib" class="postlink">BatchLibrary or how to include batch files</a></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p20360" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile20360">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche861.html?author_id=3077&amp;sr=posts">470</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Jan 2012 21:24</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content20360">
+
+						<h3 ><a href="#p20360">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf72a.html?mode=quote&amp;f=3&amp;p=20360" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice374.html?p=20360#p20360" onclick="prompt('Message #10',this.href); return false;">#10</a></span> 
+									<a class="unread" href="viewtopice374.html?p=20360#p20360" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a></strong> &raquo; </span>26 Sep 2012 11:39
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>jeb wrote:</cite>The rule is here:<br />&lt;Anyone character or none&gt; followed by any ,;=&lt;space&gt; then the colon and the name.</div></blockquote><br />Another oddity is that parsing appears to be based on the &quot;physical&quot; text lines in the source file, and recognizes a label even on a line which is in fact a continuation of the previous one i.e. when the line above it ends with a ^ caret.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal<br />pushd &quot;%~dp0&quot;<br />echo wscript.echo &quot;***&nbsp; :ads.vbs ( &quot; ^&amp; wscript.arguments(0) ^&amp; &quot; ) ***&quot; &gt;test2.cmd:ads.vbs<br />call :ads.vbs 123<br />echo before label = %0 ^( %* ^)<br />cscript //nologo test2.cmd^<br />:ads.vbs 456<br />echo after label = %0 ^( %* ^)</code></pre></div>This code saved as test2.cmd on an NTFS drive and run on XP sp3 outputs...<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;test2 987<br />after label = :ads.vbs ( 123 )<br />before label = test2 ( 987 )<br />***&nbsp; :ads.vbs ( 456 ) ***<br />after label = test2 ( 987 )</code></pre></div><br />Note that using the vbscript code embedded as an NTFS ADS (alternate data stream) is just for fun, and to give foxidrive more ammunition of course <img class="smilies" src="images/smilies/icon_wink.gif" alt=";-)" title="Wink" />  but is not essential to the main point, which is that the :ads.vbs label is recognized in the middle of a split line.<br /><br />Liviu</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p20361" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile20361">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search1322.html?author_id=2988&amp;sr=posts">3970</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 23 Dec 2011 13:59</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content20361">
+
+						<h3 ><a href="#p20361">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting6282.html?mode=quote&amp;f=3&amp;p=20361" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4940.html?p=20361#p20361" onclick="prompt('Message #11',this.href); return false;">#11</a></span> 
+									<a class="unread" href="viewtopic4940.html?p=20361#p20361" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2675.html?mode=viewprofile&amp;u=2988" style="color: #00AA00;" class="username-coloured">Squashman</a></strong> &raquo; </span>26 Sep 2012 11:49
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>foxidrive wrote:</cite>If anyone actually uses that in a batch file to help someone, I will have to take drastic action.  *polishes Uzi*<br /><br /><br />Bloody crackpot batch users. <img class="smilies" src="images/smilies/icon_wink.gif" alt=";)" title="Wink" /></div></blockquote><br />I agree and for our U.S. users I have been polishing mine in case I meet Roger Goodell in a dark alley!!!!!   <img class="smilies" src="images/smilies/icon_evil.gif" alt=":evil:" title="Evil or Very Mad" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21879" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21879">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search73f1.html?author_id=417&amp;sr=posts">880</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 30 Aug 2007 08:05</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany, Bochum</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21879">
+
+						<h3 ><a href="#p21879">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting770c.html?mode=quote&amp;f=3&amp;p=21879" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic6563.html?p=21879#p21879" onclick="prompt('Message #12',this.href); return false;">#12</a></span> 
+									<a class="unread" href="viewtopic6563.html?p=21879#p21879" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a></strong> &raquo; </span>16 Nov 2012 02:44
+			</p>
+			
+			
+			
+			<div class="content">There exists an interesting additional parser phase.<br /><br />Normally delayed expansion is evaluated only once, even in a call or call call statement.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />set &quot;perVar=%%perVar%% percent-expansion,&quot;<br />set &quot;delVar=!delVar! delayed-expansion,&quot;<br />echo %perVar%<br />call echo %perVar%<br />call call echo %perVar%<br />setlocal EnableDelayedExpansion<br />echo !delVar!<br />call echo !delVar!<br />call call echo !delVar!</code></pre></div><br /><blockquote><div><cite>output wrote:</cite>%perVar% percent-expansion,<br />%perVar% percent-expansion, percent-expansion,<br />%perVar% percent-expansion, percent-expansion, percent-expansion,<br />!delVar! delayed-expansion,<br />!delVar! delayed-expansion,<br />!delVar! delayed-expansion,</div></blockquote><br /><br />That's not new and the standard behaviour of the parser, but now ... <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>setlocal EnableDelayedExpansion<br />set &quot;var=myLabel&quot;<br />set &quot;pVar=^!var^!&quot;<br />echo !pVar!<br />call echo !pVar!<br />call :!pVar!<br />exit /b<br /><br />:myLabel<br />setlocal DisableDelayedExpansion<br />echo myLabel is called, the func name is %0<br />exit /b</code></pre></div><br /><blockquote><div><cite>Output wrote:</cite>!var!<br />!var!<br />myLabel is called, the func name is :!var!</div></blockquote><br /><br />Obviously !var! is also expanded, but only when call to find a label, not if it only echo something.<br />And %0 doesn't contain the correct label name then.<br /><br />jeb</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21880" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21880">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha86d.html?author_id=2258&amp;sr=posts">2152</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 12 Feb 2011 21:02</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> United States (east coast)</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21880">
+
+						<h3 ><a href="#p21880">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2ba1.html?mode=quote&amp;f=3&amp;p=21880" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb63b.html?p=21880#p21880" onclick="prompt('Message #13',this.href); return false;">#13</a></span> 
+									<a class="unread" href="viewtopicb63b.html?p=21880#p21880" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a></strong> &raquo; </span>16 Nov 2012 07:27
+			</p>
+			
+			
+			
+			<div class="content"><img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" /> Wow jeb, that is amazing. <br /><br />The extra round of delayed expansion only works with CALL, it does not work with GOTO. I guess that is &quot;expected&quot;.<br /><br />Liviu's discovery about physical parsing of lines is also very interesting. Label lines support line continuation during normal parsing, but do not continue if discovered by CALL or GOTO.<br /><br />This example is fun to trace  <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enableDelayedExpansion<br /><br />set &quot;var=myLabel&quot;<br />set &quot;dvar=^!var^!&quot;<br />echo before CALL<br />call :!dvar!<br />echo after CALL<br /><br />:ContinuedLabel with embedded commands that only execute if this label is called ^<br />echo After ContinuedLabel &amp; exit /b<br /><br />echo This continued line has an embedded label { ^<br />:myLabel } followed by an embedded ^<br />goto continue that only works if :myLabel is called &amp; exit /b<br />goto !dvar!<br /><br />:continue<br />setlocal disableDelayedExpansion<br />echo Inside call to %0<br />endlocal<br />goto :ContinuedLabel<br /></code></pre></div><br />output<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>before CALL<br />Inside call to :!var!<br />After ContinuedLabel<br />after CALL<br />This continued line has an embedded label { :myLabel } followed by an embedded goto continue that only works if :myLabel is called<br /></code></pre></div><br /><br />Dave Benham</div>
+
+			
+													<div class="notice">
+					Last edited by <a href="memberlist3d77.html?mode=viewprofile&amp;u=2258" style="color: #00AA00;" class="username-coloured">dbenham</a> on 16 Jan 2015 08:52, edited 1 time in total.
+									</div>
+			
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21921" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21921">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search73f1.html?author_id=417&amp;sr=posts">880</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 30 Aug 2007 08:05</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Germany, Bochum</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21921">
+
+						<h3 ><a href="#p21921">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7b9c.html?mode=quote&amp;f=3&amp;p=21921" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7dbf.html?p=21921#p21921" onclick="prompt('Message #14',this.href); return false;">#14</a></span> 
+									<a class="unread" href="viewtopic7dbf.html?p=21921#p21921" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist7125.html?mode=viewprofile&amp;u=417" class="username">jeb</a></strong> &raquo; </span>19 Nov 2012 03:20
+			</p>
+			
+			
+			
+			<div class="content">I retested a bit and have to correct myself.<br /><br />CR and LF seems to be always stop characters, (my samples were to simple).<br /><br /><blockquote><div><cite>jeb wrote:</cite>Btw. label names have completly different parser phases, only a bit escaping is done,<br />but the percent expansion nor the remove phase for CR's are executed.<br />A caret escape the next character, even in quotes, but it can't be used as multiline character (for the label name).</div></blockquote><br />There seems to be one open possibility. A caret do some sort of multiline, but I can't figure out how the label is called then.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />set pVar=!var!<br />set LF=^<br /><br /><br />setlocal EnableDelayedExpansion<br />call :lab&nbsp; &nbsp; test1<br />call :label&nbsp; test2<br />set &quot;var=lab^el&quot;<br />call :!pVar! test3<br />set &quot;var=lab^^el&quot;<br />call :!pVar! test4<br />set &quot;var=lab!LF!el&quot;<br />call :!pVar! test5<br />set &quot;var=lab^^!LF!el&quot;<br />call :!pVar! test6<br />exit /b<br /><br />:lab^<br />el<br />echo Currently I can't call this</code></pre></div><br /><br />Btw. Do ALWAYS append a parameter to your call, if experimenting with ending carets, else the cmd.exe can crash completly <img class="smilies" src="images/smilies/icon_exclaim.gif" alt=":!:" title="Exclamation" /> <br /><br /><span style="color: #FF0000">EDIT:</span><br /><blockquote><div><cite>dbenham wrote:</cite>The extra round of delayed expansion only works with CALL, it does not work with GOTO. I guess that is &quot;expected&quot;.</div></blockquote><br />Yes, I expected this, as GOTO haven't a second parser round like CALL at all.<br /><br />CALL seems to have a special mode for calling labels, as the second delayed expansion only works if a colon is found before, <br />it fails if the colon would only be visible after the second expansion.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;pVar=!var!&quot;<br />setlocal EnableDelayedExpansion<br />set &quot;var=label&quot;<br />call :!pVar! works<br />set &quot;var=:Label&quot;<br />call !pVar! failed<br />exit /b<br /><br />:label<br />echo It works<br />exit /b</code></pre></div><br />jeb</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p35425" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile35425">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistfcd9.html?mode=viewprofile&amp;u=4919" class="username">npocmaka_</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searcha36f.php?author_id=4919&amp;sr=posts">473</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 24 Jun 2013 17:10</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Bulgaria</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact npocmaka_">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact npocmaka_</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://stackoverflow.com/questions/28043589/how-can-i-compres-zip-and-uncopress-unzip-files-and-folders-with-batch-f" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content35425">
+
+						<h3 ><a href="#p35425">Re: Rules for label names vs GOTO and CALL</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting5ba2.html?mode=quote&amp;f=3&amp;p=35425" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7e60-2.html?p=35425#p35425" onclick="prompt('Message #15',this.href); return false;">#15</a></span> 
+									<a class="unread" href="viewtopic7e60-2.html?p=35425#p35425" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistfcd9.html?mode=viewprofile&amp;u=4919" class="username">npocmaka_</a></strong> &raquo; </span>25 Jun 2014 14:25
+			</p>
+			
+			
+			
+			<div class="content">I'm not sure if this is exactly applicable for this thread but seems that for bot GOTO and CALL the<br />string <span style="color: #BF0000">&quot;/?&quot;</span> is with highest priority and both commands ignore everything else when this is string is passed and print the help:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />call :blah/?blah<br />goto :blah/?blah<br /><br />call :label1 /?<br />goto :label1 /?<br /><br />exit /b 0<br /><br />:label1<br />echo --------------- </code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="posting685a.html?mode=reply&amp;f=3&amp;t=3803" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic96c0.html?f=3&amp;t=3803&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=3803">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			54 posts
+							<ul>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopic54db.html?f=3&amp;t=3803&amp;start=15" role="button">2</a></li>
+				<li><a class="button" href="viewtopic6cfc.html?f=3&amp;t=3803&amp;start=30" role="button">3</a></li>
+				<li><a class="button" href="viewtopic5232.html?f=3&amp;t=3803&amp;start=45" role="button">4</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic54db.html?f=3&amp;t=3803&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron78d2.gif?cron_type=cron.task.core.tidy_sessions" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?p=20337 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:21:39 GMT -->
+</html>

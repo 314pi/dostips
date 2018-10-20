@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8730&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Batch to rename index.html files to their subforders' names</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Batch to rename index.html files to their subforders' names</h2>
+		<p><a href="viewtopicbb7c.html?f=3&amp;t=8730">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8730</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Batch to rename index.html files to their subforders' names</h3>
+				<div class="date">Posted: <strong>22 Jul 2018 05:14</strong></div>
+				<div class="author">by <strong>terryhenderson</strong></div>
+				<div class="content">Hi,<br>
+<br>
+I'm working on over 28,000 online tests. Each test is in one subfolder. Each subfolder consists of one index.html file in addition to 3 sub subfolders which contain the test data. I am in a dire need to rename all the index.html files to their subfolders name, so that when publishing the entire tests online, each test can be accessed through its very index.html file name. For example, if the subfolder's name is: TMC-WQ-AOP-T1, its index.html file would be renamed to TMC-WQ-AOP-T1.html instead.<br>
+<br>
+Can I get some precious assistance with this request please?<br>
+<br>
+Many thanks in advance.<br>
+<br>
+T.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch to rename index.html files to their subforders' names</h3>
+				<div class="date">Posted: <strong>22 Jul 2018 07:43</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Place that batch file in the parent folder and run it.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal EnableExtensions DisableDelayedExpansion
+for /f "delims=" %%i in ('dir /a-d /b /s "index.html"') do (
+  for %%j in ("%%~dpi.") do ECHO ren "%%~i" "%%~nxj%%~xi"
+)
+PAUSE
+</code></pre></div>
+Note: The code will only display the command lines without doing any renaming operation yet. If you are convinced it would do what you're looking for then remove ECHO and PAUSE from the code in order to perform the renaming if you run the updated code.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch to rename index.html files to their subforders' names</h3>
+				<div class="date">Posted: <strong>22 Jul 2018 09:36</strong></div>
+				<div class="author">by <strong>terryhenderson</strong></div>
+				<div class="content">Thank you very much aGerman for your prompt response to my question. In fact, I followed your instructions and placed the batch file in the parent folder and ran it after removing the echo and pause as advised, but nothing has been changed. I attempting placing the batch file down in the subdirectories themselves, but no index.html file has been affected to be renamed.<br>
+<br>
+I may add that tests subdirectories with their index file and other sub subdirectories vary in their location in the parent folder. In other words, they may be in the first subdirectory from the parent directory or the ninth subdirectory from the parent. So I believe the batch should recursively search for the index.html file.<br>
+<br>
+<br>
+Once again, thank you very much.<br>
+<br>
+<br>
+T.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch to rename index.html files to their subforders' names</h3>
+				<div class="date">Posted: <strong>22 Jul 2018 10:41</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">The /S option of DIR means that it searches recursively. I already tested the script and everything worked out for me. By saying "parent folder" I meant the root folder in your folder structure that contains the index.html files (regardless of how many levels deep in the folder structure, because /S searches in all subsequent levels).<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Batch to rename index.html files to their subforders' names</h3>
+				<div class="date">Posted: <strong>22 Jul 2018 14:42</strong></div>
+				<div class="author">by <strong>terryhenderson</strong></div>
+				<div class="content">Thank you very much Steffen for your genius code; it did run soothly and all the index.html files were renamed after their folders as exactly as desired.<br>
+Pardon me for a silly mistake that I made before running your code which made it not to run at first time.<br>
+Please accept my deep gratitude.<br>
+<br>
+T.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8730&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:48:15 GMT -->
+</html>

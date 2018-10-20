@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8539&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:23:37 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Check Day in windows 10</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Check Day in windows 10</h2>
+		<p><a href="viewtopice9e6.html?f=3&amp;t=8539">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8539</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Check Day in windows 10</h3>
+				<div class="date">Posted: <strong>03 May 2018 02:09</strong></div>
+				<div class="author">by <strong>mohdfraz</strong></div>
+				<div class="content">Hi,<br>
+<br>
+I normally use this below code to check "Day" in batch file but in windows 10 it is not working. In older windows date return "Wed 03/05/2018" so it was easy to extra Day from date using below code but in windows 10 it is not working as Windows 10 will return "03/05/2018". <br>
+Any suggestion please...<br>
+
+<blockquote class="uncited"><div>
+SET D=%date:~0,3%<br>
+SET D=%D::=%<br>
+if %D% equ Mon (Goto :Mon) Else (Goto :Tue)
+</div></blockquote>
+
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Check Day in windows 10</h3>
+				<div class="date">Posted: <strong>03 May 2018 05:38</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">WMIC should be useful
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f "tokens=2 delims==" %%i in ('WMIC PATH Win32_LocalTime GET DayOfWeek /value') do for %%j in (%%i) do set "dow=%%j"</code></pre></div>
+Now variable %dow% contains a number in range 0 (for Sunday) until 6 (for Saturday).<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Check Day in windows 10</h3>
+				<div class="date">Posted: <strong>03 May 2018 05:41</strong></div>
+				<div class="author">by <strong>npocmaka_</strong></div>
+				<div class="content">check this:<br>
+<br>
+<a href="https://stackoverflow.com/a/20387874/388389" class="postlink">https://stackoverflow.com/a/20387874/388389</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Check Day in windows 10</h3>
+				<div class="date">Posted: <strong>03 May 2018 06:08</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">How the date and time variables display is dependent on your regional settings on your computer.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Check Day in windows 10</h3>
+				<div class="date">Posted: <strong>03 May 2018 06:24</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">That's true regarding order and separator. I never found a setting of how to enable or disable the leading day of week.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Check Day in windows 10</h3>
+				<div class="date">Posted: <strong>03 May 2018 08:41</strong></div>
+				<div class="author">by <strong>SIMMS7400</strong></div>
+				<div class="content">Try my function - it's region and system agnostic<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:GET_DOW
+
+::-- This parsing method works independently of any regional settings --::
+::-- This works from Windows XP to Windows 2012R2 --::
+::-- Adjust DOW variable to the required format ^[i.e. Sat or Saturday^]
+
+SET "DOW=Sunday Monday Tuesday Wednesday Thursday Friday Saturday"
+SET /A "LINE=0"
+
+FOR /F "tokens=1-9" %%A in ('wmic Path Win32_LocalTime Get Day^,DayOfWeek^,Hour^,Minute^,Month^,Quarter^,Second^,WeekInMonth^,Year ^| FIND /v ""') DO (
+
+  SET /A "LINE += 1"
+  IF "!LINE!"=="1" ( SET "VARA=%%A" &amp; SET "VARB=%%B" &amp; SET "VARC=%%C" &amp; SET "VARD=%%D" &amp; SET "VARE=%%E"
+					 SET "VARF=%%F" &amp; SET "VARG=%%G" &amp; SET "VARH=%%H" &amp; SET "VARI=%%I")
+					 
+  IF "!LINE!"=="2" ( SET "!VARA!=%%A" &amp; SET "!VARB!=%%B" &amp; SET "!VARC!=%%C" &amp; SET "!VARD!=%%D" &amp; SET "!VARE!=%%E"
+					 SET "!VARF!=%%F" &amp; SET "!VARG!=%%G" &amp; SET "!VARH!=%%H" &amp; SET "!VARI!=%%I")
+)
+
+FOR %%A IN (Month Day Hour Minute Second) DO ( IF !%%A! LSS 10 SET %%A=0!%%A!)
+SET /A DoWIndex = DayOfWeek + 1
+FOR /F "tokens=%DoWIndex%" %%A IN ("%DOW%") DO ENDLOCAL &amp; SET "DOWName=%%A"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Check Day in windows 10</h3>
+				<div class="date">Posted: <strong>04 May 2018 03:21</strong></div>
+				<div class="author">by <strong>mohdfraz</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic3482.html?p=56669#p56669" data-post-id="56669" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">03 May 2018 05:38</div></cite>
+WMIC should be useful
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f "tokens=2 delims==" %%i in ('WMIC PATH Win32_LocalTime GET DayOfWeek /value') do for %%j in (%%i) do set "dow=%%j"</code></pre></div>
+Now variable %dow% contains a number in range 0 (for Sunday) until 6 (for Saturday).<br>
+<br>
+Steffen
+</div></blockquote>
+
+Dear Steffen,<br>
+Your solution worked like a charm. Very great full to you. Many Thanks<br>
+<br>
+<br>
+I thank all others members who replied. Thank you all.<br>
+<br>
+This forum is always good and very actively solve the issues.<br>
+<br>
+Thanks</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8539&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:23:37 GMT -->
+</html>

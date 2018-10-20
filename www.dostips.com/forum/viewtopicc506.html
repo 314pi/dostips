@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8625&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:16 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Way to replace string in word DOC ?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Way to replace string in word DOC ?</h2>
+		<p><a href="viewtopic7b87.html?f=3&amp;t=8625">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8625</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Way to replace string in word DOC ?</h3>
+				<div class="date">Posted: <strong>14 Jun 2018 08:11</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">Hi all,<br>
+<br>
+I know that the word document is GUI application and obviously so far to my knowledge  can not be replacing string directly in command line. Someone suggested using 3rd party utility.<br>
+<br>
+Does anyone has some idea, suggestion or good experience on this matter?<br>
+<br>
+Your input shall be greatly appreciated as always...<br>
+<br>
+Thanks<br>
+<br>
+goodywp</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Way to replace string in word DOC ?</h3>
+				<div class="date">Posted: <strong>15 Jun 2018 04:54</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">It's possible to automate MS Word, provided it was installed on the machine where you use the script. The ActiveX interface can't be accessed by Batch but a JScript hybrid could come in handy in that case. I'll try to write some lines of code this evening...<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Way to replace string in word DOC ?</h3>
+				<div class="date">Posted: <strong>15 Jun 2018 10:54</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Okay here it goes ...<br>
+<br>
+Save with extension .bat
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (0)==(0) echo off &amp;setlocal EnableExtensions DisableDelayedExpansion &amp;set "wordrepl=cscript //nologo //e:jscript %~fs0"
+
+:: Usage:
+::  %wordrepl%  FileName  Find  Replace  [/i]  [/w]  [/a]  [/b]  [/e]  [/p]
+::    FileName    path of the Word document
+::    Find        text to search for
+::    Replace     text used for the replacement
+::    /i          ignore case
+::    /w          match whole words only
+::    /a          advanced: use wildcards and (kind of) regex
+::                  http://office.microsoft.com/en-us/word-help/find-and-replace-text-by-using-regular-expressions-advanced-HA102350661.aspx
+::    /b          match words beginning with the search string
+::    /e          match words ending with the search string
+::    /p          match phrase, ignore all white space and control characters between words
+:: returns 0 if the script succeeded
+::         1 if no replacement was performed (e.g. search string not found)
+::         2 if an error occurred (e.g. MS Word not installed, file not found, file read-only, file password-protected, etc.)
+
+
+:::::: BATCH ::::::
+%wordrepl% "test.docx" "ABC" "xyz" /i /w
+echo %errorlevel%
+pause
+
+
+:::::: JSCRIPT ::::::
+goto :eof @end
+if (WScript.Arguments.Unnamed.Count != 3 || WScript.Arguments.Count() &gt; 9) WScript.Quit(2);
+
+var namedParams = null, bMatchCase = true, bMatchWholeWord = false, bMatchWildcards = false, wdApp = null, wdDoc = null, wdFind = null, oFSO = null, oFile = null, bRet = false;
+
+try {
+  oFSO = WScript.CreateObject('Scripting.FileSystemObject');
+  oFile = oFSO.OpenTextFile(oFSO.GetAbsolutePathName(WScript.Arguments.Unnamed(0)), 8, false);
+  oFile.Close();
+
+  wdApp = WScript.CreateObject('Word.Application'); /* open the Word application */
+  wdApp.Visible = false; /* without window */
+  wdApp.Application.DisplayAlerts = 0;
+
+  wdDoc = wdApp.Documents.Open(oFSO.GetAbsolutePathName(WScript.Arguments.Unnamed(0))); /* open the document */
+  if (wdDoc.ReadOnly == true) throw true;
+
+  wdFind = wdDoc.Content.Find;
+  namedParams = WScript.Arguments.Named
+
+  /* https://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.find_members.aspx */
+  if (namedParams.Exists('b')) wdFind.MatchPrefix = true;
+  if (namedParams.Exists('e')) wdFind.MatchSuffix = true;
+  if (namedParams.Exists('p')) wdFind.MatchPhrase = true;
+
+  /* replace text (https://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.find.execute.aspx) */
+  if (namedParams.Exists('i')) bMatchCase = false;
+  if (namedParams.Exists('w')) bMatchWholeWord = true;
+  if (namedParams.Exists('a')) bMatchWildcards = true;
+  bRet = wdFind.Execute(
+    WScript.Arguments.Unnamed(1), /* FindText */
+    bMatchCase,                   /* MatchCase */
+    bMatchWholeWord,              /* MatchWholeWord */
+    bMatchWildcards,              /* MatchWildcards */
+    false,                        /* MatchSoundsLike */
+    false,                        /* MatchAllWordForms */
+    true,                         /* Forward */
+    1,                            /* Wrap (1 = wdFindContinue) */
+    false,                        /* Format */
+    WScript.Arguments.Unnamed(2), /* ReplaceWith */
+    2                             /* Replace (2 = wdReplaceAll) */
+  );
+
+  wdDoc.Close(bRet == true ? -1 : 0); /* save (if the replacement was successful) and close the document */
+  wdDoc = null;
+  wdApp.Quit(); /* quit the Word application */
+  wdApp = null;
+  WScript.Quit(bRet == false ? 1 : 0);
+}
+catch (e) {
+  if (wdDoc != null) wdDoc.Close(0); /* close unsaved */
+  if (wdApp != null) wdApp.Quit();
+  WScript.Quit(2);
+}
+</code></pre></div>
+The first line is mandatory and the JScript portion has to be the last part of the script as always in Batch-JScript-Hybrids.<br>
+It's only a proof of concept and I was only able to test using Word 2003.<br>
+<br>
+Steffen<br>
+<br>
+//EDIT 2018-06-17: code slightly improved, return value changed<br>
+//EDIT 2018-06-18: added options /b, /e, and /p</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Way to replace string in word DOC ?</h3>
+				<div class="date">Posted: <strong>18 Jun 2018 14:18</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic491e.html?p=57167#p57167" data-post-id="57167" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">15 Jun 2018 10:54</div></cite>
+Okay here it goes ...<br>
+<br>
+Save with extension .bat
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (0)==(0) echo off &amp;setlocal EnableExtensions DisableDelayedExpansion &amp;set "wordrepl=cscript //nologo //e:jscript %~fs0"
+
+:: Usage:
+::  %wordrepl%  FileName  Find  Replace  [/i]  [/w]  [/a]  [/b]  [/e]  [/p]
+::    FileName    path of the Word document
+::    Find        text to search for
+::    Replace     text used for the replacement
+::    /i          ignore case
+::    /w          match whole words only
+::    /a          advanced: use wildcards and (kind of) regex
+::                  http://office.microsoft.com/en-us/word-help/find-and-replace-text-by-using-regular-expressions-advanced-HA102350661.aspx
+::    /b          match words beginning with the search string
+::    /e          match words ending with the search string
+::    /p          match phrase, ignore all white space and control characters between words
+:: returns 0 if the script succeeded
+::         1 if no replacement was performed (e.g. search string not found)
+::         2 if an error occurred (e.g. MS Word not installed, file not found, file read-only, file password-protected, etc.)
+
+
+:::::: BATCH ::::::
+%wordrepl% "test.docx" "ABC" "xyz" /i /w
+echo %errorlevel%
+pause
+
+
+:::::: JSCRIPT ::::::
+goto :eof @end
+if (WScript.Arguments.Unnamed.Count != 3 || WScript.Arguments.Count() &gt; 9) WScript.Quit(2);
+
+var namedParams = null, bMatchCase = true, bMatchWholeWord = false, bMatchWildcards = false, wdApp = null, wdDoc = null, wdFind = null, oFSO = null, oFile = null, bRet = false;
+
+try {
+  oFSO = WScript.CreateObject('Scripting.FileSystemObject');
+  oFile = oFSO.OpenTextFile(oFSO.GetAbsolutePathName(WScript.Arguments.Unnamed(0)), 8, false);
+  oFile.Close();
+
+  wdApp = WScript.CreateObject('Word.Application'); /* open the Word application */
+  wdApp.Visible = false; /* without window */
+  wdApp.Application.DisplayAlerts = 0;
+
+  wdDoc = wdApp.Documents.Open(oFSO.GetAbsolutePathName(WScript.Arguments.Unnamed(0))); /* open the document */
+  if (wdDoc.ReadOnly == true) throw true;
+
+  wdFind = wdDoc.Content.Find;
+  namedParams = WScript.Arguments.Named
+
+  /* https://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.find_members.aspx */
+  if (namedParams.Exists('b')) wdFind.MatchPrefix = true;
+  if (namedParams.Exists('e')) wdFind.MatchSuffix = true;
+  if (namedParams.Exists('p')) wdFind.MatchPhrase = true;
+
+  /* replace text (https://msdn.microsoft.com/en-us/library/microsoft.office.interop.word.find.execute.aspx) */
+  if (namedParams.Exists('i')) bMatchCase = false;
+  if (namedParams.Exists('w')) bMatchWholeWord = true;
+  if (namedParams.Exists('a')) bMatchWildcards = true;
+  bRet = wdFind.Execute(
+    WScript.Arguments.Unnamed(1), /* FindText */
+    bMatchCase,                   /* MatchCase */
+    bMatchWholeWord,              /* MatchWholeWord */
+    bMatchWildcards,              /* MatchWildcards */
+    false,                        /* MatchSoundsLike */
+    false,                        /* MatchAllWordForms */
+    true,                         /* Forward */
+    1,                            /* Wrap (1 = wdFindContinue) */
+    false,                        /* Format */
+    WScript.Arguments.Unnamed(2), /* ReplaceWith */
+    2                             /* Replace (2 = wdReplaceAll) */
+  );
+
+  wdDoc.Close(bRet == true ? -1 : 0); /* save (if the replacement was successful) and close the document */
+  wdDoc = null;
+  wdApp.Quit(); /* quit the Word application */
+  wdApp = null;
+  WScript.Quit(bRet == false ? 1 : 0);
+}
+catch (e) {
+  if (wdDoc != null) wdDoc.Close(0); /* close unsaved */
+  if (wdApp != null) wdApp.Quit();
+  WScript.Quit(2);
+}
+</code></pre></div>
+The first line is mandatory and the JScript portion has to be the last part of the script as always in Batch-JScript-Hybrids.<br>
+It's only a proof of concept and I was only able to test using Word 2003.<br>
+<br>
+Steffen<br>
+<br>
+//EDIT 2018-06-17: code slightly improved, return value changed<br>
+//EDIT 2018-06-18: added options /b, /e, and /p
+</div></blockquote>
+
+Thanks soooo..... much and I shall try it out in several word versions and let you know...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Way to replace string in word DOC ?</h3>
+				<div class="date">Posted: <strong>18 Jun 2018 15:13</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I found some kind of bug in the return value of the Find.Execute method that makes the return value of the script rather ambiguous. E.g if you have the word <strong class="text-strong">abcx </strong>in your document and you want to replace <strong class="text-strong">abc</strong>, but only the whole word (using option /w). The Execute method returns true because it found <strong class="text-strong">abc </strong>in <strong class="text-strong">abcx </strong>even though it didn't perform the replacement because the whole word consists of abc plus x. That means the script behaves correctly but it would return 0 without any replacement done. I can't fix it because I just use Microsoft's Execute method.<br>
+FWIW Meanwhile I was able to test the script at work with Office 2013 installed. It seems to work out.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Way to replace string in word DOC ?</h3>
+				<div class="date">Posted: <strong>20 Jun 2018 06:09</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic3928.html?p=57190#p57190" data-post-id="57190" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">18 Jun 2018 15:13</div></cite>
+I found some kind of bug in the return value of the Find.Execute method that makes the return value of the script rather ambiguous. E.g if you have the word <strong class="text-strong">abcx </strong>in your document and you want to replace <strong class="text-strong">abc</strong>, but only the whole word (using option /w). The Execute method returns true because it found <strong class="text-strong">abc </strong>in <strong class="text-strong">abcx </strong>even though it didn't perform the replacement because the whole word consists of abc plus x. That means the script behaves correctly but it would return 0 without any replacement done. I can't fix it because I just use Microsoft's Execute method.<br>
+FWIW Meanwhile I was able to test the script at work with Office 2013 installed. It seems to work out.<br>
+<br>
+Steffen
+</div></blockquote>
+
+Thanks Steffen!!! not find time to try it out yet...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Way to replace string in word DOC ?</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 08:50</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopic690e.html?p=57204#p57204" data-post-id="57204" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">20 Jun 2018 06:09</div></cite>
+<blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic3928.html?p=57190#p57190" data-post-id="57190" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">18 Jun 2018 15:13</div></cite>
+I found some kind of bug in the return value of the Find.Execute method that makes the return value of the script rather ambiguous. E.g if you have the word <strong class="text-strong">abcx </strong>in your document and you want to replace <strong class="text-strong">abc</strong>, but only the whole word (using option /w). The Execute method returns true because it found <strong class="text-strong">abc </strong>in <strong class="text-strong">abcx </strong>even though it didn't perform the replacement because the whole word consists of abc plus x. That means the script behaves correctly but it would return 0 without any replacement done. I can't fix it because I just use Microsoft's Execute method.<br>
+FWIW Meanwhile I was able to test the script at work with Office 2013 installed. It seems to work out.<br>
+<br>
+Steffen
+</div></blockquote>
+
+Thanks Steffen!!! not find time to try it out yet...
+</div></blockquote>
+
+I tried these steps as below:<br>
+1) open Word2013<br>
+2) type ABC then save it as wordtest.doc in the same folder as WINWORD.exe  C:\Program Files\Microsoft Office\Office15<br>
+3)  Modify your script as 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>.............
+%wordrepl% "wordtest.doc" "ABC" "xyz" /i /w
+echo %errorlevel%
+pause
+.............
+</code></pre></div>
+4) and save it as word_convert.bat in C:\Program Files\Microsoft Office\Office15<br>
+5) under C:\Program Files\Microsoft Office\Office15 run word_convert.bat<br>
+return 2 (if an error occurred (e.g. MS Word not installed, file not found, file read-only, file password-protected, etc.)<br>
+<br>
+My questions to you, Do I need to save the word document as wordtest.docx as in your scripts via save as type Strict OpenXML Document or Word XML DOcument  ?<br>
+Anyway, tried both saving and after run, still got the return 2 value same as first time...<br>
+<br>
+Could you please let me know your works fine scenarios or point out my wrong doing...<br>
+<br>
+Thanks<br>
+<br>
+Tried in another computer and works!!!! <img class="smilies" src="images/smilies/icon_surprised.gif" width="15" height="15" alt=":o" title="Surprised"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Way to replace string in word DOC ?</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 09:22</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Don't try and read and write to any type of system or Program Files folder.  You need elevated privileges to do that.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Way to replace string in word DOC ?</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 09:25</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">It doesn't matter if you saved the document as .doc or as .docx as long as you specify the same file name and extension in the script. But why did you save the document in the program files directory? Usually you'd need elevated permissions to do any write operations there (and saving the changed file is a write operation). Also there is no need to have the script in this folder.<br>
+If you don't have both the script and the document in the same folder then you need to specify the whole path of your document in the script.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Way to replace string in word DOC ?</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 11:41</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopic4cba.html?p=57252#p57252" data-post-id="57252" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 Jun 2018 09:22</div></cite>
+Don't try and read and write to any type of system or Program Files folder.  You need elevated privileges to do that.
+</div></blockquote>
+
+Thanks for your reminding. I just a temporary used for a testing. Did the rest on another folder.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Way to replace string in word DOC ?</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 11:46</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic111d-2.html?p=57253#p57253" data-post-id="57253" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 Jun 2018 09:25</div></cite>
+It doesn't matter if you saved the document as .doc or as .docx as long as you specify the same file name and extension in the script. But why did you save the document in the program files directory? Usually you'd need elevated permissions to do any write operations there (and saving the changed file is a write operation). Also there is no need to have the script in this folder.<br>
+If you don't have both the script and the document in the same folder then you need to specify the whole path of your document in the script.<br>
+<br>
+Steffen
+</div></blockquote>
+
+Thanks Steffen!<br>
+<br>
+Is any way to replace more than one string in the scripts?<br>
+say I want to replace ABC to xyz<br>
+and also EFG to uvw<br>
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Way to replace string in word DOC ?</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 13:01</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Just use the %wordrepl% macro twice in your script. Follow the link in the Usage comment to learn more about the capabilities of a single call.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Way to replace string in word DOC ?</h3>
+				<div class="date">Posted: <strong>22 Jun 2018 14:20</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic87fa.html?p=57256#p57256" data-post-id="57256" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">22 Jun 2018 13:01</div></cite>
+Just use the %wordrepl% macro twice in your script. Follow the link in the Usage comment to learn more about the capabilities of a single call.<br>
+<br>
+Steffen
+</div></blockquote>
+
+Yes!! works perfectly...</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8625&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:16 GMT -->
+</html>

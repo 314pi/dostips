@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2836&start=45&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:20:51 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; foolproof counting of arguments - Page 4</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>foolproof counting of arguments</h2>
+		<p><a href="viewtopic9303.html?f=3&amp;t=2836">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=2836</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>4</strong> of <strong>4</strong></div>
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>28 Aug 2018 10:27</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">instead of start "" / b ...<br>
+what happens if you<br>
+do it without /b?<br>
+<br>
+Phil</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>29 Aug 2018 16:26</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopic13a7.html?p=57835#p57835" data-post-id="57835" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Aug 2018 08:05</div></cite>
+It could be useful when someone found a solution to some of the above points, or even how to close the current cmd window  <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question"> 
+</div></blockquote>
+
+Nice trick jeb<br>
+<br>
+The main thread can be terminated, but this is reasonable only when batch file called from command line and not from another batch file.<br>
+The trick is to redirect the stdin to a write-only stream, when it backs to prompt it can't read from stdin and will be terminated immediately and the handle to params.tmp will be closed then it can be deleted in StayAlive.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+REM *** Thread redirector 
+for /F "tokens=3 delims=:" %%F in ("%~0") do goto %%F
+
+cls
+
+REM *** Clear params.tmp
+break &gt; params.tmp
+
+start "" /b cmd /c "%~d0\:StayAlive:\..\%~pnx0" params.tmp
+
+(set LF=^
+%=empty=%
+)
+REM *** Change prompt for better recognition
+prompt #PROMPT#
+
+
+REM *** Change streams permanently
+REM *** stream1 redirects to params.tmp
+REM *** stream2 redirects to nul
+;;;;; echo on &gt;nul 2&gt;nul 0&gt;nul 3&gt;params.tmp 4&gt;nul 5&gt;&amp;3
+
+
+@REM *** This is the magic part, it forces a syntax error, the error message itself shows the expanded %asterix without ANY modification
+( Prepare ) PARAMS:%LF%%*%LF%
+
+echo Works
+exit /b
+
+
+REM *** Second thread to fetch and show the parameters
+:StayAlive
+
+:__WaitForParams
+if %~z1 EQU 0 (
+    goto :__WaitForParams
+)
+REM *** Show the result
+findstr /n "^" %1
+del %1
+echo I'm alive, parent dead :(
+pause
+exit
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>30 Aug 2018 03:41</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistc1e4.html?mode=viewprofile&amp;u=5414">pieh-ejdsch</a> wrote: <a href="viewtopic7e73.html?p=57836#p57836" data-post-id="57836" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Aug 2018 10:27</div></cite>
+instead of start "" / b ...<br>
+what happens if you<br>
+do it without /b?
+</div></blockquote>
+
+It opens a new cmd window, but that doesn't solve the problem that the main thread is still open.<br>
+
+<blockquote><div><cite><a href="memberlist0354.html?mode=viewprofile&amp;u=9161">sst</a> wrote: <a href="viewtopicc370.html?p=57856#p57856" data-post-id="57856" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">29 Aug 2018 16:26</div></cite>
+The main thread can be terminated, but this is reasonable only when batch file called from command line and not from another batch file.<br>
+The trick is to redirect the stdin to a write-only stream, when it backs to prompt it can't read from stdin and will be terminated immediately and the handle to params.tmp will be closed then it can be deleted in StayAlive.
+</div></blockquote>
+
+ <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> That's a cool trick, I didn't know.<br>
+<br>
+I changed the start cmd /c to cmd /k and I removed the exit from the stayAlive thread<br>
+That can be used to build a more "useable" solution.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+REM *** Thread redirector 
+for /F "tokens=3 delims=:" %%F in ("%~0") do goto %%F
+
+REM *** Clear params.tmp
+break &gt; params.tmp
+
+start "" /b cmd /k "%~d0\:StayAlive:\..\%~pnx0 params.tmp"
+
+(set LF=^
+%=empty=%
+)
+REM *** Change prompt for better recognition
+prompt #PROMPT#
+
+
+REM *** Change streams permanently
+REM *** stream1 redirects to params.tmp
+REM *** stream2 redirects to nul
+echo on &gt;nul 2&gt;nul 0&gt;nul 3&gt;params.tmp 4&gt;nul 5&gt;&amp;3
+
+@REM *** This is the magic part, it forces a syntax error, the error message itself shows the expanded %asterix without ANY modification
+( Prepare ) PARAMS:%LF%%*%LF%
+
+echo Works
+exit /b
+
+
+REM *** Second thread to fetch and show the parameters
+:StayAlive
+
+:__WaitForParams
+if %~z1 EQU 0 (
+    goto :__WaitForParams
+)
+REM *** Show the result
+findstr /n "^" %1 </code></pre></div>
+
+A small test with a mutiline paramter.
+<blockquote><div><cite>output wrote:</cite>c:\temp\Parser&gt;GetParamFull.bat Line1^<br>
+Mehr?<br>
+Mehr? () Line2^<br>
+Mehr?<br>
+Mehr? caret^^ Line3<br>
+1:<br>
+2:#PROMPT#( Prepare ) PARAMS:<br>
+3:Line1<br>
+4:() Line2<br>
+5:caret^ Line3<br>
+6:<br>
+7:<br>
+8:#PROMPT#<br>
+c:\temp\Parser&gt;
+</div></blockquote></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>30 Aug 2018 16:11</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Very cool technique with surprising behavior.  <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation">  <img class="smilies" src="images/smilies/icon_cool.gif" width="15" height="15" alt="8)" title="Cool"> <br>
+<br>
+It is very odd that the extra label is required. I get the wrong prompt in the output if I consolidate the thread redirection label and loop label into a single label.  <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"> <br>
+<br>
+I extended the method to capture the binary image of the parameter string in an ARGS variable via CERTUTIL.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+REM *** Thread redirector
+for /F "tokens=3 delims=:" %%F in ("%~0") do goto %%F
+
+REM *** Clear params.tmp
+break &gt; params.tmp
+
+start "" /b cmd /k "%~d0\:GetParms:\..\%~pnx0 params.tmp"
+
+REM *** Change prompt to achieve fixed length prefix and suffix (5 bytes each)
+prompt #
+
+
+REM *** Change streams permanently
+REM *** stream1 and stream0 redirect to params.tmp
+REM *** stream2 redirects to nul
+echo on &gt;nul 2&gt;&amp;1 0&gt;&amp;1 3&gt;params.tmp 4&gt;&amp;1 5&gt;&amp;3
+
+@REM *** This is the magic part, it forces a fatal syntax error, the error message itself shows the expanded %asterix without ANY modification
+()%*
+
+REM *** This is never reached, and the parent command shell terminates because stdin is invalid (an output file)
+
+
+REM *** Second thread to fetch parameters as one string within args variable
+:GetParms
+:WaitForParmsLoop
+if %~z1 EQU 0 (
+  goto :WaitForParmsLoop
+)
+setlocal enableDelayedExpansion
+
+set "B=^!"
+set "C=^"
+
+(set L=^
+%= Stores a LineFeed =%
+)
+
+for /F %%Z in ('copy /Z "%~dpf0" nul') do set "R=%%Z"  %= Stores a CarriageReturn =%
+
+REM *** Convert binary tmp file to hex
+certutil -f -encodehex %1 %~n1.hex 4 &gt;nul
+
+REM *** Encode hex ! ^ LF CR as hex !B! !C! !L! !R! and write modified hex file
+&gt;%~n1.hex2 (
+  for /f "delims=" %%A in (%~n1.hex) do for %%B in (%%A) do (
+    set "char=%%B"
+    set "char=!char:21=21 42 21!"
+    set "char=!char:5e=21 43 21!"
+    set "char=!char:0a=21 4c 21!"
+    set "char=!char:0d=21 52 21!"
+    echo !char!
+  )
+)
+
+REM *** Convert modified hex to encoded binary
+certutil -f -decodehex %~n1.hex2 %1 &gt;nul
+
+REM *** Read the encoded binary and decode into args variable
+for /f delims^=^ eol^= %%A in (%1) do set "args=%%A"
+
+REM *** Remove the unwanted prefix and suffix
+set "args=!args:~5,-5!
+
+REM *** Cleanup temp files
+del %1 %~n1.hex %~n1.hex2
+
+REM *** We now have the exact parameter string stored in args. Ready to begin processing
+echo [!args!]
+</code></pre></div>
+
+As written, the code clobbers variables L R B C and CHAR, in addition to setting ARGS. I suppose one of the safe return techniques can be used to make those variables temporary.<br>
+<br>
+There is still one nasty potential problem with the technique - It will fail miserably if any of the streams 3 and/or 4 and/or 5 are already defined when the script is called due to prior redirection.<br>
+<br>
+If I can determine the lowest 3 available streams, then the technique could be modified to always work as long as there are 3 available streams within the range 3 - 9. I think I know how to do it, but it will have undesired screen output that I don't know how to avoid. I don't have time to develop my idea yet. I'll post when I get time, or someone else can beat me to it.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>30 Aug 2018 23:10</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I managed to do it <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"><br>
+<br>
+The code below figures out the first 3 available unused file handles to use for the permanent redirection, and it fails cleanly if there are not 3 available handles in the range 3 - 9.<br>
+<br>
+As I feared, I was not able to prevent an unwanted error message on the screen when detecting the lowest available handle.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+REM *** Thread redirector
+for /F "tokens=3 delims=:" %%F in ("%~0") do goto %%F
+
+REM *** Clear params.tmp
+break &gt; params.tmp
+
+REM *** Define permanent redirection
+REM *** handles 0 and 1 redirect to params.tmp
+REM *** handle 2 redirects to nul
+call :redirect || (
+  &gt;&amp;2 echo Unable to permanently redirect handles 0 1 and 2
+  exit /b 1
+)
+REM *** Activate the CLS below to "hide" the unwanted error message
+:: CLS
+
+REM *** Launch 2nd process to gather parameters and do main processing
+start "" /b cmd /k "%~d0\:GetParms:\..\%~pnx0 params.tmp"
+
+REM *** Change prompt to achieve fixed length prefix and suffix (5 bytes each)
+prompt #
+
+REM *** Execute the permanent redirection
+echo on %redirect%
+
+@REM *** This is the magic part, it forces a fatal syntax error, the error message itself shows the expanded %asterix without ANY modification
+()%*
+
+REM *** This is never reached, and the parent command shell terminates because stdin is invalid (an output file)
+
+:redirect
+setlocal
+
+:: Find Highest unused handle
+set "high="
+call :test1 8 9 high &amp; if defined high goto :findSecond
+for %%A in (8 7 6 5) do call :test1 9 %%A high &amp; if defined high goto :findSecond
+exit /b 1
+
+:findSecond
+for /l %%A in (4 1 %high%) do call :test1 %high% %%A second &amp; if defined second goto :findThird
+
+:findThird
+for /l %%A in (%second% 1 %high%) do call :test1 %second% %%A third &amp; if defined third goto :findFirst
+
+:test1
+if %1 neq %2 (2&gt;nul (%1&gt;&amp;%2 break))||set "%3=%2"
+exit /b
+
+:findFirst
+for /l %%A in (3 1 %second%) do call :test2 %%A &amp;&amp; (
+  endlocal
+  set "redirect=&gt;nul 2&gt;&amp;1 0&gt;&amp;1 %%A&gt;params.tmp %second%&gt;&amp;1 %third%&gt;&amp;%%A"
+  exit /b 0
+)
+
+:test2
+(%second%&gt;&amp;%1 break)||exit /b 0
+exit /b 1
+
+
+REM *** Second thread to fetch parameters as one string within args variable
+:GetParms
+:WaitForParmsLoop
+if %~z1 EQU 0 (
+  goto :WaitForParmsLoop
+)
+setlocal enableDelayedExpansion
+
+set "B=^!"
+set "C=^"
+
+(set L=^
+%= Stores a LineFeed =%
+)
+
+for /F %%Z in ('copy /Z "%~dpf0" nul') do set "R=%%Z"  %= Stores a CarriageReturn =%
+
+REM *** Convert binary tmp file to hex
+certutil -f -encodehex %1 %~n1.hex 4 &gt;nul
+
+REM *** Encode hex ! ^ LF CR as hex !B! !C! !L! !R! and write modified hex file
+&gt;%~n1.hex2 (
+  for /f "delims=" %%A in (%~n1.hex) do for %%B in (%%A) do (
+    set "char=%%B"
+    set "char=!char:21=21 42 21!"
+    set "char=!char:5e=21 43 21!"
+    set "char=!char:0a=21 4c 21!"
+    set "char=!char:0d=21 52 21!"
+    echo !char!
+  )
+)
+
+REM *** Convert modified hex to encoded binary
+certutil -f -decodehex %~n1.hex2 %1 &gt;nul
+
+REM *** Read the encoded binary and decode into args variable
+for /f delims^=^ eol^= %%A in (%1) do set "args=%%A"
+
+REM *** Remove the unwanted prefix and suffix
+set "args=!args:~5,-5!
+
+REM *** Cleanup temp files
+del %1 %~n1.hex %~n1.hex2
+
+REM *** We now have the exact parameter string stored in args. Ready to begin processing
+echo [!args!]
+</code></pre></div>
+Here are some sample results demonstrating that it works with prior redirection, unless 3 are not available
+<blockquote><div><cite>output wrote:</cite>
+C:\test&gt;3&gt;nul 5&gt;nul 7&gt;nul 8&gt;nul GetFullParameter Line 1^<br>
+More?<br>
+More? Line 2 ^^ ! ^&amp; ^&gt; ^&lt;^<br>
+More?<br>
+More? Line 3<br>
+The handle could not be duplicated<br>
+during redirection of handle 6.<br>
+[Line 1<br>
+Line 2 ^ ! &amp; &gt; &lt;<br>
+Line 3]<br>
+<br>
+C:\test&gt;3&gt;nul 5&gt;nul 7&gt;nul 8&gt;nul 9&gt;nul GetFullParameter test<br>
+Unable to permanently redirect handles 0 1 and 2
+</div></blockquote>
+
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 03:01</strong></div>
+				<div class="author">by <strong>siberia-man</strong></div>
+				<div class="content">@dbenham<br>
+<br>
+I tested the last example. That's output I didn't expect to see<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Temp&gt;z "1 2" "3"
+The handle could not be duplicated
+during redirection of handle 4.
+["1 2" "3]
+
+C:\Temp&gt;z "1 2" 3
+The handle could not be duplicated
+during redirection of handle 4.
+["1 2]
+</code></pre></div>
+
+One more thing that seems not good. The command history is partially lost after executing the script.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 05:42</strong></div>
+				<div class="author">by <strong>jeb</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopicd844.html?p=57866#p57866" data-post-id="57866" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Aug 2018 16:11</div></cite>
+It is very odd that the extra label is required. I get the wrong prompt in the output if I consolidate the thread redirection label and loop label into a single label.  <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"> 
+</div></blockquote>
+
+I can't see any problem with deleting the :__WaitForParams label, it still works for me.<br>
+
+<blockquote><div><cite><a href="memberlist5152.html?mode=viewprofile&amp;u=5284">siberia-man</a> wrote: <a href="viewtopicb198.html?p=57873#p57873" data-post-id="57873" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Aug 2018 03:01</div></cite>
+One more thing that seems not good. The command history is partially lost after executing the script.
+</div></blockquote>
+That is expected, as the main thread will be closed and only the new created "StayAlive" thread will continue.<br>
+Thats currently necessary, because the main thread has permanently changed it's stdout/stderr stream.<br>
+
+<blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic916f.html?p=57872#p57872" data-post-id="57872" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Aug 2018 23:10</div></cite>
+I managed to do it <br>
+<br>
+The code below figures out the first 3 available unused file handles to use for the permanent redirection, and it fails cleanly if there are not 3 available handles in the range 3 - 9.
+</div></blockquote>
+That's a cool technic, too.<br>
+<br>
+But I would like to find a solution without the need of the "permanent redirect" technic.<br>
+<br>
+It's easy to redirect the output of a fatal syntax error by redirecting the output of a call.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call :fatalError &gt; params.txt 2&gt; nul
+
+:fatalError
+@echo on
+()%*</code></pre></div>
+The problem is here, that %* doesn't contain the batch start parameters, instead it contains the parameters of the CALL.<br>
+I thought of using the "(goto) 2&gt; nul" trick here, but then I always lose the redirection.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+call :fatalError &gt; params.txt 2&gt; nul
+
+:fatalError
+@echo on
+(
+  (goto) 
+  goto :__fatal
+)
+
+:__fatal
+()%*
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 08:19</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopic30a3.html?p=57879#p57879" data-post-id="57879" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Aug 2018 05:42</div></cite>
+<blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopicd844.html?p=57866#p57866" data-post-id="57866" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Aug 2018 16:11</div></cite>
+It is very odd that the extra label is required. I get the wrong prompt in the output if I consolidate the thread redirection label and loop label into a single label.  <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"> 
+</div></blockquote>
+
+I can't see any problem with deleting the :__WaitForParams label, it still works for me.
+</div></blockquote>
+ <img class="smilies" src="images/smilies/icon_eek.gif" width="15" height="15" alt=":shock:" title="Shocked"> You are correct <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <br>
+It works with a single label now. I swear I was seeing different behavior at one point, but now I can't reproduce it. When it wasn't working, the first captured prompt line had the expected "#", but the second captured prompt line had "C:\test&gt;".<br>
+<br>
+I simplified the GetParams code to use a single label instead of two.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+REM *** Thread redirector
+for /F "tokens=3 delims=:" %%F in ("%~0") do goto %%F
+
+REM *** Clear params.tmp
+break &gt; params.tmp
+
+REM *** Define permanent redirection
+REM *** handles 0 and 1 redirect to params.tmp
+REM *** handle 2 redirects to nul
+call :redirect || (
+  &gt;&amp;2 echo Unable to permanently redirect handles 0 1 and 2
+  exit /b 1
+)
+REM *** Activate the CLS below to "hide" the unwanted error message
+:: CLS
+
+REM *** Launch 2nd process to gather parameters and do main processing
+start "" /b cmd /k "%~d0\:GetParms:\..\%~pnx0 params.tmp"
+
+REM *** Change prompt to achieve fixed length prefix and suffix (5 bytes each)
+prompt #
+
+REM *** Execute the permanent redirection
+echo on %redirect%
+
+@REM *** This is the magic part, it forces a fatal syntax error, the error message itself shows the expanded %asterix without ANY modification
+()%*
+
+REM *** This is never reached, and the parent command shell terminates because stdin is invalid (an output file)
+
+:redirect
+setlocal
+
+:: Find Highest unused handle
+set "high="
+call :test1 8 9 high &amp; if defined high goto :findSecond
+for %%A in (8 7 6 5) do call :test1 9 %%A high &amp; if defined high goto :findSecond
+exit /b 1
+
+:findSecond
+for /l %%A in (4 1 %high%) do call :test1 %high% %%A second &amp; if defined second goto :findThird
+
+:findThird
+for /l %%A in (%second% 1 %high%) do call :test1 %second% %%A third &amp; if defined third goto :findFirst
+
+:test1
+if %1 neq %2 (2&gt;nul (%1&gt;&amp;%2 break))||set "%3=%2"
+exit /b
+
+:findFirst
+for /l %%A in (3 1 %second%) do call :test2 %%A &amp;&amp; (
+  endlocal
+  set "redirect=&gt;nul 2&gt;&amp;1 0&gt;&amp;1 %%A&gt;params.tmp %second%&gt;&amp;1 %third%&gt;&amp;%%A"
+  exit /b 0
+)
+
+:test2
+if %second%==4 exit /b 0
+(%second%&gt;&amp;%1 break)||exit /b 0
+exit /b 1
+
+
+REM *** Second thread to fetch parameters as one string within args variable
+:GetParms
+if %~z1 EQU 0 goto :GetParms
+setlocal enableDelayedExpansion
+
+set "B=^!"
+set "C=^"
+
+(set L=^
+%= Stores a LineFeed =%
+)
+
+for /F %%Z in ('copy /Z "%~dpf0" nul') do set "R=%%Z"  %= Stores a CarriageReturn =%
+
+REM *** Convert binary tmp file to hex
+certutil -f -encodehex %1 %~n1.hex 4 &gt;nul
+
+REM *** Encode hex ! ^ LF CR as hex !B! !C! !L! !R! and write modified hex file
+&gt;%~n1.hex2 (
+  for /f "delims=" %%A in (%~n1.hex) do for %%B in (%%A) do (
+    set "char=%%B"
+    set "char=!char:21=21 42 21!"
+    set "char=!char:5e=21 43 21!"
+    set "char=!char:0a=21 4c 21!"
+    set "char=!char:0d=21 52 21!"
+    echo !char!
+  )
+)
+
+REM *** Convert modified hex to encoded binary
+certutil -f -decodehex %~n1.hex2 %1 &gt;nul
+
+REM *** Read the encoded binary and decode into args variable
+for /f delims^=^ eol^= %%A in (%1) do set "args=%%A"
+
+REM *** Remove the unwanted prefix and suffix
+set "args=!args:~5,-5!
+
+REM *** Cleanup temp files
+del %1 %~n1.hex %~n1.hex2
+
+REM *** We now have the exact parameter string stored in args. Ready to begin processing
+echo [!args!]
+</code></pre></div>
+Note that the "stay-alive" thread inherits the REDIRECT variable, which is convenient for probing how the permanent redirection was achieved.<br>
+<br>
+I also made a simple change that eliminates the unwanted error message if both handles 3 and 4 are available. If I determine that the 2nd available handle is 4, then I know that the 1st one must be 3.<br>
+Below are some sample runs:
+<blockquote><div><cite>Output wrote:</cite>
+C:\test&gt;5&gt;nul 6&gt;nul 7&gt;nul getFullParameter test<br>
+[test]<br>
+<br>
+C:\test&gt;set redirect<br>
+redirect=&gt;nul 2&gt;&amp;1 0&gt;&amp;1 3&gt;params.tmp 4&gt;&amp;1 8&gt;&amp;3<br>
+<br>
+C:\test&gt;4&gt;nul 5&gt;nul 6&gt;nul 7&gt;nul getFullParameter test<br>
+The handle could not be duplicated<br>
+during redirection of handle 8.<br>
+[test]<br>
+<br>
+C:\test&gt;set redirect<br>
+redirect=&gt;nul 2&gt;&amp;1 0&gt;&amp;1 3&gt;params.tmp 8&gt;&amp;1 9&gt;&amp;3
+</div></blockquote>
+
+Note that leading and trailing spaces are stripped.<br>
+For example:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>[getFullParameter     test     ] yields [test].</code></pre></div>
+
+But if the first and last characters are anything other than space, including other token delimiters like , ; = &lt;tab&gt; &lt;/xFF&gt; &lt;LF&gt;, then all leading and trailing characters are preserved.<br>
+For example:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>[getFullParameter=     test     =] yields [=     test     =]</code></pre></div>
+
+I found another limitation. The script does not work if called via CMD /C - Only the first character of the parameter is preserved.<br>
+<br>
+But if CMD /K is used, then the full parameter on the first line is preserved. But subsequent lines are stripped, which is not surprising.<br>
+<br>
+Either way, if CMD /C or CMD /K is used, then the console ends up with multiple active processes associated with it, which messes up subsequent processing within the console. So that means the script cannot be used with FOR /F or pipes.<br>
+<br>
+<br>
+
+<blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopic30a3.html?p=57879#p57879" data-post-id="57879" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Aug 2018 05:42</div></cite>
+But I would like to find a solution without the need of the "permanent redirect" technic.
+</div></blockquote>Good luck with that. I don't see a way forward. But then again, I never expected to see the permanent redirection solution either.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 08:34</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist7125.html?mode=viewprofile&amp;u=417">jeb</a> wrote: <a href="viewtopic30a3.html?p=57879#p57879" data-post-id="57879" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Aug 2018 05:42</div></cite>
+<blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic916f.html?p=57872#p57872" data-post-id="57872" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Aug 2018 23:10</div></cite>
+I managed to do it <br>
+<br>
+The code below figures out the first 3 available unused file handles to use for the permanent redirection, and it fails cleanly if there are not 3 available handles in the range 3 - 9.
+</div></blockquote>
+That's a cool technic, too.
+</div></blockquote>
+Note that my algorithm only works if you are trying to identify the first 3 available handles.<br>
+<br>
+I can modify the algorithm to locate the first 2 available handles when only 2 are available, but then <strong class="text-strong"><em class="text-italics">all</em></strong> tests will have undesired stderr output.<br>
+<br>
+If there is only 1 available handle, then I don't know how to identify it at all.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>31 Aug 2018 08:53</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist5152.html?mode=viewprofile&amp;u=5284">siberia-man</a> wrote: <a href="viewtopicb198.html?p=57873#p57873" data-post-id="57873" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">31 Aug 2018 03:01</div></cite>
+@dbenham<br>
+<br>
+I tested the last example. That's output I didn't expect to see<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Temp&gt;z "1 2" "3"
+The handle could not be duplicated
+during redirection of handle 4.
+["1 2" "3]
+
+C:\Temp&gt;z "1 2" 3
+The handle could not be duplicated
+during redirection of handle 4.
+["1 2]
+</code></pre></div>
+</div></blockquote>
+Ugh. I was missing a trailing quote in my last assignment. All fixed.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+REM *** Thread redirector
+for /F "tokens=3 delims=:" %%F in ("%~0") do goto %%F
+
+REM *** Clear params.tmp
+break &gt; params.tmp
+
+REM *** Define permanent redirection
+REM *** handles 0 and 1 redirect to params.tmp
+REM *** handle 2 redirects to nul
+call :redirect || (
+  &gt;&amp;2 echo Unable to permanently redirect handles 0 1 and 2
+  exit /b 1
+)
+REM *** Activate the CLS below to "hide" the unwanted error message
+:: CLS
+
+REM *** Launch 2nd process to gather parameters and do main processing
+start "" /b cmd /k "%~d0\:GetParms:\..\%~pnx0 params.tmp"
+
+REM *** Change prompt to achieve fixed length prefix and suffix (5 bytes each)
+prompt #
+
+REM *** Execute the permanent redirection
+echo on %redirect%
+
+@REM *** This is the magic part, it forces a fatal syntax error, the error message itself shows the expanded %asterix without ANY modification
+()%*
+
+REM *** This is never reached, and the parent command shell terminates because stdin is invalid (an output file)
+
+:redirect
+setlocal
+
+:: Find Highest unused handle
+set "high="
+call :test1 8 9 high &amp; if defined high goto :findSecond
+for %%A in (8 7 6 5) do call :test1 9 %%A high &amp; if defined high goto :findSecond
+exit /b 1
+
+:findSecond
+for /l %%A in (4 1 %high%) do call :test1 %high% %%A second &amp; if defined second goto :findThird
+
+:findThird
+for /l %%A in (%second% 1 %high%) do call :test1 %second% %%A third &amp; if defined third goto :findFirst
+
+:test1
+if %1 neq %2 (2&gt;nul (%1&gt;&amp;%2 break))||set "%3=%2"
+exit /b
+
+:findFirst
+for /l %%A in (3 1 %second%) do call :test2 %%A &amp;&amp; (
+  endlocal
+  set "redirect=&gt;nul 2&gt;&amp;1 0&gt;&amp;1 %%A&gt;params.tmp %second%&gt;&amp;1 %third%&gt;&amp;%%A"
+  exit /b 0
+)
+
+:test2
+if %second%==4 exit /b 0
+(%second%&gt;&amp;%1 break)||exit /b 0
+exit /b 1
+
+
+REM *** Second thread to fetch parameters as one string within args variable
+:GetParms
+if %~z1 EQU 0 goto :GetParms
+setlocal enableDelayedExpansion
+
+set "B=^!"
+set "C=^"
+
+(set L=^
+%= Stores a LineFeed =%
+)
+
+for /F %%Z in ('copy /Z "%~dpf0" nul') do set "R=%%Z"  %= Stores a CarriageReturn =%
+
+REM *** Convert binary tmp file to hex
+certutil -f -encodehex %1 %~n1.hex 4 &gt;nul
+
+REM *** Encode hex ! ^ LF CR as hex !B! !C! !L! !R! and write modified hex file
+&gt;%~n1.hex2 (
+  for /f "delims=" %%A in (%~n1.hex) do for %%B in (%%A) do (
+    set "char=%%B"
+    set "char=!char:21=21 42 21!"
+    set "char=!char:5e=21 43 21!"
+    set "char=!char:0a=21 4c 21!"
+    set "char=!char:0d=21 52 21!"
+    echo !char!
+  )
+)
+
+REM *** Convert modified hex to encoded binary
+certutil -f -decodehex %~n1.hex2 %1 &gt;nul
+
+REM *** Read the encoded binary and decode into args variable
+for /f delims^=^ eol^= %%A in (%1) do set "args=%%A"
+
+REM *** Remove the unwanted prefix and suffix
+set "args=!args:~5,-5!"
+
+REM *** Cleanup temp files
+del %1 %~n1.hex %~n1.hex2
+
+REM *** We now have the exact parameter string stored in args. Ready to begin processing
+echo [!args!]
+</code></pre></div>
+Thanks for reporting the bug.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>01 Sep 2018 12:17</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopic916f.html?p=57872#p57872" data-post-id="57872" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Aug 2018 23:10</div></cite>
+As I feared, I was not able to prevent an unwanted error message on the screen when detecting the lowest available handle.
+</div></blockquote>
+I found a way to prevent the error message while detecting the available handles.<br>
+<br>
+If we do the detection while stderr is redirected, then we just need to find the first 2 available handles. If we have 2 handles it means that there was room for the original stderr to sit on one the lower handles. We don't need to know in which handle stderr is backed up, we just need to to the permanent redirection in two steps.<br>
+<br>
+For simplicity I used jeb's first proposed method for displaying the parameters, to focus more on the permanent redirection.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+REM *** Thread redirector 
+for /F "tokens=3 delims=:" %%F in ("%~0") do goto %%F
+
+REM *** Clear params.tmp
+break &gt; params.tmp
+
+start "" /b cmd /k @"%~d0\:StayAlive:\..\%~pnx0" "params.tmp"
+prompt #
+
+
+:: Detect available handles without displaying error messages
+:: Continue only if there is at least 3 unused handles.
+set /a "freeSlots=usedSlots=0"
+2&gt;nul (
+    for /L %%A in (3,1,8) do call :enumIO 9 %%A
+)
+:: If non of the handles 4 to 8 are free then there are three possibilities for handle 9
+:: 1. It is occupied before us (Impossible to detect)
+:: 2. It is occupied by redirection of stderr (Impossible to detect)
+:: 3. It is free (Impossible to detect)
+:: either way we don't have the required free handles
+if %freeSlots% NEQ 0 (
+    2&gt;nul call :enumIO 1 9
+)
+:: One of the handles was used by redirection of stderr
+:: So we only need 2 additional free handles to continue.
+if %freeSlots% LSS 2 (
+    echo Not enough IO Slots.
+    exit /b
+)
+
+:: First , do the permanent redirection of stderr. We don't have to know the backup handle.
+:: The order of redirection is critical: stderr ---&gt; freeSlots ---&gt; usedSlots
+set "stderr_permanent=break 2&gt;nul"
+for /L %%A in (%freeSlots%,-1,1) do call set "stderr_permanent=%%stderr_permanent%% %%freeIO[%%A]%%&gt;&amp;2"
+for /L %%A in (%usedSlots%,-1,1) do call set "stderr_permanent=%%stderr_permanent%% %%usedIO[%%A]%%&gt;&amp;2"
+%stderr_permanent%
+
+set freeIO[
+set usedIO[
+set stderr_permanent
+
+:: Next do a permanent redirection of stdout and stdin by known free handles.
+echo on &gt;params.tmp 0&gt;nul %freeIO[1]%&gt;&amp;1 %freeIO[2]%&gt;&amp;1
+()%*
+
+
+
+:enumIO
+break %1&gt;&amp;%2 &amp;&amp; (
+    set /a "usedSlots+=1"
+    call set "usedIO[%%usedSlots%%]=%2"
+    exit /b
+)
+set /a "freeSlots+=1"
+set "freeIO[%freeSlots%]=%2"
+exit /b
+
+
+REM *** Second thread to fetch and show the parameters
+:StayAlive
+
+:__WaitForParams
+if %~z1 EQU 0 (
+    goto :__WaitForParams
+)
+REM *** Show the result
+findstr /n "^" %1
+echo,
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: foolproof counting of arguments</h3>
+				<div class="date">Posted: <strong>02 Sep 2018 12:22</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">The solution I posted is not complete, it does not report the used and unused handles properly if handle 9 is already in use.<br>
+I was very tired, I completely forgot to take that into account, and honestly was not able to do that, my mind was down. I should never post anything when tired.<br>
+<br>
+Here is the correct (I hope) and more a organized solution.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal DisableDelayedExpansion
+REM *** Thread redirector 
+for /F "tokens=3 delims=:" %%F in ("%~0") do goto %%F
+
+REM *** Clear params.tmp
+break &gt; params.tmp
+
+start "" /b cmd /k @"%~d0\:StayAlive:\..\%~pnx0" "params.tmp"
+
+
+
+setlocal EnableDelayedExpansion
+
+:: Detect available handles without displaying error messages
+:: Continue only if there is at least 3(2) unused handles. (One is used by stderr redirection)
+call :enumIO
+:: One of the handles was used by redirection of stderr
+:: So we only need 2 additional free handles to continue.
+if %freeSlots% LSS 2 (
+    echo Not enough IO Slots.
+    exit /b
+)
+
+:: First , do the permanent redirection of stderr. We don't have to know the backup handle.
+:: The order of redirection is critical: stderr ---&gt; freeSlots ---&gt; usedSlots
+set "stderr_permanent=break 2&gt;nul"
+for /L %%A in (%freeSlots%,-1,1) do set "stderr_permanent=!stderr_permanent! !freeIO[%%A]!&gt;&amp;2"
+for /L %%A in (%usedSlots%,-1,1) do set "stderr_permanent=!stderr_permanent! !usedIO[%%A]!&gt;&amp;2"
+%stderr_permanent%
+
+echo One of the 'usedIO's is occupied by redirection of stderr
+echo If there is more than one, then we don't which, And no need to know
+echo Only CMD knows, This is the part that enables us to prevent the error message
+echo This reminds me of Quantum uncertainty principle :)
+echo,
+set freeIO[
+set usedIO[
+set stderr_permanent
+
+
+:: Next do a permanent redirection of stdout and stdin by known free handles.
+(
+    endlocal &amp; endlocal %= To preserve prompt value after fatal error =%
+    prompt #
+    echo on &gt;params.tmp 0&gt;nul %freeIO[1]%&gt;&amp;1 %freeIO[2]%&gt;&amp;1
+)
+()%*
+
+REM Unreachable
+
+:enumIO
+for /F "delims==" %%A in ('"(set freeIO[ &amp; set usedIO[)2&gt;nul"') do set "%%A=" // for displaying purposes
+
+set /a "freeSlots=usedSlots=0"
+2&gt;nul (
+    for /L %%A in (3,1,8) do call :nextIO 9 %%A
+)
+:: If non of the handles 4 to 8 are free then there are three possibilities for handle 9
+:: 1. It is occupied before us, then we MAY have one free handle which is occupied by redirection of 9
+:: 2. It is occupied by redirection of stderr, then we have no free handles
+:: 3. It is free, then have only one free handle which is handle 9
+:: either way we don't have the required free handles (2 handles)
+if %freeSlots% NEQ 0 2&gt;nul call :nextIO 1 9
+if %freeSlots% NEQ 0 2&gt;nul (
+    set /a "highUsed=usedIO[%usedSlots%]"
+    if "!highUsed!"=="9" (
+        set /a "highFree=freeIO[%freeSlots%], highUsed=highFree+1"
+        for /F "delims==" %%A in ('"(set freeIO[ &amp; set usedIO[)2&gt;nul"') do set "%%A=" // for displaying purposes
+        set /a "freeSlots=usedSlots=0"
+        for /L %%A in (3,1,!highFree!) do call :nextIO !highFree! %%A
+        for /L %%A in (!highUsed!,1,9) do (
+            set /a "usedSlots+=1"
+            set "usedIO[!usedSlots!]=%%A"
+        )
+    )
+)
+exit /b
+:nextIO
+break %1&gt;&amp;%2 &amp;&amp; (
+    set /a "usedSlots+=1"
+    set "usedIO[!usedSlots!]=%2"
+    (call,)
+) || (
+    set /a "freeSlots+=1"
+    set "freeIO[!freeSlots!]=%2"
+)
+exit /b
+
+
+REM *** Second thread to fetch and show the parameters
+:StayAlive
+
+:__WaitForParams
+if %~z1 EQU 0 (
+    goto :__WaitForParams
+)
+REM *** Show the result
+findstr /n "^" %1
+echo,
+</code></pre></div>
+
+Some test runs:<br>
+
+<blockquote class="uncited"><div>
+Q:\test&gt;9&gt;nul 8&gt;nul 7&gt;nul 4&gt;nul getParams test<br>
+One of the 'usedIO's is occupied by redirection of stderr<br>
+If there is more than one, then we don't know which, And no need to know<br>
+Only CMD knows, This is the part that enables us to prevent the error message<br>
+This reminds me of Quantum uncertainty principle <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"><br>
+<br>
+freeIO[1]=5<br>
+freeIO[2]=6<br>
+usedIO[1]=3<br>
+usedIO[2]=4<br>
+usedIO[3]=7<br>
+usedIO[4]=8<br>
+usedIO[5]=9<br>
+stderr_permanent=break 2&gt;nul 6&gt;&amp;2 5&gt;&amp;2 9&gt;&amp;2 8&gt;&amp;2 7&gt;&amp;2 4&gt;&amp;2 3&gt;&amp;2<br>
+1:<br>
+2:#()test<br>
+3:<br>
+4:#<br>
+<br>
+Q:\test&gt;7&gt;nul 6&gt;nul 3&gt;nul getParams test<br>
+freeIO[1]=5<br>
+freeIO[2]=8<br>
+freeIO[3]=9<br>
+usedIO[1]=3<br>
+usedIO[2]=4<br>
+usedIO[3]=6<br>
+usedIO[4]=7<br>
+stderr_permanent=break 2&gt;nul 9&gt;&amp;2 8&gt;&amp;2 5&gt;&amp;2 7&gt;&amp;2 6&gt;&amp;2 4&gt;&amp;2 3&gt;&amp;2<br>
+1:<br>
+2:#()test<br>
+3:<br>
+4:#<br>
+<br>
+Q:\test&gt;getParams test<br>
+freeIO[1]=4<br>
+freeIO[2]=5<br>
+freeIO[3]=6<br>
+freeIO[4]=7<br>
+freeIO[5]=8<br>
+freeIO[6]=9<br>
+usedIO[1]=3<br>
+stderr_permanent=break 2&gt;nul 9&gt;&amp;2 8&gt;&amp;2 7&gt;&amp;2 6&gt;&amp;2 5&gt;&amp;2 4&gt;&amp;2 3&gt;&amp;2<br>
+1:<br>
+2:#()test<br>
+3:<br>
+4:#
+</div></blockquote></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>4</strong> of <strong>4</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2836&start=45&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:20:51 GMT -->
+</html>

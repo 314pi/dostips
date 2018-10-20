@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1592&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:56:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; string manipulation help</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>string manipulation help</h2>
+		<p><a href="viewtopice264.html?f=3&amp;t=1592">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1592</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>3</strong></div>
+					<div class="post">
+				<h3>string manipulation help</h3>
+				<div class="date">Posted: <strong>21 Jan 2011 10:10</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">Hey all.<br /><br />I am currently trying to get a batch file to work correctly, and having mild success.  I'm still waiting for approval at work to have a VS ide installed on my work computer, but until then I need to go ahead and work on this batch file which may suit my needs, and even just incorporate it into my actual program when the time comes.<br /><br />So heres what I'm trying to do. I want to make a batch file that will search through the current folder, and all subfolders for a specific word or phrase in all txt files that are found. The user chooses the search string, and then I need a way to be able to return the path to that txt file that contained the search string.  This is what I have so far.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />:SEARCH<br />set /p choice=Enter the search word or phrase to find the QF:<br /><br />FINDSTR /s /i /L /c:&quot;%choice%&quot; *.txt &gt; temp.txt<br /><br />set /p exit= Do you want to try to search again: 1 for yes, 2 for no.<br />IF %exit%==1 GOTO SEARCH<br />IF %exit%==2 exit</code></pre></div><br /><br />The only problem with this is that it returns the path AND the search phrase that was found in the text file. if multiple txt files were found, it puts them each on separate lines, which is great. However I only really need the path. (so that later on i can give the user a choice to launch one of the text files that were found.)<br /><br />Here is an example of the temp.txt output. This is returned by searching for the word &quot;loyalty&quot; <br /><br />QF Folder Structure\Version 8.02\Service Packs\QF17.txt:Loyalty Interface Issues<br />QF Folder Structure\Version 8.04\Service Packs\QF3.txt:Loyalty Adjustment Issue<br /><br />So, all I really want to do, is get rid of the &quot; : &quot; and anything to the right of it. Just so I have the paths  to the text files, 1 path per line. I've had issues trying to use for /f and I guess I don't understand the tokens and delims parameters. <br /><br />Any help would be appreciated!<br />Thanks.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>21 Jan 2011 11:33</strong></div>
+				<div class="author">by <strong>!k</strong></div>
+				<div class="content">Use findstr <span style="color: #FF0000">/M</span></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>21 Jan 2011 11:47</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">Doh!<br /><br />I thought I had tried the m switch already, and had problems. Thanks, it worked perfect <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>21 Jan 2011 11:51</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">Since that works now, what would be the best function to use to open up the path thats in the temp.txt<br /><br />and if there were 4 paths in the temp file. 1 path per line.<br /><br />i would assume i'd need a for loop to go line by line and shell notepad linefromtempfile(i) <br /><br />i know how i would do this in php, or vb even. not so sure in dos though</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>21 Jan 2011 12:53</strong></div>
+				<div class="author">by <strong>ChickenSoup</strong></div>
+				<div class="content">You wouldn't even need to send it to the temp.txt file.  Just use the following:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f %%a &quot;tokens=*&quot; in ('FINDSTR /s /i /L /c:&quot;%choice%&quot; *.txt') do notepad.exe %%a</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>21 Jan 2011 13:04</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">Well, the reason behind the temp.txt is that im going to end up giving the user a choice whether they want to open 1 of the text files that was found, or 1 at a time. If 3 are found, I don't want all 3 to open, unless they do it 1 at a time. (this will be incorporated later using a listbox in a vb or c++ most likely)<br /><br />Thanks for the example of &quot;for /f&quot; though! <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>21 Jan 2011 18:37</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">Another question here regarding the same code. Here's what I have so far. This isn't going to be my final result, but it works so far the way i want it to(on my pc at least)<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />:SEARCH<br />set /p choice=Enter the search word or phrase to find the QF:<br /><br /><br />FINDSTR /s /i /L /M /c:&quot;%choice%&quot; *.txt &gt; temp.txt<br /><br />setLocal EnableDelayedExpansion<br />for /f &quot;tokens=* delims= &quot; %%a in (temp.txt) do (<br />set /a n+=1<br />set v!n!=%%a<br />echo %%a<br />notepad.exe %%a<br />)<br /><br />set /p exit= Do you want to try to search again: 1 for yes, 2 for no.<br />IF %exit%==1 GOTO SEARCH<br />IF %exit%==2 exit</code></pre></div><br /><br />Heres my question though. my for loop does the job of getting each line in the temp file into a separate variable: v1, v2, v3, etc. Later on I will need to give the user a choice to launch each of these, or all of them into notepad. Something I've run into though regarding my findstr line is this. <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FINDSTR /s /i /L /M /c:&quot;%choice%&quot; *.txt &gt; temp.txt</code></pre></div><br /><br />How can I have it start its search in a different directory than the batch file is located. I tried inserting a path right after /c:   but it creates a blank temp file. doesnt seem to do the search at the path I give it. Also, my batch file that will be running this will just be in a folder on the desktop, and so the temp file is fine being created in the same folder as the batch file. I just need to be able to conduct the whole search of a separate drive and folder path. (Which no users will have write access to, only read access.)   Anyone able to shed some light on either of my issues, with the path to begin the search in, or the way to give the user the choice to launch each of the text files in the variables.<br /><br />Let me know if I need to explain any better. The fun part is yet to come, when I have to inject all the user input needed for the batch file, from an actual application made in vb or c++.<br /><br />Thanks again.  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>22 Jan 2011 19:23</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">OK. nevermind the last post. It isn't going to be possible to have it search the different directory. as it isn't local on the harddrive, and i didnt have access to it by just doing CD \thepath<br /><br />Sooo. Ill just have to get approval to have my batch file (once complete) placed in that root directory of that path,, so people can just run it from there and wont have the issue. Also did away with the temp file, so that no files have to be written (avoids the read-only access issue).<br /><br />My current dilemma is the following. I need a way to search folder names for partial string. <br /><br />Example:<br /><br />Folders in root directory.<br /><br />Version 4.00<br />Version 3.02<br />Version 6.00<br />Version 8.03<br />Version 8.04<br /><br />Ok, so I need a way to search for the folder that contains partial string that the user can enter. So if a user types in &quot; 3.02 &quot; It will find the folder Version 3.02, and then the rest of my code can be executed from here, by simply issuing the CD Version 3.02 to change to that directory. <br /><br />My only thought so far, is to just hardcode IF statements in for all 20 possible folders (would have to update the program anytime a new version comes out...which wouldn't be that bad i guess) But figured I'd ask to see if perhaps there was a for loop someone knew that would allow to just search.<br /><br />Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>23 Jan 2011 18:05</strong></div>
+				<div class="author">by <strong>subhash chandra</strong></div>
+				<div class="content">If you want to change to a network directory you can use pushD command.<br /><br />Further, For your last question i guess below should work.<br /><br />1 ) Take a dir output of your root directory in temp file. DIR /b &gt;%temp%\_dir.txt<br />2) take the user input using set /p in a varible<br />3) do  a search for user inputed string into tempfile and redirect the output to another temp textfile1.<br />4) assign the value of tempfile1 to a varieble.  use set /p var=&lt;filename<br />5) cd to this newvariable.<br />6) it will change the directory to the correct version folder.<br />It will skip the IF condition,and even the folders are added later the code does not need to be modifed.<br /><br />Let me know your thoughts..</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>24 Jan 2011 09:00</strong></div>
+				<div class="author">by <strong>ChickenSoup</strong></div>
+				<div class="content"><blockquote><div><cite>ice_531 wrote:</cite>My only thought so far, is to just hardcode IF statements in for all 20 possible folders (would have to update the program anytime a new version comes out...which wouldn't be that bad i guess) But figured I'd ask to see if perhaps there was a for loop someone knew that would allow to just search.</div></blockquote><br /><br />This loop would probably do it for you:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />:start<br />set /p searchversion=Enter the version to use (X to exit): <br />if /i &quot;%searchversion%&quot; == &quot;X&quot; echo.Exited by user &amp;&amp; goto end<br />echo %searchversion% | findstr /r &quot;&#91;0-9&#93;\.&#91;0-9&#93;&#91;0-9&#93;&quot;&gt;nul || echo.Invalid Version (ex: #.##) &amp;&amp; goto start<br />for /f &quot;tokens=*&quot; %%a in ('dir /b /ad ^| findstr /R &quot;\&lt;%searchversion%\&gt;&quot;') do set workingversion=%%a<br />if &quot;%workingversion%&quot; == &quot;&quot; (<br />&nbsp; &nbsp;echo.Version not found.<br />&nbsp; &nbsp;goto start<br />)<br />echo Selected version: %workingversion%<br />CD &quot;%workingversion%&quot;<br />echo.Run rest of code...<br />:end<br />pause<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>26 Jan 2011 19:42</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">I appreciate the replies all.<br /><br />I have another question, i cant seem to figure this out after reading over the dir , findstr  and for /f functions. So i cant use a temp file due to read only access restrictions all the machines have that this batch file will be run from. just an fyi, for any responses.<br /><br />Im going to show you two pieces of code, the first is what i have that works, and the 2nd is how id like to change it to get it to narrow the search down more, based on a build and patch level added to the search.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:SEARCH<br /><br />set /p choice=Enter the search word or phrase to find the QF:<br /><br />setLocal EnableDelayedExpansion<br />for /f &quot;tokens=* delims= &quot; %%a in ('FINDSTR /s /i /L /M /c:&quot;%choice%&quot; *.txt') do (<br />set /a n+=1<br />set v!n!=%%a<br />echo %%a<br />)</code></pre></div><br /><br /><br />So here's the piece of code Id like to get it to do.. i know the syntax and form must not be right since it isnt working. So by the time the user gets to the portion of SEARCH code, the batch file has found the main version folder the user wanted, and changed its path to this folder. Then i need to narrow down the next search to any folders that contain a partial string, which will be in format &quot;buildpatch&quot; e.g. 03F , or  01P      (or it may not have a patch level, it may just be   02, 03, etc)<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:SEARCH<br />&nbsp;<br />set /p buildPatch=Enter the build and patch level:<br />set /p choice=Enter the search word or phrase to find the QF:<br />&nbsp;<br /><br />setLocal EnableDelayedExpansion<br />for /f &quot;tokens=* delims= &quot; %%a in ('dir /ad /b /s | findstr &quot;%buildPatch%&quot; | FINDSTR /s /i /L /M /c:&quot;%choice%&quot; *.txt') do (<br />set /a n+=1<br />set v!n!=%%a<br />echo %%a<br />)</code></pre></div><br /><br />So if the above code worked like i have it written (incorrectly). it would first search for folders containing the build and patch, and then from those folders found, conduct the search for the text file containing the keyword/phrase the user entered. but this search is ONLY conducted on the folders that match the build and patch(partially).. a real folder may read like: 8.03.28.02N  (02N would be the build and patch)<br /><br />If anyone can shed some light on my code above, or perhaps a better way. I want to be able to give the user the choice to launch the folder containing the txt file match at the end of all of this. obviously there might be multiple matches, hence the need for a choice to launch, instead of automatically launching 10 explorer windows if that was the result of the search.<br /><br />Thanks again!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>26 Jan 2011 21:03</strong></div>
+				<div class="author">by <strong>subhash chandra</strong></div>
+				<div class="content">what is the exact errror you are getting with your code?<br />use ^|^ instead of |  (| does not work directly inside loop).<br />Will there possibility of more than 1 folder ?IF so then a temp file needs to be created which will hold the name of folders containg version match,Can you think of any folder where the user will have write permission (May be his home directory or something)?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>26 Jan 2011 21:36</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">the drive to be searched is read only. their own harddrive where the folder the batch file is kept has write access though. I guess a temp file could be made there.<br /><br />Also, yes there are many folders. one of the versions alone has 60+ folders in it with different patches, etc.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>26 Jan 2011 21:38</strong></div>
+				<div class="author">by <strong>ice_531</strong></div>
+				<div class="content">So you are saying the following should work how I was trying to explain it.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f &quot;tokens=* delims= &quot; %%a in ('dir /ad /b /s | findstr &quot;%buildPatch%&quot; ^|^ FINDSTR /s /i /L /M /c:&quot;%choice%&quot; *.txt') do (<br />set /a n+=1<br />set v!n!=%%a<br />echo %%a</code></pre></div><br /><br /><br />and then something like %%a &gt; temp.txt <br />at the end? and then read each line back out and give each line as a choice to the user, and let them pick.. then just explorer %theirchoice% ?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: string manipulation help</h3>
+				<div class="date">Posted: <strong>27 Jan 2011 07:32</strong></div>
+				<div class="author">by <strong>ChickenSoup</strong></div>
+				<div class="content">Not Quite.  The carot escapes the pipe in the for loop. also, when you pipe the output from one command to FINDSTR you are only searching the output not files. Try the following (I think). I'm not clear on what you are doing exactly. This seems to have morphed from your original question<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f &quot;tokens=* delims= &quot; %%a in ('dir /ad /b /s ^| findstr /i /c:&quot;%buildPatch%&quot; ^| FINDSTR /i /c:&quot;%choice%&quot;') do (<br />set /a n+=1<br />set v!n!=%%a<br />echo %%a<br />)<br /><br /></code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>3</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1592&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:56:45 GMT -->
+</html>

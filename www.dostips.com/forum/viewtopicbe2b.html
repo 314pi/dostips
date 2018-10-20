@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8637&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; DOS Batch script - Variable for current system time plus 2 minutes?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>DOS Batch script - Variable for current system time plus 2 minutes?</h2>
+		<p><a href="viewtopic0b6a.html?f=3&amp;t=8637">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8637</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>DOS Batch script - Variable for current system time plus 2 minutes?</h3>
+				<div class="date">Posted: <strong>20 Jun 2018 22:27</strong></div>
+				<div class="author">by <strong>ClintBarton</strong></div>
+				<div class="content">Hi,<br>
+<br>
+I am limited to batch scripting for one particular task we do and in it I need to schedule a task. I'm using schtasks to create the task and it works great except for the start time. This part of the script runs whenever the previous sections have completed and the time it takes changes everyday so I can't enter a time that will work all the time. I would like to just create a variable that is 2 minutes ahead of the system time but I don't know how to do this?<br>
+<br>
+Please help. <br>
+<br>
+I didn't find the right solution from the Internet. <br>
+<br>
+References:- <br>
+<a href="https://arstechnica.com/civis/viewtopic.php?t=390290" class="postlink">https://arstechnica.com/civis/viewtopic.php?t=390290</a><br>
+<br>
+Thanks!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: DOS Batch script - Variable for current system time plus 2 minutes?</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 00:08</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Didn't look to hard at the link you posted but these days I will usually call out to Powershell within my batch file to do any type of date and time math.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F "delims=" %%G IN ('powershell "(Get-Date).AddMinutes(2).ToString('yyyyMMdd hh:mm')"') DO set dtstamp=%%G</code></pre></div>
+If you want to get all the individual date and time segments into their own variables you could do this.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F "TOKENS=1-5 delims= " %%G IN ('powershell "(Get-Date).AddMinutes(2).ToString('yyyy MM dd hh mm')"') DO (
+	set year=%%G
+	set month=%%H
+	set day=%%I
+	set hour=%%J
+	set second=%%K
+)	
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: DOS Batch script - Variable for current system time plus 2 minutes?</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 09:15</strong></div>
+				<div class="author">by <strong>capella</strong></div>
+				<div class="content">Below is a batch script I put together when I was learning how to work with dates and times for a project. It breaks down all of the parts of the date and time and shows how the parts can be put in variables and worked with in various ways.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+@setlocal enabledelayedexpansion
+
+echo.
+echo System date: %DATE%
+
+REM Echo the parts of the date
+echo.
+echo Month: %DATE:~4,2%
+
+echo.
+echo Date: %DATE:~7,2%
+
+echo.
+echo Year (2 digits): %DATE:~12,2%
+echo Year (4 digits): %DATE:~10,4%
+
+SET _CURRDATE=%DATE:~4,2%/%DATE:~7,2%/%DATE:~12,2%
+
+echo.
+echo Formatted date: %_CURRDATE%
+
+echo.
+echo System time: %TIME%
+
+REM Echo the parts of the time
+echo.
+echo Hour: %TIME:~0,2%
+
+REM Put the hour into a variable to make it easier to work with
+SET _HOUR=%TIME:~0,2%
+
+echo.
+echo Unformatted hour: %_HOUR%
+
+REM Add leading zero IF hour is a single digit
+SET _HOUR=%TIME:~0,2%
+IF "%_HOUR:~0,1%" == " " SET _HOUR=0%_HOUR:~1,1%
+
+echo.
+echo Formatted hour: %_HOUR%
+
+echo.
+echo Minutes: %TIME:~3,2%
+
+REM Put the minutes in a variable too
+SET _MINUTES=%TIME:~3,2%
+
+echo.
+echo Seconds: %TIME:~6,2%
+
+REM Put the seconds into a variable
+SET _SECONDS=%TIME:~6,2%
+
+REM Finally, the hundredths of a second:
+echo.
+echo Hundredths of a second: %TIME:~9,2%
+
+SET _HUNDREDTHS=%TIME:~9,2%
+
+REM Put together a timestamp
+SET _TIMESTAMP=%_HOUR%:%_MINUTES%
+
+echo.
+echo Timestamp: %_TIMESTAMP%
+
+REM Put it all together
+echo.
+echo The time is: %_TIMESTAMP%. And the date is: %_CURRDATE%
+echo.
+echo Detailed time: %_TIMESTAMP%:%_SECONDS%.%_HUNDREDTHS%
+
+echo.
+
+@pause</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: DOS Batch script - Variable for current system time plus 2 minutes?</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 09:20</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2f61.html?mode=viewprofile&amp;u=9280">capella</a> wrote: <a href="viewtopicefe9-3.html?p=57226#p57226" data-post-id="57226" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">21 Jun 2018 09:15</div></cite>
+Below is a batch script I put together when I was learning how to work with dates and times for a project. It breaks down all of the parts of the date and time and shows how the parts can be put in variables and worked with in various ways.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+@setlocal enabledelayedexpansion
+
+echo.
+echo System date: %DATE%
+
+REM Echo the parts of the date
+echo.
+echo Month: %DATE:~4,2%
+
+echo.
+echo Date: %DATE:~7,2%
+
+echo.
+echo Year (2 digits): %DATE:~12,2%
+echo Year (4 digits): %DATE:~10,4%
+
+SET _CURRDATE=%DATE:~4,2%/%DATE:~7,2%/%DATE:~12,2%
+
+echo.
+echo Formatted date: %_CURRDATE%
+
+echo.
+echo System time: %TIME%
+
+REM Echo the parts of the time
+echo.
+echo Hour: %TIME:~0,2%
+
+REM Put the hour into a variable to make it easier to work with
+SET _HOUR=%TIME:~0,2%
+
+echo.
+echo Unformatted hour: %_HOUR%
+
+REM Add leading zero IF hour is a single digit
+SET _HOUR=%TIME:~0,2%
+IF "%_HOUR:~0,1%" == " " SET _HOUR=0%_HOUR:~1,1%
+
+echo.
+echo Formatted hour: %_HOUR%
+
+echo.
+echo Minutes: %TIME:~3,2%
+
+REM Put the minutes in a variable too
+SET _MINUTES=%TIME:~3,2%
+
+echo.
+echo Seconds: %TIME:~6,2%
+
+REM Put the seconds into a variable
+SET _SECONDS=%TIME:~6,2%
+
+REM Finally, the hundredths of a second:
+echo.
+echo Hundredths of a second: %TIME:~9,2%
+
+SET _HUNDREDTHS=%TIME:~9,2%
+
+REM Put together a timestamp
+SET _TIMESTAMP=%_HOUR%:%_MINUTES%
+
+echo.
+echo Timestamp: %_TIMESTAMP%
+
+REM Put it all together
+echo.
+echo The time is: %_TIMESTAMP%. And the date is: %_CURRDATE%
+echo.
+echo Detailed time: %_TIMESTAMP%:%_SECONDS%.%_HUNDREDTHS%
+
+echo.
+
+@pause</code></pre></div>
+</div></blockquote>
+Your code is region dependent.  Your date and time variables may not output the same as mine depending on what country you live in.  The best options for a region independent solution is to use WMIC or Powershell within a FOR /F command to capture the output in the same consistent format every time regardless of what computer it runs on.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: DOS Batch script - Variable for current system time plus 2 minutes?</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 09:29</strong></div>
+				<div class="author">by <strong>capella</strong></div>
+				<div class="content">Thank you for the clarification, Squashman. I admit I'm terribly new to batch scripting, so I probably should have divulged that information!<br>
+<br>
+You're right, as a VB.NET programmer, I understand the need to keep localization in mind.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8637&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:25 GMT -->
+</html>

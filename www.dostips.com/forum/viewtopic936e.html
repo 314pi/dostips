@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8631&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:26 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Findstr without pipe</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Findstr without pipe</h2>
+		<p><a href="viewtopic4b9e.html?f=3&amp;t=8631">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8631</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Findstr without pipe</h3>
+				<div class="date">Posted: <strong>18 Jun 2018 01:12</strong></div>
+				<div class="author">by <strong>Bucko</strong></div>
+				<div class="content">I am using a this batch script to extract a part of a binary file following a delimiter string:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enabledelayedexpansion
+
+REM Line number of the delimiter line:
+for /F "delims=:" %%a in ('findstr /N "^xxyyzz" "Input.bin"') do set "lines=%%a"
+echo %lines%
+
+REM Extract the part of the Input.bin following the delimiter line:
+&lt; "Input.bin" (
+
+   REM Pass thru the first lines:
+   for /L %%i in (1,1,%lines%) do set /P "="
+
+   REM Copy the rest to output bin:
+   findstr "^"
+
+) &gt; Output.bin</code></pre></div>
+
+This is working fine, but with some files I get the error messages "Line ... too long". I know that this problem is associated to piping. I also found the tip:<br>
+<br>
+"The line too long error only happens when FINDSTR reads the input via redirection or a pipe. <strong class="text-strong"><span style="text-decoration: underline">That error goes away if you pass the name (path) of the file directly to FINDSTR.</span></strong>"<br>
+<br>
+My understanding of batch-command syntax is too poor to find out how this could be done in my above script. Can someone here help?<br>
+<br>
+Cheers.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Findstr without pipe</h3>
+				<div class="date">Posted: <strong>18 Jun 2018 08:45</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">There is no way that you get what you want from <strong class="text-strong">findstr</strong> command, no matters how many times you ask the same question...<br>
+<br>
+You may solve your problem via a third party .exe program, as explained at <a href="viewtopicf458.html?f=3&amp;t=8605&amp;p=57135#p57135" class="postlink">this answer</a>. You may even embeed the <strong class="text-strong">ReadFile.exe</strong> auxiliary program into <em class="text-italics">the same</em> Batch file that contain the rest of binary files, and extract it via findstr before extract the rest of files...<br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Findstr without pipe</h3>
+				<div class="date">Posted: <strong>18 Jun 2018 09:45</strong></div>
+				<div class="author">by <strong>Bucko</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopic2ca7.html?p=57182#p57182" data-post-id="57182" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">18 Jun 2018 08:45</div></cite>There is no way that you get what you want from <strong class="text-strong">findstr</strong> command, no matters how many times you ask the same question...</div></blockquote>
+
+Thank you, Aacini, I appreciate your help very much. Yes, this is my third question related to findstr, but it is not the same question. This one is the most reduced one, <strong class="text-strong">associated to a concept which is working fine with findstr</strong> (extracting from a certain point up to the end of the file).<br>
+<br>
+My hope was that this script <strong class="text-strong">could be adapted (by avoiding piping) to overcome the last (?) problem</strong> I have. May I understand your answer in such manner that the script basically <strong class="text-strong">can not be rewritten in this sense</strong>?<br>
+<br>
+(Yes, I understand your suggestions refering to third-party tools. In this special case I shouldn't use them. An alternative would be a simple <em class="text-italics">'own'</em> auxilliary exe, a code which could be compiled by myself, but until now I failed to find something like this... Such a 'launcher tool' would have to extract at least a part of a binary and run a specified file; and unicode file names should be supported, which makes the coding difficult...)<br>
+<br>
+Cheers, Bucko</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Findstr without pipe</h3>
+				<div class="date">Posted: <strong>21 Jun 2018 09:07</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistb60b.html?mode=viewprofile&amp;u=9243">Bucko</a> wrote: <a href="viewtopic345a.html?p=57183#p57183" data-post-id="57183" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">18 Jun 2018 09:45</div></cite>Yes, this is my third question related to findstr, but it is not the same question.<br>
+(...)<br>
+My hope was that this script <strong class="text-strong">could be adapted (by avoiding piping) to overcome the last (?) problem</strong> I have.
+</div></blockquote>Although i'm not Antonio, i also think it is the third time you are asking the question:<br>
+"How to xtract data from a certain point up to the end of the file using findstr only?"<br>
+<br>
+
+<blockquote><div><cite><a href="memberlistb60b.html?mode=viewprofile&amp;u=9243">Bucko</a> wrote: <a href="viewtopic345a.html?p=57183#p57183" data-post-id="57183" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">18 Jun 2018 09:45</div></cite>This one is the most reduced one, <strong class="text-strong">associated to a concept which is working fine with findstr</strong> (extracting from a certain point up to the end of the file).</div></blockquote>First, your concept for example fails if a line you want to skip has more than 1024 characters in it.<br>
+Second, you miss the fact (which i admit is hard to see) that findstr doesn't extract data from a certain point in your example:<br>
+It is the stream (created when redirecting the file "Input.bin"), that extracts data from a certain point (not findstr).<br>
+<br>
+See:<br>
+- <a href="https://technet.microsoft.com/en-us/library/system.io.stream(v=vs.85).aspx?cs-save-lang=1&amp;cs-lang=cpp" class="postlink">https://technet.microsoft.com/en-us/lib ... s-lang=cpp</a><br>
+- <a href="https://docs.microsoft.com/en-us/cpp/standard-library/what-a-stream-is" class="postlink">https://docs.microsoft.com/en-us/cpp/st ... -stream-is</a><br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8631&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:03:26 GMT -->
+</html>

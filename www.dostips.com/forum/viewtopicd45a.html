@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7153&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:29:22 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Cmdgfx - draw 3d and graphic primitives (polygons,circles etc) in cmd window</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Cmdgfx - draw 3d and graphic primitives (polygons,circles etc) in cmd window</h2>
+		<p><a href="viewtopic9d55.html?f=3&amp;t=7153">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=7153</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>7</strong></div>
+					<div class="post">
+				<h3>Cmdgfx - draw 3d and graphic primitives (polygons,circles etc) in cmd window</h3>
+				<div class="date">Posted: <strong>15 May 2016 15:19</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Here is a little something I threw together by using an old graphics engine I made and adding conversion to text.<br /><br /><strong class="text-strong">Major restructure and optimization release as of 2017-09-02! Please re-download!</strong><br /><br />Where? <a href="http://www.mediafire.com/download/x2lrkla93bd149o/cmdgfx.zip" class="postlink">http://www.mediafire.com/download/x2lrkla93bd149o/cmdgfx.zip</a><br /><br />Also, source code for cmdgfx etc is here: <a href="https://github.com/misol1/cmdgfx" class="postlink">https://github.com/misol1/cmdgfx</a><br /><br /><br />Some screenshots:<br /><br /><img src="https://ucd0ae1dc4051cea672f540d99aa.dl.dropboxusercontent.com/cd/0/inline/ATVTN3QNdyws7qalZCmisBEBhYMHeearumj2XmVhLl79zh5y2J-gFloa-Cpt-Uh6vDXMmLYJ3OZitL6_K7hafJ0ynQRHUOPavt9UHdvoiDuWfmAi9jWrVH4eBqe_M-NCSx70AWc6IMQT9tg6STVuktyOAJjNfIvab8Xg-0meee93xkggnNSklUCa8GUOZjr7Apg/file" class="postimage" alt="Image" /><br /><br />Syntax:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Usage: cmdgfx &#91;operations&#93; &#91;flags&#93; &#91;fgpalette&#93; &#91;bgpalette&#93;<br /><br />Drawing operations (separated by &amp;):<br /><br />poly&nbsp; &nbsp; &nbsp;fgcol bgcol char x1,y1,x2,y2,x3,y3&#91;,x4,y4...,y24&#93;<br />ipoly&nbsp; &nbsp; fgcol bgcol char bitop x1,y1,x2,y2,x3,y3&#91;,x4,y4...,y24&#93;<br />gpoly&nbsp; &nbsp; palette x1,y1,c1,x2,y2,c2,x3,y3,c3&#91;,x4,y4,c4...,c24&#93;<br />tpoly&nbsp; &nbsp; image &#91;-&#93;fgcol &#91;-&#93;bgcol char transpchar/transpcol x1,y1,tx1,ty1,x2,y2,tx2,ty2,x3,y3,tx3,ty3&#91;...,ty24&#93;<br />image&nbsp; &nbsp; image &#91;-&#93;fgcol &#91;-&#93;bgcol char transpchar/transpcol x,y &#91;xflip&#93; &#91;yflip&#93; &#91;w h&#93;<br />box&nbsp; &nbsp; &nbsp; fgcol bgcol char x,y,w,h<br />fbox&nbsp; &nbsp; &nbsp;fgcol bgcol char x,y,w,h<br />line&nbsp; &nbsp; &nbsp;fgcol bgcol char x1,y1,x2,y2 &#91;bezierPx1,bPy1&#91;,...,bPx6,bPy6&#93;&#93;<br />pixel&nbsp; &nbsp; fgcol bgcol char x,y<br />circle&nbsp; &nbsp;fgcol bgcol char x,y,r<br />fcircle&nbsp; fgcol bgcol char x,y,r<br />ellipse&nbsp; fgcol bgcol char x,y,rx,ry<br />fellipse fgcol bgcol char x,y,rx,ry<br />text&nbsp; &nbsp; &nbsp;fgcol bgcol char string x,y<br />block&nbsp; &nbsp; mode&#91;:1233&#93; x,y,w,h x2,y2 &#91;transpchar&#93; &#91;xflip&#93; &#91;yflip&#93; &#91;transform&#93; &#91;colExpr&#93; &#91;xExpr yExpr&#93; &#91;to|from&#93; &#91;mvx,mvy,mvw,mvh&#93;<br />3d&nbsp; &nbsp; &nbsp; &nbsp;objectfile drawmode,drawoption rx&#91;:rx2&#93;,ry&#91;:ry2&#93;,rz&#91;:rz2&#93; tx&#91;:tx2&#93;,ty&#91;:ty2&#93;,tz&#91;:tz2&#93; scalex,scaley,scalez,xmod,ymod,zmod face_culling,z_culling_near,z_culling_far,z_sort_levels xpos,ypos,distance,aspect fgcol1 bgcol1 char1 &#91;...fgcol32 bgcol32 char32&#93;<br />insert&nbsp; &nbsp;file<br /><br />Fgcol and bgcol can be specified either as decimal or hex.<br />Char is specified either as a char or a two-digit hexadecimal ASCII code.<br />For both char and fgcol+bgcol, specify ? to use existing.<br />Bitop: 0=Normal, 1=Or, 2=And, 3=Xor, 4=Add, 5=Sub, 6=Sub-n, 7=Normal ipoly.<br /><br />Image: 256 color pcx file (first 16 colors used), or gxy file, or text file.<br />If a pcx file is used, transpcol should be specified, otherwise transpchar. Always set transp to -1 if transparency is not needed!<br /><br />Gpoly palette follows '1233,' repeated, 1=fgcol, 2=bgcol, 3=char (all in hex).<br />Transform follows '1233=1233,' repeated, ?/x/- supported. Mode 0=copy, 1=move<br /><br />String for text op has all _ replaced with ' '. Supports a subset of gxy codes.<br /><br />Objectfile should point to either a plg, ply or obj file.<br />Drawmode: 0 for flat/texture, 1 for flat z-sourced, 2 for goraud-shaded z-sourced, 3 for wireframe, 4 for flat,&nbsp; 5=persp. correct texture/flat, 6=affine char/persp. correct color.<br />Drawoption: Mode 0 textured=transpchar/transpcol(-1 if not used!). Mode 0/4 flat=bitop. Mode 1/2: 0=static col, 1=even col. Mode 2: put bitop in high byte.<br /><br />&#91;flags&#93;: 'p' preserve buffer content, 'k' return code of last keypress, 'K' wait and return key, 'e/E' suppress/pause errors,<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;'wn/Wn' wait/await n ms, 'M/m&#91;wait&#93;' return key/mouse bit pattern(see mouse examples), 'u' report key-up events for M/m,<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 'Zn' set projection depth, 'n' no output, 'o/O' write (/active) errorlevel to EL.dat, 'z' sleeping wait, 'S' run as server.<br /></code></pre></div><br />An &quot;ipoly&quot; is an intersecting polygon. If lines are intersecting, the regular &quot;poly&quot; will not draw properly. Normally though, use &quot;poly&quot;.<br /><br />A &quot;tpoly&quot; is a texture-mapped polygon (not perspective-corrected). if you use another char than db, the bgcol will show through. Texture map coordinates are floating point values from 0...1, though higher values can be used to repeat the pattern.<br /><br />rx,ry,rz are rotations in degrees, but for added precision a full circle is not 360 but 360*4=1440. So just multiply angles by 4.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>15 May 2016 15:44</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Simple use:<br /><br />Draw an ellipse with character # and color white:<br /><br />cmdgfx &quot;ellipse f 0 # 40,25,20,15&quot;<br /><br />Draw a blue filled box with space char, then a red polygon with char 01 with 3 points on top of that:<br /><br />cmdgfx &quot;fbox 0 9 20 15,9,50,35 &amp; poly c 4 01 20,5,76,15,45,40&quot;</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>15 May 2016 20:06</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Since it was there to use anyway, I added texture mapping (not perspective-correct). See above.<br /><br />Screenshot from gfxtest2.bat: <a href="../../www.mediafire.com/view/xtpp876t42pewe6/textured.html" class="postlink">http://www.mediafire.com/view/xtpp876t42pewe6/textured.PNG</a><br /><br />I've included one 256 color pcx (only the first 16 are used, but my pcx loader only loads 256 color ones).<br />Note that it doesn't matter what the palette is (the normal DOS colors are used in any case). But setting the palette to match the DOS colors sure helps when making the image...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>16 May 2016 05:43</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Found a little bug in the texturemapper, it would not repeat the pattern in the y direction.<br /><br />Archive updated, and new gfxtest3.bat added.<br /><br />This shows repeating patterns in a classic demo effect: <a href="../../www.mediafire.com/view/0xa6smzz50nd3mi/textured2.html" class="postlink">http://www.mediafire.com/view/0xa6smzz50nd3mi/textured2.PNG</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>16 May 2016 08:09</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">That's interesting kind of image magic you've been into...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>16 May 2016 13:35</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Thanks, glad you think so!<br /><br />I'm not quite done yet, spinning 3d objects are coming... unfortunately I won't be able to work on any of this stuff for a month or so, but I'm leaving an unfinished teaser  <img class="smilies" src="images/smilies/icon_mrgreen.gif" alt=":mrgreen:" title="Mr. Green" /> <br /><br />Archive updated, run gfxtest4.bat<br /><br />Screenshots:<br /><a href="../../www.mediafire.com/view/tm7nkqf5x92nf4m/ico.html" class="postlink">http://www.mediafire.com/view/tm7nkqf5x92nf4m/ico.PNG</a><br /><a href="../../www.mediafire.com/view/8pfgnyjs4yjella/shark.html" class="postlink">http://www.mediafire.com/view/8pfgnyjs4yjella/shark.PNG</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>18 Jun 2016 10:19</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Archive was updated (see top). Now there is official support for 3d objects (ply,plg,obj), and &quot;text&quot; operation was added as well. See top post for syntax.<br /><br />Run gfxtest4.bat to display 17 different 3d objects, with 3 different draw modes.<br /><br />No texture mapping for 3d objects at the moment, may be added later possibly.<br /><br /><a href="../../www.mediafire.com/view/dlyb8lsvjpql69b/gfxtest4.html" class="postlink">http://www.mediafire.com/view/dlyb8lsvjpql69b/gfxtest4.PNG</a><br /><br />As with my other stuff, if things run slowly, try disabling your antivirus or adding an exception for cmdgfx.exe.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>19 Jun 2016 15:44</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Archive updated once more, link at the top. Added a few more 3d options for z culling/sorting (see top for syntax).<br /><br />Also added 3dworld.bat, a little FPS 3d world which you can explore using the cursor keys. The 3d engine is quite limited for this type of thing but it works ok for this example.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>22 Jun 2016 14:22</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Archive updated, see top for link.<br /><br />I have added an &quot;image&quot; operation, basically to add &quot;sprites&quot;. It takes either a pcx file, a gxy file (can be created with my gotoxy editor etc, see <!-- l --><a class="postlink-local" href="viewtopiccd0f.html?f=3&amp;t=7129">viewtopic.php?f=3&amp;t=7129</a><!-- l -->), or actually any text file.<br /><br />Also, the tpoly operation accepts gxy and text files now, in addition to pcx.<br /><br />Added a new example called hills.bat which shows Super Mario running around in a parallax scrolling world.<br /><br /><br />Edit: for those familiar with my gotoxy tool, cmdgfx accepts only a small subset of gxy codes, i.e. \xx, \gxx, \n, \-, \\, and colors can not use v/u/x/y/z/q/+///H/h. Editor.bat (and cmdwiz saveblock) use only this subset anyway, but take note if you create gxy files manually.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>23 Jun 2016 09:29</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Archive update, fixed a bug when using tpoly with gxy or text file.<br /><br />Changed gfxtest3.bat to test this, now press RETURN to switch between textures.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>25 Jun 2016 17:41</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Archive updated (see top for link). Found and fixed a bug in the gxy reader.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>03 Jul 2016 07:54</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Archive updated.<br /><br />The following was added:<br /><br />1. gpoly, i.e. goraud shaded polygon. Added gfxtest6.bat to demonstrate this. Press SPACE to switch colors. Not available for 3d, that would be tricky with the current approach<br /><br />2. Texture mapping for 3d objects (not perspective corrected unfortunately). This is available for .obj (3ds) 3d files only, and also, so far only pcx files are supported as textures. I added gfxtest5.bat to demonstrate this. Press 'N' while running to see the Incredible HULK spin around. Unfortunately he is rather slow, due to having to read and parse something like 3000 vertices and 5000 polygon faces every time cmdgfx runs. In pure C code, he spins nicely... too bad <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br /><br />3. Re-use of the same 3d object for a single call to cmdgfx. This speeds things up if the same object is used multiple times in one call, as in CmdRunner for instance.<br /><br />4. New draw mode (3) for 3d, but nothing exciting. The modes are 0.Flat or texture(if texture exists) 1.Z(&quot;light&quot;)-sourced 2. Wireframe 3. Always flat</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>14 Jul 2016 20:17</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Major update, still same link: <a href="http://www.mediafire.com/download/x2lrkla93bd149o/cmdgfx.zip" class="postlink">http://www.mediafire.com/download/x2lrkla93bd149o/cmdgfx.zip</a><br /><br /><strong class="text-strong">1. Transparency support for 3d object textures.</strong><br />To use this, the new *drawoption* parameter must be set to the texture color that should be transparent. Only pcx files are currently supported as 3d textures (whether transparent or not). It's important to set drawoption to -1 if transparency for a texture is not needed, to avoid speed hits.<br />Run scrolltext.bat for an example. Then run scrolltext.bat with a parameter (any will do) to see two scrolls on top of each other. Neat, huh?  <img class="smilies" src="images/smilies/icon_mrgreen.gif" alt=":mrgreen:" title="Mr. Green" /> <br /><br /><strong class="text-strong">2. Transparency support for tpoly operation (both pcx and gxy).</strong><br />No real good example, but run gfxtest3.bat and press RETURN to see it (SPACE to switch textures)<br /><br /><strong class="text-strong">3. Goraud shading support for 3d objects, as well as improved z-sourcing (&quot;lightsource&quot;) drawmode with wider range of colors.</strong><br />Run the updated gfxtest4.bat to see goraud shaded objects. The first one you see is a goraud-shaded torus.<br /><br /><strong class="text-strong">4. For 3d object files, faces with only 1 coordinate are assumed to be pixels.</strong><br />This only works in drawmode 1 (z-sourcing/lightsource mode). <br />There are plenty of examples of this one: starfield.bat, pixeltest.bat, pixeltest2.bat, pixeltunnel.bat<br /><br /><strong class="text-strong">5. Similarly, faces with only 2 coordinates are assumed to be lines.</strong><br />Run linetest.bat for an example.<br /><br /><strong class="text-strong">6. 3d objects now have separate scaling for x,y,z. </strong><br />The object in starfield.bat is non-uniformly scaled.<br /><br /><strong class="text-strong">7. Support for bit operators was added (OR, AND, XOR etc) for ipoly operation and for 3d for flat and z-sourced drawmodes.</strong><br />To use them in 3d, the new *drawoption* argument must be set to something other than 0. To use them in z-sourced mode, the bit operator must be put in the high byte (hackish, but needed).<br />Plenty examples of this: glenz.bat, interference.bat, bit-test.bat, bit-balls2.bat. In gfxtest4.bat, press 'b' to switch bitop for flat drawmodes.<br /><br /><strong class="text-strong">8. The text operation now supports the same subset of gotoxy codes as for the gxy files.</strong><br />It's used in various places, e.g. pixeltest2.bat.<br /><br /><strong class="text-strong">9. As mentioned in (3), z-sourced light (drawmode 1 and 2) was improved.</strong><br />For both of these mode, the *drawoption* can be either 0 or 1, where 1 &quot;scales&quot; the colors to fit the object's z-values, whereas 0 do not. (setting this option is the reason the bitop must be set in the high byte for drawmode 2).<br />While running gfxtest4.bat and gfxtest5.bat, press 'c' to switch between the 2 z-light modes.<br /><br /><strong class="text-strong">10. 'insert' is a new operation to insert the contents of a file into the operation string.</strong><br />No example using this. Perhaps it's kind of useless... anyway...<br /><br /><strong class="text-strong">11. New flag 'K' that waits for a key input</strong><br />As opposed to 'k' that just checks without waiting<br /><br /><strong class="text-strong">12. Also, check out dot-flag.bat and bob-flag.bat.</strong><br />They don't really show new functionality, just a test to see if I could do it. Hackery and precalculation was needed.<br /><br />Phew!  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><br />And here's a little collage of screenshots made with batch files and cmdgfx:<br /><br /><img src="https://ucd0ae1dc4051cea672f540d99aa.dl.dropboxusercontent.com/cd/0/inline/ATVTN3QNdyws7qalZCmisBEBhYMHeearumj2XmVhLl79zh5y2J-gFloa-Cpt-Uh6vDXMmLYJ3OZitL6_K7hafJ0ynQRHUOPavt9UHdvoiDuWfmAi9jWrVH4eBqe_M-NCSx70AWc6IMQT9tg6STVuktyOAJjNfIvab8Xg-0meee93xkggnNSklUCa8GUOZjr7Apg/file" class="postimage" alt="Image" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>17 Jul 2016 07:54</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Alright, one more and then I'll let this be... a while  <img class="smilies" src="images/smilies/icon_mrgreen.gif" alt=":mrgreen:" title="Mr. Green" /> <br /><br />New functionality in updated archive:<br /><br /><strong class="text-strong">1. For all operations, it's now possible to specify ? as color or char.<br /></strong>What this means is that either color or char is not written, instead the old value is used. This can be used for some nice overlay effects. Note that if either fgcol OR bgcol is set to ?, then no color is written (neither fgcol nor bgcol).<br /><br />See colorwrite-test.bat and charwrite-test.bat for examples.<br /><br /><strong class="text-strong">2. Error reporting.</strong><br />All errors encountered during one run of cmdgfx.exe is reported on top of the screen at the end of the run. At the moment too few/malformed parameter errors and load/parse errors of image/obj files are reported.<br />Also, two new flags: e and E. e suppresses all errors(not shown), E waits for a keypress if there are errors<br /><br />3. Gxy files now recognize \r<br /><br />4. Some bugs in obj reader and box/fbox found and fixed<br /><br />And here is another (slightly morbid-looking) collage of screenshots from colorwrite-test.bat and charwrite-test.bat:<br /><br /><img src="https://uc0845f662acf9e0c3fc6a07735d.dl.dropboxusercontent.com/cd/0/inline/ATaBGv-pfPMPAouHBgVRbVkbjK1O8RsCsS0RP_eQU1gY-kRLMP-DkX6DqQ_x_zXzGcRRZWzJUTe7QIGo2BdXdwG4-WjGTlq1CPvFOtme3CZaze8ToDh5C4V_Zb5zbjp_gKV-3NceeU9WR5tykiy4gqQhfowD7WL8xsduFHKssXpN_kuJF-veEChvusVhHkhUrok/file" class="postimage" alt="Image" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Cmdgfx - draw graphic primitives (polygons,circles etc) in cmd line window</h3>
+				<div class="date">Posted: <strong>18 Jul 2016 08:02</strong></div>
+				<div class="author">by <strong>misol101</strong></div>
+				<div class="content">Small bugfix for &quot;text&quot;, plus new example! <br /><br />3dworld2.bat is a textured world, as opposed to the old 3dworld.bat. I also added collision detection (which works ok, but not great)<br /><br />If you get tired of colliding, press Pgup/PgDown to elevate yourself, in which case colision detection turns off.<br /><br />H for help.<br /><br />Screenshots:<br /><br /><img src="https://uc0a87d1b9b0b7ff934715085a77.dl.dropboxusercontent.com/cd/0/inline/ATbds7TFwZYlfDAHSYFIHbymFIhWXaqS-GIvhacRhmVASD2g8GcAG215f-1ds9zKOS0HPFfmZxe--6enpRfWygyjw27zREisU4D93eJBheQW1jM1hl98xswPLAWoei2UFpQTszV6nrIJgSuA85l9Ysr_myi9mBHVCNhYoW5CEyc648LAEva2DkiM0tgi8uB_BY8/file" class="postimage" alt="Image" /></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>7</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=7153&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:29:24 GMT -->
+</html>

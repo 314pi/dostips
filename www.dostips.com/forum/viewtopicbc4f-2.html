@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5326&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:18:26 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Create nul and all ascii characters with only batch</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Create nul and all ascii characters with only batch</h2>
+		<p><a href="viewtopic91a1.html?f=3&amp;t=5326">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5326</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>8</strong></div>
+					<div class="post">
+				<h3>Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 12:40</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">Edit: This post begin for post code for create only nul charater. After the work was for create all 256 ascii characters from 0 to 255.<br>
+<br>
+Final simple code for create a byte character (.chr file) using only batch:<br>
+You need pass the ascii number that you desire as parameter.<br>
+For example, for create the tab character:<br>
+genchr.cmd 9<br>
+rem 9.chr will be created<br>
+<br>
+Edit Begin: 2018-may-06<br>
+genchr.cmd (with fix for run with native double byte codepage)<br>
+<a href="viewtopic8c1f.html?f=3&amp;t=5326&amp;p=56708#p56709" class="postlink">viewtopic.php?f=3&amp;t=5326&amp;p=56708#p56709</a><br>
+End Edit<br>
+<br>
+genchr.cmd
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>REM This code creates one single byte. Parameter: &lt;int&gt;0-255
+REM Teamwork of carlos, penpen, aGerman, dbenham
+REM Tested under Win2000, XP, Win7, Win8
+
+@echo off
+
+set "options=/d compress=off /d reserveperdatablocksize=26"
+if %~1 neq 26  (type nul &gt;%~1.tmp
+makecab %options% /d reserveperfoldersize=%~1 %~1.tmp %~1.chr &gt;nul
+type %~1.chr | (
+(for /l %%N in (1 1 38) do pause)&gt;nul&amp;findstr "^"&gt;%~1.tmp)
+&gt;nul copy /y %~1.tmp /a %~1.chr /b
+del %~1.tmp
+) else (copy /y nul + nul /a 26.chr /a &gt;nul)
+
+</code></pre></div>
+
+genchr.cmd also is available in a version with syntax:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>http://ss64.com/nt/syntax-genchr.html</code></pre></div>
+
+<strong class="text-strong">Link to code for create all the ascii characters using only batch:</strong><br>
+speedy stable carlos' version: <a href="viewtopicd5dc.html?p=32495#p32495" class="postlink">http://www.dostips.com/forum/viewtopic. ... 495#p32495</a><br>
+speedy stable dbenham' version: <a href="viewtopicb326.html?p=32485#p32485" class="postlink">http://www.dostips.com/forum/viewtopic. ... 485#p32485</a><br>
+first stable code: <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>http://www.dostips.com/forum/viewtopic.php?p=32184#p32184</code></pre></div>
+
+<strong class="text-strong">For only create the nul character:</strong><br>
+A really improved and better version is found in this link: <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>http://www.dostips.com/forum/viewtopic.php?p=32120#p32120</code></pre></div>
+
+Original title of post: createnul.cmd Create a file with the nul character<br>
+<br>
+Hello.<br>
+Tested on win8.<br>
+Edit: Modification N° 3.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off
+
+::This routine create the file zero.chr that only have the nul character
+::Author: Carlos
+
+Set "p=Pause&gt;Nul"
+Set "q=%p%&amp;%p%&amp;%p%&amp;%p%&amp;%p%&amp;%p%&amp;%p%&amp;%p%&amp;%p%"
+Set "r=%q%%q%%q%%q%%q%%q%%q%%q%%q%"
+Set "s=%r%&amp;%p%&amp;%p%"
+
+Copy /Y Nul+Nul /A sub.chr /A &gt;Nul
+Makecab /D Compress=OFF sub.chr tmp.cab &gt;Nul
+Type tmp.cab |(%s%&amp;Findstr "^") &gt;wnul.tmp
+
+Copy /Y wnul.tmp /A zero.chr /B &gt;Nul
+Del sub.chr wnul.tmp tmp.cab
+
+Rem zero.chr have the nul character
+
+</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: createnul.cmd Create a file with the nul character</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 14:36</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Nice find carlos!<br /><br />Basically the same but using FORFILES for creating the SUB:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal<br /><br />&gt;&quot;crlfX0sub0.tmp&quot; forfiles /p &quot;%~dp0.&quot; /m &quot;%~nx0&quot; /c &quot;cmd /u /c \&quot;&lt;nul set /p \&quot;=X0x1A\&quot;\&quot;&quot;<br />type &quot;crlfX0sub0.tmp&quot; | &gt;&quot;0sub0crlf.tmp&quot; (pause&gt;nul &amp;pause&gt;nul &amp;pause&gt;nul &amp;findstr &quot;^&quot;)<br />&gt;nul copy /y &quot;0sub0crlf.tmp&quot; /a &quot;zero.chr&quot; /b<br /><br />del &quot;crlfX0sub0.tmp&quot; &quot;0sub0crlf.tmp&quot;<br /></code></pre></div><br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: createnul.cmd Create a file with the nul character</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 14:42</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">How it Works?:<br /><br />We create a cabinet file without compression with a file that only have the ascii sub character (1A (hex) or 26 (dec)). This character is used as end of file for copy files in ascii mode. Also it stop the type command.<br /><br />creation of sub.chr that only have the sub character:<br /><blockquote class="uncited"><div>Copy /Y Nul+Nul /A sub.chr /A &gt;Nul<br /></div></blockquote><br /><br />creation of the cabinet file without compression:<br /><blockquote class="uncited"><div>Makecab /D Compress=OFF sub.chr tmp<br /></div></blockquote><br /><br />The cabinet file have this content:<br /><br /><img src="http://s1281.photobucket.com/user/carlosmon99/media/example_zpsc1b74cd3.png.html" class="postimage" alt="Image" /><br /><br />Now we need ignore the first 75 bytes until 00 1A (in this case are 75 bytes because the name of the file is 7 characters: sub.chr)<br /><br />For it we use a block of code like this where each Pause&gt;Nul will remove one character:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>(<br />Pause &gt;Nul<br />Pause &gt;Nul<br />...<br />Findstr &quot;^&quot;<br />)<br /></code></pre></div><br /><br />The Findstr will output the input and also add <blockquote class="uncited"><div>0D 0A</div></blockquote>.<br /><br />Then we generate the input with Type command to the previous block of code and we redirect this to a file.<br />This file will have these characters:<br /><blockquote class="uncited"><div>00 1A 0D 0A</div></blockquote><br /><br />Then copying the file in ascii mode we only copy the file until 1A character. Then we have the file with 00 character content.<br /><br />The way of remove first characters of a file I learned from walid2mi technique mentions here: <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>http://www.dostips.com/forum/viewtopic.php?p=25225#p25225</code></pre></div> and copy the files on ascii mode with sub character for remove the sub and next characters from jeb here: <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>http://www.dostips.com/forum/viewtopic.php?p=23564#p23564</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: createnul.cmd Create a file with the nul character</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 14:46</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">I changed your version to not need makecab anymore (only &quot;external tools&quot;: cmd.exe, and findstr.exe <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> ).<br />It works at least using my win xp; maybe test it on other windows versions:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off<br /><br />::This routine create the file zero.chr that only have the nul character<br />::Author: Carlos<br /><br />Copy /Y Nul+Nul sub.chr &gt;Nul<br />cmd /U /C set /P &quot;=a&quot; &lt; nul &gt; a.chr<br />copy /Y /B a.chr + /B sub.chr /B asub.txt &gt; nul<br />type asub.txt | (pause &gt; nul &amp;Findstr &quot;^&quot;) &gt; wnul.tmp<br />Copy /Y wnul.tmp /A zero.chr /B &gt;Nul<br />Del a.chr sub.chr asub.txt wnul.tmp<br /><br />Rem zero.chr have the nul character<br /></code></pre></div><br />penpen<br /><br />Edit1+2: corrected some flaws.<br />Edit3: added /y to the copy commands, as you suggested, carlos<br />Edit4+5+6: removed the &quot;set q...&quot;, &quot;set p...&quot; lines (now the &quot;set p..&quot; line is really removed...)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: createnul.cmd Create a file with the nul character</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 14:51</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">Nice penpen, it Works on my windows 8. Your code improved my original code.<br />I only added the /y to copy command (as on my modification 3) because if the file with sub character exists copy command will prompt for overwriting and because the redirection is to nul you not view the message.<br />@aGerman: forfiles is not present on all Windows versions, using copy is more portable for create the file with sub character.<br /><br />Thanks to aGerman and penpen for improve the code with ideas. Both use a Unicode string where each character are two bytes, the last ended with 00. With it makecab is unnecesary.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: createnul.cmd Create a file with the nul character</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 15:17</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite>carlos wrote:</cite>@aGerman: forfiles is not present on all Windows versions, using copy is more portable for create the file with sub character.</div></blockquote><br />I wasn't aware. Anyway it may come in handy. So I improved my code to avoid the FOR /F loop and added the /Y switch as you suggested.<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: createnul.cmd Create a file with the nul character</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 15:43</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">penpen.<br />I optimized the code for only use two temp files.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: createnul.cmd Create a file with the nul character</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 16:03</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">Now it only needs one temporary file <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> .<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off<br /><br />::This routine create the file zero.chr that only have the nul character<br />::Tested on windows 8, winxp 32 home, win xp 32 prof, windows 7 32bit<br />::Authors: carlos, aGerman, penpen<br /><br />Cmd /U /C Set /P &quot;=a&quot; &lt;Nul &gt; zero.chr<br />Copy /Y zero.chr+Nul zero.chr &gt;Nul<br />Type zero.chr |(Pause&gt;Nul &amp;Findstr &quot;^&quot;) &gt; wnul.tmp<br />Copy /Y wnul.tmp /A zero.chr /B &gt;Nul<br />Del wnul.tmp<br /><br />Rem zero.chr have the nul character<br /></code></pre></div><br />penpen<br /><br />Edit1-2: Changed authors  <img class="smilies" src="images/smilies/icon_cool.gif" alt="8)" title="Cool" /> , added test systems.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: createnul.cmd Create a file with the nul character</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 16:04</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">This is another thing that needs to go into the Library.  I have seen a few things over the last few months that I think should be in there. Is Peter the only one who can update that?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: createnul.cmd Create a file with the nul character</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 16:08</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">Carlos, aGerman, penpen, You are great!<br /><br />I like this tricks! Very good job!<br /><br />tested on windows 7 32bit.  all works!<br /><br />einstein1969</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: createnul.cmd Create a file with the nul character</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 16:10</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">@penpen: Nice last modification, only use a file  <img class="smilies" src="images/smilies/icon_surprised.gif" alt=":o" title="Surprised" /> <br />Please, you can use this header: <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::Authors: carlos, aGerman, penpen</code></pre></div> and please add on wich Windows you test it. I test your version using only one temp file and works on windows 8. I post a link in the first post to your last modification.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: createnul.cmd Create a file with the nul character</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 16:14</strong></div>
+				<div class="author">by <strong>Sponge Belly</strong></div>
+				<div class="content">Hello All! <img class="smilies" src="images/smilies/icon_smile.gif" alt=":-)" title="Smile" /><br /><br />Taking from <a href="viewtopiccd72.html?f=3&amp;t=4439" class="postlink">DT: Another Way to Create a Linefeed Variable</a> and <a href="http://stackoverflow.com/questions/13974058/how-to-write-a-single-spacebar-to-a-txt-file-with-batch" class="postlink">SO: How to Write a Single Space to a Text File</a>, I came up with this little snippet:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp; setlocal enableextensions<br />(set lf=^<br /><br />)<br />set nl=^^^%lf%%lf%^%lf%%lf%<br /><br />set &quot;lfFile=%tmp%\lf.tmp&quot;<br />set &quot;lfUTF=%tmp%\lfUTF.tmp&quot;<br />set &quot;nulFile=%tmp%\null.tmp&quot;<br /><br />echo(|(pause &gt;nul&amp;findstr &quot;^&quot; &gt;&quot;%lfFile%&quot;)<br />cmd /d /u /c type &quot;%lfFile%&quot; &gt;&quot;%lfUTF%&quot;<br />findstr /v %nl% &quot;%lfUTF%&quot; &gt;&quot;%nulFile%&quot;<br /><br />fc /b &quot;%lfFile%&quot; &quot;%nulFile%&quot;<br />del &quot;%lfFile%&quot; &quot;%lfUTF%&quot;<br />endlocal &amp; goto :EOF<br /></code></pre></div><br /><br />Kudos to Walid2mi and Dave Benham without whom the above wouldn’t have been possible. I just put the pieces together. <img class="smilies" src="images/smilies/icon_wink.gif" alt=";-)" title="Wink" /><br /><br /><em class="text-italics">- SB</em></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: createnul.cmd Create a file with the nul character</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 16:37</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content"><blockquote><div><cite>Sponge Belly wrote:</cite>Hello All! <img class="smilies" src="images/smilies/icon_smile.gif" alt=":-)" title="Smile" /><br /><br />Taking from <a href="viewtopiccd72.html?f=3&amp;t=4439" class="postlink">DT: Another Way to Create a Linefeed Variable</a> and <a href="http://stackoverflow.com/questions/13974058/how-to-write-a-single-spacebar-to-a-txt-file-with-batch" class="postlink">SO: How to Write a Single Space to a Text File</a>, I came up with this little snippet:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp; setlocal enableextensions<br />(set lf=^<br /><br />)<br />set nl=^^^%lf%%lf%^%lf%%lf%<br /><br />set &quot;lfFile=%tmp%\lf.tmp&quot;<br />set &quot;lfUTF=%tmp%\lfUTF.tmp&quot;<br />set &quot;nulFile=%tmp%\null.tmp&quot;<br /><br />echo(|(pause &gt;nul&amp;findstr &quot;^&quot; &gt;&quot;%lfFile%&quot;)<br />cmd /d /u /c type &quot;%lfFile%&quot; &gt;&quot;%lfUTF%&quot;<br />findstr /v %nl% &quot;%lfUTF%&quot; &gt;&quot;%nulFile%&quot;<br /><br />fc /b &quot;%lfFile%&quot; &quot;%nulFile%&quot;<br />del &quot;%lfFile%&quot; &quot;%lfUTF%&quot;<br />endlocal &amp; goto :EOF<br /></code></pre></div><br /><br />Kudos to Walid2mi and Dave Benham without whom the above wouldn’t have been possible. I just put the pieces together. <img class="smilies" src="images/smilies/icon_wink.gif" alt=";-)" title="Wink" /><br /><br /><em class="text-italics">- SB</em></div></blockquote><br /><br />Hi Sponge Belly, I'm melting the brain! <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> Thanks!<br /><br />einstein1969</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: createnul.cmd Create a file with the nul character</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 16:50</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">thanks Sponge Belly for share your code (it show another way of create the file with nul).<br />In my case, I prefer the improved version linked on the first post, because it not needs environments variables and only use one temp file. But you code also can be useful.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: createnul.cmd Create a file with the nul character</h3>
+				<div class="date">Posted: <strong>27 Jan 2014 18:19</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">I optimized the Sponge Belly code to this next:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off<br />::Authors: Sponge Belly, carlos<br />Echo(|(Pause &gt;Nul &amp;Findstr &quot;^&quot; &gt;zero.chr)<br />(Cmd /u /c Type zero.chr ) &gt;wnul.tmp<br />Set /P &quot;=#&quot; &gt;&gt;zero.chr &lt;Nul<br />Set /P LF=&lt;zero.chr<br />Findstr /v ^%LF:~0,1%%LF:~0,1% wnul.tmp &gt; zero.chr<br />Del wnul.tmp<br /></code></pre></div><br /><br />It use 4 write to disk operations like the code linked on the first post. The difference is that it set a environment variable unlike the linked on the first post.<br /><br />The first column is the code linked on the first post, and the second column is the code in the current post.<br /><img src="http://s1281.photobucket.com/user/carlosmon99/media/comparision_zps93b81709.png.html" class="postimage" alt="Image" /></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>8</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5326&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:18:26 GMT -->
+</html>

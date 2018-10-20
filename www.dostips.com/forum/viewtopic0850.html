@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8836&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:11:47 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; copy partition script</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>copy partition script</h2>
+		<p><a href="viewtopic7de3.html?f=3&amp;t=8836">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8836</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>copy partition script</h3>
+				<div class="date">Posted: <strong>23 Sep 2018 05:28</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">For years I've been using au3 scripts that would interface with PQMagic v8.1 to<br>
+-resize a primary partition created by Windows Experience setup ( <br>
+	AutoPartition 		= 0<br>
+	MsDosInitiated 		= 0<br>
+	UnattendedInstall 	= Yes<br>
+	UnattendMode 		= FullUnattended<br>
+	Repartition 		= Yes<br>
+	Filesystem 		= ConvertNTFS<br>
+) to 10GB<br>
+-copy partition C on disk0 to end of unallocated space on disk0<br>
+-do some operations on new copied partition D<br>
+-delete primary partition, copy partition D towards beginning of disk, set active, delete partition D<br>
+<br>
+Now I am automating Windows Server 2003 and unfortunately PQMagic v8.1 does not support Windows Server. I remember it took me days to write the script, test and debug it. I refuse to upgrade PQMagic beyond this version because of the new bugs and instabilities Symantec introduced with each new version after they took over PowerQuest.<br>
+<br>
+I ducked for "commandline copy partition" without getting useful results so I googled for "commandline copy partition" with the same useless results.<br>
+<br>
+I have several programs that do support Windows Server but none of them support "commandline copy partition".<br>
+<br>
+I am not encouraged to write an application that would interface with modern GUIs because quality of most GUIs has been on decline since 2001 and thus I see it as a "if everything else fails" solution.<br>
+<br>
+I am currently wondering if i can use dd for windows to copy a partition from the commandline  <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"><br>
+<br>
+I am quite amazed that so many companies these days no longer have the skills to write clean intuitive GUIs. A squared window is ugly and looks old so lets make the corners round and fluffy and lets not support TUI so we look like amateurs.<br>
+<br>
+Anyone has any idea for a quick and clean solution ?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: copy partition script</h3>
+				<div class="date">Posted: <strong>24 Sep 2018 00:06</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">Try HDClone <a href="https://www.miray.de/products/sat.hdclone.html" class="postlink">https://www.miray.de/products/sat.hdclone.html</a><br>
+It supports automation through its CLI. But I'm not sure if the free version has all the capabilities you need.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: copy partition script</h3>
+				<div class="date">Posted: <strong>24 Sep 2018 07:10</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">Thanks that looks good it does indeed support CLI, although since it is intended to run on windows server only the enterprise version can be installed.<br>
+<br>
+I will try Acronis Enterprise Server Disk Director first as it has become clear to me it also supports CLI and is probably the best software for scripted mass deployment and maintenance on the market and I have good experience with the True Image part of the software.<br>
+<br>
+Thanks sst for expanding my options <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: copy partition script</h3>
+				<div class="date">Posted: <strong>25 Sep 2018 08:18</strong></div>
+				<div class="author">by <strong>Ed Dyreen</strong></div>
+				<div class="content">I describe some of the programs i studied to help people who are interested in advanced partitioning features beyond what is possible with diskpart. I am using server editions but they should also run on other editions of the Microsoft platform.<br>
+<br>
+
+<blockquote><div><cite>Acronis Disk Director Server wrote:</cite>
+This edition has a CLI but it cannot do things like copy volumes. All it supports is resize, delete, create and provides little benefit over using diskpart. Another downside is that you cannot express resize in MB but in sectors, this is very unintuitive.
+</div></blockquote>
+
+<blockquote><div><cite>EASEUS Partition Master Server Edition wrote:</cite>
+Same capabilities as Acronis Disk Director Server but it does allow to specify resize in MB.
+</div></blockquote>
+
+<blockquote><div><cite>HDClone Enterprise Edition wrote:</cite>
+Same capabilities as EASEUS Partition Master Server Edition
+</div></blockquote>
+
+<blockquote><div><cite>Paragon Partition Manager Enterprise Server Edition wrote:</cite>
+This is the only edition of Paragon Partition Manager that allows you to fully automate anything you can do with the GUI. You are not provided with a CLI but it is not required because you are supposed to use the GUI and instead of apply changes you choose generate script.
+</div></blockquote></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8836&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:11:47 GMT -->
+</html>

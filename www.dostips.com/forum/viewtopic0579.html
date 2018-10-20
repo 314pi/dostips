@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1579&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:58:04 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Parsing command output into variable</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Parsing command output into variable</h2>
+		<p><a href="viewtopic894f.html?f=3&amp;t=1579">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1579</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Parsing command output into variable</h3>
+				<div class="date">Posted: <strong>17 Jan 2011 08:25</strong></div>
+				<div class="author">by <strong>l95theses</strong></div>
+				<div class="content">I'm trying to use devcon.exe to output command information into this batch file. Once this is accompished I try to split the data it gives me using &quot;(&quot; delimiter and I would like to further split it so that I can get the information behind this character &quot;)&quot; but my variable wants to be two lines even though i use a token number that should take out the other line. The only way I can separate the line number is by using &quot;/p&quot; before my set command and what is weird is that it still echos the data when I never said to echo I only told it to set a variable. Here is my code and I will attach the output of the code based on the fact that some of you may not have devcon.exe. The photo attached is the output of the code before it is parsed. However when I run this code it just echos &quot;COM5)&quot;, but i need a single variable that just says &quot;COM5&quot; or whatever com number it happens to be.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF<br />setlocal ENABLEDELAYEDEXPANSION<br />FOR /F &quot;tokens=2 delims=(&quot; %%a IN ('&quot;%~dp0devcon.exe find =ports *VID_10C4^&amp;PID_EA60*&quot;') DO (<br />set /p comnumber=%%a<br />)<br />pause<br /></code></pre></div><br /><img src="../../briany.fatcow.com/recycling/codeinclude.html" class="postimage" alt="Image" /><br />Thanks in advance!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Parsing command output into variable</h3>
+				<div class="date">Posted: <strong>17 Jan 2011 09:34</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">What about <strong class="text-strong"><em class="text-italics">delims=()</em></strong>  <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" /> <br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Parsing command output into variable</h3>
+				<div class="date">Posted: <strong>17 Jan 2011 09:39</strong></div>
+				<div class="author">by <strong>ChickenSoup</strong></div>
+				<div class="content">It is hard to guess exactly without knowing the variations of the output. But for this output something like this should work:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF<br />setlocal ENABLEDELAYEDEXPANSION<br />FOR /F &quot;tokens=2 delims=()&quot; %%a IN ('&quot;%~dp0devcon.exe find =ports *VID_10C4^&amp;PID_EA60*&quot; ^| find &quot;COM&quot;') DO set comnumber=%%a<br />echo %comnumber%<br />pause</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Parsing command output into variable</h3>
+				<div class="date">Posted: <strong>17 Jan 2011 09:57</strong></div>
+				<div class="author">by <strong>l95theses</strong></div>
+				<div class="content">The above example works of:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF<br />setlocal ENABLEDELAYEDEXPANSION<br />FOR /F &quot;tokens=2 delims=()&quot; %%a IN ('&quot;%~dp0devcon.exe find =ports *VID_10C4^&amp;PID_EA60*&quot;') DO (<br />echo comnumber=%%a<br />)<br />pause<br /></code></pre></div><br />However, I cannot use comnumber variable anywhere else outside the loop. It returns as a two line thing as you will see the output below.<br /><img src="../../briany.fatcow.com/recycling/codeinclude2.html" class="postimage" alt="Image" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Parsing command output into variable</h3>
+				<div class="date">Posted: <strong>17 Jan 2011 10:42</strong></div>
+				<div class="author">by <strong>ChickenSoup</strong></div>
+				<div class="content">Did you see my modification to the the for loop piping it to a find?  Does that do it?<br /><br /><blockquote class="uncited"><div>FOR /F &quot;tokens=2 delims=()&quot; %%a IN ('&quot;%~dp0devcon.exe find =ports *VID_10C4^&amp;PID_EA60*&quot; ^| find &quot;COM&quot;') DO set comnumber=%%a<br /></div></blockquote></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Parsing command output into variable</h3>
+				<div class="date">Posted: <strong>17 Jan 2011 11:32</strong></div>
+				<div class="author">by <strong>l95theses</strong></div>
+				<div class="content">that just results in: &quot;ECHO is off.&quot;</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Parsing command output into variable</h3>
+				<div class="date">Posted: <strong>17 Jan 2011 12:12</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Hmm... Try:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal<br />for /f &quot;tokens=2 delims=()&quot; %%a in ('&quot;%~dp0devcon.exe find =ports *VID_10C4^&amp;PID_EA60*&quot;') do (<br />&nbsp; if not defined comnumber set &quot;comnumber=%%a&quot;<br />)<br />echo %comnumber%<br />pause<br /></code></pre></div><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Parsing command output into variable</h3>
+				<div class="date">Posted: <strong>17 Jan 2011 12:18</strong></div>
+				<div class="author">by <strong>avery_larry</strong></div>
+				<div class="content">It looks like the devcon output has 3 lines, so the for loop goes through 3 times.  The first line doesn't have () so it skips the &quot;do&quot; portion.  The next 2 lines both have (), so the &quot;set&quot; command is run twice -- first it sets the variable to com5, and then it sets it to s.  The variable isn't 2 lines, it just gets set 2 separate times.<br /><br />At least I think that.<br /><br />Anyway -- if you only want the 1st instance to work, then you can break the for loop with a goto statement like this:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F &quot;tokens=2 delims=()&quot; %%a IN ('&quot;%~dp0devcon.exe find =ports *VID_10C4^&amp;PID_EA60*&quot; ^| find &quot;COM&quot;') DO set comnumber=%%a&amp;&amp;goto :continue<br />:continue<br />echo %comnumber%<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Parsing command output into variable</h3>
+				<div class="date">Posted: <strong>17 Jan 2011 13:07</strong></div>
+				<div class="author">by <strong>l95theses</strong></div>
+				<div class="content">Thank you avery_larry. You came up with a 100% fix for me.<br />This post can be closed if necessary.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1579&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:58:04 GMT -->
+</html>

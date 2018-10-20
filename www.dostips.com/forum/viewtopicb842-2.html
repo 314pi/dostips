@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2597&p=21572 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:25:16 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Why does SET performance degrade as environment size grows? - Page 2 - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopic662e-2.html?t=2597&amp;start=15">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopicfb10-2.html?f=3&amp;t=2597&amp;start=15">Why does SET performance degrade as environment size grows?</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="postingcb84.html?mode=reply&amp;f=3&amp;t=2597" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicb956.html?f=3&amp;t=2597&amp;start=15&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="2597" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			31 posts
+							<ul>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopice0d8.html?f=3&amp;t=2597" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopice0d8.html?f=3&amp;t=2597" role="button">1</a></li>
+			<li class="active"><span>2</span></li>
+				<li><a class="button" href="viewtopic3712.html?f=3&amp;t=2597&amp;start=30" role="button">3</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic3712.html?f=3&amp;t=2597&amp;start=30" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p21525" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21525">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21525">
+
+						<h3 class="first"><a href="#p21525">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting9f44-2.html?mode=quote&amp;f=3&amp;p=21525" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic30ab.html?p=21525#p21525" onclick="prompt('Message #16',this.href); return false;">#16</a></span> 
+									<a class="unread" href="viewtopic30ab.html?p=21525#p21525" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>01 Nov 2012 11:57
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>dbenham wrote:</cite><strong class="text-strong">Question - Does anyone have any better insight as to why SET degrades linearly as the environment grows  <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" /> </strong></div></blockquote><br /><blockquote><div><cite>On 11 Dec 2011 Aacini wrote:</cite>The two main factors that affect the performance of SET command are the necessity for move the environment to another place in order to expand it, and the size of the memory blocks that must be moved in order to keep the variables alphabetically ordered.<br /><br /><!-- l --><a class="postlink-local" href="viewtopic3a4a.html?f=3&amp;t=2597&amp;p=12035#p12035">viewtopic.php?f=3&amp;t=2597&amp;p=12035#p12035</a><!-- l --><br /></div></blockquote><br /><blockquote><div><cite>Liviu wrote:</cite>As you guessed, the environment is indeed stored in contiguous memory. Also, the list is stored in sorted order, so each insertion causes a search-and-shift-to-make-room. I believe the latter is the dominant factor in the linear slowdown (since I guess the memory block is allocated with some granularity, possibly 4KB pages, so not every new variable would trigger a reallocation).<br />Liviu</div></blockquote><br /><br /> <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21528" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21528">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche861.html?author_id=3077&amp;sr=posts">470</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Jan 2012 21:24</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21528">
+
+						<h3 ><a href="#p21528">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting424e.html?mode=quote&amp;f=3&amp;p=21528" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic2ed0.html?p=21528#p21528" onclick="prompt('Message #17',this.href); return false;">#17</a></span> 
+									<a class="unread" href="viewtopic2ed0.html?p=21528#p21528" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a></strong> &raquo; </span>01 Nov 2012 12:21
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite> <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" /></div></blockquote><br />Sorry, didn't mean to steal undue credit, it's just been too long a thread <img class="smilies" src="images/smilies/icon_wink.gif" alt=";-)" title="Wink" /><br /><br />That said, the page I linked provides an authoritative reference on the topic. It also makes clear that all environment is stored in one single contiguous memory block, and the internal format explains why variable names can't contain &quot;=&quot; signs, and why \0 nul characters can't be embedded in either name or value.<br /><br />Liviu</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21529" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21529">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search0d5e.html?author_id=2453&amp;sr=posts">1497</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 16 May 2011 08:21</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Flanders(Belgium)</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact Ed Dyreen">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact Ed Dyreen</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://ed-dyreen.ddns.net/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21529">
+
+						<h3 ><a href="#p21529">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinge37f.html?mode=quote&amp;f=3&amp;p=21529" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicbd93-2.html?p=21529#p21529" onclick="prompt('Message #18',this.href); return false;">#18</a></span> 
+									<a class="unread" href="viewtopicbd93-2.html?p=21529#p21529" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a></strong> &raquo; </span>01 Nov 2012 12:31
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Liviu wrote:</cite>It also makes clear that all environment is stored in one single contiguous memory block.<br /></div></blockquote>One contigious block, and how does it keeps different local scopes apart <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" /> <br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>performance at 100%<br />set var1=value<br />performance at 90%<br />setlocal<br />&nbsp; &nbsp; performance at 90%<br />&nbsp; &nbsp; set var2=value<br />&nbsp; &nbsp; set var3=value<br />&nbsp; &nbsp; performance at 70%<br />&nbsp; &nbsp; set var3=null<br />&nbsp; &nbsp; performance at 80% ( actually a bit higher as Aacini's shown )<br />&nbsp; &nbsp; set var2=null<br />&nbsp; &nbsp; set var1=null<br />&nbsp; &nbsp; performance at 90%<br />endlocal<br />performance at 90%<br /></code></pre></div>Naively I thought I could get close to a 100% inside setlocal <img class="smilies" src="images/smilies/icon_neutral.gif" alt=":|" title="Neutral" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21530" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21530">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21530">
+
+						<h3 ><a href="#p21530">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingdbed.html?mode=quote&amp;f=3&amp;p=21530" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic64ac.html?p=21530#p21530" onclick="prompt('Message #19',this.href); return false;">#19</a></span> 
+									<a class="unread" href="viewtopic64ac.html?p=21530#p21530" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>01 Nov 2012 16:12
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Liviu wrote:</cite>That said, the page I linked provides an authoritative reference on the topic. It also makes clear that all environment is stored in one single contiguous memory block,</div></blockquote><blockquote><div><cite>Aacini wrote:</cite>... the internal operation of SET VAR=VALUE command follow these steps:<br /><br /><ul><li>When a new variable is defined with a value that exceed the current environment size, the environment is copied to a new area if the area beyond it is not available. </li></ul></div></blockquote><br /><br /><blockquote><div><cite>Liviu wrote:</cite>and the internal format explains why variable names can't contain &quot;=&quot; signs, and why \0 nul characters can't be embedded in either name or value.</div></blockquote><blockquote><div><cite>On 21 Jan 2012 Aacini wrote:</cite>Batch variables are stored in the Environment (a memory block of up to 32 MB long) as strings with this format: <strong class="text-strong">VARNAME=VARVALUE0</strong>; a byte with binary zero mark the variable end followed by the next variable, and a second zero mark the Environment end. CMD.EXE have a limit of 8 KB when it search the Environment for variable names/values. In conclusion, the maximum VALUE length for 1-letter named variables is 8189 bytes.<br /><br /><!-- l --><a class="postlink-local" href="viewtopicccd8-2.html?f=3&amp;t=2828&amp;p=12965#p12965">viewtopic.php?f=3&amp;t=2828&amp;p=12965#p12965</a><!-- l --><br /></div></blockquote><br /><br /><br /><br /><blockquote><div><cite>Ed Dyreen wrote:</cite>One contigious block, and how does it keeps different local scopes apart <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" /> </div></blockquote><br />(Hi Ed, thanks for your welcome in the other topic!  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" />  )<br /><br />Each environment is a single contiguous memory block. SETLOCAL command duplicate (reserve space and copy) current environment into another memory area, but only for the <em class="text-italics">used</em> portion of the current environment. For this reason I suggested the use of :AllocateEnvironmentSpace to reserve space in the main program, and :FreeEnvironmentSpace to free reserved space <em class="text-italics">after</em> SETLOCAL command in the subroutines.<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21534" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21534">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search0d5e.html?author_id=2453&amp;sr=posts">1497</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 16 May 2011 08:21</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Flanders(Belgium)</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact Ed Dyreen">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact Ed Dyreen</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://ed-dyreen.ddns.net/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21534">
+
+						<h3 ><a href="#p21534">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting35c9-2.html?mode=quote&amp;f=3&amp;p=21534" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4981-2.html?p=21534#p21534" onclick="prompt('Message #20',this.href); return false;">#20</a></span> 
+									<a class="unread" href="viewtopic4981-2.html?p=21534#p21534" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a></strong> &raquo; </span>01 Nov 2012 16:45
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite>(Hi Ed, thanks for your welcome in the other topic!  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" />  )<br /></div></blockquote>Sorry I'm dutch, with my limited comprehension of the english language, which other topic ?<br /><blockquote><div><cite>Aacini wrote:</cite>Each environment is a single contiguous memory block. SETLOCAL command duplicate (reserve space and copy) current environment into another memory area, but only for the <em class="text-italics">used</em> portion of the current environment. For this reason I suggested the use of :AllocateEnvironmentSpace to reserve space in the main program, and :FreeEnvironmentSpace to free reserved space <em class="text-italics">after</em> SETLOCAL command in the subroutines.<br /></div></blockquote>Which is what I did, first I load an enormous amount of variables, then I setlocal, then I unset all variables that were loaded previously.<br />But speeds of this new &quot;empty&quot; contigious block, are still severly affected by variables loaded before setlocal.<br />If each environment is a single contiguous memory block then why they affect each other <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21536" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21536">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21536">
+
+						<h3 ><a href="#p21536">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postinga2be.html?mode=quote&amp;f=3&amp;p=21536" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic302e.html?p=21536#p21536" onclick="prompt('Message #21',this.href); return false;">#21</a></span> 
+									<a class="unread" href="viewtopic302e.html?p=21536#p21536" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>01 Nov 2012 17:20
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Ed Dyreen wrote:</cite><blockquote><div><cite>Aacini wrote:</cite>(Hi Ed, thanks for your welcome in the other topic!  <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" />  )<br /></div></blockquote>Sorry I'm dutch, with my limited comprehension of the english language, which other topic ?</div></blockquote><br /><blockquote><div><cite>Ed Dyreen wrote:</cite>Hi Aacini, it's been a while... <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /><br /><!-- l --><a class="postlink-local" href="viewtopic747d.html?f=3&amp;t=3866&amp;p=21352#p21352">viewtopic.php?f=3&amp;t=3866&amp;p=21352#p21352</a><!-- l --><br /></div></blockquote><br /><br /><blockquote><div><cite>Ed Dyreen wrote:</cite>Which is what I did, first I load an enormous amount of variables, then I setlocal, then I unset all variables that were loaded previously.<br />But speeds of this new &quot;empty&quot; contigious block, are still severly affected by variables loaded before setlocal.<br />If each environment is a single contiguous memory block then why they affect each other <img class="smilies" src="images/smilies/icon_question.gif" alt=":?:" title="Question" /></div></blockquote><br />The only explanation is the position of the new or modified variables into the alphabetical list of existent variables. If you define a new variable that must be inserted at beginning of the environment (ie: SET A=1), all variables after it must be moved. If you define a new variable that will be appended at environment end (ie: SET ZZZZZZZZZZZ=1), the definition is immediate.<br /><br />Try to name variables that changes frequently towards environment end (ZZZZ) and static variables to beginning (A).<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21537" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21537">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche861.html?author_id=3077&amp;sr=posts">470</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Jan 2012 21:24</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21537">
+
+						<h3 ><a href="#p21537">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting54d0.html?mode=quote&amp;f=3&amp;p=21537" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicfe08.html?p=21537#p21537" onclick="prompt('Message #22',this.href); return false;">#22</a></span> 
+									<a class="unread" href="viewtopicfe08.html?p=21537#p21537" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a></strong> &raquo; </span>01 Nov 2012 17:25
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite><blockquote><div><cite>Liviu wrote:</cite>That said, the page I linked provides an authoritative reference on the topic. It also makes clear that all environment is stored in one single contiguous memory block,</div></blockquote><blockquote><div><cite>Aacini wrote:</cite>... the internal operation of SET VAR=VALUE command follow these steps:<br /><br /><ul><li>When a new variable is defined with a value that exceed the current environment size, the environment is copied to a new area if the area beyond it is not available. </li></ul></div></blockquote></div></blockquote><br />Your quote in the original post started with &quot;Let's suppose that ...&quot;. The link I gave simply confirms your supposition to be right. With all due respect, it's still useful (and more reassuring) when such information can be traced back to the root source, in this case the OS documentation.<br /><br /><blockquote><div><cite>Aacini wrote:</cite><blockquote><div><cite>On 21 Jan 2012 Aacini wrote:</cite>Batch variables are stored in the Environment (a memory block of up to 32 MB long) as strings with this format: <strong class="text-strong">VARNAME=VARVALUE0</strong>; a byte with binary zero mark the variable end followed by the next variable, and a second zero mark the Environment end. CMD.EXE have a limit of 8 KB when it search the Environment for variable names/values. In conclusion, the maximum VALUE length for 1-letter named variables is 8189 bytes.</div></blockquote></div></blockquote><br />Not sure where the 32MB number comes from - it was 32KB in XP, and unlimited in Vista/Win7 (<a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms682653(v=vs.85).aspx" class="postlink">http://msdn.microsoft.com/en-us/library/windows/desktop/ms682653(v=vs.85).aspx</a>). Other than that, you are correct, with only observation that while CMD has indeed a lower 8KB variable limit, the OS itself has a 32KB per value limit which applies to all processes in Windows.<br /><br /><blockquote><div><cite>Ed Dyreen wrote:</cite>Naively I thought I could get close to a 100% inside setlocal</div></blockquote><br />At face value, you are getting the same performance numbers before/after endlocal as right before/after setlocal. Guess you didn't expect something to run faster just because it entered a setlocal block, so I am probably missing some background on what exactly you are running, and what those timings measure.<br /><br />Liviu</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21539" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21539">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchdc63.html?author_id=2923&amp;sr=posts">1540</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Dec 2011 22:15</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> México City, México</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21539">
+
+						<h3 ><a href="#p21539">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting3f65.html?mode=quote&amp;f=3&amp;p=21539" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic95ed.html?p=21539#p21539" onclick="prompt('Message #23',this.href); return false;">#23</a></span> 
+									<a class="unread" href="viewtopic95ed.html?p=21539#p21539" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist07be.html?mode=viewprofile&amp;u=2923" style="color: #00AA00;" class="username-coloured">Aacini</a></strong> &raquo; </span>01 Nov 2012 19:26
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Liviu wrote:</cite><blockquote><div><cite>Aacini wrote:</cite><blockquote><div><cite>On 21 Jan 2012 Aacini wrote:</cite>Batch variables are stored in the Environment (a memory block of up to 32 MB long)...</div></blockquote></div></blockquote><br />Not sure where the 32MB number comes from - it was 32KB in XP, and unlimited in Vista/Win7. Other than that, you are correct...<br /><br />Liviu</div></blockquote><br />Could be possible that the page on OS documentation (with &quot;authoritative reference on the topic&quot;) that you give us be wrong? <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" /> <br /><br />At this site: <a href="http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/ntcmds_shelloverview.mspx?mfr=true" class="postlink">Microsoft Windows XP - Command shell overview</a>, under &quot;Setting environment variables, Note&quot; said:<ul><li>The maximum individual environment variable size is 8192bytes. </li><li>The maximum total environment variable size for all variables, which includes variable names and the equal sign, is 65,536KB. </li></ul>It is funny that you have not realized that <em class="text-italics">this topic</em> is precisely about the problems to manage large environments and that all Batch programs listed here use environments up to 1293KB size (this data first appear in line # 14 of this topic). If the 32KB limit be true, these programs just did not run!<br /><br />Antonio</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21541" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21541">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search0d5e.html?author_id=2453&amp;sr=posts">1497</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 16 May 2011 08:21</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Flanders(Belgium)</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact Ed Dyreen">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact Ed Dyreen</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://ed-dyreen.ddns.net/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21541">
+
+						<h3 ><a href="#p21541">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting106e.html?mode=quote&amp;f=3&amp;p=21541" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic439c.html?p=21541#p21541" onclick="prompt('Message #24',this.href); return false;">#24</a></span> 
+									<a class="unread" href="viewtopic439c.html?p=21541#p21541" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a></strong> &raquo; </span>01 Nov 2012 20:06
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Liviu wrote:</cite>Not sure where the 32MB number comes from - it was 32KB in XP, and unlimited in Vista/Win7 (<a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms682653(v=vs.85).aspx" class="postlink">http://msdn.microsoft.com/en-us/library/windows/desktop/ms682653(v=vs.85).aspx</a>). Other than that, you are correct, with only observation that while CMD has indeed a lower 8KB variable limit, the OS itself has a 32KB per value limit which applies to all processes in Windows.<br /></div></blockquote>The limit is 64MB for XP, I've went well over 32MB many times.<br />Apart from performance degradation, another side effect of large environments is many installers/programs will start to fail to initialize, for example wmic.EXE.<br />This may no longer be the case on newer OSes if they indeed have no memory limit.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21565" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21565">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche861.html?author_id=3077&amp;sr=posts">470</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 13 Jan 2012 21:24</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21565">
+
+						<h3 ><a href="#p21565">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting4129.html?mode=quote&amp;f=3&amp;p=21565" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicb015-3.html?p=21565#p21565" onclick="prompt('Message #25',this.href); return false;">#25</a></span> 
+									<a class="unread" href="viewtopicb015-3.html?p=21565#p21565" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist2970.html?mode=viewprofile&amp;u=3077" class="username">Liviu</a></strong> &raquo; </span>02 Nov 2012 19:10
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Aacini wrote:</cite>Could be possible that the page on OS documentation (with &quot;authoritative reference on the topic&quot;) that you give us be wrong? <img class="smilies" src="images/smilies/icon_eek.gif" alt=":shock:" title="Shocked" /> </div></blockquote><br />Guess it's possible, since said documentation is wrong, indeed.<br /><br />At least, it's wrong at face value. The lower 32K limit might apply to, or cover, some corner case that's not obvious outright. One possible such case (from a  response to another post quoting the same figure) is mentioned at <a href="http://blogs.msdn.com/b/oldnewthing/archive/2010/02/03/9957320.aspx#9957646" class="postlink">http://blogs.msdn.com/b/oldnewthing/archive/2010/02/03/9957320.aspx#9957646</a>: &quot;<em class="text-italics">This isn't true (on XP at least), though it is what all the documentation says.  You can create megabytes of environment block and successfully pass it to a child process.  As far as I can tell, the 32K limit only applies if an environment block is converted from ANSI to UNICODE in CreateProcess.&quot;</em><br /><br /><blockquote><div><cite>Aacini wrote:</cite>Batch variables are stored in the Environment (a memory block of up to 32 MB long)...</div></blockquote><blockquote><div><cite>Aacini wrote:</cite>At this site: <a href="http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/ntcmds_shelloverview.mspx?mfr=true" class="postlink">Microsoft Windows XP - Command shell overview</a>, under &quot;Setting environment variables, Note&quot; said:<ul><li>The maximum individual environment variable size is 8192bytes. </li><li>The maximum total environment variable size for all variables, which includes variable names and the equal sign, is 65,536KB. </li></ul></div></blockquote><blockquote><div><cite>Ed Dyreen wrote:</cite>The limit is 64MB for XP</div></blockquote><br />Once bitten, twice shy <img class="smilies" src="images/smilies/icon_wink.gif" alt=";-)" title="Wink" /> Sorry, but I don't see either 32M or 64M limit in XP Sp3.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\tmp&gt;for /l %n in (1111048576,1,1111114765) do @set __%n_%n=%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n%n<br /><br />C:\tmp&gt;set &gt;env.txt<br /><br />C:\tmp&gt;cmd<br /><br />C:\tmp&gt;set &gt;env-copy.txt<br /><br />C:\tmp&gt;exit<br /><br />C:\tmp&gt;cmd /u<br /><br />C:\tmp&gt;set &gt;env-copy-u.txt<br /><br />C:\tmp&gt;exit<br /><br />C:\tmp&gt;dir env*.txt<br /><br />11/02/2012&nbsp; 06:28 PM&nbsp; &nbsp; &nbsp; &nbsp;135,825,408 env-copy-u.txt<br />11/02/2012&nbsp; 06:28 PM&nbsp; &nbsp; &nbsp; &nbsp; 67,912,704 env-copy.txt<br />11/02/2012&nbsp; 06:27 PM&nbsp; &nbsp; &nbsp; &nbsp; 67,912,704 env.txt<br /><br />C:\tmp&gt;find /c /v &quot;&quot; &lt;&quot;env.txt&quot;<br />66243<br /><br />C:\tmp&gt;find /c /v &quot;&quot; &lt;&quot;env-copy.txt&quot;<br />66243<br /><br />C:\tmp&gt;find /c /v &quot;&quot; &lt;&quot;env-copy-u.txt&quot;<br />66243<br /><br />C:\tmp&gt;fc /b env.txt env-copy.txt<br />Comparing files env.txt and ENV-COPY.TXT<br />FC: no differences encountered<br /><br />C:\tmp&gt;<br /></code></pre></div><br />The test case above adds 1K-long lines to the environment in a loop, totaling more than 64M characters (= 128MB memory block size, since the environment is stored as Unicode). The actual memory size is slightly lower than the byte count on disk (because line ends take one NUL char in memory vs 2 CR+LF on disk), but still easily over 64M characters. It looks to be working fine, including being successfully copied over to a child cmd process. This seems to debunk the 64M limit, regardless of it being meant as bytes or characters.<br /><br />Liviu</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21570" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21570">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search0d5e.html?author_id=2453&amp;sr=posts">1497</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 16 May 2011 08:21</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Flanders(Belgium)</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact Ed Dyreen">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact Ed Dyreen</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://ed-dyreen.ddns.net/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21570">
+
+						<h3 ><a href="#p21570">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting227b.html?mode=quote&amp;f=3&amp;p=21570" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7b6b.html?p=21570#p21570" onclick="prompt('Message #26',this.href); return false;">#26</a></span> 
+									<a class="unread" href="viewtopic7b6b.html?p=21570#p21570" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a></strong> &raquo; </span>03 Nov 2012 03:24
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Liviu wrote:</cite>Sorry, but I don't see either 32M or 64M limit in XP Sp3.<br /></div></blockquote>It's a little off-topic so won't go any further.<br />Wikipedia said in a document which I can't find or no longer exists.. XP has a 64MB limit for executables.<br />I've always assumed that would apply for cmd.exe but I've never tested it.<br />What I do know is that wmic.EXE simply won't run at a certain value well below this limit.<br />But then I rarely test anything, I just observe and assume.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21572" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21572">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist306a.html?mode=viewprofile&amp;u=592" class="username">alan_b</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search3aa7.html?author_id=592&amp;sr=posts">357</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 04 Oct 2008 09:49</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21572">
+
+						<h3 ><a href="#p21572">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting952d-2.html?mode=quote&amp;f=3&amp;p=21572" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7bcd.html?p=21572#p21572" onclick="prompt('Message #27',this.href); return false;">#27</a></span> 
+									<a class="unread" href="viewtopic7bcd.html?p=21572#p21572" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist306a.html?mode=viewprofile&amp;u=592" class="username">alan_b</a></strong> &raquo; </span>03 Nov 2012 03:53
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>Ed Dyreen wrote:</cite><blockquote><div><cite>Liviu wrote:</cite>Sorry, but I don't see either 32M or 64M limit in XP Sp3.<br /></div></blockquote><br />Wikipedia said in a document which I can't find or no longer exists.. XP has a 64MB limit for executables.<br /></div></blockquote><br />I cannot see how executables are related to environmental space.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p21574" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile21574">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search0d5e.html?author_id=2453&amp;sr=posts">1497</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 16 May 2011 08:21</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Flanders(Belgium)</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact Ed Dyreen">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact Ed Dyreen</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="http://ed-dyreen.ddns.net/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content21574">
+
+						<h3 ><a href="#p21574">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingf1f3.html?mode=quote&amp;f=3&amp;p=21574" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopica2c3.html?p=21574#p21574" onclick="prompt('Message #28',this.href); return false;">#28</a></span> 
+									<a class="unread" href="viewtopica2c3.html?p=21574#p21574" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberliste2cd.html?mode=viewprofile&amp;u=2453" class="username">Ed Dyreen</a></strong> &raquo; </span>03 Nov 2012 04:47
+			</p>
+			
+			
+			
+			<div class="content"><blockquote><div><cite>alan_b wrote:</cite>I cannot see how executables are related to environmental space.<br /></div></blockquote>They are related in that every program can write to- or read from it and pass it on to their child processes.<br />Unlike Linux, windows programs usually depend on it being correctly initialized.<br /><a href="viewtopicd4d9-2.html?p=9361#p9361" class="postlink">http://www.dostips.com/forum/viewtopic.php?p=9361#p9361</a></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p29117" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile29117">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searche2bd.html?author_id=3864&amp;sr=posts">762</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 15 Jun 2012 13:16</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Italy, Rome</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content29117">
+
+						<h3 ><a href="#p29117">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting617d-2.html?mode=quote&amp;f=3&amp;p=29117" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic1f76.html?p=29117#p29117" onclick="prompt('Message #29',this.href); return false;">#29</a></span> 
+									<a class="unread" href="viewtopic1f76.html?p=29117#p29117" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista071.html?mode=viewprofile&amp;u=3864" class="username">einstein1969</a></strong> &raquo; </span>11 Oct 2013 05:46
+			</p>
+			
+			
+			
+			<div class="content">Hi to all,<br /><br />recently i have a problem of performance with a batch. I read this thread and i perform some test for understand why my code is so slow.<br /><br />But I realized shortly and i need help. The question is on SET, SET /A, EXPAND. <br /><br />I have tried to perform test in some env for understand. There are 3 env type, where i changed the variable name and the size.<br />But i have mantain the size of the env.<br /><br />Why the time of expand change though the size of env remain costant?<br />There are parameters to be taken into cosider in the choice of the composition of the name of the variables?<br />As affects the size of the variables, and then the number of the same?<br /><br />I tried to apply the trick of Aacini to see if it would improve my sets but I have not been successful. Why?<br /><br />Env 1: (original ambient)<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp;&#91;&nbsp; 8:04:32 -&nbsp; 8:24:29 &#93; Reseved Space : 0KB&nbsp; &nbsp;Loop : 1000<br />&nbsp;---------------------------------------------------------------------------<br />&nbsp;GROW_test_________:&nbsp; &nbsp;0.00&nbsp; &nbsp;0.00&nbsp; &nbsp;0.02&nbsp; &nbsp;0.04&nbsp; &nbsp;0.17&nbsp; &nbsp;0.75&nbsp; &nbsp;2.92&nbsp; 12.17<br />&nbsp;ENV_SIZE__________:&nbsp; &nbsp; 4KB&nbsp; &nbsp;16KB&nbsp; &nbsp;36KB&nbsp; &nbsp;77KB&nbsp; 158KB&nbsp; 320KB&nbsp; 643KB 1290KB<br />&nbsp;base______________:&nbsp; &nbsp;0.02&nbsp; &nbsp;0.00&nbsp; &nbsp;0.01&nbsp; &nbsp;0.00&nbsp; &nbsp;0.00&nbsp; &nbsp;0.02&nbsp; &nbsp;0.01&nbsp; &nbsp;0.03<br />&nbsp;SL_EL_____________:&nbsp; &nbsp;0.30&nbsp; &nbsp;0.50&nbsp; &nbsp;1.73&nbsp; &nbsp;2.75&nbsp; &nbsp;5.76&nbsp; 13.70&nbsp; 27.05&nbsp; 53.84<br />&nbsp;SET_SL_S_EL_a_____:&nbsp; &nbsp;0.03&nbsp; &nbsp;0.18&nbsp; &nbsp;0.45&nbsp; &nbsp;0.84&nbsp; &nbsp;1.88&nbsp; &nbsp;5.02&nbsp; &nbsp;9.86&nbsp; 20.04<br />&nbsp;UNSET_SL_U_EL_a___:&nbsp; &nbsp;0.01&nbsp; &nbsp;0.14&nbsp; &nbsp;0.04&nbsp; &nbsp;0.81&nbsp; &nbsp;2.10&nbsp; &nbsp;4.97&nbsp; &nbsp;9.94&nbsp; 19.85<br />&nbsp;SET_SL_S_EL_zzz___:&nbsp; &nbsp;0.04&nbsp; &nbsp;0.18&nbsp; &nbsp;0.10&nbsp; &nbsp;1.20&nbsp; &nbsp;2.18&nbsp; &nbsp;6.43&nbsp; 11.55&nbsp; 23.85<br />&nbsp;UNSET_SL_U_EL_zzz_:&nbsp; &nbsp;0.01&nbsp; &nbsp;0.15&nbsp; &nbsp;0.50&nbsp; &nbsp;0.80&nbsp; &nbsp;1.64&nbsp; &nbsp;4.75&nbsp; &nbsp;9.51&nbsp; 18.97<br />&nbsp;EXPAND_a__________:&nbsp; &nbsp;0.12&nbsp; &nbsp;0.14&nbsp; &nbsp;0.13&nbsp; &nbsp;0.14&nbsp; &nbsp;0.14&nbsp; &nbsp;0.13&nbsp; &nbsp;0.14&nbsp; &nbsp;0.12<br />&nbsp;EXPAND_zzz________:&nbsp; &nbsp;0.13&nbsp; &nbsp;0.18&nbsp; &nbsp;0.21&nbsp; &nbsp;0.30&nbsp; &nbsp;0.47&nbsp; &nbsp;0.85&nbsp; &nbsp;1.43&nbsp; &nbsp;2.53<br />&nbsp;SET_UNSET_zzz_____:&nbsp; &nbsp;0.12&nbsp; &nbsp;0.32&nbsp; &nbsp;1.07&nbsp; &nbsp;2.03&nbsp; &nbsp;4.04&nbsp; 10.92&nbsp; 21.27&nbsp; 42.53<br />&nbsp;SET_UNSET_a_______:&nbsp; &nbsp;0.12&nbsp; &nbsp;0.33&nbsp; &nbsp;0.93&nbsp; &nbsp;2.03&nbsp; &nbsp;4.42&nbsp; 10.86&nbsp; 21.23&nbsp; 43.04<br />&nbsp;SET_a_____________:&nbsp; &nbsp;0.04&nbsp; &nbsp;0.14&nbsp; &nbsp;0.40&nbsp; &nbsp;0.86&nbsp; &nbsp;1.96&nbsp; &nbsp;4.55&nbsp; &nbsp;8.80&nbsp; 17.72<br />&nbsp;SET_zzz___________:&nbsp; &nbsp;0.04&nbsp; &nbsp;0.15&nbsp; &nbsp;0.44&nbsp; &nbsp;0.94&nbsp; &nbsp;2.07&nbsp; &nbsp;4.71&nbsp; &nbsp;9.40&nbsp; 18.83<br />&nbsp;UNSET_a___________:&nbsp; &nbsp;0.04&nbsp; &nbsp;0.16&nbsp; &nbsp;0.45&nbsp; &nbsp;0.95&nbsp; &nbsp;2.06&nbsp; &nbsp;4.73&nbsp; &nbsp;9.39&nbsp; 18.95<br />&nbsp;UNSET_zzz_________:&nbsp; &nbsp;0.05&nbsp; &nbsp;0.16&nbsp; &nbsp;0.44&nbsp; &nbsp;0.95&nbsp; &nbsp;2.08&nbsp; &nbsp;4.70&nbsp; &nbsp;9.42&nbsp; 18.89<br />&nbsp;_2EXP_SET_A_pal___:&nbsp; &nbsp;0.09&nbsp; &nbsp;0.19&nbsp; &nbsp;0.49&nbsp; &nbsp;0.97&nbsp; &nbsp;2.05&nbsp; &nbsp;4.55&nbsp; &nbsp;8.92&nbsp; 17.72<br />&nbsp;_2EXP_SET_pal_____:&nbsp; &nbsp;0.08&nbsp; &nbsp;0.16&nbsp; &nbsp;0.45&nbsp; &nbsp;0.93&nbsp; &nbsp;2.01&nbsp; &nbsp;4.50&nbsp; &nbsp;8.92&nbsp; 17.86<br />&nbsp;_EXP_pal__________:&nbsp; &nbsp;0.14&nbsp; &nbsp;0.14&nbsp; &nbsp;0.14&nbsp; &nbsp;0.16&nbsp; &nbsp;0.14&nbsp; &nbsp;0.14&nbsp; &nbsp;0.16&nbsp; &nbsp;0.15 &lt;---- NOTE THIS<br />&nbsp;_EXP_SET_pal______:&nbsp; &nbsp;0.08&nbsp; &nbsp;0.16&nbsp; &nbsp;0.45&nbsp; &nbsp;0.95&nbsp; &nbsp;2.03&nbsp; &nbsp;4.53&nbsp; &nbsp;8.89&nbsp; 17.64<br />&nbsp;_EXP_SET_A_pal____:&nbsp; &nbsp;0.07&nbsp; &nbsp;0.18&nbsp; &nbsp;0.45&nbsp; &nbsp;0.95&nbsp; &nbsp;2.01&nbsp; &nbsp;4.56&nbsp; &nbsp;8.90&nbsp; 17.81<br />&nbsp;IF_SET_3EXP_pal___:&nbsp; &nbsp;0.03&nbsp; &nbsp;0.05&nbsp; &nbsp;0.10&nbsp; &nbsp;0.17&nbsp; &nbsp;0.28&nbsp; &nbsp;0.61&nbsp; &nbsp;1.17&nbsp; &nbsp;2.31<br />&nbsp;EXP_TIME__________:&nbsp; &nbsp;0.15&nbsp; &nbsp;0.19&nbsp; &nbsp;0.20&nbsp; &nbsp;0.28&nbsp; &nbsp;0.44&nbsp; &nbsp;0.84&nbsp; &nbsp;1.46&nbsp; &nbsp;2.54<br />&nbsp;EXP_RND___________:&nbsp; &nbsp;0.16&nbsp; &nbsp;0.17&nbsp; &nbsp;0.21&nbsp; &nbsp;0.26&nbsp; &nbsp;0.43&nbsp; &nbsp;0.85&nbsp; &nbsp;1.41&nbsp; &nbsp;2.52<br /></code></pre></div><br /><br />Env 2: (my batch env)<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp;&#91;&nbsp; 8:24:36 -&nbsp; 9:15:52 &#93; Reseved Space : 0KB&nbsp; &nbsp;Loop : 1000<br />&nbsp;---------------------------------------------------------------------------<br />&nbsp;GROW_A1___________:&nbsp; &nbsp;0.00&nbsp; &nbsp;0.14&nbsp; &nbsp;0.83&nbsp; &nbsp;4.13&nbsp; 17.12&nbsp; 73.37 308.76 250.84<br />&nbsp;ENV_SIZE__________:&nbsp; &nbsp; 5KB&nbsp; &nbsp;16KB&nbsp; &nbsp;36KB&nbsp; &nbsp;76KB&nbsp; 157KB&nbsp; 323KB&nbsp; 656KB 1326KB<br />&nbsp;base______________:&nbsp; &nbsp;0.00&nbsp; &nbsp;0.00&nbsp; &nbsp;0.00&nbsp; &nbsp;0.00&nbsp; &nbsp;0.00&nbsp; &nbsp;0.02&nbsp; &nbsp;0.03&nbsp; &nbsp;0.03<br />&nbsp;SL_EL_____________:&nbsp; &nbsp;0.33&nbsp; &nbsp;0.56&nbsp; &nbsp;1.14&nbsp; &nbsp;2.94&nbsp; &nbsp;6.08&nbsp; 14.55&nbsp; 29.89&nbsp; 60.86 <br />&nbsp;SET_SL_S_EL_a_____:&nbsp; &nbsp;0.06&nbsp; &nbsp;0.14&nbsp; &nbsp;0.74&nbsp; &nbsp;0.84&nbsp; &nbsp;2.78&nbsp; &nbsp;5.09&nbsp; 10.61&nbsp; 21.71 <br />&nbsp;UNSET_SL_U_EL_a___:&nbsp; &nbsp;0.03&nbsp; &nbsp;0.15&nbsp; &nbsp;0.74&nbsp; &nbsp;1.00&nbsp; &nbsp;1.92&nbsp; &nbsp;5.02&nbsp; 10.47&nbsp; 21.18 <br />&nbsp;SET_SL_S_EL_zzz___:&nbsp; &nbsp;0.02&nbsp; &nbsp;0.19&nbsp; &nbsp;0.66&nbsp; &nbsp;1.40&nbsp; &nbsp;2.31&nbsp; &nbsp;6.06&nbsp; 12.72&nbsp; 26.67 <br />&nbsp;UNSET_SL_U_EL_zzz_:&nbsp; &nbsp;0.01&nbsp; &nbsp;0.16&nbsp; &nbsp;0.39&nbsp; &nbsp;0.88&nbsp; &nbsp;2.05&nbsp; &nbsp;4.98&nbsp; 10.36&nbsp; 20.50<br />&nbsp;EXPAND_a__________:&nbsp; &nbsp;0.15&nbsp; &nbsp;0.14&nbsp; &nbsp;0.14&nbsp; &nbsp;0.14&nbsp; &nbsp;0.14&nbsp; &nbsp;0.13&nbsp; &nbsp;0.13&nbsp; &nbsp;0.14<br />&nbsp;EXPAND_zzz________:&nbsp; &nbsp;0.15&nbsp; &nbsp;0.19&nbsp; &nbsp;0.28&nbsp; &nbsp;0.40&nbsp; &nbsp;0.72&nbsp; &nbsp;1.45&nbsp; &nbsp;2.64&nbsp; &nbsp;5.04 <br />&nbsp;SET_UNSET_zzz_____:&nbsp; &nbsp;0.15&nbsp; &nbsp;0.34&nbsp; &nbsp;0.94&nbsp; &nbsp;2.01&nbsp; &nbsp;4.34&nbsp; 11.15&nbsp; 23.01&nbsp; 47.14<br />&nbsp;SET_UNSET_a_______:&nbsp; &nbsp;0.17&nbsp; &nbsp;0.36&nbsp; &nbsp;0.99&nbsp; &nbsp;2.22&nbsp; &nbsp;4.70&nbsp; 11.13&nbsp; 22.89&nbsp; 47.52<br />&nbsp;SET_a_____________:&nbsp; &nbsp;0.08&nbsp; &nbsp;0.16&nbsp; &nbsp;0.43&nbsp; &nbsp;0.91&nbsp; &nbsp;2.00&nbsp; &nbsp;4.62&nbsp; &nbsp;9.48&nbsp; 19.41<br />&nbsp;SET_zzz___________:&nbsp; &nbsp;0.08&nbsp; &nbsp;0.17&nbsp; &nbsp;0.48&nbsp; &nbsp;1.01&nbsp; &nbsp;2.18&nbsp; &nbsp;5.12&nbsp; 10.29&nbsp; 21.11<br />&nbsp;UNSET_a___________:&nbsp; &nbsp;0.08&nbsp; &nbsp;0.17&nbsp; &nbsp;0.49&nbsp; &nbsp;1.03&nbsp; &nbsp;2.22&nbsp; &nbsp;5.03&nbsp; 10.36&nbsp; 21.04<br />&nbsp;UNSET_zzz_________:&nbsp; &nbsp;0.10&nbsp; &nbsp;0.17&nbsp; &nbsp;0.37&nbsp; &nbsp;1.01&nbsp; &nbsp;2.21&nbsp; &nbsp;5.03&nbsp; 10.29&nbsp; 21.08<br />&nbsp;_2EXP_SET_A_pal___:&nbsp; &nbsp;0.13&nbsp; &nbsp;0.33&nbsp; &nbsp;0.48&nbsp; &nbsp;1.77&nbsp; &nbsp;5.16&nbsp; &nbsp;6.08&nbsp; 16.30&nbsp; 39.64<br />&nbsp;_2EXP_SET_pal_____:&nbsp; &nbsp;0.07&nbsp; &nbsp;0.18&nbsp; &nbsp;0.45&nbsp; &nbsp;1.11&nbsp; &nbsp;2.70&nbsp; &nbsp;4.92&nbsp; 10.82&nbsp; 23.20<br />&nbsp;_EXP_pal__________:&nbsp; &nbsp;0.15&nbsp; &nbsp;0.16&nbsp; &nbsp;0.15&nbsp; &nbsp;0.30&nbsp; &nbsp;0.76&nbsp; &nbsp;0.41&nbsp; &nbsp;1.67&nbsp; &nbsp;4.59 &lt;---- NOTE THIS<br />&nbsp;_EXP_SET_pal______:&nbsp; &nbsp;0.10&nbsp; &nbsp;0.20&nbsp; &nbsp;0.36&nbsp; &nbsp;1.09&nbsp; &nbsp;2.66&nbsp; &nbsp;4.94&nbsp; 10.79&nbsp; 23.48<br />&nbsp;_EXP_SET_A_pal____:&nbsp; &nbsp;0.11&nbsp; &nbsp;0.30&nbsp; &nbsp;0.56&nbsp; &nbsp;1.70&nbsp; &nbsp;5.19&nbsp; &nbsp;6.03&nbsp; 16.28&nbsp; 39.80<br />&nbsp;IF_SET_3EXP_pal___:&nbsp; &nbsp;0.11&nbsp; &nbsp;0.18&nbsp; &nbsp;0.34&nbsp; &nbsp;0.93&nbsp; &nbsp;2.03&nbsp; &nbsp;4.66&nbsp; &nbsp;9.49&nbsp; 19.56<br />&nbsp;EXP_TIME__________:&nbsp; &nbsp;0.15&nbsp; &nbsp;0.18&nbsp; &nbsp;0.27&nbsp; &nbsp;0.41&nbsp; &nbsp;0.72&nbsp; &nbsp;1.45&nbsp; &nbsp;2.66&nbsp; &nbsp;5.07<br />&nbsp;EXP_RND___________:&nbsp; &nbsp;0.15&nbsp; &nbsp;0.19&nbsp; &nbsp;0.25&nbsp; &nbsp;0.41&nbsp; &nbsp;0.71&nbsp; &nbsp;1.42&nbsp; &nbsp;2.63&nbsp; &nbsp;5.03<br /></code></pre></div><br /><br />Env 3 (simil Env 2) :<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp;&#91;&nbsp; 9:16:01 - 10:09:32 &#93; Reseved Space : 0KB&nbsp; &nbsp;Loop : 1000<br />&nbsp;---------------------------------------------------------------------------<br />&nbsp;GROW_A2___________:&nbsp; &nbsp;0.00&nbsp; &nbsp;0.16&nbsp; &nbsp;0.83&nbsp; &nbsp;4.00&nbsp; 17.16&nbsp; 72.64 314.66 271.93<br />&nbsp;ENV_SIZE__________:&nbsp; &nbsp; 5KB&nbsp; &nbsp;16KB&nbsp; &nbsp;36KB&nbsp; &nbsp;76KB&nbsp; 156KB&nbsp; 323KB&nbsp; 656KB 1326KB<br />&nbsp;base______________:&nbsp; &nbsp;0.01&nbsp; &nbsp;0.00&nbsp; &nbsp;0.00&nbsp; &nbsp;0.00&nbsp; &nbsp;0.00&nbsp; &nbsp;0.02&nbsp; &nbsp;0.01&nbsp; &nbsp;0.03<br />&nbsp;SL_EL_____________:&nbsp; &nbsp;0.32&nbsp; &nbsp;0.53&nbsp; &nbsp;1.14&nbsp; &nbsp;3.05&nbsp; &nbsp;6.13&nbsp; 14.54&nbsp; 29.86&nbsp; 60.62<br />&nbsp;SET_SL_S_EL_a_____:&nbsp; &nbsp;0.04&nbsp; &nbsp;0.19&nbsp; &nbsp;0.37&nbsp; &nbsp;0.78&nbsp; &nbsp;1.96&nbsp; &nbsp;5.04&nbsp; 10.57&nbsp; 21.62<br />&nbsp;UNSET_SL_U_EL_a___:&nbsp; &nbsp;0.03&nbsp; &nbsp;0.17&nbsp; &nbsp;0.36&nbsp; &nbsp;0.79&nbsp; &nbsp;1.93&nbsp; &nbsp;5.09&nbsp; 10.55&nbsp; 21.52<br />&nbsp;SET_SL_S_EL_zzz___:&nbsp; &nbsp;0.03&nbsp; &nbsp;0.22&nbsp; &nbsp;0.96&nbsp; &nbsp;1.50&nbsp; &nbsp;2.20&nbsp; &nbsp;5.96&nbsp; 12.58&nbsp; 25.82<br />&nbsp;UNSET_SL_U_EL_zzz_:&nbsp; &nbsp;0.03&nbsp; &nbsp;0.19&nbsp; &nbsp;0.79&nbsp; &nbsp;1.17&nbsp; &nbsp;1.82&nbsp; &nbsp;5.03&nbsp; 10.26&nbsp; 20.89<br />&nbsp;EXPAND_a__________:&nbsp; &nbsp;0.13&nbsp; &nbsp;0.14&nbsp; &nbsp;0.14&nbsp; &nbsp;0.15&nbsp; &nbsp;0.14&nbsp; &nbsp;0.12&nbsp; &nbsp;0.15&nbsp; &nbsp;0.12<br />&nbsp;EXPAND_zzz________:&nbsp; &nbsp;0.15&nbsp; &nbsp;0.21&nbsp; &nbsp;0.27&nbsp; &nbsp;0.39&nbsp; &nbsp;0.69&nbsp; &nbsp;1.35&nbsp; &nbsp;2.49&nbsp; &nbsp;4.74<br />&nbsp;SET_UNSET_zzz_____:&nbsp; &nbsp;0.14&nbsp; &nbsp;0.33&nbsp; &nbsp;0.98&nbsp; &nbsp;2.45&nbsp; &nbsp;4.28&nbsp; 11.07&nbsp; 22.77&nbsp; 46.31<br />&nbsp;SET_UNSET_a_______:&nbsp; &nbsp;0.14&nbsp; &nbsp;0.36&nbsp; &nbsp;0.78&nbsp; &nbsp;1.66&nbsp; &nbsp;4.62&nbsp; 11.02&nbsp; 22.85&nbsp; 46.91<br />&nbsp;SET_a_____________:&nbsp; &nbsp;0.06&nbsp; &nbsp;0.14&nbsp; &nbsp;0.32&nbsp; &nbsp;0.66&nbsp; &nbsp;2.02&nbsp; &nbsp;4.59&nbsp; &nbsp;9.45&nbsp; 19.36<br />&nbsp;SET_zzz___________:&nbsp; &nbsp;0.07&nbsp; &nbsp;0.17&nbsp; &nbsp;0.35&nbsp; &nbsp;0.76&nbsp; &nbsp;2.17&nbsp; &nbsp;4.92&nbsp; 10.18&nbsp; 20.72<br />&nbsp;UNSET_a___________:&nbsp; &nbsp;0.07&nbsp; &nbsp;0.17&nbsp; &nbsp;0.47&nbsp; &nbsp;0.75&nbsp; &nbsp;2.19&nbsp; &nbsp;5.00&nbsp; 10.32&nbsp; 20.75<br />&nbsp;UNSET_zzz_________:&nbsp; &nbsp;0.07&nbsp; &nbsp;0.18&nbsp; &nbsp;0.36&nbsp; &nbsp;0.75&nbsp; &nbsp;2.17&nbsp; &nbsp;4.97&nbsp; 10.24&nbsp; 20.78<br />&nbsp;_2EXP_SET_A_pal___:&nbsp; &nbsp;0.13&nbsp; &nbsp;0.53&nbsp; &nbsp;1.43&nbsp; &nbsp;3.02&nbsp; &nbsp;7.22&nbsp; 14.41&nbsp; 30.07&nbsp; 62.09<br />&nbsp;_2EXP_SET_pal_____:&nbsp; &nbsp;0.10&nbsp; &nbsp;0.21&nbsp; &nbsp;0.48&nbsp; &nbsp;1.07&nbsp; &nbsp;2.78&nbsp; &nbsp;6.19&nbsp; 12.72&nbsp; 25.82<br />&nbsp;_EXP_pal__________:&nbsp; &nbsp;0.14&nbsp; &nbsp;0.18&nbsp; &nbsp;0.28&nbsp; &nbsp;0.50&nbsp; &nbsp;0.95&nbsp; &nbsp;1.87&nbsp; &nbsp;3.69&nbsp; &nbsp;7.42 &lt;---- NOTE THIS why is so different from previus? <br />&nbsp;_EXP_SET_pal______:&nbsp; &nbsp;0.09&nbsp; &nbsp;0.22&nbsp; &nbsp;0.49&nbsp; &nbsp;1.06&nbsp; &nbsp;2.86&nbsp; &nbsp;6.25&nbsp; 12.81&nbsp; 25.94<br />&nbsp;_EXP_SET_A_pal____:&nbsp; &nbsp;0.12&nbsp; &nbsp;0.46&nbsp; &nbsp;1.23&nbsp; &nbsp;2.59&nbsp; &nbsp;6.44&nbsp; 12.70&nbsp; 26.71&nbsp; 55.62<br />&nbsp;IF_SET_3EXP_pal___:&nbsp; &nbsp;0.11&nbsp; &nbsp;0.24&nbsp; &nbsp;0.66&nbsp; &nbsp;1.09&nbsp; &nbsp;2.95&nbsp; &nbsp;6.47&nbsp; 13.26&nbsp; 26.97<br />&nbsp;EXP_TIME__________:&nbsp; &nbsp;0.18&nbsp; &nbsp;0.19&nbsp; &nbsp;0.26&nbsp; &nbsp;0.39&nbsp; &nbsp;0.66&nbsp; &nbsp;1.36&nbsp; &nbsp;2.47&nbsp; &nbsp;4.71<br />&nbsp;EXP_RND___________:&nbsp; &nbsp;0.16&nbsp; &nbsp;0.19&nbsp; &nbsp;0.25&nbsp; &nbsp;0.39&nbsp; &nbsp;0.66&nbsp; &nbsp;1.35&nbsp; &nbsp;2.45&nbsp; &nbsp;4.69<br /><br /></code></pre></div><br /><br />The code (Hoping not to have made ​​too many mistakes ...) A little long, but I did not know how to shorten it:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal enableDelayedExpansion<br /><br />rem for graph<br />rem mode con: cols=100 lines=52<br /><br />set /a alt=0, aRes=0<br />for %%p in (%1 %2) do (&nbsp; &nbsp;if /I &quot;%%p&quot;==&quot;-R&quot; call :ReserveEnvironmentSpace 1400<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;if /I &quot;%%p&quot;==&quot;-A1&quot; set &quot;alt=1&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;if /I &quot;%%p&quot;==&quot;-A2&quot; set &quot;alt=2&quot; )<br /><br />set &quot;test=a&quot;<br />for /l %%n in (1 1 10) do set &quot;test=!test!!test!&quot;<br />set buf1=%test%<br />set buf2=%test%<br />set &quot;buf3=a&quot;<br />for /l %%n in (1 1 9) do set &quot;buf3=!buf3!!buf3!&quot;<br />set cnt=0<br />set &quot;a=a&quot;<br />set &quot;zzz=a&quot;<br />set &quot;aaa=a&quot;<br /><br />rem pre-alloc<br />if &quot;%3&quot;==&quot;&quot; (set prec=1000) else set prec=%3<br />set /a af=0, at=prec, env_size=0, att=0, aval=0, aRows=0, ai=0, cnt2=0, arange=0, acs=0, alg=0<br />set &quot;a0=%time%&quot;<br />set &quot;a1=%time%&quot;<br />set &quot;aLis= &quot;<br /><br />goto :Pre_!alt!<br />:Pre_1<br />:Pre_2<br />&nbsp; rem new env base<br />&nbsp; set /a ai=0, dm=256*256*3 &amp; for %%c in (000000 000080 008000 008080 800000 800080 808000 C0C0C0 808080 0000FF 00FF00 00FFFF FF0000 FF00FF FFFF00 FFFFFF) do (set &quot;p16&#91;!ai!&#93;=%%c&quot; &amp; set /a ai=ai+1)<br />&nbsp; for /L %%i in (0,1,15) do set /a &quot;rgb=0x!p16&#91;%%i&#93;!, rr&#91;%%i&#93;=rgb &gt;&gt; 16, gg&#91;%%i&#93;=(rgb &gt;&gt; 8) &amp; 0xFF, bb&#91;%%i&#93;=rgb &amp; 0xFF&quot;<br /><br />:Pre_0<br /><br />set ag0=%time%<br />for %%n in (0 10 20 40 80 160 320 640) do call :test %%n<br /><br />cls &amp; call :st<br />call :st &gt;&gt; test_env.out.!aRes!_!alt!_!prec!.txt<br />echo &gt; test_env.exit<br />pause<br />exit /b<br /><br /><br />:test<br /><br />goto :Grow_!alt!<br /><br />:Grow_2<br /><br />&nbsp; rem tuned for 0 10 20 40 80 160 ....<br />&nbsp; set /a &quot;af=cnt+1, at=cnt+%1*8+(%1*6/10)&quot;<br />&nbsp; set &quot;a0=%time%&quot;<br />&nbsp; for /L %%i in (%af%,1,%at%) do (<br />&nbsp; &nbsp; &nbsp;set /a &quot;pal16_4.R&#91;%%i&#93;=!random! %% 256, pal16_4.G&#91;%%i&#93;=!random! %% 256, pal16_4.B&#91;%%i&#93;=!random! %% 256&quot;<br />&nbsp; &nbsp;set &quot;pal16_4.bg&#91;%%i&#93;=9&quot; &amp; set &quot;pal16_4.fg&#91;%%i&#93;=D&quot; &amp; set &quot;pal16_4.char&#91;%%i&#93;=±&quot;<br />&nbsp; &nbsp;if !random! lss 2048 (set /a &quot;i=(%%i-af)*1000/(at-af+1)&quot;&amp;set i=00!i!&amp;title GROW: !i:~-3,2!.!i:~-1!%%&nbsp; !time:~0,8!)<br />&nbsp; )<br />&nbsp; set &quot;a1=%time%&quot;<br />&nbsp; set /a &quot;cnt=cnt+%1*8+(%1*6/10)&quot; &amp; title <br />&nbsp; call :stuffed a0 a1 GROW_A2 0<br /><br />&nbsp; goto :env<br /><br />:Grow_1<br /><br />&nbsp; set /a &quot;af=cnt+1, at=cnt+%1*8+(%1*6/10)&quot;<br />&nbsp; set &quot;a0=%time%&quot;<br />&nbsp; for /L %%i in (%af%,1,%at%) do (<br />&nbsp; &nbsp; &nbsp;set /a &quot;pal16_4&#91;%%i&#93;.R=!random! %% 256, pal16_4&#91;%%i&#93;.G=!random! %% 256, pal16_4&#91;%%i&#93;.B=!random! %% 256&quot;<br />&nbsp; &nbsp;set &quot;pal16_4&#91;%%i&#93;.bg=9&quot; &amp; set &quot;pal16_4&#91;%%i&#93;.fg=D&quot; &amp; set &quot;pal16_4&#91;%%i&#93;.char=±&quot;<br />&nbsp; &nbsp;if !random! lss 2048 (set /a &quot;i=(%%i-af)*1000/(at-af+1)&quot;&amp;set i=00!i!&amp;title GROW: !i:~-3,2!.!i:~-1!%%&nbsp; !time:~0,8!)<br />&nbsp; )<br />&nbsp; set &quot;a1=%time%&quot;<br />&nbsp; set /a &quot;cnt=cnt+%1*8+(%1*6/10)&quot; &amp; title <br />&nbsp; call :stuffed a0 a1 GROW_A1 0<br />&nbsp; goto :env<br /><br />:Grow_0<br />&nbsp; set /a &quot;af=cnt+1, at=cnt+%1&quot;<br />&nbsp; set &quot;a0=%time%&quot;<br />&nbsp; for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp; set test%%n=%test%<br />&nbsp; )<br />&nbsp; set &quot;a1=%time%&quot;<br />&nbsp; set /a &quot;cnt=cnt+%1&quot;<br />&nbsp; call :stuffed a0 a1 GROW_test 0<br /><br />:env<br />&nbsp; set &gt;env_!aRes!_!alt!_!prec!_%1.txt<br />&nbsp; for %%f in (env_!aRes!_!alt!_!prec!_%1.txt) do set /a &quot;env_size=(%%~zf &gt;&gt; 10)<br />&nbsp; set &quot;env_size=&nbsp; &nbsp; &nbsp; %env_size%KB&quot;<br />&nbsp; set &quot;env_size=%env_size:~-6%&quot;<br />&nbsp; set A_ENV_SIZE__________=%A_ENV_SIZE__________% %env_size%<br />&nbsp; if &quot;!aLis:ENV_SIZE__________=!&quot;==&quot;!aLis!&quot; set &quot;aLis=!aLis! ENV_SIZE__________&quot;<br /><br />set /a &quot;af=1, at=prec&quot;<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; rem<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 base 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; rem<br />&nbsp; setlocal<br />&nbsp; endlocal<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 SL_EL base<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; rem<br />&nbsp; setlocal<br />&nbsp; set &quot;a=b&quot;<br />&nbsp; endlocal<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 SET_SL_S_EL_a &quot;SL_EL+base&quot;<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; rem<br />&nbsp; setlocal<br />&nbsp; set &quot;a=&quot;<br />&nbsp; endlocal<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 UNSET_SL_U_EL_a &quot;SL_EL+base&quot;<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; rem<br />&nbsp; setlocal<br />&nbsp; set &quot;zzz=b&quot;<br />&nbsp; endlocal<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 SET_SL_S_EL_zzz &quot;SL_EL+base&quot;<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; rem<br />&nbsp; setlocal<br />&nbsp; set &quot;zzz=&quot;<br />&nbsp; endlocal<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 UNSET_SL_U_EL_zzz &quot;SL_EL+base&quot;<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; rem<br />&nbsp; echo !a!&gt;nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 EXPAND_a base<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; rem<br />&nbsp; echo !zzz!&gt;nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 EXPAND_zzz base<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; rem<br />&nbsp; set &quot;zzz=b&quot;<br />&nbsp; set &quot;zzz=&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 SET_UNSET_zzz base<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; rem<br />&nbsp; set &quot;a=b&quot;<br />&nbsp; set &quot;a=&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 SET_UNSET_a base<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; rem<br />&nbsp; set &quot;a=b&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 SET_a base<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; rem<br />&nbsp; set &quot;zzz=b&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 SET_zzz base<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; rem<br />&nbsp; set &quot;a=&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 UNSET_a base<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; rem<br />&nbsp; set &quot;zzz=&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 UNSET_zzz base<br /><br />set /a cnt2=cnt2+(%1*8+(%1*6/10)), pal16_4.size=cnt2/2<br />rem echo !pal16_4.size! &amp; pause<br /><br />goto :alt_m_!alt!<br /><br />:alt_m_0<br /><br />if &quot;!alt!&quot; equ &quot;0&quot; For %%i in (!pal16_4.size!) do set /a &quot;pal16_4&#91;%%i&#93;.R=%random% %% 256, pal16_4&#91;%%i&#93;.G=%random% %% 256, pal16_4&#91;%%i&#93;.B=%random% %%256&quot;<br /><br />:alt_m_1<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4&#91;!pal16_4.size!&#93;.R&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _2EXP_SET_A_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4&#91;%pal16_4.size%&#93;.R!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _2EXP_SET_pal 0<br /><br />goto :alt_m_0-1_!pal16_4.size!<br /><br />:alt_m_0-1_0<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4&#91;0&#93;.R!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4&#91;0&#93;.R!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4&#91;0&#93;.R&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_0-1_43<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4&#91;43&#93;.R!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4&#91;43&#93;.R!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4&#91;43&#93;.R&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_0-1_129<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4&#91;129&#93;.R!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4&#91;129&#93;.R!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4&#91;129&#93;.R&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_0-1_301<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4&#91;301&#93;.R!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4&#91;301&#93;.R!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4&#91;301&#93;.R&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_0-1_645<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4&#91;645&#93;.R!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4&#91;645&#93;.R!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4&#91;645&#93;.R&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_0-1_1333<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4&#91;1333&#93;.R!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4&#91;1333&#93;.R!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4&#91;1333&#93;.R&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_0-1_2709<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4&#91;2709&#93;.R!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4&#91;2709&#93;.R!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4&#91;2709&#93;.R&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_0-1_5461<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4&#91;5461&#93;.R!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4&#91;5461&#93;.R!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4&#91;5461&#93;.R&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_2<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4.R&#91;!pal16_4.size!&#93;&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _2EXP_SET_A_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4.R&#91;%pal16_4.size%&#93;!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _2EXP_SET_pal 0<br /><br />goto :alt_m_2_!pal16_4.size!<br /><br />:alt_m_2_0<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4.R&#91;0&#93;!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4.R&#91;0&#93;!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4.R&#91;0&#93;&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_2_43<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4.R&#91;43&#93;!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4.R&#91;43&#93;!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4.R&#91;43&#93;&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_2_129<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4.R&#91;129&#93;!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4.R&#91;129&#93;!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4.R&#91;129&#93;&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_2_301<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4.R&#91;301&#93;!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4.R&#91;301&#93;!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4.R&#91;301&#93;&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_2_645<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4.R&#91;645&#93;!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4.R&#91;645&#93;!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4.R&#91;645&#93;&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_2_1333<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4.R&#91;1333&#93;!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4.R&#91;1333&#93;!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4.R&#91;1333&#93;&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_2_2709<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4.R&#91;2709&#93;!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4.R&#91;2709&#93;!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4.R&#91;2709&#93;&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:alt_m_2_5461<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !pal16_4.R&#91;5461&#93;!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set &quot;a=!pal16_4.R&#91;5461&#93;!&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;set /a &quot;a=pal16_4.R&#91;5461&#93;&quot;<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 _EXP_SET_A_pal 0<br />goto :_fi_set<br /><br />:_fi_set<br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;if !dm! gtr !a! set ind=!pal16_4.size!<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 IF_SET_3EXP_pal 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !time!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 EXP_TIME 0<br /><br />set &quot;a0=%time%&quot;<br />for /l %%n in (%af% 1 %at%) do (<br />&nbsp; &nbsp;echo !random!&gt; nul<br />)<br />set &quot;a1=%time%&quot;<br />call :stuffed a0 a1 EXP_RND 0<br /><br />rem call :graph<br /><br />rem del env.txt<br />exit /b<br /><br />:graph<br /><br />set /a ALiB=0, ac=0, Cols=7, aval=aval+1<br /><br />set &quot;Ai_= &quot; &amp; For /F %%l in ('set Ai_') do set &quot;%%l&quot;<br /><br />for %%L in (!aLis!) do if not &quot;%%L&quot;==&quot;ENV_SIZE__________&quot; if not &quot;%%L&quot;==&quot;base______________&quot; (<br />&nbsp; &nbsp;set /a arange=!max_%%L!-!min_%%L!, Ali=1<br />&nbsp; &nbsp;if !arange! lss 0 set /a arange=-arange<br />&nbsp; &nbsp;set &quot;alg=%%L&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;<br />&nbsp; &nbsp;set alg=!alg:~0,13!<br />&nbsp; &nbsp;for %%v in (!ALiB!) do set &quot;Ai_%%v=!Ai_%%v! !alg!&quot;<br />&nbsp; &nbsp;for %%R in (!LRAW_%%L!) do (<br />&nbsp; &nbsp;&nbsp; &nbsp;if !arange! gtr 5 (set /a &quot;att=(%%R-!min_%%L!)*12/arange-1&quot;) else set att=5<br />&nbsp; &nbsp;&nbsp; &nbsp;set &quot;acs=&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;For /L %%c in (0,1,!att!) do set &quot;acs=!acs!-&quot; &amp; rem |<br />&nbsp; &nbsp;&nbsp; &nbsp;set &quot;acs=!acs!o&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;set acs=!acs:~0,13!<br />&nbsp; &nbsp;&nbsp; &nbsp;set /a ai=Ali+ALiB<br />&nbsp; &nbsp;&nbsp; &nbsp;for %%v in (!ai!) do set &quot;Ai_%%v=!Ai_%%v! !acs!&quot;<br />&nbsp; &nbsp;&nbsp; &nbsp;set /a Ali=Ali+1<br />&nbsp; &nbsp;)<br />&nbsp; &nbsp;set /a &quot;ac=(ac+1) %% cols&quot;<br />&nbsp; &nbsp;if&nbsp; !ac! equ 0 set /a &quot;ALiB=ALiB+(aval+1)&quot;<br />)<br />set /a aRows=ALiB+aval<br />exit /b<br /><br />:st<br />echo&nbsp; &#91; %ag0:~0,8% - %time:~0,8% &#93; Reseved Space : %aRes%KB&nbsp; &nbsp;Loop : %prec%<br />echo&nbsp; ---------------------------------------------------------------------------<br />for %%L in (!aLis!) do echo&nbsp; %%L:!A_%%L!<br />rem for graph<br />rem echo(<br />rem For /L %%L in (0,1,!aRows!) do echo(!Ai_%%L!<br />exit /b<br /><br />:stuffed<br />set &quot;att=%3__________________&quot;<br />rem echo !att:~0,18! &amp; pause<br />for %%L in (&quot;!att:~0,18!&quot;) do (<br />&nbsp; &nbsp;if &quot;!aLis:%%~L=!&quot;==&quot;!aLis!&quot; set &quot;aLis=!aLis! %%~L&quot;<br />&nbsp; &nbsp;call :diffTimeRaw %1 %2 %3<br />&nbsp; &nbsp;set /a &quot;%3=%3-(%~4)&quot;<br />&nbsp; &nbsp;if !%3! lss 0 set %3=0<br />&nbsp; &nbsp;set a0=!%3!<br />&nbsp; &nbsp;rem for graph<br />&nbsp; &nbsp;rem if not defined min_%%~L (set /a min_%%~L=%3) else if !%3! lss !min_%%~L! set /a min_%%~L=%3<br />&nbsp; &nbsp;rem if not defined max_%%~L (set /a max_%%~L=%3) else if !%3! gtr !max_%%~L! set /a max_%%~L=%3<br />&nbsp; &nbsp;rem set LRAW_%%~L=!LRAW_%%~L! !a0!<br />&nbsp; &nbsp;call :padNum a0<br />&nbsp; &nbsp;set A_%%~L=!A_%%~L! !a0!<br />)<br />cls<br />call :st<br />exit /b<br /><br />:padNum<br />set &quot;%1=&nbsp; &nbsp; &nbsp;!%1!&quot; <br />set &quot;%1=!%1:~-5,3!.!%1:~-2!&quot;<br />set &quot;%1=!%1:.-=-0.0!&quot;<br />set &quot;%1=!%1:-.=-0.!&quot;<br />set &quot;%1=!%1: .=0.!&quot;<br />set &quot;%1=!%1:. =.0!&quot;<br />exit /b<br /><br />:diffTimeRaw2 tStart tEnd result=<br />for /F &quot;tokens=1-4 delims=:.,&quot; %%a in (&quot;!%1!&quot;) do set /A tStart=((%%a*60+10%%b%%100)*60+10%%c%%100)*100+10%%d%%100<br />for /F &quot;tokens=1-4 delims=:.,&quot; %%a in (&quot;!%2!&quot;) do set /A tEnd=((%%a*60+10%%b%%100)*60+10%%c%%100)*100+10%%d%%100<br />set /A %3=tEnd-tStart<br />exit /B<br /><br />:diffTimeRaw tStart tEnd result=<br />set aa=&quot;!%~1!:!%~2!&quot;<br />for /F &quot;tokens=1-8 delims=:.,&quot; %%a in (&quot;!aa: =0!&quot;) do set /a &quot;%3=(a=(((1%%e-1%%a)*60)+1%%f-1%%b)*6000+1%%g%%h-1%%c%%d)+((a&gt;&gt;31) &amp; 8640000)&quot;<br />exit /B<br /><br /><br />:ReserveEnvironmentSpace sizeInKB<br />rem Define the first large variable (reserving 6 bytes for variable name)<br />set aRes=%1<br />set z1=X<br />for /L %%i in (1,1,12) do set z1=!z1!!z1!<br />set z1=!z1!!z1:~8!<br />rem Define the rest of large variables<br />set /A lastVar=%1 / 8<br />for /L %%i in (2,1,%lastVar%) do set z%%i=!z1!<br />rem Delete all the large variables in bottom-up order<br />for /L %%i in (%lastVar%,-1,1) do set z%%i=<br />exit /B<br /></code></pre></div><br /><br />Einstein1969</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p32489" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile32489">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistcb12.html?mode=viewprofile&amp;u=1621" class="username">carlos</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchda66.html?author_id=1621&amp;sr=posts">472</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 20 Aug 2010 13:57</dd>		
+		
+																<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Chile</dd>
+							
+							<dd class="profile-contact">
+				<strong>Contact:</strong>
+				<div class="dropdown-container dropdown-left">
+					<a href="#" class="dropdown-trigger" title="Contact carlos">
+						<i class="icon fa-commenting-o fa-fw icon-lg" aria-hidden="true"></i><span class="sr-only">Contact carlos</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<div class="dropdown-contents contact-icons">
+																																								<div>
+																	<a href="https://web.archive.org/web/20180902091521/http://consolesoft.com/" title="Website" class="last-cell">
+										<span class="contact-icon phpbb_website-icon">Website</span>
+									</a>
+																	</div>
+																					</div>
+					</div>
+				</div>
+			</dd>
+				
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content32489">
+
+						<h3 ><a href="#p32489">Re: Why does SET performance degrade as environment size gro</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting6329.html?mode=quote&amp;f=3&amp;p=32489" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic4944.html?p=32489#p32489" onclick="prompt('Message #30',this.href); return false;">#30</a></span> 
+									<a class="unread" href="viewtopic4944.html?p=32489#p32489" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistcb12.html?mode=viewprofile&amp;u=1621" class="username">carlos</a></strong> &raquo; </span>13 Feb 2014 14:09
+			</p>
+			
+			
+			
+			<div class="content">Hello.<br />Using doskey for save variables is a alternative.<br />Someone knows where are stored this variables?<br />It seems to not be in a environment block.<br />See this post: <a href="viewtopic63f4.html?f=3&amp;t=5366" class="postlink">http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5366</a></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="postingcb84.html?mode=reply&amp;f=3&amp;t=2597" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopicb956.html?f=3&amp;t=2597&amp;start=15&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=2597&amp;start=15">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			31 posts
+							<ul>
+			<li class="arrow previous"><a class="button button-icon-only" href="viewtopice0d8.html?f=3&amp;t=2597" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span class="sr-only">Previous</span></a></li>
+				<li><a class="button" href="viewtopice0d8.html?f=3&amp;t=2597" role="button">1</a></li>
+			<li class="active"><span>2</span></li>
+				<li><a class="button" href="viewtopic3712.html?f=3&amp;t=2597&amp;start=30" role="button">3</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopic3712.html?f=3&amp;t=2597&amp;start=30" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5089.gif?cron_type=cron.task.text_reparser.post_text" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=2597&p=21572 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:25:38 GMT -->
+</html>

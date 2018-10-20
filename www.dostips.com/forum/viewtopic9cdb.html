@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8803&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:23:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; TNSPING Multiple hosts</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>TNSPING Multiple hosts</h2>
+		<p><a href="viewtopicaf7e.html?f=3&amp;t=8803">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8803</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>TNSPING Multiple hosts</h3>
+				<div class="date">Posted: <strong>29 Aug 2018 13:20</strong></div>
+				<div class="author">by <strong>pedrohgl18</strong></div>
+				<div class="content">im trying to create a .bat to check multiple hosts, the code below doent work and idk why. please help me =)<br>
+<br>
+@echo off<br>
+set fnm=c:\scripts\databases.txt<br>
+set lnm=c:\scripts\results.txt<br>
+<br>
+if exist %fnm% goto Label1<br>
+<br>
+echo.<br>
+echo Cannot find %fnm%<br>
+echo.<br>
+Pause<br>
+goto :eof<br>
+<br>
+:Label1<br>
+echo Ping Test on %date% at %time% &gt; %lnm%<br>
+echo ================================================= &gt;&gt; %lnm%<br>
+echo.<br>
+for /f %%i in (%fnm%) do call :Sub %%i<br>
+echo.<br>
+echo ================================================= &gt;&gt; %lnm%<br>
+echo Ping Test ENDED on %date% at %time% &gt;&gt; %lnm%<br>
+echo ... now exiting<br>
+goto :eof<br>
+<br>
+:Sub<br>
+echo Testing %1<br>
+set state=OK<br>
+tnsping 1 %1 <br>
+if errorlevel 1 set state=Down<br>
+echo %1 is %state% &gt;&gt; %lnm%</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: TNSPING Multiple hosts</h3>
+				<div class="date">Posted: <strong>30 Aug 2018 06:21</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">It probably would help if you describe the error in more detail than just "the code below doent work".<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: TNSPING Multiple hosts</h3>
+				<div class="date">Posted: <strong>30 Aug 2018 06:27</strong></div>
+				<div class="author">by <strong>pedrohgl18</strong></div>
+				<div class="content">Keeps in looping at Testing 1.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: TNSPING Multiple hosts</h3>
+				<div class="date">Posted: <strong>30 Aug 2018 15:22</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">I guess the reason is that your "c:\scripts\databases.txt" contains:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>bilad and maybe some additional unknown text
+1 some other text
+1 text text
+1 text
+1 *
+1
+1 ...
+</code></pre></div>
+Beside we don't know what the content of the databas file really is (if it matches the output without the "Testing " part, then the output is completely correct) the main issue might be unwanted breaking of words/lines by some delimiters (characters that breaks a command line in statement/program name and arguments).<br>
+<br>
+You should notice that the default delimiters of a 'for/f' loop are space and tabulator.<br>
+You should also use usebackq, to enable delimiters in filenames (although in your case the filename doesn't contain any delimiter like space).<br>
+In addition you should also use doublequotes around a parameter (again to prevent against such poisonous characters == delimiters).<br>
+To avoid unwanted breaking of parameters (or filenames) you should use something like:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f "usebackq tokens=* delims=" ("%fnm%") do  do call :Sub %%~i
+</code></pre></div>(That is just an exemplary line; you should also update any other such line.)<br>
+<br>
+Sidenote:<br>
+In the future i recommend you to give at least a complete example, including the contents of all related (sample) files (using dummy data), give the expected output and the actual output.<br>
+Above i actually guessed the most probable issues, so it hopefully should help you, but it might also be that it doesn't help you.<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8803&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:23:21 GMT -->
+</html>

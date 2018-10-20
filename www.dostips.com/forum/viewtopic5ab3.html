@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8517&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:20:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; stamps</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>stamps</h2>
+		<p><a href="viewtopicf080.html?f=3&amp;t=8517">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8517</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>stamps</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 01:55</strong></div>
+				<div class="author">by <strong>miskox</strong></div>
+				<div class="content">Hello!<br>
+<br>
+Below is a program that calculates what stamps I need for a specific value (value entered is in cents! - this might probably easiy be changed: maybe: append "00" to the entered value, get tokens 1 and 2, delimited by a comma and then first two digits of token 2).<br>
+So the result is optimized to use the least number of stamps available:<br>
+<br>
+So calling it with 203 returns:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&gt;stamps 203
+
+1 X D
+1 X B
+1 X 0,20
+1 X 0,05
+2 X 0,02
+</code></pre></div>
+
+We see that I need one piece of stamps D, B, 0.20 EUR, 0.05 EUR and two pieces of 0.02 EUR.<br>
+<br>
+I am sure you experts would optimize it. So that is why I am posting it.<br>
+<br>
+Variable 'stamp' represents stamp value in cents<br>
+Variable 'stampd' represents stamp value displayed (because some stamps are marked with letters).<br>
+Stamp values are sorted min..max.<br>
+Number of stamps available can change so new variables can be added when new stamps are availalbe so the program determines how many variables are defined.<br>
+<br>
+Somehow I just couldn't make it better. I know you know some C (?) shortcuts to get remainders...<br>
+<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+REM                  value;display
+REM value in EUR cents!
+set  stamp[1]=1
+set stampd[1]=0,01
+
+set  stamp[2]=2
+set stampd[2]=0,02
+
+set  stamp[3]=5
+set stampd[3]=0,05
+
+set  stamp[4]=10
+set stampd[4]=0,10
+
+set  stamp[5]=20
+set stampd[5]=0,20
+
+set  stamp[6]=40
+set stampd[6]=A
+
+set  stamp[7]=48
+set stampd[7]=B
+
+set  stamp[8]=100
+set stampd[8]=C
+
+set  stamp[9]=126
+set stampd[9]=D
+
+REM value in cents
+
+set reqval=%1
+if "%1"=="" set /p reqval=Enter required stamp value in EUR cents:
+
+if "%reqval%"=="" echo Enter numeric value^&gt;0&amp;goto :EOF
+
+set /a reqval=reqval * 1
+
+if %reqval% LEQ 0 echo Enter numeric value^&gt;0&amp;goto :EOF
+
+REM get number of tokens
+
+set /a cntmax=1
+
+:00
+if defined stamp[%cntmax%] set /a cntmax+=1&amp;goto :00
+
+set /a cntmax-=1
+
+for /L %%L in (%cntmax%,-1,1) do call :11 %%L
+
+goto :EOF
+
+:11
+set num=%1
+
+call set stamp_display=%%stampd[%num%]%%
+
+set /a div=reqval/stamp[%num%]
+set /a remainder=reqval - stamp[%num%] * div
+
+if not "%div%"=="0" echo %div% X %stamp_display%
+
+set /a reqval=remainder
+goto :EOF
+</code></pre></div>
+
+Thanks.<br>
+Saso</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 03:59</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I think you're looking for something like that:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>REM ...
+
+REM get number of array elements
+set /a cntmax=0
+for /f %%i in ('set stamp[') do set /a cntmax+=1
+
+REM calculate
+setlocal EnableDelayedExpansion
+for /L %%L in (%cntmax%,-1,1) do (
+  set /a "div=reqval/stamp[%%L], reqval %%= stamp[%%L]"
+  if !div! neq 0 echo !div! X !stampd[%%L]!
+)
+</code></pre></div>
+No labels needed.<br>
+The operator for the calculation of the remainder is % (which you have to double in a batch script). Used in<br>
+set /a "div=reqval/stamp[%%L], reqval <span style="color: #FF0000">%%</span>= stamp[%%L]"<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 05:31</strong></div>
+				<div class="author">by <strong>miskox</strong></div>
+				<div class="content">Well...wow. Thanks Steffen. I knew you experts can do it in a more efficient way.<br>
+<br>
+Saso</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 07:04</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">This is the way I would do it:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+set stamps="D=126" "C=100" "B=48" "A=40" "0,20=20" "0,10=10" "0,05=5" "0,02=2" "0.01=1"
+
+set "reqval=%1"
+for %%a in (%stamps%) do for /F "tokens=1,2 delims==" %%m in (%%a) do (
+   set /A "div=reqval/%%n, reqval%%=%%n"
+   if !div! neq 0 echo !div! X %%m
+)
+</code></pre></div>
+
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 11:31</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">All of the listed solutions give the following for 60:<br>
+<br>
+1 X B<br>
+1 X 0,10<br>
+1 X 0,02<br>
+<br>
+The correct answer should be :<br>
+<br>
+1 X A<br>
+1 X 0,20<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 12:28</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">You are right Dave. The purpose was to use the lowest number of stamps. Is it an Extremum Problem? My last math lesson was 30 years ago  <img class="smilies" src="images/smilies/icon_lol.gif" width="15" height="15" alt=":lol:" title="Laughing"> <br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 13:14</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">Ops! You are right! I missed "the result is optimized to use the least number of stamps available" requirement.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+set "stamps=D@126 C@100 B@48 A@40 0.20@20 0.10@10 0.05@5 0.02@2 0.01@1 "
+
+echo Possible solutions:
+set /A i=0, sol=0, min=999999
+:nextSol
+set /A i+=1, num=0, reqval=%1
+for %%a in (%stamps%) do for /F "tokens=1,2 delims=@" %%m in ("%%a") do (
+   set /A "div=reqval/%%n, reqval%%=%%n"
+   if !div! neq 0 (
+      set "sol[%i%]=!sol[%i%]! !div!@%%m
+      set /A num+=div
+   )
+)
+echo %i%- !num! stamps = !sol[%i%]!
+if %num% lss %min% set /A min=num, sol=i
+set "stamps=%stamps:* =%"
+if defined stamps goto nextSol
+echo/
+echo Best solution: #%sol% = %min% stamps
+for %%a in (!sol[%sol%]!) do for /F "tokens=1,2 delims=@" %%m in ("%%a") do (
+   echo %%m X %%n
+)
+</code></pre></div>
+
+Output example:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\Antonio\Tests&gt; test.bat 60
+Possible solutions:
+1- 3 stamps =  1@B 1@0.10 1@0.02
+2- 3 stamps =  1@B 1@0.10 1@0.02
+3- 3 stamps =  1@B 1@0.10 1@0.02
+4- 2 stamps =  1@A 1@0.20
+5- 3 stamps =  3@0.20
+6- 6 stamps =  6@0.10
+7- 12 stamps =  12@0.05
+8- 30 stamps =  30@0.02
+9- 60 stamps =  60@0.01
+
+Best solution: #4 = 2 stamps
+1 X A
+1 x 0.20
+</code></pre></div>
+
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 13:48</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">@Aacini - Nope  <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <img class="smilies" src="images/smilies/icon_twisted.gif" width="15" height="15" alt=":twisted:" title="Twisted Evil"> <br>
+<br>
+<strong class="text-strong">Your result for 160:</strong><br>
+<br>
+Possible solutions:<br>
+1- 5 stamps =  1@D 1@0.20 1@0.10 2@0.02<br>
+2- 4 stamps =  1@C 1@B 1@0.10 1@0.02<br>
+3- 6 stamps =  3@B 1@0.10 1@0.05 1@0.01<br>
+4- 4 stamps =  4@A<br>
+5- 8 stamps =  8@0.20<br>
+6- 16 stamps =  16@0.10<br>
+7- 32 stamps =  32@0.05<br>
+8- 80 stamps =  80@0.02<br>
+9- 160 stamps =  160@0.01<br>
+<br>
+Best solution: #2 = 4 stamps<br>
+1 X C<br>
+1 X B<br>
+1 X 0.10<br>
+1 X 0.02<br>
+<br>
+<br>
+<strong class="text-strong">Actual best solution for 160:</strong><br>
+1 X C<br>
+1 X A<br>
+1 X 0.20<br>
+<br>
+<br>
+<strong class="text-strong">Your result for 460:</strong><br>
+<br>
+Possible solutions:<br>
+1- 8 stamps =  3@D 1@B 1@0.20 1@0.10 2@0.02<br>
+2- 7 stamps =  4@C 1@B 1@0.10 1@0.02<br>
+3- 13 stamps =  9@B 1@0.20 1@0.05 1@0.02 1@0.01<br>
+4- 12 stamps =  11@A 1@0.20<br>
+5- 23 stamps =  23@0.20<br>
+6- 46 stamps =  46@0.10<br>
+7- 92 stamps =  92@0.05<br>
+8- 230 stamps =  230@0.02<br>
+9- 460 stamps =  460@0.01<br>
+<br>
+Best solution: #2 = 7 stamps<br>
+4 X C<br>
+1 X B<br>
+1 X 0.10<br>
+1 X 0.02<br>
+<br>
+<strong class="text-strong">Actual best solution for 460:</strong><br>
+<br>
+2 X D<br>
+2 X C<br>
+2 X 0.02<br>
+<br>
+or <br>
+<br>
+4 X C<br>
+1 X A<br>
+1 X 0.20<br>
+<br>
+<br>
+The problem is not trivial  <img class="smilies" src="images/smilies/icon_twisted.gif" width="15" height="15" alt=":twisted:" title="Twisted Evil"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 13:58</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Someone likes playing Devils Advocate.  <img class="smilies" src="images/smilies/icon_lol.gif" width="15" height="15" alt=":lol:" title="Laughing"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 14:25</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">It is a lot easier than coming up with a solution  <img class="smilies" src="images/smilies/icon_lol.gif" width="15" height="15" alt=":lol:" title="Laughing"> <br>
+<br>
+I'm not sure how to translate this into a calculus multi-variable max/min problem (or even if it is possible). Like aGerman, it has been nearly 40 years. And I don't think I would want to do that in batch anyway <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=":wink:" title="Wink"> <br>
+<br>
+In lieu of that, this seems like a permutation problem, but we don't want to compute all possible permutations. We want to identify as soon as possible when a given path is pointless.<br>
+<br>
+The best I can easily do is quickly arrive at a maximal stamp quantity that is guaranteed to be less than or equal to the optimal number of stamps required:<br>
+find the largest stamp value that is &lt;= the total value, and divide that into the total value. If there is no remainder, then we have the answer. If there is a remainder, then the optimal stamp quantity must be &gt;= the integral count + 1.<br>
+<br>
+We could start with the original algorithm to arrive at one local minima. We then begin looking for other permutations that use fewer stamps, presumably by decrementing the count of one of the higher values from the current "best" solution, and then solving for the remainder. As we are exploring permutations, the moment we exceed the prior "best" solution, we can backtrack. But we don't necessarily have to wait that long to backtrack. For any given partial solution, we can compute the remainder that has to be solved. We can then apply my earlier rule about the minimum number of stamps required to reach that remainder value. If that number + the number from the current partial solution exceeds the current "best", then we can backtrack.<br>
+<br>
+Sorry, this is hard to describe <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"> <br>
+<br>
+This problem definitely seems to lend itself to recursion.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 14:59</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">If i don't miss anything, then It should be possible to solve this using dynamic programming:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableExtensions enableDelayedExpansion
+for /f "delims==" %%a in ('2^&gt;nul set "o["') do set "%%~a="
+
+set "stamps=  D   C  B  A 0,20 0,10 0,05 0,02 0.01"
+set "prices=126 100 48 40   20   10    5    2    1"
+set "o[0]=0 0 0 0 0 0 0 0 0"
+
+set /P "input=EUR in cents: "
+set /A "euro=input"
+
+for /l %%a in (1, 1, %euro%) do (
+	set /a "priceIndex=-1, bestPriceIndex=-1, bestPrice=0"
+	set /a "bestCount=euro+1"
+	for %%b in (%prices%) do (
+		set /a "priceIndex+=1, index=%%~a-%%~b"
+		if 0 leq !index! (
+			for %%c in ("!index!") do set /a "count=!o[%%~c]: =+!+1"
+			if !count! LSS !bestCount! (
+				set /a "bestCount=count, bestPrice=%%~b, bestPriceIndex=priceIndex"
+			)
+		)
+	)
+	set /a "index=%%~a-bestPrice"
+	for %%c in ("!index!") do for /f "tokens=1-9" %%0 in ("!o[%%~c]!") do (
+		set /a "count[0]=%%~0, count[1]=%%~1, count[2]=%%~2, count[3]=%%~3, count[4]=%%~4, count[5]=%%~5, count[6]=%%~6, count[7]=%%~7, count[8]=%%~8"
+		set /a "count[!bestPriceIndex!]+=1"
+		set "o[%%~a]=!count[0]! !count[1]! !count[2]! !count[3]! !count[4]! !count[5]! !count[6]! !count[7]! !count[8]!"
+		set "o[%%~a]"
+	)
+	set /a "index=%%~a-127"
+	set "o[!index!]="
+)
+
+for /f "tokens=1-9" %%A in ("!stamps!") do for /f "tokens=1-9" %%a in ("!o[%euro%]!") do (
+	echo(
+	echo(Result:
+	if not %%~a == 0 echo(%%~a x %%~A
+	if not %%~b == 0 echo(%%~b x %%~B
+	if not %%~c == 0 echo(%%~c x %%~C
+	if not %%~d == 0 echo(%%~d x %%~D
+	if not %%~e == 0 echo(%%~e x %%~E
+	if not %%~f == 0 echo(%%~f x %%~F
+	if not %%~g == 0 echo(%%~g x %%~G
+	if not %%~h == 0 echo(%%~h x %%~H
+	if not %%~i == 0 echo(%%~i x %%~I
+) 
+
+pause
+goto :eof
+</code></pre></div>
+
+penpen<br>
+<br>
+Edit: Corrected "price[" to "count[".</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 15:54</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Impressive <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation">  <img class="smilies" src="images/smilies/icon_cool.gif" width="15" height="15" alt="8)" title="Cool"> <br>
+<br>
+Now I have to see if I can figure out how your code works  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>24 Apr 2018 23:34</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopicd00e.html?p=56514#p56514" data-post-id="56514" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">24 Apr 2018 13:48</div></cite>
+@Aacini - Nope  <img class="smilies" src="images/smilies/icon_exclaim.gif" width="15" height="15" alt=":!:" title="Exclamation"> <img class="smilies" src="images/smilies/icon_twisted.gif" width="15" height="15" alt=":twisted:" title="Twisted Evil"> <br>
+<br>
+<strong class="text-strong">Your result for 460:</strong><br>
+<br>
+Possible solutions:<br>
+1- 8 stamps =  3@D 1@B 1@0.20 1@0.10 2@0.02<br>
+2- 7 stamps =  4@C 1@B 1@0.10 1@0.02<br>
+3- 13 stamps =  9@B 1@0.20 1@0.05 1@0.02 1@0.01<br>
+4- 12 stamps =  11@A 1@0.20<br>
+5- 23 stamps =  23@0.20<br>
+6- 46 stamps =  46@0.10<br>
+7- 92 stamps =  92@0.05<br>
+8- 230 stamps =  230@0.02<br>
+9- 460 stamps =  460@0.01<br>
+<br>
+Best solution: #2 = 7 stamps<br>
+4 X C<br>
+1 X B<br>
+1 X 0.10<br>
+1 X 0.02<br>
+<br>
+<strong class="text-strong">Actual best solution for 460:</strong><br>
+<br>
+2 X D<br>
+2 X C<br>
+2 X 0.02<br>
+<br>
+or <br>
+<br>
+4 X C<br>
+1 X A<br>
+1 X 0.20<br>
+<br>
+<br>
+The problem is not trivial  <img class="smilies" src="images/smilies/icon_twisted.gif" width="15" height="15" alt=":twisted:" title="Twisted Evil">
+</div></blockquote>
+Your first best solution is wrong. It gives 456, not 460...<br>
+<br>
+Ok. This is my second attempt:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+set "stamps=D@126 C@100 B@48 A@40 0.20@20 0.10@10 0.05@5 0.02@2 0.01@1 "
+
+set "reqval=%1"
+set "stampsA="
+for %%a in (%stamps%) do for /F "tokens=1,2 delims=@" %%m in ("%%a") do (
+   if %%n leq %reqval% set "stampsA=!stampsA!%%a "
+)
+
+echo Possible solutions:
+set /A i=0, min=999999
+set "prevSol="
+for /F "tokens=1*" %%a in ("%stampsA%") do set "stamp1=%%a" &amp; set "stampsB=%%b"
+
+:nextSol
+set /A i+=1, reqval=%1
+for /F "tokens=1,2 delims=@" %%m in ("%stamp1%") do (
+   set /A "num=reqval/%%n, reqval%%=%%n"
+   set "sol[%i%]=!num!@%%m"
+)
+for %%a in (%stampsB%) do for /F "tokens=1,2 delims=@" %%m in ("%%a") do (
+   set /A "div=reqval/%%n, reqval%%=%%n"
+   if !div! neq 0 (
+      set "sol[%i%]=!sol[%i%]! !div!@%%m
+      set /A num+=div
+   )
+)
+if "!sol[%i%]!" neq "%prevSol%" (
+   set "prevSol=!sol[%i%]!"
+   echo %i%- !num! stamps = !sol[%i%]!
+   if %num% leq %min% (
+      if %num% lss %min% (
+         set /A min=num, sol=i
+      ) else (
+         set "sol=!sol! %i%
+      )
+   )
+) else (
+   set /A i-=1
+)
+set "stampsB=%stampsB:* =%"
+if defined stampsB goto nextSol
+
+set "stampsA=%stampsA:* =%"
+if defined stampsA (
+   for /F "tokens=1*" %%a in ("%stampsA%") do set "stamp1=%%a" &amp; set "stampsB=%%b"
+   if defined stampsB goto nextSol
+)
+
+echo/
+echo Best solution(s) with %min% stamps
+for %%i in (%sol%) do (
+   echo/
+   echo Number %%i:
+   for %%a in (!sol[%%i]!) do for /F "tokens=1,2 delims=@" %%m in ("%%a") do (
+      echo %%m X %%n
+   )
+)
+</code></pre></div>
+
+<strong class="text-strong">Output example for 460:</strong><br>
+<br>
+Possible solutions:<br>
+1- 8 stamps = 3@D 1@B 1@0.20 1@0.10 2@0.02<br>
+2- 6 stamps = 3@D 2@A 1@0.02<br>
+3- 8 stamps = 3@D 4@0.20 1@0.02<br>
+4- 12 stamps = 3@D 8@0.10 1@0.02<br>
+5- 20 stamps = 3@D 16@0.05 1@0.02<br>
+6- 44 stamps = 3@D 41@0.02<br>
+7- 85 stamps = 3@D 82@0.01<br>
+8- 7 stamps = 4@C 1@B 1@0.10 1@0.02<br>
+9- 6 stamps = 4@C 1@A 1@0.20<br>
+10- 7 stamps = 4@C 3@0.20<br>
+11- 10 stamps = 4@C 6@0.10<br>
+12- 16 stamps = 4@C 12@0.05<br>
+13- 34 stamps = 4@C 30@0.02<br>
+14- 64 stamps = 4@C 60@0.01<br>
+15- 13 stamps = 9@B 1@0.20 1@0.05 1@0.02 1@0.01<br>
+16- 14 stamps = 9@B 2@0.10 1@0.05 1@0.02 1@0.01<br>
+17- 16 stamps = 9@B 5@0.05 1@0.02 1@0.01<br>
+18- 23 stamps = 9@B 14@0.02<br>
+19- 37 stamps = 9@B 28@0.01<br>
+20- 12 stamps = 11@A 1@0.20<br>
+21- 13 stamps = 11@A 2@0.10<br>
+22- 15 stamps = 11@A 4@0.05<br>
+23- 21 stamps = 11@A 10@0.02<br>
+24- 31 stamps = 11@A 20@0.01<br>
+25- 23 stamps = 23@0.20<br>
+26- 46 stamps = 46@0.10<br>
+27- 92 stamps = 92@0.05<br>
+28- 230 stamps = 230@0.02<br>
+<br>
+Best solution(s) with 6 stamps<br>
+<br>
+Number 2:<br>
+3 X D<br>
+2 X A<br>
+1 X 0.02<br>
+<br>
+Number 9:<br>
+4 X C<br>
+1 X A<br>
+1 X 0.20<br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>25 Apr 2018 05:26</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopicecd9.html?p=56519#p56519" data-post-id="56519" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">24 Apr 2018 23:34</div></cite>
+<blockquote><div><cite><a href="memberlist3d77.html?mode=viewprofile&amp;u=2258">dbenham</a> wrote: <a href="viewtopicd00e.html?p=56514#p56514" data-post-id="56514" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">24 Apr 2018 13:48</div></cite>
+<strong class="text-strong">Actual best solution for 460:</strong><br>
+<br>
+2 X D<br>
+2 X C<br>
+2 X 0.02<br>
+<br>
+or <br>
+<br>
+4 X C<br>
+1 X A<br>
+1 X 0.20
+</div></blockquote>
+Your first best solution is wrong. It gives 456, not 460...
+</div></blockquote>
+Sorry, I was sloppy and used a value of D=128 instead of D=126 <img class="smilies" src="images/smilies/icon_redface.gif" width="15" height="15" alt=":oops:" title="Embarassed"> <br>
+
+<blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopicecd9.html?p=56519#p56519" data-post-id="56519" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">24 Apr 2018 23:34</div></cite>
+Ok. This is my second attempt:
+</div></blockquote>
+I did some comparisons with penpen's code, and your result for 3315 is sub-optimal:<br>
+<br>
+<strong class="text-strong">Aacini 3315 solution:</strong><br>
+Best solution(s) with 31 stamps<br>
+<br>
+Number 1:<br>
+26 X D<br>
+1 X 0.20<br>
+1 X 0.10<br>
+1 X 0.05<br>
+2 X 0.02<br>
+<br>
+<strong class="text-strong">penpen 3315 solution:</strong><br>
+25 x D<br>
+1 x C<br>
+1 x A<br>
+1 x 0,20<br>
+1 x 0,05<br>
+<br>
+<br>
+I believe we can compute the maximum optimum number of each stamp for any arbitrary value:<br>
+<br>
+1 x 0.01    because 2 will be replaced by 1 x 0.02   <br>
+2 x 0.02    because 3 will be replaced by 1 x 0.05, 1 x 0.01<br>
+1 x 0.05    because 2 will be replaced by 1 x 0.10<br>
+1 x 0.10    because 2 will be replaced by 1 x 0.20<br>
+1 x 0.20    because 2 will be replaced by 1 x A<br>
+2 x A        because 3 will be replaced by 1 x C, 1 x 0.20<br>
+4 x B        because 5 will be replaced by 1 x C, 1 x A<br>
+2 x C        because 3 can be replaced by 2 x D, 1 x B   :   or 12 x C because 13 will be replaced by 10 x D, 1 x A<br>
+infinite x D<br>
+<br>
+<br>
+I'm less sure about this statement - Based on some empirical probing using penpen's solution, there may be a maximum total value at which point the maximum number of optimal 0.02 is 1. If I am correct, then there is probably a similar threshold for A, and maybe B and C.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: stamps</h3>
+				<div class="date">Posted: <strong>25 Apr 2018 10:24</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I believe I have an efficient solution that quickly computes an optimal solution for any positive integral value supported by SET /A.<br>
+<br>
+Some values have multiple optimal solutions. My code finds the optimal solution with the highest possible number of D.<br>
+<br>
+My code is dependent on one additional postulate - For any given current remainder, compute the highest denomination that is &lt;= remainder. The optimal count for this denomination will either be remainder/denomination, or (remainder/denomination)-1. If I am wrong on this, then the algorithm will have to change. <strong class="text-strong"><span style="color: #800000">I was wrong - thanks penpen. Fixed at <a href="viewtopic1b70.html?f=3&amp;t=8517&amp;start=15#p56532" class="postlink">viewtopic.php?f=3&amp;t=8517&amp;start=15#p56532</a></span></strong><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo  off
+setlocal enableDelayedExpansion
+
+set /a target=%1
+
+:: Define stamps
+set /a n=0
+for %%A in (D@126@0x7FFFFFFF C@100@2 B@48@4 A@40@2 0.20@20@1 0.10@10@1 0.05@5@1 0.02@2@2 0.01@1@1) do (
+  for /f "delims=@ tokens=1-3" %%B in ("%%A") do (
+    set /a n+=1
+    set "stamp.!n!.label=%%B"
+    set /a "stamp.!n!.value=%%C, stamp.!n!.max=%%D"
+  )
+)
+
+call :solve !target! 1 solution
+if %solution.count% == 1 (echo %1 requires 1 stamp:) else echo %1 requires %solution.count% stamps:
+echo ----------------------------------
+for %%S in (%solution.list%) do for /f "delims=@ tokens=1,2" %%A in ("%%S") do echo %%A x !stamp.%%B.label!
+
+exit /b
+
+:solve  Target  StampIndex  ReturnVar
+setlocal
+set /a "count=%1/stamp.%2.value, remainder=%1%%stamp.%2.value, solution.count+=count, next=%2+1"
+if %count% gtr !stamp.%2.max! exit /b 1
+if %remainder% equ 0 (
+  endlocal
+  set /a %3.count=%count%
+  set "%3.list=%count%@%2"
+  exit /b 0
+)
+call :solve %remainder% %next% A || exit /b 1
+set /a A.count+=count
+if %count% gtr 0 (
+  set "A.list=%count%@%2 %A.list%"
+  set /a "count-=1, remainder+=stamp.%2.value"
+  call :solve !remainder! %next% B &amp;&amp; (
+    set /a B.count+=count
+    if !B.count! lss !A.count! (
+      set /a A.count=B.count
+      if !count! gtr 0 (set "A.list=!count!@%2 !B.list!") else set "A.list=!B.list!"
+    )
+  )
+)
+( endlocal
+  set /a %3.count=%A.count%
+  set "%3.list=%A.list%"
+)
+exit /b 0
+</code></pre></div>
+
+In very limited testing, I always got the same value as penpen. However, my code is <strong class="text-strong">much</strong> faster <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8517&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:20:15 GMT -->
+</html>

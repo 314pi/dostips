@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8529&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:45:10 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; spliting a single line into multiple lines</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>spliting a single line into multiple lines</h2>
+		<p><a href="viewtopicf9a4.html?f=3&amp;t=8529">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8529</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>spliting a single line into multiple lines</h3>
+				<div class="date">Posted: <strong>28 Apr 2018 01:17</strong></div>
+				<div class="author">by <strong>bars143</strong></div>
+				<div class="content">hello to everyone ! its been years and forgot everything i learned there before.<br>
+<br>
+but now i learn a basic android for theming status bar<br>
+<br>
+and i want and stable scripts to make xml editing  easy.<br>
+<br>
+here is my sample intial content of status_bar.xml content<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;com.android.systemui.statusbar.phone.PhoneStatusBarView android:orientation="vertical" android:id="@id/status_bar" android:background="@drawable/system_bar_background" android:focusable="true" android:descendantFocusability="afterDescendants"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"&gt;
+    &lt;ImageView android:id="@id/notification_lights_out" android:paddingBottom="2.0dip" android:visibility="gone" android:layout_width="@dimen/status_bar_icon_size" android:layout_height="fill_parent" android:src="@drawable/ic_sysbar_lights_out_dot_small" android:scaleType="center" android:paddingStart="6.0dip" /&gt;
+</code></pre></div>	<br>
+	above content had 5 lines with many special characters.<br>
+	and i want every line that has a word "android:..." (which preceded with one space ) to split into new line<br>
+	<br>
+	example result of above will be the ff:<br>
+	
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>	
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;com.android.systemui.statusbar.phone.PhoneStatusBarView
+android:orientation="vertical" 
+android:id="@id/status_bar"
+android:background="@drawable/system_bar_background"
+android:focusable="true"
+android:descendantFocusability="afterDescendants"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"&gt;
+    &lt;ImageView android:id="@id/notification_lights_out"
+	android:paddingBottom="2.0dip"
+	android:visibility="gone"
+	android:layout_width="@dimen/status_bar_icon_size"
+	android:layout_height="fill_parent"
+	android:src="@drawable/ic_sysbar_lights_out_dot_small"
+	android:scaleType="center"
+	android:paddingStart="6.0dip" /&gt;
+</code></pre></div>
+	<br>
+	its now from 5 lines into 17 lines.<br>
+	so needs scripts to search for "android:" that preceded only with &lt;one space char&gt;<br>
+	after spliting a preceding space will be remove and repace with a tab (single space only) <br>
+	 <br>
+	 and here is the script i use from google:<br>
+	 
+	 <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>	 @echo off
+
+&gt;newfile.txt (
+  for /f "delims=" %%A in (files.txt) do for %%B in (%%A) do echo %%B
+)
+
+PAUSE
+EXIT
+	 </code></pre></div>
+	 <br>
+	 result above is<br>
+	 <br>
+	 
+	 <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>	 version
+"1.0"
+encoding
+&lt;com.android.systemui.statusbar.phone.PhoneStatusBarView
+android:orientation
+"vertical"
+android:id
+"@id/status_bar"
+android:background
+"@drawable/system_bar_background"
+android:focusable
+"true"
+android:descendantFocusability
+"afterDescendants"
+xmlns:android
+"http://schemas.android.com/apk/res/android"
+xmlns:systemui
+"http://schemas.android.com/apk/res/com.android.systemui"&gt;
+&lt;ImageView
+android:id
+"@id/notification_lights_out"
+android:paddingBottom
+"2.0dip"
+android:visibility
+"gone"
+android:layout_width
+"@dimen/status_bar_icon_size"
+android:layout_height
+"fill_parent"
+android:src
+"@drawable/ic_sysbar_lights_out_dot_small"
+android:scaleType
+"center"
+android:paddingStart
+"6.0dip"
+/&gt;
+
+	 </code></pre></div>
+	 <br>
+	 <br>
+	 other script i use is:<br>
+	 
+	 <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>	 jrepl "\q.*?\q" $0 /x /jmatch /f files.txt /o newfile2.txt
+	 </code></pre></div>
+	 <br>
+	 the result from using jreply is:<br>
+	 
+	 <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>	 "1.0"
+"utf-8"
+"vertical"
+"@id/status_bar"
+"@drawable/system_bar_background"
+"true"
+"afterDescendants"
+"http://schemas.android.com/apk/res/android"
+"http://schemas.android.com/apk/res/com.android.systemui"
+"@id/notification_lights_out"
+"2.0dip"
+"gone"
+"@dimen/status_bar_icon_size"
+"fill_parent"
+"@drawable/ic_sysbar_lights_out_dot_small"
+"center"
+"6.0dip"
+
+	 </code></pre></div>
+	<br>
+	<br>
+	<br>
+	<br>
+ i had hard time recalling of what i learned before to apply above problem but seem returned back as a newbie again  <img class="smilies" src="images/smilies/icon_confused.gif" width="15" height="15" alt=":?" title="Confused"> <br>
+<br>
+hoping for some to help my scripts. <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"><br>
+<br>
+bars</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: spliting a single line into multiple lines</h3>
+				<div class="date">Posted: <strong>28 Apr 2018 11:01</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">Why are you not using JREPL to match on a space and the word Android?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: spliting a single line into multiple lines</h3>
+				<div class="date">Posted: <strong>28 Apr 2018 13:24</strong></div>
+				<div class="author">by <strong>bars143</strong></div>
+				<div class="content">i should start and relearn of what i done before and i go back where i start.thanks for suggestion</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: spliting a single line into multiple lines</h3>
+				<div class="date">Posted: <strong>28 Apr 2018 20:09</strong></div>
+				<div class="author">by <strong>bars143</strong></div>
+				<div class="content">im come back and here is my text2.txt file content:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;com.android.systemui.statusbar.phone.PhoneStatusBarView android:orientation="vertical" android:id="@id/status_bar" android:background="@drawable/system_bar_background" android:focusable="true" android:descendantFocusability="afterDescendants"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"&gt;
+    &lt;ImageView android:id="@id/notification_lights_out" android:paddingBottom="2.0dip" android:visibility="gone" android:layout_width="@dimen/status_bar_icon_size" android:layout_height="fill_parent" android:src="@drawable/ic_sysbar_lights_out_dot_small" android:scaleType="center" android:paddingStart="6.0dip" /&gt;
+	
+</code></pre></div>
+
+tried this script with "=?\r?\n" as a newline equivalent( found in first page of jreply where i used post it before):<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type test2.txt | jrepl "=?\r?\n" "endofline" /m &gt;output.txt</code></pre></div>
+
+and the result is good , it replace endofline char? with string "endofline" but not creating newline:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;endofline&lt;com.android.systemui.statusbar.phone.PhoneStatusBarView android:orientation="vertical" android:id="@id/status_bar" android:background="@drawable/system_bar_background" android:focusable="true" android:descendantFocusability="afterDescendants"endofline  xmlns:android="http://schemas.android.com/apk/res/android"endofline  xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"&gt;endofline    &lt;ImageView android:id="@id/notification_lights_out" android:paddingBottom="2.0dip" android:visibility="gone" android:layout_width="@dimen/status_bar_icon_size" android:layout_height="fill_parent" android:src="@drawable/ic_sysbar_lights_out_dot_small" android:scaleType="center" android:paddingStart="6.0dip" /&gt;endofline	
+</code></pre></div>
+
+as foundout above that newline with equal char "=?\r?\n" as a code for newline, then create scripts like this one:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>type test2.txt | jrepl "android:" "=?\r?\n" /m &gt;output.txt</code></pre></div>
+
+and the result produced literal rather than newline char???:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;com.android.systemui.statusbar.phone.PhoneStatusBarView =?\r?\norientation="vertical" =?\r?\nid="@id/status_bar" =?\r?\nbackground="@drawable/system_bar_background" =?\r?\nfocusable="true" =?\r?\ndescendantFocusability="afterDescendants"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"&gt;
+    &lt;ImageView =?\r?\nid="@id/notification_lights_out" =?\r?\npaddingBottom="2.0dip" =?\r?\nvisibility="gone" =?\r?\nlayout_width="@dimen/status_bar_icon_size" =?\r?\nlayout_height="fill_parent" =?\r?\nsrc="@drawable/ic_sysbar_lights_out_dot_small" =?\r?\nscaleType="center" =?\r?\npaddingStart="6.0dip" /&gt;
+</code></pre></div>
+
+<br>
+<br>
+<br>
+therafter, I tried adding /jq  and /jmatchq then both results as shown below with my scripts are also shown produce error:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\leochard\Downloads\NEWEST_FILES\JREPL7.11&gt;type test2.txt   | jrepl "a
+roid:" "=?\r?\n" /jq /m  1&gt;output.txt
+JScript runtime error while defining /J or /JMATCH code: Syntax error
+
+C:\Users\leochard\Downloads\NEWEST_FILES\JREPL7.11&gt;type test2.txt   | jrepl "and
+roid:" "=?\r?\n" /jmatchq /m  1&gt;output.txt
+JScript runtime error while defining /J or /JMATCH code: Syntax error
+</code></pre></div>
+
+thats all i had <br>
+i will try harder next time...<br>
+<br>
+bars</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: spliting a single line into multiple lines [solved]</h3>
+				<div class="date">Posted: <strong>29 Apr 2018 14:39</strong></div>
+				<div class="author">by <strong>bars143</strong></div>
+				<div class="content">found out and solved:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>del output.txt 
+type test.txt | jrepl "=?\r?\n" "endofline" /m &gt;output.txt
+rename output.txt test2.txt
+pause
+type test2.txt | jrepl " android:" "endofline" /m &gt;output.txt
+rename output.txt test3.txt
+pause
+type test3.txt | jrepl "endofline" "\r\n" /x /m &gt;output.txt
+pause
+</code></pre></div>
+
+ <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+<br>
+to my own effort<br>
+bars</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: spliting a single line into multiple lines (solved)</h3>
+				<div class="date">Posted: <strong>29 Apr 2018 14:48</strong></div>
+				<div class="author">by <strong>bars143</strong></div>
+				<div class="content">SOLVED.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: spliting a single line into multiple lines (solved)</h3>
+				<div class="date">Posted: <strong>30 Jun 2018 17:05</strong></div>
+				<div class="author">by <strong>thefeduke</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8249.html?mode=viewprofile&amp;u=5042">bars143</a> wrote: <a href="viewtopicd241.html?p=56611#p56611" data-post-id="56611" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">29 Apr 2018 14:48</div></cite>SOLVED.</div></blockquote>bars, thank you very much for sharing your progress and thought process.  I examined all of your posts with great interest, because I was wrestling with the handling of spaces and tabs.  It was all  you with only one suggestion.  Even though your requirement was solved, I am posting an added filter to your very first experiment.  It yields this output:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>orientation=vertical
+id=@id/status_bar
+background=@drawable/system_bar_background
+focusable=true
+descendantFocusability=afterDescendants
+id=@id/notification_lights_out
+paddingBottom=2.0dip
+visibility=gone
+layout_width=@dimen/status_bar_icon_size
+layout_height=fill_parent
+src=@drawable/ic_sysbar_lights_out_dot_small
+scaleType=center
+paddingStart=6.0dip
+</code></pre></div>from this script:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>    @echo off
+    SetLOCAL EnableDelayedExpansion
+Rem spliting a single line into multiple lines
+Rem Start https://www.dostips.com/forum/memberlist.php?mode=viewprofile&amp;u=5042
+Rem #1 Post by bars143 » Sat Apr 28, 2018 3:17 am
+
+Echo=This is set up for an input file named: %~n0.txt
+If not Exist %~n0.txt (Echo.Please create one and try again.&amp; Exit /B)
+
+Rem Breaks each whole record into one record per standard delimeters with filter
+&gt;%~n01.txt (
+  for /f "delims=" %%A in (%~n0.txt) do for %%B in (%%A) do (
+    Set roid=%%B
+    If /I "!roid:~0,8!" EQU "android:" (
+      Set And=!roid:~8!=
+    ) Else (
+      Set roid=!roid:"=!
+      If Defined And (
+        Echo=!And!!roid!
+        Set "And="
+      )
+    )
+  )
+)
+
+EXIT /B
+</code></pre></div>
+Somewhat simpler than three JREPLs.<br>
+<br>
+John A.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: spliting a single line into multiple lines</h3>
+				<div class="date">Posted: <strong>30 Jun 2018 21:24</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">Mmmmm... Here it is an even simpler solution:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+for /F "delims=" %%a in (status_bar.xml) do (
+   set "line=%%a"
+   for /F "delims=" %%b in (^"!line: android:^=^
+% Do NOT remove this line %
+android:!^") do (
+      echo %%b
+   )
+)
+</code></pre></div>
+
+This program replaces every "&lt;space&gt;android:" by "&lt;cr&gt;&lt;lf&gt;android:" in a single step...<br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: spliting a single line into multiple lines</h3>
+				<div class="date">Posted: <strong>03 Jul 2018 09:39</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist8249.html?mode=viewprofile&amp;u=5042">bars143</a> wrote: <a href="viewtopic3952.html?p=56595#p56595" data-post-id="56595" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Apr 2018 01:17</div></cite>
+here is my sample intial content of status_bar.xml content
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;com.android.systemui.statusbar.phone.PhoneStatusBarView android:orientation="vertical" android:id="@id/status_bar" android:background="@drawable/system_bar_background" android:focusable="true" android:descendantFocusability="afterDescendants"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"&gt;
+    &lt;ImageView android:id="@id/notification_lights_out" android:paddingBottom="2.0dip" android:visibility="gone" android:layout_width="@dimen/status_bar_icon_size" android:layout_height="fill_parent" android:src="@drawable/ic_sysbar_lights_out_dot_small" android:scaleType="center" android:paddingStart="6.0dip" /&gt;
+</code></pre></div>
+above content had 5 lines with many special characters.<br>
+and i want every line that has a word "android:..." (which preceded with one space ) to split into new line<br>
+<br>
+example result of above will be the ff:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>	
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;com.android.systemui.statusbar.phone.PhoneStatusBarView
+android:orientation="vertical" 
+android:id="@id/status_bar"
+android:background="@drawable/system_bar_background"
+android:focusable="true"
+android:descendantFocusability="afterDescendants"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"&gt;
+    &lt;ImageView android:id="@id/notification_lights_out"
+	android:paddingBottom="2.0dip"
+	android:visibility="gone"
+	android:layout_width="@dimen/status_bar_icon_size"
+	android:layout_height="fill_parent"
+	android:src="@drawable/ic_sysbar_lights_out_dot_small"
+	android:scaleType="center"
+	android:paddingStart="6.0dip" /&gt;
+</code></pre></div>
+its now from 5 lines into 17 lines.<br>
+so needs scripts to search for "android:" that preceded only with &lt;one space char&gt;<br>
+<span style="color: #FF0000"><strong class="text-strong">after spliting a preceding space will be remove and repace with a tab (single space only) </strong></span>
+</div></blockquote>
+That bit in red above cannot give the output you are seeking. The true result would be:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;com.android.systemui.statusbar.phone.PhoneStatusBarView
+	android:orientation="vertical" 
+	android:id="@id/status_bar"
+	android:background="@drawable/system_bar_background"
+	android:focusable="true"
+	android:descendantFocusability="afterDescendants"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"&gt;
+    &lt;ImageView android:id="@id/notification_lights_out"
+	android:paddingBottom="2.0dip"
+	android:visibility="gone"
+	android:layout_width="@dimen/status_bar_icon_size"
+	android:layout_height="fill_parent"
+	android:src="@drawable/ic_sysbar_lights_out_dot_small"
+	android:scaleType="center"
+	android:paddingStart="6.0dip" /&gt;
+</code></pre></div>
+
+Your proposed output strips the space if the source line was not indented, and substitutes tab for the space if the source line is indented.<br>
+<br>
+Here is my proposal, along with a "simple" JREPL command to implement it:<br>
+<br>
+For each line, determine the whitespace prefix for that line. Then for each "android" with preceding whitespace (separate from the prefix), strip the preceding whitespace, add newline + line prefix + 2 spaces + "android"
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>jrepl "^\s*|\s+android" "prefix=$txt=$0|$txt='\r\n'+prefix+'  android'" /t "|" /xseq /jq /f status_bar.xml
+</code></pre></div>
+--OUTPUT--
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;com.android.systemui.statusbar.phone.PhoneStatusBarView
+  android:orientation="vertical"
+  android:id="@id/status_bar"
+  android:background="@drawable/system_bar_background"
+  android:focusable="true"
+  android:descendantFocusability="afterDescendants"
+  androidTest
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"&gt;
+    &lt;ImageView
+      android:id="@id/notification_lights_out"
+      android:paddingBottom="2.0dip"
+      android:visibility="gone"
+      android:layout_width="@dimen/status_bar_icon_size"
+      android:layout_height="fill_parent"
+      android:src="@drawable/ic_sysbar_lights_out_dot_small"
+      android:scaleType="center"
+      android:paddingStart="6.0dip" /&gt;
+ </code></pre></div>
+
+Note that my code relies on the fact that undeclared variables (prefix in this case) default to global scope. It wouldn't be bad to include /JBEG "var prefix" as an option to explicitly declare a global variable.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: spliting a single line into multiple lines</h3>
+				<div class="date">Posted: <strong>04 Aug 2018 08:59</strong></div>
+				<div class="author">by <strong>bars143</strong></div>
+				<div class="content">thanks to Aacini and dbenham for their own alternative scripts.<br>
+<br>
+now its easy and lessen mistakes when editing (and copy-and-paste) on .xml files</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8529&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:45:10 GMT -->
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8308&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:15:33 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; suggested function helpers</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>suggested function helpers</h2>
+		<p><a href="viewtopicf001.html?f=3&amp;t=8308">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8308</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>suggested function helpers</h3>
+				<div class="date">Posted: <strong>29 Dec 2017 16:50</strong></div>
+				<div class="author">by <strong>jonathancodes</strong></div>
+				<div class="content">whilst this might not be super-efficient, I'd like to offer up a pair of function helpers<br>
+it should be self explanatory, and i'd welcome any suggestions or gotchas that might occur to more the seasoned dos batch hackers that lurk on this forum.<br>
+ <img class="smilies" src="images/smilies/icon_razz.gif" width="15" height="15" alt=":P" title="Razz"> <br>
+obviously the :_has_args_ and :_returns_ functions do the dirty work, and they could be further optimised / reduced in size, but for readbilty i'm leaving them as is for this post<br>
+( :_returns_ is slightly more obfuscated than :_has_args_ )<br>
+ 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+
+:: we are going to replace these, so make sure that happens
+:: by filling them with bogus data
+set answer1=wrong
+set answer2=wrong1
+set answer3=wrong2
+set answer4=wrong3
+
+:: call a function to add 2 numbers (doh!)
+call :addition 57 49 answer1 description
+:: dump out the results
+set answer1
+set description
+
+:: try another one
+call :subtraction 57 49 answer2 description
+set answer1
+set description
+
+
+:: this one returns a value we did not ask for.
+call :division 67 4 answer3 description
+set answer3
+set description
+set remainder
+
+
+:: this one calls another function multiple times (doh!)
+call :multiplication 3 4 answer4 description
+
+set answer4
+set description
+:: make sure it did not dirty our earlier result
+echo is answer1 stil 57+49=106?
+set answer1
+
+:: what if we want to dirty our earlier result?
+call :multiplication 2 3 answer1 description
+
+set answer1
+set description
+
+
+goto :eof
+
+
+
+
+
+:addition
+
+  SETLOCAL &amp; call :_has_args_ a b _from_ %*
+       
+  set /a c=a+b 
+  
+  set d=%a% plus %b% equals %c%
+
+( ENDLOCAL &amp; call :_returns_ %_values_% "%c%" "%d%" %_as_% %* )
+exit /b
+
+::alternate form 
+:subtraction
+
+  SETLOCAL &amp; call :_has_args_ a b _returning_ c d _from_ %*
+       
+  set /a c_=a-b 
+  
+  set d_=%a% minus %b% equals %c_%
+
+( ENDLOCAL &amp; set %c%=%c_% &amp; set %d%=%d_% )
+exit /b
+
+::alternate format without returing keyword (returns denoted internallyby naming convention)
+::also returns mandatory hard coded value
+:division
+
+  SETLOCAL &amp; call                   :_has_args_ ^
+  a                                 ^
+  b                                 ^
+  _c_                               ^
+  _d_                               ^
+                                    _from_ %*
+       
+  set /a c=a/b 
+  set /a r=a %% b
+  
+  set d=%a% divided by %b% equals %c% remainder %r%
+
+( ENDLOCAL &amp; set %_c_%=%c% &amp; set %_d_%=%d% &amp; set remainder=%r% )
+exit /b
+
+
+::compound demo
+:multiplication
+
+  SETLOCAL &amp; call :_has_args_ a b _from_ %*
+       
+  set c=0
+  for /L %%i in (1,1,%b%) do ( 
+      call :addition !c! %a% c info
+      set info
+  )
+  
+  set d=%a% multiplied by %b% equals %c%
+  :: note that _as_ does not need to be escaped (but can be)
+( ENDLOCAL &amp; call :_returns_ %_values_% "%c%" "%d%" _as_ %* )
+exit /b
+
+
+
+
+:_has_args_
+SETLOCAL enabledelayedexpansion
+  set A=0 &amp; for %%x in (%*) do  set /A A+=1 &amp;  set "args[!A!]=%%~x"
+
+  set Z=1
+
+  for /L %%i in (1,1,%A%) do if %Z% NEQ 0 if "!args[%%i]!"=="_from_" ( set /a "Q=%%i-1" &amp; set Z=0 ) else ( if "!args[%%i]!"=="_returning_" set O=%%i )
+     
+  
+
+  if "%O%"=="" set /a O=Q+1
+ 
+  set /a load_arg=Q+1
+
+  for /L %%i in (1,1,%Q%) do (
+    
+    if "!args[%%i]!" NEQ "_returning_" (
+        set /a load_arg+=1 
+    
+        for /L %%x in (!load_arg!,1,!load_arg!) do set val[%%i]=!args[%%x]!
+    ) 
+  )
+  
+  
+  endlocal &amp; ( 
+
+    set _values_=%Q%
+    set _as_=_as_
+    
+    
+    if %Q% GEQ 1 if %O% NEQ 1 set %args[1]%=%val[1]%
+    if %Q% GEQ 2 if %O% NEQ 2 set %args[2]%=%val[2]%
+    if %Q% GEQ 3 if %O% NEQ 3 set %args[3]%=%val[3]%
+    if %Q% GEQ 4 if %O% NEQ 4 set %args[4]%=%val[4]%
+    if %Q% GEQ 5 if %O% NEQ 5 set %args[5]%=%val[5]%
+    if %Q% GEQ 6 if %O% NEQ 6 set %args[6]%=%val[6]%
+    if %Q% GEQ 7 if %O% NEQ 7 set %args[7]%=%val[7]%
+    if %Q% GEQ 8 if %O% NEQ 8 set %args[8]%=%val[8]%
+    if %Q% GEQ 9 if %O% NEQ 9 set %args[9]%=%val[9]%
+  )
+
+
+exit /b
+ 
+
+
+:_returns_
+
+SETLOCAL enabledelayedexpansion
+set R=0
+for %%x in (%*) do set "rets[!R!]=%%~x" &amp; set /A R+=1
+
+set z=1
+for /L %%i in (1,1,%R%) do if %z% NEQ 0 if "!rets[%%i]!"=="_as_" set /a "T=%%i-1" &amp; set z=0
+set /a out=T+%1+1
+for /L %%i in (1,1,%T%) do set /a out+=1 &amp; for /L %%x in (!out!,1,!out!) do set name[%%i]=!rets[%%x]!
+endlocal &amp; (
+    if %T% GEQ 1 set "%name[1]%=%rets[1]%"
+    if %T% GEQ 2 set "%name[2]%=%rets[2]%"
+    if %T% GEQ 3 set "%name[3]%=%rets[3]%"
+    if %T% GEQ 4 set "%name[4]%=%rets[4]%"
+    if %T% GEQ 5 set "%name[5]%=%rets[5]%"
+    if %T% GEQ 6 set "%name[6]%=%rets[6]%"
+    if %T% GEQ 7 set "%name[7]%=%rets[7]%"
+    if %T% GEQ 8 set "%name[8]%=%rets[8]%"
+    if %T% GEQ 9 set "%name[9]%=%rets[9]%"
+) &amp; exit /b
+
+
+
+</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8308&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:15:33 GMT -->
+</html>

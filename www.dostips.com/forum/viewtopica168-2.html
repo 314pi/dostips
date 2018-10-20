@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6744&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:51:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Definition and use of arithmetic &quot;functions&quot; in Batch files - Page 2</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Definition and use of arithmetic &quot;functions&quot; in Batch files</h2>
+		<p><a href="viewtopic210e.html?f=3&amp;t=6744">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6744</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>2</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>Re: Definition and use of arithmetic &quot;functions&quot; in Batch fi</h3>
+				<div class="date">Posted: <strong>01 Nov 2015 20:28</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">No, the batch operator is defined on variable content and substitute strings with (other) strings.<br />The [] operator is defined on common terms to substitutes a term for a variable within another term, and therefore doesn't substitute functions or operators (or...) even if their labels share the same string:<br />- &quot;%str:x=y%&quot; equals &quot;(y(y) y y(y))&quot; (set &quot;str=(x(x) x x(x))&quot;)<br />- &quot;(x(x) x x(x))[x=y]&quot; equals &quot;(x(y) x x(y))&quot;<br /><br />But if names are unique and not contained in each other, then the batch operator could be used to simulate the [] operator (if you meant that).<br /><br /><br />penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Definition and use of arithmetic &quot;functions&quot; in Batch fi</h3>
+				<div class="date">Posted: <strong>01 Nov 2015 21:40</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />set &quot;str=(x(x) x x(x))&quot;<br /><br />echo First:&nbsp; &quot;%str:x=y%&quot;<br /><br />echo Second: &quot;%str:(x)=(y)%&quot;<br /><br />set &quot;&#91;x=(x)&quot;<br />set &quot;y&#93;=(y)&quot;<br />echo Third:&nbsp; &quot;!str:%&#91;x%=%y&#93;%!&quot;<br /></code></pre></div><br />Although this &quot;substitution operator&quot; is interesting indeed, it bears <em class="text-italics">no relation</em> to <strong class="text-strong">the standard way</strong> that most programming languages use to define and invoke arithmetic functions!<br /><br /><blockquote><div><cite>penpen wrote:</cite>I must admit i never heard of a programming language that &quot;naturally&quot; supports this operator.<br /></div></blockquote><br />Then, why you introduced it in a thread whose purpose is to write something in the way most other programming languages does? <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> <br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Definition and use of arithmetic &quot;functions&quot; in Batch fi</h3>
+				<div class="date">Posted: <strong>02 Nov 2015 19:22</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content"><blockquote><div><cite>Aacini wrote:</cite>Then, why you introduced it in a thread whose purpose is to write something in the way most other programming languages does? <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> </div></blockquote><br />In the opening post you used the words:<br /><blockquote><div><cite>Aacini wrote:</cite> a method that allows to use arithmetic expressions in Batch files in a way rather similar to arithmetic functions of other programming languages</div></blockquote><br />I posted my suggestion before you have written:<br /><blockquote><div><cite>Aacini wrote:</cite>the ability to take parameters in a way equivalent to real functions in other programming languages<br /></div></blockquote><blockquote><div><cite>Aacini wrote:</cite>The purpose is to write and execute arithmetic &quot;functions&quot; in a more standard way that may be comprehended by a larger group of people.<br /></div></blockquote>So i couldn't take the last two points into account.<br /><br /><br />I think my suggestion is similar enough; our ways to assign variables don't differ that much, so i posted it, in detail:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::define: additional &quot;&#91;&#93;,&quot;<br />set &quot;f(x)=(x+2)&quot;<br />set &quot;g(x)=(&#91;&#93;, x+3)&quot;<br /><br />:: invoke: additional &quot;&#91;&#93;=&quot;<br />%f(x):x=1%<br />%g(x):&#91;&#93;=x=1%<br /></code></pre></div>The user doesn't need to know, why &quot;[]&quot; is choosen (special operator) to be replaced (or he could use any other unique string to be replaced); for example he also doesn't know why in most programming languages the parameterlist is at the end of the function header: So this seemed to me less important.<br /><br />Both versions are invoked in the same way: Replace a string with another (~ variable assignment).<br />In case of &quot;%f(x):x=1%&quot; the string to be replaced is mentioned within the variable name; but he has to know how to set the variable (and not doing &quot;%f(x=1)%&quot; or &quot;%f(1)%&quot;).<br />In case of %g(x):[]=x=1% he has to know to replace &quot;[]&quot;. If that is done for all functions it would be something that is easy to see (similar to setting x in f).<br /><br />Similar for setting up a function: The user simply must know that he has to use parentheses around the formula (see: &quot;set /A n=2 * %f(x):x=1% * 4&quot;; result 10 versus 24), so the additional &quot;[],&quot; is just another fact to know <br />(and i initially i had my &quot;consumer view&quot;, so i didn't made many thoughts about writing/defining the function, which was an error).<br /><br /><br />penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Definition and use of arithmetic &quot;functions&quot; in Batch fi</h3>
+				<div class="date">Posted: <strong>03 Nov 2015 02:08</strong></div>
+				<div class="author">by <strong>OperatorGK</strong></div>
+				<div class="content"><blockquote><div><cite>penpen wrote:</cite><blockquote><div><cite>Aacini wrote:</cite>Then, why you introduced it in a thread whose purpose is to write something in the way most other programming languages does? <img class="smilies" src="images/smilies/icon_confused.gif" alt=":?" title="Confused" /> </div></blockquote><br />In the opening post you used the words:<br /><blockquote><div><cite>Aacini wrote:</cite> a method that allows to use arithmetic expressions in Batch files in a way rather similar to arithmetic functions of other programming languages</div></blockquote><br />I posted my suggestion before you have written:<br /><blockquote><div><cite>Aacini wrote:</cite>the ability to take parameters in a way equivalent to real functions in other programming languages<br /></div></blockquote><blockquote><div><cite>Aacini wrote:</cite>The purpose is to write and execute arithmetic &quot;functions&quot; in a more standard way that may be comprehended by a larger group of people.<br /></div></blockquote>So i couldn't take the last two points into account.<br /><br /><br />I think my suggestion is similar enough; our ways to assign variables don't differ that much, so i posted it, in detail:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>::define: additional &quot;&#91;&#93;,&quot;<br />set &quot;f(x)=(x+2)&quot;<br />set &quot;g(x)=(&#91;&#93;, x+3)&quot;<br /><br />:: invoke: additional &quot;&#91;&#93;=&quot;<br />%f(x):x=1%<br />%g(x):&#91;&#93;=x=1%<br /></code></pre></div>The user doesn't need to know, why &quot;[]&quot; is choosen (special operator) to be replaced (or he could use any other unique string to be replaced); for example he also doesn't know why in most programming languages the parameterlist is at the end of the function header: So this seemed to me less important.<br /><br />Both versions are invoked in the same way: Replace a string with another (~ variable assignment).<br />In case of &quot;%f(x):x=1%&quot; the string to be replaced is mentioned within the variable name; but he has to know how to set the variable (and not doing &quot;%f(x=1)%&quot; or &quot;%f(1)%&quot;).<br />In case of %g(x):[]=x=1% he has to know to replace &quot;[]&quot;. If that is done for all functions it would be something that is easy to see (similar to setting x in f).<br /><br />Similar for setting up a function: The user simply must know that he has to use parentheses around the formula (see: &quot;set /A n=2 * %f(x):x=1% * 4&quot;; result 10 versus 24), so the additional &quot;[],&quot; is just another fact to know <br />(and i initially i had my &quot;consumer view&quot;, so i didn't made many thoughts about writing/defining the function, which was an error).<br /><br /><br />penpen</div></blockquote><br />Also with your method we can use multiple arguments:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />set &quot;f(x,y)=(&#91;&#93;,x+y)&quot;<br />set /a result=%f(x,y):&#91;&#93;=&quot;x=3,y=5&quot;%<br />echo %result%<br /></code></pre></div><br /><br /><strong class="text-strong">EDIT:</strong> There is also caveat in this method: %x% is set to 3 and %y% is set 5 after executing.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Definition and use of arithmetic &quot;functions&quot; in Batch fi</h3>
+				<div class="date">Posted: <strong>03 Nov 2015 22:40</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">Well, as we can see, several different forms of using this technique are possible. For example, &quot;args&quot; name could be used instead of &quot;[]&quot; part this way:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;sum(x,y,z)=(args, x+y+z)&quot;<br /><br />set /A &quot;sum=%sum(x,y,z):args= x=1, y=2, z=3%&quot;<br /></code></pre></div><br />... but this is not really necessary, because the &quot;[]&quot; part may be completelly omitted and the value of the variables (they are <em class="text-italics">not</em> &quot;parameters&quot;!) may be assigned before the invocation of the &quot;function&quot;, as you shown before:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;sum(x,y,z)=(x+y+z)&quot;<br /><br />set /A &quot;x=2, y=3, z=4, sum=%sum(x,y,z)%&quot;<br /></code></pre></div><br />I am pretty sure that we could develop more different ways to use this technique, and this would be very good <em class="text-italics">if the purpose of this thread would be &quot;different ways to use this method&quot;</em>. Unfortunately, the purpose of this thread is to use this method &quot;in a way rather similar to arithmetic functions of other programming languages&quot;, as the first line of this thread indicate. Perhaps would be a good idea to open a new thread with the other goal and move to it the posts that does not belong to this one!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Definition and use of arithmetic &quot;functions&quot; in Batch fi</h3>
+				<div class="date">Posted: <strong>03 Nov 2015 22:47</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">There are news on this topic!<br /><br /><br />Below there is a new example that show how easy is to perform certain complex calculations when the &quot;function&quot; technique is combined with <a href="viewtopicebb0.html?f=3&amp;t=6429" class="postlink">this expansion method</a> to create an advanced arithmetic expression in a very simple way. I like this example!<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />cls<br />echo Polynomial evaluation<br />echo/<br />echo Enter the polynomial coefficients separated by commas.<br />set /P &quot;coeffs=For example, for y=x^2-4x-7 enter 1,-4,-7:&nbsp; &quot;<br />echo/<br />set /P &quot;range=Enter the&nbsp; initial,step,final&nbsp; values for x (i.e. -9,1,9):&nbsp; &quot;<br /><br />rem Define the function. See: http://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6429<br />set &quot;f(x)=%coeffs:,=,y=y*x+%&quot;<br /><br />echo/<br />echo&nbsp; x&nbsp; &nbsp; y=%f(x)%<br />echo ---&nbsp; &nbsp;------------<br />for /L %%x in (%range%) do (<br />&nbsp; &nbsp;set /A &quot;y=!f(x):x=%%x!&quot;<br />&nbsp; &nbsp;echo %%x&nbsp; &nbsp; !y!<br />)<br /></code></pre></div><br /><br /><br />I devised a way to include two parameters in the function definition and correctly manage they in the expression as separate entities. After developed it, the method seems obvious: if one %expansion% was needed in order to expand the first parameter, then a %second% !expansion! is needed to expand the second one. However, the way to implement this management use an interesting trick that could be useful in other scenarios; keep the eyes wide open in order to discover it!<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>setlocal EnableDelayedExpansion<br /><br />set &quot;Max(x,y)=(&nbsp; z=(x),^!Ma1(y)&quot;<br />set &quot;Ma1(y)=?=((z-(y))&gt;&gt;31)+1, ?*z + ^!?*(y)&nbsp; )&quot;<br /><br />set /A &quot;max=%Max(x,y):x=10%:y=20!&quot;<br /></code></pre></div><br />The CALL and double percents trick may also be used to define <em class="text-italics">two or more parameters</em>. For example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;RandomRange(x,y)=(&nbsp; z=(x),rnd=^!random^!,%%Random1(y)&quot;<br />set &quot;Random1(y)=((y)-z+1)*rnd/32768+z&nbsp; )&quot;<br /><br />call set /A &quot;rnd=%RandomRange(x,y):x=10%:y=20%%&quot;<br /></code></pre></div><br />This is a complete &quot;two parameters&quot; example program:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br /><br />:: Define Max(x,y) function with two *real* parameters<br /><br />setlocal EnableDelayedExpansion<br /><br />set &quot;Max(x,y)=(&nbsp; z=(x),^!Ma1(y)&quot;<br />set &quot;Ma1(y)=?=((z-(y))&gt;&gt;31)+1, ?*z + ^!?*(y)&nbsp; )&quot;<br /><br />set /P &quot;numbers=Enter two numbers separated by space: &quot;<br />for /F &quot;tokens=1,2&quot; %%a in (&quot;%numbers%&quot;) do set /A one=%%a, two=%%b<br /><br />set /A &quot;max=%Max(x,y):x=one%:y=two!&quot;<br />echo The max is %max%<br /><br /><br />:: Define Max(x,y) function with two parameters via CALL/double-percents instead Delayed Expansion<br /><br />set &quot;Max(x,y)=(&nbsp; z=(x),%%Ma1(y)&quot;<br />set &quot;Ma1(y)=?=((z-(y))&gt;&gt;31)+1, ?*z + ^!?*(y)&nbsp; )&quot;<br /><br />call set /A &quot;max=%Max(x,y):x=one%:y=two%%&quot;<br />echo The max is %max% (CALL method)<br /><br /><br />:: Define RandomRange(x,y) function with two parameters via DelayedExpansion<br /><br />set &quot;RandomRange(x,y)=(&nbsp; z=(x),rnd=^!random^!,^!Random1(y)&quot;<br />set &quot;Random1(y)=((y)-z+1)*rnd/32768+z&nbsp; )&quot;<br /><br />set /A &quot;rnd=%RandomRange(x,y):x=one%:y=two!&quot;<br />echo Random number in this range: %rnd%<br /><br /><br />:: Define RandomRange(x,y) function with two parameters via CALL/double-percents<br /><br />set &quot;RandomRange(x,y)=(&nbsp; z=(x),rnd=^!random^!,%%Random1(y)&quot;<br />set &quot;Random1(y)=((y)-z+1)*rnd/32768+z&nbsp; )&quot;<br /><br />call set /A &quot;rnd=%RandomRange(x,y):x=one%:y=two%%&quot;<br />echo Random number in this range: %rnd% (CALL method)<br /></code></pre></div><br /><br /><br />Some of the most useful functions with two parameters are the <em class="text-italics">boolean operators</em>:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />:: Define functions for boolean operations<br /><br />set &quot;GTR(x,y)=(z=(x)-1,^!gte(y)&quot;<br />set &quot;GEQ(x,y)=(z=(x),^!gte(y)&quot;<br />set &quot;gte(y)=((z-(y))&gt;&gt;31)+1 )&quot;<br /><br />set &quot;LSS(x,y)=(z=(x)+1,^!lse(y)&quot;<br />set &quot;LEQ(x,y)=(z=(x),^!lse(y)&quot;<br />set &quot;lse(y)=(((y)-z)&gt;&gt;31)+1 )&quot;<br /><br />set &quot;EQU(x,y)=(z=(x),^!eq1(y)&quot;<br />set &quot;eq1(y)=^!(z-(y)) )&quot;<br /><br />set &quot;NEQ(x,y)=(z=(x),^!ne1(y)&quot;<br />set &quot;ne1(y)=^!^!(z-(y)) )&quot;<br /><br />set /P &quot;numbers=Enter two numbers separated by space: &quot;<br />for /F &quot;tokens=1,2&quot; %%a in (&quot;%numbers%&quot;) do set /A one=%%a, two=%%b<br /><br />set /A &quot;gtr=%GTR(x,y):x=one%:y=two!&quot;<br />set /A &quot;geq=%GEQ(x,y):x=one%:y=two!&quot;<br />set /A &quot;lss=%LSS(x,y):x=one%:y=two!&quot;<br />set /A &quot;leq=%LEQ(x,y):x=one%:y=two!&quot;<br />set /A &quot;equ=%EQU(x,y):x=one%:y=two!&quot;<br />set /A &quot;neq=%NEQ(x,y):x=one%:y=two!&quot;<br /><br />set &quot;ans&#91;0&#93;=NOT &quot;<br />echo/<br />echo %one% is !ans&#91;%gtr%&#93;!GTR than %two%<br />echo %one% is !ans&#91;%geq%&#93;!GEQ than %two%<br />echo %one% is !ans&#91;%lss%&#93;!LSS than %two%<br />echo %one% is !ans&#91;%leq%&#93;!LEQ than %two%<br />echo %one% is !ans&#91;%equ%&#93;!EQU than %two%<br />echo %one% is !ans&#91;%neq%&#93;!NEQ than %two%<br /></code></pre></div><br /><br /><br />As said before, the CALL/double-percent trick may be used to define more than two parameters, but we can preserve the delayed expansion in the second parameter in order to avoid excessive CALL/percents. A very good example of a function with three parameters is the if-then-else (conditional operator) one.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br />set &quot;IF(test,then,else)=(&nbsp; ?=(test),^!IFT(then,else)&quot;<br />set &quot;IFT(then,else)=t=(then),%%IFTE(else)&quot;<br />set &quot;IFTE(else)=^!^!?*t + ^!?*(else)&nbsp; )&quot;<br /><br />set /P &quot;value=Enter a value different than 0 for 123, or 0 for 456: &quot;<br /><br />REM&nbsp; &nbsp; &nbsp; ECHO set /A &quot;result=%IF(test,then,else):test=value%:then=123!:else=456%%&quot;<br />REM CALL ECHO set /A &quot;result=%IF(test,then,else):test=value%:then=123!:else=456%%&quot;<br /><br />call set /A &quot;result=%IF(test,then,else):test=value%:then=123!:else=456%%&quot;<br />echo Result: %result%<br /></code></pre></div><br />In this function you may see the reason because I called this method &quot;chained expansions&quot;; you may appreciate this behavior in a clearer way if you activate the two ECHO commands.<br /><br />You may use the boolean operator functions nested in the IF function, just pay attention to the <em class="text-italics">order</em> at which the &quot;chained expansions&quot; occur in both functions and make adjustments if neccessary. For example:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;IF(test,then,else)=(&nbsp; ?=(test),%%IFT(then,else)&quot;<br />set &quot;IFT(then,else)=t=(then),%%IFTE(else)&quot;<br />set &quot;IFTE(else)=^!^!?*t + ^!?*(else)&nbsp; )&quot;<br /><br />call call call set /A &quot;max=%%IF(test,then,else):test=%GTR(x,y):x=one%:y=two!%%:then=one%%%%:else=two%%%%%%%%&quot;<br /></code></pre></div><br />In this line the %first% and !delayed! expansions are used for the nested GTR(x,y) function, and the rest of %expansions% (second to fourth) for the IF function; be aware that two delayed expansions can <em class="text-italics">not</em> be nested (to look at the &quot;chained expansions&quot;, ECHO this line with no, one, two and three CALL's!)<br /><br />This line is a good example of the next point: the use of IF function combined with boolean operator functions may be less efficient than the direct writting of the equivalent expression or the use of another simpler function, like Max(x,y). However, if you need to write a long and complex if-then-else expression, the use of IF function may be simpler than trying to write the equivalent expression from scratch. You may also use the IF function as starting base until the code works properly and then get the equivalent direct expression from an ECHO command inserted before the SET, although the difference in efficiency between both forms would be minimal.<br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Definition and use of arithmetic &quot;functions&quot; in Batch fi</h3>
+				<div class="date">Posted: <strong>04 Nov 2015 05:28</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">OperatorGK's last edit let me notice that it might not be a good idea to change variables without limitations within a formula; examples:<br />- a in Abs(x)<br />- z in Max(x,y)<br />- t in IF(test,then,else)<br /><br />If someone writes a library with such functions, then another user connot be sure that his variables won't change.<br />She/he also cannot restore these variables in the standard way (by appending &quot;, x=%x%&quot;, or similar), because its names are unpredictable (as long as this user doesn't lookup every function).<br /><br />So it might be better to use variable names of a specific format, for example variables &quot;_1, _2, _3, ...&quot; so the user could easily avoid using these variables.<br /><br /><br />penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Definition and use of arithmetic &quot;functions&quot; in Batch fi</h3>
+				<div class="date">Posted: <strong>09 Nov 2015 00:20</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">There are very interesting news on this topic!<br /><br />After defining the &quot;function&quot; technique I wanted to use the same method to process <em class="text-italics">characters</em>, so certain frequent manipulations (like StrLen function) could be performed in the same way. However, an arithmetic expression is performed <em class="text-italics">in the same command</em> that assign its value to a variable, but there is no such equivalent for character data. In this case the data is generated by any command and is taken and assigned to a variable via a separate FOR /F command. This way, in order to simulate the &quot;function&quot; method for character data we must start defining a &quot;function&quot; or &quot;macro&quot; comprised of the FOR /F required to execute a command and assign its output to a variable, like this one:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set &quot;SET(output,command)=for /F &quot;delims=&quot; %%a in ('command') do set &quot;output=%%~a&quot;&quot;<br /></code></pre></div><br />... that may be used via the same format of the &quot;functions&quot;, that is:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>%SET(output,command):command=echo Hello World%<br />echo %output%<br /></code></pre></div><br />We may make good use of the FOR /F command and also get <em class="text-italics">several lines</em> displayed by the command and assign all of them into a long string, and enclose each line by an optional delimiter (like quotes), and even assign each line to a separate element of an array.<br /><br />These SET macros may be used in combination with any command, but we may also define a <em class="text-italics">&quot;function&quot;</em> that perform a certain manipulation (like StrLen) specifically designed to be used inside SET macro. Below there are the definition of the two forms of SET macro (output to a single line or to an array) and a couple examples of &quot;functions&quot; designed for them. The main problems when writing these functions are the nesting of commands and the fact that commands placed into a <em class="text-italics">nested</em> FOR are executed in the command-line context.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br /><br /><br />rem Definition of the two basic forms of SET macro<br /><br />set &quot;_bound=&quot;<br />set &quot;SET(output,command)=set &quot;output=&quot;&amp;(for /F &quot;delims=&quot; %%a in ('command') do set &quot;output=^^^!output^^^! ^^^!_bound^^^!%%~a^^^!_bound^^^!&quot;)&amp;set &quot;output=^^^!output:~1^^^!&quot;&quot;<br />set &quot;SET(output&#91;&#93;,command)=set _0=0&amp;(for /F &quot;delims=&quot; %%a in ('command') do set /A _0+=1&amp;set &quot;output&#91;^^^!_0^^^!&#93;=%%~a&quot;)&amp;set /A output.length=_0&quot;<br /><br /><br />cls<br />echo Examples of use of SET macro<br />echo/<br />set &quot;wildCard=*.*&quot;<br />set /P &quot;wildCard=Enter a wild card: &quot;<br /><br />echo/<br />echo List of files:<br />%SET(output,command):command=dir /B !wildCard!%<br />echo %output%<br /><br />echo/<br />echo List of quoted files:<br />set _bound=&quot;<br />%SET(output,command):command=dir /B !wildCard!%<br />echo %output%<br /><br />echo/<br />echo List of files in an array:<br />%SET(output&#91;&#93;,command):command=dir /B !wildCard!%<br />for /L %%i in (1,1,%output.length%) do echo !output&#91;%%i&#93;!<br /><br /><br />echo/<br />echo/<br />echo Definition of ToUpper(str) function for SET macro<br />echo/<br />set ToUpper(str)=cmd /V:ON /C &quot;set _0=^!str^!&amp;(for %%a in (A B C D E F G H I J K L M N O P Q R S T U V W X Y Z) do @set &quot;_0=^^^!_0:%%a=%%a^^^!&quot;)&amp;echo &quot;^^^!_0^^^!&quot;&quot;<br />set /P &quot;string=Enter a string: &quot;<br />set &quot;_bound=&quot;<br />%SET(output,command):command=&quot;!ToUpper(str):str=string!&quot;%<br />echo ToUpper:&nbsp; &nbsp; &nbsp; &nbsp; %output%<br /><br /><br />echo/<br />echo/<br />echo Definition of StrLen(str) function for SET macro<br />echo/<br />set StrLen(str)=cmd /V:ON /C &quot;set _0=0^!str^!&amp;&gt;NUL set /A _1=0,_2=4096&amp;(for /L %%i in (12,-1,0) do @&gt;NUL set /A _3=_1+_2,_2/=2&amp;(for /F %%n in (&quot;^^^!_3^^^!&quot;) do @if &quot;^^^!_0:~%%n,1^^^!&quot; neq &quot;&quot; set _1=^^^!_3^^^!))&amp;echo ^!_1^!&quot;<br />set /P &quot;string=Enter a string: &quot;<br />%SET(output,command):command=&quot;!StrLen(str):str=string!&quot;%<br />set &quot;length=%output%&nbsp; &nbsp;&quot;<br /><br />set /A tens=output/10, units=output%%10<br />set &quot;ten=123456789 &quot;<br />set /P &quot;=Length: %length:~0,4%-&gt;&nbsp; &quot; &lt; NUL<br />for /L %%i in (1,1,%tens%) do set /P &quot;=%ten%&quot; &lt; NUL<br />echo(!ten:~0,%units%!<br /></code></pre></div><br />These SET macro/function combinations have the same advantages of the previous &quot;functions&quot;: they execute faster than the original multi-line versions of the same code.<br /><br />Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Definition and use of arithmetic &quot;functions&quot; in Batch fi</h3>
+				<div class="date">Posted: <strong>23 Nov 2015 09:00</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content">Hi,<br /><br />I need some assistence for a new fuction that used a previous one.<br /><br />This is the my attempt to define Integer LN (Natural Logaritm) using Borchardt's algorithm :<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal EnableDelayedExpansion<br />set&nbsp; &quot;Sqrt(N)=( M=(N),x=M/(11*1024)+40, x=(M/x+x)&gt;&gt;1, x=(M/x+x)&gt;&gt;1, x=(M/x+x)&gt;&gt;1, x=(M/x+x)&gt;&gt;1, x=(M/x+x)&gt;&gt;1, x+=(M-x*x)&gt;&gt;31 )&quot;<br /><br />rem http://math.stackexchange.com/questions/75074/an-alternative-way-to-calculate-logx<br /><br />for %%z in (1, 2, 3, 4, 9, 10, 16, 25, 100, 511, 512, 1000, 10000,<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 65535, 65536, 100000, 131071, 131072, 262143, 262144, 393215, 393216, 800000<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1000000, 2085999, 2086000, 5000000, 10000000, 100000000, 200000000, 1000000000, 2147395600, 2147483647) do (<br /><br />set /A &quot;last_sqrt=!Sqrt(N):N=%%z!&quot;<br />set /A &quot;N=%%z, a0=(1+N)/2, b0=last_sqrt, a1=(a0+b0)/2, sqr=a1*b0&quot;<br />For %%s in (!sqr!) do set /A &quot;last_sqrt=!Sqrt(N):N=%%s!&quot;<br />set /A &quot;b1=last_sqrt, a2=(a1+b1)/2, sqr=a2*b1&quot;<br />For %%s in (!sqr!) do set /A &quot;last_sqrt=!Sqrt(N):N=%%s!&quot;<br />set /A &quot;b2=last_sqrt, a3=(a2+b2)/2, sqr=a3*b2&quot;<br />For %%s in (!sqr!) do set /A &quot;last_sqrt=!Sqrt(N):N=%%s!&quot;<br />set /A &quot;b3=last_sqrt, a4=(a3+b3)/2, sqr=a4*b3&quot;<br />For %%s in (!sqr!) do set /A &quot;last_sqrt=!Sqrt(N):N=%%s!&quot;<br /><br />set /A &quot;N=%%z, b4=last_sqrt, ln=2*(N-1)/(a4+b4), lnp=2*(N-1)/(a3+b3)&quot;<br />echo %%z ln:!ln! lnp:!lnp! <br />rem echo a0:!a0! b0:!b0! a1:!a1! b1:!b1! a2:!a2! b2:!b2! a3:!a3! b3:!b3! a4:!a4! b4:!b4!<br />rem echo(<br /><br />)<br /><br />pause<br />exit/b<br /></code></pre></div><br />There are some bugs that I will fix later...<br /><br />It is possible to get a Function inside another or need more steps?<br /><br />It is possible merge more steps in a single line?<br /><br />Einstein1969</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Definition and use of arithmetic &quot;functions&quot; in Batch fi</h3>
+				<div class="date">Posted: <strong>24 Nov 2015 09:49</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content"><blockquote><div><cite>trebor68 wrote:</cite>The Sign fuction is defineted:<br />Value <span style="color: #FF0000">x &lt; 0</span> is <span style="color: #408000">Sgn(x) = -1</span><br />Value <span style="color: #FF0000">x = 0</span> is <span style="color: #408000">Sgn(x) = 0</span><br />Value <span style="color: #FF0000">x &gt; 0</span> is <span style="color: #408000">Sgn(x) = 1</span><br /><br />See also: <a href="https://en.wikipedia.org/wiki/Sign_function" class="postlink">https://en.wikipedia.org/wiki/Sign_function</a><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>D:\CMDVerz&gt;set /a a=32,&quot;(a&gt;&gt;31)+!(a&gt;&gt;31)*!!a&quot;<br />1<br />D:\CMDVerz&gt;set /a a=0,&quot;(a&gt;&gt;31)+!(a&gt;&gt;31)*!!a&quot;<br />0<br />D:\CMDVerz&gt;set /a a=-32,&quot;(a&gt;&gt;31)+!(a&gt;&gt;31)*!!a&quot;<br />-1<br />D:\CMDVerz&gt;</code></pre></div></div></blockquote><br /><br />This is solution that not use the ! (for escape problem)<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\Users\ACER&gt;set /A &quot;n=32, s=(n&gt;&gt;31)|((-n&gt;&gt;31)&amp;1)&quot;<br />1<br />C:\Users\ACER&gt;set /A &quot;n=0, s=(n&gt;&gt;31)|((-n&gt;&gt;31)&amp;1)&quot;<br />0<br />C:\Users\ACER&gt;set /A &quot;n=-30, s=(n&gt;&gt;31)|((-n&gt;&gt;31)&amp;1)&quot;<br />-1<br /></code></pre></div><br /><br />Einstein1969</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Definition and use of arithmetic &quot;functions&quot; in Batch files</h3>
+				<div class="date">Posted: <strong>16 Jul 2018 10:46</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">There are new developments on this topic, this time related to the definition of functions with <em class="text-italics">several parameters</em>. I strongly suggest you to review the whole thread before review this reply, in order to remember the methods used here...<br>
+<br>
+Lets start with the simplest case: a function with two parameters. If a list of several expressions separated by commas is assigned to a variable in a SET /A command, the variable gets the value of the <em class="text-italics">first</em> expression, but if the list is enclosed in parentheses, then the variable gets the value of the <em class="text-italics">last</em> expression. This behavior allows to define a function with two parameters and easily separate them by just enclosing the parameters pair between parentheses in order to get the second parameter:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+rem Definition of a function with two numeric parameters
+set "TwoParams(x,y)= x=x,y , y=(x,y)"
+
+rem Usage example
+set /A "test=%TwoParams(x,y):x,y=123,456%"
+echo x=%x%, y=%y%
+
+
+rem Practical example: MAXimum and MINimum functions
+set "Max(x,y)=( x=x,y, y=(x,y), c=(x-y&gt;&gt;31)+1, c*x+^^^!c*y )"
+set "Min(x,y)=!Max(x,y):x-y=y-x!"
+
+echo/
+set /P "numbers=Enter two numbers separated by a space: "
+set /A "n1=%numbers: =,n2=%, max=%Max(x,y):x,y=n1,n2%, min=%Min(x,y):x,y=n1,n2%"
+echo Max = %max%,  Min = %min%
+
+
+rem Practical example: Add/Subtract two "1+six_digits" values representing times
+
+rem Definition of the AddTimes function with two "1HHMMSS" parameters
+set "AddTimes(t1,t2)=( t1=t1,t2,t2=(t1,t2), s1=t1%%100,t1/=100,s1+=t1%%100*60,t1/=100,s1+=t1%%100*60*60, s2=t2%%100,t2/=100,s2+=t2%%100*60,t2/=100,s2+=t2%%100*60*60, r=s1+s2, res=r%%60,r/=60,res+=r%%60*100,r/=60,res+(r+100)*10000 )"
+rem Definition of the derived SubTimes function
+set "SubTimes(t1,t2)=!AddTimes(t1,t2):s1+s2=s1-s2!"
+
+echo/
+set /P "time1=Enter base time in HH:MM:SS format: "
+set /P "time2=Enter delta time, same format:      "
+set /A "add=!AddTimes(t1,t2):t1,t2=1%time1::=%,1%time2::=%!, sub=!SubTimes(t1,t2):t1,t2=1%time1::=%,1%time2::=%!"
+echo                                    ---------
+echo                  The Add result is: %add:~-6,2%:%add:~-4,2%:%add:~-2%
+echo                                    ---------
+echo                  The Sub result is: %sub:~-6,2%:%sub:~-4,2%:%sub:~-2%
+</code></pre></div>
+
+Output:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>x=123, y=456
+
+Enter two numbers separated by a space: 123 456
+Max = 456,  Min = 123
+
+Enter base time in HH:MM:SS format: 10:45:15
+Enter delta time, same format:      00:30:30
+                                   ---------
+                 The Add result is: 11:15:45
+                                   ---------
+                 The Sub result is: 10:14:45
+</code></pre></div>
+A "SET /A" arithmetic expression don't provides a method to separate more than two parameters, so we need to use the standard "SET" tricks in order to do so. Although doing that will not return a result in the simple and direct way than the numeric "SET /A" does, this non-numeric "function" provides a method to encapsulate in a single line a series of managements that are used in a very simple way, that is the original purpose of this thread anyway. Besides, the use of standard SET command allows to manage non-numeric parameters.<br>
+<br>
+The method used to separate an "a,b,c" parameter list in individual "a", "b", "c" elements is explained with detail at <a href="viewtopic8d03.html?f=3&amp;t=6429&amp;p=55819#p55819" class="postlink">this post</a>.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+rem Definition of a non-numeric "function" with three parameters
+set SetVars(a,b,c)=set "a=a,b,c" ^&amp; set "b=^!a:*,=^!" ^&amp; call set "a=%%a:,^!b^!=%%" ^&amp; set "c=^!b:*,=^!" ^&amp; call set "b=%%b:,^!c^!=%%"
+
+rem Usage examples
+
+%SetVars(a,b,c):a,b,c=10,20,30%
+echo Three numeric values: a="%a%", b="%b%", c="%c%"
+
+%SetVars(a,b,c):a,b,c=First value,This is the second value,And this is the last one%
+echo Three string values: a="%a%", b="%b%", c="%c%"
+</code></pre></div>
+
+Output:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Three numeric values: a="10", b="20", c="30"
+Three string values: a="First value", b="This is the second value", c="And this is the last one"
+</code></pre></div>
+
+Note that the definition of <strong class="text-strong">SetVars</strong> "function" follows a well defined scheme. This point means that the creation of a function of this type with any number of parameters could be <em class="text-italics">automatized</em> via a subroutine:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+rem Example of automatized definition of a "function" with four parameters
+call :DefineSetVars a b c d
+echo Defined function:
+echo SetVars(a,b,c,d)=!SetVars(a,b,c,d)!
+
+rem Usage example
+%SetVars(a,b,c,d):a,b,c,d=10,20,30,40%
+echo Four numeric values: a="%a%", b="%b%", c="%c%", d="%d%"
+
+goto :EOF
+
+rem Subroutine to create a base "function" with several parameters
+
+:DefineSetVars var1 var2 var3 ...
+setlocal EnableDelayedExpansion
+
+set "last="
+for %%a in (%*) do (
+   if not defined last (
+      set "expr=%*"
+      set "expr=!expr: =,!"
+      set expr=SetVars(!expr!^)=set "%%a=!expr!"
+   ) else (
+      set expr=!expr! ^&amp; set "%%a=^^^!!last!:*,=^^^!" ^&amp; call set "!last!=%%!last!:,^^^!%%a^^^!=%%"
+   )
+   set "last=%%a"
+)
+for /F "delims=" %%a in ("!expr!") do (
+   endlocal
+   set "%%a"
+)
+exit /B
+</code></pre></div>
+
+Output:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Defined function:
+SetVars(a,b,c,d)=set "a=a,b,c,d" &amp; set "b=!a:*,=!" &amp; call set "a=%a:,!b!=%" &amp; set "c=!b:*,=!" &amp; call set "b=%b:,!c!=%" &amp; set "d=!c:*,=!" &amp; call set "c=%c:,!d!=%"
+Four numeric values: a="10", b="20", c="30", d="40"
+</code></pre></div>
+
+Finally, lets review a different example: instead of define a function with several parameters, lets define a function with one parameter that is <em class="text-italics">the name</em> of a variable, and process it as a string in a very different way:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+rem Define the StrLen(var) "function" with one string *variable* as parameter
+set StrLen(var)=set "str=0^!var^!" ^&amp; set /A "l=0,n=b=1&lt;&lt;12"
+for /L %%i in (1,1,13) do set StrLen(var)=!StrLen(var)! ^&amp; call set "c=%%str:~^!n^!,1%%" ^&amp; (if "^!c^!" neq "" set /A l=n) ^&amp; set /A "n=l+(b&gt;&gt;=1)"
+set StrLen(var)=!StrLen(var)! ^&amp; set /A "StrLen=l"
+
+rem Example of use of StrLen(var) function
+:loop
+   set "str="
+   set /P "str=Enter a string: "
+   if not defined str goto :EOF
+   %StrLen(var):var=str%
+   echo The length is:  %StrLen%
+   echo/
+goto loop
+</code></pre></div>
+
+Output:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Enter a string: Nineteen characters
+The length is:  19
+
+Enter a string: TenLetters
+The length is:  10
+
+Enter a string:
+</code></pre></div>
+
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Definition and use of arithmetic &quot;functions&quot; in Batch files</h3>
+				<div class="date">Posted: <strong>16 Jul 2018 17:23</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">This is syntactic sugar <img class="smilies" src="images/smilies/icon_lol.gif" width="15" height="15" alt=":lol:" title="Laughing"> Thanks for sharing.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>2</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6744&start=15&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:51:18 GMT -->
+</html>

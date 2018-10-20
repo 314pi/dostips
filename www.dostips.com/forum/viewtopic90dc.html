@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8043&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:04:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; FOR LOOP Variable setting as %C - how to solve?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>FOR LOOP Variable setting as %C - how to solve?</h2>
+		<p><a href="viewtopicab3d.html?f=3&amp;t=8043">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8043</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>FOR LOOP Variable setting as %C - how to solve?</h3>
+				<div class="date">Posted: <strong>20 Aug 2017 18:20</strong></div>
+				<div class="author">by <strong>SIMMS7400</strong></div>
+				<div class="content">Hi Folks -<br /><br />I'm building a process that uses the script name to build log,error, export etc directories. Therefore, I parse the name accordingly:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F &quot;tokens=2* delims=_&quot; %%A IN (&quot;%~n0&quot;) DO (<br />&nbsp; &nbsp;IF &#91;&quot;%%A&quot;&#93; NEQ &#91;&quot;&quot;&#93; SET &quot;A=%%A&quot;<br />&nbsp; &nbsp;IF &#91;&quot;%%B&quot;&#93; NEQ &#91;&quot;&quot;&#93; SET &quot;B=_%%B&quot;<br />)<br /></code></pre></div><br /><br />This works fine if the name is as such:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>STRING_STRING_STRING</code></pre></div><br /><br />However, the client would like the option to name the file with 3 delimiters, as such:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>STRING_STRING_STRING_STRING</code></pre></div><br /><br />The issue is when the code is as such:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F &quot;tokens=2* delims=_&quot; %%A IN (&quot;%~n0&quot;) DO (<br />&nbsp; &nbsp;IF &#91;&quot;%%A&quot;&#93; NEQ &#91;&quot;&quot;&#93; SET &quot;A=%%A&quot;<br />&nbsp; &nbsp;IF &#91;&quot;%%B&quot;&#93; NEQ &#91;&quot;&quot;&#93; SET &quot;B=_%%B&quot;<br />&nbsp; &nbsp;IF &#91;&quot;%%C&quot;&#93; NEQ &#91;&quot;&quot;&#93; SET &quot;C=_%%B&quot;<br />&nbsp; &nbsp;</code></pre></div><br /><br />it will set %C% as _%C if the file name only contains (3) strings. Can you help me put a check in there saying if there is only 3 delimiters, then set %C% to null.<br /><br />Thanks!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR LOOP Variable setting as %C - how to solve?</h3>
+				<div class="date">Posted: <strong>21 Aug 2017 00:04</strong></div>
+				<div class="author">by <strong>DosItHelp</strong></div>
+				<div class="content">Hey SIMMS7400,<br /><br />It is possible you want tokens=<span style="color: #40BF00">1,</span>2* ?<br />Also last line did you mean SET &quot;C=_<span style="color: #40BF00">%%C</span>&quot; ?<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F &quot;tokens=1,2* delims=_&quot; %%A IN (&quot;%~n0&quot;) DO (<br />&nbsp; &nbsp;IF &#91;&quot;%%A&quot;&#93; NEQ &#91;&quot;&quot;&#93; SET &quot;A=%%A&quot;<br />&nbsp; &nbsp;IF &#91;&quot;%%B&quot;&#93; NEQ &#91;&quot;&quot;&#93; SET &quot;B=_%%B&quot;<br />&nbsp; &nbsp;IF &#91;&quot;%%C&quot;&#93; NEQ &#91;&quot;&quot;&#93; SET &quot;C=_%%C&quot;<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR LOOP Variable setting as %C - how to solve?</h3>
+				<div class="date">Posted: <strong>21 Aug 2017 13:13</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">You could also use the same syntax that I introduced to you in your former thread. That way it is also possible to assign an associative array for any number of tokens.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal<br />set &quot;name=STRINGa_STRINGb_STRINGc_STRINGd&quot; &amp;rem You would use set &quot;name=%~n0&quot; instead.<br /><br />setlocal EnableDelayedExpansion<br />set &quot;n=1&quot;<br />set &quot;token!n!=%name:_=&quot; &amp; set /a n+=1 &amp; set &quot;token!n!=%&quot;<br /><br />echo - Number of tokens: !n!<br />echo - Tokens:<br />for /l %%i in (1 1 !n!) do echo !token%%i!<br /><br />pause<br /></code></pre></div><br />Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: FOR LOOP Variable setting as %C - how to solve?</h3>
+				<div class="date">Posted: <strong>21 Aug 2017 18:03</strong></div>
+				<div class="author">by <strong>SIMMS7400</strong></div>
+				<div class="content">Thank you both so much!!! This is a major help!<br /><br />Have a great night!</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8043&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:04:29 GMT -->
+</html>

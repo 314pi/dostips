@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8602&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:01 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; How to not merge folders already created</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>How to not merge folders already created</h2>
+		<p><a href="viewtopic23eb.html?f=3&amp;t=8602">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8602</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>How to not merge folders already created</h3>
+				<div class="date">Posted: <strong>03 Jun 2018 04:52</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Hi <br>
+<br>
+The script shown at the bottom creates a subfolder in "C:\Downloads" and moves files that are within it all into it after I named it . <br>
+<br>
+What it is that I already have subfolders within the folder and when im running command its also merging the subfolders that I have alreay created too.<br>
+<br>
+I may be wrong but believe that the line below is causing the issue but donno what to put in.  I think that its tellling it for each object in the folder to merge but as mentioned I only need files merged and not the folders. They just need to be left there and do nothing with them.<br>
+<br>
+ Am I right and if so what do I need to prevent it from merging subfolders already created.<br>
+<br>
+Any ideas?<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>On Error Goto 0
+For Each objFile In objDLFolder.Files
+  objFSO.MoveFile objFile.Name, strNewFolder &amp; "\"
+Next
+</code></pre></div>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Option Explicit
+
+Const strDLFolder = "C:\Downloads"
+Dim objFSO, objWShell, objDLFolder, strNewFolder, objFile
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objWShell = CreateObject("WScript.Shell")
+
+
+If Not objFSO.FolderExists(strDLFolder) Then objFSO.CreateFolder(strDLFolder)
+objWShell.CurrentDirectory = strDLFolder
+Set objDLFolder = objFSO.GetFolder(strDLFolder)
+If objDLFolder.Files.Count = 0 Then WScript.Quit
+
+Do
+  Err.Clear
+  strNewFolder = InputBox("Folder Name", vbLf &amp; "Enter the name of the folder to be created:")
+  If strNewFolder = False Then WScript.Quit
+  On Error Resume Next
+  objFSO.CreateFolder strNewFolder
+Loop While Err.Number &lt;&gt; 0 Or Not objFSO.FolderExists(strNewFolder)
+
+On Error Goto 0
+For Each objFile In objDLFolder.Files
+  objFSO.MoveFile objFile.Name, strNewFolder &amp; "\"
+Next
+
+objWShell.Popup "All files moved.", 0, "Done", vbInformation Or vbSystemModal Or &amp;h00040000&amp;
+
+objWShell.Run "explorer.exe /select,""" &amp; objFSO.BuildPath(strDLFolder, strNewFolder) &amp; """"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to not merge folders already created</h3>
+				<div class="date">Posted: <strong>03 Jun 2018 05:36</strong></div>
+				<div class="author">by <strong>SIMMS7400</strong></div>
+				<div class="content">This is a batch forum - not VB.  Your ask can be coded in 3 lines with batch, is there a reason you're not using a match method?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to not merge folders already created</h3>
+				<div class="date">Posted: <strong>03 Jun 2018 05:42</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content"><img class="smilies" src="images/smilies/icon_redface.gif" width="15" height="15" alt=":oops:" title="Embarassed">  oopppsss. Sorry no there no reason why I cant have it as a batch   Ain’t got a clue on how to write one tho ...  <img class="smilies" src="images/smilies/icon_eek.gif" width="15" height="15" alt=":shock:" title="Shocked"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to not merge folders already created</h3>
+				<div class="date">Posted: <strong>03 Jun 2018 09:00</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content"><a href="viewtopic8b6c.html?f=3&amp;t=8487" class="postlink">Here</a> you ask "how to merge files", and now you ask "how to NOT merge". Do you know exactly what you need? It looks like you're trying to learn basic coding skills by asking others to write script examples for you. Did you try bugging Google instead? Best thing is attempting to code yourself and posting your own errors. At least you'll learn something in the process.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to not merge folders already created</h3>
+				<div class="date">Posted: <strong>04 Jun 2018 05:05</strong></div>
+				<div class="author">by <strong>pieh-ejdsch</strong></div>
+				<div class="content">Hello tweacle,<br>
+This want help you. 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Setlocal
+PushD C:\Downloads
+set "newFolder=newFolderName"
+md "%newFolder%"
+Move * "%newFolder%"
+popD
+</code></pre></div>
+Phil</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to not merge folders already created</h3>
+				<div class="date">Posted: <strong>04 Jun 2018 08:04</strong></div>
+				<div class="author">by <strong>MarioZac</strong></div>
+				<div class="content">Or modify the above snippet to prompt for new folder name:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set /p "newFolderName=Enter new destination folder name &gt; "</code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8602&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:01 GMT -->
+</html>

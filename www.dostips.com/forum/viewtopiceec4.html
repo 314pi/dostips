@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8478&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:53:36 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Team schedules using a FindREPl hack</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Team schedules using a FindREPl hack</h2>
+		<p><a href="viewtopic36f9.html?f=3&amp;t=8478">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8478</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Team schedules using a FindREPl hack</h3>
+				<div class="date">Posted: <strong>06 Apr 2018 00:38</strong></div>
+				<div class="author">by <strong>thefeduke</strong></div>
+				<div class="content">Paraphrasing Bogart's character in Casablanca: "Of all the gin joints, I walks into …”.<br>
+<br>
+I have participated in two pool and one dart leagues during my membership at a local fraternal organization.  Distribution of the team schedules has been established for decades, but require similar eyeball interpretation.  The most annoying differences are in listing matches with the home team first  or on the right on a very crowded piece of paper that lists all teams.<br>
+<br>
+I wrote applications to interpret a one page PDF or web page and list a line or two for each date for only one team, showing HOME and AWAY games with opponent locations.  I printed a copy for each opponent as we met them and it seemed well received, but I was now in the publishing business!   Our  administration also liked these schedules for kitchen meal planning.<br>
+<br>
+The pool leagues involved about a dozen teams  but darts is much bigger.  The input was a large PDF with about a hundred teams in multiple divisions.  The Minute Man - World's largest Steel-Tip Dart League has an open website at <a href="http://www.mmdl.org/" class="postlink">http://www.mmdl.org/</a> for the PDF:  MMDL_S18_SS_Sched  (It was too large to attach.)<br>
+<br>
+Enough background information,   The method involved defining arrays for dates and team info such as name, location, address and an events file as the engine for look-ups.  I elected to use FindREPL.bat to store all of the tables required to build the arrays in one sequential file using tags much like FindREPL accesses its own HELP.   So in the last phase to print,  I need batch script code, the file of tables and FindREPL itself and I remain in the publishing business and cannot penetrate divisions beyond my own.  <br>
+<br>
+I spent some time reading what I could understand of the code and found a 'minimally intrusive' change to hook into the code for my own purposes.  I stole the HELP with zero arguments from FindREPL !  After some experimentation, I set the following objectives:<br>
+<br>
+1.  The application consists entirely of one batch script which contains within it all required data.<br>
+2.  This script is a fully functional fork of FindREPL20.bat only intended to be used to call itself.<br>
+3.  All user options are specified by dialogs with the user with no arguments required for printing schedules.<br>
+4.  There are to be no prerequisite external routines in CD or PATH beyond normal Windows 7 or 10 system functions.<br>
+<br>
+I am satisfied with the result.  MMDls.bat stands alone and requires as few as four keystrokes to generate a list.  It is double-clickable and can run where-ever it is downloaded.  I have attached a zip file that also contains the generating code to demonstrate the technique for the curious.  The script generator still needs to be run by me at the start of each new session/season.<br>
+<br>
+<strong class="text-strong"><span style="text-decoration: underline"><span style="font-size: 150%; line-height: normal">Antonio,</span></span></strong>  I started this thread so as not to clutter your main topic.  Your product has been robust and stable for years.  I hope that PM was not the most appropriate.  I understood that you were amenable to the use of your code for non-commercial purposes, as long as attribution to you remains intact as coded.  So, do I have permission to distribute this hack of your code?<br>
+<br>
+Further,  I do not want support to be undefined.  The average user shouldn't even know about you without the /? HELP,  but perhaps I should insert a few leading lines pointing to myself and let the rest of the help guide to getting the real product from DOStips.
+<div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/filef1d7.php?id=347">MMD.zip</a></dt>
+						<dd>(26.23 KiB) Downloaded 44 times</dd>
+		</dl>
+		
+		
+			</div>
+
+John A.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Team schedules using a FindREPl hack</h3>
+				<div class="date">Posted: <strong>12 Apr 2018 01:17</strong></div>
+				<div class="author">by <strong>thefeduke</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist742a.html?mode=viewprofile&amp;u=6577">thefeduke</a> wrote: <a href="viewtopic5ff7.html?p=56218#p56218" data-post-id="56218" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">06 Apr 2018 00:38</div></cite>
+ I set the following objectives:<br>
+. . .<br>
+2.  This script is a fully functional fork of FindREPL20.bat only intended to be used to call itself.<br>
+3.  All user options are specified by dialogs with the user with no arguments required for printing schedules.
+</div></blockquote>A little more coding and these objectives are now, more or less, enforced.  A local environment variable prevents FINDrepl functions from being called externally and any attempt to do so results in a brief HELP reminder of the download and usage instructions included when getting the batch script.<br>
+<br>
+It is not important that this protection is simple and easily defeated.  This is all about ease of use for dart players who might have a casual relationship with their Windows PC and just want their team schedule to share with their team-mates.  I also disliked that command line usage might lead to an unexpected FINDrepl run without adequate STDin preparation resulting in the script quietly reading input strings from the console of a very confused user.<br>
+<br>
+In the following sample output, I create the user batch script (not normally done by the user),  run it once as a user but with a prohibited argument and again correctly with no arguments: <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>DOS Prompt &gt;MMDready
+
+MMDready.bat copied 69 records from itself to "MMDls.bat"
+
+Converting input file "MMDL_S18_SS_Sched.pdf" to tabular text.
+
+MMDready.bat copied 871 more records from itself to "MMDls.bat"
+
+DOS Prompt &gt;MMDLs "any string"
+
+This batch script does not accept command line arguments.
+MMDls.bat creates Team schedules for South Shore Minute Man darts.
+
+MMDls [/?]
+
+  /?         Displays this brief HELP
+
+It does not require nor accept any arguments other than /?.
+
+Usage instructions:
+   Download to any convenient folder from the distribution source.
+   Open that folder using Windows Explorer.
+   Right-click and Extract to the same folder.
+   Righy-click and Open MMDls.bat (Double-left-click also works)
+
+The user will be prompted for the following:
+
+   1- An optional search string:
+         Suggestions for later prompts may be offered.
+   2- Alphabetic division level.
+   3- Numeric sequence within level.
+   4- Team numbet within selected division.
+
+DOS Prompt &gt;MMDLs
+The board is set to ask for division and team information.
+
+Enter four or more letters to search the team lists.
+Try team, establishment, street, town or city names.
+Some suggestions may be offered for division selection.
+Less characters will transfer directly to prompting.
+
+Press optional search characters and the 'Enter' key:
+</code></pre></div>I am attaching only the updated standalone script.  I have not updated the rest which was really only posted to satisfy the compulsively curious.<br>
+<br>
+@Antonio,  I believe that this satisfies my concerns about involving you in such a third party support role.  My adaptation is not marketing FINDrepl and I have removed its HELP as well.  When I reviewed the Terms and Conditions of this forum and noted that by posting to this forum we transfer rights to the owner of the domain.  I believe the spirit of this community is all about sharing, helping and the exchange of ideas.  I feel privileged that you have shared your intellectual product with us.  Something within me still wants your 'blessing".  You review a lot of code,  and understandably balk at very large scripts.  It's more about agreement in principle that I have treated you right in leaving intact your opening comments which include documenting that Findrepl is available on DOStips.com.  All of my changes are within the first 50 lines and the rest is unchanged hybrid code or my particular application code which is of no interest other than as an example.  As to the creating code: it works and is of no real concern to anyone, bit myself and curiosity seekers.<br>
+<br>
+John A.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Team schedules using a FindREPl hack</h3>
+				<div class="date">Posted: <strong>12 Apr 2018 07:43</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">Yes, I agree. You may use FindRepl.bat code in any way you wish as long as you preserve the related comments.<br>
+<br>
+I am glad to see that my work is useful.  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> <br>
+<br>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Team schedules using a FindREPl hack</h3>
+				<div class="date">Posted: <strong>03 Jul 2018 18:49</strong></div>
+				<div class="author">by <strong>thefeduke</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopic08a4.html?p=56296#p56296" data-post-id="56296" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">12 Apr 2018 07:43</div></cite>. . .<br>
+I am glad to see that my work is useful.  <img class="smilies" src="images/smilies/icon_biggrin.gif" width="15" height="15" alt=":D" title="Very Happy"> </div></blockquote>Thanks again and it was so useful that I applied the process to a different kind of input to feed a similar back-end.  Instead of a PDF file,  I visit a web page, perform a 'Select All' and copy to the Windows clipboard and use Steffen's paste VBS utility to get my teams lineup.<br>
+<br>
+But unfortunately something has changed since February.  My gut suspects Windows maintenance.  Back then a TAB seemed to be expanded to spaces and I was able to manipulate the records using simple SET commands, but now the TAB character remains intact in the created file.  This is minor if using default delimiters with FOR, because it is all white space.  In my case, this white space is the only way to separate a team name of one or more words from a home venue of an also unknown number of words.<br>
+<br>
+Here is a file to demonstrate the old and the new:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Whack Em' Up  Two Spaces. Could be 2-8
+Whack Em' Up        Eight Spaces. Could be 2-8
+Whack Em' Up     The Next Gin Joint, using five spaces.
+Whack Em' Up     The Next Gin Joint, using Tab and Space.
+Whack Em     Tab at full eight and one Space
+0----+----1----+----2----+----3----+----4
+Whack E  Tab at min of one and one Space
+</code></pre></div>  I have a fix in place with demo output:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Apply four simple Set commands
+Whack Em' Up, Two Spaces. Could be 2-8
+Whack Em' Up, Eight Spaces. Could be 2-8
+Whack Em' Up, The Next Gin Joint, using five spaces.
+Whack Em' Up     The Next Gin Joint, using Tab and Space.
+Whack Em         Tab at full eight and one Space
+0----+----1----+----2----+----3----+----4
+Whack E  Tab at min of one and one Space
+
+Apply CharLib str2hex, two Set commands, hex2str
+Whack Em' Up  Two Spaces. Could be 2-8
+Whack Em' Up        Eight Spaces. Could be 2-8
+Whack Em' Up     The Next Gin Joint, using five spaces.
+Whack Em' Up, The Next Gin Joint, using Tab and Space.
+Whack Em, Tab at full eight and one Space
+0----+----1----+----2----+----3----+----4
+Whack E, Tab at min of one and one Space
+
+Apply four simple Set commands first and then
+Apply CharLib str2hex, two Set commands, hex2str
+Whack Em' Up, Two Spaces. Could be 2-8
+Whack Em' Up, Eight Spaces. Could be 2-8
+Whack Em' Up, The Next Gin Joint, using five spaces.
+Whack Em' Up, The Next Gin Joint, using Tab and Space.
+Whack Em, Tab at full eight and one Space
+0----+----1----+----2----+----3----+----4
+Whack E, Tab at min of one and one Space</code></pre></div>that was applied with this code:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo off
+Rem Alternate method to get TAB, Carriage return and possibly all others
+Rem Start https://www.dostips.com/forum/viewtopic.php?p=56629#p56629
+Rem #19 Unread post by Aacini » Tue May 01, 2018 2:19 pm
+setlocal EnableDelayedExpansion
+
+call :DefineCtrlChar TAB=09, LF=0A, CR=0D
+
+Set "TeamName=Whack Em' Up
+Set "BarName=The Next Gin Joint"
+
+&gt; %~n0.txt Echo=%TeamName%  Two Spaces. Could be 2-8 
+&gt;&gt;%~n0.txt Echo=%TeamName%        Eight Spaces. Could be 2-8 
+&gt;&gt;%~n0.txt Echo=%TeamName%     %BarName%, using five spaces.
+&gt;&gt;%~n0.txt Echo=%TeamName%%TAB% %BarName%, using Tab and Space. 
+&gt;&gt;%~n0.txt Echo=%TeamName:~,-4%%TAB% Tab at full eight and one Space 
+&gt;&gt;%~n0.txt Echo=0----+----1----+----2----+----3----+----4
+&gt;&gt;%~n0.txt Echo=%TeamName:~,-5%%TAB% Tab at min of one and one Space 
+
+Echo=
+Echo=Display input file combinations 
+    Type %~n0.txt 
+
+Echo=
+Echo=Apply four simple Set commands
+Set "Tabbed="
+    For /F "usebackq delims=" %%A In (
+        `Type %~n0.txt` 
+    ) Do (
+Rem     Echo=:%%~A 
+        Set "Tabbed=%%~A" 
+        Set "Tabbed=!Tabbed:   =  !"
+        Set "Tabbed=!Tabbed:    =  !"
+        Set "Tabbed=!Tabbed:    =  !"
+        Set "Tabbed=!Tabbed:  =, !"
+        Echo=!Tabbed!
+    )
+
+Echo=
+Echo=Apply CharLib str2hex, two Set commands, hex2str
+Set "Tabbed="
+    For /F "usebackq delims=" %%A In (
+        `Type %~n0.txt` 
+    ) Do (
+Rem     Echo=:%%~A 
+        Set "Tabbed=%%~A" 
+Rem     new functions: :chr, :asc, :asciiMap
+Rem     Start https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1733&amp;start=15#p6953
+Rem     #28 Post by dbenham » Thu Apr 14, 2011 12:03 am 
+        Call Charlib str2hex Tabbed 2Tabbed
+        Set "2Tabbed=!2Tabbed:  =20!"
+        Set "2Tabbed=!2Tabbed:1A20=2C20!"
+        Call Charlib hex2str 2Tabbed
+    )
+
+Echo=
+Echo=Apply four simple Set commands first and then 
+Echo=Apply CharLib str2hex, two Set commands, hex2str
+Set "Tabbed="
+    For /F "usebackq delims=" %%A In (
+        `Type %~n0.txt` 
+    ) Do (
+Rem     Echo=:%%~A 
+        Set "Tabbed=%%~A" 
+        Set "Tabbed=!Tabbed:   =  !"
+        Set "Tabbed=!Tabbed:    =  !"
+        Set "Tabbed=!Tabbed:    =  !"
+        Set "Tabbed=!Tabbed:  =, !"
+        Call Charlib str2hex Tabbed 2Tabbed
+        Set "2Tabbed=!2Tabbed:  =20!"
+        Set "2Tabbed=!2Tabbed:1A20=2C20!"
+        Call Charlib hex2str 2Tabbed
+    )
+
+    Exit /B
+</code></pre></div>This is an application of Dave Benham's old CharLib script as a HEX edit function in batch. Have I missed a more direct way of handling TAB in an input file?<br>
+<br>
+This could touch so many areas.  I recall discussion of select and copy misbehaving some months ago.  An altered default in a browser? windows? Something is different.<br>
+<br>
+John A.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8478&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:53:36 GMT -->
+</html>

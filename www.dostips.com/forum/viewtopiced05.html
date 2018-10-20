@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1597&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:57:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; &quot;RUN AS ...&quot; may destroy Windows\System32</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>&quot;RUN AS ...&quot; may destroy Windows\System32</h2>
+		<p><a href="viewtopic807f.html?f=3&amp;t=1597">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1597</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>&quot;RUN AS ...&quot; may destroy Windows\System32</h3>
+				<div class="date">Posted: <strong>24 Jan 2011 09:56</strong></div>
+				<div class="author">by <strong>alan_b</strong></div>
+				<div class="content">When you use &quot;RUN AS ..&quot; on a script selected by a third party &quot;Windows Explorer&quot; you may destroy the contents of C:\WINDOWS\system32.<br /><br />It may certainly do this with a batch script that uses CMD.EXE.<br />It is possible that the problem also applies to ANY EXECUTABLE that may be similarly launched.<br /><br />I have a third party explorer that launches CMD.EXE and gives it the name and path of the selected file.<br />If I double clicked then CMD.EXE has its home changed from its location, i.e.<br />C:\WINDOWS\system32<br />and is instead set to target the folder containing the script, so that a command<br />DEL *.EXE<br />will only zap the EXE files that are in the same folder as the script.<br /><br />Unfortunately when launched via &quot;RUN AS ...&quot; there is no change to the home location.<br />In my case the script merely wanted to change a INI file that was a companion in the same folder as the script,<br />and instead CMD.EXE was trying to locate and change that file in Windows\system32.  Bad Move.<br /><br />I had to add this to my script before I could successfully use RUN AS ...<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>CD /D %~dp0</code></pre></div><br />You may wish test any third party &quot;Windows Explorer&quot; that you use to select and &quot;RUN AS ...&quot;<br /><br />HARMLESS Test Code<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF<br />ECHO %~0<br />CD<br />PAUSE<br />EXIT<br /></code></pre></div><br />My result of RUN AS with Windows Explorer :-<br /><blockquote class="uncited"><div>D:\_T\D3\Clean30\V\Y\Harmless.bat<br />D:\_T\D3\Clean30\V\Y<br />Press any key to continue . . .<br /></div></blockquote><br />My result of RUN AS with third party explorer :-<br /><blockquote class="uncited"><div>D:\_T\D3\Clean30\V\Y\Harmless.bat<br />C:\WINDOWS\system32<br />Press any key to continue . . .<br /></div></blockquote><br />I know that my version of Windows Explorer in Windows Home + SP3 has no such problem,<br />at least no problem today - but who knows what next Patch Tuesday will do ! ! !<br /><br />Regards<br />Alan</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: &quot;RUN AS ...&quot; may destroy Windows\System32</h3>
+				<div class="date">Posted: <strong>24 Jan 2011 11:42</strong></div>
+				<div class="author">by <strong>avery_larry</strong></div>
+				<div class="content">You should never assume the location that a script file is run from.  If it's important you should always explicitly specify the current directory.<br /><br />always.<br /><br />And then, if it's important (like using del *.exe), you should double check that you're in the correct directory.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: &quot;RUN AS ...&quot; may destroy Windows\System32</h3>
+				<div class="date">Posted: <strong>24 Jan 2011 13:42</strong></div>
+				<div class="author">by <strong>alan_b</strong></div>
+				<div class="content"><blockquote><div><cite>avery_larry wrote:</cite>You should never assume the location that a script file is run from.  If it's important you should always explicitly specify the current directory.<br /></div></blockquote><br />That assumption has never failed me before because I have never before used RUN AS ...<br />Please advise me, are there any other situations in which that assumption is false.<br />Just to cover my posterior I now have a default start of<br />CD /D %~dp0<br />but recognize this may cause problems if it is called by a script that first does a &quot;CD /D &quot; to a different folder that needs to be processed.<br /><br />N.B. The assumption has never failed for me since DOS 3.?,<br />not even &quot;via RUN AS ...&quot; with Windows Explorer (so far).<br />Probably many of the people who only register to get help are similarly ignorant.<br /><br />Could you please create a separate &quot;stickied&quot; topic/item to warn us of all the ways in which this assumption is hazardous.<br /><br /><blockquote class="uncited"><div>And then, if it's important (like using del *.exe), you should double check that you're in the correct directory.</div></blockquote><br />I only used &quot;DEL *.EXE&quot; as an example of the extreme danger of using &quot;RUN AS ...&quot; with my preferred third party explorer, and could be present with other third party tools.<br /><br />In my particular case I normally run the Piriform CCleaner to purge junk on Shutdown by double clicking a desktop shortcut which not only stipulates the path and name of my BAT script, but also has a &quot;Start in ...&quot; entry that stipulates the same path, and my script then alters a default CCleaner.INI file according to %USERNAME% so that when my daughter uses it the main focus is cleaning the Firefox cache in her profile to which I have no access.<br /><br />Suddenly she complained it failed to work, and I found that a recent change from FAT32 to NTFS of the &quot;Portable Tool&quot; partition H:\ had left her with the special permission to READ and to EXECUTE, but 19 other authorities were lacking, and my script under her authority could no longer modify CCleaner.INI.  So I gave all users full access to the Portable Tools - other than things like Minitool Partition Wizard etc - I am not that crazy ! ! !<br /><br />Then she reported other problems, so to thoroughly debug without needing her password to access her profile and use her restricted access level, I enabled the Guest Account and have focused upon getting the script to run with Guest Account Access level.  I then chose to use &quot;RUN AS ...&quot; so I could instantly run/test the script at Guest level and then instantly switch back to Admin status to do whatever it took to get things right.<br /><br />Whilst &quot;fixing things&quot; I chose not to pollute the desktop with numerous shortcuts to my debug scripts, hence &quot;RUN AS ...&quot; was applied to my selection in explorer.  Hence I saw the problem.<br /><br />All I could see was &quot;Access Denied&quot; and only after adding the command &quot;CD&quot; did I observe that I had not been diverted to the Guest account profile (as I suspected) but to C:\Windows\system32, and that is NOT where CCleaner.INI is held ! ! !<br />As they say at the end of some films,<br />&quot;No EXE was injured during the course of this production&quot; <br /><br />Regards<br />Alan</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: &quot;RUN AS ...&quot; may destroy Windows\System32</h3>
+				<div class="date">Posted: <strong>24 Jan 2011 14:56</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Well Alan, I really thought everybody knows that &quot;RunAs&quot; executes the file in %SystemRoot%\System32. I think the reason why is that runas.exe is placed there and the called batch file / executable inherits the environment from runas.exe. (BTW: The &quot;Run As Administrator&quot; of the right click drop down menu in Win7 works the same way.)<br /><br />But, have a look at option <em class="text-italics">/env </em> <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" />  Usually the called file should be executed in the environment from where runas was launched.<br /><br />Otherwise I think it's a good idea to use something like<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cd /d &quot;%~dp0&quot; ||(echo CD failed&amp;pause&amp;goto :eof)<br /></code></pre></div><br />in your batch file.<br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: &quot;RUN AS ...&quot; may destroy Windows\System32</h3>
+				<div class="date">Posted: <strong>25 Jan 2011 03:41</strong></div>
+				<div class="author">by <strong>alan_b</strong></div>
+				<div class="content">When I write a script that takes action after changing directory I like to have a suitable abort in case the directory does not exist or has access permissions blocked so I accept the wisdom of your suggestion.<br />I am just wondering why would there be a failure with<br />cd /d &quot;%~dp0&quot;<br />Is it possible that the script being executed does not reside at &quot;%~dp0&quot;. ?<br />I am aware that CACLS can display and control access rights, and I think I counted 21 different &quot;special access&quot; possibilities such as Generic_Read and Generic_Execute.  Could the script user have permission to execute a script at &quot;%~dp0&quot; and yet be prohibited from cd /d &quot;%~dp0&quot;<br />Or have I missed something obvious ?<br /><br />Actually I never even knew RUNAS was an executable I could launch from DOS.<br /><br />I have only seen and used it from the right click context menu of explorer GUI's, and that gives no such options on XP Home.<br />I have now launched CMD.EXE and seen the results of invoking RUNAS /?<br /><br />I have now had a look at system32\run* and was also also surprised to see runonce.exe<br />I have seen installation/removal scripts that use REG.EXE etc to arrange a one-time-only action on the next reboot.<br />I guess runonce.exe does something related to this.<br />I wondered how to use it so I tried<br />RUNONCE /?<br />It told me nothing - I hope it has not done something to punish me on my next reboot ! !<br /><br />Regards<br />Alan</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: &quot;RUN AS ...&quot; may destroy Windows\System32</h3>
+				<div class="date">Posted: <strong>25 Jan 2011 15:47</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><blockquote><div><cite>alan_b wrote:</cite>I am just wondering why would there be a failure with<br />cd /d &quot;%~dp0&quot;<br />Is it possible that the script being executed does not reside at &quot;%~dp0&quot;. ?<br /></div></blockquote><br />Run As admin is one thing. I agree this should work anyway.<br />On the other hand you could make mistakes. Lets say you are user &quot;A&quot; and your batch file is somewhere on your own profile. If you Run As user &quot;B&quot; then <em class="text-italics">cd /d &quot;%~dp0&quot;</em> would fail.<br />I know this example makes no sense (why using <em class="text-italics">cd /d &quot;%~dp0&quot;</em>), but it's possible ...<br /><br /><blockquote><div><cite>alan_b wrote:</cite>I am aware that CACLS can display and control access rights, and I think I counted 21 different &quot;special access&quot; possibilities such as Generic_Read and Generic_Execute.<br /></div></blockquote><br />Well, if you are able to change the working directory to <em class="text-italics">%~dp0</em> but you have no rights to do anything -- so what... you would realize it without CACLS.<br /><br /><blockquote><div><cite>alan_b wrote:</cite>I have now had a look at system32\run* and was also also surprised to see runonce.exe<br />[...]<br />I wondered how to use it so I tried<br />RUNONCE /?<br />It told me nothing - I hope it has not done something to punish me on my next reboot ! !</div></blockquote><br />Dangerous!!! It will execute the evil question mark!!!<br />Just kidding. It's harmless <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /><br /><br />Regards<br />aGerman</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1597&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:57:19 GMT -->
+</html>

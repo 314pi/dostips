@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6019&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:13:58 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Remove character at begin of line</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Remove character at begin of line</h2>
+		<p><a href="viewtopiccf49.html?f=3&amp;t=6019">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=6019</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Remove character at begin of line</h3>
+				<div class="date">Posted: <strong>30 Oct 2014 12:39</strong></div>
+				<div class="author">by <strong>DavideX</strong></div>
+				<div class="content">Hello,<br />I have a txt file like this:<br /><br />0 ABCDE67890 12345FGHIJ ...<br />1 12SAG3J590 FGDG45346Y ..<br />2 GASDFSD230 ...<br />3 ....<br />0 HFJSHSDK24323 ...<br />1 ....<br />2 ....<br />3 ....<br /><br />I would create a batch file to search and remove all &quot;0 &quot; (zero+space) only at the begin of lines, preserving every other occurrences. The output should be like this:<br /><br />ABCDE67890 12345FGHIJ ...<br />1 12SAG3J590 FGDG45346Y ..<br />2 GASDFSD230 ...<br />3 ....<br />HFJSHSDK24323 ...<br />1 ....<br />2 ....<br />3 ....<br /><br />I'm newbie about batch and programming, could someone kindly help me?<br /><br />Thanks!<br />David.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Remove character at begin of line</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 05:29</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Here is a robust and quick solution:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />type &quot;file.txt&quot; | repl &quot;^0 &quot; &quot;&quot; &gt;&quot;newfile.txt&quot;<br /></code></pre></div><br /><br />This uses a helper batch file called `repl.bat` (by dbenham) - download from:  <!-- m --><a class="postlink" href="https://www.dropbox.com/s/qidqwztmetbvklt/repl.bat">https://www.dropbox.com/s/qidqwztmetbvklt/repl.bat</a><!-- m --><br /><br />Place `repl.bat` in the same folder as the batch file or in a folder that is on the path.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Remove character at begin of line</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 06:07</strong></div>
+				<div class="author">by <strong>Yury</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@(for /f &quot;useback tokens=* delims=0 &quot; %%i in (&quot;example.txt&quot;) do @echo.%%i)&gt;&quot;new.txt&quot;</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Remove character at begin of line</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 06:16</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">With the data as shown it will work, but it would be very useful to future readers to <br />state that it will not work as shown with multiple spaces or multiple zeros at the start of the line.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Remove character at begin of line</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 07:39</strong></div>
+				<div class="author">by <strong>Yury</strong></div>
+				<div class="content"><blockquote><div><cite>foxidrive wrote:</cite>With the data as shown it will work, but it would be very useful to future readers to <br />state that it will not work as shown with multiple spaces or multiple zeros at the start of the line.</div></blockquote><br /><br />This code does not affect the rest of zeros and spaces, and will also work with poison characters and with exclamation marks: <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@(for /f &quot;usebackq delims=&quot; %%i in (&quot;example.txt&quot;) do @set x=%%i&amp; cmd /v:on /c echo.!x!|&gt;nul findstr /bc:&quot;0 &quot;&amp;&amp;cmd /v:on /c call echo.!x:*0 =!|| echo.%%i)&gt;&quot;new.txt&quot;</code></pre></div>.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Remove character at begin of line</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 08:13</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">This will still nuke any leading spaces and any numbers or text before the first &quot;0 &quot; on all the other lines, true?<br /><br /><blockquote><div><cite>Yury wrote:</cite>.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&amp;cmd /v:on /c call echo.!x:*0 =!</code></pre></div></div></blockquote></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Remove character at begin of line</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 09:00</strong></div>
+				<div class="author">by <strong>Yury</strong></div>
+				<div class="content"><blockquote><div><cite>foxidrive wrote:</cite>This will still nuke any leading spaces and any numbers or text before the first &quot;0 &quot; on all the other lines, true?<br /><br /><blockquote><div><cite>Yury wrote:</cite>.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&amp;cmd /v:on /c call echo.!x:*0 =!</code></pre></div></div></blockquote></div></blockquote><br /><br /><br />foxidrive, this will nuke only the text before the first &quot;0 &quot; and the first &quot;0 &quot;, but with <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr /bc:&quot;0 &quot;</code></pre></div> only the first &quot;0 &quot; are deleted.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Remove character at begin of line</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 20:46</strong></div>
+				<div class="author">by <strong>ghostmachine4</strong></div>
+				<div class="content">vbscript<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Set objFSO=CreateObject(&quot;Scripting.FileSystemObject&quot;)<br />inputFile = WScript.Arguments(0)<br />Set objFile = objFSO.OpenTextFile(inputFile)<br />Do Until objFile.AtEndOfStream<br />&nbsp; &nbsp;strNextLine = objFile.ReadLine<br />&nbsp; &nbsp;Do While Mid(strNextLine,1,1) = &quot;0&quot; Or&nbsp; Mid(strNextLine,1,1) = &quot; &quot;<br />&nbsp;&nbsp; &nbsp; strNextLine = Mid(strNextLine,2,Len(strNextLine) ) <br />&nbsp; &nbsp;Loop <br />&nbsp; &nbsp;WScript.Echo strNextLine<br />Loop<br /><br /></code></pre></div><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>cscript //nologo removeZeroesSpaces.vbs file<br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Remove character at begin of line</h3>
+				<div class="date">Posted: <strong>31 Oct 2014 22:04</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><blockquote><div><cite>Yury wrote:</cite>foxidrive, this will nuke only the text before the first &quot;0 &quot; and the first &quot;0 &quot;, but with <div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr /bc:&quot;0 &quot;</code></pre></div> only the first &quot;0 &quot; are deleted.</div></blockquote><br /><br />Sorry Yury, I didn't pay close enough attention.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Remove character at begin of line</h3>
+				<div class="date">Posted: <strong>02 Nov 2014 12:23</strong></div>
+				<div class="author">by <strong>DavideX</strong></div>
+				<div class="content">Hello guys,<br />all solutions works great for my needs!<br /><br />Thanks very much to all for your help and kindness.<br /><br />Regards.<br /><br />David.</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=6019&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 09:13:58 GMT -->
+</html>

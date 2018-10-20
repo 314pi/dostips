@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8536&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:13:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Why ~dpf ?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Why ~dpf ?</h2>
+		<p><a href="viewtopic0ead.html?f=3&amp;t=8536">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8536</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Why ~dpf ?</h3>
+				<div class="date">Posted: <strong>02 May 2018 09:28</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content">In various topics and codes here and there on dostips It can be seen that this code is recommended to use or have been used for getting carriage return.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /F %%Z in ('copy /Z "%~dpf0" nul') do set "CR=%%Z"
+</code></pre></div>
+
+The first time I saw it, I ask myself why not just <strong class="text-strong">"%~f0"</strong> but <strong class="text-strong">"%~dpf0"</strong> ?<br>
+Then I thought batch is full of gotchas and surprises there maybe a reason behind it that is not obvious to me, so I kept using <strong class="text-strong">"%~dpf0"</strong><br>
+<br>
+But I'm eager to know, in general are there any circumstances where <strong class="text-strong">~dpf</strong> and<strong class="text-strong"> ~f</strong> modifiers can yield different results?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Why ~dpf ?</h3>
+				<div class="date">Posted: <strong>02 May 2018 09:56</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I don't see any reason for using ~dpf rather than only ~f.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Why ~dpf ?</h3>
+				<div class="date">Posted: <strong>19 Sep 2018 15:46</strong></div>
+				<div class="author">by <strong>Sponge Belly</strong></div>
+				<div class="content">Hi sst, <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"><br>
+<br>
+I saw an explanation for using "%~dpf0" somewhere a long time ago. I think it was by jeb, but I could never find it again. <img class="smilies" src="images/smilies/icon_sad.gif" width="15" height="15" alt=":(" title="Sad"><br>
+<br>
+And then I noticed a subroutine you used in this <a href="https://stackoverflow.com/a/51609670/" class="postlink">SO Answer</a>:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:getBatFullPath
+set "%~1=%~f0" &amp; exit /b
+</code></pre></div>
+
+You said it was a “workaround for CMD %~0 bug.” Please give an explanation/reference.<br>
+<br>
+<em class="text-italics">- SB</em></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Why ~dpf ?</h3>
+				<div class="date">Posted: <strong>19 Sep 2018 18:53</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">The %~f0 bug is related to extra quotes.<br>
+<br>
+This code is in this location: C:\edit\test.cmd
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo Off
+Setlocal EnableExtensions
+Echo %~f0
+Echo %~dpf0
+Echo %~n0
+Echo %~x0
+
+</code></pre></div>
+
+If you call it using full path, but with extra quotes as next:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\&gt;""c:\edit\test.cmd""</code></pre></div>
+You get:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\"c:\edit\test.cmd"
+C:\"c:\edit\test.cmd"
+test
+.cmd"
+</code></pre></div>
+
+That is the bug, you need the fully location of your script file, but in this case you get garbage information: C:\"c:\edit\test.cmd"<br>
+<br>
+Seems that %~dpf0 is not a workaround for it.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Why ~dpf ?</h3>
+				<div class="date">Posted: <strong>19 Sep 2018 20:06</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">I have a vague recollection of seeing that question before years ago (I may have even asked), and no one had a reason for using %~dpf0.<br>
+<br>
+There certainly is no logical reason for it, and I've never seen any odd behavior that would warrant it.<br>
+<br>
+<br>
+Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Why ~dpf ?</h3>
+				<div class="date">Posted: <strong>19 Sep 2018 22:25</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">Other bug of %~f0 that I found here: <a href="viewtopic720e.html?t=5057#p29705" class="postlink">viewtopic.php?t=5057#p29705</a><br>
+Is related when you change the current directory inside the script, the result is different if you called your script with quotes.<br>
+<br>
+This is script is located in C:\dev\test2.cmd
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+Setlocal EnableExtensions
+E:
+Echo E:
+echo %%~f0 = %~f0
+echo %%~dpf0 = %~dpf0
+</code></pre></div>
+
+Result:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>C:\dev&gt;test2.cmd
+E:
+%~f0 = C:\dev\test2.cmd
+%~dpf0 = C:\dev\test2.cmd
+
+C:\dev&gt;"test2.cmd"
+E:
+%~f0 = E:\test2.cmd
+%~dpf0 = E:\test2.cmd
+
+C:\dev&gt;
+</code></pre></div>
+
+As you can see run test2.cmd and "test2.cmd" produce different result.<br>
+<strong class="text-strong">%~dpf0 not solve the problem, and also have non sense.</strong><br>
+<br>
+According to the documentation:<br>
+%~f Expand %1 to a Fully qualified path name.<br>
+%~d Expand %1 to a Drive letter only.<br>
+%~p Expand %1 to a Path only<br>
+<br>
+Thus %~dpf is like concatenate: drive letter, path only, and fully qualified path. Fully qualified path also include drive letter and path. Thus, why try concatenate it again? Seems that cmd detect this nonses and internally convert %~dpf to %~f</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Why ~dpf ?</h3>
+				<div class="date">Posted: <strong>20 Sep 2018 00:02</strong></div>
+				<div class="author">by <strong>sst</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistba6b.html?mode=viewprofile&amp;u=4238">Sponge Belly</a> wrote: <a href="viewtopic1b62.html?p=58017#p58017" data-post-id="58017" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">19 Sep 2018 15:46</div></cite>
+You said it was a “workaround for CMD %~0 bug.” Please give an explanation/reference.
+</div></blockquote>
+Hi Sponge Belly,<br>
+Although carlos has described the bug, here are some more references:<br>
+This SO Q/A <a href="https://stackoverflow.com/q/19781569/4561332" class="postlink">CMD: failure of %~d0 when CALL quotes the name of the batch file</a> There are some good and thorough analysis and tests by dbenham, also by jeb and MC ND. Also dbenham provided a more complete and flexible function for obtaining batch file info.<br>
+<br>
+And This SO Q/A <a href="https://stackoverflow.com/q/12141482/4561332" class="postlink">What is the reason for batch file path referenced with %~dp0 sometimes changes on changing directory?</a> Find the answer by MC ND which analysed the internal workings of the CMD to describe how and why the bug exist and why obtaining batch file info inside a function is not affected by this bug.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Why ~dpf ?</h3>
+				<div class="date">Posted: <strong>20 Sep 2018 09:04</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">Thanks @sst for the links.<br>
+After read I prefer the solution of the user MC ND.<br>
+Thus, the bug can be described as is not safe expand %~f0 in the main function, it should be expanded inside other function.<br>
+<br>
+Code located in C:\edit\test.cmd
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal enableextensions enabledelayedexpansion
+
+D: &amp;&amp; echo Changed to drive D:
+
+echo Setting moduleFileName in the main function
+set "moduleFileName=%~f0"
+echo moduleFileName: !moduleFileName!
+
+call :getModuleFileName
+echo moduleFileName: !moduleFileName!
+exit /b
+
+:getModuleFileName
+echo Setting moduleFileName inside a function
+Set "moduleFileName=%~f0"
+goto :eof
+</code></pre></div>
+
+Do the test:
+<blockquote class="uncited"><div>
+<span style="color: #0000FF">C:\edit&gt;test.cmd</span><br>
+Changed to drive D:<br>
+Setting moduleFileName in the main function<br>
+moduleFileName: C:\edit\test.cmd<br>
+Setting moduleFileName inside a function<br>
+moduleFileName: C:\edit\test.cmd<br>
+<br>
+<span style="color: #0000FF">C:\edit&gt;"test.cmd"</span><br>
+Changed to drive D:<br>
+Setting moduleFileName in the main function<br>
+<span style="color: #FF0000">moduleFileName: D:\test.cmd</span><br>
+Setting moduleFileName inside a function<br>
+moduleFileName: C:\edit\test.cmd<br>
+<br>
+<span style="color: #0000FF">C:\edit&gt;""test.cmd""</span><br>
+Changed to drive D:<br>
+Setting moduleFileName in the main function<br>
+<span style="color: #FF0000">moduleFileName: D:\"test.cmd"</span><br>
+Setting moduleFileName inside a function<br>
+moduleFileName: C:\edit\test.cmd<br>
+<br>
+<span style="color: #0000FF">C:\edit&gt;c:\edit\test.cmd</span><br>
+Changed to drive D:<br>
+Setting moduleFileName in the main function<br>
+moduleFileName: c:\edit\test.cmd<br>
+Setting moduleFileName inside a function<br>
+moduleFileName: c:\edit\test.cmd<br>
+<br>
+<span style="color: #0000FF">C:\edit&gt;"c:\edit\test.cmd"</span><br>
+Changed to drive D:<br>
+Setting moduleFileName in the main function<br>
+moduleFileName: c:\edit\test.cmd<br>
+Setting moduleFileName inside a function<br>
+moduleFileName: c:\edit\test.cmd<br>
+<br>
+<span style="color: #0000FF">C:\edit&gt;""c:\edit\test.cmd""</span><br>
+Changed to drive D:<br>
+Setting moduleFileName in the main function<br>
+<span style="color: #FF0000">moduleFileName: D:\"c:\edit\test.cmd"</span><br>
+Setting moduleFileName inside a function<br>
+moduleFileName: c:\edit\test.cmd<br>
+
+</div></blockquote>
+
+By using in the main function bad results are the next:<br>
+D:\test.cmd<br>
+D:\"test.cmd"<br>
+D:\"c:\edit\test.cmd"<br>
+<br>
+But using inside other function always get the correct result:<br>
+c:\edit\test.cmd<br>
+<br>
+Thus, that is <strong class="text-strong">a correct workaround: expand %~f0 inside a function.</strong></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Why ~dpf ?</h3>
+				<div class="date">Posted: <strong>20 Sep 2018 09:38</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">For fun, I enable the debug using the code provided by @npocmaka_ for see how cmd expand %~f0 in the main function and in other function.<br>
+<br>
+EnableDebug.cmd<br>
+//code without new line at end
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>break&amp;(:#)</code></pre></div>
+
+test.cmd
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@Echo off
+Setlocal EnableExtensions
+D:
+Set "ModuleFileName=%~f0"
+Call :getModuleFileName
+Exit /b
+
+:getModuleFileName
+Set "ModuleFileName=%~f0"
+Goto :Eof
+</code></pre></div>
+
+results:
+<blockquote class="uncited"><div>
+C:\edit&gt;EnableDebug.cmd<br>
+Cmd: EnableDebug.cmd  Type: 0<br>
+No se esperaba reak en este momento.<br>
+<br>
+C:\edit&gt;<br>
+<span style="color: #0000BF">C:\edit&gt;test.cmd</span><br>
+Cmd: test.cmd  Type: 0<br>
+@<br>
+  Cmd: Echo  Type: 0 Args: ` off'<br>
+Cmd: Setlocal  Type: 0 Args: ` EnableExtensions'<br>
+Cmd: D:  Type: 0<br>
+<span style="color: #0000BF">Cmd: Set  Type: 0 Args: ` "ModuleFileName=C:\edit\test.cmd"'</span><br>
+Cmd: Call  Type: 0 Args: ` :getModuleFileName'<br>
+Cmd: :getModuleFileName  Type: 0<br>
+<span style="color: #0000BF">Cmd: Set  Type: 0 Args: ` "ModuleFileName=C:\edit\test.cmd"'</span><br>
+Cmd: Goto  Type: 0 Args: ` :Eof'<br>
+Cmd: Exit  Type: 0 Args: ` /b'<br>
+<br>
+<span style="color: #0000BF">C:\edit&gt;"test.cmd"</span><br>
+Cmd: "test.cmd"  Type: 0<br>
+@<br>
+  Cmd: Echo  Type: 0 Args: ` off'<br>
+Cmd: Setlocal  Type: 0 Args: ` EnableExtensions'<br>
+Cmd: D:  Type: 0<br>
+<span style="color: #FF0000">Cmd: Set  Type: 0 Args: ` "ModuleFileName=D:\test.cmd"'</span><br>
+Cmd: Call  Type: 0 Args: ` :getModuleFileName'<br>
+Cmd: :getModuleFileName  Type: 0<br>
+<span style="color: #0000BF">Cmd: Set  Type: 0 Args: ` "ModuleFileName=C:\edit\test.cmd"'</span><br>
+Cmd: Goto  Type: 0 Args: ` :Eof'<br>
+Cmd: Exit  Type: 0 Args: ` /b'<br>
+<br>
+C:\edit&gt;<br>
+
+</div></blockquote></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Why ~dpf ?</h3>
+				<div class="date">Posted: <strong>23 Sep 2018 05:33</strong></div>
+				<div class="author">by <strong>Sponge Belly</strong></div>
+				<div class="content">@carlos @sst<br>
+<br>
+Thanks for the great explanations and links! <img class="smilies" src="images/smilies/icon_smile.gif" width="15" height="15" alt=":)" title="Smile"><br>
+<br>
+I’ll use a function to store the value of "%~f0" in a variable from now on. Just one more nonsensical Batch thing to remember! <img class="smilies" src="images/smilies/icon_lol.gif" width="15" height="15" alt=":lol:" title="Laughing"><br>
+<br>
+<em class="text-italics">- SB</em></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8536&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:13:41 GMT -->
+</html>

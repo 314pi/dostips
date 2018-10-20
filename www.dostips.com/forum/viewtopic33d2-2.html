@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8850&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:10:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; For while loop or just a goto statement</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>For while loop or just a goto statement</h2>
+		<p><a href="viewtopic221f.html?f=3&amp;t=8850">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8850</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>For while loop or just a goto statement</h3>
+				<div class="date">Posted: <strong>05 Oct 2018 10:03</strong></div>
+				<div class="author">by <strong>cvau89</strong></div>
+				<div class="content">I searched some but couldn't come up with the right key words to find what I'm looking for.  I need to repeatedly run a process which creates one file, than another process converts that file to another format.  So I believe i need a infinite for while loop where I can just CTR-C break out when I need.  I know I could get more fancy - but I just need it to work.  As I want to retain these two files on each iteration, I need some variable to start at zero or 1 or what ever, run my two processes and then rename the two files with the incrementing variable.  <br>
+<br>
+So first pass I have File.txt and NewFile.txt - they can be renamed File1.txt and NewFile1.txt - <br>
+Second pass process create new File.txt and Newfile.txt - variable increases by 1 so my rename would be File2.txt and NewFile2.txt. <br>
+until I break out.  <br>
+<br>
+All seems so simple in my head but my experience with batch file and vb scripting has been very basic run commands ect.  I've read some things but truely getting a headache so I thought I'd ask for a friendly shove in the right direction.  <br>
+<br>
+Thanks in advance</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: For while loop or just a goto statement</h3>
+				<div class="date">Posted: <strong>05 Oct 2018 13:24</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Sure you could use GOTO for an infinite loop. Another possibility is a FOR /L loop with an empty pair of parentheses.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off &amp;setlocal
+set /a n=0
+for /l %%i in () do (call :sub &amp;set /a n+=1)
+
+:sub
+REM Do whatever you need here
+echo %n%
+exit /b</code></pre></div>
+
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: For while loop or just a goto statement</h3>
+				<div class="date">Posted: <strong>05 Oct 2018 13:45</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content">The SET and FOR commands are both limited to 32 bit integers.  So you can basically just use a FOR loop to count to the max. This way you can just use the FOR variable for your counter.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO off
+FOR /L %%G IN (1 1 2147483647) DO (
+	ECHO Number: %%G
+)</code></pre></div>
+If you are creating more than a million files, let alone 2 billion files I would think you are doing something nefarious.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: For while loop or just a goto statement</h3>
+				<div class="date">Posted: <strong>05 Oct 2018 13:59</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">You're right Squashman although I'm afraid the next question will be related to delayed expansion  <img class="smilies" src="images/smilies/icon_lol.gif" width="15" height="15" alt=":lol:" title="Laughing"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: For while loop or just a goto statement</h3>
+				<div class="date">Posted: <strong>09 Oct 2018 07:13</strong></div>
+				<div class="author">by <strong>cvau89</strong></div>
+				<div class="content">I think I understand - now what's the syntax for renaming the files using the variable counter?<br>
+<br>
+i.e. <br>
+<br>
+ren file.txt file+%%n+.txt ?  (lol I'm laughing because I hope that was not incredibly wrong!)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: For while loop or just a goto statement</h3>
+				<div class="date">Posted: <strong>09 Oct 2018 08:58</strong></div>
+				<div class="author">by <strong>kwsiebert</strong></div>
+				<div class="content">No need for the +s here, you want:<br>
+<br>
+ren file.txt file%%n.txt</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8850&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 05:10:43 GMT -->
+</html>

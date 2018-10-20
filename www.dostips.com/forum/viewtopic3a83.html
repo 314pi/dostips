@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1451&p=5507 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:59:02 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Reading variables from a text file Using For /F command - DosTips.com</title>
+
+
+	<link rel="canonical" href="viewtopicd27a.html?t=1451">
+
+<!--
+	phpBB style name: Allan Style - SUBSILVER
+	Based on style:   prosilver (this is the default phpBB3 style)
+	Based on style:   subsilver2 (this is the default phpBB3 style)
+	Original author:  Tom Beddard ( http://www.subBlue.com/ )
+	Modified by:  Allan ( http://x-tk.ru/ )
+-->
+
+<link href="assets/css/font-awesome.mind772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/stylesheetd772.css?assets_version=34" rel="stylesheet">
+<link href="styles/AllanStyle-SUBSILVER/theme/en/stylesheetd772.css?assets_version=34" rel="stylesheet">
+
+
+
+
+<!--[if lte IE 9]>
+	<link href="./styles/AllanStyle-SUBSILVER/theme/tweaks.css?assets_version=34" rel="stylesheet">
+<![endif]-->
+
+
+
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','../../www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-280191-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+
+<div id="header-subsilver">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+		<div class="headerbar" role="banner">
+					<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="../index.html" title="DosTips.com"><span class="site_logo"></span></a>
+				<h1>DosTips.com</h1>
+				<p>A Forum all about DOS Batch</p>
+				<p class="skiplink"><a href="#start_here">Skip to content</a></p>
+			</div>
+
+									<div id="search-box" class="search-box search-header" role="search">
+				<form action="https://www.dostips.com/forum/search.php" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="inputbox search tiny" size="20" value="" placeholder="Search…" />
+					<button class="button button-search" type="submit" title="Search">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+					</button>
+					<a href="search.html" class="button button-search-end" title="Advanced search">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+					</a>
+					
+				</fieldset>
+				</form>
+			</div>
+						
+			</div>
+					</div>
+</div>
+
+
+<div id="wrap" class="wrap">
+	<div id="page-header">
+				<div class="navbar-top" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-main" class="nav-main linklist" role="menubar">
+
+		<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+			<a href="#" class="dropdown-trigger">
+				<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>Quick links</span>
+			</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents" role="menu">
+					
+											<li class="separator"></li>
+																									<li>
+								<a href="search33a7.html?search_id=unanswered" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-gray" aria-hidden="true"></i><span>Unanswered topics</span>
+								</a>
+							</li>
+							<li>
+								<a href="search526f.html?search_id=active_topics" role="menuitem">
+									<i class="icon fa-file-o fa-fw icon-blue" aria-hidden="true"></i><span>Active topics</span>
+								</a>
+							</li>
+							<li class="separator"></li>
+							<li>
+								<a href="search.html" role="menuitem">
+									<i class="icon fa-search fa-fw" aria-hidden="true"></i><span>Search</span>
+								</a>
+							</li>
+					
+											<li class="separator"></li>
+																			<li>
+								<a href="memberlist4bfd.html?mode=team" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+								</a>
+							</li>
+																<li class="separator"></li>
+
+									</ul>
+			</div>
+		</li>
+
+				<li data-skip-responsive="true">
+			<a href="app.php/help/faq.html" rel="help" title="Frequently Asked Questions" role="menuitem">
+				<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>FAQ</span>
+			</a>
+		</li>
+						
+			<li class="rightside"  data-skip-responsive="true">
+			<a href="ucp26c3.html?mode=login" title="Login" accesskey="x" role="menuitem">
+				<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>Login</span>
+			</a>
+		</li>
+					<li class="rightside" data-skip-responsive="true">
+				<a href="ucp8319.html?mode=register" role="menuitem">
+					<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>Register</span>
+				</a>
+			</li>
+						</ul>
+
+	</div>
+</div>
+
+<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-breadcrumbs" class="nav-breadcrumbs linklist navlinks" role="menubar">
+						<li class="breadcrumbs">
+							<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="../index.html" itemprop="url" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span itemprop="title">DosTips.com</span></a></span>
+										<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="index.html" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Board index</span></a></span>
+
+											<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="viewforum31e6.html?f=4" itemprop="url"><span itemprop="title">DosTips - Dos Batch</span></a></span>
+															<span class="crumb"  itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="3"><a href="viewforum4d6b.html?f=3" itemprop="url"><span itemprop="title">DOS Batch Forum</span></a></span>
+												</li>
+		
+					<li class="rightside responsive-search">
+				<a href="search.html" title="View the advanced search options" role="menuitem">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+<div class="navbar-top-link">
+	<div class="inner">
+		<ul>
+			<li class="navbar-top-link-left"><a href="search33a7.html?search_id=unanswered">Unanswered topics</a></li>
+			<li class="navbar-top-link-left"><a href="search526f.html?search_id=active_topics">Active topics</a></li>
+
+											</ul>
+	</div>
+</div>
+	</div>
+
+	
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" class="page-body" role="main">
+		
+		
+<h2 class="topic-title"><a href="viewtopicbee0.html?f=3&amp;t=1451">Reading variables from a text file Using For /F command</a></h2>
+<!-- NOTE: remove the style="display: none" when you want to have the forum description on the topic body -->
+<div style="display: none !important;">Discussion forum for all Windows batch related topics.<br /></div>
+<p>
+	<strong>Moderator:</strong> <a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>
+</p>
+
+
+<div class="action-bar bar-top">
+	
+			<a href="postingd2ed.html?mode=reply&amp;f=3&amp;t=1451" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+	
+			<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic9277.html?f=3&amp;t=1451&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+	
+			<div class="search-box" role="search">
+			<form method="get" id="topic-search" action="https://www.dostips.com/forum/search.php">
+			<fieldset>
+				<input class="inputbox search tiny"  type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+				<button class="button button-search" type="submit" title="Search">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+				</button>
+				<a href="search.html" class="button button-search-end" title="Advanced search">
+					<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+				</a>
+				<input type="hidden" name="t" value="1451" />
+<input type="hidden" name="sf" value="msgonly" />
+
+			</fieldset>
+			</form>
+		</div>
+	
+			<div class="pagination">
+			16 posts
+							<ul>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopiccfcf-3.html?f=3&amp;t=1451&amp;start=15" role="button">2</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopiccfcf-3.html?f=3&amp;t=1451&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+		</div>
+
+
+
+
+<div id="subsilver-nav-topic">
+	<div class="inner"><div class="post has-profile">
+		<div class="leftsided postbody subsilver-topic-title">Message</div>
+		<div class="leftsided postprofile subsilver-topic-author">Author</div>
+	</div></div>
+</div>
+
+			<div id="p5434" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5434">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search9bd9.html?author_id=1782&amp;sr=posts">8</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Nov 2010 11:09</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5434">
+
+						<h3 class="first"><a href="#p5434">Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting7b73.html?mode=quote&amp;f=3&amp;p=5434" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicf4b1.html?p=5434#p5434" onclick="prompt('Message #1',this.href); return false;">#1</a></span> 
+									<a class="unread" href="viewtopicf4b1.html?p=5434#p5434" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a></strong> &raquo; </span>06 Nov 2010 11:58
+			</p>
+			
+			
+			
+			<div class="content">Am trying to read a known variables from a text file using For /F command and can't see how to set the variables in the batch file.<br /><br />My batch file reads as follows.<br />set  LANG=EN-UK<br /><br />for /f &quot;tokens=* delims= &quot; %%a in ('find /v &quot;:&quot; ^&lt; setsfile ^| find &quot;%LANG%&quot;') do (<br />%%a<br />)<br />set s<br /><br />My Text file reads as follows<br />: Rem Set Disk file order reguired by oscdimg.exe<br />SET EN-UK sFileOrder=M11_EN-UK.txt<br />: <br />: Rem Set Disk volume label reguired by oscdimg.exe<br />SET EN-UK sDiskVolumeName=105P036_Rev00<br />: <br />: Rem ISO File names, don't use spaces in filename, reguired by oscdimg.exe<br />: REM This is the program name prefix for the iso ie 105P037_Rev00<br />SET EN-UK SFilename=105P036_Rev00<br />: <br />: Rem Disk media Kit number<br />SET EN-UK sKIT=105K036_Rev00_A<br /><br />: Rem Winpe Language, English US is for all Engliah variants ie UK Engliah is EN-UK<br />SET EN-UK sWinpeLANG=en-us<br /><br />: Rem Winpe Package Language, Lp file. English US is for all Engliah variants ie UK Engliah is EN-US<br />: Rem Don;t add the file extension ie &quot;lp_en-us.cab&quot; will be &quot;lp_en-us&quot;<br />SET EN-UK sWinpeLpCabFile=en-Us<br /><br />:REM ==== : Rem Set Disk file order reguired by oscdimg.exe<br />SET De-DE sFileOrder=M11-DE.txt<br /><br />: Rem ISO File names, don't use spaces in filename, reguired by oscdimg.exe<br />: REM This is the program name prefix for the iso ie 105P038_Rev00<br />SFilename=105P038<br /><br />: Rem Set Disk volume label reguired by oscdimg.exe<br />SET De-DE sDiskVolumeName=105P038_Rev00<br /><br />SET De-DE sKIT=105K038_Rev00<br /><br />: Rem Winpe Language, English US is for all Engliah variants ie UK Engliah is EN-US<br />SET De-DE sWinpeLANG=De-DE<br />: END of txt file<br /><br />I want the lines containing &quot;Set&quot; and the variables before the  &quot;=&quot; sign and it's value and set the variables in batch file.<br />Note the value can contain spaces as &quot;this is waht I want&quot;<br />Am getting errors as sFilename not define or not a recognize command etc.<br />Do I need to define the variables before reading the txt file?<br />The variables are the same for all languages except i's value<br /><br />Thanks in advance for your suggestions</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p5435" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5435">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8f68.html?mode=viewprofile&amp;u=989" class="username">!k</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchc265.html?author_id=989&amp;sr=posts">378</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 17 Oct 2009 08:30</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Russia</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5435">
+
+						<h3 ><a href="#p5435">Re: Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingc6c2.html?mode=quote&amp;f=3&amp;p=5435" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopica77c.html?p=5435#p5435" onclick="prompt('Message #2',this.href); return false;">#2</a></span> 
+									<a class="unread" href="viewtopica77c.html?p=5435#p5435" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8f68.html?mode=viewprofile&amp;u=989" class="username">!k</a></strong> &raquo; </span>06 Nov 2010 12:21
+			</p>
+			
+			
+			
+			<div class="content"><blockquote class="uncited"><div>set s</div></blockquote>set <strong class="text-strong"><span style="color: red">e</span></strong><br /><br />or<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>for /f &quot;tokens=1,3* delims= &quot; %%a in ('find /v &quot;:&quot; ^&lt; setsfile ^| find &quot;%LANG%&quot;') do (<br />%%a %%b<br />)<br />set s</code></pre></div></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p5436" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5436">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search9bd9.html?author_id=1782&amp;sr=posts">8</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Nov 2010 11:09</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5436">
+
+						<h3 ><a href="#p5436">Re: Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingc3a6.html?mode=quote&amp;f=3&amp;p=5436" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic10c3.html?p=5436#p5436" onclick="prompt('Message #3',this.href); return false;">#3</a></span> 
+									<a class="unread" href="viewtopic10c3.html?p=5436#p5436" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a></strong> &raquo; </span>07 Nov 2010 09:26
+			</p>
+			
+			
+			
+			<div class="content">what does set e do and also if am looking for n variables, do I have to add %%a %%b %%c ...%%n?<br /><br />for /f &quot;tokens=1,3* delims= &quot; %%a in ('find /v &quot;:&quot; ^&lt; D:\WinpeDismCreate\NewFilename_M11.txt ^| find &quot;%LANG%&quot;') do (<br />%%a %%b %%c %%d %%e %%f %%g %%h<br />)<br />set s<br />echo %%a<br /><br />I done the above and all I get is %a, %b ... %h as a return<br />what am I doing wrong? thanks again for the reply</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p5437" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5437">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlist8f68.html?mode=viewprofile&amp;u=989" class="username">!k</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="searchc265.html?author_id=989&amp;sr=posts">378</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 17 Oct 2009 08:30</dd>		
+		
+											<dd class="profile-custom-field profile-phpbb_location"><strong>Location:</strong> Russia</dd>
+							
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5437">
+
+						<h3 ><a href="#p5437">Re: Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting08ee.html?mode=quote&amp;f=3&amp;p=5437" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicea39-2.html?p=5437#p5437" onclick="prompt('Message #4',this.href); return false;">#4</a></span> 
+									<a class="unread" href="viewtopicea39-2.html?p=5437#p5437" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlist8f68.html?mode=viewprofile&amp;u=989" class="username">!k</a></strong> &raquo; </span>07 Nov 2010 09:46
+			</p>
+			
+			
+			
+			<div class="content">What you want ?<br /><span style="color: red">E</span>N-UK sFileOrder=M11_EN-UK.txt (1st variant)<br />or<br /><span style="color: red">s</span>FileOrder=M11_EN-UK.txt (2nd variant)</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p5438" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5438">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search9bd9.html?author_id=1782&amp;sr=posts">8</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Nov 2010 11:09</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5438">
+
+						<h3 ><a href="#p5438">Re: Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingd62e.html?mode=quote&amp;f=3&amp;p=5438" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic8657.html?p=5438#p5438" onclick="prompt('Message #5',this.href); return false;">#5</a></span> 
+									<a class="unread" href="viewtopic8657.html?p=5438#p5438" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a></strong> &raquo; </span>07 Nov 2010 13:14
+			</p>
+			
+			
+			
+			<div class="content">I want every line that contains EN-UK but want to return sFileOrder sFileOrder=M11_EN-UK.txt (2nd variant)<br />So if there are say 10 lines containg EN-UK I want all 10<br />The variable s....=<br /><br />Thanks again been tearing my hair out tring to resolve (lol)</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p5464" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5464">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search9bd9.html?author_id=1782&amp;sr=posts">8</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Nov 2010 11:09</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5464">
+
+						<h3 ><a href="#p5464">Re: Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting2cbb.html?mode=quote&amp;f=3&amp;p=5464" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopicaf23-2.html?p=5464#p5464" onclick="prompt('Message #6',this.href); return false;">#6</a></span> 
+									<a class="unread" href="viewtopicaf23-2.html?p=5464#p5464" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a></strong> &raquo; </span>12 Nov 2010 16:31
+			</p>
+			
+			
+			
+			<div class="content">!K<br />Am still waiting for your reply, really stuck</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p5467" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5467">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search5648.html?author_id=5&amp;sr=posts">239</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 18 Feb 2006 19:54</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5467">
+
+						<h3 ><a href="#p5467">Re: Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingd92c.html?mode=quote&amp;f=3&amp;p=5467" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic8730-2.html?p=5467#p5467" onclick="prompt('Message #7',this.href); return false;">#7</a></span> 
+									<a class="unread" href="viewtopic8730-2.html?p=5467#p5467" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a></strong> &raquo; </span>13 Nov 2010 12:12
+			</p>
+			
+			
+			
+			<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />set LANG=EN-UK<br /><br />rem applying language settings<br />for /f &quot;tokens=* delims=&quot; %%a in ('findstr /i /b /c:&quot;SET %LANG%&quot; ^&lt; setsfile') do (<br />&nbsp; &nbsp;for /f &quot;tokens=3,* delims== &quot; %%x in (&quot;%%a&quot;) do (<br />&nbsp; &nbsp; &nbsp; &nbsp;echo.%%x&nbsp; &nbsp; &nbsp; &nbsp; -&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;%%y<br />&nbsp; &nbsp; &nbsp; &nbsp;set %%x=%%y<br />&nbsp; &nbsp;)<br />)<br /><br />rem accessing the resolved variables<br />echo.<br />echo sFileOrder is %sFileOrder%<br /></code></pre></div><br />Does this help?</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p5471" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5471">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search9bd9.html?author_id=1782&amp;sr=posts">8</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Nov 2010 11:09</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5471">
+
+						<h3 ><a href="#p5471">Re: Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting953a.html?mode=quote&amp;f=3&amp;p=5471" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic3043.html?p=5471#p5471" onclick="prompt('Message #8',this.href); return false;">#8</a></span> 
+									<a class="unread" href="viewtopic3043.html?p=5471#p5471" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a></strong> &raquo; </span>14 Nov 2010 04:18
+			</p>
+			
+			
+			
+			<div class="content">sorry to say it hangs<br />I replace setsfile with the location of file and it hangs nver comes out of the loop<br />also tried set setsfile=  D:\WinpeDismCreate\NewFilename_M11.txt <br />i<br />@echo off<br />set LANG=EN-UK<br />set setsfile=  D:\WinpeDismCreate\NewFilename_M11.txt <br /><br />rem applying language settings<br />for /f &quot;tokens=* delims=&quot; %%a in ('findstr /i /b /c:&quot;SET %LANG%&quot; ^&lt; %setsfile%') do (<br />   for /f &quot;tokens=3,* delims== &quot; %%x in (&quot;%%a&quot;) do (<br />       echo.%%x        -         %%y<br />       set %%x=%%y<br />   )<br />)<br /><br />rem accessing the resolved variables<br />echo.<br />echo sFileOrder is %sFileOrder%<br /><br />thanks for replying, your help is appreciated</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p5475" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5475">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search5648.html?author_id=5&amp;sr=posts">239</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 18 Feb 2006 19:54</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5475">
+
+						<h3 ><a href="#p5475">Re: Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting65f5.html?mode=quote&amp;f=3&amp;p=5475" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic15f3.html?p=5475#p5475" onclick="prompt('Message #9',this.href); return false;">#9</a></span> 
+									<a class="unread" href="viewtopic15f3.html?p=5475#p5475" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a></strong> &raquo; </span>14 Nov 2010 12:27
+			</p>
+			
+			
+			
+			<div class="content">May be something in the text file is screwing up the parsing.<br /><br />I tested this with the text you send in your first post and it worked.<br />Can you try same?<br /><br />Optionally you can post the full NewFilename_M11.txt into the forum, so I can take a look.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p5492" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5492">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search9bd9.html?author_id=1782&amp;sr=posts">8</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Nov 2010 11:09</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5492">
+
+						<h3 ><a href="#p5492">Re: Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingd9f4.html?mode=quote&amp;f=3&amp;p=5492" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic720d.html?p=5492#p5492" onclick="prompt('Message #10',this.href); return false;">#10</a></span> 
+									<a class="unread" href="viewtopic720d.html?p=5492#p5492" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a></strong> &raquo; </span>15 Nov 2010 17:28
+			</p>
+			
+			
+			
+			<div class="content">Am awuful sorry, the error is in the text file.<br />I have remove all comments etc from the text file and it is working okay.<br />But I can see why, so I will have to add comments one by one to see the line causing the problem. <br />As am new to the forum I can't find a way to add attachment or upload files<br /><br />so here is the file with comments<br /><br />: REm Filename:		Fileame.txt<br />: REm Description: 	This text file declares variavle to be used by the main script reads the hardwareModule list and sets the variable accordingly<br />: REm Description: 	Reads the varaible and sets it in the scripts<br />: REm Notes:		Ensure the varable are added as below !!!<br />: REm Notes:		Lines starting with Semicolon (:) are ignored, using for /F loop !!!<br />: REm Notes:		Declare all varaible for all supported languages ie EN-UK, En-US, DE-DE etc<br />: <br />: REm Purpose: 		Help automate scripts without modifying the main script for new hardware<br />: REm Created By: 	<br />: REM Created Date: 	28/10/2010<br />: Rem Revised Date:<br />: Rem Revised Notes:<br />: <br />: rem ===============================================================================================================<br />: rem ===============================================================================================================<br />: <br />: current supported languages are EN-UK, En-US, DE-DE, ES-ES, FR-FR, It-IT and JA-JP<br />: New languages can be added withou changing the main scripts.<br />: New File has to be named as the PC or laptop module name, variable used to define PC or laptop is &quot;%SModel%&quot;<br />: <br />: Input and Keynoard layout <!-- m --><a class="postlink" href="http://msdn.microsoft.com/en-us/goglobal/bb895996.aspx">http://msdn.microsoft.com/en-us/goglobal/bb895996.aspx</a><!-- m --><br />: rem ================: REM M11 EN-UK info========================<br />: <br />: Rem Set Disk file order reguired by oscdimg.exe<br />SET EN-UK sFileOrder=M11_EN-UK.txt<br />: <br />: Rem Set Disk volume label reguired by oscdimg.exe<br />SET EN-UK sDiskVolumeName=105P036_Rev00<br />: <br />: Rem ISO File names, don't use spaces in filename, reguired by oscdimg.exe<br />: REM This is the program name prefix for the iso ie 105P037_Rev00<br />SET EN-UK SFilename=105P036_Rev00<br />: <br />: Rem Disk media Kit number<br />SET EN-UK sKIT=105K036_Rev00_A<br /><br />: Rem Winpe Language, English US is for all Engliah variants ie UK Engliah is EN-UK<br />SET EN-UK sWinpeLANG=en-us<br /><br />: Rem Winpe Package Language, Lp file. English US is for all Engliah variants ie UK Engliah is EN-US<br />: Rem Don;t add the file extension ie &quot;lp_en-us.cab&quot; will be &quot;lp_en-us&quot;<br />SET EN-UK sWinpeLpCabFile=en-Us<br /><br />: Rem Winpe Keyboard Configuration, Specially important when using laptops<br />SET EN-UK sWinpeKeyboard=test<br /><br />: Rem Winpe time zone, GMT for UK<br />SET EN-UK sTimeZone='GMT Standard Time'<br /><br />: rem ================: REM M11 EN-US info========================<br />: <br />: Rem Set Disk file order reguired by oscdimg.exe<br />SET EN-US sFileOrder=M11-US.txt<br /><br />: Rem ISO File names, don't use spaces in filename, reguired by oscdimg.exe<br />: REM This is the program name prefix for the iso ie 105P037_Rev00<br />SET EN-US SFilename=105P037_Rev00<br /><br />: Rem Set Disk volume label reguired by oscdimg.exe<br />SET EN-US sDiskVolumeName=105P037_Rev00<br /><br />: Rem Disk media Kit number<br />SET EN-US sKIT=105K037_Rev00<br /><br />: Rem Winpe Language, English US is for all Engliah variants ie UK Engliah is EN-US<br />EN-US sWinpeLANG=en-US<br /><br />: Rem Winpe Package Language, Lp file. English US is for all Engliah variants ie UK Engliah is EN-US<br />: Rem Don;t add the file extension ie &quot;lp_en-us.cab&quot; will be &quot;lp_en-us&quot;<br />EN-US sWinpeLpCabFile=lp_en-us<br /><br />: Rem Winpe Keyboard Configuration, Specially important when using laptops<br />SET EN-US sWinpeKeyboard=0409:00000409<br /><br />: Rem Winpe time zone, GMT for Us<br />EN-US sTimeZone=&quot;Pacific Standard Time&quot;<br />: <br />: rem ================: REM M11 DE-DE info========================<br />: <br />: Rem Set Disk file order reguired by oscdimg.exe<br />SET De-DE sFileOrder=M11-DE.txt<br /><br />: Rem ISO File names, don't use spaces in filename, reguired by oscdimg.exe<br />: REM This is the program name prefix for the iso ie 105P038_Rev00<br />SET De-DE SFilename=105P038<br /><br />: Rem Set Disk volume label reguired by oscdimg.exe<br />SET De-DE sDiskVolumeName=105P038_Rev00<br /><br />SET De-DE sKIT=105K038_Rev00<br /><br />: Rem Winpe Language, English US is for all Engliah variants ie UK Engliah is EN-US<br />SET De-DE sWinpeLANG=De-DE<br /><br />: Rem Winpe Package Language, Lp file. English US is for all Engliah variants ie UK Engliah is EN-US<br />: Rem Don;t add the file extension ie &quot;lp_de-de.cab&quot; will be &quot;lp_de-de&quot;<br />SET De-DE sWinpeLpCabFile=lp_de-de<br /><br />: Rem Winpe Keyboard Configuration, Specially important when using laptops<br />SET De-DE sWinpeKeyboard=0407:00000407<br /><br />: Rem Winpe time zone, for germany<br />SET De-DE sTimeZone=&quot;W. Europe Standard Time&quot;<br />: <br />: rem ================:: REM M11 ES-ES info========================<br />: <br />: Rem Set Disk file order reguired by oscdimg.exe<br />SET ES-Es sFileOrder=M11-ES.txt<br /><br />: Rem ISO File names, don't use spaces in filename, reguired by oscdimg.exe<br />: REM This is the program name prefix for the iso ie 105P039_Rev00<br />SET SFilename_M11_ES-ES=105P039_Rev00<br /><br />: Rem Set Disk volume label reguired by oscdimg.exe<br />SET ES-Es sDiskVolumeName=105P039_Rev00<br /><br />SET ES-Es sKIT=105K039_Rev00<br /><br />: Rem Winpe Language, English US is for all Engliah variants ie UK Engliah is EN-US<br />ES-Es sWinpeLANG=ES-ES<br /><br />: Rem Winpe Package Language, Spanish Lp file<br />: Rem Don;t add the file extension ie &quot;lp_es-es.cab&quot; will be &quot;lp_es-es&quot;<br />SET ES-Es sWinpeLpCabFile=lp.cab<br /><br />: Rem Winpe Keyboard Configuration, Specially important when using laptops<br />SET ES-Es sWinpeKeyboard=040a:0000040a<br /><br />: Rem Winpe time zone, for Spain<br />SET sTimeZone_M11_ES-ES=&quot;Romance Standard Time&quot;<br />: <br />: rem ================: REM M11 FR-FR info========================<br />: <br />: Rem Set Disk file order reguired by oscdimg.exe<br />SET FR-FR sFileOrder=M11-FR.txt<br /><br />: Rem ISO File names, don't use spaces in filename, reguired by oscdimg.exe<br />: REM This is the program name prefix for the iso ie 105P040_Rev00<br />SET FR-FR SFilename=105P040_Rev00O<br /><br />: Rem Set Disk volume label reguired by oscdimg.exe<br />SET FR-FR sDiskVolumeName=105P040_Rev00<br /><br />SET FR-FR sKIT=105K040_Rev00<br /><br />: Rem Winpe Language, English US is for all Engliah variants ie UK Engliah is EN-US<br />SET FR-FR sWinpeLANG=De-DE<br /><br />: Rem Winpe Package Language, French Lp file.<br />: Rem Don;t add the file extension ie &quot;lp_fr-fr.cab&quot; will be &quot;lp_fr-fr&quot;<br />SET FR-FR sWinpeLpCabFile=lp_fr-fr<br /><br />: Rem Winpe Keyboard Configuration, Specially important when using laptops<br />SET FR-FR sWinpeKeyboard=040c:0000040c<br /><br />: Rem Winpe time zone, for France<br />SET FR-FR sTimeZone=&quot;Romance Standard Time&quot;<br /><br />: <br />: rem ================: REM M11 IT-IT info========================<br />: <br />: Rem Set Disk file order reguired by oscdimg.exe<br />SET IT-IT sFileOrder=M11-It.txt<br /><br />: Rem ISO File names, don't use spaces in filename, reguired by oscdimg.exe<br />: REM This is the program name prefix for the iso ie 105P041_Rev00<br />SET IT-IT SFilename=105P041_Rev00<br /><br />: Rem Set Disk volume label reguired by oscdimg.exe<br />SET IT-IT sDiskVolumeName=105P041_Rev00<br /><br />IT-IT sKIT=105K041_Rev00<br /><br />: Rem Winpe Language, English US is for all Engliah variants ie UK Engliah is EN-US<br />SET IT-IT sWinpeLANG=IT-IT<br /><br />: Rem Winpe Package Language, Italian Lp file.<br />: Rem Don;t add the file extension ie &quot;lp_it-it.cab&quot; will be &quot;lp_it-it&quot;<br />SET IT-IT sWinpeLpCabFile=lp_it-it.cab<br /><br />: Rem Winpe Keyboard Configuration, Specially important when using laptops<br />SET IT-IT sWinpeKeyboard=0410:00000410<br /><br />: Rem Winpe time zone, for Italy<br />SET IT-IT sTimeZone=&quot;W. Europe Standard Timee&quot;<br /><br />: <br />: rem ================: REM M11 JA-JP info========================<br />: <br />: Rem Set Disk file order reguired by oscdimg.exe<br />SET JA-JP sFileOrder=M11-JP.txt<br /><br />: Rem ISO File names, don't use spaces in filename, reguired by oscdimg.exe<br />: REM This is the program name prefix for the iso ie 105P042_Rev00<br />SET JA-JP SFilename=105P042_Rev00<br /><br />: Rem Set Disk volume label reguired by oscdimg.exe<br />SET JA-JP sDiskVolumeName=105P042_Rev00<br /><br />SET JA-JP sKIT=105K042_Rev00<br /><br />: Rem Winpe Language, English US is for all Engliah variants ie UK Engliah is EN-US<br />SET JA-JP sWinpeLANG=JA-JP<br /><br />: Rem Winpe Package Language, Lp file. English US is for all Engliah variants ie UK Engliah is EN-US<br />: Rem Don;t add the file extension ie &quot;lp_ja-jp.cab&quot; will be &quot;lp_ja-jp&quot;<br />SET JA-JP sWinpeLpCabFile=lp_ja-jp<br /><br />: Rem Winpe Keyboard Configuration, Specially important when using laptops<br />SET JA-JP sWinpeKeyboard=ja-jp<br /><br />: Rem Winpe time zone, Tokyo for Japanese<br />SET JA-JP sTimeZone=&quot;Tokyo Standard Time&quot;<br />: <br />: rem [================: End of Config File info========================]<br />: rem [=================================================================]<br />: <br />I will try all combinations to see what is making it hang<br />Anyway so happy its woking without the comments, I was trying to comment it for a template etc<br />thanks for your help, your help is appreciated</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p5497" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5497">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search5648.html?author_id=5&amp;sr=posts">239</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 18 Feb 2006 19:54</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5497">
+
+						<h3 ><a href="#p5497">Re: Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting6b0e.html?mode=quote&amp;f=3&amp;p=5497" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic7705-2.html?p=5497#p5497" onclick="prompt('Message #11',this.href); return false;">#11</a></span> 
+									<a class="unread" href="viewtopic7705-2.html?p=5497#p5497" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a></strong> &raquo; </span>16 Nov 2010 01:14
+			</p>
+			
+			
+			
+			<div class="content">I tried with the text you send and it looks fine on my box for EN-UK, as far I can tell.<br />What error do you get, for which language?<br /><br />The findstr should ignore all comments so I can't see how the comments could cause a problem, but may be I'm missing something.<br /><br />When filtering only the lines starting with SET then I see some suspicious lines:<br /><br />SET EN-UK sFileOrder=M11_EN-UK.txt<br />SET EN-UK sDiskVolumeName=105P036_Rev00<br />SET EN-UK SFilename=105P036_Rev00<br />SET EN-UK sKIT=105K036_Rev00_A<br />SET EN-UK sWinpeLANG=en-us<br />SET EN-UK sWinpeLpCabFile=en-Us<br />SET EN-UK sWinpeKeyboard=test<br />SET EN-UK sTimeZone=<span style="color: #FF0000">'GMT Standard Time'  &lt;-- single quotes, others use double quotes</span><br />SET EN-US sFileOrder=M11-US.txt<br />SET EN-US SFilename=105P037_Rev00<br />SET EN-US sDiskVolumeName=105P037_Rev00<br />SET EN-US sKIT=105K037_Rev00<br />SET EN-US sWinpeKeyboard=0409:00000409<br />SET De-DE sFileOrder=M11-DE.txt<br />SET De-DE SFilename=105P038<br />SET De-DE sDiskVolumeName=105P038_Rev00<br />SET De-DE sKIT=105K038_Rev00<br />SET De-DE sWinpeLANG=De-DE<br />SET De-DE sWinpeLpCabFile=lp_de-de<br />SET De-DE sWinpeKeyboard=0407:00000407<br />SET De-DE sTimeZone=&quot;W. Europe Standard Time&quot;<br />SET ES-Es sFileOrder=M11-ES.txt<br />SET <span style="color: #FF0000">SFilename_M11_ES-ES</span>=105P039_Rev00<br />SET ES-Es sDiskVolumeName=105P039_Rev00<br />SET ES-Es sKIT=105K039_Rev00<br />SET ES-Es sWinpeLpCabFile=lp.cab<br />SET ES-Es sWinpeKeyboard=040a:0000040a<br />SET <span style="color: #FF0000">sTimeZone_M11_ES-ES</span>=&quot;Romance Standard Time&quot;<br />SET FR-FR sFileOrder=M11-FR.txt<br />SET FR-FR SFilename=105P040_Rev00O<br />SET FR-FR sDiskVolumeName=105P040_Rev00<br />SET FR-FR sKIT=105K040_Rev00<br />SET FR-FR sWinpeLANG=De-DE<br />SET FR-FR sWinpeLpCabFile=lp_fr-fr<br />SET FR-FR sWinpeKeyboard=040c:0000040c<br />SET FR-FR sTimeZone=&quot;Romance Standard Time&quot;<br />SET IT-IT sFileOrder=M11-It.txt<br />SET IT-IT SFilename=105P041_Rev00<br />SET IT-IT sDiskVolumeName=105P041_Rev00<br />SET IT-IT sWinpeLANG=IT-IT<br />SET IT-IT sWinpeLpCabFile=lp_it-it.cab<br />SET IT-IT sWinpeKeyboard=0410:00000410<br />SET IT-IT sTimeZone=&quot;W. Europe Standard Timee&quot;<br />SET JA-JP sFileOrder=M11-JP.txt<br />SET JA-JP SFilename=105P042_Rev00<br />SET JA-JP sDiskVolumeName=105P042_Rev00<br />SET JA-JP sKIT=105K042_Rev00<br />SET JA-JP sWinpeLANG=JA-JP<br />SET JA-JP sWinpeLpCabFile=lp_ja-jp<br />SET JA-JP sWinpeKeyboard=ja-jp<br />SET JA-JP sTimeZone=&quot;Tokyo Standard Time&quot;</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p5502" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5502">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search9bd9.html?author_id=1782&amp;sr=posts">8</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Nov 2010 11:09</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5502">
+
+						<h3 ><a href="#p5502">Re: Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingb6c3-3.html?mode=quote&amp;f=3&amp;p=5502" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopica24e.html?p=5502#p5502" onclick="prompt('Message #12',this.href); return false;">#12</a></span> 
+									<a class="unread" href="viewtopica24e.html?p=5502#p5502" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a></strong> &raquo; </span>16 Nov 2010 16:09
+			</p>
+			
+			
+			
+			<div class="content">problem solved, i found out if the last line of the text file contains a colon then the batch file hangs.<br /><br />The supicious lines is a mistaake, copied from another file. well spotted<br />The quote signs is also a mistake, not required. Entered for debugging and fogot to remove it after<br /><br />Thanks again for all the support you provide, you help me figure out a bit how the For /F loop works and much appreciated <br /><br />Thanks again, stay blessed<br />Albert</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p5507" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5507">
+			<dt class="has-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a>							</dt>
+
+						<dd class="profile-rank">Expert</dd>			
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search5648.html?author_id=5&amp;sr=posts">239</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 18 Feb 2006 19:54</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5507">
+
+						<h3 ><a href="#p5507">Re: Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingbb5a.html?mode=quote&amp;f=3&amp;p=5507" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic35b1.html?p=5507#p5507" onclick="prompt('Message #13',this.href); return false;">#13</a></span> 
+									<a class="unread" href="viewtopic35b1.html?p=5507#p5507" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlista6a8.html?mode=viewprofile&amp;u=5" class="username">DosItHelp</a></strong> &raquo; </span>16 Nov 2010 19:04
+			</p>
+			
+			
+			
+			<div class="content">Interesting.<br />The problem can be fixed by &quot;piping&quot; the text file into the findstr command, instead of using &quot;input redirection&quot;.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal<br />set LANG=EN-UK<br /><br />for /f &quot;tokens=* delims=&quot; %%a in ('type &quot;setsfile&quot;^|findstr /i /b /c:&quot;SET %LANG%&quot;') do (<br />&nbsp; &nbsp;for /f &quot;tokens=3,* delims== &quot; %%x in (&quot;%%a&quot;) do (<br />&nbsp; &nbsp; &nbsp; &nbsp;echo.%%x&nbsp; &nbsp; &nbsp; &nbsp; -&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;%%y<br />&nbsp; &nbsp; &nbsp; &nbsp;set %%x=%%y<br />&nbsp; &nbsp;)<br />)<br /><br />rem accessing the resolved variables<br />echo.<br />echo sFileOrder is %sFileOrder%<br /></code></pre></div> <img class="smilies" src="images/smilies/icon_wink.gif" alt=":wink:" title="Wink" /></div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p5513" class="post has-profile bg1">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5513">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search9bd9.html?author_id=1782&amp;sr=posts">8</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 06 Nov 2010 11:09</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5513">
+
+						<h3 ><a href="#p5513">Re: Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="postingc774.html?mode=quote&amp;f=3&amp;p=5513" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopice106.html?p=5513#p5513" onclick="prompt('Message #14',this.href); return false;">#14</a></span> 
+									<a class="unread" href="viewtopice106.html?p=5513#p5513" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistef0d.html?mode=viewprofile&amp;u=1782" class="username">Addcom</a></strong> &raquo; </span>19 Nov 2010 01:20
+			</p>
+			
+			
+			
+			<div class="content"><img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /> <br />Thanks, it worked, even with all sort of characters at the end of the file, &quot;;@|<br />Even uncompleted statements like Set en-uk<br /><br />I will use your last suggestion, so in the near future others can modify the batch file without locking up<br /><br />Thanks again for all the support you given me, i do appreciate<br /><br />Albert</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+				<div id="p5521" class="post has-profile bg2">
+		<div class="inner">
+
+		<dl class="postprofile" id="profile5521">
+			<dt class="no-profile-rank no-avatar">
+				<div class="avatar-container">
+																			</div>
+								<a href="memberlistfdfe.html?mode=viewprofile&amp;u=736" class="username">SenHu</a>							</dt>
+
+									
+		<dd class="profile-posts"><strong>Posts:</strong> <a href="search040f.html?author_id=736&amp;sr=posts">19</a></dd>		<dd class="profile-joined"><strong>Joined:</strong> 19 Mar 2009 14:57</dd>		
+		
+						
+						
+		</dl>
+
+		<div class="postbody">
+						<div id="post_content5521">
+
+						<h3 ><a href="#p5521">Re: Reading variables from a text file Using For /F command</a></h3>
+
+													<ul class="post-buttons">
+																																									<li>
+							<a href="posting026d.html?mode=quote&amp;f=3&amp;p=5521" title="Reply with quote" class="button button-icon-only">
+								<i class="icon fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span>
+							</a>
+						</li>
+														</ul>
+							
+						<p class="author"><span class="posti"><a href="viewtopic5b1d.html?p=5521#p5521" onclick="prompt('Message #15',this.href); return false;">#15</a></span> 
+									<a class="unread" href="viewtopic5b1d.html?p=5521#p5521" title="Post">
+						<i class="icon fa-file fa-fw icon-lightgray icon-md" aria-hidden="true"></i><span class="sr-only">Post</span>
+					</a>
+								<span class="responsive-hide">by <strong><a href="memberlistfdfe.html?mode=viewprofile&amp;u=736" class="username">SenHu</a></strong> &raquo; </span>20 Nov 2010 08:45
+			</p>
+			
+			
+			
+			<div class="content">Wow, people on this forum really work hard to solve problems diligently. That's just great. This is a very helpful forum. I thought I add my little bit of help.<br /><br />When faced with text files that have special characters (commas, colons, quotes, double quotes, exclaimation marks, tabs, etc.) that are sometimes difficult to parse, here is an alternate approach one can take. Regular Expressions. These biterscripting commands will extract all SET variables and their values (regardless of whether they contain special characters).<br /><br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>var string content&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; # Declare a string variable<br />cat &quot;C:/path/to/text/file.txt&quot; &gt; $content&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; # Read input text into string variable<br />while ( { sen -r &quot;^SET (A&gt;Z)&amp;\n^&quot; $content } &gt; 0 )&nbsp; &nbsp;# Are there any variables left ?<br />&nbsp; &nbsp; stex -r &quot;SET (A&gt;Z)&amp;\n&quot; $content&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;# Extract and print the next variable<br /></code></pre></div><br /><br />The regular expression I am using is SET (A&gt;Z)&amp;\n which means the word SET followed by a space, followed by one letter in the range (capital) A&gt;Z, followed by ANYTHING (&amp;), followed by a newline.</div>
+
+			
+									
+									
+						</div>
+
+		</div>
+
+				<div class="back2top">
+						<a href="#top" class="top" title="Top">
+				<i class="icon fa-chevron-circle-up fa-fw icon-gray" aria-hidden="true"></i>
+				<span class="sr-only">Top</span>
+			</a>
+					</div>
+		
+		</div>
+	</div>
+
+	<hr class="divider" />
+	
+
+	<div class="action-bar bar-bottom">
+	
+			<a href="postingd2ed.html?mode=reply&amp;f=3&amp;t=1451" class="button" title="Post a reply">
+							<span>Post Reply</span> <i class="icon fa-reply fa-fw" aria-hidden="true"></i>
+					</a>
+		
+		<div class="dropdown-container dropdown-button-control topic-tools">
+		<span title="Topic tools" class="button button-secondary dropdown-trigger dropdown-select">
+			<i class="icon fa-wrench fa-fw" aria-hidden="true"></i>
+			<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+		</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																												<li>
+					<a href="viewtopic9277.html?f=3&amp;t=1451&amp;view=print" title="Print view" accesskey="p">
+						<i class="icon fa-print fa-fw" aria-hidden="true"></i><span>Print view</span>
+					</a>
+				</li>
+											</ul>
+		</div>
+	</div>
+
+			<form method="post" action="https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=1451">
+		<div class="dropdown-container dropdown-container-left dropdown-button-control sort-tools">
+	<span title="Display and sorting options" class="button button-secondary dropdown-trigger dropdown-select">
+		<i class="icon fa-sort-amount-asc fa-fw" aria-hidden="true"></i>
+		<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+	</span>
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<div class="dropdown-contents">
+			<fieldset class="display-options">
+							<label>Display: <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></label>
+								<label>Sort by: <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></label>
+				<label>Direction: <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></label>
+								<hr class="dashed" />
+				<input type="submit" class="button2" name="sort" value="Go" />
+						</fieldset>
+		</div>
+	</div>
+</div>
+		</form>
+	
+	
+	
+			<div class="pagination">
+			16 posts
+							<ul>
+		<li class="active"><span>1</span></li>
+				<li><a class="button" href="viewtopiccfcf-3.html?f=3&amp;t=1451&amp;start=15" role="button">2</a></li>
+				<li class="arrow next"><a class="button button-icon-only" href="viewtopiccfcf-3.html?f=3&amp;t=1451&amp;start=15" rel="next" role="button"><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+	</ul>
+					</div>
+	</div>
+
+
+<div class="action-bar actions-jump">
+		<p class="jumpbox-return">
+		<a href="viewforum4d6b.html?f=3" class="left-box arrow-left" accesskey="r">
+			<i class="icon fa-angle-left fa-fw icon-black" aria-hidden="true"></i><span>Return to “DOS Batch Forum”</span>
+		</a>
+	</p>
+	
+		<div class="jumpbox dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+			<span title="Jump to" class="button button-secondary dropdown-trigger dropdown-select">
+				<span>Jump to</span>
+				<span class="caret"><i class="icon fa-sort-down fa-fw" aria-hidden="true"></i></span>
+			</span>
+		<div class="dropdown">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+																				<li><a href="viewforum31e6.html?f=4" class="jumpbox-cat-link"> <span> DosTips - Dos Batch</span></a></li>
+																<li><a href="viewforum4d6b.html?f=3" class="jumpbox-sub-link"><span class="spacer"></span> <span>&#8627; &nbsp; DOS Batch Forum</span></a></li>
+											</ul>
+		</div>
+	</div>
+
+	</div>
+
+
+			</div>
+
+
+<div id="page-footer" class="page-footer" role="contentinfo">
+	<div class="navbar" role="navigation">
+	<div class="inner">
+
+	<ul id="nav-footer" class="nav-footer linklist" role="menubar">
+		<li class="breadcrumbs">
+							<span class="crumb"><a href="../index.html" data-navbar-reference="home"><i class="icon fa-home fa-fw" aria-hidden="true"></i><span>DosTips.com</span></a></span>									<span class="crumb"><a href="index.html" data-navbar-reference="index"><span>Board index</span></a></span>					</li>
+		
+				<li class="rightside">All times are <span title="UTC-6">UTC-06:00</span></li>
+							<li class="rightside">
+				<a href="ucp033a.html?mode=delete_cookies" data-ajax="true" data-refresh="true" role="menuitem">
+					<i class="icon fa-trash fa-fw" aria-hidden="true"></i><span>Delete all board cookies</span>
+				</a>
+			</li>
+												<li class="rightside" data-last-responsive="true">
+				<a href="memberlist4bfd.html?mode=team" role="menuitem">
+					<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>The team</span>
+				</a>
+			</li>
+									<li class="rightside" data-last-responsive="true">
+				<a href="memberlist8733.html?mode=contactadmin" role="menuitem">
+					<i class="icon fa-envelope fa-fw" aria-hidden="true"></i><span>Contact us</span>
+				</a>
+			</li>
+			</ul>
+
+	</div>
+</div>
+
+	<div class="copyright">
+				<!-- WARNING NO DELETE -->Style developer by <a href="http://tricolor.x-tk.ru/">support forum tricolor</a>, <!-- END WARNING NO DELETE -->Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+									</div>
+
+	<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+		<div id="darken" class="darken">&nbsp;</div>
+	</div>
+
+	<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+	</div>
+	<div id="phpbb_confirm" class="phpbb_alert">
+		<a href="#" class="alert_close">
+			<i class="icon fa-times-circle fa-fw" aria-hidden="true"></i>
+		</a>
+		<div class="alert_text"></div>
+	</div>
+</div>
+
+</div>
+
+<div>
+	<a id="bottom" class="anchor" accesskey="z"></a>
+	<img src="cron5495.gif?cron_type=cron.task.text_reparser.poll_title" width="1" height="1" alt="cron" /></div>
+
+<script type="text/javascript" src="assets/javascript/jquery.mind772.js?assets_version=34"></script>
+<script type="text/javascript" src="assets/javascript/cored772.js?assets_version=34"></script>
+
+
+
+<script type="text/javascript" src="styles/prosilver/template/forum_fnd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/prosilver/template/ajaxd772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/jquery-uid772.js?assets_version=34"></script>
+<script type="text/javascript" src="styles/AllanStyle-SUBSILVER/template/collapsed772.js?assets_version=34"></script>
+
+
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=1451&p=5507 by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 08:59:02 GMT -->
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8255&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:51:22 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; How to freely select one column based on another column data?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>How to freely select one column based on another column data?</h2>
+		<p><a href="viewtopicdfcd.html?f=3&amp;t=8255">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8255</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>2</strong></div>
+					<div class="post">
+				<h3>How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>29 Nov 2017 15:49</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">Hi All,<br>
+<br>
+I have a following code to do the job as select from any other column data based upon first column data via a criteria (profile as which column):<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>call C:\auto_pkg_build\Scripts\scheme_replace\get_src.cmd
+set prof=%prof: =%
+
+if "%prof%"=="QA_Infra"   goto QA_Infra
+if "%prof%"=="NAR_Infra"  goto NAR_Infra
+if "%prof%"=="US_Prod"    goto US_Prod
+if "%prof%"=="MY_Prof"    goto MY_Prof
+
+:QA_Infra
+(for /F "tokens=2 delims=, " %%I IN ('findstr /B /g:echosch_1.txt profile_scheme.txt') do echo %%I)&gt;sch_pack_1.txt
+goto end
+
+:NAR_Infra
+(for /F "tokens=3 delims=, " %%I IN ('findstr /B /g:echosch_1.txt profile_scheme.txt') do echo %%I)&gt;sch_pack_1.txt
+goto end
+
+:MY_Prof
+(for /F "tokens=4 delims=, " %%I IN ('findstr /B /g:echosch_1.txt profile_scheme.txt') do echo %%I)&gt;sch_pack_1.txt
+goto end
+
+:US_Prod
+(for /F "tokens=5 delims=, " %%I IN ('findstr /B /g:echosch_1.txt profile_scheme.txt') do echo %%I)&gt;sch_pack_1.txt
+goto end
+
+:end
+</code></pre></div> <br>
+<br>
+Here is the sample of echosch_1.txt<br>
+T501-08680-0101 <br>
+T501-08699-0101<br>
+O501-08690-0101<br>
+<br>
+And here is the profile_scheme.txt<br>
+<br>
+Mockup              ,  QA_Infra           ,  NAR_Infra         ,  MY_Prof             , US_Prod<br>
+T501-08680-0100, T501-08815-0100, T501-08665-0100, T501-01110-0100, T501-04440-0100<br>
+T501-08680-0101, T501-08815-0101, T501-08665-0101, T501-01110-0101, T501-04440-0101<br>
+T501-08680-0102, T501-08815-0102, T501-08665-0102, T501-01110-0102, T501-04440-0102<br>
+T501-08680-0103, T501-08815-0103, T501-08665-0103, T501-01110-0103, T501-04440-0103<br>
+no_gen,                no_gen,                no_gen,                no_gen,               no_gen<br>
+<br>
+T501-08699-0100, T501-08700-0100, T501-08681-0100, T501-02220-0100, T501-05550-0100<br>
+T501-08699-0101, T501-08700-0101, T501-08681-0101, T501-02220-0101, T501-05550-0101<br>
+no_sl,                   no_sl,                   no_sl,                  no_sl,                   no_sl<br>
+<br>
+O501-08690-0100, T501-08788-0100, T501-08658-0100, T501-03330-0100, T501-06660-0100<br>
+O501-08690-0101, T501-08788-0101, T501-08658-0101, T501-03330-0101, T501-06660-0101<br>
+O501-08690-0102, T501-08788-0102, T501-08658-0102, T501-03330-0102, T501-06660-0102<br>
+no_fk,                   no_fk,                  no_fk,                  no_fk.                  no_fk<br>
+<br>
+So if "%prof%"=="QA_Infra", then it will select <br>
+T501-08815-0101 <br>
+T501-08700-0101<br>
+T501-08788-0101<br>
+as output to sch_pack_1.txt<br>
+<br>
+And it works fine for different profile. But there is a limitation for this. I only based upon the first column then select the rest column.<br>
+<br>
+Now the new requirement is asking more flexible. It is not only based upon the first column. It can be any column (for the source data) then select the relative column based upon the profile as output...<br>
+<br>
+Say my new echosch_1.txt is as below<br>
+T501-04440-0103<br>
+T501-05550-0101<br>
+T501-06660-0102<br>
+<br>
+if "%prof%"=="QA_Infra", then it will select <br>
+T501-08815-0103<br>
+T501-08700-0101<br>
+T501-08788-0102<br>
+<br>
+Any thoughts?<br>
+<br>
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>29 Nov 2017 18:00</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">If the new requirement is that the source data can be at any column, then it is equivalent to say that not matters in which column is it, right? So you just need to eliminate the /B switch from FINDSTR command... This should work as long as there is not duplicate data in more than one column.<br>
+<br>
+The Batch file below is <em class="text-italics">equivalent</em> to your original code (with FINDSTR /B switch removed), but simpler....<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+REM call C:\auto_pkg_build\Scripts\scheme_replace\get_src.cmd
+REM set prof=%prof: =%
+
+REM For test purposes:
+SET "prof=QA_Infra"
+
+set /P "header=" &lt; profile_scheme.txt
+set "i=0"
+for %%a in (%header%) do (
+   set /A i+=1
+   if "%%a" equ "%prof%" set /A token=i
+)
+
+(for /F "tokens=%token% delims=, " %%I IN ('findstr /g:echosch_1.txt profile_scheme.txt') do echo %%I)&gt;sch_pack_1.txt
+</code></pre></div>
+Antonio</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>30 Nov 2017 08:38</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">Hi Aacini,<br>
+<br>
+Thanks for the code. I tried but complain this:<br>
+ delims=, " was unexpected at this time.<br>
+<br>
+Any reasons?<br>
+<br>
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>30 Nov 2017 08:48</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">OK figure it out<br>
+<br>
+Just remove the double-quoted around <br>
+<br>
+set prof=QA_Infra <br>
+<br>
+and it works fine now.<br>
+<br>
+Thanks again!<br>
+<br>
+goodywp</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>30 Nov 2017 09:16</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopice816.html?p=54843#p54843" data-post-id="54843" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Nov 2017 08:48</div></cite>
+OK figure it out<br>
+<br>
+Just remove the double-quoted around <br>
+<br>
+set prof=QA_Infra <br>
+<br>
+and it works fine now.<br>
+<br>
+Thanks again!<br>
+<br>
+goodywp
+</div></blockquote>
+Doubtful. Quotes around the set statement should never have any implications on that string.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>30 Nov 2017 09:22</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">Ohh.... but that was how it works for now. And I have no further idea...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>30 Nov 2017 09:51</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopicba0e.html?p=54845#p54845" data-post-id="54845" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">30 Nov 2017 09:22</div></cite>
+Ohh.... but that was how it works for now. And I have no further idea...
+</div></blockquote>
+
+This error
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>delims=, " was unexpected at this time.</code></pre></div>
+Has nothing to do with this.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set "prof=QA_Infra"</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>28 Jun 2018 13:25</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">I had some issue for this code. It was OK when the column is not that much. But now after adding more column and getting some weird issue, for some column I got the error back again<br>
+<br>
+Here is my config file<br>
+<br>
+profile_scheme.txt file as below, originally I had , between two column, but after remove it still work..<br>
+MOCKUP_DL QA_DL US_PROD_DL TD_DL GPC_DL ELAVON_DL DESJAR_DL CA_PROD_DL<br>
+T501-08680-0100 T501-08815-0100 T501-08665-0100 T501-08665-0100 T501-08665-0100 T501-08665-0100 T501-08665-0100 T501-08665-0101<br>
+T501-08680-0101 T501-08815-0101 T501-08665-0101 T501-08665-0101 T501-08665-0101 T501-08665-0101 T501-08665-0101 T501-08665-0102<br>
+T501-08680-0102 T501-08815-0102 T501-08665-0102 T501-08665-0102 T501-08665-0102 T501-08665-0102 T501-08665-0102 T501-08665-0103<br>
+T501-08680-0103 T501-08815-0103 T501-08665-0103 T501-08665-0103 T501-08665-0103 T501-08665-0103 T501-08665-0103 T501-08665-0104<br>
+<br>
+0501-08690-0100 0501-08783-0100 0501-08658-0100 0501-08658-0100 0501-08658-0100 0501-08658-0100 0501-08658-0100 0501-08658-0101<br>
+0501-08690-0102 0501-08783-0102 0501-08658-0102 0501-08658-0102 0501-08658-0102 0501-08658-0102 0501-08658-0102 0501-08658-0103<br>
+<br>
+my source column is QA_DL then target TD_DL, it works fine but <br>
+when I select source column is QA_DL then target CA_PROD_DL I got an error as <br>
+<br>
+The code I used for as <br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+
+cd C:\auto_pkg_build\Scripts\scheme_replace\pkg_data\temp
+echo 00
+if exist profile_scheme.txt (del profile_scheme.txt)
+echo 11
+copy C:\auto_pkg_build\Sources\Source_schemes\profile_scheme.txt .
+echo 22
+if exist sch_pack_1.txt (del sch_pack_1.txt)
+echo 33
+call C:\auto_pkg_build\Scripts\scheme_replace\get_src.cmd
+echo 44
+set "profname=%profname: =%"
+echo 55
+set /P "header=" &lt; profile_scheme.txt
+echo 66
+set "i=0"
+echo 77
+for %%a in (%header%) do (
+echo 88
+   set /A i+=1
+echo 99
+   if "%%a" equ "%profname%" set /A token=i
+echo aa
+)
+echo bb
+(for /F "tokens=%token% delims= " %%I IN ('findstr /g:echosch_1.txt profile_scheme.txt') do echo %%I)&gt;sch_pack_1.txt
+</code></pre></div>
+
+after line bb above, it shows error<br>
+ delims=, " was unexpected at this time.<br>
+or <br>
+ delims= " was unexpected at this time. depend on the code and the above config file<br>
+<br>
+But when I switch two column name between TD_DL and CAN_PROD_DL then try the above code again,<br>
+got the same result that means TD_DL works but CAN_PROD_DL not work and also got that error message after line bb<br>
+<br>
+what is the issue here??? It looks like not making sense to me it is name of head  dependent...  <img class="smilies" src="images/smilies/icon_redface.gif" width="15" height="15" alt=":oops:" title="Embarassed"> <br>
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>28 Jun 2018 13:29</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist07be.html?mode=viewprofile&amp;u=2923">Aacini</a> wrote: <a href="viewtopic86ef-2.html?p=54833#p54833" data-post-id="54833" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">29 Nov 2017 18:00</div></cite>
+If the new requirement is that the source data can be at any column, then it is equivalent to say that not matters in which column is it, right? So you just need to eliminate the /B switch from FINDSTR command... This should work as long as there is not duplicate data in more than one column.<br>
+<br>
+The Batch file below is <em class="text-italics">equivalent</em> to your original code (with FINDSTR /B switch removed), but simpler....<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+REM call C:\auto_pkg_build\Scripts\scheme_replace\get_src.cmd
+REM set prof=%prof: =%
+
+REM For test purposes:
+SET "prof=QA_Infra"
+
+set /P "header=" &lt; profile_scheme.txt
+set "i=0"
+for %%a in (%header%) do (
+   set /A i+=1
+   if "%%a" equ "%prof%" set /A token=i
+)
+
+(for /F "tokens=%token% delims=, " %%I IN ('findstr /g:echosch_1.txt profile_scheme.txt') do echo %%I)&gt;sch_pack_1.txt
+</code></pre></div>
+Antonio
+</div></blockquote>
+
+Hi Antonio,<br>
+<br>
+Do you have any idea why this happen as the latest post showing some issue <br>
+<br>
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>28 Jun 2018 14:00</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopicd65f.html?p=57301#p57301" data-post-id="57301" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Jun 2018 13:25</div></cite>
+after line bb above, it shows error<br>
+ delims=, " was unexpected at this time.<br>
+or <br>
+ delims= " was unexpected at this time. depend on the code and the above config file
+</div></blockquote>
+You are absolutely 100% positive that is the exact error, character for character, you are receiving?<br>
+<br>
+The only way you would get that error is if the token variable was set to a special character or delim character like a comma.  The code you are showing us would not do that.  So I assume it is obfuscated.<br>
+<br>
+I can run through all iterations of your profile scheme input file without a single error using your same logic for increasing the value of the token variable.<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+type profile_scheme.txt
+set /P "header="&lt;profile_scheme.txt
+
+FOR %%G IN (%header%) DO CALL :DOME %%G
+
+GOTO :EOF
+:DOME
+set "i=0"
+set "profname=%1"
+for %%a in (%header%) do (
+   set /A i+=1
+   if "%%a" equ "%profname%" set /A token=i
+)
+for /F "tokens=%token% delims= " %%I IN (profile_scheme.txt) do echo %%I</code></pre></div>
+Output
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>MOCKUP_DL QA_DL US_PROD_DL TD_DL GPC_DL ELAVON_DL DESJAR_DL CA_PROD_DL
+T501-08680-0100 T501-08815-0100 T501-08665-0100 T501-08665-0100 T501-08665-0100 T501-08665-0100 T501-08665-0100 T501-08665-0101
+T501-08680-0101 T501-08815-0101 T501-08665-0101 T501-08665-0101 T501-08665-0101 T501-08665-0101 T501-08665-0101 T501-08665-0102
+T501-08680-0102 T501-08815-0102 T501-08665-0102 T501-08665-0102 T501-08665-0102 T501-08665-0102 T501-08665-0102 T501-08665-0103
+T501-08680-0103 T501-08815-0103 T501-08665-0103 T501-08665-0103 T501-08665-0103 T501-08665-0103 T501-08665-0103 T501-08665-0104
+MOCKUP_DL
+T501-08680-0100
+T501-08680-0101
+T501-08680-0102
+T501-08680-0103
+QA_DL
+T501-08815-0100
+T501-08815-0101
+T501-08815-0102
+T501-08815-0103
+US_PROD_DL
+T501-08665-0100
+T501-08665-0101
+T501-08665-0102
+T501-08665-0103
+TD_DL
+T501-08665-0100
+T501-08665-0101
+T501-08665-0102
+T501-08665-0103
+GPC_DL
+T501-08665-0100
+T501-08665-0101
+T501-08665-0102
+T501-08665-0103
+ELAVON_DL
+T501-08665-0100
+T501-08665-0101
+T501-08665-0102
+T501-08665-0103
+DESJAR_DL
+T501-08665-0100
+T501-08665-0101
+T501-08665-0102
+T501-08665-0103
+CA_PROD_DL
+T501-08665-0101
+T501-08665-0102
+T501-08665-0103
+T501-08665-0104</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>28 Jun 2018 14:40</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content">Really appreciated your effort!!<br>
+My original requirement was this as below<br>
+<br>
+if I have two scheme pack under QA_DL, <br>
+T501-08815-0103<br>
+0501-08783-0102<br>
+if my target is MOCKUP_DL, then it will find<br>
+T501-08680-0103<br>
+0501-08690-0102<br>
+<br>
+if my target is TD_DL, then it will pop up<br>
+T501-08665-0103<br>
+0501-08658-0102<br>
+<br>
+and so on...<br>
+Now the issue I raised here if my target is CA_PROD_DL, it got error as above....<br>
+Thanks again</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>28 Jun 2018 14:41</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopic8b96.html?p=57306#p57306" data-post-id="57306" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Jun 2018 14:40</div></cite>
+Now the issue I raised here if my target is CA_PROD_DL, it got error as above....<br>
+Thanks again
+</div></blockquote>
+The input example and code example you have given does not produce that error.  PERIOD!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>28 Jun 2018 14:47</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopic25b9.html?p=57307#p57307" data-post-id="57307" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Jun 2018 14:41</div></cite>
+<blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopic8b96.html?p=57306#p57306" data-post-id="57306" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Jun 2018 14:40</div></cite>
+Now the issue I raised here if my target is CA_PROD_DL, it got error as above....<br>
+Thanks again
+</div></blockquote>
+The input example and code example you have given does not produce that error.  PERIOD!
+</div></blockquote>
+
+strange on my PC keep giving me error but if I switch to TD_DL or US_PROD_DL they both OK.... <img class="smilies" src="images/smilies/icon_cry.gif" width="15" height="15" alt=":cry:" title="Crying or Very sad"></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>28 Jun 2018 14:57</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopic3bf1.html?p=57308#p57308" data-post-id="57308" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Jun 2018 14:47</div></cite>
+<blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopic25b9.html?p=57307#p57307" data-post-id="57307" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Jun 2018 14:41</div></cite>
+<blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopic8b96.html?p=57306#p57306" data-post-id="57306" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Jun 2018 14:40</div></cite>
+Now the issue I raised here if my target is CA_PROD_DL, it got error as above....<br>
+Thanks again
+</div></blockquote>
+The input example and code example you have given does not produce that error.  PERIOD!
+</div></blockquote>
+
+strange on my PC keep giving me error but if I switch to TD_DL or US_PROD_DL they both OK.... <img class="smilies" src="images/smilies/icon_cry.gif" width="15" height="15" alt=":cry:" title="Crying or Very sad">
+</div></blockquote>
+
+Create a zip file with your batch file and all your input files and attach the zip file to a post.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to freely select one column based on another column data?</h3>
+				<div class="date">Posted: <strong>28 Jun 2018 15:26</strong></div>
+				<div class="author">by <strong>goodywp</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopicda10-2.html?p=57309#p57309" data-post-id="57309" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Jun 2018 14:57</div></cite>
+<blockquote><div><cite><a href="memberlist39de.html?mode=viewprofile&amp;u=8833">goodywp</a> wrote: <a href="viewtopic3bf1.html?p=57308#p57308" data-post-id="57308" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Jun 2018 14:47</div></cite>
+<blockquote><div><cite><a href="memberlist2675.html?mode=viewprofile&amp;u=2988">Squashman</a> wrote: <a href="viewtopic25b9.html?p=57307#p57307" data-post-id="57307" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">28 Jun 2018 14:41</div></cite>
+<br>
+The input example and code example you have given does not produce that error.  PERIOD!
+</div></blockquote>
+
+strange on my PC keep giving me error but if I switch to TD_DL or US_PROD_DL they both OK.... <img class="smilies" src="images/smilies/icon_cry.gif" width="15" height="15" alt=":cry:" title="Crying or Very sad">
+</div></blockquote>
+
+Create a zip file with your batch file and all your input files and attach the zip file to a post.
+</div></blockquote>
+
+Tried another input file and works and could be the input file issue....really strange... nothing related to code...</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>2</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8255&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:51:22 GMT -->
+</html>

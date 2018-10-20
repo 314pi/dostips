@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8650&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:47:22 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; How to check (with &quot;tasklist&quot; built-in cmd) if prgm is running?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>How to check (with &quot;tasklist&quot; built-in cmd) if prgm is running?</h2>
+		<p><a href="viewtopicb0e8.html?f=3&amp;t=8650">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8650</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>How to check (with &quot;tasklist&quot; built-in cmd) if prgm is running?</h3>
+				<div class="date">Posted: <strong>27 Jun 2018 01:02</strong></div>
+				<div class="author">by <strong>pstein</strong></div>
+				<div class="content">How do I check (from within a DOS batch script) if a certain program (with "Imagename" is myprog.exe") is currently running?<br>
+<br>
+I fiddled around with the built-in command "tasklist". But for example<br>
+<br>
+tasklist /FI "Imagename eq myprog.exe"<br>
+echo el=%errorlevel%<br>
+<br>
+yields always 0<br>
+<br>
+I need a return code or return value to echk in a following "if" statement if the program is currently up.<br>
+Something like<br>
+<br>
+tasklist /FI "Imagename eq myprog.exe"<br>
+if [%errorlevel%]==[1] ( echo "hey its running" )<br>
+<br>
+If another built-in program is more suitable then its welcomed as well<br>
+<br>
+Peter</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to check (with &quot;tasklist&quot; built-in cmd) if prgm is running?</h3>
+				<div class="date">Posted: <strong>27 Jun 2018 01:39</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">TASKLIST does neither set the errorlevel nor does it write to StdErr. Usually I pass the output to FINDSTR which changes the errorlevel accordingly.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>set "proc=myprog.exe"
+tasklist /nh /fi "imagename eq %proc%" | &gt;nul findstr /bic:"%proc% "
+echo %errorlevel%
+</code></pre></div>
+
+Steffen<br>
+<br>
+EDIT: If the process name exceeds the column width you might rather change the output format like that
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>tasklist /nh /fo csv /fi "imagename eq %proc%" | &gt;nul findstr /bic:"\"%proc%\","</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to check (with &quot;tasklist&quot; built-in cmd) if prgm is running?</h3>
+				<div class="date">Posted: <strong>26 Jul 2018 15:09</strong></div>
+				<div class="author">by <strong>Hackoo</strong></div>
+				<div class="content">You can take a look at this : <a href="https://stackoverflow.com/questions/51494059/batch-file-to-determine-websites-in-ie?answertab=active#tab-top" class="postlink">https://stackoverflow.com/questions/514 ... ve#tab-top</a></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to check (with &quot;tasklist&quot; built-in cmd) if prgm is running?</h3>
+				<div class="date">Posted: <strong>26 Jul 2018 15:25</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>FOR /F "skip=1 delims=" %%G IN ('tasklist /FO CSV /FI "imagename eq notepad.exe"') do echo It is Running.</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to check (with &quot;tasklist&quot; built-in cmd) if prgm is running?</h3>
+				<div class="date">Posted: <strong>26 Jul 2018 16:02</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">I'm not a member on SO, Hackoo.<br>
+Are you familiar with JScript hybrids?<br>
+This is a proof of concept how to enumerate the URLs of the InternetExplorer tabs.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (0)==(0) echo off
+
+for /f "delims=" %%i in ('cscript //nologo //e:jscript %~fs0') do (
+  echo %%i
+)
+pause
+
+goto :eof @end try {
+  var colShWindows = WScript.CreateObject('Shell.Application').Windows(),
+      objFso = WScript.CreateObject('Scripting.FileSystemObject');
+  for (var objEnum = new Enumerator(colShWindows); !objEnum.atEnd(); objEnum.moveNext())
+    if (objFso.GetFileName(objEnum.item().FullName).toLowerCase() == 'iexplore.exe')
+      WScript.Echo(objEnum.item().LocationURL);
+} catch (e) {;}</code></pre></div>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to check (with &quot;tasklist&quot; built-in cmd) if prgm is running?</h3>
+				<div class="date">Posted: <strong>27 Jul 2018 10:07</strong></div>
+				<div class="author">by <strong>Hackoo</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopice381.html?p=57574#p57574" data-post-id="57574" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">26 Jul 2018 16:02</div></cite>
+I'm not a member on SO, Hackoo.<br>
+Are you familiar with JScript hybrids?<br>
+This is a proof of concept how to enumerate the URLs of the InternetExplorer tabs.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@if (0)==(0) echo off
+
+for /f "delims=" %%i in ('cscript //nologo //e:jscript %~fs0') do (
+  echo %%i
+)
+pause
+
+goto :eof @end try {
+  var colShWindows = WScript.CreateObject('Shell.Application').Windows(),
+      objFso = WScript.CreateObject('Scripting.FileSystemObject');
+  for (var objEnum = new Enumerator(colShWindows); !objEnum.atEnd(); objEnum.moveNext())
+    if (objFso.GetFileName(objEnum.item().FullName).toLowerCase() == 'iexplore.exe')
+      WScript.Echo(objEnum.item().LocationURL);
+} catch (e) {;}</code></pre></div>
+Steffen
+</div></blockquote>
+
+Thank you @aGerman your script give me an idea to translate it in vbscript, because i'm familar with vbs hybrid , but anyway here is the code in vbscript :
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Set objFso = CreateObject("Scripting.FileSystemObject")	  
+Set colShWindows = CreateObject("shell.application").Windows
+For Each w In colShWindows
+	If objFso.GetFileName(LCase(w.FullName)) = "iexplore.exe" Then
+		WScript.Echo w.LocationURL
+	End If
+Next</code></pre></div>
+
+And in hybrid code batch and vbscript <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=";)" title="Wink"><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+(
+echo Set objFso = CreateObject^("Scripting.FileSystemObject"^)	  
+echo Set colShWindows = CreateObject^("shell.application"^).Windows
+echo For Each w In colShWindows
+echo 	If objFso.GetFileName^(LCase^(w.FullName^)^) = "iexplore.exe" Then
+echo 		WScript.Echo w.LocationURL
+echo 	End If
+echo Next
+)&gt;"%Temp%\iexplore_tabs.vbs"
+
+for /f %%a in ('cscript //nologo "%Temp%\iexplore_tabs.vbs"') do echo %%a
+pause</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to check (with &quot;tasklist&quot; built-in cmd) if prgm is running?</h3>
+				<div class="date">Posted: <strong>27 Jul 2018 10:10</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistc23f.html?mode=viewprofile&amp;u=5494">Hackoo</a> wrote: <a href="viewtopic1d52.html?p=57577#p57577" data-post-id="57577" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">27 Jul 2018 10:07</div></cite>
+<br>
+And in hybrid code batch and vbscript <img class="smilies" src="images/smilies/icon_wink.gif" width="15" height="15" alt=";)" title="Wink"><br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+(
+echo Set objFso = CreateObject^("Scripting.FileSystemObject"^)	  
+echo Set colShWindows = CreateObject^("shell.application"^).Windows
+echo For Each w In colShWindows
+echo 	If objFso.GetFileName^(LCase^(w.FullName^)^) = "iexplore.exe" Then
+echo 		WScript.Echo w.LocationURL
+echo 	End If
+echo Next
+)&gt;"%Temp%\iexplore_tabs.vbs"
+
+for /f %%a in ('cscript //nologo "%Temp%\iexplore_tabs.vbs"') do echo %%a
+pause</code></pre></div>
+</div></blockquote>
+Hybrid means all the code is self contained in one script file an executes the same script file.  You are just writing out a vbscript and then executing it.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to check (with &quot;tasklist&quot; built-in cmd) if prgm is running?</h3>
+				<div class="date">Posted: <strong>27 Jul 2018 10:21</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">The user on SO might be happy with any kind of "piece of code". You can easily do everything in VBS. Just use a WMI query to terminate all instances of iexplore.exe if the URL was found.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to check (with &quot;tasklist&quot; built-in cmd) if prgm is running?</h3>
+				<div class="date">Posted: <strong>27 Jul 2018 12:19</strong></div>
+				<div class="author">by <strong>Hackoo</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopica41f.html?p=57579#p57579" data-post-id="57579" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">27 Jul 2018 10:21</div></cite>
+The user on SO might be happy with any kind of "piece of code". You can easily do everything in VBS. Just use a WMI query to terminate all instances of iexplore.exe if the URL was found.<br>
+Steffen
+</div></blockquote>
+I did like this !
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+Title Checking Running Process and Get their command lines
+setlocal enabledelayedexpansion
+Mode 90,25 &amp; color 0A
+Set "ProcessName=iexplore.exe"
+Set "String2Search=facebook"
+Call :CheckRunning !ProcessName!
+If /I "%flag%"=="True" (
+    color 0A
+    echo %flag%
+	Call :GetCommandLine !ProcessName!
+	echo(
+	Call :CheckString_in_URL "%String2Search%"
+) else (
+    color 0C
+    echo %flag%
+    echo !ProcessName! is not running !
+    pause&gt;nul &amp; exit
+)
+Exit
+::********************************************************************************************************
+:CheckRunning &lt;ProcessName&gt;
+Set "ProcessName=%1"
+tasklist /NH /FI "imagename eq %ProcessName%" 2&gt;nul |find /i "%ProcessName%" &gt;nul
+If not errorlevel 1 ( Set "flag=True" ) else ( Set "flag=False" )
+Exit /b 
+::********************************************************************************************************
+:GetCommandLine &lt;ProcessName&gt;
+Set "ProcessCmd="
+for /f "tokens=2 delims==" %%P in ('wmic process where caption^="%~1" get commandline /format:value ^| findstr /I "%~1" ^| find /I /V "%~nx0" 2^&gt;nul') do (
+    Set "ProcessCmd=%%P"
+    echo !ProcessCmd!
+)
+Exit /b
+::******************************************************************************************************
+:Kill &lt;ProcessName&gt;
+Taskkill /IM "%~1" /F&gt;nul 2&gt;&amp;1
+Exit /b
+::******************************************************************************************************
+:CheckString_in_URL &lt;String2Search&gt;
+set "String2Search=%~1"
+(
+echo Set objFso = CreateObject^("Scripting.FileSystemObject"^)	  
+echo Set colShWindows = CreateObject^("shell.application"^).Windows
+echo For Each w In colShWindows
+echo 	If objFso.GetFileName^(LCase^(w.FullName^)^) = "iexplore.exe" Then
+echo 		WScript.Echo w.LocationURL
+echo 	End If
+echo Next
+)&gt;"%Temp%\iexplore_tabs.vbs"
+
+setlocal EnableDelayedExpansion
+for /f %%a in ('cscript //nologo "%Temp%\iexplore_tabs.vbs"') do (
+	set /a index+=1
+	set "URL[!index!]=%%a"
+)
+
+for /L %%i in (1,1,%index%) do (
+	echo !URL[%%i]! | find /I "%String2Search%"&gt;nul &amp;&amp; ( 
+		echo Found this string "%String2Search%" in the URL "!URL[%%i]!"
+		echo(
+		echo Did you want to kill this process "!ProcessName!" Y/N ?
+		Set /p "Answer="
+			If /I "!Answer!"=="Y" ( Call :Kill "!ProcessName!" ) else ( exit )
+		) || (
+			echo No string like "%String2Search%" found in "!URL[%%i]!"
+			Timeout /T 5 /nobreak&gt;nul
+		)
+)
+exit /b 
+::******************************************************************************************************</code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: How to check (with &quot;tasklist&quot; built-in cmd) if prgm is running?</h3>
+				<div class="date">Posted: <strong>27 Jul 2018 12:41</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Don't you think the script should rather run unattended?
+<blockquote><div><cite>Uhujkill wrote:</cite>I am needing to force close IE when a user locks their PC</div></blockquote>
+Sounds to me like creating a scheduled task that listens to the lock event.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8650&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:47:22 GMT -->
+</html>

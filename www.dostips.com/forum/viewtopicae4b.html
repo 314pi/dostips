@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8605&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; A simple way to join/unjoin files</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>A simple way to join/unjoin files</h2>
+		<p><a href="viewtopicab94.html?f=3&amp;t=8605">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8605</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>A simple way to join/unjoin files</h3>
+				<div class="date">Posted: <strong>05 Jun 2018 01:54</strong></div>
+				<div class="author">by <strong>Bucko</strong></div>
+				<div class="content">There is a simple way to concatenate files by a DOS command:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>copy /a Batch.bat + /b Binary.exe /b Combined.bat       *)</code></pre></div>
+
+An there is a way to "unconcatenate" such a Combined.bat by a DOS command: If Batch.bat consists only of lines starting with e.g. ";;==,," (this doesn't affect the execution of the bat!), the following Unjoin.bat using only the findstr command extracts the Binary.exe from the Combined.bat:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>findstr /v "^;;==,," Combined.bat &gt; BinaryExtracted.exe</code></pre></div>
+
+This command "ignores" all "lines" of the Combined.bat not starting with ";;==,," and outputs only the binary part. My experience is that this works perfectly, findstr extracts exactly the original Binary.exe.<br>
+<br>
+Now to my question: Could findstr (or maybe antoher DOS command) be used to unjoin a file generated in such a way, with a Delimiter.txt containing only a line with ";;==,,".:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>copy /b Binary1.exe + /a Delimiter.txt + /b Binary2.exe + /a Delimiter.txt + /b Binary3.exe /b Combined.exe</code></pre></div>
+
+The Unjoin.bat should extract Binary1.exe, Binary2.exe, ... <br>
+<br>
+Is this possible?<br>
+<br>
+Thank you very much in advance.<br>
+<br>
+<br>
+<br>
+<br>
+*) Or:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>copy /b Binary.exe + /a Batch.bat /b Combined.exe</code></pre></div>
+<span style="font-size: 85%; line-height: normal">The difference is: In the first example starting Combined.bat runs Batch.bat, in the second example starting Combined.exe runs Binary.exe.<br>
+And generally, of course, the file joined with Batch.bat can be any type of binary or text file.</span></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: A simple way to join/unjoin files</h3>
+				<div class="date">Posted: <strong>05 Jun 2018 21:30</strong></div>
+				<div class="author">by <strong>Bucko</strong></div>
+				<div class="content">If the above is impossible or too complex, at least the following should be achieved:<br>
+<br>
+If Combined.exe contains only one delimiter string:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>copy /b Binary1.exe + /a Delimiter.txt + /b Binary2.exe /b Combined.exe</code></pre></div>
+
+only the binary part after this string (Binary2.exe) should be extracted. That means that findstr should "ignore" not only all lines starting with ";;==,," but also all lines preceeding the first occurence of such a line.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: A simple way to join/unjoin files</h3>
+				<div class="date">Posted: <strong>08 Jun 2018 02:27</strong></div>
+				<div class="author">by <strong>penpen</strong></div>
+				<div class="content">Your algorithm has a possible weaknesses against the string "\r\n;;==,," (c++-notation; '\r'==carriage return, '\n'== newline), because it might be part of any executable:<br>
+You should test the executable you want to join for that string, and if it is contained abort the joining process.<br>
+<br>
+
+<blockquote><div><cite><a href="memberlistb60b.html?mode=viewprofile&amp;u=9243">Bucko</a> wrote: <a href="viewtopic8a8e.html?p=57078#p57078" data-post-id="57078" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">05 Jun 2018 01:54</div></cite> Could findstr (or maybe antoher DOS command) be used to unjoin a file generated in such a way, with a Delimiter.txt containing only a line with ";;==,,".:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>copy /b Binary1.exe + /a Delimiter.txt + /b Binary2.exe + /a Delimiter.txt + /b Binary3.exe /b Combined.exe</code></pre></div>
+
+The Unjoin.bat should extract Binary1.exe, Binary2.exe, ... <br>
+<br>
+Is this possible?</div></blockquote>Actually i don't know a console/gui command that is able to display data until a special delimiter (except the "copy/a" and "type" commands, which both stops at the first SUB character - but it only can be used up to the first SUB character).<br>
+<br>
+You maybe could use dave's "JREPL.BAT" - if that's an option for you:<br>
+<a href="viewtopicb16d.html?f=3&amp;t=6044" class="postlink">viewtopic.php?f=3&amp;t=6044</a>.<br>
+<br>
+Or you might use certutil to create a base64 string and use a line with characters that are no base64 codepoints (or something like that).<br>
+<br>
+<br>
+penpen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: A simple way to join/unjoin files</h3>
+				<div class="date">Posted: <strong>09 Jun 2018 08:07</strong></div>
+				<div class="author">by <strong>Bucko</strong></div>
+				<div class="content">Thank you very much, penpen!<br>
+<br>
+The delimiter string was just an example, of course a more sofisticated string can be used.<br>
+<br>
+Yes, findstr is able to process binary "strings"! There are some limitations, but the method works.<br>
+<br>
+I see that nobody here can give me an answer, so I posted a new question limited to a specific aspect of my problem:<br>
+<a href="viewtopice723.html?f=3&amp;t=8613" class="postlink">viewtopic.php?f=3&amp;t=8613</a><br>
+Maybe this will be more successful.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: A simple way to join/unjoin files</h3>
+				<div class="date">Posted: <strong>11 Jun 2018 20:32</strong></div>
+				<div class="author">by <strong>Aacini</strong></div>
+				<div class="content">If you are willing to use an additional .exe file (not findstr.exe), then this problem may be solved in a very simple way.<br>
+<br>
+Some time ago I wrote an auxiliary program called ReadFile.exe that can read a certain number of bytes from a redirected file handle. Using this program you may split a large file in several segments based on the size of each one, so it is not necessary to include any kind of delimiter between binary files.<br>
+<br>
+This is <strong class="text-strong">JoinFiles.bat:</strong>
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+rem Join/Unjoin binary files in a Batch file
+rem The created program requires ReadFile.exe auxiliary file
+rem Antonio Perez Ayala
+
+if "%~1" neq "" goto begin
+echo Usage: %0 binFile1 binFile2 ...
+echo/
+echo Creates MakeFiles.bat file that will extract the files given in the parameters
+goto :EOF
+
+:begin
+
+rem Create the self-extracting Batch file
+echo These files will be joined:
+set "i=0"
+set "files="
+(
+   rem Header of the Batch file
+   echo @echo off
+   echo setlocal EnableDelayedExpansion
+   echo set "file[0]=NUL"
+
+   rem Names and sizes of joined files
+   for %%f in (%*) do (
+      if exist %%f (
+         set /A i+=1
+         echo !i!- %%f (%%~Zf bytes^)&gt; CON
+         echo set "file[!i!]=%%~f"
+         echo set "size[!i!]=%%~Zf"
+         set "files=!files! + /B "%%~f""
+      ) else (
+         echo File not found: %%f &gt; CON
+      )
+   )
+
+   rem Code to extract files
+   echo ^&lt; "%%~F0" ( for /L %%%%i in (0,1,!i!^) do ReadFile 0 ^^^!size[%%%%i]^^^! ^&gt; "^!file[%%%%i]^!" ^)
+   echo goto :EOF
+
+) &gt; Temp.txt
+
+rem Get the size of the Batch code. It will include an additional first line with this format:
+rem @set "size[0]=9999"
+rem that is, 19 characters plus CR+LF at end = 21
+for %%f in (Temp.txt) do set /A "size=%%~Zf+21"
+set "size=   %size%"
+
+rem Create the final Batch file 
+(
+   echo @set "size[0]=%size:~-4%"
+   type Temp.txt
+) &gt; MakeFiles.bat
+del Temp.txt
+
+rem Add the joined files
+copy /A MakeFiles.bat %files% /B MakeFiles.bat &gt; NUL
+echo MakeFiles.bat file created
+</code></pre></div>
+
+ReadFile.exe program is included in "Auxiliary .exe programs.zip" file; you may download it from <a href="viewtopic9635.html?f=3&amp;t=3428" class="postlink">this thread</a>. Such a .zip file includes many other useful auxiliary .exe programs.<br>
+<br>
+Or you may download just ReadFile.exe program from the next .zip file:<br>
+<br>
+
+<div class="inline-attachment">
+			
+		
+		
+				<dl class="file">
+			<dt><span class="imageset icon_topic_attach"></span> <a class="postlink" href="download/filec637.php?id=371">ReadFile.zip</a></dt>
+						<dd>(744 Bytes) Downloaded 27 times</dd>
+		</dl>
+		
+		
+			</div>
+
+<br>
+Antonio</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8605&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:04:19 GMT -->
+</html>

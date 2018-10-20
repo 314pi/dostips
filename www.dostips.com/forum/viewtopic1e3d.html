@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8644&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:53:54 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; String generated from CL parameters...</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>String generated from CL parameters...</h2>
+		<p><a href="viewtopicf21b.html?f=3&amp;t=8644">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8644</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>String generated from CL parameters...</h3>
+				<div class="date">Posted: <strong>24 Jun 2018 04:42</strong></div>
+				<div class="author">by <strong>Bucko</strong></div>
+				<div class="content">I would like to run a batch file via a command line with three parameters like this (e.g.):<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Test.bat 99 "Par 2" "Par 3"</code></pre></div>
+
+The batch file should generate a string composed from the parameters:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&lt;Result&gt;&lt;99&gt;&lt;Two:Par 2&gt;&lt;Three:Par 3&gt;|</code></pre></div>
+
+How this can be done? I have some success with my attempts, but I can not figure out how to generate the string without doublequotes (which are required in the CL because the parameters may include spaces).<br>
+<br>
+After this, the string should be written to a text file.<br>
+<br>
+(Potentially there could be more than two parameters of the type "Par 2", "Par 3"...)</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: String generated from CL parameters...</h3>
+				<div class="date">Posted: <strong>24 Jun 2018 05:15</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">The tilde sign (~) removes surrounding quotes. E.g. %2 vs. %~2. More interesting is how you handle strings like Two: and Three:. Where are they coming from? Especially if you pass more arguments to the batch script.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: String generated from CL parameters...</h3>
+				<div class="date">Posted: <strong>24 Jun 2018 05:41</strong></div>
+				<div class="author">by <strong>Bucko</strong></div>
+				<div class="content">Danke, Steffen!<br>
+<br>
+Tilde, that's fine! It removes DQ from parameters. But my str is stil in DG, how to remove them? <br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+SETLOCAL ENABLEDELAYEDEXPANSION
+
+set str="&lt;Result&gt;&lt;%1&gt;&lt;Two:%~2&gt;&lt;Three:%~3&gt;|"
+
+echo %str%
+
+echo %str% &gt; Result.txt
+
+REM cmd /u /c "echo %str% &gt; Result.txt"</code></pre></div>
+
+echo writes to Result.txt. The last line should write to a Unicode text file, but does not...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: String generated from CL parameters...</h3>
+				<div class="date">Posted: <strong>24 Jun 2018 06:02</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+SETLOCAL ENABLEDELAYEDEXPANSION
+
+set "str=&lt;Result&gt;&lt;%1&gt;&lt;Two:%~2&gt;&lt;Three:%~3&gt;|"
+
+echo !str!
+
+&gt;"Result.txt" echo !str!</code></pre></div>
+Note that the quote is in front of the variable name.<br>
+Enclose the variable in exclamation marks for the output to make sure special characters like &lt;&gt;| are taken literally.<br>
+Make sure there is no space between string and redirection (&gt;) if you dont want it in the file. It's my default to always write the redirection at the beginning of the line to avoid failures like that.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: String generated from CL parameters...</h3>
+				<div class="date">Posted: <strong>24 Jun 2018 07:17</strong></div>
+				<div class="author">by <strong>Bucko</strong></div>
+				<div class="content">OK, Steffen, my last problem:<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@ECHO OFF
+SETLOCAL ENABLEDELAYEDEXPANSION
+
+set "str=&lt;Result&gt;&lt;%1&gt;&lt;Two:%~2&gt;&lt;Three:%~3&gt;|"
+
+echo !str!
+
+REM Works fine: &gt;"Result.txt" echo !str!
+
+REM Output to a Unicode file:
+cmd /u /c "echo "!str!"&gt;ResultU.txt"</code></pre></div>
+
+This last line works with quotes in "!str!", but then there are quotes in text file too...</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: String generated from CL parameters...</h3>
+				<div class="date">Posted: <strong>24 Jun 2018 07:31</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content"><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:: make sure !str! ain't expanded in the parent cmd.exe instance
+setlocal DisableDelayedExpansion
+:: /v:on enables the delayed expansion in the new cmd.exe instance, also the redirection doesn't belong to the new cmd.exe instance
+&gt;"ResultU.txt" cmd /v:on /u /c "echo !str!"</code></pre></div>
+
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: String generated from CL parameters...</h3>
+				<div class="date">Posted: <strong>24 Jun 2018 09:21</strong></div>
+				<div class="author">by <strong>Bucko</strong></div>
+				<div class="content">Works like a charm! Danke!!!</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: String generated from CL parameters...</h3>
+				<div class="date">Posted: <strong>24 Jun 2018 10:34</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">What about<blockquote><div><cite><a href="memberlistb60b.html?mode=viewprofile&amp;u=9243">Bucko</a> wrote: <a href="viewtopicb440.html?p=57266#p57266" data-post-id="57266" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">24 Jun 2018 04:42</div></cite>(Potentially there could be more than two parameters of the type "Par 2", "Par 3"...)</div></blockquote> <img class="smilies" src="images/smilies/icon_question.gif" width="15" height="15" alt=":?:" title="Question"> 
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal DisableDelayedExpansion
+
+if "%~1"=="" exit /b 1
+set "str=&lt;Result&gt;&lt;%~1&gt;"
+
+setlocal EnableDelayedExpansion
+set /a "num=2, cnt=2"
+for %%i in (
+                "Two"         "Three"       "Four"        "Five"
+  "Six"         "Seven"       "Eight"       "Nine"        "Ten"
+  "Eleven"      "Twelve"      "Thirteen"    "Fourteen"    "Fifteen"
+  "Sixteen"     "Seventeen"   "Eighteen"    "Nineteen"    "Twenty"
+) do (
+  set "n_!num!=%%~i"
+  set /a "num+=1"
+)
+
+setlocal DisableDelayedExpansion
+:loop
+shift
+if "%~1" neq "" if %cnt% lss %num% (
+  setlocal EnableDelayedExpansion
+  for /f "delims=" %%i in ("!str!") do for /f "delims=" %%j in ("!n_%cnt%!") do (
+    endlocal
+    set "str=%%i&lt;%%j:%~1&gt;"
+  )
+
+  set /a "cnt+=1"
+  goto loop
+)
+
+set "str=%str%|"
+
+&gt;"ResultU.txt" cmd /v:on /u /c "echo !str!"
+exit /b 0
+</code></pre></div>
+I just had a look into my crystal ball though. You never answered my question of my first reply.<br>
+<br>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: String generated from CL parameters...</h3>
+				<div class="date">Posted: <strong>24 Jun 2018 14:29</strong></div>
+				<div class="author">by <strong>Bucko</strong></div>
+				<div class="content">Steffen, I am overwhelmed! Thank you very much!<br>
+<br>
+"You never answered my question of my first reply." Yes, my fault. However, in my case this was irrelevant, the string composition was just an example, only the parameter parts are relevant for my batch file. Sorry...<br>
+<br>
+In the meantime I found another problem associated to writing to a Unicode encoced text file. My expectation was that by my last line a file is generated which would be identical to a file generated by Notepad. This is not true, there are two differences. The batch-generated file (i) has no BOM, and (ii) at the end of the file automatically a new line (0D 00 0A 00) is appended!!! For my project the second difference is a problem, there should be no new line... This problem is probably unsolvable, right?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: String generated from CL parameters...</h3>
+				<div class="date">Posted: <strong>24 Jun 2018 16:05</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Using &lt;NUL SET /P you can write a string without new line characters. Easy ways to add the BOM are dependent on your local settings. In the code below I assumed both that your default ANSI code page is Windows-1252 and that you saved the script Windows-1252-encoded. <span style="color: #0000BF">EDIT Changed it to a more generic way using UTF-7.<br>
+</span><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off
+setlocal DisableDelayedExpansion
+
+if "%~1"=="" exit /b 1
+set "str=&lt;Result&gt;&lt;%~1&gt;"
+
+setlocal EnableDelayedExpansion
+set /a "num=2, cnt=2"
+for %%i in (
+                "Two"         "Three"       "Four"        "Five"
+  "Six"         "Seven"       "Eight"       "Nine"        "Ten"
+  "Eleven"      "Twelve"      "Thirteen"    "Fourteen"    "Fifteen"
+  "Sixteen"     "Seventeen"   "Eighteen"    "Nineteen"    "Twenty"
+) do (
+  set "n_!num!=%%~i"
+  set /a "num+=1"
+)
+
+setlocal DisableDelayedExpansion
+:loop
+shift
+if "%~1" neq "" if %cnt% lss %num% (
+  setlocal EnableDelayedExpansion
+  for /f "delims=" %%i in ("!str!") do for /f "delims=" %%j in ("!n_%cnt%!") do (
+    endlocal
+    set "str=%%i&lt;%%j:%~1&gt;"
+  )
+
+  set /a "cnt+=1"
+  goto loop
+)
+
+set "str=%str%|"
+
+:: save current OEM code page
+for /f "tokens=*" %%a in ('chcp') do for %%b in (%%a) do set "oemcp=%%~nb"
+:: change to UTF-7
+&gt;nul chcp 65000
+:: characters ÿþ UTF-7-encoded
+set "bom16_7_1252=+AP8A/g-"
+:: change to Windows-1252 where ÿ is represented by byte 0xFF and þ by 0xFE which is the byte sequence of the UTF-16 LE BOM
+&gt;nul chcp 1252
+:: write the BOM (the content of variable bom16_7_1252 was automatically converted to the current code page)
+&gt;"ResultU.txt" &lt;nul set /p "=%bom16_7_1252%"
+:: turn back to the default OEM code page
+&gt;nul chcp %oemcp%
+
+&gt;&gt;"ResultU.txt" cmd /v:on /u /c "&lt;nul set /p "=!str!""
+exit /b 0</code></pre></div>
+
+Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8644&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:53:54 GMT -->
+</html>

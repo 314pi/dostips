@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5326&start=60&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:19:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Create nul and all ascii characters with only batch - Page 5</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Create nul and all ascii characters with only batch</h2>
+		<p><a href="viewtopic91a1.html?f=3&amp;t=5326">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=5326</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>5</strong> of <strong>8</strong></div>
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>31 Jan 2014 18:39</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><blockquote><div><cite>carlos wrote:</cite> in the past when I post some code to alt.msdos.batch.nt it add a space to the end of every line of the code</div></blockquote><br /><br />I presume you posted using Google.  <br /><br />Google *really* mangles Usenet posts - but some Usenet clients (Thunderbird) also mangles some text.<br /><br />Most Usenet clients work well.<br /><br /><br /><br />Good work on creating the hex 00 there, Sponge Belly.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>02 Feb 2014 08:53</strong></div>
+				<div class="author">by <strong>miskox</strong></div>
+				<div class="content"><blockquote><div><cite>Sponge Belly wrote:</cite>I hereby nominate Carlos for promotion to Expert. Any seconds?<br /></div></blockquote><br /><br />+1.<br /><br />Saso</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>09 Feb 2014 19:12</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">I develop a way for increase the speed of creation of the all 255 .chr files.<br />This code uses function :gen255 that use asynchronus macro for generate the .chr files.<br />Because, the task are asynchronus, the code uses a loop for wait until the .chr file have 1 byte (that is when it is ready for use).<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />:gen255<br />::This code creates one single byte. Parameter: int<br />::This is encoded in a macro way for be called with cmd /c<br />::Teamwork of carlos, penpen, aGerman, dbenham<br />::Tested under Win8<br />set &quot;genchr=if not %%#==26 (type nul &gt;%%#.tmp&quot;<br />set &quot;genchr=%genchr% &amp;makecab /d compress=off&quot;<br />set &quot;genchr=%genchr% /d reserveperdatablocksize=26&quot;<br />set &quot;genchr=%genchr% /d reserveperfoldersize=%%#&quot;<br />set &quot;genchr=%genchr% %%#.tmp %%#.chr &gt;nul&quot;<br />set &quot;genchr=%genchr% &amp;type %%#.chr&quot;<br />set &quot;genchr=%genchr% |((for /l %%_ in (1 1 38) do pause)&gt;nul&quot;<br />set &quot;genchr=%genchr% &amp;findstr ^^^^ &gt;%%#.tmp)&quot;<br />set &quot;genchr=%genchr% &amp;copy /y %%#.tmp /a %%#.chr /b &gt;nul&quot;<br />set &quot;genchr=%genchr% &amp;del %%#.tmp) else&quot;<br />set &quot;genchr=%genchr% (copy /y nul + nul /a 26.chr /a &gt;nul)&quot;<br />::end of genchr macro::<br />del /f /q /a *.chr &gt;nul 2&gt;&amp;1<br />for /l %%# in (0,1,255) do start &quot;&quot; /b /i cmd /d /c &quot;%genchr%&quot;<br />set &quot;check=0&quot;<br />:check255<br />for /l %%# in (%check%,1,255) do for %%_ in (<br />%%#.chr) do if not &quot;1&quot;==&quot;%%~z_&quot; (<br />ping -l 0 -n 1 -w 100 1.0.0.0 &gt;nul<br />set &quot;check=%%#&quot;<br />goto :check255)<br />goto :eof<br /><br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>09 Feb 2014 23:24</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Nice work Carlos.  <img class="smilies" src="images/smilies/icon_cool.gif" alt="8)" title="Cool" /> <br /><br />I took your idea and optimized it some more. I was able to basically double the speed yet again  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /> <br /><br />1) There is no point in creating more processes than you have processors (or cores)<br /><br />2) Better to launch the last process synchronously. Then you don't have to begin checking if done until the last one completes. Each process is doing basically the same amount of work, so they should all end about the same time. So I don't bother putting a delay in the wait loop since I am confident it won't be running for long.<br /><br />The above points don't really improve speed, but they do minimize the number of processes that the OS has to keep track of.<br /><br />3) Most of the printable ASCII characters can be generated much more quickly using CMD /C EXIT n to set %=exitCodeAscii%. This saves a lot of time.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal<br /><br />:genAllChr<br />::This code creates 256 1 byte files, one for each possible byte value.<br />::This is encoded in a macro way to be called asynchronously with start cmd /c<br />::Teamwork of carlos, penpen, aGerman, dbenham<br />::Tested under Win7 and XP<br />set ^&quot;genchr=(^<br />for /l %%N in (%%A !cnt! 255) do (^<br />&nbsp; if %%N equ 26 (^<br />&nbsp; &nbsp; copy /y nul + nul /a 26.chr /a ^&gt;nul^<br />&nbsp; ) else (if %%N geq 35 if %%N leq 126 if %%N neq 61 (^<br />&nbsp; &nbsp; cmd /c exit %%N^&amp;^<br />&nbsp; &nbsp; ^&lt;nul set /p &quot;=!=exitCodeAscii!&quot; ^&gt;%%N.chr^<br />&nbsp; ))^&amp;^<br />&nbsp; if not exist %%N.chr (^<br />&nbsp; &nbsp; makecab /d compress=off /d reserveperdatablocksize=26 /d reserveperfoldersize=%%N %%A.tmp %%N.chr ^&gt;nul^&amp;^<br />&nbsp; &nbsp; type %%N.chr ^| ((for /l %%n in (1 1 38) do pause)^&gt;nul^&amp;findstr &quot;^^&quot; ^&gt;%%N.temp)^&amp;^<br />&nbsp; &nbsp; ^&gt;nul copy /y %%N.temp /a %%N.chr /b^&amp;^<br />&nbsp; &nbsp; del %%N.temp^<br />&nbsp; )^<br />))^&amp;^<br />del %%A.tmp^&quot;<br />del /f /q /a *.chr *.tmp &gt;nul 2&gt;&amp;1<br />set /a cnt=number_of_processors<br />if %cnt% lss 1 set cnt=1<br />if %cnt% gtr 256 set cnt=256<br />set /a &quot;end=cnt-1&quot;<br />for /l %%A in (0 1 %end%) do (<br />&nbsp; type nul &gt;%%A.tmp<br />&nbsp; if %%A equ %end% (<br />&nbsp; &nbsp; start &quot;&quot; /b /wait cmd /q /v:on /c &quot;%genchr%&quot;<br />&nbsp; ) else (<br />&nbsp; &nbsp; start &quot;&quot; /b cmd /q /v:on /c &quot;%genchr%&quot;<br />&nbsp; )<br />)<br />:genAllChr.check<br />if exist *.tmp goto :genAllChr.check<br />exit /b<br /></code></pre></div><br />Here are some timings I got comparing your original code and my modified version.<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Carlos' original&nbsp; &nbsp; &nbsp; &nbsp;My modifid version<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -------------------&nbsp; &nbsp; &nbsp;--------------------<br />Win7 64bit&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;7.93 7.47 7.12&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3.77 3.72 3.79<br />4 processors (cores)&nbsp; &nbsp; &nbsp;Avg = 7.51&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Avg = 3.76<br /><br />XP virtual machine&nbsp; &nbsp; &nbsp; &nbsp;57.73 57.92 57.50&nbsp; &nbsp; &nbsp; &nbsp;35.71 35.93 36.13<br />1 processor&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Avg = 57.72&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Avg = 35.92<br /></code></pre></div><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>09 Feb 2014 23:44</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">dbenham: thanks for the tips. I not know why, your posted code generates really faster the .chr files, but the script not end.<br />I will take some of your ideas using ExitCodeAscii and post a new code.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>10 Feb 2014 00:05</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content"><blockquote><div><cite>carlos wrote:</cite>your posted code generates really faster the .chr files, but the script not end.</div></blockquote><br />That is really weird. It works perfectly for me, and the code seems so straight forward. I'm eager to hear what the problem is.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>10 Feb 2014 00:25</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Dave's code ends here ok.<br /><br />I got these timings:<br /><br />1.01<br />1.11<br />1.11</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>10 Feb 2014 01:21</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">Dave, thinking about you say all process should end the work at same point: I remember write that function because without it i get some messages like: is not posible access to the file. try rebuild a binary file with the generated.<br /><br />Edit: i found the cause in your code the waiting forever. this portions:<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>:genAllChr.check<br />if exist *.tmp goto :genAllChr.check<br /></code></pre></div><br />why? I don't now why: In my current test folder i have strange hidden folders:<br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>09-02-2014&nbsp; 07:09&nbsp; &nbsp; &lt;DIR&gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0529b7c51f51499b97790158a5c048e0$dpx$.tmp<br />09-02-2014&nbsp; 07:09&nbsp; &nbsp; &lt;DIR&gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0f9a6cef33234a339777cc8c7a6ac410$dpx$.tmp<br />09-02-2014&nbsp; 22:29&nbsp; &nbsp; &lt;DIR&gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 51028f328af346c7877d778b7cd1a38e$dpx$.tmp<br />04-02-2014&nbsp; 23:59&nbsp; &nbsp; &lt;DIR&gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 7d7efd315de74dc195a48db87689949e$dpx$.tmp<br />09-02-2014&nbsp; 07:09&nbsp; &nbsp; &lt;DIR&gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; fe4c2a5674f04b898a40277759970f75$dpx$.tmp</code></pre></div><br /><br />deleted it, the code ends ok.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>10 Feb 2014 01:42</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">About my code, I implemente your trick with =exitcodeascii, and also for check that all .chr files are ready I removed the goto loop system, using a function that uses for /l.<br /><br />please, check time with this: (in my system it takes round 6 seconds):<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />:gen255<br />::generates 0-255 .chr files that have 1 byte<br />::Teamwork of carlos, penpen, aGerman, dbenham<br />::Tested under Win8<br /><br />set &quot;func1=type nul &gt;%%#.tmp&quot;<br />set &quot;func1=%func1% &amp;makecab /d compress=off&quot;<br />set &quot;func1=%func1% /d reserveperdatablocksize=26&quot;<br />set &quot;func1=%func1% /d reserveperfoldersize=%%#&quot;<br />set &quot;func1=%func1% %%#.tmp %%#.chr &gt;nul&quot;<br />set &quot;func1=%func1% &amp;type %%#.chr&quot;<br />set &quot;func1=%func1% |((for /l %%_ in (1 1 38) do pause)&gt;nul&quot;<br />set &quot;func1=%func1% &amp;findstr ^^^^ &gt;%%#.tmp)&quot;<br />set &quot;func1=%func1% &amp;copy /y %%#.tmp /a %%#.chr /b &gt;nul&quot;<br />set &quot;func1=%func1% &amp;del %%#.tmp&quot;<br />set &quot;func2=cmd /c exit /b %%# &amp;cmd /a /c set /p&quot;<br />set &quot;func2=%func2% =^^%%=exitcodeascii%%&lt;nul &gt;%%#.chr&quot;<br />set &quot;func3=for /l %%- in (0) do if &quot;1&quot;==&quot;%%~z_&quot; exit /b&quot;<br /><br />del /f /q /a *.chr &gt;nul 2&gt;&amp;1<br />for /l %%# in (0,1,25) do start &quot;&quot; /b /i cmd /d /c &quot;%func1%&quot;<br />copy /y nul + nul /a 26.chr /a &gt;nul<br />for /l %%# in (27,1,34) do start &quot;&quot; /b /i cmd /d /c &quot;%func1%&quot;<br />for /l %%# in (35,1,60) do start &quot;&quot; /b /i cmd /d /c &quot;%func2%&quot;<br />for %%# in (61) do %func1%<br />for /l %%# in (62,1,126) do start &quot;&quot; /b /i cmd /d /c &quot;%func2%&quot;<br />for /l %%# in (127,1,255) do start &quot;&quot; /b /i cmd /d /c &quot;%func1%&quot;<br /><br />for /l %%# in (0,1,255) do for %%_ in (<br />%%#.chr) do cmd /q /d /c &quot;%func3%&quot;<br /><br />goto :eof<br /><br /></code></pre></div></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>10 Feb 2014 02:49</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content">Time here for Carlos' version<br /><br />2.16<br />2.33<br />2.31</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>10 Feb 2014 06:36</strong></div>
+				<div class="author">by <strong>dbenham</strong></div>
+				<div class="content">Hidden .tmp files would do it.<br /><br />I took Carlos' idea and explicitly check for the existence of each .tmp file that my code creates using a FOR /L loop. I no longer del *.tmp at the top. I also removed the START /B /WAIT from the last process - simpler to use CMD /C directly.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal disableDelayedExpansion<br /><br />:genAllChr<br />::This code creates 256 1 byte files, one for each possible byte value.<br />::This is encoded in a macro way to be called asynchronously with start cmd /c<br />::Teamwork of carlos, penpen, aGerman, dbenham<br />::Tested under Win7 and XP<br />set ^&quot;genchr=(^<br />for /l %%N in (%%A !cnt! 255) do (^<br />&nbsp; if %%N equ 26 (^<br />&nbsp; &nbsp; copy /y nul + nul /a 26.chr /a ^&gt;nul^<br />&nbsp; ) else (if %%N geq 35 if %%N leq 126 if %%N neq 61 (^<br />&nbsp; &nbsp; cmd /c exit %%N^&amp;^<br />&nbsp; &nbsp; ^&lt;nul set /p &quot;=!=exitCodeAscii!&quot; ^&gt;%%N.chr^<br />&nbsp; ))^&amp;^<br />&nbsp; if not exist %%N.chr (^<br />&nbsp; &nbsp; makecab /d compress=off /d reserveperdatablocksize=26 /d reserveperfoldersize=%%N %%A.tmp %%N.chr ^&gt;nul^&amp;^<br />&nbsp; &nbsp; type %%N.chr ^| ((for /l %%n in (1 1 38) do pause)^&gt;nul^&amp;findstr &quot;^^&quot; ^&gt;%%N.temp)^&amp;^<br />&nbsp; &nbsp; ^&gt;nul copy /y %%N.temp /a %%N.chr /b^&amp;^<br />&nbsp; &nbsp; del %%N.temp^<br />&nbsp; )^<br />))^&amp;^<br />del %%A.tmp^&quot;<br />del /f /q /a *.chr &gt;nul 2&gt;&amp;1<br />if &quot;%~1&quot; neq &quot;&quot; (set /a cnt=%~1) else set /a cnt=number_of_processors<br />if %cnt% lss 1 set cnt=1<br />if %cnt% gtr 256 set cnt=256<br />set /a &quot;end=cnt-1&quot;<br />for /l %%A in (0 1 %end%) do (<br />&nbsp; type nul &gt;%%A.tmp<br />&nbsp; if %%A equ %end% (<br />&nbsp; &nbsp; cmd /q /v:on /c &quot;%genchr%&quot;<br />&nbsp; ) else (<br />&nbsp; &nbsp; start &quot;&quot; /b cmd /q /v:on /c &quot;%genchr%&quot;<br />&nbsp; )<br />)<br />:genAllChr.check<br />for /l %%N in (0 1 %end%) do if exist %%N.tmp goto :genAllChr.check<br />exit /b<br /></code></pre></div><br />I don't see any difference in timing from before.<br /><br />In production code I would probably create a temporary directory in the %TEMP% folder to hold all the working files. That folder would be guaranteed to be empty at the start. Then I don't even need to delete *.CHR, and I can revert back to a simple IF EXIST *.TMP at the end.<br /><br /><br />Dave Benham</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>10 Feb 2014 08:28</strong></div>
+				<div class="author">by <strong>Squashman</strong></div>
+				<div class="content"><blockquote><div><cite>foxidrive wrote:</cite>Dave's code ends here ok.<br /><br />I got these timings:<br /><br />1.01<br />1.11<br />1.11</div></blockquote><br />I think someone just wanted to brag that he has a faster computer than all of us.  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>10 Feb 2014 15:34</strong></div>
+				<div class="author">by <strong>foxidrive</strong></div>
+				<div class="content"><blockquote><div><cite>Squashman wrote:</cite>I think someone just wanted to brag that he has a faster computer than all of us.  <img class="smilies" src="images/smilies/icon_biggrin.gif" alt=":D" title="Very Happy" /></div></blockquote><br /><br />*laughs*<br /><br />I bought it second hand 20 months ago - $600 well spent. <img class="smilies" src="images/smilies/icon_smile.gif" alt=":)" title="Smile" /></div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>10 Feb 2014 17:22</strong></div>
+				<div class="author">by <strong>einstein1969</strong></div>
+				<div class="content"><blockquote><div><cite>dbenham wrote:</cite>Hidden .tmp files would do it.<br /><br />I took Carlos' idea and explicitly check for the existence of each .tmp file that my code creates using a FOR /L loop. I no longer del *.tmp at the top. I also removed the START /B /WAIT from the last process - simpler to use CMD /C directly.<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br />setlocal disableDelayedExpansion<br /><br />:genAllChr<br />::This code creates 256 1 byte files, one for each possible byte value.<br />::This is encoded in a macro way to be called asynchronously with start cmd /c<br />::Teamwork of carlos, penpen, aGerman, dbenham<br />::Tested under Win7 and XP<br />set ^&quot;genchr=(^<br />for /l %%N in (%%A !cnt! 255) do (^<br />&nbsp; if %%N equ 26 (^<br />&nbsp; &nbsp; copy /y nul + nul /a 26.chr /a ^&gt;nul^<br />&nbsp; ) else (if %%N geq 35 if %%N leq 126 if %%N neq 61 (^<br />&nbsp; &nbsp; cmd /c exit %%N^&amp;^<br />&nbsp; &nbsp; ^&lt;nul set /p &quot;=!=exitCodeAscii!&quot; ^&gt;%%N.chr^<br />&nbsp; ))^&amp;^<br />&nbsp; if not exist %%N.chr (^<br />&nbsp; &nbsp; makecab /d compress=off /d reserveperdatablocksize=26 /d reserveperfoldersize=%%N %%A.tmp %%N.chr ^&gt;nul^&amp;^<br />&nbsp; &nbsp; type %%N.chr ^| ((for /l %%n in (1 1 38) do pause)^&gt;nul^&amp;findstr &quot;^^&quot; ^&gt;%%N.temp)^&amp;^<br />&nbsp; &nbsp; ^&gt;nul copy /y %%N.temp /a %%N.chr /b^&amp;^<br />&nbsp; &nbsp; del %%N.temp^<br />&nbsp; )^<br />))^&amp;^<br />del %%A.tmp^&quot;<br />del /f /q /a *.chr &gt;nul 2&gt;&amp;1<br />if &quot;%~1&quot; neq &quot;&quot; (set /a cnt=%~1) else set /a cnt=number_of_processors<br />if %cnt% lss 1 set cnt=1<br />if %cnt% gtr 256 set cnt=256<br />set /a &quot;end=cnt-1&quot;<br />for /l %%A in (0 1 %end%) do (<br />&nbsp; type nul &gt;%%A.tmp<br />&nbsp; if %%A equ %end% (<br />&nbsp; &nbsp; cmd /q /v:on /c &quot;%genchr%&quot;<br />&nbsp; ) else (<br />&nbsp; &nbsp; start &quot;&quot; /b cmd /q /v:on /c &quot;%genchr%&quot;<br />&nbsp; )<br />)<br />:genAllChr.check<br />for /l %%N in (0 1 %end%) do if exist %%N.tmp goto :genAllChr.check<br />exit /b<br /></code></pre></div><br />I don't see any difference in timing from before.<br /><br />In production code I would probably create a temporary directory in the %TEMP% folder to hold all the working files. That folder would be guaranteed to be empty at the start. Then I don't even need to delete *.CHR, and I can revert back to a simple IF EXIST *.TMP at the end.<br /><br /><br />Dave Benham</div></blockquote><br /><br />Hi Dave,<br /><br />I do not have enough experience to include this piece of code in the macro. On my single processor system this reduces by a further 20% of the execution time. It should be possible to adapt it to run on Multicores.<br /><br /><blockquote class="uncited"><div>@echo off<br />set t0=%time%<br /><strong class="text-strong">del /f /q /a *.chr &gt;nul 2&gt;&amp;1<br />setlocal EnableDelayedExpansion<br /> 	set &quot;charlist=#$%%&amp;'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~&quot;<br />	for /L %%N in (0,1,91) do if %%N neq 26 &lt;nul set /p &quot;=!charlist:~%%N,1!&quot; &gt;%%N.chr<br />endlocal</strong><br />setlocal disableDelayedExpansion<br />:genAllChr<br />::This code creates 256 1 byte files, one for each possible byte value.<br />::This is encoded in a macro way to be called asynchronously with start cmd /c<br />::Teamwork of carlos, penpen, aGerman, dbenham<br />::Tested under Win7 and XP<br />set ^&quot;genchr=(^<br />for /l %%N in (%%A !cnt! 255) do (^<br />  if %%N equ 26 (^<br />    copy /y nul + nul /a 26.chr /a ^&gt;nul^<br />  ) else (<strong class="text-strong">if not exist %%N.chr</strong> if %%N geq 35 if %%N leq 126 if %%N neq 61 (^<br />    cmd /c exit %%N^&amp;^<br />    ^&lt;nul set /p &quot;=!=exitCodeAscii!&quot; ^&gt;%%N.chr^<br />  ))^&amp;^<br />  if not exist %%N.chr (^<br />    makecab /d compress=off /d reserveperdatablocksize=26 /d reserveperfoldersize=%%N %%A.tmp %%N.chr ^&gt;nul^&amp;^<br />    type %%N.chr ^| ((for /l %%n in (1 1 38) do pause)^&gt;nul^&amp;findstr &quot;^^&quot; ^&gt;%%N.temp)^&amp;^<br />    ^&gt;nul copy /y %%N.temp /a %%N.chr /b^&amp;^<br />    del %%N.temp^<br />  )^<br />))^&amp;^<br />del %%A.tmp^&quot;<br />if &quot;%~1&quot; neq &quot;&quot; (set /a cnt=%~1) else set /a cnt=number_of_processors<br />if %cnt% lss 1 set cnt=1<br />if %cnt% gtr 256 set cnt=256<br />set /a &quot;end=cnt-1&quot;<br />for /l %%A in (0 1 %end%) do (<br />  type nul &gt;%%A.tmp<br />  if %%A equ %end% (<br />    cmd /q /v:on /c &quot;%genchr%&quot;<br />  ) else (<br />    start &quot;&quot; /b cmd /q /v:on /c &quot;%genchr%&quot;<br />  )<br />)<br />echo %t0% - %time%<br />:genAllChr.check<br />for /l %%N in (0 1 %end%) do if exist %%N.tmp goto :genAllChr.check<br />echo %time%<br />exit /b</div></blockquote><br /><br />EDIT: There is an error on For. Must add +35 in the %%N.chr<br /><br />einstein1969</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Create nul and all ascii characters with only batch</h3>
+				<div class="date">Posted: <strong>10 Feb 2014 23:03</strong></div>
+				<div class="author">by <strong>carlos</strong></div>
+				<div class="content">I wrote many variants today, but this is maybe the better for me:<br /><br />In the macro I copied the if else logic from dbenham:<br /><br /><div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>@echo off<br /><br />:gen255<br />::generates 0-255 .chr files that have 1 byte<br />::Teamwork of carlos, penpen, aGerman, dbenham<br />::Tested under Win8<br /><br />set &quot;genchr=if %%# equ 26 (&quot;<br />set &quot;genchr=%genchr% copy /y nul + nul /a 26.chr /a &gt;nul ) else (&quot;<br />set &quot;genchr=%genchr% if %%# geq 35 if %%# leq 126 if %%# neq 61 (&quot;<br />set &quot;genchr=%genchr% cmd /a /d /q /c exit /b %%# &amp;cmd /a /d /q /c set /p&quot;<br />set &quot;genchr=%genchr% &quot;=%%=exitcodeascii%%&quot; &lt;nul &gt;%%#.chr&quot;<br />set &quot;genchr=%genchr% )) &amp;if not exist %%#.chr (&quot;<br />set &quot;genchr=%genchr% type nul &gt;%%#.tmp&quot;<br />set &quot;genchr=%genchr% &amp;makecab /d compress=off&quot;<br />set &quot;genchr=%genchr% /d reserveperdatablocksize=26&quot;<br />set &quot;genchr=%genchr% /d reserveperfoldersize=%%#&quot;<br />set &quot;genchr=%genchr% %%#.tmp %%#.chr &gt;nul&quot;<br />set &quot;genchr=%genchr% &amp;type %%#.chr&quot;<br />set &quot;genchr=%genchr% |((for /l %%_ in (1 1 38) do pause)&gt;nul&quot;<br />set &quot;genchr=%genchr% &amp;findstr ^^^^ &gt;%%#.tmp)&quot;<br />set &quot;genchr=%genchr% &amp;copy /y %%#.tmp /a %%#.chr /b &gt;nul&quot;<br />set &quot;genchr=%genchr% &amp;del %%#.tmp)&quot;<br /><br />for /l %%# in (0,1,255) do (<br />if exist %%#.chr del /f /q /a %%#.chr &gt;nul<br />if exist %%#.tmp del /f /q /a %%#.tmp &gt;nul<br />)<br /><br />for /l %%# in (0,1,255) do start &quot;&quot; /b /i cmd /a /d /q /c &quot;%genchr%&quot;<br /><br />:gen255chk<br />for /l %%# in (0 1 255) do for %%_ in (<br />%%#.chr) do if not &quot;1&quot;==&quot;%%~z_&quot; goto :gen255chk<br /><br />goto :eof<br /><br /></code></pre></div></div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>5</strong> of <strong>8</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=5326&start=60&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:19:18 GMT -->
+</html>

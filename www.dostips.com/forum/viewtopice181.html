@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8487&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:09 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Can I merge files and move in a command?</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Can I merge files and move in a command?</h2>
+		<p><a href="viewtopic8b6c.html?f=3&amp;t=8487">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8487</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Can I merge files and move in a command?</h3>
+				<div class="date">Posted: <strong>11 Apr 2018 08:37</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Hi everyone apologies if ive posted in wrong forum but think DOS commands is what I need. <br>
+<br>
+I have a folder of which is  C:/Downloads of which has files and folders in it.  <br>
+<br>
+What im trying to do is if possible when I click on the shortcut icon on the desktop i need to  create a new folder within C:/Downloads  and then move all the files into that folder. There will be other folders within the folder C:/Downloads already but I just need the individual files to be moved.   Once it has moved the files I need a message box or something to pop up asking me to name what the folder is going to be called and then name it.<br>
+<br>
+Any ideas if this is possible. <br>
+<br>
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I merge files and move in a command?</h3>
+				<div class="date">Posted: <strong>11 Apr 2018 14:55</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">There is no such thing like a message box in Batch. To help out I'll offer you a VBScript code (save with file extension .vbs)
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>Option Explicit
+
+Const strDLFolder = "C:\Downloads"
+Dim objFSO, objWShell, objDLFolder, strNewFolder, objFile
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objWShell = CreateObject("WScript.Shell")
+
+
+If Not objFSO.FolderExists(strDLFolder) Then objFSO.CreateFolder(strDLFolder)
+objWShell.CurrentDirectory = strDLFolder
+Set objDLFolder = objFSO.GetFolder(strDLFolder)
+If objDLFolder.Files.Count = 0 Then WScript.Quit
+
+Do
+  Err.Clear
+  strNewFolder = InputBox("Folder Name", vbLf &amp; "Enter the name of the folder to be created:")
+  If strNewFolder = False Then WScript.Quit
+  On Error Resume Next
+  objFSO.CreateFolder strNewFolder
+Loop While Err.Number &lt;&gt; 0 Or Not objFSO.FolderExists(strNewFolder)
+
+On Error Goto 0
+For Each objFile In objDLFolder.Files
+  objFSO.MoveFile objFile.Name, strNewFolder &amp; "\"
+Next
+
+objWShell.Popup "All files moved.", 0, "Done", vbInformation Or vbSystemModal Or &amp;h00040000&amp;</code></pre></div>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I merge files and move in a command?</h3>
+				<div class="date">Posted: <strong>12 Apr 2018 04:08</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Seffen <br>
+<br>
+A BIG BIG Thanks.<br>
+<br>
+You are a legend and saved me loads of work doing that.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I merge files and move in a command?</h3>
+				<div class="date">Posted: <strong>12 Apr 2018 04:30</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">I forgot one thing sorry !!<br>
+<br>
+The script above works perfectly but there one thing I missed off.  What im trying to do is if poss when folder created and files moved I need the folder C:/Downloads to re open to show the folders and launch  7 zip file manager so I can ZIP and password protect file. <br>
+<br>
+If youre not able to launch 7 zip file manager thats fine as long as I can get it to reopen C:/Downloads.<br>
+<br>
+Thanks</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I merge files and move in a command?</h3>
+				<div class="date">Posted: <strong>12 Apr 2018 05:00</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">Just add this line at the end of the script.<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>objWShell.Run "explorer.exe /select,""" &amp; objFSO.BuildPath(strDLFolder, strNewFolder) &amp; """"</code></pre></div>
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I merge files and move in a command?</h3>
+				<div class="date">Posted: <strong>12 Apr 2018 08:45</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Steffen <br>
+<br>
+A big big thanks once again</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Can I merge files and move in a command?</h3>
+				<div class="date">Posted: <strong>31 May 2018 03:32</strong></div>
+				<div class="author">by <strong>tweacle</strong></div>
+				<div class="content">Is there anyway I can add to command below...<br>
+<br>
+What it does at present is exactly what I want it to do but im trying to amend the end so that once folder created and files moved  I want to have a message box or something pop up asking me if to save to section A or B and then I click on selection it moves the folder and opens it in the new section and once opened the window at the end pop up as this text<br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>objWShell.Popup "ALL FILES MOVED NOW 7ZIP AND PASSWORD PROTECT FOLDER", 0, "Done", vbInformation Or vbSystemModal Or &amp;h00040000&amp;</code></pre></div>[/code]<br>
+<br>
+I.E created the folder  and then click on selection "A" and folder then moves to C:\DOWNLOADS\SECTIONA and then opens it and pops with with the message "ALL FILES MOVED NOW 7ZIP AND PASSWORD PROTECT FOLDER" <br>
+or if I select "B" I need it moving to C:\DOWNLOADS\SECTIONB and then opens it and pops with with the message "ALL FILES MOVED NOW 7ZIP AND PASSWORD PROTECT FOLDER" <br>
+
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code> Option Explicit
+
+Const strDLFolder = "C:\Downloads"
+Dim objFSO, objWShell, objDLFolder, strNewFolder, objFile
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objWShell = CreateObject("WScript.Shell")
+
+
+If Not objFSO.FolderExists(strDLFolder) Then objFSO.CreateFolder(strDLFolder)
+objWShell.CurrentDirectory = strDLFolder
+Set objDLFolder = objFSO.GetFolder(strDLFolder)
+If objDLFolder.Files.Count = 0 Then WScript.Quit
+
+Do
+  Err.Clear
+  strNewFolder = InputBox("Folder Name", vbLf &amp; "Enter the name of the folder to be created:")
+  If strNewFolder = False Then WScript.Quit
+  On Error Resume Next
+  objFSO.CreateFolder strNewFolder
+Loop While Err.Number &lt;&gt; 0 Or Not objFSO.FolderExists(strNewFolder)
+
+On Error Goto 0
+For Each objFile In objDLFolder.Files
+  objFSO.MoveFile objFile.Name, strNewFolder &amp; "\"
+Next
+
+objWShell.Popup "All files moved.", 0, "Done", vbInformation Or vbSystemModal Or &amp;h00040000&amp;</code></pre></div>
+
+<br>
+Is this possible. <br>
+<br>
+Thanks</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8487&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 07:06:09 GMT -->
+</html>

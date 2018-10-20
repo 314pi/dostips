@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8779&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:43:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="noindex" />
+
+<title>DosTips.com &bull; Dir multiple folder search</title>
+
+<link href="styles/AllanStyle-SUBSILVER/theme/print.css" rel="stylesheet">
+</head>
+<body id="phpbb">
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<h1>DosTips.com</h1>
+		<p>A Forum all about DOS Batch<br /><a href="index-2.html">https://www.dostips.com/forum/</a></p>
+
+		<h2>Dir multiple folder search</h2>
+		<p><a href="viewtopic20ec.html?f=3&amp;t=8779">https://www.dostips.com/forum/viewtopic.php?f=3&amp;t=8779</a></p>
+	</div>
+
+	<div id="page-body" class="page-body">
+		<div class="page-number">Page <strong>1</strong> of <strong>1</strong></div>
+					<div class="post">
+				<h3>Dir multiple folder search</h3>
+				<div class="date">Posted: <strong>13 Aug 2018 04:00</strong></div>
+				<div class="author">by <strong>iulian.fartade</strong></div>
+				<div class="content">Good day!<br>
+<br>
+I am having some issues with the basics, I'm sorry to use your time but I had spent  several days of search and got no results.<br>
+<br>
+I have the next folder structure, in a test folder on the desktop:
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>\test
+       \1
+           \empty
+       \2
+           \a11.txt
+           \b11.txt
+       \3
+           \a11.txt
+           \b11.txt
+       \a1
+           \empty
+       \a2
+           \a11.txt
+           \b11.txt
+       \a3
+           \empty
+       \Test1
+           \a12.txt
+           \b12.txt
+       \Test2
+           \a23.txt
+           \b23.txt
+</code></pre></div>
+What I need to do is create a list, containing (if exists) the existence of a .txt file starrting with "a" and the folder that contains it. This batch will need to give only the result of the \TestX folders.<br>
+The code I tried is simple:<br>
+<br>
+DIR C:\Users\Tesla-Project\Desktop\test\a*.txt /S /O -L &gt;lista.txt 2&gt;&amp;1<br>
+START lista.txt<br>
+<br>
+The issue with this code is that it runs all folders contained in \test folder. If this folder contains a lot of files the batch will take a very long time to process.<br>
+I need to exclude the 1,2,3,a1,a2,a3 folders and have the program run only \Test1 and \Test2 folders.<br>
+If I try to use % or * for the Test folder, I have no result:<br>
+<br>
+DIR C:\Users\Tesla-Project\Desktop\test\Test*\a*.txt /S /O -L &gt;lista.txt 2&gt;&amp;1<br>
+START lista.txt<br>
+<br>
+I feel like I am missing something very simple but I really cannot find a solution for this... <br>
+Could someone help me on this please?</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dir multiple folder search</h3>
+				<div class="date">Posted: <strong>13 Aug 2018 08:53</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">You can target a list of folders in just one DIR command line.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>DIR "C:\Users\Tesla-Project\Desktop\test\Test1\a*.txt" "C:\Users\Tesla-Project\Desktop\test\Test2\a*.txt" /A:-D /S /O /L</code></pre></div>
+
+Steffen</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dir multiple folder search</h3>
+				<div class="date">Posted: <strong>13 Aug 2018 11:09</strong></div>
+				<div class="author">by <strong>iulian.fartade</strong></div>
+				<div class="content"><blockquote><div><cite><a href="memberlistf667.html?mode=viewprofile&amp;u=1265">aGerman</a> wrote: <a href="viewtopic2627.html?p=57747#p57747" data-post-id="57747" onclick="if(document.getElementById(hash.substr(1)))href=hash">↑</a><div class="responsive-hide">13 Aug 2018 08:53</div></cite>
+You can target a list of folders in just one DIR command line.
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>DIR "C:\Users\Tesla-Project\Desktop\test\Test1\a*.txt" "C:\Users\Tesla-Project\Desktop\test\Test2\a*.txt" /A:-D /S /O /L</code></pre></div>
+
+Steffen
+</div></blockquote>
+
+Thank you Verry Much Steffen!!!<br>
+<br>
+Do you think it would also be possible to filter the result and save in the list only the files created 1 day ago?<br>
+I tried to do this using:<br>
+forfiles /m "a*.txt" /d -1<br>
+The /m thow is not recognized... If I remove the /m I have a result but it seems to completely ignore the mentioned line.</div>
+			</div>
+			<hr />
+					<div class="post">
+				<h3>Re: Dir multiple folder search</h3>
+				<div class="date">Posted: <strong>13 Aug 2018 13:22</strong></div>
+				<div class="author">by <strong>aGerman</strong></div>
+				<div class="content">You may use FORFILES instead of DIR but you'll lose the ability of searching in several folders at once. Also /D -1 means that the files are at least one day old (not exactly one).
+<div class="codebox"><p>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></p><pre><code>forfiles /p "C:\Users\Tesla-Project\Desktop\test\Test1" /m "a*.txt" /d -1 /s /c "cmd /c echo @path"</code></pre></div>
+
+Steffen</div>
+			</div>
+			<hr />
+			</div>
+
+	<div id="page-footer" class="page-footer">
+		<div class="page-number">All times are <span title="UTC-6">UTC-06:00</span><br />Page <strong>1</strong> of <strong>1</strong></div>
+		<div class="copyright">Powered by phpBB&reg; Forum Software &copy; phpBB Limited<br />https://www.phpbb.com/</div>
+	</div>
+</div>
+
+</body>
+
+<!-- Mirrored from www.dostips.com/forum/viewtopic.php?f=3&t=8779&view=print by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Oct 2018 06:43:21 GMT -->
+</html>
